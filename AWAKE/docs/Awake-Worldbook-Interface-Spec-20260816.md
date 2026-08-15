@@ -229,6 +229,10 @@ public interface IWorldbookRegistry
 - `ContentTier`
 - `CorpusFingerprint`
 - `RuleCount`
+- `PersonaCount`
+- `SourceFormat`：`awake` / `af`
+- `RulesDirectory`
+- `PersonaDirectory`
 - `Owner`
 
 ### 3.2 查询接口
@@ -391,6 +395,84 @@ long Score(WorldbookRule rule, WorldbookQuery query)
 - `ragShortTexts` / `semanticPrototypes` 不进入分数。
 - 所有权重是固定常量，后续调整只能改常量，不能引入模型打分。
 - `persona` / `background` 持久规则拥有独立预算，不与非身份规则竞争。
+
+### 5.6 AF 世界书兼容层
+
+目标：AF 世界书只做“不破坏内容的少量扩展”即可直接接入，不改字段名、不改正文。
+
+兼容原则：
+
+- 解析器同时接受 AF 的 PascalCase 和 AWAKE 的 camelCase。
+- AF 单规则文件可以直接作为一条规则加载。
+- 缺失字段使用默认值，不要求作者补全。
+- AF `personality_background` 文件自动映射为 AWAKE `personas`。
+- 不做内容重写，只做字段归一化。
+
+字段默认值：
+
+| AF / AWAKE 字段 | 默认值 |
+| --- | --- |
+| `Id` -> `id` | 必填 |
+| `Keywords` -> `keywords` | `[]` |
+| `RagShortTexts` -> `ragShortTexts` | `[]` |
+| `SemanticPrototypes` -> `semanticPrototypes` | `[]` |
+| `Variants` -> `variants` | `[]` |
+| `TextMappings` -> `textMappings` | `[]` |
+| AWAKE `kind` | `background` |
+| AWAKE `scope` | `npc` |
+| AWAKE `persistence` | `persistent` |
+| AWAKE `priority` | `0` |
+| AWAKE `contentTier` | `pure` |
+| AWAKE `ngrams` | `[]` |
+| AWAKE `context` | `{}` |
+
+目录布局示例：
+
+```text
+worldbook/
+  manifest.json
+  rules/
+    rule_xxx.json
+  personality_background/
+    CharacterObject_xxx.json
+```
+
+`manifest.json`：
+
+```json
+{
+  "schemaVersion": "awake.worldbook.v1",
+  "id": "af.calradia.dark",
+  "sourceFormat": "af",
+  "rulesDirectory": "rules",
+  "personaDirectory": "personality_background"
+}
+```
+
+导入流程：
+
+1. 读取 `manifest.json`。
+2. 扫描 `rules/*.json` 并映射为 AWAKE Rule，缺失字段填默认值。
+3. 扫描 `personality_background/*.json` 并映射为 AWAKE Persona。
+4. 校验 `id` 唯一、`content` 非空。
+5. 构建 `keyword -> 全部 rule` 和 `ngram -> 全部 rule` 的多对多索引。
+6. 计算指纹并注册到 `IWorldbookRegistry`。
+
+字段名兼容：
+
+- `HeroIds` -> `heroIds`
+- `Cultures` -> `cultures`
+- `KingdomIds` -> `kingdomIds`
+- `SettlementIds` -> `settlementIds`
+- `Roles` -> `roles`
+- `IdentityIds` -> `identityIds`
+- `IsFemale` -> `isFemale`
+- `IsClanLeader` -> `isClanLeader`
+- `SkillMin` -> `skillMin`
+- `Priority` -> `priority`
+- `Content` -> `content`
+
+解析器统一输出 AWAKE camelCase，但输入两种命名都接受。
 
 ## 6. 与 Marcus 的边界
 
