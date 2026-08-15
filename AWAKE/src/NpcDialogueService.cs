@@ -40,6 +40,7 @@ internal sealed class NpcDialogueService : IDisposable
     private string _heroCulture = string.Empty;
     private string _openingHint = string.Empty;
     private string _memoryBlock = string.Empty;
+    private string _npcState = string.Empty;
     private string _memoryConversationId = string.Empty;
 
     internal NpcDialogueService(IMarcusAiFrameworkHost host, string heroId, string heroName, string sceneKeywords)
@@ -313,6 +314,7 @@ internal sealed class NpcDialogueService : IDisposable
             RefreshHeroInfo();
             await RefreshPlayerKnownAsync(context, CancellationToken.None).ConfigureAwait(false);
             await LoadMemoryBlockAsync(CancellationToken.None).ConfigureAwait(false);
+            await LoadNpcStateAsync(CancellationToken.None).ConfigureAwait(false);
             await RegisterPromptBestEffortAsync(context, CancellationToken.None).ConfigureAwait(false);
             lock (_gate) _ready = true;
             PushStatus("对话已就绪。");
@@ -368,6 +370,7 @@ internal sealed class NpcDialogueService : IDisposable
         RefreshHeroInfo();
         await RefreshPlayerKnownAsync(context, cancellationToken).ConfigureAwait(false);
         await LoadMemoryBlockAsync(cancellationToken).ConfigureAwait(false);
+        await LoadNpcStateAsync(cancellationToken).ConfigureAwait(false);
         lock (_gate) _ready = true;
         PushStatus("对话已就绪。");
         return new NpcDialogueTurnResult(true, string.Empty, string.Empty, string.Empty);
@@ -451,6 +454,40 @@ internal sealed class NpcDialogueService : IDisposable
         catch (Exception ex)
         {
             AwakeLog.Write("npc_dialogue_memory_load_error hero=" + _heroId + " error=" + ex.Message);
+        }
+    }
+
+    private async Task LoadNpcStateAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            WorldStateStore store = AwakeRuntime.WorldStateStore;
+            if (store == null)
+            {
+                _npcState = string.Empty;
+                return;
+            }
+            IMarcusAiFrameworkHost host = AwakeRuntime.ResolveHost();
+            if (host == null)
+            {
+                _npcState = string.Empty;
+                return;
+            }
+            RequestContext context = AwakeRuntime.CreateContext(host, Guid.NewGuid().ToString("N"));
+            Newtonsoft.Json.Linq.JObject relationship = await store.GetRelationshipAsync(
+                _heroId,
+                context,
+                cancellationToken).ConfigureAwait(false);
+            _npcState = NpcDialogueStateFormatter.FormatState(relationship, null, null);
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("npc_dialogue_state_load_error hero=" + _heroId + " error=" + ex.Message);
+            _npcState = string.Empty;
         }
     }
 
@@ -570,12 +607,22 @@ internal sealed class NpcDialogueService : IDisposable
             }
         }
 
+        string npcState = _npcState ?? string.Empty;
+        string unnamedConstraint = AwakeUnnamedProfileService.BuildStateConstraint(_target);
+        if (!string.IsNullOrWhiteSpace(unnamedConstraint))
+        {
+            npcState = string.IsNullOrWhiteSpace(npcState)
+                ? unnamedConstraint
+                : unnamedConstraint + "\n" + npcState;
+        }
+        if (string.IsNullOrWhiteSpace(npcState)) npcState = "当前没有已记录的角色状态。";
+
         Dictionary<string, string> rawVariables = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["retrieved_knowledge"] = retrievedKnowledge,
             ["npc_memory"] = _memoryBlock ?? string.Empty,
             ["npc_identity"] = BuildNpcIdentity(),
-            ["npc_state"] = AwakeUnnamedProfileService.BuildStateConstraint(_target),
+            ["npc_state"] = npcState,
             ["player_known"] = SerializePlayerKnown(_playerName, _clanName, _kingdomName),
             ["scene"] = _sceneKeywords,
             ["opening_hint"] = openingHint,

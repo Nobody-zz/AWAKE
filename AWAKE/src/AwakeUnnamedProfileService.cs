@@ -18,7 +18,8 @@ internal static class AwakeUnnamedProfileService
 
     internal static string BuildStateConstraint(AwakeNpcTarget target)
     {
-        if (target == null || target.IsHero) return "关系、身体与发情状态由内容包提供。";
+        if (target == null) return "当前没有可用的角色状态。";
+        if (target.IsHero) return string.Empty;
         return "你是无名角色，不是有名英雄；你只了解自己的身份、所处地点与日常见闻，不掌握领主账目、王国机密或超出身份的信息。";
     }
 

@@ -15,5 +15,8 @@ internal static class NpcDialogueConstants
     internal const string PermissionRouteInvoke = "ai.route.invoke:" + RouteId;
     internal const string PermissionPromptCompile = "prompt.compile:" + PromptId;
     internal static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(90);
-    internal static readonly string[] AllowedCommandIds = Array.Empty<string>();
+    internal static readonly string[] AllowedCommandIds = new[]
+    {
+        AiTaskConstants.RelationshipDeltaCommandId
+    };
 }

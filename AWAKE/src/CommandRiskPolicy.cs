@@ -6,7 +6,10 @@ namespace Awake;
 
 internal static class CommandRiskPolicy
 {
-    private static readonly Dictionary<string, CommandRiskTier> KnownCommands = new Dictionary<string, CommandRiskTier>(StringComparer.Ordinal);
+    private static readonly Dictionary<string, CommandRiskTier> KnownCommands = new Dictionary<string, CommandRiskTier>(StringComparer.Ordinal)
+    {
+        [AiTaskConstants.RelationshipDeltaCommandId] = CommandRiskTier.R2Gameplay
+    };
 
     internal static bool TryGetRiskTier(string commandId, out CommandRiskTier tier)
     {

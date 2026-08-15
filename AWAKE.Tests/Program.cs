@@ -38,8 +38,74 @@ internal static class Program
 		RunUnnamedProfileSmoke();
 		RunSceneDialogueRangeSmoke();
 		RunAwakeEventEngineCoreSmoke();
+		RunRelationshipCommandSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunRelationshipCommandSmoke()
+	{
+		if (!AwakeUnnamedProfileService.BuildStateConstraint(null).Contains("没有"))
+		{
+			throw new InvalidOperationException("unnamed profile null target should use the generic state block.");
+		}
+
+		string validJson = "{\"heroId\":\"hero-1\",\"trustDelta\":1,\"loveDelta\":0,\"hostilityDelta\":0,\"reason\":\"talk\"}";
+		FakeClock clock = new FakeClock(DateTimeOffset.UtcNow);
+		RequestContext context = clock.Context("awake.smoke", null, "relationship-pre");
+		CommandRequest request = new CommandRequest(
+			"rel-1",
+			AiTaskConstants.RelationshipDeltaCommandId,
+			validJson,
+			"idem-1",
+			DateTimeOffset.UtcNow.AddMinutes(1.0));
+		OperationResult<CommandAdapterPreflight> preflight = new AwakeRelationshipDeltaAdapter().Preflight(request, context);
+		MafAssertions.Succeeded(preflight, "relationship preflight expected");
+
+		string zeroJson = "{\"heroId\":\"hero-1\",\"trustDelta\":0,\"loveDelta\":0,\"hostilityDelta\":0,\"reason\":\"zero\"}";
+		CommandRequest zeroRequest = new CommandRequest(
+			"rel-zero",
+			AiTaskConstants.RelationshipDeltaCommandId,
+			zeroJson,
+			"idem-zero",
+			DateTimeOffset.UtcNow.AddMinutes(1.0));
+		MafAssertions.Failed(
+			new AwakeRelationshipDeltaAdapter().Preflight(zeroRequest, context),
+			FrameworkErrorCategory.InvalidRequest,
+			"awake.world_state.relationship.invalid",
+			"zero relationship delta should reject");
+
+		if (!CommandRiskPolicy.IsWorldBridgeAllowed(AiTaskConstants.RelationshipDeltaCommandId))
+		{
+			throw new InvalidOperationException("relationship command should be world-bridge allowed.");
+		}
+		if (!CommandRiskPolicy.TryGetRiskTier(AiTaskConstants.RelationshipDeltaCommandId, out CommandRiskTier tier)
+			|| tier != CommandRiskTier.R2Gameplay)
+		{
+			throw new InvalidOperationException("relationship command risk tier mismatch.");
+		}
+		if (Array.IndexOf(NpcDialogueConstants.AllowedCommandIds, AiTaskConstants.RelationshipDeltaCommandId) < 0)
+		{
+			throw new InvalidOperationException("relationship command should be allowlisted for NPC dialogue.");
+		}
+		if (!StringComparer.Ordinal.Equals(WorldStateStore.BuildHeroKey("hero-1"), "hero.hero-1.v1"))
+		{
+			throw new InvalidOperationException("relationship hero key mismatch.");
+		}
+		Newtonsoft.Json.Linq.JObject relationship = new Newtonsoft.Json.Linq.JObject
+		{
+			["trust"] = 5,
+			["love"] = 3,
+			["hostility"] = -2
+		};
+		string formatted = NpcDialogueStateFormatter.FormatState(relationship, null, null);
+		if (formatted.IndexOf("信任 5", StringComparison.Ordinal) < 0
+			|| formatted.IndexOf("爱意 3", StringComparison.Ordinal) < 0
+			|| formatted.IndexOf("敌意 -2", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("relationship state formatting mismatch.");
+		}
+		Console.WriteLine("PASS relationship command smoke");
 	}
 
 	private static void RunAwakeEventEngineCoreSmoke()
@@ -155,7 +221,7 @@ internal static class Program
 		{
 			throw new InvalidOperationException("unnamed profile role label mismatch.");
 		}
-		if (!AwakeUnnamedProfileService.BuildStateConstraint(null).Contains("内容包"))
+		if (!AwakeUnnamedProfileService.BuildStateConstraint(null).Contains("没有"))
 		{
 			throw new InvalidOperationException("unnamed profile null target should use the generic state block.");
 		}

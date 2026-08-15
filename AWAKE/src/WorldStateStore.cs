@@ -13,6 +13,7 @@ namespace Awake;
 internal enum WorldStateKind
 {
     Memory,
+    Relationship,
     EventMeta
 }
 
@@ -395,6 +396,35 @@ internal sealed class WorldStateStore
             }
         }
         return doc;
+    }
+
+    internal async Task<JObject> GetRelationshipAsync(string heroId, RequestContext context, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(heroId)) return null;
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.RelationshipsNamespace, out store);
+        if (store == null) return null;
+
+        string key = BuildHeroKey(heroId);
+        OperationResult<string> loaded = await store.GetAsync(key, context ?? CreateContext(), cancellationToken).ConfigureAwait(false);
+        if (!loaded.IsSuccess)
+        {
+            AwakeLog.Write("world_state_relationship_load_failed hero=" + heroId + " code=" + (loaded.Error?.Code ?? "unknown"));
+            return null;
+        }
+        if (string.IsNullOrWhiteSpace(loaded.Value)) return NewRelationshipState(heroId);
+
+        try
+        {
+            JObject doc = JObject.Parse(loaded.Value);
+            if (doc.Type != JTokenType.Object) throw new InvalidOperationException("relationship root is not object");
+            return doc;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_state_relationship_corrupt hero=" + heroId + " error=" + ex.Message);
+            return null;
+        }
     }
 
     internal async Task<JObject> GetEventMetaAsync(RequestContext context, CancellationToken cancellationToken)
@@ -862,6 +892,9 @@ internal sealed class WorldStateStore
             case WorldStateKind.Memory:
                 applyError = ApplyMemory(state, command, out eventPayload);
                 break;
+            case WorldStateKind.Relationship:
+                applyError = ApplyRelationship(state, command);
+                break;
             case WorldStateKind.EventMeta:
                 applyError = ApplyEventMeta(state, command);
                 break;
@@ -907,6 +940,7 @@ internal sealed class WorldStateStore
         switch (kind)
         {
             case WorldStateKind.Memory: return NewMemoryState(heroId);
+            case WorldStateKind.Relationship: return NewRelationshipState(heroId);
             case WorldStateKind.EventMeta: return NewEventMetaState();
             default: return new JObject();
         }
@@ -934,6 +968,21 @@ internal sealed class WorldStateStore
             ["versions"] = new JObject(),
             ["cooldowns"] = new JObject(),
             ["daily"] = new JObject()
+        };
+    }
+
+    private static JObject NewRelationshipState(string heroId)
+    {
+        return new JObject
+        {
+            ["schema"] = "awake.relationship.state.v1",
+            ["heroId"] = heroId ?? string.Empty,
+            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+            ["trust"] = 0,
+            ["love"] = 0,
+            ["hostility"] = 0,
+            ["entries"] = new JArray(),
+            ["appliedKeys"] = new JArray()
         };
     }
 
@@ -1065,6 +1114,50 @@ internal sealed class WorldStateStore
         return string.Empty;
     }
 
+    private static string ApplyRelationship(JObject state, WorldStateCommand command)
+    {
+        EnsureRelationshipShape(state, command.HeroId);
+        int trust = IntValue(state["trust"]);
+        int love = IntValue(state["love"]);
+        int hostility = IntValue(state["hostility"]);
+        int trustDelta = IntValue(command.Arguments["trustDelta"]);
+        int loveDelta = IntValue(command.Arguments["loveDelta"]);
+        int hostilityDelta = IntValue(command.Arguments["hostilityDelta"]);
+        state["trust"] = Clamp(trust + trustDelta, -100, 100);
+        state["love"] = Clamp(love + loveDelta, -100, 100);
+        state["hostility"] = Clamp(hostility + hostilityDelta, -100, 100);
+
+        JArray entries = (JArray)state["entries"];
+        entries.Insert(0, new JObject
+        {
+            ["commandId"] = command.CommandId,
+            ["idempotencyKey"] = command.IdempotencyKey,
+            ["trustDelta"] = trustDelta,
+            ["loveDelta"] = loveDelta,
+            ["hostilityDelta"] = hostilityDelta,
+            ["reason"] = (string)command.Arguments["reason"] ?? string.Empty,
+            ["requestedUtc"] = command.RequestedUtc.ToString("O")
+        });
+        Trim(entries, AiTaskConstants.StateEntriesMaximum);
+
+        JArray appliedKeys = (JArray)state["appliedKeys"];
+        appliedKeys.Add(command.IdempotencyKey);
+        Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+        state["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
+        return string.Empty;
+    }
+
+    private static void EnsureRelationshipShape(JObject state, string heroId)
+    {
+        state["schema"] = "awake.relationship.state.v1";
+        if (state["heroId"] == null) state["heroId"] = heroId ?? string.Empty;
+        if (!(state["trust"] is JValue) || state["trust"].Type != JTokenType.Integer) state["trust"] = 0;
+        if (!(state["love"] is JValue) || state["love"].Type != JTokenType.Integer) state["love"] = 0;
+        if (!(state["hostility"] is JValue) || state["hostility"].Type != JTokenType.Integer) state["hostility"] = 0;
+        if (!(state["entries"] is JArray)) state["entries"] = new JArray();
+        if (!(state["appliedKeys"] is JArray)) state["appliedKeys"] = new JArray();
+    }
+
     private static string ClampTextElements(string value, int maximumElements)
     {
         if (string.IsNullOrEmpty(value)) return string.Empty;
@@ -1142,9 +1235,14 @@ internal sealed class WorldStateStore
         }
     }
 
-    private static string HeroKey(string heroId)
+    internal static string BuildHeroKey(string heroId)
     {
         return "hero." + heroId + ".v1";
+    }
+
+    private static string HeroKey(string heroId)
+    {
+        return BuildHeroKey(heroId);
     }
 
     private RequestContext CreateContext()

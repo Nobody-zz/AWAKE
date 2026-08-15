@@ -131,6 +131,16 @@ internal sealed class AwakeExtension : IFrameworkExtension
                 throw new InvalidOperationException("register_world_context_provider_failed id=" + worldProvider.ProviderId + " code=" + (worldProviderResult.Error?.Code ?? "unknown"));
             }
         }
+
+        RegisterWorldCommand(registration, new CommandDescriptor(
+            AiTaskConstants.RelationshipDeltaCommandId,
+            Owner,
+            CommandRiskTier.R2Gameplay,
+            AiTaskConstants.CommandInputSchema(AiTaskConstants.RelationshipDeltaCommandId),
+            AiTaskConstants.CommandOutputSchema(AiTaskConstants.RelationshipDeltaCommandId),
+            new[] { "1.3.15" }),
+            new AwakeRelationshipDeltaAdapter(),
+            "relationship_delta");
     }
 
     private static void RegisterWorldCommand(IExtensionRegistration registration, CommandDescriptor descriptor, ICommandAdapter adapter, string label)

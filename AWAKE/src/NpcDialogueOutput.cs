@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json.Linq;
 
@@ -143,6 +144,26 @@ internal static class NpcDialogueStateFormatter
 
     internal static string FormatState(JObject relationship, JObject body, JObject estrus)
     {
-        return "关系、身体与发情状态由内容包提供。";
+        List<string> parts = new List<string>();
+        if (relationship != null)
+        {
+            parts.Add("信任 " + IntValue(relationship["trust"])
+                + "；爱意 " + IntValue(relationship["love"])
+                + "；敌意 " + IntValue(relationship["hostility"]));
+        }
+        else
+        {
+            parts.Add("关系尚未记录");
+        }
+        if (body != null) parts.Add("身体状态由内容包提供");
+        if (estrus != null) parts.Add("发情状态由内容包提供");
+        return string.Join("；", parts);
+    }
+
+    private static int IntValue(JToken token)
+    {
+        if (token == null || token.Type != JTokenType.Integer) return 0;
+        try { return (int)token; }
+        catch { return 0; }
     }
 }

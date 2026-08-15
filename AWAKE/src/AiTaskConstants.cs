@@ -15,7 +15,10 @@ internal static class AiTaskConstants
 
     internal const string NpcMemoriesNamespace = "awake.npc.memories";
     internal const string EventMetaNamespace = "awake.event_meta";
+    internal const string RelationshipsNamespace = "awake.relationships";
     internal const string EventMetaKey = "campaign.event_meta.v1";
+
+    internal const string RelationshipDeltaCommandId = "awake.relationship.delta.v1";
 
     internal const string PreprocessOutputSchema = "awake.preprocess.output.v1";
     internal const string PostprocessOutputSchema = "awake.postprocess.output.v1";
@@ -58,12 +61,16 @@ internal static class AiTaskConstants
         RouteMemoryDaily
     };
 
-    internal static readonly string[] NewCommandIds = Array.Empty<string>();
+    internal static readonly string[] NewCommandIds = new[]
+    {
+        RelationshipDeltaCommandId
+    };
 
     internal static readonly string[] StorageNamespaceIds = new[]
     {
         NpcMemoriesNamespace,
-        EventMetaNamespace
+        EventMetaNamespace,
+        RelationshipsNamespace
     };
 
     internal static string RoutePermission(string routeId) => "ai.route.invoke:" + routeId;
