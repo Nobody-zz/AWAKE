@@ -58,3 +58,20 @@
 - 不复制 AF 全部无名档案 JSON。
 - 不复制 Alice 的 SQLite 会话库。
 - 不给每个路边村民生成永久独立人格。
+
+## 9. AWAKE 改进点
+
+1. 种子化人格指纹：
+   - `fingerprint = hash(characterId + culture + occupation + sceneRole + sessionSeed)`
+   - 同一场景、同一个人稳定。
+   - 同一兵种、不同个体由 `sessionSeed` 区分。
+   - 不需要给每个无名 NPC 建档案文件。
+2. 记忆分级：
+   - `ephemeral`：场景会话内短期记忆。
+   - `party`：队伍内无名 NPC 短期记忆。
+   - `promoted`：升格为 Hero 后才长期记忆。
+3. 成年判定用职业白名单：
+   - 士兵、守卫、商贩、酒馆老板、工匠等明确成年身份允许。
+   - 普通平民年龄不明则拒绝。
+   - 不再用“默认 30 岁”兜底。
+4. 无名 NPC 命令默认拒绝，内容包显式注册后才放行。
