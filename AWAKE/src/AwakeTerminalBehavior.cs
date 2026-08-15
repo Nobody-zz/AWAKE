@@ -258,92 +258,6 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         }
     }
 
-    private static void OpenNpcTalkSelection()
-    {
-        try
-        {
-            if (!MainHeroIsAdult())
-            {
-                ShowMessage(
-                    AwakeLocalization.Resolve("awake.menu.npc_talk_title", "醒世·深谈"),
-                    AwakeLocalization.Resolve("awake.menu.npc_talk_too_young", "你还太年轻，无法深谈。"));
-                return;
-            }
-
-            List<AwakeNpcTarget> targets = NpcDialogueLauncher.GetNearbyTargets(8);
-            if (targets.Count == 0)
-            {
-                ShowMessage(
-                    AwakeLocalization.Resolve("awake.menu.npc_talk_title", "醒世·深谈"),
-                    AwakeLocalization.Resolve("awake.menu.npc_talk_no_nearby", "附近没有可以深谈的对象。"));
-                return;
-            }
-
-            List<InquiryElement> elements = new List<InquiryElement>();
-            foreach (AwakeNpcTarget target in targets)
-            {
-                string name = target.DisplayName;
-                string gender = target.IsFemale ? "女" : "男";
-                string age = Math.Floor(target.Age).ToString("0");
-                string kind = target.IsHero ? "英雄" : "无名";
-                elements.Add(new InquiryElement(
-                    (object)target.StableId,
-                    name + "（" + kind + "，" + gender + "，" + age + "岁）",
-                    (ImageIdentifier)null,
-                    true,
-                    "与其深谈"));
-            }
-
-            MultiSelectionInquiryData data = new MultiSelectionInquiryData(
-                AwakeLocalization.Resolve("awake.menu.npc_talk_title", "醒世·深谈"),
-                AwakeLocalization.Resolve("awake.menu.npc_talk_prompt", "选择要深谈的对象："),
-                elements,
-                true,
-                1,
-                1,
-                "确定",
-                "取消",
-                OnNpcTalkSelected,
-                _ => { },
-                "",
-                false);
-            MBInformationManager.ShowMultiSelectionInquiry(data, true, false);
-        }
-        catch (Exception ex)
-        {
-            AwakeLog.Write("awake_npc_talk_consequence_error error=" + ex.Message);
-        }
-    }
-
-    private static void OnNpcTalkSelected(List<InquiryElement> selected)
-    {
-        try
-        {
-            if (selected == null || selected.Count == 0) return;
-            string targetId = selected[0].Identifier as string;
-            if (string.IsNullOrWhiteSpace(targetId)) return;
-            AwakeNpcTarget target = NpcDialogueLauncher.FindTargetById(targetId);
-            if (target == null || !NpcDialogueLauncher.IsEligibleNpcTarget(target))
-            {
-                ShowMessage(
-                    AwakeLocalization.Resolve("awake.menu.npc_talk_title", "醒世·深谈"),
-                    AwakeLocalization.Resolve("awake.menu.npc_talk_gone", "对方已经不在附近。"));
-                return;
-            }
-            NpcDialogueLaunchResult result = NpcDialogueLauncher.TryOpenDialogue(target, "terminal");
-            if (result == NpcDialogueLaunchResult.None)
-            {
-                ShowMessage(
-                    AwakeLocalization.Resolve("awake.menu.npc_talk_title", "醒世·深谈"),
-                    AwakeLocalization.Resolve("awake.menu.npc_talk_unavailable", "对方暂时无法交谈。"));
-            }
-        }
-        catch (Exception ex)
-        {
-            AwakeLog.Write("awake_npc_talk_selected_error error=" + ex.Message);
-        }
-    }
-
     private static void ShowDeveloperReport()
     {
         try
@@ -356,18 +270,6 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         catch (Exception ex)
         {
             AwakeLog.Write("awake_developer_report_error error=" + ex.Message);
-        }
-    }
-
-    private static bool MainHeroIsAdult()
-    {
-        try
-        {
-            return Hero.MainHero != null && Hero.MainHero.Age >= 18f;
-        }
-        catch
-        {
-            return false;
         }
     }
 
