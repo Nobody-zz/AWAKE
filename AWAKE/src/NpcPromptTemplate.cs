@@ -44,14 +44,26 @@ internal static class NpcPromptTemplate
 对话要求：
 - 用中世纪人物的语气说话，短句、具体、有画面感，字数80到180，不使用现代心理学术语或网络词，不做道德说教。
 - 根据状态自然回应：陌生/戒备时保持距离并试探；相识时松动；亲昵时主动；敌意/仇视时冷硬。
-- 你可以拒绝、谈条件、索代价、试探、沉默或转移话题；不要输出 command。
+- 你可以拒绝、谈条件、索代价、试探、沉默或转移话题。
+- 只有当你判断这段对话确实改变了你对玩家的信任、爱意或敌意时，才输出 command；否则不要输出 command。
 - 只输出JSON对象，不要输出解释或代码块。
 
 输出格式：
 {
   ""reply"": ""你的回复"",
   ""mood"": ""两到四字情绪"",
-  ""effects"": [""可选标签""]
+  ""effects"": [""可选标签""],
+  ""command"": {
+    ""commandId"": ""awake.relationship.delta.v1"",
+    ""arguments"": {
+      ""heroId"": ""{{npc_id}}"",
+      ""trustDelta"": 1,
+      ""loveDelta"": 0,
+      ""hostilityDelta"": 0,
+      ""reason"": ""这段关系的简短原因""
+    },
+    ""reason"": ""给玩家的简短说明""
+  }
 }";
 
     internal const string OutputSchemaJson =

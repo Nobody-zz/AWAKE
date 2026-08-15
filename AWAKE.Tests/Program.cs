@@ -88,6 +88,10 @@ internal static class Program
 		{
 			throw new InvalidOperationException("relationship command should be allowlisted for NPC dialogue.");
 		}
+		if (NpcPromptTemplate.TemplateText.IndexOf("awake.relationship.delta.v1", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("relationship command should be present in the NPC prompt template.");
+		}
 		if (!StringComparer.Ordinal.Equals(WorldStateStore.BuildHeroKey("hero-1"), "hero.hero-1.v1"))
 		{
 			throw new InvalidOperationException("relationship hero key mismatch.");
