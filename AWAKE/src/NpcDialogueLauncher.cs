@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using MarcusAIFramework.Api;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Conversation;
+using TaleWorlds.CampaignSystem.Encounters;
 using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.CampaignSystem.Settlements.Locations;
@@ -213,7 +215,9 @@ internal static class NpcDialogueLauncher
 
             if (target.Character == null || target.Character == CharacterObject.PlayerCharacter) return false;
             if (target.Age < 18f) return false;
-            return target.LocationCharacter != null || target.AgentIndex >= 0;
+            return target.LocationCharacter != null
+                || target.AgentIndex >= 0
+                || IsEncounterPartyLeader(target.Character);
         }
         catch (Exception ex)
         {
@@ -296,6 +300,21 @@ internal static class NpcDialogueLauncher
             }
         }
         return null;
+    }
+
+    private static bool IsEncounterPartyLeader(CharacterObject character)
+    {
+        if (character == null || PlayerEncounter.Current == null || PlayerEncounter.EncounteredParty == null) return false;
+        try
+        {
+            return ReferenceEquals(
+                ConversationHelper.GetConversationCharacterPartyLeader(PlayerEncounter.EncounteredParty),
+                character);
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     internal static string CurrentSceneKeywords()
