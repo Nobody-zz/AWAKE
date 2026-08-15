@@ -52,3 +52,15 @@
 3. NPC 会主动来信并显示未读。
 4. 存档重开后未读、历史、最近消息仍存在。
 5. 不存在独立收件箱/写信弹窗。
+
+## 7. 参考 Alice
+
+- `LetterManager`：距离计费、回复延迟 1 天、NPC 主动来信。
+- `LetterStorage`：来信持久化、读档恢复。
+- `ChatPanel / ChatPanelVM`：写信、阅读、回复统一放在会话面板内。
+
+不照搬：
+
+- 不做独立的 `LetterComposePopup / LetterReadPopup`。
+- 不复制 Alice 的 SQLite 数据库编辑器。
+- 主动来信不照搬 Alice 的完整随机权重，先做“熟识/有历史 Hero + 每日限量”的保守策略。

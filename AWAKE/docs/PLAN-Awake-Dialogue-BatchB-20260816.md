@@ -46,3 +46,15 @@
 2. 年龄不明的平民不会进入对话。
 3. 无名 NPC 无法执行 Hero 关系命令。
 4. 无名 NPC 可以正常 AI 对话。
+
+## 8. 参考 AF / Alice
+
+- AF `NpcDataPacket`：名字、身份、角色描述、UnnamedKey、兵种、文化、性别、年龄。
+- AF `UnnamedNpcProfiles`：无名 NPC 有回退档案，但不要求运行时每个都生成。
+- Alice `NPCConversationManager`：历史按 `sessionType` 区分，提示词只读最近 N 条。
+
+不照搬：
+
+- 不复制 AF 全部无名档案 JSON。
+- 不复制 Alice 的 SQLite 会话库。
+- 不给每个路边村民生成永久独立人格。

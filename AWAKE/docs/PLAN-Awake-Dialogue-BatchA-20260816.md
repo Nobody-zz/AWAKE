@@ -58,3 +58,15 @@
 - 不替换原版对话 UI
 - 不新增远程写信代码
 - 不新增群聊
+
+## 8. 参考 AF / Alice
+
+- AF `AnimusForgeNativeConversationOverlay`：场景内 AI 对话使用独立覆盖层，正文贴近原版对话。
+- AF `NpcDataPacket`：场景候选携带 AgentIndex、身份、名字、角色描述。
+- Alice `ChatPanel`：联系人/聊天/输入/建议/历史集中在同一面板。
+- Alice `NPCConversationManager`：会话区分 `single / letter / multi`。
+
+不照搬：
+
+- AF 的 T/Y 是“喊话范围预览”，不是对话选择；AWAKE 只借用“T 选中、Y 确认”的操作直觉。
+- Alice 的 `/` 附近人物弹窗列表不是最终形态；AWAKE 用场景高亮 + 通讯录替代。
