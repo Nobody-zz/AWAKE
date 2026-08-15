@@ -26,6 +26,8 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
 
     private bool _wasKeyDown;
     private bool _terminalUiActive;
+    private int _sceneSelectedAgentIndex = -1;
+    private string _sceneSelectedTargetId = string.Empty;
     private float _lastOpenRealTime = -999f;
     private float _nextTerminalKeyRefreshRealTime = -999f;
     private InputKey _cachedTerminalKey = InputKey.Y;
@@ -59,6 +61,10 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
 
     private void OnTick()
     {
+        if (TryProcessSceneDialogue())
+        {
+            return;
+        }
         bool keyDown = false;
         try
         {
@@ -90,6 +96,213 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         }
         _lastOpenRealTime = now;
         OpenRootMenu();
+    }
+
+    private bool TryProcessSceneDialogue()
+    {
+        if (Mission.Current == null)
+        {
+            ClearSceneSelection();
+            return false;
+        }
+        if (!CanUseSceneDialogue())
+        {
+            ClearSceneSelection();
+            return false;
+        }
+
+        if (Input.IsKeyPressed(InputKey.T))
+        {
+            CycleSceneTarget();
+            return true;
+        }
+        if (Input.IsKeyPressed(InputKey.Y))
+        {
+            ConfirmSceneTarget();
+            return true;
+        }
+        return false;
+    }
+
+    private bool CanUseSceneDialogue()
+    {
+        try
+        {
+            if (Mission.Current == null || Campaign.Current == null) return false;
+            if (Campaign.Current.ConversationManager != null
+                && Campaign.Current.ConversationManager.IsConversationInProgress)
+            {
+                return false;
+            }
+            if (NpcDialogueOverlay.IsOpen || AwakeMessengerOverlay.IsOpen) return false;
+            try
+            {
+                if (InformationManager.IsAnyInquiryActive()) return false;
+            }
+            catch
+            {
+            }
+            try
+            {
+                if (Input.IsOnScreenKeyboardActive) return false;
+            }
+            catch
+            {
+            }
+            try
+            {
+                ScreenLayer focusedLayer = ScreenManager.FocusedLayer;
+                if (focusedLayer != null && focusedLayer.IsFocusedOnInput()) return false;
+            }
+            catch
+            {
+            }
+            MissionMode mode = Mission.Current.Mode;
+            return mode != MissionMode.Battle
+                && mode != MissionMode.Deployment
+                && mode != MissionMode.Duel
+                && mode != MissionMode.Stealth
+                && mode != MissionMode.Tournament;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("awake_scene_dialogue_can_open_error error=" + ex.Message);
+            return false;
+        }
+    }
+
+    private void CycleSceneTarget()
+    {
+        List<AwakeNpcTarget> candidates = GetSceneCandidates();
+        if (candidates.Count == 0)
+        {
+            ClearSceneSelection();
+            ShowSceneMessage(AwakeLocalization.Resolve("awake.scene.no_candidates", "附近没有可以对话的人物。"));
+            return;
+        }
+
+        int currentIndex = -1;
+        for (int i = 0; i < candidates.Count; i++)
+        {
+            if (candidates[i].AgentIndex == _sceneSelectedAgentIndex
+                || StringComparer.Ordinal.Equals(candidates[i].StableId, _sceneSelectedTargetId))
+            {
+                currentIndex = i;
+                break;
+            }
+        }
+        int nextIndex = currentIndex < 0 ? 0 : (currentIndex + 1) % candidates.Count;
+        SelectSceneTarget(candidates[nextIndex]);
+    }
+
+    private void ConfirmSceneTarget()
+    {
+        List<AwakeNpcTarget> candidates = GetSceneCandidates();
+        AwakeNpcTarget target = null;
+        foreach (AwakeNpcTarget candidate in candidates)
+        {
+            if (candidate.AgentIndex == _sceneSelectedAgentIndex
+                || StringComparer.Ordinal.Equals(candidate.StableId, _sceneSelectedTargetId))
+            {
+                target = candidate;
+                break;
+            }
+        }
+        if (target == null && candidates.Count > 0)
+        {
+            target = candidates[0];
+        }
+        if (target == null)
+        {
+            ClearSceneSelection();
+            ShowSceneMessage(AwakeLocalization.Resolve("awake.scene.no_candidates", "附近没有可以对话的人物。"));
+            return;
+        }
+        SelectSceneTarget(target, showHint: false);
+        NpcDialogueLaunchResult result = NpcDialogueLauncher.TryOpenDialogue(target, "scene");
+        ClearSceneSelection();
+        if (result == NpcDialogueLaunchResult.None)
+        {
+            ShowSceneMessage(AwakeLocalization.Resolve("awake.scene.confirm_unavailable", "对方暂时无法交谈。"));
+        }
+    }
+
+    private void SelectSceneTarget(AwakeNpcTarget target, bool showHint = true)
+    {
+        if (target == null || target.AgentIndex < 0)
+        {
+            ClearSceneSelection();
+            return;
+        }
+        SetSceneAgentHighlight(_sceneSelectedAgentIndex, false);
+        _sceneSelectedAgentIndex = target.AgentIndex;
+        _sceneSelectedTargetId = target.StableId;
+        SetSceneAgentHighlight(_sceneSelectedAgentIndex, true);
+        if (showHint)
+        {
+            ShowSceneMessage(AwakeLocalization.Resolve(
+                "awake.scene.select_hint",
+                "已选中 " + target.DisplayName + "，按 Y 继续对话。",
+                new Dictionary<string, string> { ["NAME"] = target.DisplayName }));
+        }
+    }
+
+    private List<AwakeNpcTarget> GetSceneCandidates()
+    {
+        List<AwakeNpcTarget> result = new List<AwakeNpcTarget>();
+        foreach (AwakeNpcTarget target in NpcDialogueLauncher.GetNearbyTargets(32))
+        {
+            if (target != null
+                && target.AgentIndex >= 0
+                && NpcDialogueLauncher.IsEligibleNpcTarget(target))
+            {
+                result.Add(target);
+            }
+        }
+        return result;
+    }
+
+    private void ClearSceneSelection()
+    {
+        if (_sceneSelectedAgentIndex >= 0)
+        {
+            SetSceneAgentHighlight(_sceneSelectedAgentIndex, false);
+        }
+        _sceneSelectedAgentIndex = -1;
+        _sceneSelectedTargetId = string.Empty;
+    }
+
+    private static void SetSceneAgentHighlight(int agentIndex, bool enabled)
+    {
+        if (agentIndex < 0 || Mission.Current?.Agents == null) return;
+        foreach (Agent agent in Mission.Current.Agents)
+        {
+            if (agent == null || agent.Index != agentIndex || agent.AgentVisuals == null) continue;
+            try
+            {
+                uint? color = enabled
+                    ? (uint?)new Color(1f, 0.84f, 0.2f, 1f).ToUnsignedInteger()
+                    : null;
+                agent.AgentVisuals.SetContourColor(color);
+            }
+            catch (Exception ex)
+            {
+                AwakeLog.Write("awake_scene_agent_highlight_error index=" + agentIndex + " error=" + ex.Message);
+            }
+            return;
+        }
+    }
+
+    private static void ShowSceneMessage(string text)
+    {
+        try
+        {
+            InformationManager.DisplayMessage(new InformationMessage(text, new Color(0.45f, 0.9f, 0.45f)));
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("awake_scene_show_message_error error=" + ex.Message);
+        }
     }
 
     private InputKey GetTerminalKey()
