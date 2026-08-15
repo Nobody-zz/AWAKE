@@ -1,13 +1,14 @@
 # AWAKE · Marcus 框架利用地图
 
 > 日期：2026-08-16
-> 状态：与当前运行时对齐。旧版地图不在本仓库，保留在原始工作区。
+> 状态：与当前运行时对齐。旧版 Slaanesh 时代的地图归档为 `docs/archive/Awake-Framework-Usage-Map-20260813.md`。
 
 ## 1. 身份边界
 
 - 运行时：`AWAKE`，ModId `AWAKE`，DLL `Awake.dll`，namespace `Awake`，owner `AWAKE`，存储与路由前缀 `awake.*`。
-- 内容包：另立仓库，通过 AWAKE 公开 API 接入；内容数据前缀由内容包自定。
+- 内容包：`SlaaneshsEmbraceContent`，DLL `SlaneshsEmbrace.dll`，ModId `SlaaneshsEmbrace`，内容数据前缀 `slaanesh.*`。
 - 运行时不依赖 AF / 爱与恨，也不反向引用内容包类型。
+- 当前完整架构清单见 `docs/AWAKE-AI-Architecture-Inventory-20260816.md`，本文件只保留能力映射。
 
 ## 2. 已注册的 Marcus 能力
 
@@ -16,10 +17,10 @@
 | Extension registration | `AwakeExtension` / `ProbeExtension` | 注册探针 capability、上下文 Provider、权限与路由 |
 | AiGateway | `AiTaskGateway` + `NpcDialogueService` | NPC 深谈与四条逻辑路由 |
 | Prompts | `NpcPromptTemplate` + `NpcDialogueService` | NPC 对话提示词注册/编译 |
-| Storage | `WorldStateStore` | `awake.npc.memories`、`awake.event_meta` |
+| Storage | `WorldStateStore` | `awake.npc.memories`、`awake.event_meta`、`awake.relationships` |
 | Rag | `KnowledgeService` / `KnowledgeRuntime` | 世界知识检索与本地关键词回退 |
-| Commands | `WorldCommandBridge` | 风险门 + 权限 + preflight/submit + drain；运行时命令白名单当前为空，内容包后续注册 |
-| Events | `WorldEventLedger` | 本地事件账本，最终持久化待游戏内验证 |
+| Commands | `WorldCommandBridge` | 风险门 + 权限 + preflight/submit + drain；`awake.relationship.delta.v1` 已接入 |
+| Events | `AwakeEventEngine` / `WorldEventLedger` | 事件评估、弹窗、参与话题、效果结算；账本最终持久化待游戏内验证 |
 | GameData | `PlayerContextProvider` / `HeroContextProvider` | 玩家与当前英雄快照，贡献到 `PlayerKnown` |
 | Diagnostics | `AwakeDeveloperReport` | 只读开发者报告 |
 
@@ -39,11 +40,12 @@
 
 ## 5. 运行时 UI 与入口
 
-- `AwakeTerminalBehavior`：MCM 可配置快捷键（默认 `U`）呼出命令台。
+- `AwakeTerminalBehavior`：MCM 可配置快捷键呼出命令台。
 - `NpcDialogueOverlay`：NPC 深谈 Gauntlet 覆盖层，失败回退原版对话。
+- `AwakeMessengerOverlay`：通讯录与会话面板。
 
 ## 6. 当前未完成
 
 - 内容包公开 API 仍是草案，注册表未落地为代码。
-- `awake.npc.memories` / `awake.event_meta` 的真实 Companion 存储管道待游戏内验证。
-- 运行时命令白名单为空；命令与内容语义由内容包注册。
+- `awake.npc.memories` / `awake.event_meta` / `awake.relationships` 的真实 Companion 存储管道待游戏内验证。
+- 运行时命令只有关系命令；世界效果与内容语义由内容包后续注册。

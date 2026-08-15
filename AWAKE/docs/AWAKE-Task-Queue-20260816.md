@@ -17,6 +17,7 @@
   - 事件选项接入关系命令结算
   - 存储管道离线 SdkSmoke
   - NPC 记忆逻辑 SdkSmoke
+  - AI 架构清单文档
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）
