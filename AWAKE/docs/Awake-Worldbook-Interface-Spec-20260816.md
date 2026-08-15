@@ -474,6 +474,47 @@ worldbook/
 
 解析器统一输出 AWAKE camelCase，但输入两种命名都接受。
 
+### 5.7 AF 兼容风险与处理边界
+
+AF 兼容不能只做字段改名，以下内容必须保留语义或明确标记：
+
+| 风险点 | AF 语义 | AWAKE 处理 |
+| --- | --- | --- |
+| `Variants` | AF 按 when 匹配分数选一个最佳 variant | AF 导入模式使用 `af-best`，不使用 AWAKE `first/all/random` 默认规则 |
+| `TextMappings` | 依赖 AF 运行时动态替换，Kinds 与游戏状态绑定 | 先保留原始 JSON，标记 `text_mappings_preserved`；未实现动态替换前不执行 |
+| `SkillMin` | AF 在 variant 选择中参与匹配与 tie-break | 保留字段，AWAKE 原生评分只做布尔门槛；两种模式分开记录 |
+| `RagShortTexts` | AF 拼接成检索文本，不是权威正文 | AWAKE 只作为召回种子，不进入最终知识正文 |
+| `SemanticPrototypes` | AF 用于语义候选 | AWAKE 保留，但不作为检索唯一依据 |
+| `VoiceId` | AF TTS 语音 | AWAKE 保留原始值，媒体层未实现前不使用 |
+| 未知字段 | AF 可能随版本新增 | 保留在 `Raw`，不静默丢弃 |
+
+导入时必须生成 `WorldbookImportWarning` 报告：
+
+- `source`：文件名或规则 ID
+- `code`：如 `text_mappings_preserved`、`af_variant_semantics`、`voice_id_preserved`
+- `message`：说明保留还是降级
+
+未支持项不允许静默消失。
+
+### 5.8 大小写与规范化
+
+AF 不同版本可能混用 `Empire` / `empire`、`Lord` / `lord` 这类值。AWAKE 不做“看到就合并”，而是：
+
+- `when` 中的身份与分类值统一按大小写不敏感匹配。
+- 导入时保留原始值到 `Raw`。
+- 归一化键使用小写，用于索引与匹配。
+- 如果两个不同原始值归一化后相同，只视为同一分类，不重复建索引。
+- 如果归一化后冲突但语义可能不同，例如 `empire` 与 `Empire` 被不同作者用作不同含义，导入报告必须警告，不能静默合并。
+
+当前安装的 AF 世界书扫描结果：
+
+- 规则数：1447
+- 检查字段：`HeroIds` / `Cultures` / `KingdomIds` / `SettlementIds` / `Roles` / `IdentityIds`
+- `TextMappings.Kind` 也检查
+- 暂未发现仅大小写不同的重复值
+
+兼容层仍保留大小写不敏感匹配与碰撞检测，防止其他 AF 版本出现该问题。
+
 ## 6. 与 Marcus 的边界
 
 - 世界书文件加载、校验、指纹由 AWAKE 负责。
