@@ -12,6 +12,7 @@
 
 - 字段：规则级 `Weight`、`CooldownHours`（沿用现有引擎单位）、`MaxPerDay`；选项级 `DialogueAction { Choice, TargetId, OpeningHint }`（可选，缺省沿用现有行为），保证 A 选项开对话、B 选项不开。
 - `open_npc_dialogue` 动作：选项结算后按稳定 ID 解析目标 Hero → 成年/存活/附近重校验 → `NpcDialogueContext.Record(heroId, openingHint)` → 用 `NpcDialogueLauncher.TryOpenDialogue` 打开；打开失败记 ledger，不伪造成功。
+- 事件弹窗扩展：事件定义可带 `DiscussionAction`，弹窗出现“参与话题”第三入口；选择后直接进入同一 NPC 的 AI 对话深入探讨，A/B 原选项仍可独立结算。
 - 弹窗安全：动作不直接在 `ShowInquiry` 回调里开覆盖层；先入队到战役/应用 tick 的待办队列，下一安全点消费；失败有回退与 ledger 语义。
 - 冷却/每日上限：`CooldownHours` 与日计数持久化到 `WorldStateStore` 事件元数据 namespace，读档后继续生效，单位全程统一为小时。
 - 周报：事件与主动邀约已有 ledger；NPC 对话命令结算的 ledger 记录在 P0b 显式补齐（含 body/estrus 结果），不当作“现状已具备”。
