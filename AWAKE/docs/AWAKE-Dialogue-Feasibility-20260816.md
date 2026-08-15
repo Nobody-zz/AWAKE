@@ -23,20 +23,19 @@
 需要做：
 
 - 把 `NpcDialogueService` 作为共享会话服务，供 Immersive 与 Messenger 两个视图复用。
-- `NpcDialogueLauncher` 增加“屏幕中心 + 距离权重”候选排序。
-- `T` 循环选择 + 高亮 + `Y` 确认。
+- `NpcDialogueLauncher` 增加三维距离候选排序。
+- 按住 `T` 扩大范围，`Y` 切换候选人，松开 `T` 确认。
 - 遭遇面谈增加 `PlayerEncounterState.Begin/Wait` 与敌意门。
 
 技术依据：
 
-- `Agent.Position.AsVec2`
-- `Agent.Main.LookDirection.AsVec2`
+- `Vec3.Distance(Agent.Main.Position, agent.Position)`
 - `Agent.AgentVisuals.SetContourColor`
 - `Team.IsEnemyOf`
 
 风险：
 
-- 屏幕中心选人的判定需要真机调参。
+- 三维距离范围增长曲线需要真机调参。
 - 场景候选可能包含大量 Agent，需要限制距离和数量。
 
 ## 3. Batch B 可行性
