@@ -43,3 +43,18 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\validate_localization.
 ## Content pack
 
 The Slanesh's Embrace content pack is intentionally excluded from this repository. The runtime must stay clean, content-free, and independently playable.
+
+## Remote
+
+- Repository: `https://github.com/Nobody-zz/AWAKE.git`
+- Local clean root: `C:\Users\26811\OneDrive\文档\New project\AWAKE-Repo`
+- Sync script: `C:\Users\26811\OneDrive\文档\New project\sync_awake_repo.ps1`
+
+After runtime code changes, run the sync script, then commit and push from this directory:
+
+```powershell
+cd "C:\Users\26811\OneDrive\文档\New project\AWAKE-Repo"
+git add .
+git commit -m "Update AWAKE runtime"
+git push origin main
+```
