@@ -55,6 +55,16 @@ Worldbook/
 
 AF 的 `PlayerExports/卡拉迪亚编年史` 可以直接作为一个世界书目录使用：补一个 `manifest.json`，指向 `rules`、`personality_background`、`unnamed_persona`、`voice_mapping`、`event_data` 等子目录。
 
+### 2.0.1 检索单元
+
+- 关键词检索的对象是“规则条目”，不是代码行，也不是代码文件。
+- 一个世界书文件只是容器；一个文件可以包含一条或多条规则。
+- AF 默认一个文件一条规则，AWAKE 兼容层保留这种格式。
+- 如果某个文件包含多条规则，加载时拆成多个 `WorldbookRule` 后再建索引。
+- `personality_background` 文件映射成 `WorldbookPersona`，也是按角色条目检索。
+
+检索结果返回的是规则/人格条目，而不是文件路径或正文行号。
+
 ### 2.1 根结构
 
 ```json
