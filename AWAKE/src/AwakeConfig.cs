@@ -1,0 +1,148 @@
+﻿using System;
+using System.Collections.Generic;
+using MCM.Abstractions;
+using MCM.Abstractions.Attributes;
+using MCM.Abstractions.Attributes.v2;
+using MCM.Abstractions.Base.Global;
+using Newtonsoft.Json;
+
+namespace Awake;
+
+public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
+{
+    internal const string SettingsId = "AWAKE";
+
+    private static AwakeConfig _instance;
+
+    [JsonIgnore]
+    public override string Id => SettingsId;
+
+    [JsonIgnore]
+    public override string DisplayName => AwakeLocalization.Resolve("AWAKE.ModuleName", "醒世");
+
+    [JsonIgnore]
+    public override string FolderName => "AWAKE";
+
+    [JsonIgnore]
+    public override string FormatType => "json";
+
+    [JsonIgnore]
+    [SettingPropertyText("{=awake.mcm.ai_status.name}AI 链路状态", Order = 0, RequireRestart = false, HintText = "{=awake.mcm.ai_status.hint}只读显示：Companion 连接、路由能力与候选 Provider 状态。Provider 配置请在 MCM → Marcus AI Framework → 01 Companion 完成，Route ID 使用模组 README 中的四条逻辑路由。")]
+    [SettingPropertyGroup("{=awake.mcm.group.ai_link}AI 链路", GroupOrder = -1)]
+    public string AiRuntimeStatus
+    {
+        get
+        {
+            string latest = AwakeRuntimeStatus.LatestText;
+            return string.IsNullOrWhiteSpace(latest)
+                ? AwakeLocalization.Resolve("awake.status.not_checked", "Not checked yet")
+                : latest;
+        }
+        set { }
+    }
+
+    [SettingPropertyBool("{=awake.mcm.cloud_export.name}启用云外发", Order = 0, RequireRestart = false, HintText = "{=awake.mcm.cloud_export.hint}默认关闭。开启后仍需要下面的分类开关与框架权限授权，两层都满足才会把对应分类外发到云 AI。")]
+    [SettingPropertyGroup("{=awake.mcm.group.data_debug}数据与调试", GroupOrder = 0)]
+    public bool EnableCloudExport { get; set; }
+
+    [SettingPropertyBool("{=awake.mcm.export_player_state.name}允许外发玩家状态", Order = 1, RequireRestart = false, HintText = "{=awake.mcm.export_player_state.hint}允许把玩家、英雄、关系等角色状态作为 player_state 分类随女神对话外发。默认关闭。")]
+    [SettingPropertyGroup("{=awake.mcm.group.data_debug}数据与调试", GroupOrder = 0)]
+    public bool AllowCloudExportPlayerState { get; set; }
+
+    [SettingPropertyBool("{=awake.mcm.developer_menu.name}启用开发者菜单", Order = 2, RequireRestart = false, HintText = "{=awake.mcm.developer_menu.hint}默认关闭。开启后城镇、城堡、村庄、领主府菜单显示神谕 AI 自检与开发者检查。")]
+    [SettingPropertyGroup("{=awake.mcm.group.data_debug}数据与调试", GroupOrder = 0)]
+    public bool EnableDeveloperMenu { get; set; }
+
+    [SettingPropertyText("{=awake.mcm.terminal_key.name}命令台快捷键", Order = 3, RequireRestart = false, HintText = "{=awake.mcm.terminal_key.hint}输入 InputKey 名称，例如 Y、K、H。")]
+    [SettingPropertyGroup("{=awake.mcm.group.command}命令台", GroupOrder = 1)]
+    public string TerminalKey { get; set; } = "Y";
+
+    public AwakeConfig()
+    {
+        _instance = this;
+    }
+
+    internal static new AwakeConfig Instance => _instance;
+
+    public override IEnumerable<ISettingsPreset> GetBuiltInPresets()
+    {
+        return Array.Empty<ISettingsPreset>();
+    }
+
+}
+
+internal static class AwakeRuntimeStatus
+{
+    internal static string LatestText { get; private set; } = string.Empty;
+
+    internal static void Update(string value)
+    {
+        LatestText = string.IsNullOrWhiteSpace(value)
+            ? AwakeLocalization.Resolve("awake.status.not_checked", "Not checked yet")
+            : value;
+    }
+
+    internal static void ResetForTesting()
+    {
+        LatestText = string.Empty;
+    }
+
+    internal static void RestoreForTesting(string value)
+    {
+        LatestText = value ?? string.Empty;
+    }
+}
+
+internal static class AwakeSettings
+{
+    private static AwakeConfig _config;
+
+    internal static AwakeConfig Current
+    {
+        get
+        {
+            try
+            {
+                if (BaseSettingsProvider.Instance?.GetSettings(AwakeConfig.SettingsId) is AwakeConfig mcm)
+                {
+                    _config = mcm;
+                    return mcm;
+                }
+            }
+            catch (Exception ex)
+            {
+                AwakeLog.Write("mcm_settings_lookup_failed error=" + ex.Message);
+            }
+            return _config ??= new AwakeConfig();
+        }
+    }
+
+    internal static void UpdateRuntimeStatus(string value)
+    {
+        try
+        {
+            AwakeConfig config = Current;
+            AwakeRuntimeStatus.Update(value);
+            config.OnPropertyChanged(nameof(AwakeConfig.AiRuntimeStatus));
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("mcm_runtime_status_update_failed error=" + ex.Message);
+        }
+    }
+
+    internal static void LogConfigPresence()
+    {
+        AwakeLog.Write("mcm_ai_config_loaded provider=marcus_framework_in_game");
+    }
+
+    internal static void SetConfigForTesting(AwakeConfig config)
+    {
+        _config = config;
+    }
+
+    internal static void ResetConfigForTesting()
+    {
+        _config = null;
+    }
+}

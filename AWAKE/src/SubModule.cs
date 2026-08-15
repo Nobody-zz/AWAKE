@@ -1,0 +1,145 @@
+﻿using System;
+using System.Reflection;
+using MarcusAIFramework.Api;
+using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.GameState;
+using TaleWorlds.Core;
+using TaleWorlds.MountAndBlade;
+
+[assembly: AssemblyTitle("Awake")]
+[assembly: AssemblyProduct("Awake")]
+[assembly: AssemblyVersion("0.2.0.0")]
+[assembly: AssemblyFileVersion("0.2.0.0")]
+[assembly: AssemblyInformationalVersion(Awake.AwakeVersion.InformationalVersion)]
+
+namespace Awake;
+
+public sealed class SubModule : MBSubModuleBase
+{
+    private AwakeExtension _extension;
+
+    protected override void OnSubModuleLoad()
+    {
+        base.OnSubModuleLoad();
+        DialogueOverlayLifecycle.CloseAll = CloseDialogueOverlays;
+        CampaignResetLifecycle.Reset = ResetCampaignState;
+        AwakeLog.Write("module_load id=Awake version=" + AwakeVersion.Version);
+        _extension = new AwakeExtension();
+        OperationResult<bool> registration = FrameworkHostLocator.Register(_extension);
+        if (registration.IsSuccess && registration.Value)
+        {
+            AwakeLog.Write("register_ok");
+        }
+        else
+        {
+            AwakeLog.Write("register_failed code=" + (registration.Error?.Code ?? "unknown")
+                + " category=" + (registration.Error?.Category.ToString() ?? "unknown")
+                + " detail=" + (registration.Error?.SafeFallback ?? ""));
+        }
+    }
+
+    protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
+    {
+        base.OnGameStart(game, gameStarterObject);
+        ResetCampaignState();
+        if (gameStarterObject is CampaignGameStarter campaignStarter)
+        {
+            try
+            {
+                campaignStarter.AddBehavior(new AwakeTerminalBehavior());
+                AwakeLog.Write("awake_terminal_behavior_added");
+            }
+            catch (Exception ex)
+            {
+                AwakeLog.Write("awake_terminal_behavior_add_failed error=" + ex.Message);
+            }
+        }
+        AwakeLog.Write("game_start version=" + AwakeVersion.Version);
+    }
+
+    protected override void OnApplicationTick(float dt)
+    {
+        base.OnApplicationTick(dt);
+        AwakeTerminalBehavior.TickCurrent();
+        AwakeUiDispatcher.InitializeGameThread();
+        AwakeUiDispatcher.Drain();
+        NpcDialogueOverlay.OnApplicationTick();
+        DrainEventDialogueQueue();
+    }
+
+    private static void CloseDialogueOverlays()
+    {
+        AwakeUiDispatcher.Enqueue(() =>
+        {
+            NpcDialogueOverlay.CloseActive();
+        });
+    }
+
+    private static void ResetCampaignState()
+    {
+        try
+        {
+            DialogueOverlayLifecycle.CloseAll?.Invoke();
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("campaign_reset_overlay_close_error error=" + ex.Message);
+        }
+        WorldEventLedger.ClearForTesting();
+        NpcDialogueContext.ClearForTesting();
+        NpcDialogueLauncher.ClearCache();
+        EventDialogueQueue.ClearForTesting();
+    }
+
+    private static void DrainEventDialogueQueue()
+    {
+        try
+        {
+            if (AwakeRuntime.SessionEnded
+                || NpcDialogueOverlay.IsOpen
+                )
+            {
+                return;
+            }
+            if (!(GameStateManager.Current?.ActiveState is MapState)
+                && Campaign.Current?.CurrentMenuContext == null)
+            {
+                return;
+            }
+            try
+            {
+                if (Campaign.Current?.ConversationManager != null
+                    && Campaign.Current.ConversationManager.IsConversationFlowActive)
+                {
+                    return;
+                }
+            }
+            catch
+            {
+            }
+            PendingDialogue pending;
+            if (!EventDialogueQueue.TryDequeue(out pending)) return;
+            AwakeNpcTarget target = NpcDialogueLauncher.FindTargetById(pending.HeroId);
+            if (target == null || !NpcDialogueLauncher.IsEligibleNpcTarget(target))
+            {
+                WorldEventLedger.Record(AwakeRuntime.CurrentGameDay(), "npc_dialogue_open_failed", pending.HeroId + ":target_unavailable");
+                return;
+            }
+            NpcDialogueContext.Record(pending.HeroId, pending.OpeningHint);
+            NpcDialogueLaunchResult result = NpcDialogueLauncher.TryOpenDialogue(target, "event");
+            if (result == NpcDialogueLaunchResult.None)
+            {
+                NpcDialogueContext.TryTake(out _, out _);
+                WorldEventLedger.Record(AwakeRuntime.CurrentGameDay(), "npc_dialogue_open_failed", pending.HeroId + ":open_failed");
+            }
+            else if (result == NpcDialogueLaunchResult.Native)
+            {
+                NpcDialogueContext.TryTake(out _, out _);
+            }
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("event_dialogue_queue_drain_error error=" + ex.Message);
+        }
+    }
+}

@@ -1,0 +1,1 @@
+Reference assemblies are isolated by Bannerlord API. Use ref/v1.4.8/MarcusAIFramework.dll only with v1.4.8 game references and ref/v1.3.15/MarcusAIFramework.dll only with v1.3.15 game references. Never mix the two.

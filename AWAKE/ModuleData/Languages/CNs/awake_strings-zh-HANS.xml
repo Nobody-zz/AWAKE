@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="简体中文" />
+  </tags>
+  <strings>
+    <string id="AWAKE.ModuleName" text="醒世" />
+    <string id="AWAKE.Description" text="基于马库斯 AI 框架的通用 AI 世界运行时。" />
+    <string id="awake.menu.npc_talk" text="深谈（醒世）" />
+    <string id="awake.menu.npc_talk_title" text="醒世·深谈" />
+    <string id="awake.menu.npc_talk_prompt" text="选择要深谈的对象：" />
+    <string id="awake.menu.npc_talk_too_young" text="你还太年轻，无法深谈。" />
+    <string id="awake.menu.npc_talk_no_nearby" text="附近没有可以深谈的对象。" />
+    <string id="awake.menu.npc_talk_gone" text="对方已经不在附近。" />
+    <string id="awake.menu.npc_talk_unavailable" text="对方暂时无法交谈。" />
+    <string id="awake.terminal.title" text="醒世 · 命令台" />
+    <string id="awake.terminal.prompt" text="选择功能：" />
+    <string id="awake.terminal.confirm" text="确定" />
+    <string id="awake.terminal.close" text="关闭" />
+    <string id="awake.menu.developer_check" text="开发者检查" />
+    <string id="awake.dialogue.npc_title" text="醒世·与 {HERO} 交谈" />
+    <string id="awake.mcm.group.ai_link" text="AI 链路" />
+    <string id="awake.mcm.group.data_debug" text="数据与调试" />
+    <string id="awake.mcm.group.behavior" text="档位与行为" />
+    <string id="awake.mcm.ai_status.name" text="AI 链路状态" />
+    <string id="awake.mcm.ai_status.hint" text="只读显示：Companion 连接、路由能力与候选 Provider 状态。Provider 配置请在 MCM → Marcus AI Framework → 01 Companion 完成，Route ID 使用模组 README 中的四条逻辑路由。" />
+    <string id="awake.mcm.cloud_export.name" text="启用云外发" />
+    <string id="awake.mcm.cloud_export.hint" text="默认关闭。开启后仍需要下面的分类开关与框架权限授权，两层都满足才会把对应分类外发到云 AI。" />
+    <string id="awake.mcm.export_player_state.name" text="允许外发玩家状态" />
+    <string id="awake.mcm.export_player_state.hint" text="允许把玩家、英雄、关系等角色状态作为 player_state 分类随女神对话外发。默认关闭。" />
+    <string id="awake.mcm.developer_menu.name" text="启用开发者菜单" />
+    <string id="awake.mcm.developer_menu.hint" text="默认关闭。开启后城镇、城堡、村庄、领主府菜单显示神谕 AI 自检与开发者检查。" />
+    <string id="awake.mcm.terminal_key.name" text="命令台快捷键" />
+    <string id="awake.mcm.terminal_key.hint" text="输入 InputKey 名称，例如 Y、K、H。" />
+    <string id="awake.mcm.group.command" text="命令台" />
+    <string id="awake.mcm.world_effects.name" text="启用世界效果" />
+    <string id="awake.mcm.world_effects.hint" text="默认开启。关闭后女神输出的世界命令与神谕效果都会被拒绝；该开关计划在 0.2.x 实际接入。" />
+    <string id="awake.mcm.boon_offers.name" text="启用愿力提案" />
+    <string id="awake.mcm.boon_offers.hint" text="默认开启。关闭后女神不再生成新的赐福/供奉候选，已挂起且未结算的提案会被清理；结算中的提案允许完成。" />
+    <string id="awake.mcm.npc_proactive.name" text="启用 NPC 主动" />
+    <string id="awake.mcm.npc_proactive.hint" text="默认关闭。开启后 NPC 有概率按发情与关系状态主动发起互动；概率由下一项控制。" />
+    <string id="awake.mcm.npc_proactive_chance.name" text="NPC 主动概率" />
+    <string id="awake.mcm.npc_proactive_chance.hint" text="NPC 主动发起的概率百分比，0-100，默认 35。" />
+    <string id="awake.mcm.event_engine.name" text="启用事件引擎" />
+    <string id="awake.mcm.event_engine.hint" text="默认开启。开启后事件池会按条件与冷却每小时评估并触发测试/世界事件。" />
+    <string id="awake.preset.default" text="默认" />
+    <string id="awake.preset.easy" text="轻松" />
+    <string id="awake.preset.standard" text="标准" />
+    <string id="awake.preset.slow_burn" text="慢热" />
+    <string id="awake.preset.strict" text="严格模拟" />
+    <string id="awake.status.companion" text="伴侣服务：{STATE}" />
+    <string id="awake.status.route" text="路由：{ROUTE}" />
+    <string id="awake.status.candidates" text="候选：{CANDIDATES}" />
+    <string id="awake.status.separator" text="；" />
+    <string id="awake.status.not_checked" text="尚未检查" />
+    <string id="awake.status.connected" text="已连接" />
+    <string id="awake.status.degraded_offline" text="离线（降级）" />
+    <string id="awake.status.query_failed" text="查询失败" />
+    <string id="awake.status.unknown" text="未知" />
+    <string id="awake.status.candidates_empty" text="无" />
+    <string id="awake.status.route_error" text="路由能力：{CODE}" />
+    <string id="awake.status.route_query_failed" text="路由能力：查询失败" />
+  </strings>
+</base>

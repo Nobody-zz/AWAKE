@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'MarcusAIFramework.Sdk.Specs'">
+    <BannerlordApi Condition="'$(BannerlordApi)' == ''">1.4.8</BannerlordApi>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)..\_build_out\tests\$(BannerlordApi)\$(Configuration)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(BaseIntermediateOutputPath)</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+</Project>

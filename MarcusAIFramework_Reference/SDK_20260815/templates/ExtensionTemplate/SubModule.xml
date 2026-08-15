@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+  <Name value="Your Extension" />
+  <Id value="YourCompany.YourExtension" />
+  <Version value="v0.1.0" />
+  <ModuleType value="Community" />
+  <SingleplayerModule value="true" />
+  <MultiplayerModule value="false" />
+  <DependedModules>
+    <DependedModule Id="MarcusAIFramework" />
+    <DependedModule Id="Native" />
+    <DependedModule Id="SandBoxCore" />
+    <DependedModule Id="Sandbox" />
+  </DependedModules>
+  <DependedModuleMetadatas>
+    <DependedModuleMetadata id="MarcusAIFramework" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Native" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="SandBoxCore" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Sandbox" order="LoadBeforeThis" />
+  </DependedModuleMetadatas>
+  <SubModules>
+    <SubModule>
+      <Name value="Your Extension" />
+      <DLLName value="YourCompany.YourExtension.dll" />
+      <SubModuleClassType value="YourCompany.YourExtension.SubModule" />
+      <Tags />
+    </SubModule>
+  </SubModules>
+</Module>

@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <BannerlordApi Condition="'$(BannerlordApi)' == ''">1.4.8</BannerlordApi>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)_build_out\$(BannerlordApi)\$(Configuration)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(BaseIntermediateOutputPath)</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+</Project>

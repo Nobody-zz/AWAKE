@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>Awake</AssemblyName>
+    <RootNamespace>Awake</RootNamespace>
+    <OutputType>Library</OutputType>
+    <PlatformTarget>x64</PlatformTarget>
+    <BannerlordApi Condition="'$(BannerlordApi)' == ''">1.3.15</BannerlordApi>
+    <GamePath Condition="'$(GamePath)' == ''">D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord</GamePath>
+    <FrameworkReferenceRoot>$(MSBuildThisFileDirectory)..\MarcusAIFramework_Reference\SDK_20260815</FrameworkReferenceRoot>
+    <FrameworkDllPath>$(FrameworkReferenceRoot)\ref\v$(BannerlordApi)\MarcusAIFramework.dll</FrameworkDllPath>
+    <OutputPath>$(MSBuildThisFileDirectory)_build_out\$(BannerlordApi)\$(Configuration)\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <Deterministic>true</Deterministic>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>10.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(MSBuildThisFileDirectory)obj\**;$(MSBuildThisFileDirectory)_build_out\**</DefaultItemExcludes>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MarcusAIFramework" HintPath="$(FrameworkDllPath)" Private="false" />
+    <Reference Include="MCMv5" HintPath="$(GamePath)\Modules\Bannerlord.MBOptionScreen\bin\Win64_Shipping_Client\MCMv5.dll" Private="false" />
+    <Reference Include="Newtonsoft.Json" HintPath="$(GamePath)\bin\Win64_Shipping_Client\Newtonsoft.Json.dll" Private="false" />
+    <Reference Include="TaleWorlds.CampaignSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.CampaignSystem.dll" Private="false" />
+    <Reference Include="TaleWorlds.CampaignSystem.ViewModelCollection" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.CampaignSystem.ViewModelCollection.dll" Private="false" />
+    <Reference Include="TaleWorlds.Core" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Core.dll" Private="false" />
+    <Reference Include="TaleWorlds.DotNet" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.DotNet.dll" Private="false" />
+    <Reference Include="TaleWorlds.Engine" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Engine.dll" Private="false" />
+    <Reference Include="TaleWorlds.Engine.GauntletUI" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Engine.GauntletUI.dll" Private="false" />
+    <Reference Include="TaleWorlds.GauntletUI" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.GauntletUI.dll" Private="false" />
+    <Reference Include="TaleWorlds.InputSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.InputSystem.dll" Private="false" />
+    <Reference Include="TaleWorlds.Library" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Library.dll" Private="false" />
+    <Reference Include="TaleWorlds.Localization" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Localization.dll" Private="false" />
+    <Reference Include="TaleWorlds.MountAndBlade" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.MountAndBlade.dll" Private="false" />
+    <Reference Include="TaleWorlds.ObjectSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.ObjectSystem.dll" Private="false" />
+    <Reference Include="TaleWorlds.ScreenSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.ScreenSystem.dll" Private="false" />
+    <Reference Include="TaleWorlds.TwoDimension" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.TwoDimension.dll" Private="false" />
+  </ItemGroup>
+  <Target Name="ValidateFrameworkReference" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(FrameworkDllPath)')" Text="Build or install the matching MarcusAIFramework reference at $(FrameworkDllPath)." />
+    <Error Condition="'$(BannerlordApi)' != '1.4.8' and '$(BannerlordApi)' != '1.3.15'" Text="Use BannerlordApi=1.4.8 or 1.3.15." />
+    <Error Condition="!Exists('$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.MountAndBlade.dll')" Text="GamePath does not contain TaleWorlds.MountAndBlade.dll." />
+  </Target>
+</Project>

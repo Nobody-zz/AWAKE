@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "maf.sdk.capability-descriptor.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "owner", "kind", "inputSchema", "outputSchema", "visibility", "maturity", "threadAffinity"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^capability://[A-Za-z0-9_.:/-]{1,240}$" },
+    "owner": { "type": "string", "pattern": "^[A-Za-z0-9_.-]{1,160}$" },
+    "kind": { "type": "string", "maxLength": 64 },
+    "inputSchema": { "$ref": "#/$defs/schemaRef" },
+    "outputSchema": { "$ref": "#/$defs/schemaRef" },
+    "visibility": { "enum": ["Public", "ConsentRequired", "Private"] },
+    "maturity": { "enum": ["Planned", "Experimental", "Preview", "Stable", "Deprecated"] },
+    "threadAffinity": { "enum": ["any", "game", "companion"] }
+  },
+  "$defs": {
+    "schemaRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "major", "minor"],
+      "properties": {
+        "id": { "type": "string", "maxLength": 160 },
+        "major": { "type": "integer", "minimum": 1 },
+        "minor": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "connections": [
+    {
+      "id": "ollama-local",
+      "adapter": "ollama",
+      "baseUrl": "http://127.0.0.1:11434",
+      "credentialEnvironmentVariable": "",
+      "isCloud": false,
+      "timeoutSeconds": 90,
+      "enabled": true
+    },
+    {
+      "id": "openai-compatible-local",
+      "adapter": "openai-compatible",
+      "baseUrl": "http://127.0.0.1:8000/v1",
+      "credentialEnvironmentVariable": "",
+      "isCloud": false,
+      "timeoutSeconds": 90,
+      "enabled": false
+    },
+    {
+      "id": "openai-compatible-cloud",
+      "adapter": "openai-compatible",
+      "baseUrl": "https://api.example.invalid/v1",
+      "credentialEnvironmentVariable": "MAF_OPENAI_API_KEY",
+      "isCloud": true,
+      "timeoutSeconds": 120,
+      "enabled": false
+    },
+    {
+      "id": "anthropic-cloud",
+      "adapter": "anthropic",
+      "baseUrl": "https://api.anthropic.com/v1",
+      "credentialEnvironmentVariable": "MAF_ANTHROPIC_API_KEY",
+      "isCloud": true,
+      "timeoutSeconds": 120,
+      "enabled": false
+    }
+  ],
+  "models": [
+    {
+      "id": "qwen2.5-local",
+      "connectionId": "ollama-local",
+      "remoteModelId": "qwen2.5:latest",
+      "capabilities": [ "text" ],
+      "supportsStreaming": true,
+      "enabled": true
+    },
+    {
+      "id": "local-openai-chat",
+      "connectionId": "openai-compatible-local",
+      "remoteModelId": "replace-with-local-model-id",
+      "capabilities": [ "text" ],
+      "supportsStreaming": true,
+      "enabled": false
+    },
+    {
+      "id": "cloud-openai-chat",
+      "connectionId": "openai-compatible-cloud",
+      "remoteModelId": "replace-with-openai-model-id",
+      "capabilities": [ "text" ],
+      "supportsStreaming": true,
+      "enabled": false
+    },
+    {
+      "id": "cloud-anthropic-chat",
+      "connectionId": "anthropic-cloud",
+      "remoteModelId": "replace-with-anthropic-model-id",
+      "capabilities": [ "text" ],
+      "supportsStreaming": true,
+      "enabled": false
+    }
+  ],
+  "routes": [
+    {
+      "id": "awake.route.npc.dialogue",
+      "candidateModelIds": [ "qwen2.5-local" ],
+      "taskKinds": [ "text" ],
+      "allowCloud": false,
+      "pinModel": true,
+      "enabled": true
+    },
+    {
+      "id": "awake.route.preprocess",
+      "candidateModelIds": [ "qwen2.5-local" ],
+      "taskKinds": [ "text" ],
+      "allowCloud": false,
+      "pinModel": true,
+      "enabled": true
+    },
+    {
+      "id": "awake.route.postprocess",
+      "candidateModelIds": [ "qwen2.5-local" ],
+      "taskKinds": [ "text" ],
+      "allowCloud": false,
+      "pinModel": true,
+      "enabled": true
+    },
+    {
+      "id": "awake.route.memory.daily",
+      "candidateModelIds": [ "qwen2.5-local" ],
+      "taskKinds": [ "text" ],
+      "allowCloud": false,
+      "pinModel": true,
+      "enabled": true
+    }
+  ],
+  "voiceProfiles": []
+}

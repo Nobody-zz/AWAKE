@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MarcusAIFramework</name>
+    </assembly>
+    <members>
+        <member name="P:MarcusAIFramework.Api.ExtensionManifest.RouteIds">
+            <summary>Declared AI Route IDs. Mandatory for every extension that issues provider requests.</summary>
+        </member>
+        <member name="T:MarcusAIFramework.Api.IFrameworkExtension">
+            <summary>Entry contract for an independently compiled framework extension.</summary>
+        </member>
+        <member name="T:MarcusAIFramework.Api.FrameworkConsole">
+            <summary>Public in-game console entry points (AI/LLM setup and framework diagnostics).
+            Kept in the public SDK surface so child extensions never reach into internal namespaces.</summary>
+        </member>
+        <member name="M:MarcusAIFramework.Api.FrameworkConsole.OpenAiSetup">
+            <summary>Opens the in-game AI setup console (providers, models, routes, voices, GGUF).</summary>
+        </member>
+        <member name="M:MarcusAIFramework.Api.FrameworkConsole.OpenDiagnostics">
+            <summary>Opens the framework diagnostics console.</summary>
+        </member>
+        <member name="T:MarcusAIFramework.Api.IMarcusAiFrameworkHost">
+            <summary>Public service surface exposed to independently compiled extensions.</summary>
+        </member>
+        <member name="T:MarcusAIFramework.Api.FrameworkHostLocator">
+            <summary>Locates the active framework host and registers public extensions.</summary>
+        </member>
+        <member name="T:MarcusAIFramework.Api.ILoggingService">
+            <summary>Bounded local file logging for the framework and independently compiled extensions.
+            Never log credentials, authorization headers, or database contents through this service.</summary>
+        </member>
+        <member name="P:MarcusAIFramework.Api.ILoggingService.Directory">
+            <summary>Actual log directory in use (mod log folder or LOCALAPPDATA fallback).</summary>
+        </member>
+        <member name="M:MarcusAIFramework.Api.ILoggingService.Write(System.String,MarcusAIFramework.Api.FrameworkLogLevel,System.String,System.Exception)">
+            <summary>Writes one line to &lt;log dir&gt;/&lt;fileName&gt;.log.
+            fileName is sanitized to letters/digits/._- (max 64); extensions use their own file name
+            so framework and child-Mod logs never collide.</summary>
+        </member>
+        <member name="T:MarcusAIFramework.Api.RequestContext">
+            <summary>Caller, session, correlation, and deadline context propagated across public service calls.</summary>
+        </member>
+        <member name="T:MarcusAIFramework.Api.OperationResult`1">
+            <summary>A typed success value or stable framework error.</summary>
+        </member>
+        <member name="T:MarcusAIFramework.Api.ToolCandidate">
+            <summary>An untrusted model-proposed tool invocation that must pass framework validation.</summary>
+        </member>
+        <member name="M:MarcusAIFramework.Core.ExtensionRegistry.GetDeclaredRoutes">
+            <summary>All declared Route IDs across registered extensions (deduplicated).</summary>
+        </member>
+        <member name="M:MarcusAIFramework.Core.FrameworkHost.EnsureDeclaredRoutesAsync">
+            <summary>Auto-provisions declared extension Route IDs that are missing from the
+            Companion route profiles (additive; never rewrites existing routes or user choices).
+            New routes become usable without opening the AI setup page.</summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="English" />
+  </tags>
+  <strings>
+    <string id="AWAKE.ModuleName" text="AWAKE: Awakened World AI" />
+    <string id="AWAKE.Description" text="Generic AI world runtime for Bannerlord, powered by Marcus AI Framework." />
+    <string id="awake.menu.npc_talk" text="Deep Talk (AWAKE)" />
+    <string id="awake.menu.npc_talk_title" text="AWAKE - Deep Talk" />
+    <string id="awake.menu.npc_talk_prompt" text="Choose who to talk with:" />
+    <string id="awake.menu.npc_talk_too_young" text="You are too young to begin this conversation." />
+    <string id="awake.menu.npc_talk_no_nearby" text="There is no one nearby to talk with." />
+    <string id="awake.menu.npc_talk_gone" text="They are no longer nearby." />
+    <string id="awake.menu.npc_talk_unavailable" text="They cannot talk right now." />
+    <string id="awake.terminal.title" text="AWAKE Command Deck" />
+    <string id="awake.terminal.prompt" text="Choose a function:" />
+    <string id="awake.terminal.confirm" text="Confirm" />
+    <string id="awake.terminal.close" text="Close" />
+    <string id="awake.menu.developer_check" text="Developer Check" />
+    <string id="awake.dialogue.npc_title" text="AWAKE - Talk with {HERO}" />
+    <string id="awake.mcm.group.ai_link" text="AI Link" />
+    <string id="awake.mcm.group.data_debug" text="Data and Debug" />
+    <string id="awake.mcm.group.behavior" text="Presets and Behavior" />
+    <string id="awake.mcm.ai_status.name" text="AI Link Status" />
+    <string id="awake.mcm.ai_status.hint" text="Read-only: Companion connection, route capabilities and candidate providers. Configure Provider under MCM → Marcus AI Framework → 01 Companion; use the four logical routes from the README." />
+    <string id="awake.mcm.cloud_export.name" text="Enable Cloud Export" />
+    <string id="awake.mcm.cloud_export.hint" text="Disabled by default. Even when enabled, the classification switch and framework permission must both allow the category before it is sent to a cloud AI." />
+    <string id="awake.mcm.export_player_state.name" text="Allow Player State Export" />
+    <string id="awake.mcm.export_player_state.hint" text="Allows player, hero and relationship state to be exported as player_state in goddess dialogue. Disabled by default." />
+    <string id="awake.mcm.developer_menu.name" text="Enable Developer Menu" />
+    <string id="awake.mcm.developer_menu.hint" text="Disabled by default. Adds AI self-check and developer check entries in town, castle, village and keep menus." />
+    <string id="awake.mcm.terminal_key.name" text="Command Deck Hotkey" />
+    <string id="awake.mcm.terminal_key.hint" text="Input an InputKey name, e.g. Y, K or H." />
+    <string id="awake.mcm.group.command" text="Command Deck" />
+    <string id="awake.mcm.world_effects.name" text="Enable World Effects" />
+    <string id="awake.mcm.world_effects.hint" text="Enabled by default. When disabled, world commands and oracle effects from goddess output are rejected; actual gameplay wiring is planned for 0.2.x." />
+    <string id="awake.mcm.boon_offers.name" text="Enable Divine Proposals" />
+    <string id="awake.mcm.boon_offers.hint" text="Enabled by default. When disabled, no new divine candidates are generated, unsettled proposals are cleared, and in-flight settlement may finish." />
+    <string id="awake.mcm.npc_proactive.name" text="Enable NPC Proactive" />
+    <string id="awake.mcm.npc_proactive.hint" text="Disabled by default. When enabled, NPCs may proactively approach based on estrus and relationship state; chance is controlled by the next option." />
+    <string id="awake.mcm.npc_proactive_chance.name" text="NPC Proactive Chance" />
+    <string id="awake.mcm.npc_proactive_chance.hint" text="Chance percentage for NPC proactive initiations, 0-100, default 35." />
+    <string id="awake.mcm.event_engine.name" text="Enable Event Engine" />
+    <string id="awake.mcm.event_engine.hint" text="Enabled by default. When enabled, the event pool evaluates conditions and cooldowns every hour and can trigger test/world events." />
+    <string id="awake.preset.default" text="Default" />
+    <string id="awake.preset.easy" text="Easy" />
+    <string id="awake.preset.standard" text="Standard" />
+    <string id="awake.preset.slow_burn" text="Slow Burn" />
+    <string id="awake.preset.strict" text="Strict" />
+    <string id="awake.status.companion" text="Companion: {STATE}" />
+    <string id="awake.status.route" text="Route: {ROUTE}" />
+    <string id="awake.status.candidates" text="Candidates: {CANDIDATES}" />
+    <string id="awake.status.separator" text=" | " />
+    <string id="awake.status.not_checked" text="Not checked yet" />
+    <string id="awake.status.connected" text="Connected" />
+    <string id="awake.status.degraded_offline" text="Offline (degraded)" />
+    <string id="awake.status.query_failed" text="Query failed" />
+    <string id="awake.status.unknown" text="Unknown" />
+    <string id="awake.status.candidates_empty" text="none" />
+    <string id="awake.status.route_error" text="Route capability: {CODE}" />
+    <string id="awake.status.route_query_failed" text="Route capability: Query failed" />
+  </strings>
+</base>

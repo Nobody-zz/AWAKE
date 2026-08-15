@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>MarcusAIFramework.Sdk.Specs</AssemblyName>
+    <PlatformTarget>x64</PlatformTarget>
+    <BannerlordApi Condition="'$(BannerlordApi)' == ''">1.4.8</BannerlordApi>
+    <SdkRoot>$(MSBuildThisFileDirectory)..\..\</SdkRoot>
+    <FrameworkReferenceRoot>$(SdkRoot)ref\v$(BannerlordApi)</FrameworkReferenceRoot>
+    <OutputPath>$(SdkRoot)_build_out\tests\$(BannerlordApi)\$(Configuration)\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(MSBuildProjectDirectory)\obj\**;$(SdkRoot)_build_out\**</DefaultItemExcludes>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MarcusAIFramework" HintPath="$(FrameworkReferenceRoot)\MarcusAIFramework.dll" Private="true" />
+    <Compile Include="..\..\fake-host\FakeHost.cs" Link="FakeHost.cs" />
+    <Compile Include="..\..\test-kit\MafAssertions.cs" Link="MafAssertions.cs" />
+  </ItemGroup>
+  <Target Name="ValidateReference" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="'$(BannerlordApi)' != '1.4.8' and '$(BannerlordApi)' != '1.3.15'" Text="Use BannerlordApi=1.4.8 or 1.3.15." />
+    <Error Condition="!Exists('$(FrameworkReferenceRoot)\MarcusAIFramework.dll')" Text="Missing isolated SDK reference for $(BannerlordApi)." />
+  </Target>
+</Project>

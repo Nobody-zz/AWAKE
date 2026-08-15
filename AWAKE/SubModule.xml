@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+  <Name value="AWAKE" />
+  <Id value="AWAKE" />
+  <Version value="v0.2.0" />
+  <ModuleType value="Community" />
+  <SingleplayerModule value="true" />
+  <MultiplayerModule value="false" />
+  <DependedModules>
+    <DependedModule Id="Bannerlord.Harmony" />
+    <DependedModule Id="Bannerlord.ButterLib" />
+    <DependedModule Id="Bannerlord.UIExtenderEx" />
+    <DependedModule Id="Bannerlord.MBOptionScreen" />
+    <DependedModule Id="MarcusAIFramework" />
+    <DependedModule Id="Native" />
+    <DependedModule Id="SandBoxCore" />
+    <DependedModule Id="Sandbox" />
+  </DependedModules>
+  <DependedModuleMetadatas>
+    <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Bannerlord.ButterLib" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="MarcusAIFramework" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Native" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="SandBoxCore" order="LoadBeforeThis" />
+    <DependedModuleMetadata id="Sandbox" order="LoadBeforeThis" />
+  </DependedModuleMetadatas>
+  <SubModules>
+    <SubModule>
+      <Name value="AWAKE" />
+      <DLLName value="Awake.dll" />
+      <SubModuleClassType value="Awake.SubModule" />
+      <Tags />
+    </SubModule>
+  </SubModules>
+</Module>

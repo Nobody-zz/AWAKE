@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>YourCompany.YourExtension</AssemblyName>
+    <RootNamespace>YourCompany.YourExtension</RootNamespace>
+    <OutputType>Library</OutputType>
+    <PlatformTarget>x64</PlatformTarget>
+    <BannerlordApi Condition="'$(BannerlordApi)' == ''">1.4.8</BannerlordApi>
+    <FrameworkReferenceRoot Condition="'$(FrameworkReferenceRoot)' == ''">$(MSBuildThisFileDirectory)..\..\..\ref\v$(BannerlordApi)</FrameworkReferenceRoot>
+    <FrameworkDllPath>$(FrameworkReferenceRoot)\MarcusAIFramework.dll</FrameworkDllPath>
+    <GamePath Condition="'$(GamePath)' == '' and '$(BannerlordApi)' == '1.4.8'">D:\Program Files\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GamePath>
+    <GamePath Condition="'$(GamePath)' == '' and '$(BannerlordApi)' == '1.3.15'">E:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord</GamePath>
+    <OutputPath>_build_out\$(BannerlordApi)\$(Configuration)\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <Deterministic>true</Deterministic>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(MSBuildProjectDirectory)\obj\**;$(MSBuildProjectDirectory)\_build_out\**</DefaultItemExcludes>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MarcusAIFramework" HintPath="$(FrameworkDllPath)" Private="false" />
+    <Reference Include="TaleWorlds.MountAndBlade" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.MountAndBlade.dll" Private="false" />
+  </ItemGroup>
+  <Target Name="ValidateFrameworkReference" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(FrameworkDllPath)')" Text="Build or install the matching MarcusAIFramework reference at $(FrameworkDllPath)." />
+    <Error Condition="'$(BannerlordApi)' != '1.4.8' and '$(BannerlordApi)' != '1.3.15'" Text="Use BannerlordApi=1.4.8 or 1.3.15." />
+  </Target>
+</Project>
