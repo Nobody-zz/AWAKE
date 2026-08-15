@@ -13,6 +13,30 @@
 
 ## 2. 世界书格式规范
 
+### 2.0 世界书放置位置
+
+世界书属于内容数据，不硬编码进运行时：
+
+- 内容包：`Modules/<ContentPack>/ModuleData/Worldbook/manifest.json`
+- 运行时测试/兼容目录：`Modules/AWAKE/ModuleData/Worldbook/manifest.json`
+
+推荐目录结构：
+
+```text
+Worldbook/
+  manifest.json
+  rules/
+  personality_background/
+  unnamed_persona/
+  voice_mapping/
+  event_data/
+  debt/
+  dialogue_history/
+  compressed_memory/
+```
+
+`manifest.json` 中的目录字段可配置，默认与 AF `PlayerExports` 目录名一致。
+
 ### 2.1 根结构
 
 ```json
@@ -67,6 +91,29 @@ AF 实际使用两类文件：
   "VoiceId": ""
 }
 ```
+
+### 2.1.2 AF 字段作用分析（以《卡拉迪亚编年史》为例）
+
+| 字段 | 实际作用 | 示例 |
+| --- | --- | --- |
+| `Keywords` | 规则召回关键词，多个规则可共享同一关键词 | `"“半耳”圭卡"` |
+| `RagShortTexts` | 检索问句/短描述，用于 RAG 召回，不是最终正文 | `"哈尔达尔为何忌惮“半耳”圭卡？"` |
+| `SemanticPrototypes` | 语义原型，用于检索扩展；当前目录多为空 | `[]` |
+| `Variants` | 同一规则按身份/文化/角色给出多个说法，运行时选一个 | 平民、领主、诺德人分别不同说法 |
+| `TextMappings` | 正文里的动态占位符，按游戏状态替换 | `SourceText: "A"`、`Kind: "status|hero|is_dead"` |
+
+`TextMappings` 不是静态文本，它依赖游戏状态：
+
+- `SourceText`：正文中的占位符。
+- `Kind`：取值来源，如 `status|hero|is_dead`、`clan_all_towns`、`clan_leader_name`。
+- `TargetId`：目标实体。
+- `TrueText` / `FalseText` / `EmptyValueText`：按状态替换的结果。
+
+AWAKE 对应字段：
+
+- `variants`：已有。
+- `ragShortTexts` / `semanticPrototypes`：已有，但只作为召回元数据。
+- `textMappings`：已有，但当前只保留原始数据，未实现运行时替换。
 
 ### 2.2 AWAKE Rule 结构
 
