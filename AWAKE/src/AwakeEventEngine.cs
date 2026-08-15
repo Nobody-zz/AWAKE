@@ -346,6 +346,10 @@ internal sealed class AwakeEventEngine
             _busy = false;
             WorldEventLedger.Record(CurrentGameDay(), "event", rule.Definition.Title);
             TryQueueDialogueAction(rule, choice);
+            if (rule.Definition.Effect != null)
+            {
+                _ = ApplyEffectAsync(rule, choice);
+            }
             AwakeEventRule next = AwakeEventChainCore.Resolve(_rulesById, rule.Definition.Id, choice);
             if (next == null) return;
             AwakeLog.Write("awake_event_chain_advanced from=" + rule.Definition.Id + " to=" + next.Definition.Id);
@@ -356,6 +360,46 @@ internal sealed class AwakeEventEngine
         {
             AwakeLog.Write("awake_event_choice_error id=" + rule.Definition.Id + " error=" + ex.Message);
             _busy = false;
+        }
+    }
+
+    private static async Task ApplyEffectAsync(AwakeEventRule rule, string choice)
+    {
+        try
+        {
+            AwakeEventEffect effect = rule?.Definition?.Effect;
+            if (effect == null || !AwakeEventEffectRules.ShouldApply(effect, choice)) return;
+            string targetId = ResolveDialogueTarget(effect.TargetId);
+            if (string.IsNullOrWhiteSpace(targetId))
+            {
+                WorldEventLedger.Record(CurrentGameDay(), "event_effect_target_missing", (effect.TargetId ?? "unknown") + ":target_unavailable");
+                return;
+            }
+            Newtonsoft.Json.Linq.JObject args = AwakeEventEffectRules.BuildRelationshipArgs(
+                targetId,
+                effect,
+                "event_" + rule.Definition.Id);
+            if (args == null) return;
+
+            IMarcusAiFrameworkHost host = AwakeRuntime.ResolveHost();
+            if (host == null) return;
+            await AwakeRuntime.EnsureWorldStateReadyAsync(host, CancellationToken.None).ConfigureAwait(false);
+            OperationResult<string> result = await new WorldCommandBridge(host).ExecuteAsync(
+                new WorldCommandProposal(
+                    AiTaskConstants.RelationshipDeltaCommandId,
+                    args.ToString(Newtonsoft.Json.Formatting.None),
+                    "事件结算"),
+                Guid.NewGuid().ToString("N"),
+                CancellationToken.None).ConfigureAwait(false);
+            AwakeLog.Write("awake_event_effect_applied id=" + rule.Definition.Id
+                + " choice=" + choice
+                + " target=" + targetId
+                + " ok=" + result.IsSuccess
+                + " code=" + (result.Error?.Code ?? "none"));
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("awake_event_effect_error id=" + rule.Definition.Id + " error=" + ex.Message);
         }
     }
 

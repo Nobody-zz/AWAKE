@@ -24,7 +24,7 @@
 | NPC 主动来信 | 无 | 主动触发、冷却、每日上限、通知 | M3 |
 | NPC 记忆 | `NpcMemoryService` 代码存在 | 真实 Companion 存储管道未验证；无名 NPC 记忆未做 | 游戏内验证 + 无名记忆键 |
 | 知识检索 | 本地关键词索引与 RAG 代码存在 | 运行时语料 `awake_knowledge.json` 缺失；内容包语料未接入 | 接入内容包或运行时空语料降级 |
-| 命令效果 | `WorldCommandBridge`、风险门、权限、幂等存在；`awake.relationship.delta.v1` 已注册并进入 NPC 对话白名单 | 目前只有关系变化一条命令，body/estrus/世界效果未接入 | 后续按内容包契约扩容命令 |
+| 命令效果 | `WorldCommandBridge`、风险门、权限、幂等存在；`awake.relationship.delta.v1` 已注册并进入 NPC 对话白名单；事件选项也可触发关系命令 | 目前只有关系变化一条命令，body/estrus/世界效果未接入 | 后续按内容包契约扩容命令 |
 | 事件对话队列 | `EventDialogueQueue` 存在；`AwakeEventEngine` 已能注册规则、每小时评估、持久化冷却/每日上限、把选项动作入队；弹窗支持 A/B 与可选“参与话题”第三入口 | 没有内置事件规则，内容包注册 API 未接 | 先接内容包公开 API，再由内容包注册规则 |
 | 事件元数据 | `WorldStateStore` 的 `awake.event_meta` 已接事件引擎 | 尚无内容规则产生真实事件 | 内容包接入后生效 |
 | 事件类型定义 | 类型清单已列出，覆盖触发/场景/主体/内容/结算/选项/持久性 | 尚未落成代码枚举与校验 | 按清单实现 `AwakeEventCategory` 等字段 |

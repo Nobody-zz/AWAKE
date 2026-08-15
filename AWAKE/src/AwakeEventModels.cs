@@ -95,6 +95,32 @@ internal sealed class AwakeEventDialogueAction
     }
 }
 
+internal sealed class AwakeEventEffect
+{
+    internal string Choice { get; }
+    internal string TargetId { get; }
+    internal int TrustDelta { get; }
+    internal int LoveDelta { get; }
+    internal int HostilityDelta { get; }
+    internal string Reason { get; }
+
+    internal AwakeEventEffect(
+        string choice,
+        string targetId,
+        int trustDelta,
+        int loveDelta,
+        int hostilityDelta,
+        string reason = null)
+    {
+        Choice = choice ?? string.Empty;
+        TargetId = targetId ?? string.Empty;
+        TrustDelta = trustDelta;
+        LoveDelta = loveDelta;
+        HostilityDelta = hostilityDelta;
+        Reason = reason ?? string.Empty;
+    }
+}
+
 internal sealed class AwakeEventDefinition
 {
     internal string Id { get; }
@@ -104,6 +130,7 @@ internal sealed class AwakeEventDefinition
     internal string OptionB { get; }
     internal AwakeEventDialogueAction DialogueAction { get; }
     internal AwakeEventDialogueAction DiscussionAction { get; }
+    internal AwakeEventEffect Effect { get; }
     internal AwakeEventSource? Source { get; }
     internal AwakeEventContext? Context { get; }
     internal AwakeEventSubject? Subject { get; }
@@ -126,7 +153,8 @@ internal sealed class AwakeEventDefinition
         AwakeEventContent? content = null,
         AwakeEventResolution? resolution = null,
         AwakeEventChoiceShape? choiceShape = null,
-        AwakeEventPersistence? persistence = null)
+        AwakeEventPersistence? persistence = null,
+        AwakeEventEffect effect = null)
     {
         Id = id ?? string.Empty;
         Title = title ?? string.Empty;
@@ -135,6 +163,7 @@ internal sealed class AwakeEventDefinition
         OptionB = optionB ?? string.Empty;
         DialogueAction = dialogueAction;
         DiscussionAction = discussionAction;
+        Effect = effect;
         Source = source;
         Context = context;
         Subject = subject;
@@ -225,6 +254,39 @@ internal static class AwakeEventValidation
             if (discussion.OpeningHint.Length > 240)
             {
                 error = "discussionAction.openingHint";
+                return false;
+            }
+        }
+
+        AwakeEventEffect effect = definition.Effect;
+        if (effect != null)
+        {
+            if (!StringComparer.Ordinal.Equals(effect.Choice, "a")
+                && !StringComparer.Ordinal.Equals(effect.Choice, "b")
+                && !StringComparer.Ordinal.Equals(effect.Choice, "discuss"))
+            {
+                error = "effect.choice";
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(effect.TargetId) || effect.TargetId.Length > 120)
+            {
+                error = "effect.targetId";
+                return false;
+            }
+            if (effect.TrustDelta < -100
+                || effect.TrustDelta > 100
+                || effect.LoveDelta < -100
+                || effect.LoveDelta > 100
+                || effect.HostilityDelta < -100
+                || effect.HostilityDelta > 100
+                || (effect.TrustDelta == 0 && effect.LoveDelta == 0 && effect.HostilityDelta == 0))
+            {
+                error = "effect.delta";
+                return false;
+            }
+            if (effect.Reason.Length > 240)
+            {
+                error = "effect.reason";
                 return false;
             }
         }

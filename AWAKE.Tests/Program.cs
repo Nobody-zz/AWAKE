@@ -39,8 +39,164 @@ internal static class Program
 		RunSceneDialogueRangeSmoke();
 		RunAwakeEventEngineCoreSmoke();
 		RunRelationshipCommandSmoke();
+		await RunStoragePipelineSmokeAsync();
+		RunNpcMemorySmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunNpcMemorySmoke()
+	{
+		List<NpcMemoryFact> rawFacts = new List<NpcMemoryFact>();
+		for (int i = 0; i < 12; i++) rawFacts.Add(new NpcMemoryFact("fact-" + i));
+		Newtonsoft.Json.Linq.JArray builtFacts = NpcMemoryFactsBuilder.Build(rawFacts);
+		if (builtFacts.Count != NpcMemoryConstants.FactsMaximum)
+		{
+			throw new InvalidOperationException("memory facts should cap at configured maximum.");
+		}
+
+		Newtonsoft.Json.Linq.JObject high = new Newtonsoft.Json.Linq.JObject
+		{
+			["id"] = "m-high",
+			["day"] = 10,
+			["weight"] = 3,
+			["type"] = "shared_experience",
+			["summary"] = "重要记忆",
+			["facts"] = new Newtonsoft.Json.Linq.JArray { "事实甲" }
+		};
+		Newtonsoft.Json.Linq.JObject low = new Newtonsoft.Json.Linq.JObject
+		{
+			["id"] = "m-low",
+			["day"] = 11,
+			["weight"] = 1,
+			["type"] = "event",
+			["summary"] = "旧事",
+			["facts"] = new Newtonsoft.Json.Linq.JArray()
+		};
+		Newtonsoft.Json.Linq.JObject doc = new Newtonsoft.Json.Linq.JObject
+		{
+			["memories"] = new Newtonsoft.Json.Linq.JArray { low, high }
+		};
+		string block = NpcMemorySelector.FormatTopK(doc, 1, 2000);
+		if (block.IndexOf("重要记忆", StringComparison.Ordinal) < 0
+			|| block.IndexOf("旧事", StringComparison.Ordinal) >= 0)
+		{
+			throw new InvalidOperationException("memory selector should prefer weight over recency.");
+		}
+
+		string summary = NpcMemorySummaryTemplate.ParseSummary(
+			"{\"summary\":\"这次深谈让她对你有了新的判断。\"}");
+		if (summary.IndexOf("新的判断", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("memory summary parser mismatch.");
+		}
+		Console.WriteLine("PASS npc memory smoke");
+	}
+
+	private static async Task RunStoragePipelineSmokeAsync()
+	{
+		SessionRef session = new SessionRef("smoke-campaign", "smoke-timeline", "smoke-session");
+		WorldStateStore store = new WorldStateStore(session);
+		FakeKeyValueStore memoryStore = new FakeKeyValueStore();
+		FakeKeyValueStore eventMetaStore = new FakeKeyValueStore();
+		FakeKeyValueStore relationshipStore = new FakeKeyValueStore();
+		store.InjectStoreForTesting(AiTaskConstants.NpcMemoriesNamespace, memoryStore);
+		store.InjectStoreForTesting(AiTaskConstants.EventMetaNamespace, eventMetaStore);
+		store.InjectStoreForTesting(AiTaskConstants.RelationshipsNamespace, relationshipStore);
+
+		RequestContext context = new FakeClock(DateTimeOffset.UtcNow).Context("awake.smoke", session, "storage-smoke");
+		Newtonsoft.Json.Linq.JArray facts = new Newtonsoft.Json.Linq.JArray { "共同经历" };
+		bool flushed = await store.FlushMemoryFactsAsync(
+			"hero-1",
+			"conv-1",
+			1,
+			"shared_experience",
+			facts,
+			"第一次深谈",
+			2,
+			"npc_dialogue",
+			CancellationToken.None).ConfigureAwait(false);
+		if (!flushed) throw new InvalidOperationException("memory flush should succeed.");
+		Newtonsoft.Json.Linq.JObject memory = await store.GetMemoriesAsync("hero-1", context, CancellationToken.None).ConfigureAwait(false);
+		if (memory == null
+			|| !(memory["memories"] is Newtonsoft.Json.Linq.JArray memoryEntries)
+			|| memoryEntries.Count != 1
+			|| !StringComparer.Ordinal.Equals((string)memoryEntries[0]["summary"], "第一次深谈"))
+		{
+			throw new InvalidOperationException("memory storage roundtrip mismatch.");
+		}
+
+		bool metaUpdated = await store.UpdateEventMetaAsync(
+			"evt.1",
+			1,
+			10d,
+			5,
+			1,
+			"idem-meta",
+			CancellationToken.None).ConfigureAwait(false);
+		if (!metaUpdated) throw new InvalidOperationException("event meta update should succeed.");
+		Newtonsoft.Json.Linq.JObject eventMeta = await store.GetEventMetaAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (eventMeta == null
+			|| !(eventMeta["cooldowns"] is Newtonsoft.Json.Linq.JObject cooldowns)
+			|| !(eventMeta["daily"] is Newtonsoft.Json.Linq.JObject daily)
+			|| cooldowns["evt.1"] == null
+			|| daily["evt.1"] == null)
+		{
+			throw new InvalidOperationException("event meta storage roundtrip mismatch.");
+		}
+
+		Newtonsoft.Json.Linq.JObject relArgs = new Newtonsoft.Json.Linq.JObject
+		{
+			["trustDelta"] = 2,
+			["loveDelta"] = 1,
+			["hostilityDelta"] = 0,
+			["reason"] = "smoke"
+		};
+		WorldStateCommand relCommand = new WorldStateCommand(
+			AiTaskConstants.RelationshipsNamespace,
+			WorldStateStore.BuildHeroKey("hero-1"),
+			AiTaskConstants.RelationshipDeltaCommandId,
+			"rel-idem-1",
+			"hero-1",
+			WorldStateKind.Relationship,
+			relArgs,
+			DateTimeOffset.UtcNow,
+			"rel-correlation");
+		if (!store.TryEnqueue(relCommand)) throw new InvalidOperationException("relationship command enqueue should succeed.");
+		await store.DrainAsync(relCommand.CommandId, relCommand.IdempotencyKey, CancellationToken.None).ConfigureAwait(false);
+		Newtonsoft.Json.Linq.JObject relationship = await store.GetRelationshipAsync("hero-1", context, CancellationToken.None).ConfigureAwait(false);
+		if (relationship == null
+			|| (int)relationship["trust"] != 2
+			|| (int)relationship["love"] != 1
+			|| (int)relationship["hostility"] != 0)
+		{
+			throw new InvalidOperationException("relationship storage roundtrip mismatch.");
+		}
+
+		WorldStateCommand duplicate = new WorldStateCommand(
+			AiTaskConstants.RelationshipsNamespace,
+			WorldStateStore.BuildHeroKey("hero-1"),
+			AiTaskConstants.RelationshipDeltaCommandId,
+			"rel-idem-1",
+			"hero-1",
+			WorldStateKind.Relationship,
+			relArgs,
+			DateTimeOffset.UtcNow,
+			"rel-correlation-2");
+		if (!store.TryEnqueue(duplicate)) throw new InvalidOperationException("duplicate command enqueue should succeed.");
+		WorldDrainSummary summary = await store.DrainAsync(
+			duplicate.CommandId,
+			duplicate.IdempotencyKey,
+			CancellationToken.None).ConfigureAwait(false);
+		Newtonsoft.Json.Linq.JObject relationshipAfterDuplicate = await store.GetRelationshipAsync("hero-1", context, CancellationToken.None).ConfigureAwait(false);
+		if (summary.DuplicateCount < 1
+			|| (int)relationshipAfterDuplicate["trust"] != 2
+			|| (int)relationshipAfterDuplicate["love"] != 1)
+		{
+			throw new InvalidOperationException("relationship idempotency mismatch.");
+		}
+
+		Console.WriteLine("PASS storage pipeline smoke");
 	}
 
 	private static void RunRelationshipCommandSmoke()
@@ -149,6 +305,65 @@ internal static class Program
 			|| !StringComparer.Ordinal.Equals(error, "discussionAction.choice"))
 		{
 			throw new InvalidOperationException("invalid discussion choice should be rejected.");
+		}
+
+		AwakeEventDefinition withEffect = new AwakeEventDefinition(
+			"awake.event.effect",
+			"Title",
+			"Body",
+			"A",
+			"B",
+			null,
+			null,
+			AwakeEventSource.PresetRule,
+			AwakeEventContext.Camp,
+			AwakeEventSubject.PlayerNpc,
+			AwakeEventContent.Relationship,
+			AwakeEventResolution.NumericSettlement,
+			AwakeEventChoiceShape.TwoChoice,
+			AwakeEventPersistence.Repeatable,
+			new AwakeEventEffect("a", "hero-1", 1, 0, 0, "event reason"));
+		if (!AwakeEventValidation.Validate(withEffect, out error))
+		{
+			throw new InvalidOperationException("valid event effect should pass.");
+		}
+
+		AwakeEventDefinition badEffect = new AwakeEventDefinition(
+			"awake.event.bad.effect",
+			"Title",
+			"Body",
+			"A",
+			"B",
+			null,
+			null,
+			AwakeEventSource.PresetRule,
+			AwakeEventContext.Camp,
+			AwakeEventSubject.PlayerNpc,
+			AwakeEventContent.Relationship,
+			AwakeEventResolution.NumericSettlement,
+			AwakeEventChoiceShape.TwoChoice,
+			AwakeEventPersistence.Repeatable,
+			new AwakeEventEffect("a", "hero-1", 0, 0, 0, ""));
+		if (AwakeEventValidation.Validate(badEffect, out error)
+			|| !StringComparer.Ordinal.Equals(error, "effect.delta"))
+		{
+			throw new InvalidOperationException("zero event effect should be rejected.");
+		}
+
+		AwakeEventEffect validEffect = new AwakeEventEffect("discuss", "hero-1", 2, 1, 0, "discussed");
+		Newtonsoft.Json.Linq.JObject effectArgs = AwakeEventEffectRules.BuildRelationshipArgs("hero-1", validEffect, "fallback");
+		if (!AwakeEventEffectRules.ShouldApply(validEffect, "discuss")
+			|| AwakeEventEffectRules.ShouldApply(validEffect, "a")
+			|| effectArgs == null
+			|| !StringComparer.Ordinal.Equals((string)effectArgs["heroId"], "hero-1")
+			|| (int)effectArgs["trustDelta"] != 2
+			|| (int)effectArgs["loveDelta"] != 1)
+		{
+			throw new InvalidOperationException("event effect rules mismatch.");
+		}
+		if (AwakeEventEffectRules.BuildRelationshipArgs("hero-1", new AwakeEventEffect("a", "hero-1", 0, 0, 0, ""), "x") != null)
+		{
+			throw new InvalidOperationException("zero delta effect args should be rejected.");
 		}
 
 		AwakeEventDefinition missingCategory = new AwakeEventDefinition(

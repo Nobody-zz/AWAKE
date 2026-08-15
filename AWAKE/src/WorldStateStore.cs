@@ -159,6 +159,18 @@ internal sealed class WorldStateStore
         _sessionRef = host.CurrentSession ?? new SessionRef(string.Empty, string.Empty, string.Empty);
     }
 
+    internal WorldStateStore(SessionRef sessionRef)
+    {
+        _host = null;
+        _sessionRef = sessionRef ?? new SessionRef("test-campaign", "test-timeline", "test-session");
+    }
+
+    internal void InjectStoreForTesting(string namespaceId, IKeyValueStore store)
+    {
+        if (string.IsNullOrWhiteSpace(namespaceId) || store == null) return;
+        lock (_gate) _stores[namespaceId] = store;
+    }
+
     internal bool SessionEnded
     {
         get { lock (_gate) return _sessionEnded; }

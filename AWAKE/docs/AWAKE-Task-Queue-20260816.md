@@ -14,6 +14,9 @@
   - 事件弹窗“参与话题”第三入口
   - 事件类型清单文档
   - 事件类型枚举与校验
+  - 事件选项接入关系命令结算
+  - 存储管道离线 SdkSmoke
+  - NPC 记忆逻辑 SdkSmoke
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）
@@ -21,11 +24,10 @@
 1. Messenger 统一会话：通讯录与 NPC 覆盖层并存；统一入口调度，不删除任一层。
 2. Messenger 持久化：会话历史未持久化；接 `WorldStateStore` / Marcus Storage。
 3. Messenger 写信/来信：远方联系人显示“后续开放”；写信、回复延迟、未读、来信通知。
-4. NPC 记忆游戏内验证：代码已实现，未真机验收；存储管道、读档回读、无名 NPC 记忆。
-5. 存储管道验证：`npc.memories` / `event_meta` / `relationships` 已接；Companion 真机验证。
-6. 事件选项接入关系命令结算：事件 A/B 或“参与话题”可触发关系命令。
-7. 周报/世界事件接线：`WorldEventLedger` / `NarrativeReportBuilder` 未接入实际周报。
-8. 开发者检查面板：当前只有文本报告，无完整诊断面板。
+4. 存储管道真机验证：离线 SdkSmoke 已覆盖；剩余 Companion 真机、读档持久化。
+5. NPC 记忆游戏内验证：逻辑 SdkSmoke 已覆盖；剩余读档回读、真实对话记忆。
+6. 周报/世界事件接线：`WorldEventLedger` / `NarrativeReportBuilder` 未接入实际周报。
+7. 开发者检查面板：当前只有文本报告，无完整诊断面板。
 
 ## 半成品（有入口但未闭环）
 
