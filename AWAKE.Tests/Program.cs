@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MarcusAIFramework.Api;
 using MarcusAIFramework.Sdk.FakeHost;
 using MarcusAIFramework.Sdk.TestKit;
+using TaleWorlds.CampaignSystem;
 
 namespace Awake.SdkSmoke;
 
@@ -34,8 +35,24 @@ internal static class Program
 		await RunEchoAndProbeAsync();
 		await RunUiDispatcherMainThreadSmokeAsync();
 		RunNpcTargetStableIdSmoke();
+		RunUnnamedProfileSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunUnnamedProfileSmoke()
+	{
+		if (!StringComparer.Ordinal.Equals(AwakeUnnamedProfileService.RoleLabel(Occupation.Villager), "村民")
+			|| !StringComparer.Ordinal.Equals(AwakeUnnamedProfileService.RoleLabel(Occupation.Tavernkeeper), "酒馆老板")
+			|| !StringComparer.Ordinal.Equals(AwakeUnnamedProfileService.RoleLabel(Occupation.Soldier), "士兵"))
+		{
+			throw new InvalidOperationException("unnamed profile role label mismatch.");
+		}
+		if (!AwakeUnnamedProfileService.BuildStateConstraint(null).Contains("内容包"))
+		{
+			throw new InvalidOperationException("unnamed profile null target should use the generic state block.");
+		}
+		Console.WriteLine("PASS unnamed profile role labels");
 	}
 
 	private static void RunNpcTargetStableIdSmoke()

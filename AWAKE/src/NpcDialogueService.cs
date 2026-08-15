@@ -523,6 +523,15 @@ internal sealed class NpcDialogueService : IDisposable
         }
     }
 
+    private string BuildNpcIdentity()
+    {
+        if (_target != null && !_target.IsHero)
+        {
+            return AwakeUnnamedProfileService.BuildIdentity(_target);
+        }
+        return NpcDialogueStateFormatter.FormatIdentity(_heroName, _heroGender, _heroCulture);
+    }
+
     private async Task<string> BuildPromptInputAsync(
         IReadOnlyList<NpcDialogueChatEntry> history,
         string playerText,
@@ -565,8 +574,8 @@ internal sealed class NpcDialogueService : IDisposable
         {
             ["retrieved_knowledge"] = retrievedKnowledge,
             ["npc_memory"] = _memoryBlock ?? string.Empty,
-            ["npc_identity"] = NpcDialogueStateFormatter.FormatIdentity(_heroName, _heroGender, _heroCulture),
-            ["npc_state"] = "关系、身体与发情状态由内容包提供。",
+            ["npc_identity"] = BuildNpcIdentity(),
+            ["npc_state"] = AwakeUnnamedProfileService.BuildStateConstraint(_target),
             ["player_known"] = SerializePlayerKnown(_playerName, _clanName, _kingdomName),
             ["scene"] = _sceneKeywords,
             ["opening_hint"] = openingHint,
