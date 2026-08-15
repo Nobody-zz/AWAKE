@@ -19,6 +19,7 @@
   - NPC 记忆逻辑 SdkSmoke
   - AI 架构清单文档
   - 世界书接口与格式规范草案
+  - 最终对抗审查与阶段总结
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）
