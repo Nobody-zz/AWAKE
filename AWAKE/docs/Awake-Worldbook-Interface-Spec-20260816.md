@@ -337,6 +337,61 @@ public interface IWorldbookQueryService
    - 不默认把同一 when 的所有 variants 拼接。
    - 不用 100 字符限制反向约束内容创作。
 
+### 5.5 优先级计算（纯代码，不使用 AI 打分）
+
+检索分两步：
+
+1. **硬过滤**：不满足 `when`、`contentTier`、`persistence` 门控的规则直接排除。
+2. **固定权重评分**：用以下纯函数计算，模型不参与排序。
+
+```csharp
+long Score(WorldbookRule rule, WorldbookQuery query)
+{
+    long identity = 0;
+    if (Matches(rule.When.HeroIds, query.HeroId)) identity += 1000;
+    if (Matches(rule.When.CharacterIds, query.CharacterId)) identity += 900;
+    if (Matches(rule.When.IdentityIds, query.IdentityId)) identity += 800;
+    if (Matches(rule.When.Cultures, query.CultureId)) identity += 600;
+    if (Matches(rule.When.KingdomIds, query.KingdomId)) identity += 500;
+    if (Matches(rule.When.SettlementIds, query.SettlementId)) identity += 400;
+    if (Matches(rule.When.Roles, query.Role)) identity += 300;
+    if (rule.When.IsFemale != null && rule.When.IsFemale == query.IsFemale) identity += 100;
+    if (rule.When.MinAge != null && query.Age >= rule.When.MinAge) identity += 100;
+    if (rule.When.MaxAge != null && query.Age <= rule.When.MaxAge) identity += 100;
+    if (rule.When.IsClanLeader != null && rule.When.IsClanLeader == query.IsClanLeader) identity += 100;
+    if (MeetsSkillMin(rule.When.SkillMin, query.Skills)) identity += 100;
+
+    long context = 0;
+    foreach (string keyword in query.SceneKeywords)
+    {
+        if (Contains(rule.Context.SceneKeywords, keyword)) context += 200;
+    }
+    foreach (string mode in query.ContextModes)
+    {
+        if (Contains(rule.Context.ContextModes, mode)) context += 150;
+    }
+
+    long recall = 0;
+    recall += CountHits(rule.Keywords, query.PlayerText) * 100;
+    recall += CountHits(rule.Ngrams, query.PlayerText) * 50;
+
+    return identity * 1000 + context * 100 + recall * 10 + rule.Priority;
+}
+```
+
+排序规则：
+
+- 按 `Score` 从高到低。
+- 分数相同按 `rule.Priority` 从高到低。
+- 仍相同按 `rule.Id` 字典序，保证确定性。
+
+边界：
+
+- `RAG` 只负责召回候选，不参与分数计算。
+- `ragShortTexts` / `semanticPrototypes` 不进入分数。
+- 所有权重是固定常量，后续调整只能改常量，不能引入模型打分。
+- `persona` / `background` 持久规则拥有独立预算，不与非身份规则竞争。
+
 ## 6. 与 Marcus 的边界
 
 - 世界书文件加载、校验、指纹由 AWAKE 负责。
