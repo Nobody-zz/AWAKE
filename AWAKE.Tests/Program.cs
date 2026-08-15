@@ -37,8 +37,85 @@ internal static class Program
 		RunNpcTargetStableIdSmoke();
 		RunUnnamedProfileSmoke();
 		RunSceneDialogueRangeSmoke();
+		RunAwakeEventEngineCoreSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunAwakeEventEngineCoreSmoke()
+	{
+		AwakeEventDefinition valid = new AwakeEventDefinition(
+			"awake.event.valid",
+			"Title",
+			"Body",
+			"A",
+			"B",
+			new AwakeEventDialogueAction("a", "hero-1", "hint"));
+		string error;
+		if (!AwakeEventValidation.Validate(valid, out error))
+		{
+			throw new InvalidOperationException("valid event definition should pass.");
+		}
+
+		AwakeEventDefinition badChoice = new AwakeEventDefinition(
+			"awake.event.bad.choice",
+			"Title",
+			"Body",
+			"A",
+			"B",
+			new AwakeEventDialogueAction("c", "hero-1", ""));
+		if (AwakeEventValidation.Validate(badChoice, out error)
+			|| !StringComparer.Ordinal.Equals(error, "dialogueAction.choice"))
+		{
+			throw new InvalidOperationException("invalid dialogue choice should be rejected.");
+		}
+
+		AwakeEventRule clamped = new AwakeEventRule(
+			valid,
+			-3,
+			-1,
+			AwakeEventCondition.Always,
+			null,
+			-2);
+		if (clamped.Weight != 1 || clamped.CooldownHours != 0 || clamped.MaxPerDay != 0)
+		{
+			throw new InvalidOperationException("event rule clamping mismatch.");
+		}
+
+		if (AwakeEventEngineCore.SelectWeighted(new List<AwakeEventRule>(), new Random(1)) != null)
+		{
+			throw new InvalidOperationException("empty weighted selection should return null.");
+		}
+		if (!AwakeEventEngineCore.IsCooldownReady(-1d, 10d, 1)
+			|| !AwakeEventEngineCore.IsCooldownReady(9d, 10d, 1)
+			|| AwakeEventEngineCore.IsCooldownReady(9.5d, 10d, 1))
+		{
+			throw new InvalidOperationException("cooldown boundary mismatch.");
+		}
+
+		AwakeEventRule start = new AwakeEventRule(
+			new AwakeEventDefinition("start", "Title", "Body", "A", "B"),
+			1,
+			1,
+			AwakeEventCondition.Always,
+			"next");
+		AwakeEventRule next = new AwakeEventRule(
+			new AwakeEventDefinition("next", "Title", "Body", "A", "B"),
+			1,
+			1,
+			AwakeEventCondition.Always);
+		Dictionary<string, AwakeEventRule> chain = new Dictionary<string, AwakeEventRule>(StringComparer.Ordinal)
+		{
+			["start"] = start,
+			["next"] = next
+		};
+		if (!ReferenceEquals(AwakeEventChainCore.Resolve(chain, "start", "a"), next)
+			|| AwakeEventChainCore.Resolve(chain, "start", "b") != null)
+		{
+			throw new InvalidOperationException("event chain resolution mismatch.");
+		}
+
+		Console.WriteLine("PASS awake event engine core smoke");
 	}
 
 	private static void RunSceneDialogueRangeSmoke()

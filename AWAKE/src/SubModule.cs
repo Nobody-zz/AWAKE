@@ -50,6 +50,8 @@ public sealed class SubModule : MBSubModuleBase
                 AwakeLog.Write("awake_terminal_behavior_added");
                 campaignStarter.AddBehavior(new AwakeEncounterBehavior());
                 AwakeLog.Write("awake_encounter_behavior_added");
+                campaignStarter.AddBehavior(new AwakeEventBehavior());
+                AwakeLog.Write("awake_event_behavior_added");
             }
             catch (Exception ex)
             {
