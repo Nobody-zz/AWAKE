@@ -63,6 +63,7 @@ public sealed class SubModule : MBSubModuleBase
         AwakeTerminalBehavior.TickCurrent();
         AwakeUiDispatcher.InitializeGameThread();
         AwakeUiDispatcher.Drain();
+        AwakeMessengerOverlay.OnApplicationTick();
         NpcDialogueOverlay.OnApplicationTick();
         DrainEventDialogueQueue();
     }

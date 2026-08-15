@@ -298,7 +298,7 @@ internal static class NpcDialogueLauncher
         return null;
     }
 
-    private static string CurrentSceneKeywords()
+    internal static string CurrentSceneKeywords()
     {
         try
         {

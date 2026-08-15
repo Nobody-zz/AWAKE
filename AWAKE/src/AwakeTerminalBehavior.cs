@@ -161,7 +161,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
             {
                 return false;
             }
-            if (NpcDialogueOverlay.IsOpen)
+            if (NpcDialogueOverlay.IsOpen || AwakeMessengerOverlay.IsOpen)
             {
                 return false;
             }
@@ -211,11 +211,11 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         List<InquiryElement> elements = new List<InquiryElement>
         {
             new InquiryElement(
-                "npc_talk",
-                AwakeLocalization.Resolve("awake.menu.npc_talk", "深谈（醒世）"),
+                "messenger",
+                AwakeLocalization.Resolve("awake.menu.messenger", "通讯录（醒世）"),
                 (ImageIdentifier)null,
                 true,
-                "与附近角色展开 AI 深谈"),
+                "打开通讯录并开始对话"),
             new InquiryElement(
                 "developer_report",
                 AwakeLocalization.Resolve("awake.menu.developer_check", "开发者检查"),
@@ -247,9 +247,9 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     {
         if (selected == null || selected.Count == 0) return;
         string id = selected[0].Identifier as string;
-        if (StringComparer.Ordinal.Equals(id, "npc_talk"))
+        if (StringComparer.Ordinal.Equals(id, "messenger"))
         {
-            OpenNpcTalkSelection();
+            AwakeMessengerOverlay.Open();
             return;
         }
         if (StringComparer.Ordinal.Equals(id, "developer_report"))
