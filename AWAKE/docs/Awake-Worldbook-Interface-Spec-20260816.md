@@ -30,6 +30,7 @@
   "id": "rule.empire.lord.honor",
   "kind": "background",
   "scope": "npc",
+  "persistence": "persistent",
   "priority": 100,
   "when": {
     "heroIds": [],
@@ -43,8 +44,11 @@
     "minAge": 18,
     "maxAge": null,
     "isClanLeader": null,
-    "sceneKeywords": ["court", "keep"],
     "contentTier": "pure"
+  },
+  "context": {
+    "sceneKeywords": ["court", "keep"],
+    "contextModes": ["settlement_keep", "town"]
   },
   "keywords": ["荣誉", "封臣", "誓言"],
   "ngrams": ["荣誉", "封臣誓言"],
@@ -72,8 +76,10 @@
 | `rules[].id` | 是 | 全局唯一 |
 | `rules[].kind` | 是 | `persona` / `background` / `world` / `relationship` / `scene` |
 | `rules[].scope` | 是 | `global` / `npc` / `kingdom` / `settlement` / `culture` |
+| `rules[].persistence` | 是 | `persistent` = NPC 长期知识；`contextual` = 仅当前场景/事件补充 |
 | `rules[].priority` | 否 | 0-1000，默认 0 |
-| `rules[].when` | 是 | 身份与场景绑定条件 |
+| `rules[].when` | 是 | 身份与内容适用条件 |
+| `rules[].context` | 否 | 场景/事件条件，只影响当前注入优先级 |
 | `rules[].content` | 是 | 注入正文 |
 | `rules[].variants` | 否 | 按额外条件替换正文 |
 | `rules[].keywords` | 否 | 精确词/近义词，用于本地索引 |
@@ -81,9 +87,14 @@
 | `rules[].ragShortTexts` | 否 | RAG 检索短句，不作为权威正文 |
 | `rules[].semanticPrototypes` | 否 | 语义原型，后续可映射到 RAG 查询 |
 
-### 2.4 When 条件
+### 2.4 知识 vs 提示词
 
-`when` 是身份绑定的第一道门，不参与全文模糊匹配：
+- 知识：NPC 长期拥有的身份、文化、王国、定居点、角色、关系、个人背景。`persistent` 规则一旦绑定到该 NPC，就一直属于这个 NPC 的知识，不因场景切换或年龄增长而消失。
+- 提示词：当前对话实际注入给 AI 的文本。受 token 预算限制，只能选取知识层的一部分；场景只决定“这次优先注入什么”，不影响 NPC 知道什么。
+
+### 2.5 When 条件
+
+`when` 是持久知识的适用条件，不参与全文模糊匹配，也不是“临时想起”的开关：
 
 - `heroIds`：稳定 HeroId
 - `characterIds`：CharacterObject StringId
@@ -91,8 +102,19 @@
 - `roles`：领主、商贩、士兵、酒馆老板等
 - `identityIds`：无名 NPC 的确定性身份键
 - `isFemale` / `minAge` / `maxAge` / `isClanLeader`
-- `sceneKeywords`：场景关键词
 - `contentTier`：内容档位门控
+
+年龄是内容适用条件，例如 18+ 门控、童年记忆、成年礼仪，不是“NPC 一出门就忘了”的检索开关。年龄变化后重新评估一次绑定，而不是每轮对话重新过滤。
+
+### 2.6 Context 条件
+
+`context` 只用于 `contextual` 规则或持久规则的“当前注入优先级”：
+
+- `sceneKeywords`：当前场景关键词
+- `contextModes`：城镇、城堡、村庄、海上、扎营、遭遇等
+- 命中 context 的规则在当前对话中优先注入，不命中不会从 NPC 知识中删除
+
+例如：帝国领主知道自己的封臣义务，这属于持久知识；在领主府对话时，这条规则会优先注入。离开领主府后，他仍然知道这些，只是当前对话不一定需要占用提示词预算。
 
 ## 3. 世界书接口
 
@@ -146,14 +168,13 @@ public interface IWorldbookQueryService
 
 ## 4. NPC 身份读取链路
 
-1. 打开 NPC 对话时构建 `NpcTarget` 上下文。
-2. `WorldbookQueryService` 先按 `when` 做身份绑定，选出该 NPC 专属规则。
-3. 在绑定结果内按优先级排序，先注入 `persona` / `background`。
-4. 用当前玩家文本和场景关键词做话题检索，命中 `world` / `scene` / `relationship` 规则。
-5. 所有规则按字节预算组装，身份规则保留独立预算，不被话题检索挤掉。
-6. 组装结果进入 `NpcPromptTemplate` 的 `retrieved_knowledge`。
+1. NPC 身份确定后，按 `when` 构建持久知识池。
+2. 持久知识池进入该 NPC 的知识缓存，不随场景切换清空。
+3. 打开对话时，用当前玩家文本和场景关键词对知识池做“注入排序”。
+4. 排序命中后按优先级和字节预算组装提示词，进入 `NpcPromptTemplate` 的 `retrieved_knowledge`。
+5. 同一 NPC 在城镇、扎营、海上都知道自己的文化、家族、身份；只是不同场景优先注入不同切片。
 
-这样“一个帝国的商贩”不会读到“帝国女领主”的宫廷规则；同一角色在不同场景只会读到场景允许的切片。
+这样“一个帝国的商贩”不会读到“帝国女领主”的宫廷规则；但商贩离开城镇后不会忘记自己是帝国商贩。
 
 ## 5. 对 AF 检索问题的突破
 
@@ -169,12 +190,12 @@ public interface IWorldbookQueryService
 
 | 层 | 作用 | 解决什么 |
 | --- | --- | --- |
-| 身份绑定 | 先按 `when` 过滤规则 | 避免全员关键词竞争 |
+| 身份绑定 | 先按 `when` 构建持久知识池 | 避免全员关键词竞争 |
 | 结构化索引 | 只索引 `id / kind / when / keywords / ngrams` | 避免整本世界书暴力扫描 |
 | 中文 n-gram | 2-3 字本地索引 | 解决中文 FTS5 token 退化 |
 | RAG | 仅作为话题补充 | 不承担身份权威 |
 | 预算保护 | 身份规则独立预算 | 避免知识层截断规则 |
-| 缓存 | 战役内按 NPC 预载身份切片 | 避免每轮全量检索 |
+| 缓存 | 战役内按 NPC 缓存持久知识池 | 避免每轮全量检索 |
 | 日志 | 记录命中模式与规则 ID | 可观测、可调参 |
 
 ### 5.3 能否突破
