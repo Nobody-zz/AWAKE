@@ -20,11 +20,57 @@
   "schemaVersion": "awake.worldbook.v1",
   "id": "slaanesh.worldbook.calradia",
   "culture": "calradia",
-  "rules": []
+  "rules": [],
+  "personas": []
 }
 ```
 
-### 2.2 Rule 结构
+### 2.1.1 AF 世界书结构对照
+
+AF 实际使用两类文件：
+
+1. 知识规则文件，结构为：
+
+```json
+{
+  "Id": "rule_帝国军制",
+  "Keywords": ["帝国军制", "常备军", "军团"],
+  "RagShortTexts": ["旧帝国依赖常备军团维持边境秩序"],
+  "SemanticPrototypes": ["军团是旧帝国秩序的象征"],
+  "Variants": [
+    {
+      "Priority": 0,
+      "When": {
+        "HeroIds": null,
+        "Cultures": ["empire"],
+        "KingdomIds": null,
+        "SettlementIds": null,
+        "Roles": ["lord"],
+        "IdentityIds": null,
+        "IsFemale": null,
+        "IsClanLeader": null,
+        "SkillMin": null
+      },
+      "Content": "帝国领主通常用军团传统解释自己的军事立场。"
+    }
+  ],
+  "TextMappings": []
+}
+```
+
+2. 角色人格背景文件，结构为：
+
+```json
+{
+  "Personality": "这个角色对外表现的脾气、欲望、说话方式和判断习惯。",
+  "Background": "这个角色真实的出身、经历、立场和秘密。",
+  "VoiceId": ""
+}
+```
+
+### 2.2 AWAKE Rule 结构
+
+AWAKE 保留 AF 字段名和语义，不另造一套：
 
 ```json
 {
@@ -45,6 +91,7 @@
     "minAge": 18,
     "maxAge": null,
     "isClanLeader": null,
+    "skillMin": null,
     "contentTier": "pure"
   },
   "context": {
@@ -58,13 +105,32 @@
   "content": "帝国领主视荣誉高于私利，但不等于不会背叛；背叛必须由具体事件推动。",
   "variants": [
     {
+      "priority": 0,
       "when": {
         "isFemale": true
       },
       "content": "女领主同样以誓言立身，但宫廷更常质疑她的权威。"
+    },
+    {
+      "priority": 1,
+      "when": {
+        "isFemale": true
+      },
+      "content": "另一种同等成立的女领主表达，按优先级或顺序解析。"
     }
   ],
   "textMappings": []
+}
+```
+
+### 2.2.1 Persona 结构
+
+```json
+{
+  "characterId": "CharacterObject_1795__图卢勒",
+  "personality": "角色对外表现的脾气、欲望、说话方式和判断习惯。",
+  "background": "角色真实的出身、经历、立场和秘密。",
+  "voiceId": ""
 }
 ```
 
@@ -82,11 +148,18 @@
 | `rules[].when` | 是 | 身份与内容适用条件 |
 | `rules[].context` | 否 | 场景/事件条件，只影响当前注入优先级 |
 | `rules[].content` | 是 | 注入正文 |
-| `rules[].variants` | 否 | 按额外条件替换正文 |
+| `rules[].variants` | 否 | 允许多条；同一 when 允许多个 variant，按 priority 再按数组顺序解析 |
+| `rules[].variants[].priority` | 否 | 变体优先级，默认 0 |
+| `rules[].variantSelection` | 否 | `first` / `all` / `random`；默认 `first` |
 | `rules[].keywords` | 否 | 精确词/近义词，用于本地索引 |
 | `rules[].ngrams` | 否 | 2-3 字中文词，用于 n-gram 回退 |
-| `rules[].ragShortTexts` | 否 | RAG 检索短句，不作为权威正文 |
+| `rules[].ragShortTexts` | 否 | RAG 召回种子，不作为权威正文；不设 100 字符硬限制，建议单条不超过 512 字 |
 | `rules[].semanticPrototypes` | 否 | 语义原型，后续可映射到 RAG 查询 |
+| `personas[]` | 否 | 角色人格背景，对应 AF `personality_background` |
+| `personas[].characterId` | 是 | 角色稳定 ID |
+| `personas[].personality` | 否 | 角色人格正文 |
+| `personas[].background` | 否 | 角色背景正文 |
+| `personas[].voiceId` | 否 | 预留语音 ID |
 
 ### 2.4 世界书、提示词、上下文三层分离
 
@@ -112,6 +185,7 @@
 - `roles`：领主、商贩、士兵、酒馆老板等
 - `identityIds`：无名 NPC 的确定性身份键
 - `isFemale` / `minAge` / `maxAge` / `isClanLeader`
+- `skillMin`：技能下限条件，对应 AF `SkillMin`
 - `contentTier`：内容档位门控
 
 年龄是内容适用条件，例如 18+ 门控、童年记忆、成年礼仪，不是“NPC 一出门就忘了”的检索开关。年龄变化后重新评估一次绑定，而不是每轮对话重新过滤。
@@ -183,6 +257,8 @@ public interface IWorldbookQueryService
 - `RetrievedText`：最终注入文本
 - `MatchMode`：`identity` / `keyword` / `ngram` / `rag` / `mixed`
 - `ByteBudget`：各层消耗
+- `MatchedKeywords`：命中的关键词/n-gram
+- `ResolvedVariantIds`：实际解析的 variant 标识
 - `HitIds`：用于日志与调试
 
 ## 4. NPC 身份读取链路
@@ -201,6 +277,9 @@ public interface IWorldbookQueryService
 ### 5.1 AF 的问题
 
 - `Keywords` 只做词面命中，没有身份绑定前置。
+- 单一 keyword 只对应一条 rule，导致同 keyword 的多条规则无法全部进入候选。
+- 同一规则相同 `when` 只允许一个 variant，创作上限制过大。
+- `RagShortTexts` 有固定短句字数限制，例如 100 字符，无法承载更完整的事实。
 - `RagShortTexts` 被拼接成一条检索文本，中文 FTS5 分词弱，短句召回不稳定。
 - 所有规则放在同一检索池，缺少 per-NPC worldbook slice。
 - 规则命中与 RAG 命中没有明确权威顺序，知识层截断可能把规则一起截掉。
@@ -212,6 +291,9 @@ public interface IWorldbookQueryService
 | --- | --- | --- |
 | 身份绑定 | 先按 `when` 构建持久知识池 | 避免全员关键词竞争 |
 | 结构化索引 | 只索引 `id / kind / when / keywords / ngrams` | 避免整本世界书暴力扫描 |
+| 多对多关键词 | keyword -> 全部包含该 keyword 的 rules | 避免“一词只出一条规则” |
+| Variants 多值 | 同一 when 允许多个 variant，按优先级/顺序解析 | 放宽创作限制 |
+| RAG 预算 | 不设 100 字符硬上限，由单条与总预算控制 | 保留完整事实片段 |
 | 中文 n-gram | 2-3 字本地索引 | 解决中文 FTS5 token 退化 |
 | RAG | 仅作为话题补充 | 不承担身份权威 |
 | 预算保护 | 身份规则独立预算 | 避免知识层截断规则 |
@@ -231,6 +313,29 @@ public interface IWorldbookQueryService
 - 让规则先于 RAG。
 - 让中文检索有确定性回退。
 - 让每次命中都可审计。
+
+### 5.4 推荐改进（不要求全部采用）
+
+针对你提出的三个限制，建议如下：
+
+1. **keyword 多对多**
+   推荐改为：同一 keyword 命中所有包含该 keyword 的 rules，全部进入候选集。候选集再经过身份绑定、优先级、预算排序，最终只注入最合适的一部分。这样不会“一词只出一条”，也不会把所有命中规则全部塞进提示词。
+
+2. **同一 when 允许多个 variants**
+   推荐允许同一规则、相同 `when` 下存在多个 variant。解析顺序为：
+   - `priority` 从高到低
+   - 相同优先级按数组顺序
+   - 可选 `variantSelection = first / all / random`
+   - 默认 `first`，避免无脑拼接导致上下文膨胀
+
+3. **RAG 短句不设 100 字符硬限制**
+   推荐把 `ragShortTexts` 定义为“召回种子”，不是权威正文。权威正文放在 `content` / `variants`。所以不需要把完整事实硬塞进 100 字；建议单条 `ragShortTexts` 不超过 512 字，总预算由检索层控制。
+
+4. **不建议的做法**
+   - 不把所有 keyword 命中规则全部注入。
+   - 不把 `ragShortTexts` 当作最终知识正文。
+   - 不默认把同一 when 的所有 variants 拼接。
+   - 不用 100 字符限制反向约束内容创作。
 
 ## 6. 与 Marcus 的边界
 
