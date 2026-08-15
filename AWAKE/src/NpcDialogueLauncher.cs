@@ -96,6 +96,24 @@ internal static class NpcDialogueLauncher
         return result;
     }
 
+    internal static List<AwakeNpcTarget> GetSceneTargets(int limit)
+    {
+        List<AwakeNpcTarget> result = new List<AwakeNpcTarget>();
+        if (limit <= 0) return result;
+        HashSet<string> seen = new HashSet<string>(StringComparer.Ordinal);
+        try
+        {
+            AddMissionAgents(result, seen, limit);
+            AddLocationCharacters(result, seen, limit);
+            AddSceneHeroCandidates(result, seen, limit);
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("npc_dialogue_launcher_scene_targets_error error=" + ex.Message);
+        }
+        return result;
+    }
+
     internal static List<Hero> GetNearbyHeroes(int limit)
     {
         List<Hero> result = new List<Hero>();
@@ -187,6 +205,19 @@ internal static class NpcDialogueLauncher
         }
     }
 
+    internal static Agent GetActiveAgent(int agentIndex)
+    {
+        if (agentIndex < 0 || Mission.Current?.Agents == null) return null;
+        foreach (Agent agent in Mission.Current.Agents)
+        {
+            if (agent != null && agent.Index == agentIndex && agent.IsActive())
+            {
+                return agent;
+            }
+        }
+        return null;
+    }
+
     internal static bool IsEligibleNearbyHero(Hero hero)
     {
         return IsEligibleNpcTarget(AwakeNpcTarget.FromHero(hero));
@@ -197,6 +228,14 @@ internal static class NpcDialogueLauncher
         try
         {
             if (target == null || string.IsNullOrWhiteSpace(target.StableId)) return false;
+            if (target.AgentIndex >= 0)
+            {
+                Agent agent = GetActiveAgent(target.AgentIndex);
+                if (agent == null || !agent.IsActive() || agent == Agent.Main || agent.IsMainAgent) return false;
+                if (agent.Character == null || agent.Character == CharacterObject.PlayerCharacter) return false;
+                if (target.Age > 0f && target.Age < 18f) return false;
+                return true;
+            }
             if (target.IsHero)
             {
                 Hero hero = target.Hero;
@@ -233,6 +272,23 @@ internal static class NpcDialogueLauncher
         {
             if (result.Count >= limit) return;
             AwakeNpcTarget target = AwakeNpcTarget.FromHero(hero);
+            if (target == null || !IsEligibleNpcTarget(target)) continue;
+            if (!seen.Add(target.StableId)) continue;
+            result.Add(target);
+        }
+    }
+
+    private static void AddSceneHeroCandidates(List<AwakeNpcTarget> result, HashSet<string> seen, int limit)
+    {
+        if (Mission.Current?.Agents == null) return;
+        if (Campaign.Current?.CampaignObjectManager?.AliveHeroes == null) return;
+        foreach (Hero hero in Campaign.Current.CampaignObjectManager.AliveHeroes)
+        {
+            if (result.Count >= limit) return;
+            if (hero == null || hero == Hero.MainHero || !hero.IsAlive || hero.Age < 18f) continue;
+            int agentIndex = ResolveAgentIndex(hero.CharacterObject);
+            if (agentIndex < 0) continue;
+            AwakeNpcTarget target = AwakeNpcTarget.FromHero(hero, agentIndex);
             if (target == null || !IsEligibleNpcTarget(target)) continue;
             if (!seen.Add(target.StableId)) continue;
             result.Add(target);

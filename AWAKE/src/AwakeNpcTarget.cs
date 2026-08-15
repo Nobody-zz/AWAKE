@@ -51,7 +51,7 @@ internal sealed class AwakeNpcTarget
         Age = age;
     }
 
-    internal static AwakeNpcTarget FromHero(Hero hero)
+    internal static AwakeNpcTarget FromHero(Hero hero, int agentIndex = -1)
     {
         if (hero == null) return null;
         string name = SafeName(hero.Name, hero.StringId);
@@ -60,7 +60,7 @@ internal sealed class AwakeNpcTarget
             hero,
             hero.CharacterObject,
             null,
-            -1,
+            agentIndex,
             "hero:" + hero.StringId,
             name,
             cultureId,

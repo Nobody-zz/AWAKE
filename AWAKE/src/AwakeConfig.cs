@@ -57,6 +57,10 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyGroup("{=awake.mcm.group.command}命令台", GroupOrder = 1)]
     public string TerminalKey { get; set; } = "Y";
 
+    [SettingPropertyInteger("{=awake.mcm.scene_max_range.name}场景选人最大距离（米）", 8, 150, Order = 0, RequireRestart = false, HintText = "{=awake.mcm.scene_max_range.hint}按住 T 的最大搜索半径，默认 60。使用三维空间距离，过高会把隔墙或上下楼层的人也纳入候选。")]
+    [SettingPropertyGroup("{=awake.mcm.group.scene}场景对话", GroupOrder = 2)]
+    public int SceneMaxRangeMeters { get; set; } = (int)SceneDialogueSelection.DefaultMaxRangeMeters;
+
     public AwakeConfig()
     {
         _instance = this;

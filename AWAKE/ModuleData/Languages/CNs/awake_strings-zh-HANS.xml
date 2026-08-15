@@ -8,7 +8,8 @@
     <string id="AWAKE.Description" text="基于马库斯 AI 框架的通用 AI 世界运行时。" />
     <string id="awake.menu.messenger" text="通讯录（醒世）" />
     <string id="awake.menu.encounter_talk" text="面谈（醒世）" />
-    <string id="awake.scene.select_hint" text="已选中 {NAME}，按 Y 继续对话。" />
+    <string id="awake.scene.hold_hint" text="按住 T 扩大距离范围，按 Y 切换，松开 T 开始对话。" />
+    <string id="awake.scene.select_hint" text="已选中 {NAME}（{RANGE} 米），按 Y 切换，松开 T 开始对话。" />
     <string id="awake.scene.no_candidates" text="附近没有可以对话的人物。" />
     <string id="awake.scene.confirm_unavailable" text="对方暂时无法交谈。" />
     <string id="awake.terminal.title" text="醒世 · 命令台" />
@@ -20,6 +21,7 @@
     <string id="awake.mcm.group.ai_link" text="AI 链路" />
     <string id="awake.mcm.group.data_debug" text="数据与调试" />
     <string id="awake.mcm.group.behavior" text="档位与行为" />
+    <string id="awake.mcm.group.scene" text="场景对话" />
     <string id="awake.mcm.ai_status.name" text="AI 链路状态" />
     <string id="awake.mcm.ai_status.hint" text="只读显示：Companion 连接、路由能力与候选 Provider 状态。Provider 配置请在 MCM → Marcus AI Framework → 01 Companion 完成，Route ID 使用模组 README 中的四条逻辑路由。" />
     <string id="awake.mcm.cloud_export.name" text="启用云外发" />
@@ -30,6 +32,8 @@
     <string id="awake.mcm.developer_menu.hint" text="默认关闭。开启后城镇、城堡、村庄、领主府菜单显示神谕 AI 自检与开发者检查。" />
     <string id="awake.mcm.terminal_key.name" text="命令台快捷键" />
     <string id="awake.mcm.terminal_key.hint" text="输入 InputKey 名称，例如 Y、K、H。" />
+    <string id="awake.mcm.scene_max_range.name" text="场景选人最大距离（米）" />
+    <string id="awake.mcm.scene_max_range.hint" text="按住 T 的最大搜索半径，默认 60。使用三维空间距离，过高会把隔墙或上下楼层的人也纳入候选。" />
     <string id="awake.mcm.group.command" text="命令台" />
     <string id="awake.mcm.world_effects.name" text="启用世界效果" />
     <string id="awake.mcm.world_effects.hint" text="默认开启。关闭后女神输出的世界命令与神谕效果都会被拒绝；该开关计划在 0.2.x 实际接入。" />

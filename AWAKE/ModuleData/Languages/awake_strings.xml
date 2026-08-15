@@ -8,7 +8,8 @@
     <string id="AWAKE.Description" text="Generic AI world runtime for Bannerlord, powered by Marcus AI Framework." />
     <string id="awake.menu.messenger" text="Messenger (AWAKE)" />
     <string id="awake.menu.encounter_talk" text="Face Talk (AWAKE)" />
-    <string id="awake.scene.select_hint" text="Selected {NAME}. Press Y to continue." />
+    <string id="awake.scene.hold_hint" text="Hold T to widen the range, press Y to switch, release T to talk." />
+    <string id="awake.scene.select_hint" text="Selected {NAME} ({RANGE}m). Press Y to switch, release T to talk." />
     <string id="awake.scene.no_candidates" text="There is no one nearby to talk with." />
     <string id="awake.scene.confirm_unavailable" text="They cannot talk right now." />
     <string id="awake.terminal.title" text="AWAKE Command Deck" />
@@ -20,6 +21,7 @@
     <string id="awake.mcm.group.ai_link" text="AI Link" />
     <string id="awake.mcm.group.data_debug" text="Data and Debug" />
     <string id="awake.mcm.group.behavior" text="Presets and Behavior" />
+    <string id="awake.mcm.group.scene" text="Scene Dialogue" />
     <string id="awake.mcm.ai_status.name" text="AI Link Status" />
     <string id="awake.mcm.ai_status.hint" text="Read-only: Companion connection, route capabilities and candidate providers. Configure Provider under MCM → Marcus AI Framework → 01 Companion; use the four logical routes from the README." />
     <string id="awake.mcm.cloud_export.name" text="Enable Cloud Export" />
@@ -30,6 +32,8 @@
     <string id="awake.mcm.developer_menu.hint" text="Disabled by default. Adds AI self-check and developer check entries in town, castle, village and keep menus." />
     <string id="awake.mcm.terminal_key.name" text="Command Deck Hotkey" />
     <string id="awake.mcm.terminal_key.hint" text="Input an InputKey name, e.g. Y, K or H." />
+    <string id="awake.mcm.scene_max_range.name" text="Scene Target Max Range (m)" />
+    <string id="awake.mcm.scene_max_range.hint" text="Maximum search radius while holding T. Default 60. Uses 3D distance; very high values include people across walls or floors." />
     <string id="awake.mcm.group.command" text="Command Deck" />
     <string id="awake.mcm.world_effects.name" text="Enable World Effects" />
     <string id="awake.mcm.world_effects.hint" text="Enabled by default. When disabled, world commands and oracle effects from goddess output are rejected; actual gameplay wiring is planned for 0.2.x." />

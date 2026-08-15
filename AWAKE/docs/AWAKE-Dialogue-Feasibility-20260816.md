@@ -24,7 +24,7 @@
 
 - 把 `NpcDialogueService` 作为共享会话服务，供 Immersive 与 Messenger 两个视图复用。
 - `NpcDialogueLauncher` 增加三维距离候选排序。
-- 按住 `T` 扩大范围，`Y` 切换候选人，松开 `T` 确认。
+- 按住 `T` 扩大范围，`Y` 切换候选人，松开 `T` 确认；默认上限 `60m`，MCM 可调 `8-150m`。
 - 遭遇面谈增加 `PlayerEncounterState.Begin/Wait` 与敌意门。
 
 技术依据：

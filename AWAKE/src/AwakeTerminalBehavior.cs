@@ -28,6 +28,9 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     private bool _terminalUiActive;
     private int _sceneSelectedAgentIndex = -1;
     private string _sceneSelectedTargetId = string.Empty;
+    private bool _sceneHoldActive;
+    private float _sceneHoldStartRealTime = -999f;
+    private float _sceneCurrentRangeMeters = SceneDialogueSelection.MinRangeMeters;
     private float _lastOpenRealTime = -999f;
     private float _nextTerminalKeyRefreshRealTime = -999f;
     private InputKey _cachedTerminalKey = InputKey.Y;
@@ -102,26 +105,63 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     {
         if (Mission.Current == null)
         {
-            ClearSceneSelection();
+            AbortSceneSelection();
             return false;
         }
         if (!CanUseSceneDialogue())
         {
-            ClearSceneSelection();
+            AbortSceneSelection();
             return false;
         }
 
-        if (Input.IsKeyPressed(InputKey.T))
+        bool tDown = false;
+        try
         {
-            CycleSceneTarget();
+            tDown = Input.IsKeyDown(InputKey.T);
+        }
+        catch
+        {
+            tDown = false;
+        }
+
+        if (tDown)
+        {
+            float now = (float)TerminalClock.Elapsed.TotalSeconds;
+            if (!_sceneHoldActive)
+            {
+                _sceneHoldActive = true;
+                _sceneHoldStartRealTime = now;
+                _sceneCurrentRangeMeters = SceneDialogueSelection.CurrentRange(0f, GetSceneMaxRange());
+                ClearSceneSelection();
+                ShowSceneMessage(AwakeLocalization.Resolve(
+                    "awake.scene.hold_hint",
+                    "按住 T 扩大距离范围，按 Y 切换，松开 T 开始对话。"));
+            }
+            else
+            {
+                _sceneCurrentRangeMeters = SceneDialogueSelection.CurrentRange(
+                    Math.Max(0f, now - _sceneHoldStartRealTime),
+                    GetSceneMaxRange());
+            }
+
+            if (Input.IsKeyPressed(InputKey.Y))
+            {
+                CycleSceneTarget();
+            }
             return true;
         }
-        if (Input.IsKeyPressed(InputKey.Y))
+
+        if (_sceneHoldActive)
         {
+            _sceneCurrentRangeMeters = SceneDialogueSelection.CurrentRange(
+                Math.Max(0f, (float)TerminalClock.Elapsed.TotalSeconds - _sceneHoldStartRealTime),
+                GetSceneMaxRange());
+            _sceneHoldActive = false;
             ConfirmSceneTarget();
             return true;
         }
-        return false;
+
+        return true;
     }
 
     private bool CanUseSceneDialogue()
@@ -240,26 +280,81 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         SetSceneAgentHighlight(_sceneSelectedAgentIndex, true);
         if (showHint)
         {
+            string rangeText = _sceneCurrentRangeMeters.ToString("0");
             ShowSceneMessage(AwakeLocalization.Resolve(
                 "awake.scene.select_hint",
-                "已选中 " + target.DisplayName + "，按 Y 继续对话。",
-                new Dictionary<string, string> { ["NAME"] = target.DisplayName }));
+                "已选中 " + target.DisplayName + "（" + rangeText + "m），按 Y 切换，松开 T 开始对话。",
+                new Dictionary<string, string>
+                {
+                    ["NAME"] = target.DisplayName,
+                    ["RANGE"] = rangeText
+                }));
         }
     }
 
     private List<AwakeNpcTarget> GetSceneCandidates()
     {
-        List<AwakeNpcTarget> result = new List<AwakeNpcTarget>();
-        foreach (AwakeNpcTarget target in NpcDialogueLauncher.GetNearbyTargets(32))
+        Agent mainAgent = Mission.Current?.MainAgent ?? Agent.Main;
+        if (mainAgent == null || !mainAgent.IsActive())
         {
-            if (target != null
-                && target.AgentIndex >= 0
-                && NpcDialogueLauncher.IsEligibleNpcTarget(target))
+            return new List<AwakeNpcTarget>();
+        }
+
+        float rangeSquared = _sceneCurrentRangeMeters * _sceneCurrentRangeMeters;
+        List<Tuple<AwakeNpcTarget, float>> scored = new List<Tuple<AwakeNpcTarget, float>>();
+        foreach (AwakeNpcTarget target in NpcDialogueLauncher.GetSceneTargets(64))
+        {
+            if (target == null
+                || target.AgentIndex < 0
+                || !NpcDialogueLauncher.IsEligibleNpcTarget(target))
             {
-                result.Add(target);
+                continue;
             }
+            Agent agent = NpcDialogueLauncher.GetActiveAgent(target.AgentIndex);
+            if (agent == null || !agent.IsActive())
+            {
+                continue;
+            }
+
+            float distanceSquared = mainAgent.Position.DistanceSquared(agent.Position);
+            if (float.IsNaN(distanceSquared)
+                || float.IsInfinity(distanceSquared)
+                || distanceSquared > rangeSquared)
+            {
+                continue;
+            }
+
+            float distanceMeters = (float)Math.Sqrt(distanceSquared);
+            scored.Add(Tuple.Create(target, distanceMeters));
+        }
+
+        scored.Sort((a, b) => a.Item2.CompareTo(b.Item2));
+        List<AwakeNpcTarget> result = new List<AwakeNpcTarget>();
+        foreach (Tuple<AwakeNpcTarget, float> item in scored)
+        {
+            result.Add(item.Item1);
         }
         return result;
+    }
+
+    private void AbortSceneSelection()
+    {
+        _sceneHoldActive = false;
+        _sceneHoldStartRealTime = -999f;
+        _sceneCurrentRangeMeters = SceneDialogueSelection.MinRangeMeters;
+        ClearSceneSelection();
+    }
+
+    private static float GetSceneMaxRange()
+    {
+        try
+        {
+            return SceneDialogueSelection.ClampMax(AwakeSettings.Current.SceneMaxRangeMeters);
+        }
+        catch
+        {
+            return SceneDialogueSelection.DefaultMaxRangeMeters;
+        }
     }
 
     private void ClearSceneSelection()

@@ -36,8 +36,38 @@ internal static class Program
 		await RunUiDispatcherMainThreadSmokeAsync();
 		RunNpcTargetStableIdSmoke();
 		RunUnnamedProfileSmoke();
+		RunSceneDialogueRangeSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunSceneDialogueRangeSmoke()
+	{
+		if (SceneDialogueSelection.CurrentRange(0f, 60f) != SceneDialogueSelection.MinRangeMeters)
+		{
+			throw new InvalidOperationException("scene dialogue initial range mismatch.");
+		}
+		if (SceneDialogueSelection.CurrentRange(SceneDialogueSelection.MaxHoldSeconds, 60f) != 60f)
+		{
+			throw new InvalidOperationException("scene dialogue max range mismatch.");
+		}
+		if (SceneDialogueSelection.CurrentRange(999f, 60f) != 60f)
+		{
+			throw new InvalidOperationException("scene dialogue hold overflow should clamp.");
+		}
+		float early = SceneDialogueSelection.CurrentRange(1f, 60f);
+		float late = SceneDialogueSelection.CurrentRange(2f, 60f);
+		if (early <= SceneDialogueSelection.MinRangeMeters || late <= early)
+		{
+			throw new InvalidOperationException("scene dialogue range curve must be monotonic.");
+		}
+		if (SceneDialogueSelection.ClampMax(500f) != SceneDialogueSelection.HardMaxRangeMeters
+			|| SceneDialogueSelection.ClampMax(3f) != SceneDialogueSelection.MinRangeMeters
+			|| SceneDialogueSelection.ClampMax(float.NaN) != SceneDialogueSelection.DefaultMaxRangeMeters)
+		{
+			throw new InvalidOperationException("scene dialogue range clamp mismatch.");
+		}
+		Console.WriteLine("PASS scene dialogue range curve");
 	}
 
 	private static void RunUnnamedProfileSmoke()
