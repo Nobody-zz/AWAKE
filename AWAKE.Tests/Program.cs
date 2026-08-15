@@ -114,12 +114,8 @@ internal static class Program
 
 	private static void RunAwakeEventEngineCoreSmoke()
 	{
-		AwakeEventDefinition valid = new AwakeEventDefinition(
+		AwakeEventDefinition valid = TestEventDefinition(
 			"awake.event.valid",
-			"Title",
-			"Body",
-			"A",
-			"B",
 			new AwakeEventDialogueAction("a", "hero-1", "hint"));
 		string error;
 		if (!AwakeEventValidation.Validate(valid, out error))
@@ -127,12 +123,8 @@ internal static class Program
 			throw new InvalidOperationException("valid event definition should pass.");
 		}
 
-		AwakeEventDefinition badChoice = new AwakeEventDefinition(
+		AwakeEventDefinition badChoice = TestEventDefinition(
 			"awake.event.bad.choice",
-			"Title",
-			"Body",
-			"A",
-			"B",
 			new AwakeEventDialogueAction("c", "hero-1", ""));
 		if (AwakeEventValidation.Validate(badChoice, out error)
 			|| !StringComparer.Ordinal.Equals(error, "dialogueAction.choice"))
@@ -140,12 +132,8 @@ internal static class Program
 			throw new InvalidOperationException("invalid dialogue choice should be rejected.");
 		}
 
-		AwakeEventDefinition withDiscussion = new AwakeEventDefinition(
+		AwakeEventDefinition withDiscussion = TestEventDefinition(
 			"awake.event.discussion",
-			"Title",
-			"Body",
-			"A",
-			"B",
 			null,
 			new AwakeEventDialogueAction("discuss", "hero-1", "topic hint"));
 		if (!AwakeEventValidation.Validate(withDiscussion, out error))
@@ -153,18 +141,26 @@ internal static class Program
 			throw new InvalidOperationException("valid discussion action should pass.");
 		}
 
-		AwakeEventDefinition badDiscussion = new AwakeEventDefinition(
+		AwakeEventDefinition badDiscussion = TestEventDefinition(
 			"awake.event.bad.discussion",
-			"Title",
-			"Body",
-			"A",
-			"B",
 			null,
 			new AwakeEventDialogueAction("a", "hero-1", ""));
 		if (AwakeEventValidation.Validate(badDiscussion, out error)
 			|| !StringComparer.Ordinal.Equals(error, "discussionAction.choice"))
 		{
 			throw new InvalidOperationException("invalid discussion choice should be rejected.");
+		}
+
+		AwakeEventDefinition missingCategory = new AwakeEventDefinition(
+			"awake.event.missing.category",
+			"Title",
+			"Body",
+			"A",
+			"B");
+		if (AwakeEventValidation.Validate(missingCategory, out error)
+			|| !StringComparer.Ordinal.Equals(error, "source"))
+		{
+			throw new InvalidOperationException("missing event category should be rejected.");
 		}
 
 		AwakeEventRule clamped = new AwakeEventRule(
@@ -191,13 +187,13 @@ internal static class Program
 		}
 
 		AwakeEventRule start = new AwakeEventRule(
-			new AwakeEventDefinition("start", "Title", "Body", "A", "B"),
+			TestEventDefinition("start"),
 			1,
 			1,
 			AwakeEventCondition.Always,
 			"next");
 		AwakeEventRule next = new AwakeEventRule(
-			new AwakeEventDefinition("next", "Title", "Body", "A", "B"),
+			TestEventDefinition("next"),
 			1,
 			1,
 			AwakeEventCondition.Always);
@@ -213,6 +209,28 @@ internal static class Program
 		}
 
 		Console.WriteLine("PASS awake event engine core smoke");
+	}
+
+	private static AwakeEventDefinition TestEventDefinition(
+		string id,
+		AwakeEventDialogueAction dialogueAction = null,
+		AwakeEventDialogueAction discussionAction = null)
+	{
+		return new AwakeEventDefinition(
+			id,
+			"Title",
+			"Body",
+			"A",
+			"B",
+			dialogueAction,
+			discussionAction,
+			AwakeEventSource.PresetRule,
+			AwakeEventContext.Camp,
+			AwakeEventSubject.PlayerNpc,
+			AwakeEventContent.Daily,
+			AwakeEventResolution.DialogueEntry,
+			AwakeEventChoiceShape.TwoChoice,
+			AwakeEventPersistence.Repeatable);
 	}
 
 	private static void RunSceneDialogueRangeSmoke()

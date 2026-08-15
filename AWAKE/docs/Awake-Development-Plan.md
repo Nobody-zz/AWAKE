@@ -16,7 +16,7 @@
 - NPC 深谈入口为 AWAKE 命令台：MCM 可配置快捷键（默认 `U`），深谈复用 `NpcDialogueLauncher`。
 - 运行时已有 NPC 对话、跨会话记忆、本地知识检索、世界状态存储、权限与命令桥骨架。
 - 事件引擎骨架已加入运行时：规则注册、每小时评估、冷却/每日上限持久化、事件弹窗、对话动作队列；具体事件内容留待内容包接入。
-- 事件类型边界见 `docs/Awake-Event-Type-Inventory-20260816.md`，确认后落成代码枚举并接入校验。
+- 事件类型边界见 `docs/Awake-Event-Type-Inventory-20260816.md`，七条分类线已落成代码枚举并接入校验。
 - 原生命令底座已加入运行时：`awake.relationship.delta.v1` 可校验、入队、持久化，并会把信任/爱意/敌意状态写回 NPC 对话提示词。
 - 内容包公开 API 仍是草案；`SlaneshsEmbraceContent` 当前为骨架工程，`frozen/` 保留旧内容实现。
 

@@ -11,6 +11,76 @@ internal enum AwakeEventCondition
     HasPrisoners
 }
 
+internal enum AwakeEventSource
+{
+    PresetRule,
+    Situational,
+    PlayerInitiated,
+    NpcInitiated,
+    DynamicAI
+}
+
+internal enum AwakeEventContext
+{
+    MapMarch,
+    Camp,
+    Settlement,
+    Sea,
+    Encounter,
+    Scene
+}
+
+internal enum AwakeEventSubject
+{
+    PlayerNpc,
+    NpcNpc,
+    Clan,
+    Kingdom,
+    World,
+    Environment
+}
+
+internal enum AwakeEventContent
+{
+    Daily,
+    Survival,
+    Military,
+    Politics,
+    Trade,
+    Relationship,
+    Intimate,
+    Mystic,
+    World
+}
+
+internal enum AwakeEventResolution
+{
+    NarrativeOnly,
+    DialogueEntry,
+    NumericSettlement,
+    Chain,
+    WorldEffect
+}
+
+internal enum AwakeEventChoiceShape
+{
+    Informational,
+    TwoChoice,
+    MultiChoice,
+    DiscussionEntry,
+    Timed
+}
+
+internal enum AwakeEventPersistence
+{
+    Repeatable,
+    DailyCapped,
+    OneTime,
+    ChainUnique,
+    CampaignPersistent,
+    CrossSave
+}
+
 internal sealed class AwakeEventDialogueAction
 {
     internal string Choice { get; }
@@ -34,6 +104,13 @@ internal sealed class AwakeEventDefinition
     internal string OptionB { get; }
     internal AwakeEventDialogueAction DialogueAction { get; }
     internal AwakeEventDialogueAction DiscussionAction { get; }
+    internal AwakeEventSource? Source { get; }
+    internal AwakeEventContext? Context { get; }
+    internal AwakeEventSubject? Subject { get; }
+    internal AwakeEventContent? Content { get; }
+    internal AwakeEventResolution? Resolution { get; }
+    internal AwakeEventChoiceShape? ChoiceShape { get; }
+    internal AwakeEventPersistence? Persistence { get; }
 
     internal AwakeEventDefinition(
         string id,
@@ -42,7 +119,14 @@ internal sealed class AwakeEventDefinition
         string optionA,
         string optionB,
         AwakeEventDialogueAction dialogueAction = null,
-        AwakeEventDialogueAction discussionAction = null)
+        AwakeEventDialogueAction discussionAction = null,
+        AwakeEventSource? source = null,
+        AwakeEventContext? context = null,
+        AwakeEventSubject? subject = null,
+        AwakeEventContent? content = null,
+        AwakeEventResolution? resolution = null,
+        AwakeEventChoiceShape? choiceShape = null,
+        AwakeEventPersistence? persistence = null)
     {
         Id = id ?? string.Empty;
         Title = title ?? string.Empty;
@@ -51,6 +135,13 @@ internal sealed class AwakeEventDefinition
         OptionB = optionB ?? string.Empty;
         DialogueAction = dialogueAction;
         DiscussionAction = discussionAction;
+        Source = source;
+        Context = context;
+        Subject = subject;
+        Content = content;
+        Resolution = resolution;
+        ChoiceShape = choiceShape;
+        Persistence = persistence;
     }
 }
 
@@ -64,6 +155,13 @@ internal static class AwakeEventValidation
             error = "definition";
             return false;
         }
+        if (definition.Source == null) { error = "source"; return false; }
+        if (definition.Context == null) { error = "context"; return false; }
+        if (definition.Subject == null) { error = "subject"; return false; }
+        if (definition.Content == null) { error = "content"; return false; }
+        if (definition.Resolution == null) { error = "resolution"; return false; }
+        if (definition.ChoiceShape == null) { error = "choiceShape"; return false; }
+        if (definition.Persistence == null) { error = "persistence"; return false; }
         if (string.IsNullOrWhiteSpace(definition.Id) || definition.Id.Length > 60)
         {
             error = "id";

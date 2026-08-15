@@ -107,6 +107,7 @@ internal sealed class AwakeEventEngine
             List<AwakeEventRule> eligible = new List<AwakeEventRule>();
             foreach (AwakeEventRule rule in snapshot)
             {
+                if (!IsHourlySource(rule.Definition.Source)) continue;
                 if (!CanTriggerSync(rule, nowHour, day)) continue;
                 if (!ConditionMet(rule.Condition)) continue;
                 eligible.Add(rule);
@@ -230,6 +231,12 @@ internal sealed class AwakeEventEngine
         {
             AwakeLog.Write("awake_event_meta_load_error error=" + ex.Message);
         }
+    }
+
+    private static bool IsHourlySource(AwakeEventSource? source)
+    {
+        return source == AwakeEventSource.PresetRule
+            || source == AwakeEventSource.Situational;
     }
 
     private bool CanTriggerSync(AwakeEventRule rule, double nowHour, int day)
