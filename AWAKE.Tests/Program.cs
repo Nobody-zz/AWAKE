@@ -140,6 +140,33 @@ internal static class Program
 			throw new InvalidOperationException("invalid dialogue choice should be rejected.");
 		}
 
+		AwakeEventDefinition withDiscussion = new AwakeEventDefinition(
+			"awake.event.discussion",
+			"Title",
+			"Body",
+			"A",
+			"B",
+			null,
+			new AwakeEventDialogueAction("discuss", "hero-1", "topic hint"));
+		if (!AwakeEventValidation.Validate(withDiscussion, out error))
+		{
+			throw new InvalidOperationException("valid discussion action should pass.");
+		}
+
+		AwakeEventDefinition badDiscussion = new AwakeEventDefinition(
+			"awake.event.bad.discussion",
+			"Title",
+			"Body",
+			"A",
+			"B",
+			null,
+			new AwakeEventDialogueAction("a", "hero-1", ""));
+		if (AwakeEventValidation.Validate(badDiscussion, out error)
+			|| !StringComparer.Ordinal.Equals(error, "discussionAction.choice"))
+		{
+			throw new InvalidOperationException("invalid discussion choice should be rejected.");
+		}
+
 		AwakeEventRule clamped = new AwakeEventRule(
 			valid,
 			-3,

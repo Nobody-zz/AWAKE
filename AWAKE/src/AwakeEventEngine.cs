@@ -356,7 +356,9 @@ internal sealed class AwakeEventEngine
     {
         try
         {
-            AwakeEventDialogueAction action = rule?.Definition?.DialogueAction;
+            AwakeEventDialogueAction action = StringComparer.Ordinal.Equals(choice, "discuss")
+                ? rule?.Definition?.DiscussionAction
+                : rule?.Definition?.DialogueAction;
             if (action == null || !StringComparer.Ordinal.Equals(action.Choice, choice)) return;
             string targetId = ResolveDialogueTarget(action.TargetId);
             if (string.IsNullOrWhiteSpace(targetId))

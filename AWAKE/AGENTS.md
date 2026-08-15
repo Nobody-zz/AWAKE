@@ -1,6 +1,6 @@
 # AWAKE 项目任务准则
 
-> 本文件是 AWAKE 仓库的运行时项目任务准则，覆盖 `AWAKE/` 与 `AWAKE.Tests/`。本仓库不包含 `SlaneshsEmbraceContent` 内容包；内容包另立仓库，接入时通过 AWAKE 公开 API，不进入运行时核心。
+> 本文件是 `C:\Users\26811\OneDrive\文档\New project\AGENTS.md` 在 AWAKE 运行时项目目录的嵌套任务版，覆盖 `_houkai_merge\AWAKE` 全部开发线。根 AGENTS.md、全局 `~/.codex/AGENTS.md` 与 `grill-me-codex` skill 继续有效；本文件按本项目实际情况细化执行边界，与根规范冲突时以更靠近本目录的规则优先。
 
 ## 项目定位与边界
 
@@ -8,7 +8,7 @@
 - 命名（2026-08-15 已执行）：运行时主模组为 **AWAKE: Awakened World AI**；代码、目录、命名空间、路由、存储、ModId 已全部改为 AWAKE。“斯拉涅斯之拥（Slanesh's Embrace）”保留为内容包名。
 - 定位：包容、强兼容的 AI 世界运行架构，为 Bannerlord 提供通用 NPC 智能、记忆、世界知识与效果治理；斯拉涅斯/齁改世界观是内置内容之一，不是运行前提。
 - 情色/成人内容突出但可选：基础运行时与默认内容保持纯净可玩；性相关内容作为插件、世界书或内容包补充，统一经 ContentPolicy 门控，核心不硬依赖任何成人内容。
-- 项目拆分：AWAKE 是通用 AI 世界运行时；内容包（世界书、事件、信件、NPC 主动基础）另立仓库，女神人格与情色机制是内容包支线，不在本仓库内。
+- 项目拆分：AWAKE 是通用 AI 世界运行时；`SlaneshsEmbraceContent` 是内容包基础（世界书、事件、信件、NPC 主动基础）；女神人格与情色机制各自作为独立内容包支线。
 - 女神功能归女神人格支线：运行时只保留通用“AI 人格对话壳”与菜单注册框架；女神人格、祭坛、愿力、神谕入口不得硬编码进核心，未启用内容包时不出现在游戏菜单中。
 - 创作意义已从“成人世界观的延伸与完善”转为“承载多种世界观与内容取向的 AI 世界架构”；后续功能设计优先保证架构通用、内容可替换、其他模组/世界书可接入。
 - 与 AF 版 `AnimusForgeHoukai`、插件版 `AnimusForgeLoveHateHoukaiPlugin` 彻底分离：不同 ModId/DLL/存档命名空间/版本线，不读 AF 状态、不反射 AF 内部签名、不共享实现代码。
@@ -38,9 +38,17 @@
 ## 工作流程
 
 - 任何新功能、新玩法机制、新内容批次动手前必须走 `grill-me-codex`：先逐题拷问并锁定计划文件，再由独立审查代理以只读方式对抗审查；只有 `VERDICT: APPROVED` 且用户签收后才允许写代码。
-- 计划与审查日志归档到 `AWAKE/docs/` 或 `AWAKE/docs/archive/`；`PLAN.md` 被并行任务占用时改用带日期/功能名的独立计划文件。
+- 计划与审查日志归档到 `_houkai_merge\AWAKE`；`PLAN.md` 被并行任务占用时改用带日期/功能名的独立计划文件。
 - 当前活动批次：AWAKE 运行时核心基线（v0.1.x）；后续按路线图顺序推进。
 - 审查轮次达到上限后，实现前必须等待用户签收，不自行把“已审查”当成“已批准”。
+
+## 任务连续性
+
+- 每次开始新请求前先读 `docs/AWAKE-Task-Queue-20260816.md`。
+- 先继续进行中任务；新想法、新建议先登记到任务队列，不顶替当前任务。
+- 完成一项后更新队列状态，再进入下一项；半成品必须继续推进，不得因为新话题搁置。
+- 当前任务被打断时，把“做到哪里、卡在哪、下一步是什么”写回任务队列，确保下轮能接续。
+- 未完成/半成品不得在交付说明中写成已完成。
 
 ## 架构硬规则
 
@@ -60,7 +68,7 @@
 
 - 主工程：`dotnet build -c Release -p:BannerlordApi=1.3.15` 0 warnings / 0 errors。
 - SdkSmoke：`Awake.SdkSmoke.exe` `PASS ALL`。
-- maf-lint：`MarcusAIFramework_Reference\SDK_20260815\analyzers\maf-lint.ps1` 0 blocking。
+- maf-lint：`_houkai_merge\MarcusAIFramework_Reference\SDK_20260815\analyzers\maf-lint.ps1` 0 blocking。
 - 文档：README_CN/EN、Framework Usage Map、BUILD_VERIFICATION 与实现同步；版本号一致。
 - 同步：`dist\Modules\AWAKE` 的 DLL 与 `_build_out` SHA-256 一致；游戏目录同步只在用户退出游戏且明确要求时执行。
 - 游戏内验证必须由用户运行游戏后提供日志；交付说明分开写编译、SdkSmoke、lint、哈希、游戏内验证与剩余风险。
@@ -75,7 +83,7 @@
 
 ## 工作区与临时产物
 
-- 本仓库是独立 git 仓库；文件移动/删除前必须核验目标绝对路径，且不得把生成物、存档、日志或 API Key 提交进仓库。
+- 本工作区不是 git 仓库，且位于 OneDrive 同步目录；文件移动/删除前必须核验目标绝对路径。
 - 编辑前只备份本次将修改的精确文件到系统临时目录，不整目录复制项目。
 - 一次性检查脚本、反编译片段、验证报告不落入 `src`、`ModuleData`、`GUI`、`dist`；任务结束后清理自己创建的临时文件。
 - 不主动整理用户未要求的遗留目录、备份、旧发布包或其他 Mod。
