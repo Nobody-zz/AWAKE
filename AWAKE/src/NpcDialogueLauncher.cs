@@ -281,14 +281,14 @@ internal static class NpcDialogueLauncher
     private static void AddSceneHeroCandidates(List<AwakeNpcTarget> result, HashSet<string> seen, int limit)
     {
         if (Mission.Current?.Agents == null) return;
-        if (Campaign.Current?.CampaignObjectManager?.AliveHeroes == null) return;
-        foreach (Hero hero in Campaign.Current.CampaignObjectManager.AliveHeroes)
+        foreach (Agent agent in Mission.Current.Agents)
         {
             if (result.Count >= limit) return;
+            if (agent == null || !agent.IsActive() || agent == Agent.Main || agent.IsMainAgent) continue;
+            if (!(agent.Character is CharacterObject character) || character.HeroObject == null) continue;
+            Hero hero = character.HeroObject;
             if (hero == null || hero == Hero.MainHero || !hero.IsAlive || hero.Age < 18f) continue;
-            int agentIndex = ResolveAgentIndex(hero.CharacterObject);
-            if (agentIndex < 0) continue;
-            AwakeNpcTarget target = AwakeNpcTarget.FromHero(hero, agentIndex);
+            AwakeNpcTarget target = AwakeNpcTarget.FromHero(hero, agent.Index);
             if (target == null || !IsEligibleNpcTarget(target)) continue;
             if (!seen.Add(target.StableId)) continue;
             result.Add(target);
