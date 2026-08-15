@@ -15,27 +15,45 @@
 
 ### 2.0 世界书放置位置
 
+世界书不是单个 JSON，而是一整个内容目录。`manifest.json` 只是目录入口/索引，不包含世界书正文。
+
 世界书属于内容数据，不硬编码进运行时：
 
 - 内容包：`Modules/<ContentPack>/ModuleData/Worldbook/manifest.json`
 - 运行时测试/兼容目录：`Modules/AWAKE/ModuleData/Worldbook/manifest.json`
 
-推荐目录结构：
+一个世界书目录的完整形态：
 
 ```text
 Worldbook/
   manifest.json
-  rules/
-  personality_background/
-  unnamed_persona/
-  voice_mapping/
-  event_data/
-  debt/
-  dialogue_history/
-  compressed_memory/
+  rules/                      # 规则文件，一个文件一条或多条规则
+    rule_xxx.json
+    rule_yyy.json
+  personality_background/     # 角色人格背景，一个角色一个文件
+    CharacterObject_xxx.json
+  unnamed_persona/            # 无名 NPC 人格/档案
+    UnnamedNpcProfiles.json
+  voice_mapping/              # 语音映射
+    VoiceMapping.json
+  event_data/                 # 事件数据
+    EventRecords.json
+    KingdomOpeningSummaries.json
+    WorldOpeningSummary.json
+  debt/                       # 债务数据
+  dialogue_history/           # 对话历史
+  compressed_memory/          # 压缩记忆
 ```
 
+加载时不是解析一个 JSON，而是：
+
+1. 读取 `manifest.json` 作为入口。
+2. 扫描 `manifest.json` 指定的所有子目录。
+3. 把扫描到的 rules / personas / unnamed / voice / event 等数据组装成一个 `WorldbookDocument`。
+
 `manifest.json` 中的目录字段可配置，默认与 AF `PlayerExports` 目录名一致。
+
+AF 的 `PlayerExports/卡拉迪亚编年史` 可以直接作为一个世界书目录使用：补一个 `manifest.json`，指向 `rules`、`personality_background`、`unnamed_persona`、`voice_mapping`、`event_data` 等子目录。
 
 ### 2.1 根结构
 
