@@ -29,6 +29,7 @@ internal static class NpcMemoryConsolidator
         if (doc == null) return result;
 
         List<JObject> all = new List<JObject>();
+        HashSet<string> promiseIds = new HashSet<string>(StringComparer.Ordinal);
         if (doc["memories"] is JArray existing)
         {
             foreach (JToken token in existing)
@@ -40,7 +41,7 @@ internal static class NpcMemoryConsolidator
         {
             foreach (JToken token in existingPromises)
             {
-                if (token is JObject promise) promises.Add((JObject)promise.DeepClone());
+                if (token is JObject promise) AddPromise(promises, promiseIds, (JObject)promise.DeepClone());
             }
         }
 
@@ -51,7 +52,7 @@ internal static class NpcMemoryConsolidator
         {
             if (IsPromise(entry))
             {
-                promises.Add(entry);
+                AddPromise(promises, promiseIds, entry);
                 continue;
             }
             int weight = IntValue(entry["weight"], 1);
@@ -88,6 +89,14 @@ internal static class NpcMemoryConsolidator
         kept.Sort((a, b) => IntValue(b["day"], 0).CompareTo(IntValue(a["day"], 0)));
         foreach (JObject entry in kept) memories.Add(entry);
         return result;
+    }
+
+    private static void AddPromise(JArray promises, HashSet<string> promiseIds, JObject promise)
+    {
+        if (promise == null) return;
+        string id = (string)promise["id"] ?? string.Empty;
+        if (!string.IsNullOrWhiteSpace(id) && !promiseIds.Add(id)) return;
+        promises.Add(promise);
     }
 
     private static bool IsPromise(JObject entry)
@@ -131,7 +140,9 @@ internal static class NpcMemoryConsolidator
         JObject merged = (JObject)first.DeepClone();
         merged["day"] = oldestDay;
         merged["type"] = "merged";
-        merged["summary"] = string.Join("；", summaries);
+        merged["summary"] = AwakeRuntime.TruncateTextElements(
+            string.Join("；", summaries),
+            AiTaskConstants.MemorySummaryMaximumChars);
         merged["facts"] = factArray;
         merged["weight"] = 2;
         merged["result"] = "merged";

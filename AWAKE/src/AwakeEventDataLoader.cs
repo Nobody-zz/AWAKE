@@ -57,11 +57,18 @@ internal static class AwakeEventDataLoader
         }
         try
         {
+            string conditionText = Str(payload["condition"]);
+            AwakeEventCondition? condition = ParseEnum<AwakeEventCondition>(conditionText);
+            if (!string.IsNullOrWhiteSpace(conditionText) && condition == null)
+            {
+                error = "condition:" + conditionText;
+                return false;
+            }
             rule = new AwakeEventRule(
                 definition,
                 IntValue(payload["weight"], 1),
                 IntValue(payload["cooldownHours"], 0),
-                ParseEnum<AwakeEventCondition>(Str(payload["condition"])) ?? AwakeEventCondition.Always,
+                condition ?? AwakeEventCondition.Always,
                 Str(payload["nextEventId"]),
                 IntValue(payload["maxPerDay"], 0));
             return true;

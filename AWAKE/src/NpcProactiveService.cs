@@ -157,6 +157,7 @@ internal sealed class NpcProactiveService
 
     private async Task EnsureLoadedAsync(CancellationToken cancellationToken)
     {
+        NpcProactiveMotiveRegistry.LoadFromRuleRegistry();
         lock (_gate)
         {
             if (_loaded) return;
@@ -167,7 +168,6 @@ internal sealed class NpcProactiveService
             }
             _lastLoadAttemptUtcTicks = now;
         }
-        NpcProactiveMotiveRegistry.LoadFromRuleRegistry();
         WorldStateStore store = AwakeRuntime.WorldStateStore;
         if (store == null)
         {

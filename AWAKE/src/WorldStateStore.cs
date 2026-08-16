@@ -1388,6 +1388,8 @@ internal sealed class WorldStateStore
             {
                 return "awake.world_state.memory.consolidate_invalid";
             }
+            Trim(consolidatedMemories, AiTaskConstants.MemoryEntriesMaximum);
+            Trim(consolidatedPromises, AiTaskConstants.MemoryEntriesMaximum);
             state["memories"] = (JArray)consolidatedMemories.DeepClone();
             state["promises"] = (JArray)consolidatedPromises.DeepClone();
             appliedKeys.Add(command.IdempotencyKey);

@@ -2267,3 +2267,20 @@ A-Class B0-B7 Complete (2026-08-16, no version bump)
 - tools/release_check.ps1 -> RELEASE_CHECK_OK.
 - Awake.dll SHA-256 14B2C1840B6725FFBDB1860EC5A657E5D0C562AA6165552FC5D26A1B576069CF.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Bug Scan Fixes (2026-08-16, no version bump)
+- Rule registry rejects duplicate IDs instead of silently replacing; content packs can still be added later via revision-based reload.
+- Rule files are now loaded recursively from ModuleData/Rules.
+- Content event registration validates through AwakeEventDataLoader before it can enter the registry.
+- Content motive registration validates through NpcProactiveMotiveRegistry before it can enter the registry.
+- Content API normalizes manifest IDs to lowercase to match the rule ID contract.
+- Proactive motive registry is refreshed before the service's loaded-cache check so late-registered motives are visible.
+- Event condition parsing rejects unknown values instead of silently falling back to Always.
+- Memory consolidation de-duplicates promise entries and clamps merged summaries to the 240-character limit.
+- Consolidate writes cap memories/promises to the configured entry maximum.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (30 paths).
+- LOCALIZATION_OK source=130 en=148 cn=148.
+- tools/release_check.ps1 -> RELEASE_CHECK_OK.
+- Awake.dll SHA-256 136346F0E461AA3A39692EAB69767D2320BFD1AFEA5AC1524F216EB7A07B88D8.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

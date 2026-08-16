@@ -124,7 +124,7 @@ internal static class AwakeRuleRegistry
         if (string.IsNullOrWhiteSpace(directory) || !Directory.Exists(directory)) return;
         try
         {
-            foreach (string file in Directory.GetFiles(directory, "*.json", SearchOption.TopDirectoryOnly))
+            foreach (string file in Directory.GetFiles(directory, "*.json", SearchOption.AllDirectories))
             {
                 LoadFile(file);
             }

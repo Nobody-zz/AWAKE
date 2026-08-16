@@ -534,6 +534,26 @@ internal static class Program
 		{
 			throw new InvalidOperationException("content pack kinds missing.");
 		}
+		AwakeContentRegistry direct = new AwakeContentRegistry();
+		if (direct.RegisterEvent(new AwakeContentEvent
+		{
+			Id = "bad.event",
+			Title = "坏事件",
+			Body = "",
+			OptionA = "",
+			OptionB = ""
+		}))
+		{
+			throw new InvalidOperationException("invalid content event should be rejected.");
+		}
+		if (direct.RegisterProactiveMotive(new AwakeContentMotive
+		{
+			Id = "bad.motive",
+			BaseWeight = 0
+		}))
+		{
+			throw new InvalidOperationException("invalid content motive should be rejected.");
+		}
 		AwakeRuleRegistry.ResetForTesting();
 		Console.WriteLine("PASS content api smoke");
 	}

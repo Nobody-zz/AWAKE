@@ -103,7 +103,7 @@ internal sealed class AwakeContentRegistry : IAwakeContentRegistry
         return AwakeRuleRegistry.Register(new AwakeRuleManifest
         {
             SchemaVersion = string.IsNullOrWhiteSpace(rule.SchemaVersion) ? "awake.rule.v1" : rule.SchemaVersion,
-            Id = rule.Id,
+            Id = (rule.Id ?? string.Empty).ToLowerInvariant(),
             Group = string.IsNullOrWhiteSpace(rule.Group) ? "content" : rule.Group,
             Priority = rule.Priority,
             Enabled = rule.Enabled,
@@ -171,9 +171,16 @@ internal sealed class AwakeContentRegistry : IAwakeContentRegistry
             ["nextEventId"] = evt.NextEventId,
             ["event"] = eventObject
         };
+        AwakeEventRule parsedRule;
+        string parseError;
+        if (!AwakeEventDataLoader.TryParseRule(payload, out parsedRule, out parseError))
+        {
+            AwakeLog.Write("awake_content_event_invalid id=" + evt.Id + " error=" + parseError);
+            return false;
+        }
         return AwakeRuleRegistry.Register(new AwakeRuleManifest
         {
-            Id = evt.Id + ".event",
+            Id = (evt.Id ?? string.Empty).ToLowerInvariant() + ".event",
             Group = "content",
             Priority = 100,
             Enabled = true,
@@ -196,9 +203,25 @@ internal sealed class AwakeContentRegistry : IAwakeContentRegistry
             ["minAffinity"] = motive.MinAffinity,
             ["maxAffinity"] = motive.MaxAffinity
         };
+        NpcProactiveMotiveDefinition definition = new NpcProactiveMotiveDefinition
+        {
+            Id = (motive.Id ?? string.Empty).ToLowerInvariant(),
+            DisplayName = motive.DisplayName,
+            BaseWeight = motive.BaseWeight,
+            OpeningHint = motive.OpeningHint,
+            MinAffinity = motive.MinAffinity,
+            MaxAffinity = motive.MaxAffinity
+        };
+        string motiveError;
+        if (!NpcProactiveMotiveRegistry.Validate(definition, out motiveError))
+        {
+            AwakeLog.Write("awake_content_motive_invalid id=" + motive.Id + " error=" + motiveError);
+            return false;
+        }
+        payload["id"] = definition.Id;
         return AwakeRuleRegistry.Register(new AwakeRuleManifest
         {
-            Id = motive.Id + ".motive",
+            Id = definition.Id + ".motive",
             Group = "content",
             Priority = 100,
             Enabled = true,

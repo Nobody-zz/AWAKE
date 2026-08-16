@@ -32,7 +32,12 @@ internal static class NpcProactiveMotiveRegistry
         }
         lock (Gate)
         {
-            Motives[definition.Id] = definition;
+            if (Motives.ContainsKey(definition.Id))
+            {
+                AwakeLog.Write("npc_proactive_motive_duplicate id=" + definition.Id);
+                return false;
+            }
+            Motives.Add(definition.Id, definition);
             return true;
         }
     }
