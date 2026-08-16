@@ -2,7 +2,7 @@
 
 > 日期：2026-08-16
 > 规则：每轮开始先读本文件；延续候选必须列出并等待用户决策，不自动选择下一项。
-> 本轮：AF 结构落地方案已输出，等待用户选择实施批次，未提版。
+> 本轮：Messenger 持久化完成；等待用户选择下一项或进游戏验收，未提版。
 
 ## 当前主线
 
@@ -46,13 +46,13 @@
 ## 待用户决策（延续候选）
 
 1. Messenger 统一会话：通讯录与 NPC 覆盖层并存；统一入口调度，不删除任一层。
-2. Messenger 持久化：会话历史未持久化；接 `WorldStateStore` / Marcus Storage。
-3. Messenger 写信/来信：远方联系人显示“后续开放”；写信、回复延迟、未读、来信通知。
-4. 存储管道真机验证：离线 SdkSmoke 已覆盖；剩余 Companion 真机、读档持久化。
-5. NPC 记忆游戏内验证：逻辑 SdkSmoke 已覆盖；剩余读档回读、真实对话记忆。
-6. 周报/世界事件接线：`WorldEventLedger` / `NarrativeReportBuilder` 未接入实际周报。
-7. 开发者检查面板：当前只有文本报告，无完整诊断面板。
-8. AF 结构落地：按 `AF-Structures-Landing-Plan-20260816.md` 从 Batch 1（A1 NPC 主动聊天 + A4 长等待解锁）开始。
+2. Messenger 写信/来信：远方联系人显示“后续开放”；写信、回复延迟、未读、来信通知。
+3. 存储管道真机验证：离线 SdkSmoke 已覆盖；剩余 Companion 真机、读档持久化。
+4. NPC 记忆游戏内验证：逻辑 SdkSmoke 已覆盖；剩余读档回读、真实对话记忆。
+5. 世界事件/周报游戏内验收：持久化与自动生成已接，等待进游戏验证收件箱与周报。
+6. 开发者检查面板：当前只有文本报告，无完整诊断面板。
+7. MCM 游戏内验收：分组、预设、按钮已接，等待进游戏验证。
+8. AF 结构落地：五个 batch 代码已完成，等待游戏内逐批验收。
 
 ## 半成品（有入口但未闭环）
 
@@ -70,7 +70,13 @@
 ## 远程同步说明
 
 - 远端 `main` 原为更早版本的无共同祖先根提交 `8ae927d Add files via upload`；用户确认后，以本地最新 `main` 为权威，强推覆盖远端。
-- `Bundle Calradic Chronicle worldbook` 本地提交 `2b32d2c` 已建；推送因 GitHub 连接失败待网络恢复后重试。
+- 本地待推送提交：`6742aa9 Persist world events and generate weekly report`、`341ed27 Persist messenger chat history`；推送因 GitHub 连接失败待重试。
+
+## 当前检查点
+
+- 已完成：Messenger 历史持久化。
+- 下一步：由用户从“待用户决策”选择，或进游戏完成验收。
+- 阻塞：GitHub 推送网络中断；游戏内验收需用户运行游戏。
 
 ## 排队中（新想法/建议，不打断当前任务）
 
