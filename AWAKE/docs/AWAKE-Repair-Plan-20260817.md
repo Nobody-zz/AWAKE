@@ -1,6 +1,6 @@
 # AWAKE 修复方案（2026-08-17）
 
-> 状态：方案待用户批准，未开始实现。
+> 状态：用户已批准；Batch 1 代码完成，待游戏内验收；Batch 2 待 grill-me / PLAN。
 > 依据：08-17 游戏反馈 + `Awake.log` / `AwakeProbe.log` / Marcus `framework.log` / `companion.log` 日志核查。
 
 ## 已确认根因
@@ -13,6 +13,8 @@
 6. 大地图 NPC 对话入口割裂：通讯录 `IsNearby` 依赖场景目标，地图相遇后没有可直接调出 AI 对话菜单的统一入口。
 
 ## Batch 1：P0/P1 代码修复（低风险，不走新机制 grill-me）
+
+> 状态：已实现，待游戏内验收。
 
 ### 1. 云外发链路
 

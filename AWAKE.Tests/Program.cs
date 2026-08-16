@@ -56,6 +56,7 @@ internal static class Program
 		RunGuardPerfSmoke();
 		RunFeedbackSmoke();
 		RunMcmPresetSmoke();
+		RunCloudExportSmoke();
 		RunMessengerHistorySmoke();
 		RunB0StabilitySmoke();
 		RunRuleRegistrySmoke();
@@ -87,6 +88,39 @@ internal static class Program
 			throw new InvalidOperationException("marcus mcm actions should be wired.");
 		}
 		Console.WriteLine("PASS marcus link smoke");
+	}
+
+	private static void RunCloudExportSmoke()
+	{
+		AwakeConfig config = new AwakeConfig();
+		if (!CloudExportPolicy.IsKnownClassification(CloudExportPolicy.None)
+			|| !CloudExportPolicy.IsKnownClassification(CloudExportPolicy.PlayerState))
+		{
+			throw new InvalidOperationException("cloud export classifications should be known.");
+		}
+		config.EnableCloudExport = false;
+		config.AllowCloudExportPlayerState = true;
+		if (!StringComparer.Ordinal.Equals(
+			CloudExportPolicy.ResolveDialogueClassification(config),
+			CloudExportPolicy.None))
+		{
+			throw new InvalidOperationException("disabled cloud export should resolve to none.");
+		}
+		config.EnableCloudExport = true;
+		if (!StringComparer.Ordinal.Equals(
+			CloudExportPolicy.ResolveDialogueClassification(config),
+			CloudExportPolicy.PlayerState))
+		{
+			throw new InvalidOperationException("enabled cloud export should resolve to player_state.");
+		}
+		config.AllowCloudExportPlayerState = false;
+		if (!StringComparer.Ordinal.Equals(
+			CloudExportPolicy.ResolveDialogueClassification(config),
+			CloudExportPolicy.None))
+		{
+			throw new InvalidOperationException("player state denied should fall back to none.");
+		}
+		Console.WriteLine("PASS cloud export smoke");
 	}
 
 	private static void RunMessengerHistorySmoke()
@@ -1168,6 +1202,20 @@ internal static class Program
 			|| !StringComparer.Ordinal.Equals((string)storedCandidates[0]["heroId"], "hero-1"))
 		{
 			throw new InvalidOperationException("proactive storage roundtrip mismatch.");
+		}
+
+		FakeKeyValueStore missingKeyStore = new FakeKeyValueStore { FailGetWithKeyNotFound = true };
+		store.InjectStoreForTesting(AiTaskConstants.ProactiveNamespace, missingKeyStore);
+		bool missingKeyUpdated = await store.UpdateProactiveAsync(
+			new Newtonsoft.Json.Linq.JArray(),
+			"proactive-missing-idem",
+			CancellationToken.None).ConfigureAwait(false);
+		if (!missingKeyUpdated) throw new InvalidOperationException("proactive write should initialize a missing key.");
+		Newtonsoft.Json.Linq.JObject missingKeyProactive = await store.GetProactiveAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (missingKeyProactive == null
+			|| !(missingKeyProactive["candidates"] is Newtonsoft.Json.Linq.JArray))
+		{
+			throw new InvalidOperationException("proactive missing-key roundtrip mismatch.");
 		}
 
 		bool worldAppended = await store.AppendWorldEventAsync(

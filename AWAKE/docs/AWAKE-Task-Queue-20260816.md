@@ -261,7 +261,7 @@
 ## 修复方案（2026-08-17）
 
 - 已整理 `docs/AWAKE-Repair-Plan-20260817.md`，分 Batch 1（云外发、存储缺 key、Prompt 诊断、C 键）、Batch 2（主动对话逻辑化、地图对话入口）、Batch 3（开发者检查、世界书管理、通讯录 UI）。
-- 状态：待用户批准；批准后先执行 Batch 1，再对 Batch 2 走 grill-me / PLAN。
+- 状态：用户已批准；Batch 1 代码完成，待游戏内验收；Batch 2 走 grill-me / PLAN。
 
 ## 可行性核验（2026-08-16）
 

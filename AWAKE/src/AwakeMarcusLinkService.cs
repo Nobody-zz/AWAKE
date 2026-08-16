@@ -56,10 +56,17 @@ internal static class AwakeMarcusLinkService
                 "awake.status.route",
                 "Route: {ROUTE}",
                 new Dictionary<string, string> { ["ROUTE"] = declared.ToString() });
+            string cloud = AwakeLocalization.Resolve(
+                "awake.status.cloud",
+                "Cloud: {STATE}",
+                new Dictionary<string, string>
+                {
+                    ["STATE"] = CloudExportPolicy.DescribeAllowed(AwakeSettings.Current)
+                });
             string session = host.CurrentSession == null
                 ? "session:not_ready"
                 : "session:ready";
-            List<string> parts = new List<string> { companion, route, session };
+            List<string> parts = new List<string> { companion, route, session, cloud };
             if (health.Count > 0) parts.Add("health:" + string.Join(",", health));
             string result = string.Join(" | ", parts);
             return result;

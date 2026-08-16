@@ -22,6 +22,7 @@ internal static class AwakeDeveloperReport
         builder.AppendLine("权限目录=" + PermissionCatalog.All.Length + " 条");
         builder.AppendLine("云外发=" + (config != null && config.EnableCloudExport ? "已启用" : "已禁用"));
         builder.AppendLine("云外发分类=" + CloudExportPolicy.DescribeAllowed(config));
+        builder.AppendLine("快捷键冲突=" + BuildSceneKeyConflictText(config));
         if (host == null || host.Diagnostics == null)
         {
             return Truncate(builder.ToString());
@@ -45,6 +46,7 @@ internal static class AwakeDeveloperReport
         rows.Add(NewRow("permissions", PermissionCatalog.All.Length.ToString()));
         rows.Add(NewRow("cloud_export", config != null && config.EnableCloudExport ? "enabled" : "disabled"));
         rows.Add(NewRow("cloud_categories", CloudExportPolicy.DescribeAllowed(config)));
+        rows.Add(NewRow("scene_key_conflicts", BuildSceneKeyConflictText(config)));
         if (host == null || host.Diagnostics == null)
         {
             rows.Add(NewRow("health", "unavailable"));
@@ -205,6 +207,21 @@ internal static class AwakeDeveloperReport
             AwakeLog.Write("developer_report_extensions_failed error=" + ex.Message);
             builder.AppendLine("扩展=诊断不可用");
         }
+    }
+
+    private static string BuildSceneKeyConflictText(AwakeConfig config)
+    {
+        if (config == null) return "config_unavailable";
+        string shout = (config.SceneShoutKey ?? string.Empty).Trim().ToUpperInvariant();
+        if (StringComparer.Ordinal.Equals(shout, "C"))
+        {
+            return "C 已由游戏占用";
+        }
+        if (StringComparer.Ordinal.Equals(shout, "U"))
+        {
+            return "U 与命令台冲突";
+        }
+        return "ok";
     }
 
     private static string Truncate(string value)

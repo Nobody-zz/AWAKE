@@ -1218,13 +1218,14 @@ internal sealed class WorldStateStore
         }
 
         OperationResult<string> loaded = await store.GetAsync(command.Key, context, cancellationToken).ConfigureAwait(false);
-        if (!loaded.IsSuccess)
+        if (!loaded.IsSuccess
+            && !StringComparer.Ordinal.Equals(loaded.Error?.Code, "storage.key_not_found"))
         {
             return new WorldApplyResult { Retryable = true, Code = loaded.Error?.Code ?? "awake.world_state.read_failed" };
         }
 
         JObject state;
-        if (string.IsNullOrWhiteSpace(loaded.Value))
+        if (!loaded.IsSuccess || string.IsNullOrWhiteSpace(loaded.Value))
         {
             state = NewState(command.Kind, command.HeroId);
         }

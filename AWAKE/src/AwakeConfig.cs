@@ -93,9 +93,9 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyGroup("{=awake.mcm.group.scene}1. 对话与场景", GroupOrder = 0)]
     public string SceneCycleFarToNearKey { get; set; } = "]";
 
-    [SettingPropertyText("{=awake.mcm.scene_shout_key.name}场景喊话键", Order = 4, RequireRestart = false, HintText = "{=awake.mcm.scene_shout_key.hint}按住 T 后按此键进入无目标场景喊话，默认 C。")]
+    [SettingPropertyText("{=awake.mcm.scene_shout_key.name}场景喊话键", Order = 4, RequireRestart = false, HintText = "{=awake.mcm.scene_shout_key.hint}按住 T 后按此键进入无目标场景喊话，默认 V。")]
     [SettingPropertyGroup("{=awake.mcm.group.scene}1. 对话与场景", GroupOrder = 0)]
-    public string SceneShoutKey { get; set; } = "C";
+    public string SceneShoutKey { get; set; } = "V";
 
     [SettingPropertyBool("{=awake.mcm.npc_proactive.name}启用 NPC 主动", Order = 0, RequireRestart = false, HintText = "{=awake.mcm.npc_proactive.hint}默认开启。开启后附近 NPC 有概率按关系与场合主动发起谈话。")]
     [SettingPropertyGroup("{=awake.mcm.group.behavior}2. 主动行为", GroupOrder = 1)]

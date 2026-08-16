@@ -31,6 +31,7 @@ internal sealed class NpcDialogueService : IDisposable
     private bool _disposed;
     private bool _ready;
     private bool _initStarted;
+    private bool _promptRegistered;
     private bool _openingHintConsumed;
     private bool _sending;
     private int _generation;
@@ -235,7 +236,7 @@ internal sealed class NpcDialogueService : IDisposable
                 _isSceneShout
                     ? NpcDialogueConstants.SceneShoutOutputContractId
                     : NpcDialogueConstants.OutputContractId,
-                CloudExportPolicy.None,
+                CloudExportPolicy.ResolveDialogueClassification(AwakeSettings.Current),
                 true,
                 onEvent,
                 turnContext,
@@ -466,6 +467,11 @@ internal sealed class NpcDialogueService : IDisposable
 
     private async Task RegisterPromptBestEffortAsync(RequestContext sourceContext, CancellationToken cancellationToken)
     {
+        lock (_gate)
+        {
+            if (_promptRegistered) return;
+            _promptRegistered = true;
+        }
         try
         {
             RequestContext registerContext = AwakeRuntime.CreateContext(_host, sourceContext.CorrelationId);
@@ -475,7 +481,9 @@ internal sealed class NpcDialogueService : IDisposable
                 cancellationToken).ConfigureAwait(false);
             if (!registered.IsSuccess || !registered.Value)
             {
-                AwakeLog.Write("npc_prompt_register_failed code=" + (registered.Error?.Code ?? "unknown"));
+                AwakeLog.Write("npc_prompt_register_failed code=" + (registered.Error?.Code ?? "unknown")
+                    + " category=" + (registered.Error?.Category.ToString() ?? "none")
+                    + " detail=" + (registered.Error?.SafeFallback ?? ""));
             }
         }
         catch (OperationCanceledException)

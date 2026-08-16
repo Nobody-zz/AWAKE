@@ -13,6 +13,7 @@ internal sealed class FakeKeyValueStore : IKeyValueStore
     internal int SetCount { get; private set; }
     internal bool FailSet { get; set; }
     internal int FailSetAfter { get; set; } = 1;
+    internal bool FailGetWithKeyNotFound { get; set; }
 
     internal string GetValue(string key)
     {
@@ -23,6 +24,13 @@ internal sealed class FakeKeyValueStore : IKeyValueStore
 
     public Task<OperationResult<string>> GetAsync(string key, RequestContext context, CancellationToken cancellationToken)
     {
+        if (FailGetWithKeyNotFound && string.IsNullOrEmpty(GetValue(key)))
+        {
+            return Task.FromResult(OperationResult<string>.Failed(FrameworkErrors.Create(
+                "storage.key_not_found",
+                FrameworkErrorCategory.NotFound,
+                "key not found")));
+        }
         return Task.FromResult(OperationResult<string>.Succeeded(GetValue(key)));
     }
 

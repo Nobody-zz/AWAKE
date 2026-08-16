@@ -39,7 +39,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     private InputKey _cachedTerminalKey = InputKey.U;
     private InputKey _cachedSceneNearKey = InputKey.OpenBraces;
     private InputKey _cachedSceneFarKey = InputKey.CloseBraces;
-    private InputKey _cachedSceneShoutKey = InputKey.C;
+    private InputKey _cachedSceneShoutKey = InputKey.V;
     private string _cachedTerminalKeyRaw = string.Empty;
     private bool _sceneShoutMode;
     private bool _sceneVisualEnabled;
@@ -585,7 +585,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
             InputKey.CloseBraces);
         _cachedSceneShoutKey = SceneInputKeyMapper.ParseOrDefault(
             AwakeSettings.Current.SceneShoutKey,
-            InputKey.C);
+            InputKey.V);
     }
 
     private static float GetSceneMaxRange()
