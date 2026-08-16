@@ -2432,3 +2432,12 @@ Map Dialogue Scope (2026-08-17, no version bump)
 - SdkSmoke PASS ALL; LOCALIZATION_OK source=197 en=226 cn=226; asset lint 107 files OK.
 - Awake.dll SHA-256 09F2D37AE6CD3EDAF12E9D6F2E55BB1C9100FB18E05FC30A5F5B3704CD480942 identical across _build_out, dist, and game Modules/AWAKE after sync.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Shout / Onboarding / Cloud Diagnostic (2026-08-17, no version bump)
+- Scene shout key falls back to V when an existing MCM config still contains C or U, preventing game-key conflicts on old saves.
+- AwakeOnboardingService is now checked automatically on safe map ticks; the first-run guide can pop up without pressing the command deck key first.
+- Cloud export failures now show explicit bilingual guidance to enable cloud export in Marcus AI settings and AWAKE MCM.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=199 en=228 cn=228; asset lint 107 files OK.
+- Awake.dll SHA-256 ACFA06E0734CBA9479E6F40EF6A2BB3DA36BC222D30E54D4C9B4986343EA0B46 identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

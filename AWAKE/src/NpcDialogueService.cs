@@ -1207,7 +1207,19 @@ internal sealed class NpcDialogueService : IDisposable
         FrameworkError error = evt.Error;
         AwakeLog.Write("npc_dialogue_turn_failed code=" + (error?.Code ?? "none") + " category=" + (error?.Category.ToString() ?? "none"));
         string display;
-        if (error != null && error.Category == FrameworkErrorCategory.Timeout) display = "对方回应超时了。";
+        if (error != null && StringComparer.Ordinal.Equals(error.Code, "ai.cloud_export_denied"))
+        {
+            display = AwakeLocalization.Resolve(
+                "awake.dialogue.cloud_export_denied",
+                "Cloud export denied: enable cloud export for AWAKE.route.npc.dialogue in Marcus AI settings and in AWAKE MCM.");
+        }
+        else if (error != null && StringComparer.Ordinal.Equals(error.Code, "awake.cloud_export_disabled"))
+        {
+            display = AwakeLocalization.Resolve(
+                "awake.dialogue.cloud_export_disabled",
+                "AWAKE cloud export is disabled: enable it under MCM Data & Debug.");
+        }
+        else if (error != null && error.Category == FrameworkErrorCategory.Timeout) display = "对方回应超时了。";
         else if (error != null && error.Category == FrameworkErrorCategory.Unavailable) display = "对方暂时无法开口。";
         else if (error != null && error.Category == FrameworkErrorCategory.Denied) display = "对话被拒绝了。";
         else if (error != null && error.Category == FrameworkErrorCategory.Expired) display = "时机已经过去。";

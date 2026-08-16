@@ -33,6 +33,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     private float _sceneHoldStartRealTime = -999f;
     private float _sceneCurrentRangeMeters = SceneDialogueSelection.MinRangeMeters;
     private float _lastOpenRealTime = -999f;
+    private float _nextOnboardingCheckRealTime = -999f;
     private float _nextTerminalKeyRefreshRealTime = -999f;
     private float _nextSceneKeyRefreshRealTime = -999f;
     private float _nextSceneCandidateRefreshRealTime = -999f;
@@ -76,6 +77,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
 
     private void OnTick()
     {
+        TryShowAutoGuide();
         if (TryProcessSceneDialogue())
         {
             return;
@@ -119,6 +121,33 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
             return;
         }
         OpenRootMenu();
+    }
+
+    private void TryShowAutoGuide()
+    {
+        try
+        {
+            if (_terminalUiActive
+                || AwakeDialogueSessionCoordinator.IsActive
+                || AwakeMessengerOverlay.IsOpen
+                || InformationManager.IsAnyInquiryActive()
+                || Campaign.Current == null
+                || Mission.Current != null)
+            {
+                return;
+            }
+            float now = (float)TerminalClock.Elapsed.TotalSeconds;
+            if (now - _nextOnboardingCheckRealTime < 5f)
+            {
+                return;
+            }
+            _nextOnboardingCheckRealTime = now;
+            AwakeOnboardingService.TryShowGuide();
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("awake_onboarding_auto_check_error error=" + ex.Message);
+        }
     }
 
     private bool TryProcessSceneDialogue()
@@ -586,6 +615,12 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         _cachedSceneShoutKey = SceneInputKeyMapper.ParseOrDefault(
             AwakeSettings.Current.SceneShoutKey,
             InputKey.V);
+        string shoutRaw = (AwakeSettings.Current.SceneShoutKey ?? string.Empty).Trim();
+        if (StringComparer.OrdinalIgnoreCase.Equals(shoutRaw, "C")
+            || StringComparer.OrdinalIgnoreCase.Equals(shoutRaw, "U"))
+        {
+            _cachedSceneShoutKey = InputKey.V;
+        }
     }
 
     private static float GetSceneMaxRange()
