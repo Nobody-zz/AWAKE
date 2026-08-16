@@ -40,6 +40,7 @@
   - AF 反馈层：`AwakeFeedback` 统一游戏内操作反馈
   - MCM 菜单重排、预设与操作按钮
   - 世界事件持久化与周报自动生成
+  - Messenger 会话历史持久化
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）
@@ -61,7 +62,7 @@
 - 开发者检查：仍是文本报告，无完整诊断面板。
 - Preprocess/Postprocess 路由：已注册但无调用方。
 - 无名 NPC：有身份回退，无永久记忆与命令边界。
-- 遭遇面谈 / 场景 T/Y / 通讯录：入口存在，统一会话未完成。
+- 遭遇面谈 / 场景 T/Y / 通讯录：入口存在，统一会话未完成；通讯录历史已持久化。
 - 世界书游戏内验收：世界书已嵌入，等待用户进游戏验证 `worldbook_runtime_initialized`、NPC 对话命中、TextMappings、persona 注入。
 - AF Batch 1 游戏内验收：等待用户验证主动弹窗 → 深谈、拒绝冷却、AI 等待超 60 秒 Esc 取消。
 - AF Batch 2-5 游戏内验收：命令台收件箱/周报、日结日志、回复清洗与性能日志。

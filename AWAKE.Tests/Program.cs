@@ -53,8 +53,25 @@ internal static class Program
 		RunGuardPerfSmoke();
 		RunFeedbackSmoke();
 		RunMcmPresetSmoke();
+		RunMessengerHistorySmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunMessengerHistorySmoke()
+	{
+		AwakeMessengerHistory.ClearForTesting();
+		AwakeMessengerHistory.Append("hero-1", "你", "你好");
+		AwakeMessengerHistory.Append("hero-1", "NPC", "你好");
+		IReadOnlyList<AwakeMessengerChatLine> history = AwakeMessengerHistory.GetHistory("hero-1");
+		if (history.Count != 2
+			|| !StringComparer.Ordinal.Equals(history[0].Speaker, "你")
+			|| !StringComparer.Ordinal.Equals(history[1].Text, "你好"))
+		{
+			throw new InvalidOperationException("messenger history cache mismatch.");
+		}
+		AwakeMessengerHistory.ClearForTesting();
+		Console.WriteLine("PASS messenger history smoke");
 	}
 
 	private static void RunMcmPresetSmoke()
@@ -610,11 +627,13 @@ internal static class Program
 		FakeKeyValueStore relationshipStore = new FakeKeyValueStore();
 		FakeKeyValueStore proactiveStore = new FakeKeyValueStore();
 		FakeKeyValueStore worldEventsStore = new FakeKeyValueStore();
+		FakeKeyValueStore messengerStore = new FakeKeyValueStore();
 		store.InjectStoreForTesting(AiTaskConstants.NpcMemoriesNamespace, memoryStore);
 		store.InjectStoreForTesting(AiTaskConstants.EventMetaNamespace, eventMetaStore);
 		store.InjectStoreForTesting(AiTaskConstants.RelationshipsNamespace, relationshipStore);
 		store.InjectStoreForTesting(AiTaskConstants.ProactiveNamespace, proactiveStore);
 		store.InjectStoreForTesting(AiTaskConstants.WorldEventsNamespace, worldEventsStore);
+		store.InjectStoreForTesting(AiTaskConstants.MessengerNamespace, messengerStore);
 
 		RequestContext context = new FakeClock(DateTimeOffset.UtcNow).Context("awake.smoke", session, "storage-smoke");
 		Newtonsoft.Json.Linq.JArray facts = new Newtonsoft.Json.Linq.JArray { "共同经历" };
@@ -748,6 +767,24 @@ internal static class Program
 			|| !StringComparer.Ordinal.Equals((string)records[0]["text"], "攻城战结束"))
 		{
 			throw new InvalidOperationException("world event storage roundtrip mismatch.");
+		}
+
+		bool messengerAppended = await store.AppendMessengerMessageAsync(
+			"hero-1",
+			"你",
+			"你好",
+			5,
+			"msg-idem-1",
+			CancellationToken.None).ConfigureAwait(false);
+		if (!messengerAppended) throw new InvalidOperationException("messenger append should succeed.");
+		Newtonsoft.Json.Linq.JObject messenger = await store.GetMessengerAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (messenger == null
+			|| !(messenger["chats"] is Newtonsoft.Json.Linq.JObject chats)
+			|| !(chats["hero-1"] is Newtonsoft.Json.Linq.JArray chatLines)
+			|| chatLines.Count != 1
+			|| !StringComparer.Ordinal.Equals((string)chatLines[0]["text"], "你好"))
+		{
+			throw new InvalidOperationException("messenger storage roundtrip mismatch.");
 		}
 
 		Console.WriteLine("PASS storage pipeline smoke");

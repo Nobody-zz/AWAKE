@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MarcusAIFramework.Api;
@@ -97,6 +98,14 @@ internal sealed class AwakeMessengerVM : ViewModel
     internal AwakeMessengerVM(Action close)
     {
         _close = close;
+        try
+        {
+            AwakeMessengerHistory.LoadAsync(CancellationToken.None).GetAwaiter().GetResult();
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("awake_messenger_history_load_error error=" + ex.Message);
+        }
         foreach (AwakeContactInfo contact in AwakeMessengerService.BuildContacts())
         {
             AwakeContactInfo captured = contact;
@@ -165,6 +174,7 @@ internal sealed class AwakeMessengerVM : ViewModel
         InputText = string.Empty;
         StreamingText = string.Empty;
         AddChatRow("你", text);
+        AwakeMessengerHistory.Append(_activeTargetId, "你", text);
         IsLoading = true;
         _ = SendAsyncSafe(text);
     }
@@ -238,6 +248,10 @@ internal sealed class AwakeMessengerVM : ViewModel
         TitleText = service.DisplayTitle;
         NoticeText = "对方似乎有话想对你说。";
         StatusText = "对话正在苏醒……";
+        foreach (AwakeMessengerChatLine line in AwakeMessengerHistory.GetHistory(targetId))
+        {
+            AddChatRow(line.Speaker, line.Text);
+        }
         AddChatRow("系统", "正在连接……");
         OnPropertyChangedWithValue(true, nameof(HasActive));
         OnPropertyChangedWithValue(CanSend, nameof(CanSend));
@@ -293,6 +307,7 @@ internal sealed class AwakeMessengerVM : ViewModel
                 NpcDialogueTurnResult turnResult = evt.Turn;
                 StreamingText = string.Empty;
                 AddChatRow(_activeService.SpeakerName, turnResult.Reply);
+                AwakeMessengerHistory.Append(_activeTargetId, _activeService.SpeakerName, turnResult.Reply);
                 NoticeText = string.IsNullOrWhiteSpace(turnResult.Mood) ? "对方已回应。" : "对方已回应（" + turnResult.Mood + "）。";
                 IsLoading = false;
                 break;
@@ -300,6 +315,7 @@ internal sealed class AwakeMessengerVM : ViewModel
                 NpcDialogueTurnResult failedResult = evt.Turn;
                 StreamingText = string.Empty;
                 AddChatRow(_activeService.SpeakerName, failedResult.ErrorDisplay);
+                AwakeMessengerHistory.Append(_activeTargetId, "系统", failedResult.ErrorDisplay);
                 NoticeText = failedResult.ErrorDisplay;
                 IsLoading = false;
                 break;

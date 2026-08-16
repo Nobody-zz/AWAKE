@@ -16,7 +16,8 @@ internal enum WorldStateKind
     Relationship,
     EventMeta,
     Proactive,
-    WorldEvents
+    WorldEvents,
+    Messenger
 }
 
 internal sealed class MemoryReservation
@@ -612,6 +613,66 @@ internal sealed class WorldStateStore
         return true;
     }
 
+    internal async Task<JObject> GetMessengerAsync(RequestContext context, CancellationToken cancellationToken)
+    {
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.MessengerNamespace, out store);
+        if (store == null) return null;
+
+        OperationResult<string> loaded = await store.GetAsync(
+            AiTaskConstants.MessengerKey,
+            context ?? CreateContext(),
+            cancellationToken).ConfigureAwait(false);
+        if (!loaded.IsSuccess)
+        {
+            AwakeLog.Write("world_state_messenger_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            return null;
+        }
+        if (string.IsNullOrWhiteSpace(loaded.Value)) return NewMessengerState();
+        try
+        {
+            JObject doc = JObject.Parse(loaded.Value);
+            if (doc.Type != JTokenType.Object) throw new InvalidOperationException("messenger root is not object");
+            return doc;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_state_messenger_corrupt error=" + ex.Message);
+            return null;
+        }
+    }
+
+    internal async Task<bool> AppendMessengerMessageAsync(
+        string targetId,
+        string speaker,
+        string text,
+        int day,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(targetId) || string.IsNullOrWhiteSpace(idempotencyKey)) return false;
+        JObject arguments = new JObject
+        {
+            ["targetId"] = targetId,
+            ["speaker"] = speaker ?? string.Empty,
+            ["text"] = text ?? string.Empty,
+            ["day"] = day
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.MessengerNamespace,
+            AiTaskConstants.MessengerKey,
+            "awake.messenger.append",
+            idempotencyKey,
+            string.Empty,
+            WorldStateKind.Messenger,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
     internal async Task BeginFinalDrainAsync()
     {
         bool started;
@@ -1030,6 +1091,9 @@ internal sealed class WorldStateStore
             case WorldStateKind.WorldEvents:
                 applyError = ApplyWorldEvents(state, command);
                 break;
+            case WorldStateKind.Messenger:
+                applyError = ApplyMessenger(state, command);
+                break;
         }
         if (!string.IsNullOrWhiteSpace(applyError))
         {
@@ -1076,6 +1140,7 @@ internal sealed class WorldStateStore
             case WorldStateKind.EventMeta: return NewEventMetaState();
             case WorldStateKind.Proactive: return NewProactiveState();
             case WorldStateKind.WorldEvents: return NewWorldEventsState();
+            case WorldStateKind.Messenger: return NewMessengerState();
             default: return new JObject();
         }
     }
@@ -1123,6 +1188,17 @@ internal sealed class WorldStateStore
             ["schema"] = "awake.world_events.v1",
             ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
             ["records"] = new JArray(),
+            ["appliedKeys"] = new JArray()
+        };
+    }
+
+    private static JObject NewMessengerState()
+    {
+        return new JObject
+        {
+            ["schema"] = "awake.messenger.v1",
+            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+            ["chats"] = new JObject(),
             ["appliedKeys"] = new JArray()
         };
     }
@@ -1189,6 +1265,40 @@ internal sealed class WorldStateStore
             ["text"] = ClampTextElements((string)command.Arguments["text"] ?? string.Empty, 500)
         });
         Trim(records, 200);
+        state["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
+        JArray appliedKeys = (JArray)state["appliedKeys"];
+        appliedKeys.Add(command.IdempotencyKey);
+        Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+        return string.Empty;
+    }
+
+    private static void EnsureMessengerShape(JObject state)
+    {
+        state["schema"] = "awake.messenger.v1";
+        if (!(state["chats"] is JObject)) state["chats"] = new JObject();
+        if (!(state["appliedKeys"] is JArray)) state["appliedKeys"] = new JArray();
+    }
+
+    private static string ApplyMessenger(JObject state, WorldStateCommand command)
+    {
+        EnsureMessengerShape(state);
+        string targetId = (string)command.Arguments["targetId"] ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(targetId)) return "awake.world_state.messenger.invalid_target";
+        JObject chats = (JObject)state["chats"];
+        JArray lines = chats[targetId] as JArray;
+        if (lines == null)
+        {
+            lines = new JArray();
+            chats[targetId] = lines;
+        }
+        lines.Add(new JObject
+        {
+            ["id"] = command.IdempotencyKey,
+            ["speaker"] = ClampTextElements((string)command.Arguments["speaker"] ?? string.Empty, 40),
+            ["text"] = ClampTextElements((string)command.Arguments["text"] ?? string.Empty, 4000),
+            ["day"] = IntValue(command.Arguments["day"])
+        });
+        while (lines.Count > 200) lines.RemoveAt(0);
         state["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
         JArray appliedKeys = (JArray)state["appliedKeys"];
         appliedKeys.Add(command.IdempotencyKey);
