@@ -217,7 +217,22 @@ internal static class WorldbookLoader
         ValidateRule(rule, warnings);
         if (StringComparer.Ordinal.Equals(sourceFormat, "af") && rule.TextMappings.Count > 0)
         {
-            AddWarning(warnings, id, "text_mappings_preserved", "AF TextMappings 已保留原始数据，尚未实现动态替换。");
+            List<string> unsupportedKinds = new List<string>();
+            foreach (WorldbookTextMapping mapping in rule.TextMappings)
+            {
+                if (mapping != null && !WorldbookTextMappingResolver.IsSupportedKind(mapping.Kind))
+                {
+                    unsupportedKinds.Add(mapping.Kind ?? string.Empty);
+                }
+            }
+            if (unsupportedKinds.Count > 0)
+            {
+                AddWarning(
+                    warnings,
+                    id,
+                    "text_mappings_unsupported",
+                    "AF TextMappings 存在未支持的 Kind，替换时将保留原文：" + string.Join(",", unsupportedKinds));
+            }
         }
         if (StringComparer.Ordinal.Equals(sourceFormat, "af") && rule.Variants.Count > 1)
         {

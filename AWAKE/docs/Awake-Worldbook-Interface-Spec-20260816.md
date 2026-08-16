@@ -141,7 +141,7 @@ AWAKE 对应字段：
 
 - `variants`：已有。
 - `ragShortTexts` / `semanticPrototypes`：已有，但只作为召回元数据。
-- `textMappings`：已有，但当前只保留原始数据，未实现运行时替换。
+- `textMappings`：已有，运行时按 AF Kind 动态替换；当前《卡拉迪亚编年史》扫描到的 22 种 Kind 已全部覆盖。
 
 ### 2.2 AWAKE Rule 结构
 
@@ -556,7 +556,7 @@ AF 兼容不能只做字段改名，以下内容必须保留语义或明确标�
 | 风险点 | AF 语义 | AWAKE 处理 |
 | --- | --- | --- |
 | `Variants` | AF 按 when 匹配分数选一个最佳 variant | AF 导入模式使用 `af-best`，不使用 AWAKE `first/all/random` 默认规则 |
-| `TextMappings` | 依赖 AF 运行时动态替换，Kinds 与游戏状态绑定 | 先保留原始 JSON，标记 `text_mappings_preserved`；未实现动态替换前不执行 |
+| `TextMappings` | 依赖 AF 运行时动态替换，Kinds 与游戏状态绑定 | 已实现动态替换；未知 Kind 保留 `SourceText` 并标记 `text_mappings_unsupported` |
 | `SkillMin` | AF 在 variant 选择中参与匹配与 tie-break | 保留字段，AWAKE 原生评分只做布尔门槛；两种模式分开记录 |
 | `RagShortTexts` | AF 拼接成检索文本，不是权威正文 | AWAKE 只作为召回种子，不进入最终知识正文 |
 | `SemanticPrototypes` | AF 用于语义候选 | AWAKE 保留，但不作为检索唯一依据 |
@@ -566,7 +566,7 @@ AF 兼容不能只做字段改名，以下内容必须保留语义或明确标�
 导入时必须生成 `WorldbookImportWarning` 报告：
 
 - `source`：文件名或规则 ID
-- `code`：如 `text_mappings_preserved`、`af_variant_semantics`、`voice_id_preserved`
+- `code`：如 `text_mappings_unsupported`、`af_variant_semantics`、`voice_id_preserved`
 - `message`：说明保留还是降级
 
 未支持项不允许静默消失。

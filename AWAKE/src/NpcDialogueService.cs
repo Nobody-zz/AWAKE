@@ -601,33 +601,113 @@ internal sealed class NpcDialogueService : IDisposable
                 context.BoundSettlementName = Settlement.CurrentSettlement?.Name?.ToString() ?? string.Empty;
                 return context;
             }
-            if (Campaign.Current?.CampaignObjectManager?.AliveHeroes == null) return context;
-            foreach (Hero hero in Campaign.Current.CampaignObjectManager.AliveHeroes)
-            {
-                if (hero == null || !StringComparer.Ordinal.Equals(hero.StringId, _heroId)) continue;
-                context.BoundHeroName = hero.Name?.ToString() ?? string.Empty;
-                context.HeroIsDead = hero.IsDead;
-                context.BoundClanName = hero.Clan?.Name?.ToString() ?? string.Empty;
-                context.BoundSettlementName = hero.CurrentSettlement?.Name?.ToString() ?? string.Empty;
-                if (hero.Clan?.Kingdom != null && hero.Clan.Kingdom.Leader != null)
-                {
-                    context.KingdomLeaderNames[hero.Clan.Kingdom.StringId] =
-                        hero.Clan.Kingdom.Leader.Name?.ToString() ?? string.Empty;
-                }
-                break;
-            }
-            Settlement settlement = Settlement.CurrentSettlement;
-            if (settlement?.OwnerClan?.Leader != null)
-            {
-                context.SettlementOwnerLeaderNames[settlement.StringId] =
-                    settlement.OwnerClan.Leader.Name?.ToString() ?? string.Empty;
-            }
+            FillHeroMappingContext(context);
+            FillKingdomMappingContext(context);
+            FillClanMappingContext(context);
+            FillSettlementMappingContext(context);
         }
         catch (Exception ex)
         {
             AwakeLog.Write("npc_dialogue_mapping_context_error error=" + ex.Message);
         }
         return context;
+    }
+
+    private void FillHeroMappingContext(WorldbookMappingContext context)
+    {
+        FillHero(context, Hero.AllAliveHeroes);
+        FillHero(context, Hero.DeadOrDisabledHeroes);
+    }
+
+    private void FillHero(WorldbookMappingContext context, IEnumerable<Hero> heroes)
+    {
+        if (heroes == null) return;
+        foreach (Hero hero in heroes)
+        {
+            if (hero == null || string.IsNullOrWhiteSpace(hero.StringId)) continue;
+            context.HeroNames[hero.StringId] = hero.Name?.ToString() ?? string.Empty;
+            context.Statuses["status|hero|is_alive|" + hero.StringId] = hero.IsAlive;
+            context.Statuses["status|hero|is_dead|" + hero.StringId] = hero.IsDead;
+            if (!StringComparer.Ordinal.Equals(hero.StringId, _heroId)) continue;
+            context.BoundHeroName = hero.Name?.ToString() ?? string.Empty;
+            context.BoundClanName = hero.Clan?.Name?.ToString() ?? string.Empty;
+            context.BoundSettlementName = hero.CurrentSettlement?.Name?.ToString()
+                ?? hero.StayingInSettlement?.Name?.ToString() ?? string.Empty;
+            context.BoundKingdomName = hero.Clan?.Kingdom?.Name?.ToString() ?? string.Empty;
+        }
+    }
+
+    private static void FillKingdomMappingContext(WorldbookMappingContext context)
+    {
+        if (Kingdom.All == null) return;
+        foreach (Kingdom kingdom in Kingdom.All)
+        {
+            if (kingdom == null || string.IsNullOrWhiteSpace(kingdom.StringId)) continue;
+            context.KingdomNames[kingdom.StringId] = kingdom.Name?.ToString() ?? string.Empty;
+            context.KingdomLeaderNames[kingdom.StringId] = kingdom.Leader?.Name?.ToString() ?? string.Empty;
+            context.Statuses["status|kingdom|is_eliminated|" + kingdom.StringId] = kingdom.IsEliminated;
+        }
+    }
+
+    private static void FillClanMappingContext(WorldbookMappingContext context)
+    {
+        if (Clan.All == null) return;
+        foreach (Clan clan in Clan.All)
+        {
+            if (clan == null || string.IsNullOrWhiteSpace(clan.StringId)) continue;
+            context.ClanNames[clan.StringId] = clan.Name?.ToString() ?? string.Empty;
+            context.ClanLeaderNames[clan.StringId] = clan.Leader?.Name?.ToString() ?? string.Empty;
+            bool hasTown = false;
+            if (clan.Settlements != null)
+            {
+                foreach (Settlement settlement in clan.Settlements)
+                {
+                    if (settlement != null && settlement.IsTown)
+                    {
+                        hasTown = true;
+                        break;
+                    }
+                }
+            }
+            context.Statuses["status|clan|has_any_town|" + clan.StringId] = hasTown;
+        }
+    }
+
+    private static void FillSettlementMappingContext(WorldbookMappingContext context)
+    {
+        if (Settlement.All == null) return;
+        foreach (Settlement settlement in Settlement.All)
+        {
+            if (settlement == null || string.IsNullOrWhiteSpace(settlement.StringId)) continue;
+            string name = settlement.Name?.ToString() ?? string.Empty;
+            context.SettlementNames[settlement.StringId] = name;
+            Clan owner = settlement.OwnerClan;
+            if (owner == null || string.IsNullOrWhiteSpace(owner.StringId)) continue;
+            context.SettlementOwnerClanNames[settlement.StringId] = owner.Name?.ToString() ?? string.Empty;
+            context.SettlementOwnerLeaderNames[settlement.StringId] = owner.Leader?.Name?.ToString() ?? string.Empty;
+            AddSettlementName(context.ClanTowns, owner.StringId, settlement.IsTown ? name : string.Empty);
+            AddSettlementName(context.ClanVillages, owner.StringId, settlement.IsVillage ? name : string.Empty);
+            AddSettlementName(context.ClanSettlements, owner.StringId, name);
+        }
+        Settlement current = Settlement.CurrentSettlement;
+        if (current == null) return;
+        context.BoundSettlementOwnerClanName = current.OwnerClan?.Name?.ToString() ?? string.Empty;
+        context.BoundSettlementOwnerLeaderName = current.OwnerClan?.Leader?.Name?.ToString() ?? string.Empty;
+    }
+
+    private static void AddSettlementName(
+        Dictionary<string, List<string>> values,
+        string clanId,
+        string name)
+    {
+        if (string.IsNullOrWhiteSpace(name)) return;
+        List<string> list;
+        if (!values.TryGetValue(clanId, out list))
+        {
+            list = new List<string>();
+            values[clanId] = list;
+        }
+        if (!list.Contains(name)) list.Add(name);
     }
 
     private async Task<string> BuildPromptInputAsync(

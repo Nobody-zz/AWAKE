@@ -142,17 +142,40 @@ internal sealed class WorldbookQuery
 
 internal sealed class WorldbookMappingContext
 {
-    internal bool? HeroIsDead { get; set; }
-    internal bool? ClanHasTown { get; set; }
-    internal Dictionary<string, string> KingdomLeaderNames { get; set; } =
-        new Dictionary<string, string>(StringComparer.Ordinal);
-    internal Dictionary<string, string> SettlementOwnerLeaderNames { get; set; } =
-        new Dictionary<string, string>(StringComparer.Ordinal);
+    // AF lore-only bound placeholders. Empty means the source text is kept.
     internal string BoundHeroName { get; set; } = string.Empty;
+    internal string BoundHeroTitle { get; set; } = string.Empty;
     internal string BoundClanName { get; set; } = string.Empty;
     internal string BoundSettlementName { get; set; } = string.Empty;
+    internal string BoundSettlementOwnerClanName { get; set; } = string.Empty;
+    internal string BoundSettlementOwnerLeaderName { get; set; } = string.Empty;
+    internal string BoundKingdomName { get; set; } = string.Empty;
     internal string BoundItemName { get; set; } = string.Empty;
     internal string BoundTroopName { get; set; } = string.Empty;
+    internal string BoundDeityName { get; set; } = string.Empty;
+    internal string BoundEventName { get; set; } = string.Empty;
+    internal string BoundRegionName { get; set; } = string.Empty;
+
+    // Status keys are "{kind}|{TargetId}", e.g. "status|hero|is_alive|lord_1_7".
+    internal Dictionary<string, bool> Statuses { get; } = new Dictionary<string, bool>(StringComparer.Ordinal);
+
+    // TargetId-keyed runtime display names.
+    internal Dictionary<string, string> HeroNames { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    internal Dictionary<string, string> ClanNames { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    internal Dictionary<string, string> KingdomNames { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    internal Dictionary<string, string> SettlementNames { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    internal Dictionary<string, string> ClanLeaderNames { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    internal Dictionary<string, string> KingdomLeaderNames { get; } =
+        new Dictionary<string, string>(StringComparer.Ordinal);
+    internal Dictionary<string, string> SettlementOwnerClanNames { get; } =
+        new Dictionary<string, string>(StringComparer.Ordinal);
+    internal Dictionary<string, string> SettlementOwnerLeaderNames { get; } =
+        new Dictionary<string, string>(StringComparer.Ordinal);
+
+    // TargetId-keyed owned settlement display names.
+    internal Dictionary<string, List<string>> ClanTowns { get; } = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+    internal Dictionary<string, List<string>> ClanVillages { get; } = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+    internal Dictionary<string, List<string>> ClanSettlements { get; } = new Dictionary<string, List<string>>(StringComparer.Ordinal);
 }
 
 internal sealed class WorldbookQueryResult

@@ -161,18 +161,118 @@ internal static class Program
 		{
 			SourceText = "A",
 			Kind = "status|hero|is_dead",
+			TargetId = "lord_1_7",
 			TrueText = "他已去世",
 			FalseText = "他还活着"
 		};
-		WorldbookMappingContext deadContext = new WorldbookMappingContext { HeroIsDead = true };
+		WorldbookMappingContext mappingContext = new WorldbookMappingContext
+		{
+			BoundSettlementName = "龙堡",
+			BoundDeityName = "荒野女神",
+			BoundEventName = "潘德拉克",
+			BoundHeroTitle = "男爵",
+			BoundKingdomName = "坎尼人的王国",
+			BoundRegionName = "珀拉斯海",
+			BoundSettlementOwnerClanName = "狼皮部落",
+			BoundSettlementOwnerLeaderName = "乌尔夫"
+		};
+		mappingContext.Statuses["status|hero|is_dead|lord_1_7"] = true;
+		mappingContext.Statuses["status|hero|is_alive|lord_1_7"] = true;
+		mappingContext.Statuses["status|kingdom|is_eliminated|empire"] = false;
+		mappingContext.Statuses["status|clan|has_any_town|clan_nord_1"] = true;
+		mappingContext.HeroNames["lord_1_7"] = "加里俄斯";
+		mappingContext.ClanNames["clan_nord_1"] = "诺德王国";
+		mappingContext.ClanLeaderNames["clan_nord_1"] = "哈尔达尔";
+		mappingContext.ClanTowns["clan_nord_1"] = new List<string> { "瑞尔城", "奥斯蒂港" };
+		mappingContext.ClanVillages["clan_nord_1"] = new List<string> { "冻土村" };
+		mappingContext.ClanSettlements["clan_nord_1"] = new List<string> { "瑞尔城", "奥斯蒂港", "冻土村" };
+		mappingContext.KingdomNames["empire_w"] = "西帝国";
+		mappingContext.KingdomLeaderNames["empire_w"] = "加里俄斯";
+		mappingContext.SettlementNames["town_V7"] = "奥斯蒂港";
+		mappingContext.SettlementOwnerClanNames["town_V7"] = "戴·阿罗曼克";
+		mappingContext.SettlementOwnerLeaderNames["town_V7"] = "阿罗曼克";
 		if (!StringComparer.Ordinal.Equals(
-			WorldbookTextMappingResolver.Resolve(deadMapping, deadContext),
+			WorldbookTextMappingResolver.Resolve(deadMapping, mappingContext),
 			"他已去世"))
 		{
 			throw new InvalidOperationException("worldbook text mapping status resolution mismatch.");
 		}
+		WorldbookTextMapping aliveMapping = new WorldbookTextMapping
+		{
+			SourceText = "A",
+			Kind = "status|hero|is_alive",
+			TargetId = "lord_1_7",
+			TrueText = "他还在世"
+		};
+		if (!StringComparer.Ordinal.Equals(
+			WorldbookTextMappingResolver.Resolve(aliveMapping, mappingContext),
+			"他还在世"))
+		{
+			throw new InvalidOperationException("worldbook text mapping alive status resolution mismatch.");
+		}
+		WorldbookTextMapping kingdomEliminated = new WorldbookTextMapping
+		{
+			SourceText = "B",
+			Kind = "status|kingdom|is_eliminated",
+			TargetId = "empire",
+			FalseText = "北帝国就是这样一个国家"
+		};
+		if (!StringComparer.Ordinal.Equals(
+			WorldbookTextMappingResolver.Resolve(kingdomEliminated, mappingContext),
+			"北帝国就是这样一个国家"))
+		{
+			throw new InvalidOperationException("worldbook text mapping kingdom status resolution mismatch.");
+		}
+		if (!StringComparer.Ordinal.Equals(
+			WorldbookTextMappingResolver.Resolve(
+				new WorldbookTextMapping { Kind = "clan_all_towns", TargetId = "clan_nord_1" },
+				mappingContext),
+			"奥斯蒂港，瑞尔城"))
+		{
+			throw new InvalidOperationException("worldbook text mapping clan town list mismatch.");
+		}
+		if (!StringComparer.Ordinal.Equals(
+			WorldbookTextMappingResolver.Resolve(
+				new WorldbookTextMapping { Kind = "clan_leader_name", TargetId = "clan_nord_1" },
+				mappingContext),
+			"哈尔达尔"))
+		{
+			throw new InvalidOperationException("worldbook text mapping clan leader mismatch.");
+		}
+		if (!StringComparer.Ordinal.Equals(
+			WorldbookTextMappingResolver.Resolve(
+				new WorldbookTextMapping { Kind = "settlement_owner_leader_name", TargetId = "town_V7" },
+				mappingContext),
+			"阿罗曼克"))
+		{
+			throw new InvalidOperationException("worldbook text mapping settlement owner leader mismatch.");
+		}
+		if (!StringComparer.Ordinal.Equals(
+			WorldbookTextMappingResolver.Resolve(
+				new WorldbookTextMapping { Kind = "bound_deity_name" },
+				mappingContext),
+			"荒野女神")
+			|| !StringComparer.Ordinal.Equals(
+				WorldbookTextMappingResolver.Resolve(
+					new WorldbookTextMapping { Kind = "bound_event_name" },
+					mappingContext),
+				"潘德拉克")
+			|| !StringComparer.Ordinal.Equals(
+				WorldbookTextMappingResolver.Resolve(
+					new WorldbookTextMapping { Kind = "bound_hero_title" },
+					mappingContext),
+				"男爵"))
+		{
+			throw new InvalidOperationException("worldbook text mapping bound lore name mismatch.");
+		}
+		if (!WorldbookTextMappingResolver.IsSupportedKind("status|hero|is_alive")
+			|| !WorldbookTextMappingResolver.IsSupportedKind("clan_all_settlements")
+			|| WorldbookTextMappingResolver.IsSupportedKind("unknown_kind"))
+		{
+			throw new InvalidOperationException("worldbook text mapping kind support list mismatch.");
+		}
 		string mappedText = WorldbookTextMappingResolver.Apply(
-			"国王A，统治着B",
+			"国王A，统治着B。C是这座城的领主。",
 			new List<WorldbookTextMapping>
 			{
 				deadMapping,
@@ -180,15 +280,18 @@ internal static class Program
 				{
 					SourceText = "B",
 					Kind = "bound_settlement_name"
+				},
+				new WorldbookTextMapping
+				{
+					SourceText = "C",
+					Kind = "settlement_owner_leader_name",
+					TargetId = "town_V7"
 				}
 			},
-			new WorldbookMappingContext
-			{
-				HeroIsDead = true,
-				BoundSettlementName = "龙堡"
-			});
+			mappingContext);
 		if (mappedText.IndexOf("国王他已去世", StringComparison.Ordinal) < 0
-			|| mappedText.IndexOf("统治着龙堡", StringComparison.Ordinal) < 0)
+			|| mappedText.IndexOf("统治着龙堡", StringComparison.Ordinal) < 0
+			|| mappedText.IndexOf("阿罗曼克是这座城的领主", StringComparison.Ordinal) < 0)
 		{
 			throw new InvalidOperationException("worldbook text mapping apply mismatch.");
 		}

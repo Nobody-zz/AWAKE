@@ -172,3 +172,11 @@
 5. **AF 兼容模式独立实现**：Variants / TextMappings / SkillMin 不能套用 AWAKE 默认逻辑。
 6. **补齐运行时接入**：实现 `WorldbookService`，再替换 NPC 对话知识源。
 7. **增加测试覆盖**：格式校验、大小写、多文件、重复 ID、身份匹配、variant 选择、预算组装。
+
+## 落地结果（2026-08-16）
+
+- 类型模型、多文件容错、多对多 keyword/ngram 索引、身份绑定优先、AF Variants `af-best` 选择、运行时接入 NPC 对话均已落地。
+- `WorldbookTextMappingResolver` 已覆盖《卡拉迪亚编年史》扫描到的全部 22 种 `TextMappings.Kind`：状态判断、实体名、领地列表、bound lore 占位符。
+- 未知 Kind 不再静默消失：保留 `SourceText`，导入时写 `text_mappings_unsupported` warning。
+- `NpcDialogueService.BuildMappingContext` 从战役对象填充 Hero/Clan/Kingdom/Settlement 名称、状态与领地列表。
+- SdkSmoke 新增覆盖：状态真假、领地列表、家族领袖、定居点统治者、bound 名称、Kind 白名单与整体替换。
