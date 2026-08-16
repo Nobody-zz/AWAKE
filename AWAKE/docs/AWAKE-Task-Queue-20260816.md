@@ -26,6 +26,9 @@
   - 世界书运行时接入 NPC 对话
   - 世界书附加目录数据加载
   - 世界书 TextMappings 全量 AF Kind 覆盖（22 种）
+  - 世界书一次性迁移脚本 `tools/migrate_af_worldbook.ps1`
+  - 世界书迁移规范 `AWAKE-Worldbook-Migration-Spec-20260816.md`
+  - 世界书 `variantSelection` 显式解析与校验
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）

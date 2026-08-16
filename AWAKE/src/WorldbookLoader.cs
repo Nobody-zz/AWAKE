@@ -201,7 +201,8 @@ internal static class WorldbookLoader
             Kind = Str(obj, "kind", "Kind") ?? "background",
             Scope = Str(obj, "scope", "Scope") ?? "npc",
             Persistence = Str(obj, "persistence", "Persistence") ?? "persistent",
-            VariantSelection = StringComparer.Ordinal.Equals(sourceFormat, "af") ? "af-best" : "first",
+            VariantSelection = Str(obj, "variantSelection", "VariantSelection")
+                ?? (StringComparer.Ordinal.Equals(sourceFormat, "af") ? "af-best" : "first"),
             Priority = Int(obj, "priority", "Priority") ?? 0,
             When = ParseWhen(Obj(obj, "when", "When")),
             Context = ParseContext(Obj(obj, "context", "Context")),
@@ -456,6 +457,10 @@ internal static class WorldbookLoader
         if (!IsAllowed(rule.Persistence, "persistent", "contextual"))
         {
             AddWarning(warnings, rule.Id, "rule_persistence_unsupported", "未知 persistence: " + rule.Persistence);
+        }
+        if (!IsAllowed(rule.VariantSelection, "first", "all", "random", "af-best"))
+        {
+            AddWarning(warnings, rule.Id, "rule_variant_selection_unsupported", "未知 variantSelection: " + rule.VariantSelection);
         }
         string tier = rule.When.ContentTier;
         if (!string.IsNullOrWhiteSpace(tier) && !IsAllowed(tier, "pure", "standard", "intense"))

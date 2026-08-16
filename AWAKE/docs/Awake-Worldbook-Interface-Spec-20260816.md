@@ -225,7 +225,7 @@ AWAKE 保留 AF 字段名和语义，不另造一套：
 | `rules[].content` | 是 | 注入正文 |
 | `rules[].variants` | 否 | 允许多条；同一 when 允许多个 variant，按 priority 再按数组顺序解析 |
 | `rules[].variants[].priority` | 否 | 变体优先级，默认 0 |
-| `rules[].variantSelection` | 否 | `first` / `all` / `random`；默认 `first` |
+| `rules[].variantSelection` | 否 | `first` / `all` / `random` / `af-best`；默认 `first`。AF 导入或迁移规则显式使用 `af-best` |
 | `rules[].keywords` | 否 | 精确词/近义词，用于本地索引 |
 | `rules[].ngrams` | 否 | 2-3 字中文词，用于 n-gram 回退 |
 | `rules[].ragShortTexts` | 否 | RAG 召回种子，不作为权威正文；不设 100 字符硬限制，建议单条不超过 512 字 |
@@ -404,7 +404,7 @@ public interface IWorldbookQueryService
    推荐允许同一规则、相同 `when` 下存在多个 variant。解析顺序为：
    - `priority` 从高到低
    - 相同优先级按数组顺序
-   - 可选 `variantSelection = first / all / random`
+   - 可选 `variantSelection = first / all / random / af-best`
    - 默认 `first`，避免无脑拼接导致上下文膨胀
 
 3. **RAG 短句不设 100 字符硬限制**
@@ -482,6 +482,8 @@ long Score(WorldbookRule rule, WorldbookQuery query)
 - 缺失字段使用默认值，不要求作者补全。
 - AF `personality_background` 文件自动映射为 AWAKE `personas`。
 - 不做内容重写，只做字段归一化。
+
+如需把 AF 世界书一次性迁移成 AWAKE 原生格式，使用 `tools/migrate_af_worldbook.ps1`，规范见 `docs/AWAKE-Worldbook-Migration-Spec-20260816.md`。
 
 字段默认值：
 

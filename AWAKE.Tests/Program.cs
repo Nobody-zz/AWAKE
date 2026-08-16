@@ -90,6 +90,62 @@ internal static class Program
 			throw new InvalidOperationException("worldbook AF field mapping mismatch.");
 		}
 
+		string awakeRuleJson = @"{
+			""id"": ""rule.awake.variant"",
+			""variantSelection"": ""af-best"",
+			""variants"": [
+				{
+					""priority"": 0,
+					""when"": {
+						""cultures"": [""empire""]
+					},
+					""content"": ""帝国变体""
+				}
+			]
+		}";
+		List<WorldbookImportWarning> awakeWarnings = new List<WorldbookImportWarning>();
+		WorldbookRule awakeRule;
+		if (!WorldbookLoader.TryParseRule(
+			Newtonsoft.Json.Linq.JObject.Parse(awakeRuleJson),
+			"fallback",
+			"awake",
+			awakeWarnings,
+			out awakeRule)
+			|| !StringComparer.Ordinal.Equals(awakeRule.VariantSelection, "af-best"))
+		{
+			throw new InvalidOperationException("worldbook explicit variantSelection should parse.");
+		}
+
+		string badVariantJson = @"{
+			""id"": ""rule.bad.variant"",
+			""variantSelection"": ""unknown"",
+			""content"": ""x""
+		}";
+		List<WorldbookImportWarning> badVariantWarnings = new List<WorldbookImportWarning>();
+		WorldbookRule badVariantRule;
+		if (!WorldbookLoader.TryParseRule(
+			Newtonsoft.Json.Linq.JObject.Parse(badVariantJson),
+			"fallback",
+			"awake",
+			badVariantWarnings,
+			out badVariantRule))
+		{
+			throw new InvalidOperationException("bad variantSelection rule should still parse with warning.");
+		}
+		bool foundVariantWarning = false;
+		foreach (WorldbookImportWarning warning in badVariantWarnings)
+		{
+			if (StringComparer.Ordinal.Equals(warning.Code, "rule_variant_selection_unsupported"))
+			{
+				foundVariantWarning = true;
+				break;
+			}
+		}
+		if (!foundVariantWarning)
+		{
+			throw new InvalidOperationException("bad variantSelection should emit a warning.");
+		}
+
 		WorldbookRule rule2 = new WorldbookRule
 		{
 			Id = "rule.empire.soldier",
