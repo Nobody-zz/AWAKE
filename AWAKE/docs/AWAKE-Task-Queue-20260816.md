@@ -237,6 +237,7 @@
   - 优先级：P1；状态：`queued`；分类：`non_blocking`。
 - `FB-20260817-3`：主动对话无逻辑、纯概率触发。
   - 证据：`NpcProactiveService.EvaluateAsync` 目前是 `BaseChance + affinity` 随机抽取，motive 按权重随机，OpeningHint 通用，缺少“当前处境/事件/身份/关系事实”驱动。
+  - 日志证据：16:20:27-38 连续出现 `npc_proactive_candidate_created hero=... motive=casual`，且同时大量 `world_state_relationship_load_failed code=storage.key_not_found`，说明没有关系/事件事实参与，纯随机高频触发。
   - 建议：先做确定性触发条件（关系阶段、近期事件、身份、地点、需求），概率只做最终扰动；并给触发写可解释理由。
   - 优先级：P1；状态：`queued`；分类：`non_blocking`。
 - `FB-20260817-4`：通讯录 UI 继续补头像等信息。
@@ -250,8 +251,12 @@
   - 证据：只有 WorldbookLoader/Service/Runtime 的加载与查询，无游戏内管理、重载、校验、编辑、检索调试面板。
   - 优先级：P2；状态：`queued`；分类：`non_blocking`。
 - `FB-20260817-7`：Slaanesh 路由残留与对话路由疑点。
-  - 证据：源码/游戏模块文本未找到 `Slaanesh` 路由文件，当前路由为 `AWAKE.route.npc.dialogue`；Companion 日志出现 `ai.cloud_export_denied`。马库斯侧称仍残留 Slaanesh 文件名相关路由文件，需进一步查 `platform.db`/Companion 配置并验证对话路由。
+  - 证据：源码/游戏模块文本未找到 `Slaanesh` 路由文件，当前路由为 `AWAKE.route.npc.dialogue`；马库斯侧称仍残留 Slaanesh 文件名相关路由文件，需进一步查 `platform.db`/Companion 配置。
+  - 日志证据：`[2026-08-17 00:18:38] AI task failed ... RouteId: AWAKE.route.npc.dialogue | Code: ai.cloud_export_denied`；AWAKE 日志同步出现 `npc_dialogue_turn_failed code=ai.cloud_export_denied category=ProviderFailure`，对话路由实际被云外发策略拒绝。
   - 优先级：P1；状态：`queued` / `decision_needed`；分类：`non_blocking`。
+- `FB-20260817-8`：存储 key 缺失导致持久化失败/写丢。
+  - 证据：AWAKE 日志大量 `world_state_memory_load_failed`、`world_state_relationship_load_failed`、`world_state_messenger_load_failed`、`world_state_proactive_load_failed` 均为 `storage.key_not_found`；`world_state_write_failed_dropped ... code=storage.key_not_found attempts=3`；会话结束 `world_state_final_drain_failed pending_writes=20 dropped=2`。
+  - 优先级：P1；状态：`queued`；分类：`non_blocking`。
 
 ## 可行性核验（2026-08-16）
 
