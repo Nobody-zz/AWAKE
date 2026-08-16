@@ -366,3 +366,4 @@
 - 完成：多步引导数据模型与状态机（`awake.onboarding.v1` 存储、完成/跳过/永久跳过/重复提醒日）、MCM 引导开关与重复间隔、`AwakeLetterService` 写信基础（transcript `source=letter` 玩家行）。
 - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化 212/241/241；资产检查 108；release_check OK；DLL SHA-256 `C0E0C97B3505CFBEDE634516044520208EA4E8AEA6FDC5854189FAA435AD6859` 已同步 `_build_out/dist/游戏目录`。
 - 仍待离线实现：`PLAN-Interactions` 命令/恢复服务、`PLAN-UnifiedDialogueSession` 核心、通讯录写信 UI、多步引导 UI。
+- 推送：本地离线批次 C/D 均已提交；远端 `main` 推送持续被网络重置阻断，网络恢复后需补推。
