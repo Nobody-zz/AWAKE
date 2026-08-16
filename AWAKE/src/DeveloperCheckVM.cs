@@ -7,6 +7,9 @@ namespace Awake;
 internal sealed class DeveloperCheckVM : ViewModel
 {
     private readonly Action _close;
+    private readonly Action _refresh;
+    private readonly Action _openAiSetup;
+    private readonly Action _openDiagnostics;
     private readonly MBBindingList<DeveloperCheckRowVM> _rows = new MBBindingList<DeveloperCheckRowVM>();
     private string _titleText;
     private string _statusText;
@@ -28,11 +31,34 @@ internal sealed class DeveloperCheckVM : ViewModel
         private set => Set(ref _statusText, value, nameof(StatusText));
     }
 
-    internal DeveloperCheckVM(Action close, IReadOnlyList<KeyValuePair<string, string>> rows)
+    [DataSourceProperty]
+    public string RefreshText => AwakeLocalization.Resolve("awake.dev_check.refresh", "Refresh");
+
+    [DataSourceProperty]
+    public string AiSetupText => AwakeLocalization.Resolve("awake.dev_check.ai_setup", "AI Setup");
+
+    [DataSourceProperty]
+    public string DiagnosticsText => AwakeLocalization.Resolve("awake.dev_check.diagnostics", "Diagnostics");
+
+    internal DeveloperCheckVM(
+        Action close,
+        Action refresh,
+        Action openAiSetup,
+        Action openDiagnostics,
+        IReadOnlyList<KeyValuePair<string, string>> rows)
     {
         _close = close;
-        TitleText = AwakeLocalization.Resolve("awake.dev_check.title", "醒世 · 开发者检查");
-        StatusText = AwakeLocalization.Resolve("awake.dev_check.status", "运行时诊断");
+        _refresh = refresh;
+        _openAiSetup = openAiSetup;
+        _openDiagnostics = openDiagnostics;
+        TitleText = AwakeLocalization.Resolve("awake.dev_check.title", "AWAKE Developer Check");
+        StatusText = AwakeLocalization.Resolve("awake.dev_check.status", "Runtime diagnostics");
+        Reload(rows);
+    }
+
+    internal void Reload(IReadOnlyList<KeyValuePair<string, string>> rows)
+    {
+        _rows.Clear();
         if (rows != null)
         {
             foreach (KeyValuePair<string, string> row in rows)
@@ -40,11 +66,27 @@ internal sealed class DeveloperCheckVM : ViewModel
                 _rows.Add(new DeveloperCheckRowVM(row.Key, row.Value));
             }
         }
+        StatusText = AwakeLocalization.Resolve("awake.dev_check.status_refreshed", "Runtime diagnostics refreshed");
     }
 
     public void ExecuteClose()
     {
         _close?.Invoke();
+    }
+
+    public void ExecuteRefresh()
+    {
+        _refresh?.Invoke();
+    }
+
+    public void ExecuteOpenAiSetup()
+    {
+        _openAiSetup?.Invoke();
+    }
+
+    public void ExecuteOpenDiagnostics()
+    {
+        _openDiagnostics?.Invoke();
     }
 
     private bool Set(ref string field, string value, string name)

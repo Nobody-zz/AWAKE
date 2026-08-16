@@ -771,6 +771,12 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         List<InquiryElement> elements = new List<InquiryElement>
         {
             new InquiryElement(
+                "nearby_dialogue",
+                AwakeLocalization.Resolve("awake.menu.nearby_dialogue", "附近对话（地图）"),
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.terminal.nearby_dialogue_hint", "选择附近英雄发起 AI 对话")),
+            new InquiryElement(
                 "messenger",
                 AwakeLocalization.Resolve("awake.menu.messenger", "通讯录（醒世）"),
                 (ImageIdentifier)null,
@@ -825,6 +831,11 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     {
         if (selected == null || selected.Count == 0) return;
         string id = selected[0].Identifier as string;
+        if (StringComparer.Ordinal.Equals(id, "nearby_dialogue"))
+        {
+            OpenNearbyDialoguePicker();
+            return;
+        }
         if (StringComparer.Ordinal.Equals(id, "inbox"))
         {
             ShowWorldInbox();
@@ -849,6 +860,71 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         {
             OpenDeveloperTestTools();
         }
+    }
+
+    private static void OpenNearbyDialoguePicker()
+    {
+        List<Hero> heroes = NpcDialogueLauncher.GetNearbyHeroes(8);
+        if (heroes.Count == 0)
+        {
+            AwakeFeedback.ShowWarning(AwakeLocalization.Resolve(
+                "awake.dev_tools.no_target",
+                "Nearby target missing."));
+            return;
+        }
+        List<InquiryElement> elements = new List<InquiryElement>();
+        foreach (Hero hero in heroes)
+        {
+            if (hero == null || string.IsNullOrWhiteSpace(hero.StringId)) continue;
+            elements.Add(new InquiryElement(
+                hero.StringId,
+                hero.Name?.ToString() ?? hero.StringId,
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.terminal.nearby_dialogue_hero_hint", "发起 AI 对话")));
+        }
+        if (elements.Count == 0)
+        {
+            AwakeFeedback.ShowWarning(AwakeLocalization.Resolve(
+                "awake.dev_tools.no_target",
+                "Nearby target missing."));
+            return;
+        }
+        MBInformationManager.ShowMultiSelectionInquiry(
+            new MultiSelectionInquiryData(
+                AwakeLocalization.Resolve("awake.terminal.nearby_dialogue_title", "附近对话"),
+                AwakeLocalization.Resolve("awake.terminal.nearby_dialogue_prompt", "选择要交谈的对象："),
+                elements,
+                true,
+                1,
+                1,
+                AwakeLocalization.Resolve("awake.terminal.confirm", "确定"),
+                AwakeLocalization.Resolve("awake.terminal.close", "关闭"),
+                selected =>
+                {
+                    if (selected == null || selected.Count == 0) return;
+                    string heroId = selected[0].Identifier as string;
+                    Hero hero = NpcDialogueLauncher.FindHeroById(heroId);
+                    if (hero == null)
+                    {
+                        AwakeFeedback.ShowWarning(AwakeLocalization.Resolve(
+                            "awake.dev_tools.no_target",
+                            "Nearby target missing."));
+                        return;
+                    }
+                    NpcDialogueLaunchResult result = NpcDialogueLauncher.TryOpenDialogue(hero, "map");
+                    if (result == NpcDialogueLaunchResult.None)
+                    {
+                        AwakeFeedback.ShowError(AwakeLocalization.Resolve(
+                            "awake.dev_tools.dialogue_failed",
+                            "Dialogue failed to open."));
+                    }
+                },
+                _ => { },
+                string.Empty,
+                false),
+            true,
+            false);
     }
 
     private static void OpenDeveloperTestTools()
@@ -885,7 +961,25 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 AwakeLocalization.Resolve("awake.dev_tools.reset_proactive", "重置主动状态"),
                 (ImageIdentifier)null,
                 true,
-                AwakeLocalization.Resolve("awake.dev_tools.reset_proactive_hint", "清空 NPC 主动聊天候选"))
+                AwakeLocalization.Resolve("awake.dev_tools.reset_proactive_hint", "清空 NPC 主动聊天候选")),
+            new InquiryElement(
+                "worldbook_status",
+                AwakeLocalization.Resolve("awake.dev_tools.worldbook_status", "世界书状态"),
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.dev_tools.worldbook_status_hint", "查看规则/人物/警告数量")),
+            new InquiryElement(
+                "worldbook_search",
+                AwakeLocalization.Resolve("awake.dev_tools.worldbook_search", "世界书关键词查询"),
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.dev_tools.worldbook_search_hint", "输入关键词查找命中的规则")),
+            new InquiryElement(
+                "worldbook_reload",
+                AwakeLocalization.Resolve("awake.dev_tools.worldbook_reload", "重载世界书"),
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.dev_tools.worldbook_reload_hint", "重新读取 ModuleData/Worldbook"))
         };
         MultiSelectionInquiryData data = new MultiSelectionInquiryData(
             AwakeLocalization.Resolve("awake.dev_tools.title", "醒世 · 开发者测试"),
@@ -934,6 +1028,21 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         if (StringComparer.Ordinal.Equals(id, "reset_proactive"))
         {
             AwakeDeveloperTestActions.ResetProactive();
+            return;
+        }
+        if (StringComparer.Ordinal.Equals(id, "worldbook_status"))
+        {
+            AwakeDeveloperTestActions.ShowWorldbookStatus();
+            return;
+        }
+        if (StringComparer.Ordinal.Equals(id, "worldbook_search"))
+        {
+            AwakeDeveloperTestActions.SearchWorldbook();
+            return;
+        }
+        if (StringComparer.Ordinal.Equals(id, "worldbook_reload"))
+        {
+            AwakeDeveloperTestActions.ReloadWorldbook();
         }
     }
 

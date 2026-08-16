@@ -449,7 +449,8 @@ internal static class Program
 			ExpiresAtDay = 11,
 			CooldownDay = 12,
 			Fatigue = 1,
-			OpeningHint = "hint"
+			OpeningHint = "hint",
+			TriggerReason = "reason"
 		};
 		Newtonsoft.Json.Linq.JObject json = candidate.ToJson();
 		NpcProactiveCandidate parsed = NpcProactiveCandidate.FromJson(json);
@@ -461,9 +462,22 @@ internal static class Program
 			|| parsed.ExpiresAtDay != 11
 			|| parsed.CooldownDay != 12
 			|| parsed.Fatigue != 1
-			|| !StringComparer.Ordinal.Equals(parsed.OpeningHint, "hint"))
+			|| !StringComparer.Ordinal.Equals(parsed.OpeningHint, "hint")
+			|| !StringComparer.Ordinal.Equals(parsed.TriggerReason, "reason"))
 		{
 			throw new InvalidOperationException("npc proactive candidate roundtrip mismatch.");
+		}
+		if (!StringComparer.Ordinal.Equals(
+			NpcProactiveService.BuildTriggerReason(60, true),
+			"双方已有信任与吸引，对方愿意主动接近"))
+		{
+			throw new InvalidOperationException("proactive trigger reason mismatch.");
+		}
+		if (NpcProactiveService.ComputeTriggerChance(0, false, 35) >= 0.03
+			|| NpcProactiveService.ComputeTriggerChance(60, true, 35) < 0.10
+			|| NpcProactiveService.ComputeTriggerChance(60, true, 0) != 0d)
+		{
+			throw new InvalidOperationException("proactive trigger chance mismatch.");
 		}
 		if (NpcProactiveConstants.MaximumFatigue <= 0
 			|| NpcProactiveConstants.CooldownDays <= 0
@@ -832,6 +846,17 @@ internal static class Program
 			Personas = new List<WorldbookPersona> { persona }
 		};
 		WorldbookService service = new WorldbookService(document);
+		if (service.RuleCount != 2
+			|| service.PersonaCount != 1
+			|| service.WarningCount != 0)
+		{
+			throw new InvalidOperationException("worldbook status counters mismatch.");
+		}
+		List<WorldbookRule> searchHits = service.Search("荣誉", 10);
+		if (searchHits.Count == 0)
+		{
+			throw new InvalidOperationException("worldbook keyword search should return rules.");
+		}
 		WorldbookQuery query = new WorldbookQuery
 		{
 			CultureId = "empire",

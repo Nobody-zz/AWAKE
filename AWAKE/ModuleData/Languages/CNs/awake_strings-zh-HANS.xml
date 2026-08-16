@@ -47,6 +47,10 @@
     <string id="awake.menu.developer_check" text="开发者检查" />
     <string id="awake.dev_check.title" text="醒世 · 开发者检查" />
     <string id="awake.dev_check.status" text="运行时诊断" />
+    <string id="awake.dev_check.status_refreshed" text="运行时诊断已刷新" />
+    <string id="awake.dev_check.refresh" text="刷新" />
+    <string id="awake.dev_check.ai_setup" text="AI 设置" />
+    <string id="awake.dev_check.diagnostics" text="诊断台" />
     <string id="awake.onboarding.title" text="醒世 · 首启向导" />
     <string id="awake.onboarding.text" text="开始前需要先配置 AI 服务商、模型与路由。打开 AI 设置台完成配置后，就能进入 NPC 对话。" />
     <string id="awake.onboarding.open" text="打开 AI 设置" />
@@ -84,7 +88,7 @@
     <string id="awake.mcm.npc_proactive.name" text="启用 NPC 主动" />
     <string id="awake.mcm.npc_proactive.hint" text="默认开启。附近 NPC 有概率按关系与当前场合主动发起谈话。" />
     <string id="awake.mcm.npc_proactive_chance.name" text="NPC 主动概率" />
-    <string id="awake.mcm.npc_proactive_chance.hint" text="NPC 主动发起的概率百分比，0-100，默认 35。" />
+    <string id="awake.mcm.npc_proactive_chance.hint" text="NPC 主动发起的最终扰动比例，0-100，默认 35；实际触发优先由关系/事件条件决定。" />
     <string id="awake.mcm.sync_routes.name" text="同步路由" />
     <string id="awake.mcm.sync_routes.content" text="同步路由" />
     <string id="awake.mcm.sync_routes.hint" text="路由由框架自动声明；如需手动同步，请到 AI 设置台点击“同步路由”。" />
@@ -120,6 +124,25 @@
     <string id="awake.dev_tools.inbox_hint" text="打开事件收件箱。" />
     <string id="awake.dev_tools.weekly_hint" text="打开世界周报。" />
     <string id="awake.dev_tools.reset_proactive_hint" text="清空 NPC 主动聊天候选。" />
+    <string id="awake.dev_tools.worldbook_status" text="世界书状态" />
+    <string id="awake.dev_tools.worldbook_status_hint" text="查看规则/人物/警告数量。" />
+    <string id="awake.dev_tools.worldbook_search" text="世界书关键词查询" />
+    <string id="awake.dev_tools.worldbook_search_hint" text="按关键词查找命中的规则。" />
+    <string id="awake.dev_tools.worldbook_reload" text="重载世界书" />
+    <string id="awake.dev_tools.worldbook_reload_hint" text="重新读取 ModuleData/Worldbook。" />
+    <string id="awake.worldbook.status_title" text="世界书状态" />
+    <string id="awake.worldbook.search_title" text="世界书关键词查询" />
+    <string id="awake.worldbook.search_prompt" text="输入关键词或 RuleId：" />
+    <string id="awake.worldbook.search" text="搜索" />
+    <string id="awake.worldbook.search_result" text="世界书搜索结果" />
+    <string id="awake.worldbook.not_loaded" text="世界书尚未加载。" />
+    <string id="awake.worldbook.no_hits" text="没有命中的规则。" />
+    <string id="awake.ui.cancel" text="取消" />
+    <string id="awake.menu.nearby_dialogue" text="附近对话（地图）" />
+    <string id="awake.terminal.nearby_dialogue_hint" text="选择附近英雄发起 AI 对话。" />
+    <string id="awake.terminal.nearby_dialogue_hero_hint" text="发起 AI 对话" />
+    <string id="awake.terminal.nearby_dialogue_title" text="附近对话" />
+    <string id="awake.terminal.nearby_dialogue_prompt" text="选择要交谈的对象：" />
     <string id="awake.feedback.inbox_open_failed" text="无法打开事件收件箱。" />
     <string id="awake.feedback.weekly_report_open_failed" text="无法打开世界周报。" />
     <string id="awake.ui.talk" text="交谈" />

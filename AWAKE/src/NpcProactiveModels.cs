@@ -33,6 +33,14 @@ internal static class NpcProactiveConstants
     internal const double BaseChance = 0.10;
     internal const double RelationshipBonusPerPoint = 0.001;
     internal const double ChanceMaximum = 0.35;
+    internal const double MissingRelationshipChance = 0.02;
+    internal const double NeutralChance = 0.05;
+    internal const double FamiliarChance = 0.08;
+    internal const double HighAffinityChance = 0.16;
+    internal const double HostilityChance = 0.09;
+    internal const int HighAffinityThreshold = 50;
+    internal const int FamiliarAffinityThreshold = 10;
+    internal const int HostilityThreshold = -30;
 }
 
 internal sealed class NpcProactiveCandidate
@@ -48,6 +56,7 @@ internal sealed class NpcProactiveCandidate
     internal int CooldownDay { get; set; }
     internal int Fatigue { get; set; }
     internal string OpeningHint { get; set; } = string.Empty;
+    internal string TriggerReason { get; set; } = string.Empty;
 
     internal JObject ToJson()
     {
@@ -63,7 +72,8 @@ internal sealed class NpcProactiveCandidate
             ["expiresAtDay"] = ExpiresAtDay,
             ["cooldownDay"] = CooldownDay,
             ["fatigue"] = Fatigue,
-            ["openingHint"] = OpeningHint ?? string.Empty
+            ["openingHint"] = OpeningHint ?? string.Empty,
+            ["triggerReason"] = TriggerReason ?? string.Empty
         };
     }
 
@@ -88,6 +98,7 @@ internal sealed class NpcProactiveCandidate
         candidate.CooldownDay = IntValue(obj["cooldownDay"]);
         candidate.Fatigue = IntValue(obj["fatigue"]);
         candidate.OpeningHint = (string)obj["openingHint"] ?? string.Empty;
+        candidate.TriggerReason = (string)obj["triggerReason"] ?? string.Empty;
         return candidate;
     }
 

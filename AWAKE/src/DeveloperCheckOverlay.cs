@@ -82,8 +82,34 @@ internal sealed class DeveloperCheckOverlay
     private DeveloperCheckOverlay(ScreenBase screen, IReadOnlyList<KeyValuePair<string, string>> rows)
     {
         _screen = screen;
-        _dataSource = new DeveloperCheckVM(Close, rows);
+        _dataSource = new DeveloperCheckVM(Close, Refresh, OpenAiSetup, OpenDiagnostics, rows);
         _layer = new GauntletLayer("DeveloperCheck", 545, false);
+    }
+
+    private void Refresh()
+    {
+        if (_closed) return;
+        try
+        {
+            IMarcusAiFrameworkHost host = AwakeRuntime.ResolveHost();
+            IReadOnlyList<KeyValuePair<string, string>> rows = AwakeDeveloperReport.BuildRows(host, AwakeSettings.Current);
+            _dataSource.Reload(rows);
+            AwakeLog.Write("developer_check_panel_refreshed rows=" + rows.Count);
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("developer_check_refresh_error error=" + ex.Message);
+        }
+    }
+
+    private static void OpenAiSetup()
+    {
+        AwakeMarcusLinkService.OpenAiSetup();
+    }
+
+    private static void OpenDiagnostics()
+    {
+        AwakeMarcusLinkService.OpenDiagnostics();
     }
 
     private void OpenLayer()

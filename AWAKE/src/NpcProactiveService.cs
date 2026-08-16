@@ -304,11 +304,13 @@ internal sealed class NpcProactiveService
             }
 
             int affinity = 0;
+            bool hasRelationship = false;
             if (store != null)
             {
                 JObject relationship = await store.GetRelationshipAsync(hero.StringId, null, cancellationToken).ConfigureAwait(false);
                 if (relationship != null)
                 {
+                    hasRelationship = true;
                     affinity = Clamp(
                         IntValue(relationship["trust"]) + IntValue(relationship["love"]) - IntValue(relationship["hostility"]),
                         -100,
@@ -317,13 +319,14 @@ internal sealed class NpcProactiveService
             }
 
             NpcProactiveMotiveDefinition motiveDefinition = SelectMotive(affinity);
+            string triggerReason = BuildTriggerReason(affinity, hasRelationship);
             int chancePercent = Clamp(AwakeSettings.Current.NpcProactiveChance, 0, 100);
-            double chance = (NpcProactiveConstants.BaseChance
-                + affinity * NpcProactiveConstants.RelationshipBonusPerPoint)
-                * (chancePercent / 35.0);
-            chance = Math.Min(NpcProactiveConstants.ChanceMaximum, chance);
+            double chance = ComputeTriggerChance(affinity, hasRelationship, chancePercent);
             if (_random.NextDouble() >= chance) continue;
 
+            string openingHint = string.IsNullOrWhiteSpace(motiveDefinition.OpeningHint)
+                ? triggerReason
+                : triggerReason + "；" + motiveDefinition.OpeningHint;
             lock (_gate)
             {
                 if (HasCandidateForHeroUnlocked(hero.StringId)) continue;
@@ -339,18 +342,64 @@ internal sealed class NpcProactiveService
                     ExpiresAtDay = day + NpcProactiveConstants.ExpiresAfterDays,
                     CooldownDay = day + NpcProactiveConstants.CooldownDays,
                     Fatigue = 1,
-                    OpeningHint = string.IsNullOrWhiteSpace(motiveDefinition.OpeningHint)
-                        ? AwakeLocalization.Resolve(
-                            "awake.proactive.opening_hint",
-                            "对方主动想和你谈谈。")
-                        : motiveDefinition.OpeningHint
+                    OpeningHint = openingHint,
+                    TriggerReason = triggerReason
                 });
             }
             AwakeLog.Write("npc_proactive_candidate_created hero=" + hero.StringId
-                + " motive=" + motiveDefinition.Id);
+                + " motive=" + motiveDefinition.Id
+                + " reason=" + triggerReason);
             return true;
         }
         return false;
+    }
+
+    internal static string BuildTriggerReason(int affinity, bool hasRelationship)
+    {
+        if (!hasRelationship)
+        {
+            return "双方尚未建立明确关系，只是偶然相遇";
+        }
+        if (affinity >= NpcProactiveConstants.HighAffinityThreshold)
+        {
+            return "双方已有信任与吸引，对方愿意主动接近";
+        }
+        if (affinity <= NpcProactiveConstants.HostilityThreshold)
+        {
+            return "对方对你有戒心或敌意，但有话想当面说";
+        }
+        if (affinity >= NpcProactiveConstants.FamiliarAffinityThreshold)
+        {
+            return "关系逐渐熟悉，对方主动搭话";
+        }
+        return "关系普通，对方偶然开口";
+    }
+
+    internal static double ComputeTriggerChance(int affinity, bool hasRelationship, int chancePercent)
+    {
+        double baseChance;
+        if (!hasRelationship)
+        {
+            baseChance = NpcProactiveConstants.MissingRelationshipChance;
+        }
+        else if (affinity >= NpcProactiveConstants.HighAffinityThreshold)
+        {
+            baseChance = NpcProactiveConstants.HighAffinityChance;
+        }
+        else if (affinity <= NpcProactiveConstants.HostilityThreshold)
+        {
+            baseChance = NpcProactiveConstants.HostilityChance;
+        }
+        else if (affinity >= NpcProactiveConstants.FamiliarAffinityThreshold)
+        {
+            baseChance = NpcProactiveConstants.FamiliarChance;
+        }
+        else
+        {
+            baseChance = NpcProactiveConstants.NeutralChance;
+        }
+        double scaled = baseChance * (Clamp(chancePercent, 0, 100) / 35.0);
+        return Math.Min(NpcProactiveConstants.ChanceMaximum, scaled);
     }
 
     private NpcProactiveMotiveDefinition SelectMotive(int affinity)

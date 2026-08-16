@@ -47,6 +47,10 @@
     <string id="awake.menu.developer_check" text="Developer Check" />
     <string id="awake.dev_check.title" text="AWAKE Developer Check" />
     <string id="awake.dev_check.status" text="Runtime diagnostics" />
+    <string id="awake.dev_check.status_refreshed" text="Runtime diagnostics refreshed" />
+    <string id="awake.dev_check.refresh" text="Refresh" />
+    <string id="awake.dev_check.ai_setup" text="AI Setup" />
+    <string id="awake.dev_check.diagnostics" text="Diagnostics" />
     <string id="awake.onboarding.title" text="AWAKE First Run" />
     <string id="awake.onboarding.text" text="Before you begin, configure the AI provider, model, and routes. Open the AI Setup console to finish setup, then you can start NPC conversations." />
     <string id="awake.onboarding.open" text="Open AI Setup" />
@@ -84,7 +88,7 @@
     <string id="awake.mcm.npc_proactive.name" text="Enable NPC Proactive" />
     <string id="awake.mcm.npc_proactive.hint" text="Enabled by default. Nearby NPCs may proactively start a conversation based on relationship and current situation." />
     <string id="awake.mcm.npc_proactive_chance.name" text="NPC Proactive Chance" />
-    <string id="awake.mcm.npc_proactive_chance.hint" text="Chance percentage for NPC proactive initiations, 0-100, default 35." />
+    <string id="awake.mcm.npc_proactive_chance.hint" text="Final variance for NPC proactive initiations, 0-100, default 35. Relationship and event conditions decide the base trigger first." />
     <string id="awake.mcm.sync_routes.name" text="Sync Routes" />
     <string id="awake.mcm.sync_routes.content" text="Sync Routes" />
     <string id="awake.mcm.sync_routes.hint" text="Routes are auto-provisioned by the framework; click Sync Routes in the AI setup console if needed." />
@@ -120,6 +124,25 @@
     <string id="awake.dev_tools.inbox_hint" text="Open the event inbox." />
     <string id="awake.dev_tools.weekly_hint" text="Open the weekly report." />
     <string id="awake.dev_tools.reset_proactive_hint" text="Clear NPC proactive talk candidates." />
+    <string id="awake.dev_tools.worldbook_status" text="Worldbook Status" />
+    <string id="awake.dev_tools.worldbook_status_hint" text="Show rule/persona/warning counts." />
+    <string id="awake.dev_tools.worldbook_search" text="Worldbook Keyword Search" />
+    <string id="awake.dev_tools.worldbook_search_hint" text="Search rules by keyword." />
+    <string id="awake.dev_tools.worldbook_reload" text="Reload Worldbook" />
+    <string id="awake.dev_tools.worldbook_reload_hint" text="Re-read ModuleData/Worldbook." />
+    <string id="awake.worldbook.status_title" text="Worldbook Status" />
+    <string id="awake.worldbook.search_title" text="Worldbook Search" />
+    <string id="awake.worldbook.search_prompt" text="Enter a keyword or RuleId:" />
+    <string id="awake.worldbook.search" text="Search" />
+    <string id="awake.worldbook.search_result" text="Worldbook Search Result" />
+    <string id="awake.worldbook.not_loaded" text="Worldbook is not loaded." />
+    <string id="awake.worldbook.no_hits" text="No matching rules." />
+    <string id="awake.ui.cancel" text="Cancel" />
+    <string id="awake.menu.nearby_dialogue" text="Nearby Dialogue (Map)" />
+    <string id="awake.terminal.nearby_dialogue_hint" text="Choose a nearby hero for AI dialogue." />
+    <string id="awake.terminal.nearby_dialogue_hero_hint" text="Start AI dialogue" />
+    <string id="awake.terminal.nearby_dialogue_title" text="Nearby Dialogue" />
+    <string id="awake.terminal.nearby_dialogue_prompt" text="Choose who to talk with:" />
     <string id="awake.feedback.inbox_open_failed" text="Could not open the event inbox." />
     <string id="awake.feedback.weekly_report_open_failed" text="Could not open the weekly report." />
     <string id="awake.ui.talk" text="Talk" />

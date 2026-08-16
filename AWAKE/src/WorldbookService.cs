@@ -49,6 +49,41 @@ internal sealed class WorldbookService
         }
     }
 
+    internal int RuleCount => _rules.Count;
+    internal int PersonaCount => _personasByCharacterId.Count;
+    internal int WarningCount => _warnings.Count;
+    internal IReadOnlyList<WorldbookImportWarning> Warnings => _warnings;
+
+    internal List<WorldbookRule> Search(string text, int limit)
+    {
+        List<WorldbookRule> result = new List<WorldbookRule>();
+        if (string.IsNullOrWhiteSpace(text) || limit <= 0) return result;
+        foreach (string keyword in AllIndexKeys(_keywordIndex))
+        {
+            if (text.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) < 0) continue;
+            foreach (WorldbookRule rule in _keywordIndex[keyword])
+            {
+                AddUnique(result, rule);
+            }
+        }
+        foreach (string ngram in AllIndexKeys(_ngramIndex))
+        {
+            if (text.IndexOf(ngram, StringComparison.OrdinalIgnoreCase) < 0) continue;
+            foreach (WorldbookRule rule in _ngramIndex[ngram])
+            {
+                AddUnique(result, rule);
+            }
+        }
+        result.Sort((a, b) =>
+        {
+            int compare = b.Priority.CompareTo(a.Priority);
+            if (compare != 0) return compare;
+            return string.CompareOrdinal(a.Id, b.Id);
+        });
+        if (result.Count > limit) result.RemoveRange(limit, result.Count - limit);
+        return result;
+    }
+
     internal WorldbookQueryResult Query(WorldbookQuery query, WorldbookMappingContext mappingContext = null)
     {
         WorldbookQueryResult result = new WorldbookQueryResult();

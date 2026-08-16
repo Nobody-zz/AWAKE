@@ -38,6 +38,24 @@ internal static class WorldbookRuntime
         _current = null;
     }
 
+    internal static void Reload()
+    {
+        ShutdownCurrent();
+        EnsureCreated();
+    }
+
+    internal static string BuildStatusText()
+    {
+        WorldbookService service = _current;
+        if (service == null)
+        {
+            return "世界书未加载";
+        }
+        return "rules=" + service.RuleCount
+            + " personas=" + service.PersonaCount
+            + " warnings=" + service.WarningCount;
+    }
+
     private static string LocateManifest()
     {
         string assemblyDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".";

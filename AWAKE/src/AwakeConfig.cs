@@ -101,7 +101,7 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyGroup("{=awake.mcm.group.behavior}2. 主动行为", GroupOrder = 1)]
     public bool EnableNpcProactive { get; set; } = true;
 
-    [SettingPropertyInteger("{=awake.mcm.npc_proactive_chance.name}NPC 主动概率", 0, 100, Order = 1, RequireRestart = false, HintText = "{=awake.mcm.npc_proactive_chance.hint}主动发起的概率缩放，默认 35。")]
+    [SettingPropertyInteger("{=awake.mcm.npc_proactive_chance.name}NPC 主动概率", 0, 100, Order = 1, RequireRestart = false, HintText = "{=awake.mcm.npc_proactive_chance.hint}最终扰动比例，默认 35；实际触发优先由关系/事件条件决定。")]
     [SettingPropertyGroup("{=awake.mcm.group.behavior}2. 主动行为", GroupOrder = 1)]
     public int NpcProactiveChance { get; set; } = 35;
 
