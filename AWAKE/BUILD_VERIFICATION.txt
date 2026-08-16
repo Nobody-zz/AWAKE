@@ -2174,6 +2174,17 @@ Marcus MCM Convenient Config (2026-08-16, no version bump)
 - Awake.dll SHA-256 42F32134E5B6EB171C6CAFAD761E5BEB94551C39ACCC60B80AA833185633D097.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
 
+Developer Test Tools (2026-08-16, no version bump)
+- Added AwakeDeveloperTestActions: developer report, forced nearby deep talk, event inbox, weekly report, proactive reset.
+- Command deck root menu adds Developer Testing entry when EnableDeveloperMenu is on.
+- Added NpcProactiveService.ClearForTesting for developer reset.
+- Added docs/PLAN-DevTestTools-20260816.md and review log.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (25 paths including proactive reset path).
+- LOCALIZATION_OK source=86 en=104 cn=104.
+- Awake.dll SHA-256 8252CC20288E320F9ACEA1C6CF817FECE4BFE498663266529CE1BF9A757E0146.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
 Messenger History Persistence (2026-08-16, no version bump)
 - Added awake.messenger namespace and WorldStateKind.Messenger.
 - Added AwakeMessengerHistory cache + outbox persistence, grouped by TargetId.

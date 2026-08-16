@@ -241,6 +241,7 @@ internal static class Program
 		{
 			throw new InvalidOperationException("npc proactive constants should be positive.");
 		}
+		NpcProactiveService.ClearForTesting();
 		Console.WriteLine("PASS npc proactive smoke");
 	}
 

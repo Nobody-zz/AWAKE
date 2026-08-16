@@ -62,6 +62,17 @@ internal sealed class NpcProactiveService
         }
     }
 
+    internal static void ClearForTesting()
+    {
+        NpcProactiveService service = Current;
+        if (service == null) return;
+        lock (service._gate)
+        {
+            service._candidates.Clear();
+            service._loaded = false;
+        }
+    }
+
     internal async Task OnHourlyTickAsync(CancellationToken cancellationToken)
     {
         try

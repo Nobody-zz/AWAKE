@@ -26,7 +26,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     internal static AwakeTerminalBehavior Current { get; private set; }
 
     private bool _wasKeyDown;
-    private bool _terminalUiActive;
+    private static bool _terminalUiActive;
     private int _sceneSelectedAgentIndex = -1;
     private string _sceneSelectedTargetId = string.Empty;
     private bool _sceneHoldActive;
@@ -556,7 +556,13 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 AwakeLocalization.Resolve("awake.menu.developer_check", "开发者检查"),
                 (ImageIdentifier)null,
                 AwakeSettings.Current.EnableDeveloperMenu,
-                "查看运行时诊断")
+                "查看运行时诊断"),
+            new InquiryElement(
+                "dev_tools",
+                AwakeLocalization.Resolve("awake.menu.dev_tools", "开发者测试"),
+                (ImageIdentifier)null,
+                AwakeSettings.Current.EnableDeveloperMenu,
+                "游戏内测试工具")
         };
         MultiSelectionInquiryData data = new MultiSelectionInquiryData(
             AwakeLocalization.Resolve("awake.terminal.title", "醒世 · 命令台"),
@@ -600,6 +606,97 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         if (StringComparer.Ordinal.Equals(id, "developer_report"))
         {
             ShowDeveloperReport();
+            return;
+        }
+        if (StringComparer.Ordinal.Equals(id, "dev_tools"))
+        {
+            OpenDeveloperTestTools();
+        }
+    }
+
+    private static void OpenDeveloperTestTools()
+    {
+        _terminalUiActive = true;
+        List<InquiryElement> elements = new List<InquiryElement>
+        {
+            new InquiryElement(
+                "developer_report",
+                AwakeLocalization.Resolve("awake.menu.developer_check", "开发者检查"),
+                (ImageIdentifier)null,
+                true,
+                "查看运行时诊断"),
+            new InquiryElement(
+                "test_dialogue",
+                AwakeLocalization.Resolve("awake.dev_tools.dialogue", "强制附近深谈"),
+                (ImageIdentifier)null,
+                true,
+                "打开最近 NPC 深谈"),
+            new InquiryElement(
+                "test_inbox",
+                AwakeLocalization.Resolve("awake.menu.inbox", "事件收件箱"),
+                (ImageIdentifier)null,
+                true,
+                "打开事件收件箱"),
+            new InquiryElement(
+                "test_weekly",
+                AwakeLocalization.Resolve("awake.menu.weekly_report", "世界周报"),
+                (ImageIdentifier)null,
+                true,
+                "打开世界周报"),
+            new InquiryElement(
+                "reset_proactive",
+                AwakeLocalization.Resolve("awake.dev_tools.reset_proactive", "重置主动状态"),
+                (ImageIdentifier)null,
+                true,
+                "清空 NPC 主动聊天候选")
+        };
+        MultiSelectionInquiryData data = new MultiSelectionInquiryData(
+            AwakeLocalization.Resolve("awake.dev_tools.title", "醒世 · 开发者测试"),
+            AwakeLocalization.Resolve("awake.dev_tools.prompt", "选择测试动作："),
+            elements,
+            true,
+            1,
+            1,
+            AwakeLocalization.Resolve("awake.terminal.confirm", "确定"),
+            AwakeLocalization.Resolve("awake.terminal.close", "返回"),
+            selected =>
+            {
+                _terminalUiActive = false;
+                HandleDeveloperTestSelection(selected);
+            },
+            _ => _terminalUiActive = false,
+            "",
+            false);
+        MBInformationManager.ShowMultiSelectionInquiry(data, true, false);
+    }
+
+    private static void HandleDeveloperTestSelection(List<InquiryElement> selected)
+    {
+        if (selected == null || selected.Count == 0) return;
+        string id = selected[0].Identifier as string;
+        if (StringComparer.Ordinal.Equals(id, "developer_report"))
+        {
+            AwakeDeveloperTestActions.OpenDeveloperReport();
+            return;
+        }
+        if (StringComparer.Ordinal.Equals(id, "test_dialogue"))
+        {
+            AwakeDeveloperTestActions.TestNearbyDialogue();
+            return;
+        }
+        if (StringComparer.Ordinal.Equals(id, "test_inbox"))
+        {
+            AwakeDeveloperTestActions.TestWorldInbox();
+            return;
+        }
+        if (StringComparer.Ordinal.Equals(id, "test_weekly"))
+        {
+            AwakeDeveloperTestActions.TestWeeklyReport();
+            return;
+        }
+        if (StringComparer.Ordinal.Equals(id, "reset_proactive"))
+        {
+            AwakeDeveloperTestActions.ResetProactive();
         }
     }
 
@@ -657,6 +754,16 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     internal static void ShowDeveloperReportForMcm()
     {
         ShowDeveloperReport();
+    }
+
+    internal static void ShowWorldInboxForMcm()
+    {
+        ShowWorldInbox();
+    }
+
+    internal static void ShowWeeklyReportForMcm()
+    {
+        ShowWeeklyReport();
     }
 
     private static void ShowMessage(string title, string text)
