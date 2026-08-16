@@ -359,17 +359,18 @@
 - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化 208/237/237；资产检查 107；release_check OK；DLL SHA-256 `7E706B9BA0F9C01805954803CD76383EFB1554B7B4ED2D783503FBE96E8E7A7B` 已同步 `_build_out/dist/游戏目录`。
 - 仍待离线实现：多步引导数据模型与状态机、Messenger 写信基础、统一会话核心、Interactions 命令/恢复服务；这些或依赖已 APPROVED PLAN，或仍需 grill-me 后再落地。
 - 游戏内验收仍挂起：FB-20260817-10/11/12、ContactHubHistory、世界书真机命中、存储/记忆真机。
-- 推送：本地已提交 `fa22f0a`；远端 `main` 推送被 `Connection was reset` 阻断，网络恢复后需补推。
+- 推送：本地离线批次 C 已提交，远端 `main` 已成功接收（当前批次顶点 `7756d31`）。
 
 ## 离线改进批次 D（2026-08-17）
 
 - 完成：多步引导数据模型与状态机（`awake.onboarding.v1` 存储、完成/跳过/永久跳过/重复提醒日）、MCM 引导开关与重复间隔、`AwakeLetterService` 写信基础（transcript `source=letter` 玩家行）。
 - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化 212/241/241；资产检查 108；release_check OK；DLL SHA-256 `C0E0C97B3505CFBEDE634516044520208EA4E8AEA6FDC5854189FAA435AD6859` 已同步 `_build_out/dist/游戏目录`。
 - 仍待离线实现：`PLAN-Interactions` 命令/恢复服务、`PLAN-UnifiedDialogueSession` 核心、通讯录写信 UI、多步引导 UI。
-- 推送：本地离线批次 C/D 均已提交；远端 `main` 推送持续被网络重置阻断，网络恢复后需补推。
+- 推送：本地离线批次 C/D 均已提交并推送到远端 `main`。
 
 ## 离线改进批次 E（2026-08-17）
 
 - 完成：`AwakeDialogueStartPayload` / `AwakeDialogueSessionState`；统一会话协调器 token 化 `TryStart`/`CloseByToken`；NPC 对话、场景喊话、地图喊话改为按 token 打开/关闭。
 - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产/发布检查通过；DLL SHA-256 `CEB4D1FD43EA7F3C68C5C465B8D849A7BB4AB43F05DEF4C3B0132DB6199E634B` 已同步。
 - 仍待离线实现：持久对话队列、统一 hub 生命周期、`PLAN-Interactions` 命令/恢复服务、通讯录写信 UI、多步引导 UI。
+- 推送：本地离线批次 C/D/E 均已推送到远端 `main`（当前顶点 `7756d31`）。
