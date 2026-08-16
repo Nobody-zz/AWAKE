@@ -36,6 +36,7 @@
   - AF 结构落地方案文档 `AF-Structures-Landing-Plan-20260816.md`
   - AF Batch 1 代码落地：`NpcProactiveService` 主动聊天状态机 + 覆盖层 60 秒 Esc 解锁
   - AF Batch 2-5 代码落地：命令台收件箱/周报、记忆日结、UI 审计、回复规范化与性能探针
+  - AF 五批次 grillme 复查文档 `GRILLME-AF-BATCHES-20260816.md`
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）
