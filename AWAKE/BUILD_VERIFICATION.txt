@@ -2441,3 +2441,12 @@ Shout / Onboarding / Cloud Diagnostic (2026-08-17, no version bump)
 - SdkSmoke PASS ALL; LOCALIZATION_OK source=199 en=228 cn=228; asset lint 107 files OK.
 - Awake.dll SHA-256 ACFA06E0734CBA9479E6F40EF6A2BB3DA36BC222D30E54D4C9B4986343EA0B46 identical across _build_out, dist, and game Modules/AWAKE after sync.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+One-Click Cloud Dialogue Enable (2026-08-17, no version bump)
+- AwakeConfig now defaults EnableCloudExport and AllowCloudExportPlayerState to true, so new saves start with cloud-capable NPC dialogue while local Ollama can still turn both off.
+- Added MCM button "Enable Cloud Dialogue": sets both AWAKE switches, calls BaseSettingsProvider.Instance.SaveSettings, refreshes runtime status, and opens Marcus AI setup so the player only needs to allow AWAKE.route.npc.dialogue cloud export.
+- Presets no longer turn cloud transport off; EN/CN strings and dialogue denial guidance updated to point at the one-click entry.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=205 en=234 cn=234; asset lint 107 files OK; release_check OK.
+- Awake.dll SHA-256 382609372A9AB6DC4E46F351882AC26A1A519829F313F713E4E7F9EEBED2EF32 identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

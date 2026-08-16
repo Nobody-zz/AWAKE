@@ -316,3 +316,11 @@
 - 最近推送成功：`f16d4b0`（A 类 B0-B7 完成）。
 - 最近推送成功：`d256e91`（B 类完成 + 大审核修复）。
 - 最近推送成功：本批 ContactHubHistory + transcript 历史权威 + 场景选人 UX（含队列检查点）。
+
+## 一键开启云端对话（2026-08-17）
+
+- 当前任务：`一键开启云端对话`，代码完成，状态 `pending_game`。
+- 完成内容：AWAKE 云外发与玩家状态外发默认开启；MCM 新增“一键开启云端对话”按钮，置位并调用 `BaseSettingsProvider.Instance.SaveSettings` 后打开 Marcus AI 设置台；预设不再关闭云传输；EN/CN 文案与对话错误指引更新。
+- 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；LOCALIZATION_OK source=205 en=234 cn=234；asset lint 107 文件 OK；release_check OK；DLL SHA-256 `382609372A9AB6DC4E46F351882AC26A1A519829F313F713E4E7F9EEBED2EF32` 已同步 `_build_out/dist/游戏目录`。
+- 下一步：进入游戏确认 MCM 按钮可用、点击后两个开关开启并弹出 AI 设置台；仍需在 Marcus AI 设置台允许 `AWAKE.route.npc.dialogue` 云外发。
+- 待办：`ContactHubHistory` 游戏内验收保持 `paused`；完成后按原顺序继续 `PLAN-Interactions`。

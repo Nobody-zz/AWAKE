@@ -63,9 +63,15 @@
     <string id="awake.mcm.ai_status.name" text="AI Link Status" />
     <string id="awake.mcm.ai_status.hint" text="Read-only: Companion connection, route capabilities and candidate providers. Configure Provider under MCM → Marcus AI Framework → 01 Companion; use the four logical routes from the README." />
     <string id="awake.mcm.cloud_export.name" text="Enable Cloud Export" />
-    <string id="awake.mcm.cloud_export.hint" text="Disabled by default. Even when enabled, the classification switch and framework permission must both allow the category before it is sent to a cloud AI." />
+    <string id="awake.mcm.cloud_export.hint" text="Enabled by default. Local Ollama and other local links still work when this is off; cloud dialogue still requires framework route permission." />
     <string id="awake.mcm.export_player_state.name" text="Allow Player State Export" />
-    <string id="awake.mcm.export_player_state.hint" text="Allows player, hero and relationship state to be exported as player_state in goddess dialogue. Disabled by default." />
+    <string id="awake.mcm.export_player_state.hint" text="Allows player, hero and relationship state to be exported as player_state in NPC dialogue. Enabled by default." />
+    <string id="awake.mcm.enable_cloud_oneclick.name" text="Enable Cloud Dialogue" />
+    <string id="awake.mcm.enable_cloud_oneclick.content" text="Enable" />
+    <string id="awake.mcm.enable_cloud_oneclick.hint" text="Enables AWAKE cloud export and player-state export, then opens Marcus AI setup. You still need to allow cloud export for AWAKE.route.npc.dialogue there." />
+    <string id="awake.mcm.actions.cloud_oneclick_ok" text="Cloud export enabled. In the AI setup console, allow cloud export for AWAKE.route.npc.dialogue." />
+    <string id="awake.mcm.actions.cloud_oneclick_session_only" text="Cloud export enabled for this session. Save MCM settings, then allow AWAKE.route.npc.dialogue cloud export in the AI setup console." />
+    <string id="awake.mcm.actions.cloud_oneclick_failed" text="One-click cloud enable failed. Enable cloud export manually." />
     <string id="awake.mcm.developer_menu.name" text="Enable Developer Menu" />
     <string id="awake.mcm.developer_menu.hint" text="Disabled by default. Adds AI self-check and developer check entries in town, castle, village and keep menus." />
     <string id="awake.mcm.terminal_key.name" text="Command Deck Hotkey" />
@@ -224,7 +230,7 @@
     <string id="awake.proactive.decline" text="Later" />
     <string id="awake.proactive.opening_hint" text="The other person initiated this conversation." />
     <string id="awake.dialogue.long_wait_hint" text="Still responding. You can close and cancel after 60 seconds." />
-    <string id="awake.dialogue.cloud_export_denied" text="Cloud export denied: enable cloud export for AWAKE.route.npc.dialogue in Marcus AI settings and in AWAKE MCM." />
+    <string id="awake.dialogue.cloud_export_denied" text="Cloud export denied: use AWAKE MCM Enable Cloud Dialogue, then allow AWAKE.route.npc.dialogue cloud export in Marcus AI settings." />
     <string id="awake.dialogue.cloud_export_disabled" text="AWAKE cloud export is disabled: enable it under MCM Data &amp; Debug." />
     <string id="awake.menu.inbox" text="Event Inbox" />
     <string id="awake.menu.weekly_report" text="Weekly Report" />

@@ -63,9 +63,15 @@
     <string id="awake.mcm.ai_status.name" text="AI 链路状态" />
     <string id="awake.mcm.ai_status.hint" text="只读显示：Companion 连接、路由能力与候选 Provider 状态。Provider 配置请在 MCM → Marcus AI Framework → 01 Companion 完成，Route ID 使用模组 README 中的四条逻辑路由。" />
     <string id="awake.mcm.cloud_export.name" text="启用云外发" />
-    <string id="awake.mcm.cloud_export.hint" text="默认关闭。开启后仍需要下面的分类开关与框架权限授权，两层都满足才会把对应分类外发到云 AI。" />
+    <string id="awake.mcm.cloud_export.hint" text="默认开启。关闭后本机 Ollama 等本地链路不受影响；开启云端对话仍需框架路由权限授权。" />
     <string id="awake.mcm.export_player_state.name" text="允许外发玩家状态" />
-    <string id="awake.mcm.export_player_state.hint" text="允许把玩家、英雄、关系等角色状态作为 player_state 分类随女神对话外发。默认关闭。" />
+    <string id="awake.mcm.export_player_state.hint" text="允许把玩家、英雄、关系等角色状态作为 player_state 分类随 NPC 对话外发。默认开启。" />
+    <string id="awake.mcm.enable_cloud_oneclick.name" text="一键开启云端对话" />
+    <string id="awake.mcm.enable_cloud_oneclick.content" text="一键开启" />
+    <string id="awake.mcm.enable_cloud_oneclick.hint" text="开启 AWAKE 云外发与玩家状态外发，并打开 Marcus AI 设置台。仍需在设置台允许 AWAKE.route.npc.dialogue 云外发。" />
+    <string id="awake.mcm.actions.cloud_oneclick_ok" text="云外发已开启。请在弹出的 AI 设置台中允许 AWAKE.route.npc.dialogue 云外发。" />
+    <string id="awake.mcm.actions.cloud_oneclick_session_only" text="云外发已在本局开启。配置保存失败，请到 MCM 保存设置，然后在 AI 设置台允许 AWAKE.route.npc.dialogue 云外发。" />
+    <string id="awake.mcm.actions.cloud_oneclick_failed" text="一键开启失败，请手动开启云外发。" />
     <string id="awake.mcm.developer_menu.name" text="启用开发者菜单" />
     <string id="awake.mcm.developer_menu.hint" text="默认关闭。开启后城镇、城堡、村庄、领主府菜单显示神谕 AI 自检与开发者检查。" />
     <string id="awake.mcm.terminal_key.name" text="命令台快捷键" />
@@ -224,7 +230,7 @@
     <string id="awake.proactive.decline" text="改天" />
     <string id="awake.proactive.opening_hint" text="对方主动发起了这次谈话。" />
     <string id="awake.dialogue.long_wait_hint" text="对方仍在回应。等待 60 秒后可关闭并取消生成。" />
-    <string id="awake.dialogue.cloud_export_denied" text="云外发被拒绝：请在 Marcus AI 设置台允许 AWAKE.route.npc.dialogue 云外发，并在 AWAKE MCM 开启云外发。" />
+    <string id="awake.dialogue.cloud_export_denied" text="云外发被拒绝：请先点击 AWAKE MCM 的“一键开启云端对话”，然后在 Marcus AI 设置台允许 AWAKE.route.npc.dialogue 云外发。" />
     <string id="awake.dialogue.cloud_export_disabled" text="AWAKE 云外发未开启：请到 MCM 数据与调试中打开云外发。" />
     <string id="awake.menu.inbox" text="事件收件箱" />
     <string id="awake.menu.weekly_report" text="世界周报" />

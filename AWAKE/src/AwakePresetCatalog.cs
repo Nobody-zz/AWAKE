@@ -46,8 +46,8 @@ internal static class AwakePresetCatalog
                     EnableNpcProactive = true,
                     NpcProactiveChance = 35,
                     EnableEventEngine = true,
-                    EnableCloudExport = false,
-                    AllowCloudExportPlayerState = false,
+                    EnableCloudExport = true,
+                    AllowCloudExportPlayerState = true,
                     EnableDeveloperMenu = false
                 }),
             new AwakeSettingsPreset(
@@ -58,8 +58,8 @@ internal static class AwakePresetCatalog
                     EnableNpcProactive = true,
                     NpcProactiveChance = 60,
                     EnableEventEngine = true,
-                    EnableCloudExport = false,
-                    AllowCloudExportPlayerState = false,
+                    EnableCloudExport = true,
+                    AllowCloudExportPlayerState = true,
                     EnableDeveloperMenu = false
                 }),
             new AwakeSettingsPreset(
@@ -70,8 +70,8 @@ internal static class AwakePresetCatalog
                     EnableNpcProactive = true,
                     NpcProactiveChance = 35,
                     EnableEventEngine = true,
-                    EnableCloudExport = false,
-                    AllowCloudExportPlayerState = false,
+                    EnableCloudExport = true,
+                    AllowCloudExportPlayerState = true,
                     EnableDeveloperMenu = false
                 }),
             new AwakeSettingsPreset(
@@ -82,8 +82,8 @@ internal static class AwakePresetCatalog
                     EnableNpcProactive = true,
                     NpcProactiveChance = 15,
                     EnableEventEngine = true,
-                    EnableCloudExport = false,
-                    AllowCloudExportPlayerState = false,
+                    EnableCloudExport = true,
+                    AllowCloudExportPlayerState = true,
                     EnableDeveloperMenu = false
                 }),
             new AwakeSettingsPreset(
@@ -94,8 +94,8 @@ internal static class AwakePresetCatalog
                     EnableNpcProactive = false,
                     NpcProactiveChance = 5,
                     EnableEventEngine = true,
-                    EnableCloudExport = false,
-                    AllowCloudExportPlayerState = false,
+                    EnableCloudExport = true,
+                    AllowCloudExportPlayerState = true,
                     EnableDeveloperMenu = false
                 })
         };

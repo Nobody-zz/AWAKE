@@ -45,25 +45,29 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
     public Action SyncRoutes { get; set; }
 
-    [SettingPropertyButton("{=awake.mcm.refresh_status.name}AI 自检", -1, true, "", Content = "{=awake.mcm.refresh_status.content}AI 自检", Order = 2, RequireRestart = false, HintText = "{=awake.mcm.refresh_status.hint}刷新 Companion 连接状态并显示结果。")]
+    [SettingPropertyButton("{=awake.mcm.enable_cloud_oneclick.name}一键开启云端对话", -1, true, "", Content = "{=awake.mcm.enable_cloud_oneclick.content}一键开启", Order = 2, RequireRestart = false, HintText = "{=awake.mcm.enable_cloud_oneclick.hint}开启 AWAKE 云外发与玩家状态外发，并打开 Marcus AI 设置台。仍需在设置台允许 AWAKE.route.npc.dialogue 云外发。")]
+    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
+    public Action EnableCloudDialogueOneClick { get; set; }
+
+    [SettingPropertyButton("{=awake.mcm.refresh_status.name}AI 自检", -1, true, "", Content = "{=awake.mcm.refresh_status.content}AI 自检", Order = 3, RequireRestart = false, HintText = "{=awake.mcm.refresh_status.hint}刷新 Companion 连接状态并显示结果。")]
     [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
     public Action RefreshAiStatus { get; set; }
 
-    [SettingPropertyButton("{=awake.mcm.open_setup.name}打开 AI 设置台", -1, true, "", Content = "{=awake.mcm.open_setup.content}打开", Order = 3, RequireRestart = false, HintText = "{=awake.mcm.open_setup.hint}打开 Marcus AI 设置台配置 Provider、模型与路由。")]
+    [SettingPropertyButton("{=awake.mcm.open_setup.name}打开 AI 设置台", -1, true, "", Content = "{=awake.mcm.open_setup.content}打开", Order = 4, RequireRestart = false, HintText = "{=awake.mcm.open_setup.hint}打开 Marcus AI 设置台配置 Provider、模型与路由。")]
     [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
     public Action OpenAiSetup { get; set; }
 
-    [SettingPropertyButton("{=awake.mcm.open_diagnostics.name}打开诊断台", -1, true, "", Content = "{=awake.mcm.open_diagnostics.content}打开", Order = 4, RequireRestart = false, HintText = "{=awake.mcm.open_diagnostics.hint}打开框架诊断台。")]
+    [SettingPropertyButton("{=awake.mcm.open_diagnostics.name}打开诊断台", -1, true, "", Content = "{=awake.mcm.open_diagnostics.content}打开", Order = 5, RequireRestart = false, HintText = "{=awake.mcm.open_diagnostics.hint}打开框架诊断台。")]
     [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
     public Action OpenDiagnostics { get; set; }
 
-    [SettingPropertyBool("{=awake.mcm.cloud_export.name}启用云外发", Order = 0, RequireRestart = false, HintText = "{=awake.mcm.cloud_export.hint}默认关闭。开启后仍需要下面的分类开关与框架权限授权，两层都满足才会把对应分类外发到云 AI。")]
+    [SettingPropertyBool("{=awake.mcm.cloud_export.name}启用云外发", Order = 0, RequireRestart = false, HintText = "{=awake.mcm.cloud_export.hint}默认开启。关闭后本机 Ollama 等本地链路不受影响；开启云端对话仍需框架权限授权。")]
     [SettingPropertyGroup("{=awake.mcm.group.data_debug}4. 数据与调试", GroupOrder = 3)]
-    public bool EnableCloudExport { get; set; }
+    public bool EnableCloudExport { get; set; } = true;
 
-    [SettingPropertyBool("{=awake.mcm.export_player_state.name}允许外发玩家状态", Order = 1, RequireRestart = false, HintText = "{=awake.mcm.export_player_state.hint}允许把玩家、英雄、关系等角色状态作为 player_state 分类随女神对话外发。默认关闭。")]
+    [SettingPropertyBool("{=awake.mcm.export_player_state.name}允许外发玩家状态", Order = 1, RequireRestart = false, HintText = "{=awake.mcm.export_player_state.hint}允许把玩家、英雄、关系等角色状态作为 player_state 分类随 NPC 对话外发。默认开启。")]
     [SettingPropertyGroup("{=awake.mcm.group.data_debug}4. 数据与调试", GroupOrder = 3)]
-    public bool AllowCloudExportPlayerState { get; set; }
+    public bool AllowCloudExportPlayerState { get; set; } = true;
 
     [SettingPropertyBool("{=awake.mcm.developer_menu.name}启用开发者菜单", Order = 2, RequireRestart = false, HintText = "{=awake.mcm.developer_menu.hint}默认关闭。开启后城镇、城堡、村庄、领主府菜单显示神谕 AI 自检与开发者检查。")]
     [SettingPropertyGroup("{=awake.mcm.group.data_debug}4. 数据与调试", GroupOrder = 3)]
@@ -113,6 +117,7 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     {
         _instance = this;
         SyncRoutes = AwakeMcmActions.SyncRoutes;
+        EnableCloudDialogueOneClick = AwakeMcmActions.EnableCloudDialogueOneClick;
         RefreshAiStatus = AwakeMcmActions.RefreshAiStatus;
         OpenDeveloperReport = AwakeMcmActions.ShowDeveloperReport;
         OpenAiSetup = AwakeMcmActions.OpenAiSetup;

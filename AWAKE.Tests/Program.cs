@@ -81,6 +81,7 @@ internal static class Program
 		}
 		AwakeConfig config = new AwakeConfig();
 		if (config.SyncRoutes == null
+			|| config.EnableCloudDialogueOneClick == null
 			|| config.RefreshAiStatus == null
 			|| config.OpenAiSetup == null
 			|| config.OpenDiagnostics == null)
@@ -93,6 +94,10 @@ internal static class Program
 	private static void RunCloudExportSmoke()
 	{
 		AwakeConfig config = new AwakeConfig();
+		if (!config.EnableCloudExport || !config.AllowCloudExportPlayerState)
+		{
+			throw new InvalidOperationException("cloud export defaults should be enabled.");
+		}
 		if (!CloudExportPolicy.IsKnownClassification(CloudExportPolicy.None)
 			|| !CloudExportPolicy.IsKnownClassification(CloudExportPolicy.PlayerState))
 		{
@@ -323,9 +328,13 @@ internal static class Program
 
 	private static void RunMcmPresetSmoke()
 	{
-		if (new AwakeConfig().NpcProactiveChance != 35)
+		AwakeConfig defaults = new AwakeConfig();
+		if (defaults.NpcProactiveChance != 35
+			|| !defaults.EnableCloudExport
+			|| !defaults.AllowCloudExportPlayerState
+			|| defaults.EnableCloudDialogueOneClick == null)
 		{
-			throw new InvalidOperationException("mcm proactive chance default should be 35.");
+			throw new InvalidOperationException("mcm defaults mismatch.");
 		}
 		bool sawStrict = false;
 		foreach (MCM.Abstractions.ISettingsPreset preset in AwakePresetCatalog.Build())
@@ -334,6 +343,10 @@ internal static class Program
 			if (template == null || template.NpcProactiveChance < 0 || template.NpcProactiveChance > 100)
 			{
 				throw new InvalidOperationException("mcm preset template invalid.");
+			}
+			if (!template.EnableCloudExport || !template.AllowCloudExportPlayerState)
+			{
+				throw new InvalidOperationException("preset should not disable cloud transport.");
 			}
 			if (StringComparer.Ordinal.Equals(preset.Id, "strict") && template.EnableNpcProactive)
 			{
