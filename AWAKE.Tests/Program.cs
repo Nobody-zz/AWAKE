@@ -41,8 +41,122 @@ internal static class Program
 		RunRelationshipCommandSmoke();
 		await RunStoragePipelineSmokeAsync();
 		RunNpcMemorySmoke();
+		RunWorldbookSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunWorldbookSmoke()
+	{
+		string ruleJson = @"{
+			""Id"": ""rule.empire.lord"",
+			""Keywords"": [""荣誉""],
+			""RagShortTexts"": [""帝国领主如何看待荣誉？""],
+			""Variants"": [
+				{
+					""Priority"": 0,
+					""When"": {
+						""Cultures"": [""empire""],
+						""Roles"": [""lord""]
+					},
+					""Content"": ""帝国领主视荣誉为立身之本。""
+				}
+			],
+			""TextMappings"": [
+				{
+					""SourceText"": ""A"",
+					""Kind"": ""status|hero|is_dead"",
+					""TargetId"": ""lord_7_3"",
+					""TrueText"": ""他已去世""
+				}
+			]
+		}";
+		List<WorldbookImportWarning> warnings = new List<WorldbookImportWarning>();
+		WorldbookRule rule;
+		if (!WorldbookLoader.TryParseRule(
+			Newtonsoft.Json.Linq.JObject.Parse(ruleJson),
+			"fallback",
+			"af",
+			warnings,
+			out rule))
+		{
+			throw new InvalidOperationException("AF worldbook rule should parse.");
+		}
+		if (rule.Keywords.Count != 1
+			|| rule.Variants.Count != 1
+			|| rule.TextMappings.Count != 1
+			|| !StringComparer.Ordinal.Equals(rule.TextMappings[0].Kind, "status|hero|is_dead"))
+		{
+			throw new InvalidOperationException("worldbook AF field mapping mismatch.");
+		}
+
+		WorldbookRule rule2 = new WorldbookRule
+		{
+			Id = "rule.empire.soldier",
+			Keywords = new List<string> { "荣誉" },
+			When = new WorldbookWhen
+			{
+				Cultures = new List<string> { "empire" },
+				Roles = new List<string> { "soldier" }
+			},
+			Content = "帝国士兵同样把荣誉挂在嘴边。"
+		};
+		WorldbookPersona persona = new WorldbookPersona
+		{
+			CharacterId = "CharacterObject_1795",
+			Personality = "务实而谨慎",
+			Background = "出身帝国边境"
+		};
+		WorldbookDocument document = new WorldbookDocument
+		{
+			Rules = new List<WorldbookRule> { rule, rule2 },
+			Personas = new List<WorldbookPersona> { persona }
+		};
+		WorldbookService service = new WorldbookService(document);
+		WorldbookQuery query = new WorldbookQuery
+		{
+			CultureId = "empire",
+			Role = "lord",
+			PlayerText = "荣誉和誓言",
+			ContentTier = "pure",
+			MaximumBytes = 100000
+		};
+		WorldbookQueryResult result = service.Query(query);
+		if (result.RetrievedText.IndexOf("rule.empire.lord", StringComparison.Ordinal) < 0
+			|| result.RetrievedText.IndexOf("rule.empire.soldier", StringComparison.Ordinal) >= 0
+			|| result.RetrievedText.IndexOf("帝国领主视荣誉为立身之本", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("worldbook identity binding or variant selection mismatch.");
+		}
+
+		WorldbookQuery caseQuery = new WorldbookQuery
+		{
+			CultureId = "Empire",
+			Role = "lord",
+			PlayerText = "荣誉",
+			ContentTier = "pure",
+			MaximumBytes = 100000
+		};
+		WorldbookQueryResult caseResult = service.Query(caseQuery);
+		if (caseResult.RetrievedText.IndexOf("rule.empire.lord", StringComparison.Ordinal) >= 0)
+		{
+			throw new InvalidOperationException("worldbook culture code matching must be case-sensitive.");
+		}
+
+		WorldbookQuery personaQuery = new WorldbookQuery
+		{
+			CharacterId = "CharacterObject_1795",
+			PlayerText = "",
+			ContentTier = "pure",
+			MaximumBytes = 100000
+		};
+		WorldbookQueryResult personaResult = service.Query(personaQuery);
+		if (personaResult.RetrievedText.IndexOf("务实而谨慎", StringComparison.Ordinal) < 0
+			|| personaResult.RetrievedText.IndexOf("出身帝国边境", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("worldbook persona injection mismatch.");
+		}
+		Console.WriteLine("PASS worldbook smoke");
 	}
 
 	private static void RunNpcMemorySmoke()
