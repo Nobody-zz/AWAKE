@@ -53,10 +53,10 @@ internal static class NpcPromptTemplate
   ""reply"": ""你的回复"",
   ""mood"": ""两到四字情绪"",
   ""effects"": [""可选标签""],
-  ""command"": {
-    ""commandId"": ""awake.relationship.delta.v1"",
-    ""arguments"": {
-      ""heroId"": ""{{npc_id}}"",
+    ""command"": {
+      ""commandId"": ""awake.relationship.delta.v1"",
+      ""arguments"": {
+      ""heroId"": {{npc_id}},
       ""trustDelta"": 1,
       ""loveDelta"": 0,
       ""hostilityDelta"": 0,

@@ -7,7 +7,7 @@
 
 ## 当前检查点
 
-- 当前任务：`PLAN-ContactHubHistory-20260816.md` 代码完成，状态 `pending_game`。
+- 当前任务：稳定性修复批次 B（FB-20260817-10/11/12）代码完成，状态 `pending_game`；`PLAN-ContactHubHistory` 保持 `paused`。
 - 最近完成：Messenger 旧历史写入已弃用，通讯录聊天/历史统一走 transcript；`AwakeMessengerHistory` 仅保留旧档迁移读取；双版本构建、SdkSmoke、本地化、发布校验全部通过，DLL 已同步 dist/游戏目录。
 - 下一步：用户进游戏验收通讯录/历史 Tab/固定/transcript-only 联系人；通过后切 `PLAN-Interactions`。
 - 阻塞：游戏内验收需用户运行游戏。
@@ -231,11 +231,14 @@
 - `FB-20260817-10`：地图 AI 对话不会写入通讯录历史。
   - 来源：`Awake.log` 18:28:58 `transcript_turn_rejected key=hero:lord_1_177 source=map`。
   - 证据：`AwakeTranscriptConstants.ValidSources` 只含 `messenger/scene/encounter/event/proactive/letter/system`，没有 `map`；地图对话 `NpcDialogueLauncher.TryOpenDialogue(hero, "map")` 会以 `source=map` 调 transcript，被校验拒绝。
-  - 优先级：P1；状态：`queued`；分类：`non_blocking`。
+  - 优先级：P1；状态：`fixed_pending_game`；分类：`non_blocking`。
 - `FB-20260817-11`：记忆日结路由仍被云外发拒绝。
   - 来源：`companion.log` 02:29:01 / 02:30:49 `AWAKE.route.memory.daily | Code: ai.cloud_export_denied`；`Awake.log` 同步 `ai_task_submit_accepted route=AWAKE.route.memory.daily`。
   - 证据：`NpcMemoryService.SummarizeAsync` 固定传 `CloudExportPolicy.None`，云 Provider 下该路由仍被框架拒绝；NPC 对话改为 `player_state` 后已能成功，但记忆摘要没有走同一云外发分类。
-  - 优先级：P1；状态：`queued`；分类：`non_blocking`。
+  - 优先级：P1；状态：`fixed_pending_game`；分类：`non_blocking`。
+- `FB-20260817-12`：NPC 提示词输出示例里 `heroId` 出现双重引号。
+  - 来源：`companion.log` 中 `"heroId": ""hero:lord_1_177""`；`NpcPromptTemplate` 模板 `""heroId"": ""{{npc_id}}"",` 与 `Build` 里 `JsonConvert.SerializeObject` 二次加引号。
+  - 优先级：P1；状态：`fixed_pending_game`；分类：`non_blocking`。
 - `FB-20260817-9`：载入存档后始终进不了大地图。
   - 来源：用户实测 + `AwakeProbe.log` / `framework.log`。
   - 证据：`CampaignSessionStarting` 已记录，但 `CampaignSessionReady` 始终未出现；`Awake.log` 在 `game_start` 后停止；进程 CPU 持续增长，日志不再增长；`save054.sav` 只含 AWAKE + MarcusAIFramework，模块列表与当前一致。
@@ -342,3 +345,10 @@
 - 下一步：进入游戏确认 MCM 按钮可用、点击后两个开关开启并弹出 AI 设置台；仍需在 Marcus AI 设置台允许 `AWAKE.route.npc.dialogue` 云外发。
 - 待办：`ContactHubHistory` 游戏内验收保持 `paused`；完成后按原顺序继续 `PLAN-Interactions`。
 - 推送：本地已提交 `720293e Add one-click cloud dialogue enable` 及后续队列检查点提交；远端 `main` 已同步。
+
+## 修复与改进优先级（2026-08-17 修订）
+
+- P0 本轮：地图对话历史写入、记忆日结云外发、提示词 heroId 双重引号；代码已完成，待游戏内复验。
+- P1 下一轮：`npc_prompt_register_failed code=unknown` 深挖；首次读取 `storage.key_not_found` 日志收敛；MCM 场景喊话键显示与存档回退统一；世界书占位符审计工具；记忆摘要成功后持久化验收。
+- P1/P2 机制：世界书检索相关性过滤、玩家王国/身份上下文补全、统一会话、ContactHubHistory 游戏内验收、Interactions、事件内容规则、命令层世界效果。
+- P2 体验：开发者检查完整 UI、通讯录头像/关系摘要、写信、Messenger 群聊/媒体/TTS、多步引导、群聊整理候选。

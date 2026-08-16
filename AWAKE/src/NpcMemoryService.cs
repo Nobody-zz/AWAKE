@@ -536,7 +536,7 @@ internal sealed class NpcMemoryService : IDisposable
                 NpcMemoryConstants.RouteId,
                 input,
                 NpcMemoryConstants.OutputContractId,
-                CloudExportPolicy.None,
+                CloudExportPolicy.ResolveDialogueClassification(AwakeSettings.Current),
                 false,
                 onEvent,
                 context,

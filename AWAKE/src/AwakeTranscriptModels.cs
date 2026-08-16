@@ -19,7 +19,7 @@ internal static class AwakeTranscriptConstants
 
     internal static readonly string[] ValidSources = new[]
     {
-        "messenger", "scene", "encounter", "event", "proactive", "letter", "system"
+        "messenger", "scene", "encounter", "event", "proactive", "letter", "system", "map", "dev_test"
     };
 
     internal static readonly string[] ValidKinds = new[]

@@ -58,6 +58,7 @@ internal static class Program
 		RunMcmPresetSmoke();
 		RunCloudExportSmoke();
 		RunMessengerHistorySmoke();
+		RunTranscriptSourceSmoke();
 		RunB0StabilitySmoke();
 		RunRuleRegistrySmoke();
 		RunEventDataLoaderSmoke();
@@ -142,6 +143,34 @@ internal static class Program
 		}
 		AwakeMessengerHistory.ClearForTesting();
 		Console.WriteLine("PASS messenger history smoke");
+	}
+
+	private static void RunTranscriptSourceSmoke()
+	{
+		if (!AwakeTranscriptValidator.IsValidSource("map")
+			|| !AwakeTranscriptValidator.IsValidSource("dev_test"))
+		{
+			throw new InvalidOperationException("transcript valid sources should include map and dev_test.");
+		}
+		string built = NpcPromptTemplate.BuildDirectInput(new Dictionary<string, string>
+		{
+			["retrieved_knowledge"] = "k",
+			["npc_memory"] = "",
+			["npc_state"] = "s",
+			["npc_identity"] = "测试人物",
+			["dialogue_history"] = "",
+			["player_known"] = "p",
+			["scene"] = "sc",
+			["opening_hint"] = "",
+			["player_turn"] = "你好",
+			["npc_id"] = "hero:test"
+		});
+		if (built.IndexOf("\"heroId\": \"hero:test\"", StringComparison.Ordinal) < 0
+			|| built.IndexOf("\"heroId\": \"\"", StringComparison.Ordinal) >= 0)
+		{
+			throw new InvalidOperationException("npc prompt heroId should not be double-quoted.");
+		}
+		Console.WriteLine("PASS transcript source + prompt heroId smoke");
 	}
 
 	private static void RunB0StabilitySmoke()
