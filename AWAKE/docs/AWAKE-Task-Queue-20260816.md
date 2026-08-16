@@ -234,8 +234,8 @@
   - 关联：`195c263` 新增的 `TryShowAutoGuide` 会在 `Campaign.Current != null && Mission.Current == null` 时尝试弹出首启向导，读档阶段正好满足该条件。
   - 优先级：P0；状态：`fixed_pending_game`；分类：`blocking_current`。
   - 修复：`AwakeTerminalBehavior.TryShowAutoGuide` 现在要求 `GameStateManager.Current?.ActiveState is MapState` 且 `Campaign.Current.CurrentMenuContext == null` 才弹首启向导；`AwakeOnboardingService` 实际弹窗时会记录 `awake_onboarding_show active_state=...`。
-  - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产检查通过；`dist` 已同步新 DLL SHA-256 `46C4616689704808126FBE725FAC53BE9ED231A5A74438EFFB8A8A4D0687A51C`，游戏目录同步需用户退出卡住的游戏进程。
-  - 下一步：用户退出当前游戏进程后补同步游戏目录，再进游戏加载 `save054.sav` 验收。
+  - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产检查通过；DLL SHA-256 `46C4616689704808126FBE725FAC53BE9ED231A5A74438EFFB8A8A4D0687A51C` 已同步 `_build_out/dist/游戏目录`，`release_check OK`。
+  - 下一步：进游戏加载 `save054.sav`，确认能进入大地图且首启向导只在进入地图后出现。
 - `FB-20260817-1`：大地图 NPC 对话入口割裂。
   - 证据：用户实测；只读核查显示通讯录 `IsNearby` 依赖 `NpcDialogueLauncher.GetNearbyTargets`，遭遇菜单有“面谈（醒世）”，但相遇后缺少可直接调出 AI 对话菜单的入口。
   - 建议方向：先定范围 -> 定格画面 -> 选择具体人物/公开喊话（参考 AF），并统一场景/地图/通讯录入口。
