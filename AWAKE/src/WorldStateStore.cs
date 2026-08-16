@@ -22,7 +22,8 @@ internal enum WorldStateKind
     Contacts,
     Audit,
     Onboarding,
-    PendingDialogue
+    PendingDialogue,
+    Interaction
 }
 
 internal sealed class MemoryReservation
@@ -894,6 +895,108 @@ internal sealed class WorldStateStore
         return true;
     }
 
+    internal async Task<JObject> GetInteractionsAsync(
+        string canonicalContactKey,
+        RequestContext context,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(canonicalContactKey)) return null;
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.InteractionsNamespace, out store);
+        if (store == null) return null;
+        string key = BuildInteractionKey(canonicalContactKey);
+        OperationResult<string> loaded = await store.GetAsync(
+            key,
+            context ?? CreateContext(),
+            cancellationToken).ConfigureAwait(false);
+        if (!loaded.IsSuccess)
+        {
+            if (!IsStorageKeyNotFound(loaded))
+            {
+                AwakeLog.Write("world_state_interactions_load_failed key=" + key + " code=" + (loaded.Error?.Code ?? "unknown"));
+            }
+            return null;
+        }
+        if (string.IsNullOrWhiteSpace(loaded.Value)) return NewInteractionState(canonicalContactKey);
+        try
+        {
+            JObject doc = JObject.Parse(loaded.Value);
+            return doc.Type == JTokenType.Object ? doc : null;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_state_interactions_corrupt key=" + key + " error=" + ex.Message);
+            return null;
+        }
+    }
+
+    internal async Task<bool> UpsertPromiseAsync(
+        string canonicalContactKey,
+        JObject promise,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(canonicalContactKey) || promise == null || string.IsNullOrWhiteSpace(idempotencyKey))
+        {
+            return false;
+        }
+        JObject arguments = new JObject
+        {
+            ["mode"] = "promise_upsert",
+            ["promise"] = (JObject)promise.DeepClone()
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.InteractionsNamespace,
+            BuildInteractionKey(canonicalContactKey),
+            AiTaskConstants.PromiseRequestCommandId,
+            idempotencyKey,
+            canonicalContactKey,
+            WorldStateKind.Interaction,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
+    internal async Task<bool> UpdatePromiseStatusAsync(
+        string canonicalContactKey,
+        string promiseId,
+        string newStatus,
+        string reason,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(canonicalContactKey)
+            || string.IsNullOrWhiteSpace(promiseId)
+            || string.IsNullOrWhiteSpace(newStatus)
+            || string.IsNullOrWhiteSpace(idempotencyKey))
+        {
+            return false;
+        }
+        JObject arguments = new JObject
+        {
+            ["mode"] = "promise_update",
+            ["promiseId"] = promiseId,
+            ["newStatus"] = newStatus,
+            ["reason"] = reason ?? string.Empty
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.InteractionsNamespace,
+            BuildInteractionKey(canonicalContactKey),
+            AiTaskConstants.PromiseUpdateCommandId,
+            idempotencyKey,
+            canonicalContactKey,
+            WorldStateKind.Interaction,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
     internal async Task<JObject> GetTranscriptChunkAsync(
         string contactKey,
         int chunkIndex,
@@ -1488,6 +1591,9 @@ internal sealed class WorldStateStore
             case WorldStateKind.PendingDialogue:
                 applyError = ApplyDialogueQueue(state, command);
                 break;
+            case WorldStateKind.Interaction:
+                applyError = ApplyInteraction(state, command);
+                break;
         }
         if (!string.IsNullOrWhiteSpace(applyError))
         {
@@ -1540,6 +1646,7 @@ internal sealed class WorldStateStore
             case WorldStateKind.Audit: return NewAuditState();
             case WorldStateKind.Onboarding: return NewOnboardingState();
             case WorldStateKind.PendingDialogue: return NewDialogueQueueState();
+            case WorldStateKind.Interaction: return NewInteractionState(heroId);
             default: return new JObject();
         }
     }
@@ -1660,6 +1767,19 @@ internal sealed class WorldStateStore
             ["schema"] = AwakeStorageContract.DialogueQueueSchema,
             ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
             ["entries"] = new JArray(),
+            ["appliedKeys"] = new JArray()
+        };
+    }
+
+    private static JObject NewInteractionState(string canonicalContactKey)
+    {
+        return new JObject
+        {
+            ["schema"] = AwakeStorageContract.InteractionSchema,
+            ["canonicalContactKey"] = canonicalContactKey ?? string.Empty,
+            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+            ["promises"] = new JArray(),
+            ["interactions"] = new JArray(),
             ["appliedKeys"] = new JArray()
         };
     }
@@ -1930,6 +2050,94 @@ internal sealed class WorldStateStore
         foreach (JToken token in entries)
         {
             if (token is JObject obj && StringComparer.Ordinal.Equals((string)obj["id"], id))
+            {
+                return obj;
+            }
+        }
+        return null;
+    }
+
+    private static void EnsureInteractionShape(JObject state, string canonicalContactKey)
+    {
+        state["schema"] = AwakeStorageContract.InteractionSchema;
+        state["canonicalContactKey"] = canonicalContactKey ?? string.Empty;
+        if (!(state["promises"] is JArray)) state["promises"] = new JArray();
+        if (!(state["interactions"] is JArray)) state["interactions"] = new JArray();
+        if (!(state["appliedKeys"] is JArray)) state["appliedKeys"] = new JArray();
+    }
+
+    private static string ApplyInteraction(JObject state, WorldStateCommand command)
+    {
+        EnsureInteractionShape(state, command.HeroId);
+        JArray promises = (JArray)state["promises"];
+        JArray interactions = (JArray)state["interactions"];
+        JArray appliedKeys = (JArray)state["appliedKeys"];
+        string mode = (string)command.Arguments["mode"] ?? string.Empty;
+        if (StringComparer.Ordinal.Equals(mode, "promise_upsert"))
+        {
+            if (!(command.Arguments["promise"] is JObject promise))
+            {
+                return "awake.world_state.interactions.invalid_promise";
+            }
+            string promiseId = (string)promise["promiseId"] ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(promiseId)) return "awake.world_state.interactions.invalid_promise_id";
+            JObject existing = FindPromise(promises, promiseId);
+            if (existing != null)
+            {
+                promise["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
+                existing.Replace(promise);
+            }
+            else
+            {
+                promise["createdUtc"] = DateTimeOffset.UtcNow.ToString("O");
+                promises.Add(promise);
+            }
+            interactions.Add(new JObject
+            {
+                ["kind"] = "promise_request",
+                ["promiseId"] = promiseId,
+                ["day"] = IntValue(promise["day"]),
+                ["correlation"] = command.CorrelationId
+            });
+        }
+        else if (StringComparer.Ordinal.Equals(mode, "promise_update"))
+        {
+            string promiseId = (string)command.Arguments["promiseId"] ?? string.Empty;
+            string newStatus = (string)command.Arguments["newStatus"] ?? string.Empty;
+            JObject existing = FindPromise(promises, promiseId);
+            if (existing == null) return "awake.world_state.interactions.promise_not_found";
+            if (!AwakePromiseStateMachine.CanTransition((string)existing["status"], newStatus))
+            {
+                return "awake.world_state.interactions.invalid_transition";
+            }
+            existing["status"] = newStatus;
+            existing["reason"] = ClampTextElements((string)command.Arguments["reason"] ?? string.Empty, 240);
+            existing["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
+            interactions.Add(new JObject
+            {
+                ["kind"] = "promise_update",
+                ["promiseId"] = promiseId,
+                ["status"] = newStatus,
+                ["correlation"] = command.CorrelationId
+            });
+        }
+        else
+        {
+            return "awake.world_state.interactions.invalid_mode";
+        }
+        Trim(promises, 100);
+        Trim(interactions, 200);
+        appliedKeys.Add(command.IdempotencyKey);
+        Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+        return string.Empty;
+    }
+
+    private static JObject FindPromise(JArray promises, string promiseId)
+    {
+        if (promises == null) return null;
+        foreach (JToken token in promises)
+        {
+            if (token is JObject obj && StringComparer.Ordinal.Equals((string)obj["promiseId"], promiseId))
             {
                 return obj;
             }
@@ -2323,6 +2531,11 @@ internal sealed class WorldStateStore
     internal static string BuildHeroKey(string heroId)
     {
         return "hero." + heroId + ".v1";
+    }
+
+    internal static string BuildInteractionKey(string canonicalContactKey)
+    {
+        return "campaign.interactions.v1." + (canonicalContactKey ?? string.Empty);
     }
 
     private static string HeroKey(string heroId)

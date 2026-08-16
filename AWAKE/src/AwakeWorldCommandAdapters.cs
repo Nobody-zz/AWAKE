@@ -304,3 +304,236 @@ internal sealed class AwakeWorldEffectRecordAdapter : BaseAwakeCommandAdapter
             owner: AwakeConstants.OwnerValue));
     }
 }
+
+internal sealed class AwakePromiseRequestAdapter : BaseAwakeCommandAdapter
+{
+    public override OperationResult<CommandAdapterPreflight> Preflight(CommandRequest request, RequestContext context)
+    {
+        if (context == null || context.IsExpired) return Denied("awake.world_state.context_expired", context?.CorrelationId);
+        JObject args = ParseArguments(request);
+        if (args == null || !Validate(args, out string _))
+        {
+            return Denied("awake.action.promise_request.invalid", context.CorrelationId);
+        }
+        return OperationResult<CommandAdapterPreflight>.Succeeded(new CommandAdapterPreflight(
+            "承诺请求：" + ((string)args["text"] ?? string.Empty),
+            SnapshotFromArguments(request)));
+    }
+
+    public override OperationResult<CommandAdapterResult> Execute(
+        CommandRequest request,
+        RequestContext context,
+        string expectedSnapshotToken)
+    {
+        if (context == null || context.IsExpired) return ResultFailed("awake.world_state.context_expired", context?.CorrelationId);
+        if (!TokenMatches(expectedSnapshotToken, SnapshotFromArguments(request)))
+        {
+            return ResultFailed("awake.action.promise_request.snapshot_mismatch", context.CorrelationId);
+        }
+        JObject args = ParseArguments(request);
+        if (args == null || !Validate(args, out string _))
+        {
+            return ResultFailed("awake.action.promise_request.invalid", context.CorrelationId);
+        }
+        if (AwakeRuntime.SessionEnded) return ResultFailed("awake.world_state.session_ended", context.CorrelationId);
+        WorldStateStore store = AwakeRuntime.WorldStateStore;
+        if (store == null) return ResultFailed("awake.world_state.store_unavailable", context.CorrelationId);
+
+        string playerHeroId = (string)args["playerHeroId"] ?? string.Empty;
+        string targetHeroId = (string)args["targetHeroId"] ?? string.Empty;
+        string contactKey = (string)args["canonicalContactKey"] ?? targetHeroId;
+        bool playerObliged = StringComparer.OrdinalIgnoreCase.Equals((string)args["obligor"], "player");
+        JObject promise = new JObject
+        {
+            ["promiseId"] = AwakePromiseStateMachine.NewPromiseId(),
+            ["status"] = AwakePromiseStateMachine.Pending,
+            ["text"] = ClampText((string)args["text"] ?? string.Empty, 240),
+            ["day"] = AwakeRuntime.CurrentGameDay(),
+            ["playerHeroId"] = playerHeroId,
+            ["targetHeroId"] = targetHeroId,
+            ["obligor"] = playerObliged ? playerHeroId : targetHeroId,
+            ["obligee"] = playerObliged ? targetHeroId : playerHeroId
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.InteractionsNamespace,
+            WorldStateStore.BuildInteractionKey(contactKey),
+            AiTaskConstants.PromiseRequestCommandId,
+            request.IdempotencyKey,
+            contactKey,
+            WorldStateKind.Interaction,
+            new JObject
+            {
+                ["mode"] = "promise_upsert",
+                ["promise"] = promise
+            },
+            DateTimeOffset.UtcNow,
+            context.CorrelationId);
+        if (!store.TryEnqueue(command))
+        {
+            return ResultFailed("awake.world_state.session_ended", context.CorrelationId);
+        }
+        return OperationResult<CommandAdapterResult>.Succeeded(
+            new CommandAdapterResult(CommandState.Succeeded, "承诺已进入账本。"));
+    }
+
+    internal static bool Validate(JObject args, out string error)
+    {
+        error = string.Empty;
+        if (args == null)
+        {
+            error = "args";
+            return false;
+        }
+        string playerHeroId = (string)args["playerHeroId"] ?? string.Empty;
+        string targetHeroId = (string)args["targetHeroId"] ?? string.Empty;
+        string text = (string)args["text"] ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(playerHeroId) || string.IsNullOrWhiteSpace(targetHeroId))
+        {
+            error = "hero";
+            return false;
+        }
+        if (string.IsNullOrWhiteSpace(text) || text.Length > 240)
+        {
+            error = "text";
+            return false;
+        }
+        string obligor = (string)args["obligor"] ?? string.Empty;
+        if (!string.IsNullOrWhiteSpace(obligor)
+            && !StringComparer.OrdinalIgnoreCase.Equals(obligor, "player")
+            && !StringComparer.OrdinalIgnoreCase.Equals(obligor, "npc"))
+        {
+            error = "obligor";
+            return false;
+        }
+        return true;
+    }
+
+    private static string ClampText(string text, int maximum)
+    {
+        return AwakeRuntime.TruncateTextElements(text ?? string.Empty, maximum);
+    }
+
+    private static OperationResult<CommandAdapterPreflight> Denied(string code, string correlationId)
+    {
+        return OperationResult<CommandAdapterPreflight>.Failed(FrameworkErrors.Create(
+            code,
+            FrameworkErrorCategory.InvalidRequest,
+            "Promise request rejected.",
+            correlationId,
+            owner: AwakeConstants.OwnerValue));
+    }
+
+    private static OperationResult<CommandAdapterResult> ResultFailed(string code, string correlationId)
+    {
+        return OperationResult<CommandAdapterResult>.Failed(FrameworkErrors.Create(
+            code,
+            FrameworkErrorCategory.InvalidRequest,
+            "Promise request failed.",
+            correlationId,
+            owner: AwakeConstants.OwnerValue));
+    }
+}
+
+internal sealed class AwakePromiseUpdateAdapter : BaseAwakeCommandAdapter
+{
+    public override OperationResult<CommandAdapterPreflight> Preflight(CommandRequest request, RequestContext context)
+    {
+        if (context == null || context.IsExpired) return Denied("awake.world_state.context_expired", context?.CorrelationId);
+        JObject args = ParseArguments(request);
+        if (args == null || !Validate(args, out string _))
+        {
+            return Denied("awake.action.promise_update.invalid", context.CorrelationId);
+        }
+        return OperationResult<CommandAdapterPreflight>.Succeeded(new CommandAdapterPreflight(
+            "承诺状态：" + ((string)args["newStatus"] ?? string.Empty),
+            SnapshotFromArguments(request)));
+    }
+
+    public override OperationResult<CommandAdapterResult> Execute(
+        CommandRequest request,
+        RequestContext context,
+        string expectedSnapshotToken)
+    {
+        if (context == null || context.IsExpired) return ResultFailed("awake.world_state.context_expired", context?.CorrelationId);
+        if (!TokenMatches(expectedSnapshotToken, SnapshotFromArguments(request)))
+        {
+            return ResultFailed("awake.action.promise_update.snapshot_mismatch", context.CorrelationId);
+        }
+        JObject args = ParseArguments(request);
+        if (args == null || !Validate(args, out string _))
+        {
+            return ResultFailed("awake.action.promise_update.invalid", context.CorrelationId);
+        }
+        if (AwakeRuntime.SessionEnded) return ResultFailed("awake.world_state.session_ended", context.CorrelationId);
+        WorldStateStore store = AwakeRuntime.WorldStateStore;
+        if (store == null) return ResultFailed("awake.world_state.store_unavailable", context.CorrelationId);
+
+        string contactKey = (string)args["canonicalContactKey"] ?? string.Empty;
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.InteractionsNamespace,
+            WorldStateStore.BuildInteractionKey(contactKey),
+            AiTaskConstants.PromiseUpdateCommandId,
+            request.IdempotencyKey,
+            contactKey,
+            WorldStateKind.Interaction,
+            new JObject
+            {
+                ["mode"] = "promise_update",
+                ["promiseId"] = (string)args["promiseId"] ?? string.Empty,
+                ["newStatus"] = (string)args["newStatus"] ?? string.Empty,
+                ["reason"] = (string)args["reason"] ?? string.Empty
+            },
+            DateTimeOffset.UtcNow,
+            context.CorrelationId);
+        if (!store.TryEnqueue(command))
+        {
+            return ResultFailed("awake.world_state.session_ended", context.CorrelationId);
+        }
+        return OperationResult<CommandAdapterResult>.Succeeded(
+            new CommandAdapterResult(CommandState.Succeeded, "承诺状态已更新。"));
+    }
+
+    internal static bool Validate(JObject args, out string error)
+    {
+        error = string.Empty;
+        if (args == null)
+        {
+            error = "args";
+            return false;
+        }
+        string promiseId = (string)args["promiseId"] ?? string.Empty;
+        string status = (string)args["newStatus"] ?? string.Empty;
+        string contactKey = (string)args["canonicalContactKey"] ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(promiseId) || string.IsNullOrWhiteSpace(contactKey))
+        {
+            error = "id";
+            return false;
+        }
+        if (!AwakePromiseStateMachine.IsValidStatus(status))
+        {
+            error = "status";
+            return false;
+        }
+        return true;
+    }
+
+    private static OperationResult<CommandAdapterPreflight> Denied(string code, string correlationId)
+    {
+        return OperationResult<CommandAdapterPreflight>.Failed(FrameworkErrors.Create(
+            code,
+            FrameworkErrorCategory.InvalidRequest,
+            "Promise update rejected.",
+            correlationId,
+            owner: AwakeConstants.OwnerValue));
+    }
+
+    private static OperationResult<CommandAdapterResult> ResultFailed(string code, string correlationId)
+    {
+        return OperationResult<CommandAdapterResult>.Failed(FrameworkErrors.Create(
+            code,
+            FrameworkErrorCategory.InvalidRequest,
+            "Promise update failed.",
+            correlationId,
+            owner: AwakeConstants.OwnerValue));
+    }
+}

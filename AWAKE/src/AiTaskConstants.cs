@@ -30,6 +30,7 @@ internal static class AiTaskConstants
     internal const string OnboardingKey = "campaign.onboarding.v1";
     internal const string DialogueQueueNamespace = "awake.dialogue.queue";
     internal const string DialogueQueueKey = "campaign.dialogue.queue.v1";
+    internal const string InteractionsNamespace = "awake.interactions";
 
     internal const string TranscriptAppendCommandId = "awake.transcript.append.v1";
     internal const string TranscriptPinCommandId = "awake.transcript.pin.v1";
@@ -38,6 +39,8 @@ internal static class AiTaskConstants
     internal const string OnboardingUpsertCommandId = "awake.onboarding.upsert.v1";
     internal const string DialogueQueueEnqueueCommandId = "awake.dialogue.queue.enqueue.v1";
     internal const string DialogueQueueConsumeCommandId = "awake.dialogue.queue.consume.v1";
+    internal const string PromiseRequestCommandId = "awake.action.promise_request.v1";
+    internal const string PromiseUpdateCommandId = "awake.action.promise_update.v1";
 
     internal const string RelationshipDeltaCommandId = "awake.relationship.delta.v1";
     internal const string WorldEffectRecordCommandId = "awake.world.effect.record.v1";
@@ -86,7 +89,9 @@ internal static class AiTaskConstants
     internal static readonly string[] NewCommandIds = new[]
     {
         RelationshipDeltaCommandId,
-        WorldEffectRecordCommandId
+        WorldEffectRecordCommandId,
+        PromiseRequestCommandId,
+        PromiseUpdateCommandId
     };
 
     internal static readonly string[] StorageNamespaceIds = new[]
@@ -101,7 +106,8 @@ internal static class AiTaskConstants
         ContactsNamespace,
         AuditNamespace,
         OnboardingNamespace,
-        DialogueQueueNamespace
+        DialogueQueueNamespace,
+        InteractionsNamespace
     };
 
     internal static string RoutePermission(string routeId) => "ai.route.invoke:" + routeId;

@@ -24,7 +24,8 @@ internal static class NpcDialogueConstants
     internal static readonly string[] AllowedCommandIds = new[]
     {
         AiTaskConstants.RelationshipDeltaCommandId,
-        AiTaskConstants.WorldEffectRecordCommandId
+        AiTaskConstants.WorldEffectRecordCommandId,
+        AiTaskConstants.PromiseRequestCommandId
     };
 
     internal static readonly string[] SceneShoutAllowedCommandIds = Array.Empty<string>();

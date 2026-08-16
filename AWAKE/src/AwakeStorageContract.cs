@@ -17,6 +17,7 @@ internal static class AwakeStorageContract
     internal const string AuditSchema = AwakeTranscriptConstants.AuditSchema;
     internal const string OnboardingSchema = "awake.onboarding.v1";
     internal const string DialogueQueueSchema = "awake.dialogue.queue.v1";
+    internal const string InteractionSchema = "awake.interactions.v1";
 
     internal static bool IsKnownSchema(string schema)
     {
@@ -31,7 +32,8 @@ internal static class AwakeStorageContract
             || StringComparer.Ordinal.Equals(schema, ContactsSchema)
             || StringComparer.Ordinal.Equals(schema, AuditSchema)
             || StringComparer.Ordinal.Equals(schema, OnboardingSchema)
-            || StringComparer.Ordinal.Equals(schema, DialogueQueueSchema);
+            || StringComparer.Ordinal.Equals(schema, DialogueQueueSchema)
+            || StringComparer.Ordinal.Equals(schema, InteractionSchema);
     }
 
     internal static string ExpectedSchema(WorldStateKind kind)
@@ -60,6 +62,8 @@ internal static class AwakeStorageContract
                 return OnboardingSchema;
             case WorldStateKind.PendingDialogue:
                 return DialogueQueueSchema;
+            case WorldStateKind.Interaction:
+                return InteractionSchema;
             default:
                 return string.Empty;
         }

@@ -151,6 +151,26 @@ internal sealed class AwakeExtension : IFrameworkExtension
             new[] { "1.3.15" }),
             new AwakeWorldEffectRecordAdapter(),
             "world_effect_record");
+
+        RegisterWorldCommand(registration, new CommandDescriptor(
+            AiTaskConstants.PromiseRequestCommandId,
+            Owner,
+            CommandRiskTier.R1Interface,
+            AiTaskConstants.CommandInputSchema(AiTaskConstants.PromiseRequestCommandId),
+            AiTaskConstants.CommandOutputSchema(AiTaskConstants.PromiseRequestCommandId),
+            new[] { "1.3.15" }),
+            new AwakePromiseRequestAdapter(),
+            "promise_request");
+
+        RegisterWorldCommand(registration, new CommandDescriptor(
+            AiTaskConstants.PromiseUpdateCommandId,
+            Owner,
+            CommandRiskTier.R1Interface,
+            AiTaskConstants.CommandInputSchema(AiTaskConstants.PromiseUpdateCommandId),
+            AiTaskConstants.CommandOutputSchema(AiTaskConstants.PromiseUpdateCommandId),
+            new[] { "1.3.15" }),
+            new AwakePromiseUpdateAdapter(),
+            "promise_update");
     }
 
     private static void RegisterWorldCommand(IExtensionRegistration registration, CommandDescriptor descriptor, ICommandAdapter adapter, string label)

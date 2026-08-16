@@ -2514,3 +2514,13 @@ Persistent Dialogue Queue (2026-08-17, no version bump)
 - SdkSmoke PASS ALL; LOCALIZATION_OK source=212 en=241 cn=241; asset lint 108 files OK; release_check OK.
 - Awake.dll SHA-256 F74E3AC959470C8DAFF0529E779C43145041E5CA879FE4BA30A91400FD246B0A identical across _build_out, dist, and game Modules/AWAKE after sync.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Interactions Promise Ledger Core (2026-08-17, no version bump)
+- Added WorldStateKind.Interaction with schema awake.interactions.v1 and per-contact key campaign.interactions.v1.<contact>.
+- Added AwakePromiseStateMachine and promise_request/promise_update command adapters; promise_update validates state transitions in the applier.
+- Commands are registered in constants, risk policy, permissions, manifest, and dialogue allowlist (promise_update stays internal-only).
+- SdkSmoke covers promise transitions, command allowlist, adapter validation, and interaction storage schema mapping.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=212 en=241 cn=241; asset lint 109 files OK; release_check OK.
+- Awake.dll SHA-256 8DD09A7FA43F24B045DDF2B846D8CEC0709DB1B0CFC7EEBA5F79089B6C277AC6 identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

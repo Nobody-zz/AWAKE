@@ -45,6 +45,7 @@ internal static class Program
 		RunAwakeEventEngineCoreSmoke();
 		RunRelationshipCommandSmoke();
 		RunWorldEffectCommandSmoke();
+		RunPromiseStateMachineSmoke();
 		await RunStoragePipelineSmokeAsync();
 		RunNpcMemorySmoke();
 		RunWorldbookSmoke();
@@ -786,7 +787,10 @@ internal static class Program
 				AwakeStorageContract.OnboardingSchema)
 			|| !StringComparer.Ordinal.Equals(
 				AwakeStorageContract.ExpectedSchema(WorldStateKind.PendingDialogue),
-				AwakeStorageContract.DialogueQueueSchema))
+				AwakeStorageContract.DialogueQueueSchema)
+			|| !StringComparer.Ordinal.Equals(
+				AwakeStorageContract.ExpectedSchema(WorldStateKind.Interaction),
+				AwakeStorageContract.InteractionSchema))
 		{
 			throw new InvalidOperationException("storage contract schema mapping mismatch.");
 		}
@@ -1665,6 +1669,47 @@ internal static class Program
 			throw new InvalidOperationException("empty world effect text should fail.");
 		}
 		Console.WriteLine("PASS world effect command smoke");
+	}
+
+	private static void RunPromiseStateMachineSmoke()
+	{
+		if (!AwakePromiseStateMachine.CanTransition(AwakePromiseStateMachine.Pending, AwakePromiseStateMachine.Accepted)
+			|| !AwakePromiseStateMachine.CanTransition(AwakePromiseStateMachine.Accepted, AwakePromiseStateMachine.Kept)
+			|| AwakePromiseStateMachine.CanTransition(AwakePromiseStateMachine.Kept, AwakePromiseStateMachine.Broken)
+			|| AwakePromiseStateMachine.CanTransition(AwakePromiseStateMachine.Pending, "bogus"))
+		{
+			throw new InvalidOperationException("promise state transitions mismatch.");
+		}
+		if (!CommandRiskPolicy.IsWorldBridgeAllowed(AiTaskConstants.PromiseRequestCommandId)
+			|| !CommandRiskPolicy.IsWorldBridgeAllowed(AiTaskConstants.PromiseUpdateCommandId)
+			|| Array.IndexOf(NpcDialogueConstants.AllowedCommandIds, AiTaskConstants.PromiseRequestCommandId) < 0
+			|| Array.IndexOf(NpcDialogueConstants.AllowedCommandIds, AiTaskConstants.PromiseUpdateCommandId) >= 0)
+		{
+			throw new InvalidOperationException("promise command allowlist mismatch.");
+		}
+		Newtonsoft.Json.Linq.JObject validRequest = new Newtonsoft.Json.Linq.JObject
+		{
+			["playerHeroId"] = "main_hero",
+			["targetHeroId"] = "hero:lord_1_18",
+			["text"] = "我会归还这笔钱。",
+			["obligor"] = "player"
+		};
+		string error;
+		if (!AwakePromiseRequestAdapter.Validate(validRequest, out error))
+		{
+			throw new InvalidOperationException("valid promise request should pass: " + error);
+		}
+		Newtonsoft.Json.Linq.JObject invalidRequest = new Newtonsoft.Json.Linq.JObject
+		{
+			["playerHeroId"] = "main_hero",
+			["targetHeroId"] = "hero:lord_1_18",
+			["text"] = ""
+		};
+		if (AwakePromiseRequestAdapter.Validate(invalidRequest, out _))
+		{
+			throw new InvalidOperationException("empty promise text should fail.");
+		}
+		Console.WriteLine("PASS promise state machine smoke");
 	}
 
 	private static void RunAwakeEventEngineCoreSmoke()
