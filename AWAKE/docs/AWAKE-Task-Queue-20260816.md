@@ -359,3 +359,4 @@
 - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化 208/237/237；资产检查 107；release_check OK；DLL SHA-256 `7E706B9BA0F9C01805954803CD76383EFB1554B7B4ED2D783503FBE96E8E7A7B` 已同步 `_build_out/dist/游戏目录`。
 - 仍待离线实现：多步引导数据模型与状态机、Messenger 写信基础、统一会话核心、Interactions 命令/恢复服务；这些或依赖已 APPROVED PLAN，或仍需 grill-me 后再落地。
 - 游戏内验收仍挂起：FB-20260817-10/11/12、ContactHubHistory、世界书真机命中、存储/记忆真机。
+- 推送：本地已提交 `fa22f0a`；远端 `main` 推送被 `Connection was reset` 阻断，网络恢复后需补推。
