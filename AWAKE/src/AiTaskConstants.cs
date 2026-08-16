@@ -41,6 +41,7 @@ internal static class AiTaskConstants
     internal const string DialogueQueueConsumeCommandId = "awake.dialogue.queue.consume.v1";
     internal const string PromiseRequestCommandId = "awake.action.promise_request.v1";
     internal const string PromiseUpdateCommandId = "awake.action.promise_update.v1";
+    internal const string GiveGoldCommandId = "awake.action.give_gold.v1";
 
     internal const string RelationshipDeltaCommandId = "awake.relationship.delta.v1";
     internal const string WorldEffectRecordCommandId = "awake.world.effect.record.v1";
@@ -91,7 +92,8 @@ internal static class AiTaskConstants
         RelationshipDeltaCommandId,
         WorldEffectRecordCommandId,
         PromiseRequestCommandId,
-        PromiseUpdateCommandId
+        PromiseUpdateCommandId,
+        GiveGoldCommandId
     };
 
     internal static readonly string[] StorageNamespaceIds = new[]

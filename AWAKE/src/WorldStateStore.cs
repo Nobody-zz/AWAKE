@@ -2121,6 +2121,17 @@ internal sealed class WorldStateStore
                 ["correlation"] = command.CorrelationId
             });
         }
+        else if (StringComparer.Ordinal.Equals(mode, "give_gold"))
+        {
+            interactions.Add(new JObject
+            {
+                ["kind"] = "give_gold",
+                ["amount"] = IntValue(command.Arguments["amount"]),
+                ["targetHeroId"] = (string)command.Arguments["targetHeroId"] ?? string.Empty,
+                ["day"] = IntValue(command.Arguments["day"]),
+                ["correlation"] = command.CorrelationId
+            });
+        }
         else
         {
             return "awake.world_state.interactions.invalid_mode";

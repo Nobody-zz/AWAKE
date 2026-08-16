@@ -387,3 +387,9 @@
 - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产/发布检查通过；DLL SHA-256 `8DD09A7FA43F24B045DDF2B846D8CEC0709DB1B0CFC7EEBA5F79089B6C277AC6` 已同步。
 - 仍待离线实现：give_gold 结算/恢复服务、统一 hub 生命周期、通讯录写信 UI、多步引导 UI。
 - 推送：批次 G 本地已提交 `410ce46`，远端推送被网络重置阻断，网络恢复后补推。
+
+## 离线改进批次 H（2026-08-17）
+
+- 完成：`awake.action.give_gold.v1` 基础命令（参数校验、玩家金币扣减、交互账本记录）；风险策略、权限、manifest、对话 allowlist 已注册。
+- 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产/发布检查通过；DLL SHA-256 `15A25B999FF2889190125DF010A6E91FCA574CD853102705F8C730652959B4F9` 已同步。
+- 仍待离线实现：give_gold 三阶段恢复/补偿、统一 hub 生命周期、通讯录写信 UI、多步引导 UI。

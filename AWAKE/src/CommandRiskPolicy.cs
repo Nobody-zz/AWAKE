@@ -11,7 +11,8 @@ internal static class CommandRiskPolicy
         [AiTaskConstants.RelationshipDeltaCommandId] = CommandRiskTier.R2Gameplay,
         [AiTaskConstants.WorldEffectRecordCommandId] = CommandRiskTier.R2Gameplay,
         [AiTaskConstants.PromiseRequestCommandId] = CommandRiskTier.R1Interface,
-        [AiTaskConstants.PromiseUpdateCommandId] = CommandRiskTier.R1Interface
+        [AiTaskConstants.PromiseUpdateCommandId] = CommandRiskTier.R1Interface,
+        [AiTaskConstants.GiveGoldCommandId] = CommandRiskTier.R2Gameplay
     };
 
     internal static bool TryGetRiskTier(string commandId, out CommandRiskTier tier)

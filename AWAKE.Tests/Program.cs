@@ -46,6 +46,7 @@ internal static class Program
 		RunRelationshipCommandSmoke();
 		RunWorldEffectCommandSmoke();
 		RunPromiseStateMachineSmoke();
+		RunGiveGoldSmoke();
 		await RunStoragePipelineSmokeAsync();
 		RunNpcMemorySmoke();
 		RunWorldbookSmoke();
@@ -1710,6 +1711,36 @@ internal static class Program
 			throw new InvalidOperationException("empty promise text should fail.");
 		}
 		Console.WriteLine("PASS promise state machine smoke");
+	}
+
+	private static void RunGiveGoldSmoke()
+	{
+		if (!CommandRiskPolicy.IsWorldBridgeAllowed(AiTaskConstants.GiveGoldCommandId)
+			|| Array.IndexOf(NpcDialogueConstants.AllowedCommandIds, AiTaskConstants.GiveGoldCommandId) < 0)
+		{
+			throw new InvalidOperationException("give gold command should be allowed.");
+		}
+		Newtonsoft.Json.Linq.JObject valid = new Newtonsoft.Json.Linq.JObject
+		{
+			["targetHeroId"] = "hero:lord_1_18",
+			["amount"] = 100,
+			["reason"] = "还债"
+		};
+		string error;
+		if (!AwakeGiveGoldAdapter.Validate(valid, out error))
+		{
+			throw new InvalidOperationException("valid give gold args should pass: " + error);
+		}
+		Newtonsoft.Json.Linq.JObject invalid = new Newtonsoft.Json.Linq.JObject
+		{
+			["targetHeroId"] = "hero:lord_1_18",
+			["amount"] = 0
+		};
+		if (AwakeGiveGoldAdapter.Validate(invalid, out _))
+		{
+			throw new InvalidOperationException("zero gold amount should fail.");
+		}
+		Console.WriteLine("PASS give gold smoke");
 	}
 
 	private static void RunAwakeEventEngineCoreSmoke()

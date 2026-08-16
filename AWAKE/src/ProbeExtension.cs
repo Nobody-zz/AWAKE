@@ -171,6 +171,16 @@ internal sealed class AwakeExtension : IFrameworkExtension
             new[] { "1.3.15" }),
             new AwakePromiseUpdateAdapter(),
             "promise_update");
+
+        RegisterWorldCommand(registration, new CommandDescriptor(
+            AiTaskConstants.GiveGoldCommandId,
+            Owner,
+            CommandRiskTier.R2Gameplay,
+            AiTaskConstants.CommandInputSchema(AiTaskConstants.GiveGoldCommandId),
+            AiTaskConstants.CommandOutputSchema(AiTaskConstants.GiveGoldCommandId),
+            new[] { "1.3.15" }),
+            new AwakeGiveGoldAdapter(),
+            "give_gold");
     }
 
     private static void RegisterWorldCommand(IExtensionRegistration registration, CommandDescriptor descriptor, ICommandAdapter adapter, string label)

@@ -3,6 +3,7 @@ using System.Text;
 using MarcusAIFramework.Api;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TaleWorlds.CampaignSystem;
 
 namespace Awake;
 
@@ -533,6 +534,146 @@ internal sealed class AwakePromiseUpdateAdapter : BaseAwakeCommandAdapter
             code,
             FrameworkErrorCategory.InvalidRequest,
             "Promise update failed.",
+            correlationId,
+            owner: AwakeConstants.OwnerValue));
+    }
+}
+
+internal sealed class AwakeGiveGoldAdapter : BaseAwakeCommandAdapter
+{
+    public override OperationResult<CommandAdapterPreflight> Preflight(CommandRequest request, RequestContext context)
+    {
+        if (context == null || context.IsExpired) return Denied("awake.world_state.context_expired", context?.CorrelationId);
+        JObject args = ParseArguments(request);
+        if (args == null || !Validate(args, out string _))
+        {
+            return Denied("awake.action.give_gold.invalid", context.CorrelationId);
+        }
+        return OperationResult<CommandAdapterPreflight>.Succeeded(new CommandAdapterPreflight(
+            "给金币：" + ((string)args["amount"] ?? "0"),
+            SnapshotFromArguments(request)));
+    }
+
+    public override OperationResult<CommandAdapterResult> Execute(
+        CommandRequest request,
+        RequestContext context,
+        string expectedSnapshotToken)
+    {
+        if (context == null || context.IsExpired) return ResultFailed("awake.world_state.context_expired", context?.CorrelationId);
+        if (!TokenMatches(expectedSnapshotToken, SnapshotFromArguments(request)))
+        {
+            return ResultFailed("awake.action.give_gold.snapshot_mismatch", context.CorrelationId);
+        }
+        JObject args = ParseArguments(request);
+        if (args == null || !Validate(args, out string _))
+        {
+            return ResultFailed("awake.action.give_gold.invalid", context.CorrelationId);
+        }
+        if (AwakeRuntime.SessionEnded) return ResultFailed("awake.world_state.session_ended", context.CorrelationId);
+        if (Hero.MainHero == null || Hero.MainHero.Gold < 0)
+        {
+            return ResultFailed("awake.action.give_gold.player_unavailable", context.CorrelationId);
+        }
+        int amount = (int)args["amount"];
+        if (Hero.MainHero.Gold < amount)
+        {
+            return OperationResult<CommandAdapterResult>.Failed(FrameworkErrors.Create(
+                "awake.action.insufficient_gold",
+                FrameworkErrorCategory.Conflict,
+                "Player gold is insufficient.",
+                context.CorrelationId,
+                owner: AwakeConstants.OwnerValue));
+        }
+        Hero.MainHero.Gold -= amount;
+
+        WorldStateStore store = AwakeRuntime.WorldStateStore;
+        if (store == null) return ResultFailed("awake.world_state.store_unavailable", context.CorrelationId);
+        string contactKey = (string)args["canonicalContactKey"] ?? (string)args["targetHeroId"];
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.InteractionsNamespace,
+            WorldStateStore.BuildInteractionKey(contactKey),
+            AiTaskConstants.GiveGoldCommandId,
+            request.IdempotencyKey,
+            contactKey,
+            WorldStateKind.Interaction,
+            new JObject
+            {
+                ["mode"] = "give_gold",
+                ["amount"] = amount,
+                ["targetHeroId"] = (string)args["targetHeroId"] ?? string.Empty,
+                ["day"] = AwakeRuntime.CurrentGameDay(),
+                ["reason"] = (string)args["reason"] ?? string.Empty
+            },
+            DateTimeOffset.UtcNow,
+            context.CorrelationId);
+        if (!store.TryEnqueue(command))
+        {
+            return ResultFailed("awake.world_state.session_ended", context.CorrelationId);
+        }
+        return OperationResult<CommandAdapterResult>.Succeeded(
+            new CommandAdapterResult(CommandState.Succeeded, "金币已扣除并记录。"));
+    }
+
+    internal static bool Validate(JObject args, out string error)
+    {
+        error = string.Empty;
+        if (args == null)
+        {
+            error = "args";
+            return false;
+        }
+        string targetHeroId = (string)args["targetHeroId"] ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(targetHeroId) || targetHeroId.Length > 120)
+        {
+            error = "target";
+            return false;
+        }
+        JToken amountToken = args["amount"];
+        if (amountToken == null || amountToken.Type != JTokenType.Integer)
+        {
+            error = "amount";
+            return false;
+        }
+        int amount;
+        try
+        {
+            amount = (int)amountToken;
+        }
+        catch
+        {
+            error = "amount";
+            return false;
+        }
+        if (amount < 1 || amount > 100000)
+        {
+            error = "amount";
+            return false;
+        }
+        string reason = (string)args["reason"];
+        if (reason != null && reason.Length > 240)
+        {
+            error = "reason";
+            return false;
+        }
+        return true;
+    }
+
+    private static OperationResult<CommandAdapterPreflight> Denied(string code, string correlationId)
+    {
+        return OperationResult<CommandAdapterPreflight>.Failed(FrameworkErrors.Create(
+            code,
+            FrameworkErrorCategory.InvalidRequest,
+            "Give gold command rejected.",
+            correlationId,
+            owner: AwakeConstants.OwnerValue));
+    }
+
+    private static OperationResult<CommandAdapterResult> ResultFailed(string code, string correlationId)
+    {
+        return OperationResult<CommandAdapterResult>.Failed(FrameworkErrors.Create(
+            code,
+            FrameworkErrorCategory.InvalidRequest,
+            "Give gold command failed.",
             correlationId,
             owner: AwakeConstants.OwnerValue));
     }

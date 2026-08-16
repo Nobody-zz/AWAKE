@@ -2524,3 +2524,13 @@ Interactions Promise Ledger Core (2026-08-17, no version bump)
 - SdkSmoke PASS ALL; LOCALIZATION_OK source=212 en=241 cn=241; asset lint 109 files OK; release_check OK.
 - Awake.dll SHA-256 8DD09A7FA43F24B045DDF2B846D8CEC0709DB1B0CFC7EEBA5F79089B6C277AC6 identical across _build_out, dist, and game Modules/AWAKE after sync.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Give Gold Interaction (2026-08-17, no version bump)
+- Added awake.action.give_gold.v1 with validation, player gold deduction, and interaction ledger write.
+- Command registered in constants, risk policy, permissions, manifest, and dialogue allowlist.
+- ApplyInteraction records give_gold interactions.
+- SdkSmoke covers risk/allowlist and argument validation.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=212 en=241 cn=241; asset lint 109 files OK; release_check OK.
+- Awake.dll SHA-256 15A25B999FF2889190125DF010A6E91FCA574CD853102705F8C730652959B4F9 identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
