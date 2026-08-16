@@ -60,7 +60,7 @@ public sealed class SubModule : MBSubModuleBase
             NpcProactiveHooks.GetNearbyHeroes = limit => NpcDialogueLauncher.GetNearbyHeroes(limit);
             NpcProactiveHooks.FindHeroById = heroId => NpcDialogueLauncher.FindHeroById(heroId);
             NpcProactiveHooks.IsDialogueOpen = () => NpcDialogueOverlay.IsOpen;
-            NpcProactiveHooks.IsMessengerOpen = () => AwakeMessengerOverlay.IsOpen;
+            NpcProactiveHooks.IsMessengerOpen = () => AwakeMessengerOverlay.IsOpen || WorldEventInboxOverlay.IsOpen;
             NpcProactiveHooks.RecordDialogueContext = (heroId, hint) => NpcDialogueContext.Record(heroId, hint);
             NpcProactiveHooks.EnqueueDialogue = (heroId, hint) => EventDialogueQueue.Enqueue(heroId, hint);
             AwakeMcmActions.ShowDeveloperReport = AwakeTerminalBehavior.ShowDeveloperReportForMcm;
@@ -76,6 +76,7 @@ public sealed class SubModule : MBSubModuleBase
         AwakeUiDispatcher.InitializeGameThread();
         AwakeUiDispatcher.Drain();
         AwakeMessengerOverlay.OnApplicationTick();
+        WorldEventInboxOverlay.OnApplicationTick();
         NpcDialogueOverlay.OnApplicationTick();
         DrainEventDialogueQueue();
     }

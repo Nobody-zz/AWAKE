@@ -704,13 +704,12 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     {
         try
         {
-            WorldEventLedger.LoadFromStoreAsync(CancellationToken.None).GetAwaiter().GetResult();
-            int day = AwakeRuntime.CurrentGameDay();
-            List<WorldEventRecord> week = WorldEventLedger.SnapshotWeek(day);
-            string text = WorldEventInboxFormatter.Format(week, day);
-            ShowMessage(
-                AwakeLocalization.Resolve("awake.menu.inbox", "事件收件箱"),
-                text);
+            if (!WorldEventInboxOverlay.Open())
+            {
+                AwakeFeedback.ShowError(AwakeLocalization.Resolve(
+                    "awake.feedback.inbox_open_failed",
+                    "无法打开事件收件箱。"));
+            }
         }
         catch (Exception ex)
         {
