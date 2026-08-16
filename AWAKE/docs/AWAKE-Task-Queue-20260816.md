@@ -263,6 +263,11 @@
 - 已整理 `docs/AWAKE-Repair-Plan-20260817.md`，分 Batch 1（云外发、存储缺 key、Prompt 诊断、C 键）、Batch 2（主动对话逻辑化、地图对话入口）、Batch 3（开发者检查、世界书管理、通讯录 UI）。
 - 状态：用户已批准；Batch 1 代码完成，待游戏内验收；Batch 2 走 grill-me / PLAN。
 
+## 内测门槛（2026-08-17）
+
+- 已整理 `docs/AWAKE-Internal-Test-Gate-20260817.md`：Level 0 技术内测 / Level 1 玩法内测 / Level 2 公开 Beta。
+- 当前尚未放行 Level 0，需先完成 Batch 1 与 ContactHubHistory 的游戏内验收。
+
 ## 可行性核验（2026-08-16）
 
 - API probe：`Hero.Gold` 可读可写；`PartyBase.ItemRoster` 存在；`HeroVM(Hero, bool)` 提供 `ImageIdentifier`。
