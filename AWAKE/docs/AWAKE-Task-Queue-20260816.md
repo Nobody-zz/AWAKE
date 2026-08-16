@@ -31,6 +31,7 @@
   - 世界书 `variantSelection` 显式解析与校验
   - 卡拉迪亚编年史嵌入 `ModuleData/Worldbook`（759 文件，约 3 MB）
   - 路由 ID 命名空间修复（`AWAKE.route.*`）
+  - Companion 路由恢复：`profiles.awake.deepseek.routes.json` 已同步四条 AWAKE 路由
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）

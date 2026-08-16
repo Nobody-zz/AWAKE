@@ -1,0 +1,89 @@
+{
+  "connections": [
+    {
+      "id": "deepseek",
+      "adapter": "openai-compatible",
+      "baseUrl": "https://api.deepseek.com",
+      "credentialEnvironmentVariable": "MAF_DEEPSEEK_API_KEY",
+      "adapterOptionsJson": "{}",
+      "isCloud": true,
+      "timeoutSeconds": 90,
+      "enabled": true
+    },
+    {
+      "id": "ollama-local",
+      "adapter": "ollama",
+      "baseUrl": "http://127.0.0.1:11434",
+      "credentialEnvironmentVariable": "",
+      "adapterOptionsJson": "{}",
+      "isCloud": false,
+      "timeoutSeconds": 90,
+      "enabled": false
+    }
+  ],
+  "models": [
+    {
+      "id": "deepseek.deepseek-v4-flash",
+      "connectionId": "deepseek",
+      "remoteModelId": "deepseek-v4-flash",
+      "capabilities": [ "text" ],
+      "supportsStructuredOutput": false,
+      "embeddingDimensions": [],
+      "imageFormats": [],
+      "ttsFormats": [],
+      "cancellationSemantics": "request_abort",
+      "adapterOptionsJson": "{}",
+      "supportsStreaming": true,
+      "enabled": true
+    },
+    {
+      "id": "qwen2.5-local",
+      "connectionId": "ollama-local",
+      "remoteModelId": "qwen2.5:latest",
+      "capabilities": [ "text" ],
+      "supportsStructuredOutput": false,
+      "embeddingDimensions": [],
+      "imageFormats": [],
+      "ttsFormats": [],
+      "cancellationSemantics": "request_abort",
+      "adapterOptionsJson": "{}",
+      "supportsStreaming": true,
+      "enabled": false
+    }
+  ],
+  "routes": [
+    {
+      "id": "AWAKE.route.npc.dialogue",
+      "candidateModelIds": [ "deepseek.deepseek-v4-flash" ],
+      "taskKinds": [ "text" ],
+      "allowCloud": true,
+      "pinModel": true,
+      "enabled": true
+    },
+    {
+      "id": "AWAKE.route.preprocess",
+      "candidateModelIds": [ "deepseek.deepseek-v4-flash" ],
+      "taskKinds": [ "text" ],
+      "allowCloud": true,
+      "pinModel": true,
+      "enabled": true
+    },
+    {
+      "id": "AWAKE.route.postprocess",
+      "candidateModelIds": [ "deepseek.deepseek-v4-flash" ],
+      "taskKinds": [ "text" ],
+      "allowCloud": true,
+      "pinModel": true,
+      "enabled": true
+    },
+    {
+      "id": "AWAKE.route.memory.daily",
+      "candidateModelIds": [ "deepseek.deepseek-v4-flash" ],
+      "taskKinds": [ "text" ],
+      "allowCloud": true,
+      "pinModel": true,
+      "enabled": true
+    }
+  ],
+  "voiceProfiles": []
+}

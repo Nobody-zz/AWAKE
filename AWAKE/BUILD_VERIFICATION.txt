@@ -2091,6 +2091,7 @@ Route ID Namespace Fix (2026-08-16, no version bump)
 - Fixed all four routes to AWAKE.route.npc.dialogue / AWAKE.route.preprocess / AWAKE.route.postprocess / AWAKE.route.memory.daily.
 - Added SdkSmoke route contract check that every route starts with <Owner>.route. and permission mirrors the route id.
 - Updated README_CN/EN, PROVIDER_SETUP, provider profile JSON, Framework Usage Map, AI architecture inventory, and roadmap references.
+- Companion routes were empty; applied docs/profiles.awake.deepseek.routes.json and verified 4 AWAKE routes with deepseek.deepseek-v4-flash, allowCloud=true, enabled=true.
 - dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
 - SdkSmoke: PASS ALL Awake.SdkSmoke (14 paths including route contract smoke).
 - Awake.dll SHA-256 F8CCC1BDF91AD87408ED959030D97070FCD545F61D04CBD9E05C9EA9FFE59C91.
