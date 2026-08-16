@@ -5,10 +5,11 @@ namespace Awake;
 
 internal static class AiTaskConstants
 {
-    internal const string RouteNpcDialogue = "awake.route.npc.dialogue";
-    internal const string RoutePreprocess = "awake.route.preprocess";
-    internal const string RoutePostprocess = "awake.route.postprocess";
-    internal const string RouteMemoryDaily = "awake.route.memory.daily";
+    // Route IDs must match "<ExtensionId>.route.<name>"; owner is AWAKE.
+    internal const string RouteNpcDialogue = "AWAKE.route.npc.dialogue";
+    internal const string RoutePreprocess = "AWAKE.route.preprocess";
+    internal const string RoutePostprocess = "AWAKE.route.postprocess";
+    internal const string RouteMemoryDaily = "AWAKE.route.memory.daily";
 
     internal const string PlayerContextProviderId = "awake.player.context";
     internal const string HeroContextProviderId = "awake.hero.context";

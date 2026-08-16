@@ -2085,3 +2085,13 @@ Bundled Calradic Chronicle Worldbook (2026-08-16, no version bump)
 - Worldbook directory is byte-identical across project ModuleData, dist Modules/AWAKE, and game Modules/AWAKE (aggregate SHA-256 AD655791521FE34FEA7F6B94152A0FEB09A2C5C6712F2F751C032A7E768E278D).
 - Awake.dll SHA-256 remains C0C44241AE2AA530581130CB729DC9E38640952E70D548FBEBCA8A95ED6A1526.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Route ID Namespace Fix (2026-08-16, no version bump)
+- Game log showed register_failed code=extension.route_invalid: declared routes were awake.route.* but the ExtensionId is AWAKE.
+- Fixed all four routes to AWAKE.route.npc.dialogue / AWAKE.route.preprocess / AWAKE.route.postprocess / AWAKE.route.memory.daily.
+- Added SdkSmoke route contract check that every route starts with <Owner>.route. and permission mirrors the route id.
+- Updated README_CN/EN, PROVIDER_SETUP, provider profile JSON, Framework Usage Map, AI architecture inventory, and roadmap references.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (14 paths including route contract smoke).
+- Awake.dll SHA-256 F8CCC1BDF91AD87408ED959030D97070FCD545F61D04CBD9E05C9EA9FFE59C91.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

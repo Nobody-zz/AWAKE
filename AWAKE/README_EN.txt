@@ -2,13 +2,14 @@
 
 AWAKE is a generic AI world runtime for Mount & Blade II: Bannerlord. NPC intelligence, cross-session memory, world knowledge, events, command governance, and effect settlement belong to the runtime and are not tied to any specific worldview.
 
-The content pack (worldbook, events, letters, NPC proactive base) lives in a separate repository. The goddess persona and erotic mechanics are content-pack branches and are not part of this repository.
+`SlaneshsEmbraceContent` is the content-pack base (worldbook, events, letters, non-erotic NPC proactive behavior). The goddess persona and the erotic mechanics are separate content-pack branches, not part of the runtime.
 
 ## Current state
 
 - The runtime is content-free: it no longer references goddess, altar, body/estrus, captive, or letter code.
-- All code names are AWAKE: ModId `AWAKE`, DLL `Awake.dll`, namespace `Awake`, routes `awake.route.*`, storage `awake.*`, logs `Awake.log`.
-- Runtime source and localization file names now use `Awake*` / `awake_*`; the content pack is not included in this repository.
+- All code names are AWAKE: ModId `AWAKE`, DLL `Awake.dll`, namespace `Awake`, routes `AWAKE.route.*`, storage `awake.*`, logs `Awake.log`.
+- Runtime source and localization file names now use `Awake*` / `awake_*`; the `SlaneshsEmbraceContent` pack keeps its own Slaanesh identity.
+- Content-pack base and goddess/erotic branches are frozen under `SlaneshsEmbraceContent/frozen`.
 - Build: 0 warnings, 0 errors; `Awake.SdkSmoke` PASS ALL; localization validation passes.
 - NPC deep-talk now lives in the AWAKE command deck: press the command-deck hotkey (default `Y`, configurable in MCM) to open a dedicated panel with "Deep Talk (AWAKE)" and "Developer Check", then reuse `NpcDialogueLauncher` for the overlay or native dialogue fallback. No extra town-menu options are injected.
 - Runtime user-facing copy now uses AWAKE/醒世; Slanesh-era wording no longer leaks into permission prompts, menus, or dialogue titles.
@@ -16,14 +17,18 @@ The content pack (worldbook, events, letters, NPC proactive base) lives in a sep
 ## Directory layout
 
 ```text
-AWAKE/
-  src/                      # runtime source
-  docs/                     # current AWAKE docs
-  ModuleData/               # runtime localization
-  GUI/                      # runtime UI
-  tools/                    # validation scripts
-AWAKE.Tests/                # runtime SdkSmoke
-MarcusAIFramework_Reference/ # SDK/reference
+_houkai_merge/
+  AWAKE/                    # runtime project
+    src/                    # runtime source
+    docs/                   # roadmap, split, API contract, classification
+    dist/                   # release output
+    ModuleData/             # runtime localization
+    GUI/                    # runtime UI
+    tools/                  # validation scripts
+  AWAKE.Tests/              # runtime SdkSmoke
+  SlaneshsEmbraceContent/   # content pack (base + frozen branches)
+  MarcusAIFramework_Reference/  # SDK/reference
+  archive/                  # history, backups, deprecated projects
 ```
 
 ## Version roadmap

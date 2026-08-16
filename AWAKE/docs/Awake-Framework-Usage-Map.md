@@ -28,10 +28,10 @@
 
 | Route | 用途 | 状态 |
 | --- | --- | --- |
-| `awake.route.npc.dialogue` | NPC 深谈 | 已实现 |
-| `awake.route.preprocess` | 话题/关键词/意图分类 | 空契约 |
-| `awake.route.postprocess` | 回复标签抽取 | 空契约 |
-| `awake.route.memory.daily` | 日记忆压缩 | NPC 记忆摘要使用 |
+| `AWAKE.route.npc.dialogue` | NPC 深谈 | 已实现 |
+| `AWAKE.route.preprocess` | 话题/关键词/意图分类 | 空契约 |
+| `AWAKE.route.postprocess` | 回复标签抽取 | 空契约 |
+| `AWAKE.route.memory.daily` | 日记忆压缩 | NPC 记忆摘要使用 |
 
 ## 4. 上下文 Provider
 

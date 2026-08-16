@@ -42,8 +42,28 @@ internal static class Program
 		await RunStoragePipelineSmokeAsync();
 		RunNpcMemorySmoke();
 		RunWorldbookSmoke();
+		RunRouteContractSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunRouteContractSmoke()
+	{
+		string prefix = AwakeConstants.OwnerValue + ".route.";
+		foreach (string routeId in AiTaskConstants.AllRouteIds)
+		{
+			if (!routeId.StartsWith(prefix, StringComparison.Ordinal))
+			{
+				throw new InvalidOperationException("route id namespace mismatch: " + routeId);
+			}
+		}
+		if (!StringComparer.Ordinal.Equals(
+			AiTaskConstants.RoutePermission(AiTaskConstants.RouteNpcDialogue),
+			"ai.route.invoke:" + AiTaskConstants.RouteNpcDialogue))
+		{
+			throw new InvalidOperationException("route permission id should mirror the route id.");
+		}
+		Console.WriteLine("PASS route contract smoke");
 	}
 
 	private static void RunWorldbookSmoke()

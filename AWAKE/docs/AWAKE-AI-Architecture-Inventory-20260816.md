@@ -32,10 +32,10 @@
 
 | Route | 用途 | 状态 |
 | --- | --- | --- |
-| `awake.route.npc.dialogue` | NPC 深谈 | 使用中 |
-| `awake.route.memory.daily` | 记忆摘要 | 使用中 |
-| `awake.route.preprocess` | 预留 | 未使用 |
-| `awake.route.postprocess` | 预留 | 未使用 |
+| `AWAKE.route.npc.dialogue` | NPC 深谈 | 使用中 |
+| `AWAKE.route.memory.daily` | 记忆摘要 | 使用中 |
+| `AWAKE.route.preprocess` | 预留 | 未使用 |
+| `AWAKE.route.postprocess` | 预留 | 未使用 |
 
 ## 4. 上下文 Provider
 

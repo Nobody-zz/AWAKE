@@ -8,10 +8,10 @@ AWAKE 的源码里只使用四条逻辑路由：
 
 ```text
 新版框架从 manifest 自动声明并同步 Route；AI 设置台点击“同步路由”即可。旧版手动配置使用：
-awake.route.npc.dialogue
-awake.route.preprocess
-awake.route.postprocess
-awake.route.memory.daily
+AWAKE.route.npc.dialogue
+AWAKE.route.preprocess
+AWAKE.route.postprocess
+AWAKE.route.memory.daily
 ```
 
 模组不提交 URL、API Key、模型名或厂商 DTO，也不解析 Provider 内部格式。Provider 连接、密钥和模型路由全部由 MarcusAIFramework 负责，因此更换 Provider 不需要重编译，也不需要改模组代码。
@@ -31,7 +31,7 @@ awake.route.memory.daily
 3. 在 Route ID 栏填写本模组的四条逻辑路由，用英文逗号分隔：
 
 ```text
-awake.route.npc.dialogue,awake.route.preprocess,awake.route.postprocess,awake.route.memory.daily
+AWAKE.route.npc.dialogue,AWAKE.route.preprocess,AWAKE.route.postprocess,AWAKE.route.memory.daily
 ```
 
 4. 云端或需要认证的服务点击“设置 / 替换 Key”，保存到 Companion；Ollama 跳过此步。
