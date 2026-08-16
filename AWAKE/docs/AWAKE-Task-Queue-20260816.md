@@ -2,7 +2,7 @@
 
 > 日期：2026-08-16
 > 规则：每轮开始先读本文件；延续候选必须列出并等待用户决策，不自动选择下一项。
-> 本轮：卡拉迪亚编年史已迁移嵌入 AWAKE，游戏内验收待用户执行，未提版。
+> 本轮：AF 结构落地方案已输出，等待用户选择实施批次，未提版。
 
 ## 当前主线
 
@@ -33,6 +33,7 @@
   - 路由 ID 命名空间修复（`AWAKE.route.*`）
   - Companion 路由恢复：`profiles.awake.deepseek.routes.json` 已同步四条 AWAKE 路由
   - 命令台默认快捷键改为 `U`
+  - AF 结构落地方案文档 `AF-Structures-Landing-Plan-20260816.md`
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）
@@ -44,6 +45,7 @@
 5. NPC 记忆游戏内验证：逻辑 SdkSmoke 已覆盖；剩余读档回读、真实对话记忆。
 6. 周报/世界事件接线：`WorldEventLedger` / `NarrativeReportBuilder` 未接入实际周报。
 7. 开发者检查面板：当前只有文本报告，无完整诊断面板。
+8. AF 结构落地：按 `AF-Structures-Landing-Plan-20260816.md` 从 Batch 1（A1 NPC 主动聊天 + A4 长等待解锁）开始。
 
 ## 半成品（有入口但未闭环）
 
