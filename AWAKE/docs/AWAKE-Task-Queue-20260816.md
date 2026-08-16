@@ -219,6 +219,12 @@
 - 新策略：默认 PLAN `MAX_ROUNDS=5`；统一会话/交互命令高风险项 `MAX_ROUNDS=8`；资产边界/历史命令低风险项 `MAX_ROUNDS=3`；APPROVED 提前终止，5 轮仍 REVISE 就交用户拆解。
 - 已写入 `docs/grill/Grill-Summary-20260816.md`。
 
+## 常驻原则（2026-08-17）
+
+- 每个功能必须评估 MCM 菜单是否需要调整或新增调控项；评估结论写进 PLAN，不需要时写明理由。
+- 已有玩家可调行为时必须提供 MCM 入口，默认值 fail-safe；改动同步检查分组、中英文、预设联动与 `Config.json` 兼容。
+- 已写入 `AWAKE/AGENTS.md` 的 `MCM 菜单规则`。
+
 ## 可行性核验（2026-08-16）
 
 - API probe：`Hero.Gold` 可读可写；`PartyBase.ItemRoster` 存在；`HeroVM(Hero, bool)` 提供 `ImageIdentifier`。
