@@ -264,4 +264,4 @@
 - 远端 `main` 已确认以本地最新为权威。
 - 最近推送成功：`f16d4b0`（A 类 B0-B7 完成）。
 - 最近推送成功：`d256e91`（B 类完成 + 大审核修复）。
-- 最近推送成功：`e3d4eb4`（ContactHubHistory + transcript 历史权威 + 场景选人 UX，含队列检查点）。
+- 最近推送成功：`6bc9467`（ContactHubHistory + transcript 历史权威 + 场景选人 UX，含队列检查点）。
