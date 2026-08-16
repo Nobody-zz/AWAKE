@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using MarcusAIFramework.Api;
 
 namespace Awake;
@@ -12,19 +13,24 @@ internal static class AwakeMcmActions
 
     internal static void SyncRoutes()
     {
-        AwakeFeedback.Show(AwakeLocalization.Resolve(
-            "awake.mcm.actions.sync_routes_result",
-            "路由由框架自动同步；可在 AI 设置台点击“同步路由”。"));
+        _ = AwakeMarcusLinkService.SyncRoutesAsync(CancellationToken.None);
     }
 
     internal static void RefreshAiStatus()
     {
-        bool connected = FrameworkHostLocator.TryGetHost(out _);
-        AwakeRuntimeStatus.Update(connected
-            ? AwakeLocalization.Resolve("awake.status.connected", "Connected")
-            : AwakeLocalization.Resolve("awake.status.degraded_offline", "Offline (degraded)"));
+        AwakeRuntimeStatus.Update(AwakeMarcusLinkService.BuildStatusText());
         AwakeFeedback.ShowSuccess(AwakeLocalization.Resolve(
             "awake.mcm.actions.status_refreshed",
             "AI 状态已刷新。"));
+    }
+
+    internal static void OpenAiSetup()
+    {
+        AwakeMarcusLinkService.OpenAiSetup();
+    }
+
+    internal static void OpenDiagnostics()
+    {
+        AwakeMarcusLinkService.OpenDiagnostics();
     }
 }

@@ -2,7 +2,7 @@
 
 > 日期：2026-08-16
 > 规则：每轮开始必须先读 `awake-task-continuity/SKILL.md` 与本文件；延续候选必须列出并等待用户决策，不自动选择下一项。
-> 当前状态：Messenger 持久化完成；新增“马库斯一键配置”候选，等待用户选择，未提版。
+> 当前状态：Marcus MCM 便捷配置代码完成；等待游戏内验收，未提版。
 
 ## 当前检查点
 
@@ -46,6 +46,7 @@
 - `AwakeFeedback` 统一操作反馈
 - MCM 菜单重排、预设与操作按钮
 - 世界事件持久化与周报自动生成
+- Marcus MCM 便捷配置（状态、一键打开 AI 设置/诊断、自动同步引导）
 
 ### AF 结构学习
 
@@ -76,7 +77,7 @@
 5. 开发者检查面板：完整诊断 UI，而不是文本报告。
 6. 对话覆盖层等待动画与状态提示增强。
 7. Messenger 未读计数与大地图通知。
-8. Marcus 一键配置：AWAKE MCM 内提供类似 AF 的简单操作/一键配置；自动检测框架、一键同步路由、Provider 状态、启动引导。可行性文档已出：`docs/Marcus-OneClick-Feasibility-20260816.md`；写入 Provider profile 不建议 AWAKE 直写。
+8. Marcus 一键配置：代码已完成（MCM 状态、AI 设置/诊断入口、自动同步引导），待游戏内验收；写入 Provider profile 不建议 AWAKE 直写。
 
 ## 待修复（自查发现）
 

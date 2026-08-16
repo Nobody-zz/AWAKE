@@ -54,8 +54,27 @@ internal static class Program
 		RunFeedbackSmoke();
 		RunMcmPresetSmoke();
 		RunMessengerHistorySmoke();
+		RunMarcusLinkSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunMarcusLinkSmoke()
+	{
+		string status = AwakeMarcusLinkService.BuildStatusText();
+		if (string.IsNullOrWhiteSpace(status))
+		{
+			throw new InvalidOperationException("marcus link status should never be empty.");
+		}
+		AwakeConfig config = new AwakeConfig();
+		if (config.SyncRoutes == null
+			|| config.RefreshAiStatus == null
+			|| config.OpenAiSetup == null
+			|| config.OpenDiagnostics == null)
+		{
+			throw new InvalidOperationException("marcus mcm actions should be wired.");
+		}
+		Console.WriteLine("PASS marcus link smoke");
 	}
 
 	private static void RunMessengerHistorySmoke()

@@ -49,6 +49,14 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
     public Action RefreshAiStatus { get; set; }
 
+    [SettingPropertyButton("{=awake.mcm.open_setup.name}打开 AI 设置台", -1, true, "", Content = "{=awake.mcm.open_setup.content}打开", Order = 3, RequireRestart = false, HintText = "{=awake.mcm.open_setup.hint}打开 Marcus AI 设置台配置 Provider、模型与路由。")]
+    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
+    public Action OpenAiSetup { get; set; }
+
+    [SettingPropertyButton("{=awake.mcm.open_diagnostics.name}打开诊断台", -1, true, "", Content = "{=awake.mcm.open_diagnostics.content}打开", Order = 4, RequireRestart = false, HintText = "{=awake.mcm.open_diagnostics.hint}打开框架诊断台。")]
+    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
+    public Action OpenDiagnostics { get; set; }
+
     [SettingPropertyBool("{=awake.mcm.cloud_export.name}启用云外发", Order = 0, RequireRestart = false, HintText = "{=awake.mcm.cloud_export.hint}默认关闭。开启后仍需要下面的分类开关与框架权限授权，两层都满足才会把对应分类外发到云 AI。")]
     [SettingPropertyGroup("{=awake.mcm.group.data_debug}4. 数据与调试", GroupOrder = 3)]
     public bool EnableCloudExport { get; set; }
@@ -91,6 +99,8 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
         SyncRoutes = AwakeMcmActions.SyncRoutes;
         RefreshAiStatus = AwakeMcmActions.RefreshAiStatus;
         OpenDeveloperReport = AwakeMcmActions.ShowDeveloperReport;
+        OpenAiSetup = AwakeMcmActions.OpenAiSetup;
+        OpenDiagnostics = AwakeMcmActions.OpenDiagnostics;
     }
 
     internal static new AwakeConfig Instance => _instance;

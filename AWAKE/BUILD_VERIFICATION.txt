@@ -2163,6 +2163,17 @@ World Event Persistence + Weekly Report (2026-08-16, no version bump)
 - Awake.dll SHA-256 E3AD059D119AD20F430CE5DCF02E0766B7DB7B4B175048A8752043592FAABAE2.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
 
+Marcus MCM Convenient Config (2026-08-16, no version bump)
+- Added AwakeMarcusLinkService with framework status, declared route count, health component summary, AI setup and diagnostics console entry.
+- AWAKE MCM 0. AI 链路 group now has Sync Routes, AI Self Check, Open AI Setup, and Open Diagnostics buttons.
+- Sync Routes uses framework auto-provisioning and opens the AI setup console; it does not write platform.db or reflect internal APIs.
+- Added docs/PLAN-MarcusMcmConfig-20260816.md and review log.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (25 paths including marcus link smoke).
+- LOCALIZATION_OK source=77 en=95 cn=95.
+- Awake.dll SHA-256 42F32134E5B6EB171C6CAFAD761E5BEB94551C39ACCC60B80AA833185633D097.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
 Messenger History Persistence (2026-08-16, no version bump)
 - Added awake.messenger namespace and WorldStateKind.Messenger.
 - Added AwakeMessengerHistory cache + outbox persistence, grouped by TargetId.
