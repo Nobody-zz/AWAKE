@@ -76,7 +76,7 @@
 5. 开发者检查面板：完整诊断 UI，而不是文本报告。
 6. 对话覆盖层等待动画与状态提示增强。
 7. Messenger 未读计数与大地图通知。
-8. Marcus 一键配置：AWAKE MCM 内提供类似 AF 的简单操作/一键配置；自动检测框架、一键同步路由、写入/应用 Provider profile、启动向导。需先评估权限与架构边界，且只做引导不复制框架。
+8. Marcus 一键配置：AWAKE MCM 内提供类似 AF 的简单操作/一键配置；自动检测框架、一键同步路由、Provider 状态、启动引导。可行性文档已出：`docs/Marcus-OneClick-Feasibility-20260816.md`；写入 Provider profile 不建议 AWAKE 直写。
 
 ## 待修复（自查发现）
 
