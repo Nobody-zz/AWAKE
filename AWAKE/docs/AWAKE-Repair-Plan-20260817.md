@@ -1,6 +1,6 @@
 # AWAKE 修复方案（2026-08-17）
 
-> 状态：用户已批准；Batch 1 完成待游戏内验收；Batch 2 主动对话逻辑完成，地图对话提供附近选择入口，定格/统一会话仍待 UnifiedDialogueSession；Batch 3 开发者检查与世界书管理完成，通讯录 UI 扩展仍待处理。
+> 状态：用户已批准；Batch 1 完成待游戏内验收；Batch 2 主动对话逻辑完成，地图对话提供“范围 -> 定格选择 -> 公开喊话”两步入口，统一会话仍待 UnifiedDialogueSession；Batch 3 开发者检查与世界书管理完成，通讯录 UI 扩展仍待处理。
 > 依据：08-17 游戏反馈 + `Awake.log` / `AwakeProbe.log` / Marcus `framework.log` / `companion.log` 日志核查。
 
 ## 已确认根因
@@ -40,7 +40,7 @@
 
 ## Batch 2：需要 grill-me -> PLAN 的机制修复
 
-> 状态：主动对话逻辑已完成；地图对话已加“附近对话（地图）”入口，冻结画面与统一会话仍待 `PLAN-UnifiedDialogueSession`。
+> 状态：主动对话逻辑已完成；地图对话已加“范围 -> 定格选择 -> 公开喊话”两步入口，统一会话仍待 `PLAN-UnifiedDialogueSession`。
 
 ### 5. 主动对话逻辑化
 

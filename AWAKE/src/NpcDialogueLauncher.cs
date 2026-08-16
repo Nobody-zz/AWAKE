@@ -208,6 +208,54 @@ internal static class NpcDialogueLauncher
         }
     }
 
+    internal static NpcDialogueLaunchResult TryOpenMapShout(string sceneKeywords)
+    {
+        string sourceKey = "map_shout";
+        string targetId = "scene:current:map";
+        try
+        {
+            if (Mission.Current != null || Campaign.Current == null)
+            {
+                AwakeLog.Write("map_shout_unavailable mission=" + (Mission.Current != null));
+                return NpcDialogueLaunchResult.None;
+            }
+            if (AwakeDialogueSessionCoordinator.IsActive)
+            {
+                AwakeLog.Write("map_shout_open_failed reason=busy active=" + AwakeDialogueSessionCoordinator.ActiveSource);
+                return NpcDialogueLaunchResult.None;
+            }
+            IMarcusAiFrameworkHost host = AwakeRuntime.ResolveHost();
+            if (host == null)
+            {
+                AwakeLog.Write("map_shout_open_failed reason=no_host");
+                return NpcDialogueLaunchResult.None;
+            }
+            if (!AwakeDialogueSessionCoordinator.TryAcquire(sourceKey, targetId))
+            {
+                AwakeLog.Write("map_shout_open_failed reason=busy");
+                return NpcDialogueLaunchResult.None;
+            }
+            NpcDialogueService service = NpcDialogueService.CreateSceneShout(host, sceneKeywords);
+            service.Initialize();
+            bool opened = NpcDialogueOverlay.Open(service, sourceKey, targetId);
+            if (opened)
+            {
+                AwakeLog.Write("map_shout_open_success");
+                return NpcDialogueLaunchResult.Overlay;
+            }
+            service.Dispose();
+            AwakeDialogueSessionCoordinator.Close(sourceKey, targetId);
+            AwakeLog.Write("map_shout_open_failed reason=overlay_open_failed");
+            return NpcDialogueLaunchResult.None;
+        }
+        catch (Exception ex)
+        {
+            AwakeDialogueSessionCoordinator.Close(sourceKey, targetId);
+            AwakeLog.Write("map_shout_open_error error=" + ex.Message);
+            return NpcDialogueLaunchResult.None;
+        }
+    }
+
     internal static SceneShoutAvailabilityResult EvaluateSceneShoutAvailability()
     {
         if (Mission.Current == null || Campaign.Current == null)

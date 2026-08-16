@@ -864,7 +864,66 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
 
     private static void OpenNearbyDialoguePicker()
     {
-        List<Hero> heroes = NpcDialogueLauncher.GetNearbyHeroes(8);
+        List<InquiryElement> elements = new List<InquiryElement>
+        {
+            new InquiryElement(
+                "party",
+                AwakeLocalization.Resolve("awake.terminal.map_scope_party", "同队伍英雄"),
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.terminal.map_scope_party_hint", "选择玩家队伍中的英雄")),
+            new InquiryElement(
+                "nearby",
+                AwakeLocalization.Resolve("awake.terminal.map_scope_nearby", "附近可交谈者"),
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.terminal.map_scope_nearby_hint", "选择当前可交谈的附近英雄")),
+            new InquiryElement(
+                "shout",
+                AwakeLocalization.Resolve("awake.terminal.map_scope_shout", "地图公开喊话"),
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.terminal.map_scope_shout_hint", "不指定人物，向当前地图场合喊话"))
+        };
+        MBInformationManager.ShowMultiSelectionInquiry(
+            new MultiSelectionInquiryData(
+                AwakeLocalization.Resolve("awake.terminal.map_scope_title", "地图对话"),
+                AwakeLocalization.Resolve("awake.terminal.map_scope_prompt", "先选择范围，然后从候选中选择对象："),
+                elements,
+                true,
+                1,
+                1,
+                AwakeLocalization.Resolve("awake.terminal.confirm", "确定"),
+                AwakeLocalization.Resolve("awake.terminal.close", "关闭"),
+                selected =>
+                {
+                    if (selected == null || selected.Count == 0) return;
+                    string scope = selected[0].Identifier as string;
+                    if (StringComparer.Ordinal.Equals(scope, "shout"))
+                    {
+                        NpcDialogueLaunchResult shoutResult = NpcDialogueLauncher.TryOpenMapShout(NpcDialogueLauncher.CurrentSceneKeywords());
+                        if (shoutResult == NpcDialogueLaunchResult.None)
+                        {
+                            AwakeFeedback.ShowError(AwakeLocalization.Resolve(
+                                "awake.terminal.map_shout_failed",
+                                "Map shout failed to open."));
+                        }
+                        return;
+                    }
+                    OpenMapHeroPicker(scope);
+                },
+                _ => { },
+                string.Empty,
+                false),
+            true,
+            false);
+    }
+
+    private static void OpenMapHeroPicker(string scope)
+    {
+        List<Hero> heroes = StringComparer.Ordinal.Equals(scope, "party")
+            ? GetPartyDialogueHeroes(8)
+            : NpcDialogueLauncher.GetNearbyHeroes(8);
         if (heroes.Count == 0)
         {
             AwakeFeedback.ShowWarning(AwakeLocalization.Resolve(
@@ -925,6 +984,25 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 false),
             true,
             false);
+    }
+
+    private static List<Hero> GetPartyDialogueHeroes(int limit)
+    {
+        List<Hero> result = new List<Hero>();
+        if (Campaign.Current?.CampaignObjectManager?.AliveHeroes == null) return result;
+        MobileParty mainParty = MobileParty.MainParty;
+        if (mainParty == null) return result;
+        foreach (Hero hero in Campaign.Current.CampaignObjectManager.AliveHeroes)
+        {
+            if (result.Count >= limit) break;
+            if (hero == null || hero == Hero.MainHero || !hero.IsAlive || hero.Age < 18f) continue;
+            if (hero.PartyBelongedTo != mainParty && hero.PartyBelongedToAsPrisoner != mainParty.Party) continue;
+            if (NpcDialogueLauncher.IsEligibleNpcTarget(AwakeNpcTarget.FromHero(hero)))
+            {
+                result.Add(hero);
+            }
+        }
+        return result;
     }
 
     private static void OpenDeveloperTestTools()
