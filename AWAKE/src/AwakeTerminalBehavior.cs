@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.GameMenus;
+using TaleWorlds.CampaignSystem.GameState;
 using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Core;
@@ -132,7 +133,9 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 || AwakeMessengerOverlay.IsOpen
                 || InformationManager.IsAnyInquiryActive()
                 || Campaign.Current == null
-                || Mission.Current != null)
+                || Mission.Current != null
+                || !(GameStateManager.Current?.ActiveState is MapState)
+                || Campaign.Current.CurrentMenuContext != null)
             {
                 return;
             }

@@ -2450,3 +2450,12 @@ One-Click Cloud Dialogue Enable (2026-08-17, no version bump)
 - SdkSmoke PASS ALL; LOCALIZATION_OK source=205 en=234 cn=234; asset lint 107 files OK; release_check OK.
 - Awake.dll SHA-256 382609372A9AB6DC4E46F351882AC26A1A519829F313F713E4E7F9EEBED2EF32 identical across _build_out, dist, and game Modules/AWAKE after sync.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Campaign Load Hang Fix (2026-08-17, no version bump)
+- FB-20260817-9: campaign load stopped after CampaignSessionStarting and never reached CampaignSessionReady; recent 195c263 introduced TryShowAutoGuide which could show the onboarding inquiry while Campaign.Current was already set during load.
+- AwakeTerminalBehavior.TryShowAutoGuide now requires GameStateManager active state to be MapState and CurrentMenuContext to be null before attempting onboarding.
+- AwakeOnboardingService logs active_state when the guide is actually shown, so future first-run behavior is traceable.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=205 en=234 cn=234; asset lint 107 files OK.
+- Awake.dll SHA-256 46C4616689704808126FBE725FAC53BE9ED231A5A74438EFFB8A8A4D0687A51C identical across _build_out and dist; game Modules/AWAKE sync is pending user exit because the stuck Bannerlord process still holds the old DLL.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

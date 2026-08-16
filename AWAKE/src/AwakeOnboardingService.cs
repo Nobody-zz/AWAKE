@@ -25,6 +25,8 @@ internal static class AwakeOnboardingService
         _shownThisCampaign = true;
         try
         {
+            AwakeLog.Write("awake_onboarding_show active_state="
+                + (GameStateManager.Current?.ActiveState?.GetType().Name ?? "none"));
             InformationManager.ShowInquiry(
                 new InquiryData(
                     AwakeLocalization.Resolve("awake.onboarding.title", "醒世 · 首启向导"),
