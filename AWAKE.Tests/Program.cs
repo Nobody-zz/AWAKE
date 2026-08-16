@@ -676,6 +676,25 @@ internal static class Program
 		{
 			throw new InvalidOperationException("close with correct source/target should release session.");
 		}
+		AwakeDialogueSessionState session = AwakeDialogueSessionCoordinator.TryStart(new AwakeDialogueStartPayload
+		{
+			Source = "event",
+			TargetId = "hero-3",
+			OpeningHint = "测试开场"
+		});
+		if (session == null || string.IsNullOrWhiteSpace(session.Token))
+		{
+			throw new InvalidOperationException("unified session start should return a token.");
+		}
+		if (AwakeDialogueSessionCoordinator.CloseByToken("wrong-token"))
+		{
+			throw new InvalidOperationException("wrong token should not close the active session.");
+		}
+		if (!AwakeDialogueSessionCoordinator.CloseByToken(session.Token)
+			|| AwakeDialogueSessionCoordinator.IsActive)
+		{
+			throw new InvalidOperationException("correct token should close the active session.");
+		}
 		AwakeDialogueSessionCoordinator.ResetForTesting();
 		Console.WriteLine("PASS dialogue session coordinator smoke");
 	}

@@ -367,3 +367,9 @@
 - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化 212/241/241；资产检查 108；release_check OK；DLL SHA-256 `C0E0C97B3505CFBEDE634516044520208EA4E8AEA6FDC5854189FAA435AD6859` 已同步 `_build_out/dist/游戏目录`。
 - 仍待离线实现：`PLAN-Interactions` 命令/恢复服务、`PLAN-UnifiedDialogueSession` 核心、通讯录写信 UI、多步引导 UI。
 - 推送：本地离线批次 C/D 均已提交；远端 `main` 推送持续被网络重置阻断，网络恢复后需补推。
+
+## 离线改进批次 E（2026-08-17）
+
+- 完成：`AwakeDialogueStartPayload` / `AwakeDialogueSessionState`；统一会话协调器 token 化 `TryStart`/`CloseByToken`；NPC 对话、场景喊话、地图喊话改为按 token 打开/关闭。
+- 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产/发布检查通过；DLL SHA-256 `CEB4D1FD43EA7F3C68C5C465B8D849A7BB4AB43F05DEF4C3B0132DB6199E634B` 已同步。
+- 仍待离线实现：持久对话队列、统一 hub 生命周期、`PLAN-Interactions` 命令/恢复服务、通讯录写信 UI、多步引导 UI。

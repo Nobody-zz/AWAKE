@@ -33,6 +33,7 @@ internal static class NpcDialogueLauncher
 
     internal static NpcDialogueLaunchResult TryOpenDialogue(AwakeNpcTarget target, string entrySource)
     {
+        AwakeDialogueSessionState session = null;
         try
         {
             if (target == null || string.IsNullOrWhiteSpace(target.StableId) || !IsEligibleNpcTarget(target))
@@ -47,7 +48,12 @@ internal static class NpcDialogueLauncher
                 return NpcDialogueLaunchResult.None;
             }
             string sourceKey = string.IsNullOrWhiteSpace(entrySource) ? "unknown" : entrySource;
-            if (!AwakeDialogueSessionCoordinator.TryAcquire(sourceKey, target.StableId))
+            session = AwakeDialogueSessionCoordinator.TryStart(new AwakeDialogueStartPayload
+            {
+                Source = sourceKey,
+                TargetId = target.StableId
+            });
+            if (session == null)
             {
                 AwakeLog.Write("npc_dialogue_launcher_busy target=" + target.StableId
                     + " source=" + entrySource
@@ -64,7 +70,7 @@ internal static class NpcDialogueLauncher
                 return NpcDialogueLaunchResult.Overlay;
             }
             service.Dispose();
-            AwakeDialogueSessionCoordinator.Close(sourceKey, target.StableId);
+            AwakeDialogueSessionCoordinator.CloseByToken(session.Token);
 
             if (StringComparer.Ordinal.Equals(entrySource, "scene"))
             {
@@ -72,7 +78,7 @@ internal static class NpcDialogueLauncher
                 return NpcDialogueLaunchResult.None;
             }
 
-            AwakeDialogueSessionCoordinator.Close(sourceKey, target.StableId);
+            AwakeDialogueSessionCoordinator.CloseByToken(session.Token);
             if (NpcDialogueStarter.TryOpenConversation(target))
             {
                 AwakeLog.Write("npc_dialogue_launcher_result target=" + target.StableId + " source=" + entrySource + " mode=native");
@@ -83,9 +89,10 @@ internal static class NpcDialogueLauncher
         }
         catch (Exception ex)
         {
-            AwakeDialogueSessionCoordinator.Close(
-                string.IsNullOrWhiteSpace(entrySource) ? "unknown" : entrySource,
-                target?.StableId ?? string.Empty);
+            if (session != null)
+            {
+                AwakeDialogueSessionCoordinator.CloseByToken(session.Token);
+            }
             AwakeLog.Write("npc_dialogue_launcher_error target=" + (target?.StableId ?? "unknown") + " source=" + entrySource + " error=" + ex.Message);
             return NpcDialogueLaunchResult.None;
         }
@@ -167,6 +174,7 @@ internal static class NpcDialogueLauncher
     {
         string sourceKey = "scene_shout";
         string targetId = "scene:current";
+        AwakeDialogueSessionState session = null;
         try
         {
             SceneShoutAvailabilityResult availability = EvaluateSceneShoutAvailability();
@@ -181,7 +189,12 @@ internal static class NpcDialogueLauncher
                 AwakeLog.Write("scene_shout_open_failed reason=no_host");
                 return NpcDialogueLaunchResult.None;
             }
-            if (!AwakeDialogueSessionCoordinator.TryAcquire(sourceKey, targetId))
+            session = AwakeDialogueSessionCoordinator.TryStart(new AwakeDialogueStartPayload
+            {
+                Source = sourceKey,
+                TargetId = targetId
+            });
+            if (session == null)
             {
                 AwakeLog.Write("scene_shout_open_failed reason=busy active=" + AwakeDialogueSessionCoordinator.ActiveSource);
                 return NpcDialogueLaunchResult.None;
@@ -196,13 +209,16 @@ internal static class NpcDialogueLauncher
                 return NpcDialogueLaunchResult.Overlay;
             }
             service.Dispose();
-            AwakeDialogueSessionCoordinator.Close(sourceKey, targetId);
+            AwakeDialogueSessionCoordinator.CloseByToken(session.Token);
             AwakeLog.Write("scene_shout_open_failed reason=overlay_open_failed");
             return NpcDialogueLaunchResult.None;
         }
         catch (Exception ex)
         {
-            AwakeDialogueSessionCoordinator.Close(sourceKey, targetId);
+            if (session != null)
+            {
+                AwakeDialogueSessionCoordinator.CloseByToken(session.Token);
+            }
             AwakeLog.Write("scene_shout_open_error error=" + ex.Message);
             return NpcDialogueLaunchResult.None;
         }
@@ -212,6 +228,7 @@ internal static class NpcDialogueLauncher
     {
         string sourceKey = "map_shout";
         string targetId = "scene:current:map";
+        AwakeDialogueSessionState session = null;
         try
         {
             if (Mission.Current != null || Campaign.Current == null)
@@ -230,7 +247,12 @@ internal static class NpcDialogueLauncher
                 AwakeLog.Write("map_shout_open_failed reason=no_host");
                 return NpcDialogueLaunchResult.None;
             }
-            if (!AwakeDialogueSessionCoordinator.TryAcquire(sourceKey, targetId))
+            session = AwakeDialogueSessionCoordinator.TryStart(new AwakeDialogueStartPayload
+            {
+                Source = sourceKey,
+                TargetId = targetId
+            });
+            if (session == null)
             {
                 AwakeLog.Write("map_shout_open_failed reason=busy");
                 return NpcDialogueLaunchResult.None;
@@ -244,13 +266,16 @@ internal static class NpcDialogueLauncher
                 return NpcDialogueLaunchResult.Overlay;
             }
             service.Dispose();
-            AwakeDialogueSessionCoordinator.Close(sourceKey, targetId);
+            AwakeDialogueSessionCoordinator.CloseByToken(session.Token);
             AwakeLog.Write("map_shout_open_failed reason=overlay_open_failed");
             return NpcDialogueLaunchResult.None;
         }
         catch (Exception ex)
         {
-            AwakeDialogueSessionCoordinator.Close(sourceKey, targetId);
+            if (session != null)
+            {
+                AwakeDialogueSessionCoordinator.CloseByToken(session.Token);
+            }
             AwakeLog.Write("map_shout_open_error error=" + ex.Message);
             return NpcDialogueLaunchResult.None;
         }
