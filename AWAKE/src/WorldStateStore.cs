@@ -1088,6 +1088,7 @@ internal sealed class WorldStateStore
                 return new WorldApplyResult { Retryable = false, Code = "awake.world_state.corrupt" };
             }
         }
+        AwakeStorageContract.TryNormalizeSchema(state, AwakeStorageContract.ExpectedSchema(command.Kind));
 
         if (command.Kind != WorldStateKind.EventMeta)
         {

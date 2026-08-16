@@ -60,6 +60,9 @@ internal static class Program
 		RunMemoryConsolidatorSmoke();
 		RunProactiveMotiveRegistrySmoke();
 		RunContentApiSmoke();
+		RunDialogueSessionCoordinatorSmoke();
+		RunOnboardingSmoke();
+		RunB9InfraSmoke();
 		RunMarcusLinkSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
@@ -556,6 +559,80 @@ internal static class Program
 		}
 		AwakeRuleRegistry.ResetForTesting();
 		Console.WriteLine("PASS content api smoke");
+	}
+
+	private static void RunDialogueSessionCoordinatorSmoke()
+	{
+		AwakeDialogueSessionCoordinator.ResetForTesting();
+		if (!AwakeDialogueSessionCoordinator.TryAcquire("scene", "hero-1"))
+		{
+			throw new InvalidOperationException("first dialogue session should acquire.");
+		}
+		if (AwakeDialogueSessionCoordinator.TryAcquire("messenger", "contacts"))
+		{
+			throw new InvalidOperationException("second dialogue session should be rejected.");
+		}
+		AwakeDialogueSessionCoordinator.Close("scene", "hero-2");
+		if (!AwakeDialogueSessionCoordinator.IsActive)
+		{
+			throw new InvalidOperationException("close with wrong target should not release session.");
+		}
+		AwakeDialogueSessionCoordinator.Close("scene", "hero-1");
+		if (AwakeDialogueSessionCoordinator.IsActive)
+		{
+			throw new InvalidOperationException("close with correct source/target should release session.");
+		}
+		AwakeDialogueSessionCoordinator.ResetForTesting();
+		Console.WriteLine("PASS dialogue session coordinator smoke");
+	}
+
+	private static void RunOnboardingSmoke()
+	{
+		AwakeOnboardingService.ResetForTesting();
+		if (!AwakeOnboardingService.ShouldShowGuide())
+		{
+			throw new InvalidOperationException("onboarding should be visible after reset.");
+		}
+		AwakeOnboardingService.MarkShownForTesting();
+		if (AwakeOnboardingService.ShouldShowGuide())
+		{
+			throw new InvalidOperationException("onboarding should not show twice per campaign.");
+		}
+		AwakeOnboardingService.ResetForTesting();
+		if (!AwakeOnboardingService.ShouldShowGuide())
+		{
+			throw new InvalidOperationException("onboarding reset should allow showing again.");
+		}
+		AwakeOnboardingService.ResetForTesting();
+		Console.WriteLine("PASS onboarding smoke");
+	}
+
+	private static void RunB9InfraSmoke()
+	{
+		AwakePerfProbe.Reset();
+		long started = AwakePerfProbe.StartMilliseconds();
+		AwakePerfProbe.Record("b9_smoke", started);
+		PerfProbeSnapshot snapshot = AwakePerfProbe.Snapshot();
+		if (snapshot.RecordCount <= 0 || snapshot.UptimeMilliseconds < 0)
+		{
+			throw new InvalidOperationException("perf probe snapshot mismatch.");
+		}
+
+		Newtonsoft.Json.Linq.JObject state = new Newtonsoft.Json.Linq.JObject();
+		if (!AwakeStorageContract.TryNormalizeSchema(state, AwakeStorageContract.MemorySchema)
+			|| !StringComparer.Ordinal.Equals((string)state["schema"], AwakeStorageContract.MemorySchema))
+		{
+			throw new InvalidOperationException("storage schema normalize mismatch.");
+		}
+		if (!AwakeStorageContract.IsKnownSchema(AwakeStorageContract.WorldEventsSchema)
+			|| !StringComparer.Ordinal.Equals(
+				AwakeStorageContract.ExpectedSchema(WorldStateKind.Messenger),
+				AwakeStorageContract.MessengerSchema))
+		{
+			throw new InvalidOperationException("storage contract schema mapping mismatch.");
+		}
+		AwakePerfProbe.Reset();
+		Console.WriteLine("PASS b9 infra smoke");
 	}
 
 	private static void RunLongWaitSmoke()

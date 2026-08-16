@@ -46,16 +46,25 @@ internal static class NpcDialogueLauncher
                 AwakeLog.Write("npc_dialogue_launcher_no_host target=" + target.StableId + " source=" + entrySource);
                 return NpcDialogueLaunchResult.None;
             }
+            string sourceKey = string.IsNullOrWhiteSpace(entrySource) ? "unknown" : entrySource;
+            if (!AwakeDialogueSessionCoordinator.TryAcquire(sourceKey, target.StableId))
+            {
+                AwakeLog.Write("npc_dialogue_launcher_busy target=" + target.StableId
+                    + " source=" + entrySource
+                    + " active=" + AwakeDialogueSessionCoordinator.ActiveSource);
+                return NpcDialogueLaunchResult.None;
+            }
 
             NpcDialogueService service = new NpcDialogueService(host, target, CurrentSceneKeywords());
             service.Initialize();
-            bool opened = NpcDialogueOverlay.Open(service);
+            bool opened = NpcDialogueOverlay.Open(service, sourceKey, target.StableId);
             if (opened)
             {
                 AwakeLog.Write("npc_dialogue_launcher_result target=" + target.StableId + " source=" + entrySource + " mode=overlay");
                 return NpcDialogueLaunchResult.Overlay;
             }
             service.Dispose();
+            AwakeDialogueSessionCoordinator.Close(sourceKey, target.StableId);
 
             if (StringComparer.Ordinal.Equals(entrySource, "scene"))
             {
@@ -63,6 +72,7 @@ internal static class NpcDialogueLauncher
                 return NpcDialogueLaunchResult.None;
             }
 
+            AwakeDialogueSessionCoordinator.Close(sourceKey, target.StableId);
             if (NpcDialogueStarter.TryOpenConversation(target))
             {
                 AwakeLog.Write("npc_dialogue_launcher_result target=" + target.StableId + " source=" + entrySource + " mode=native");
@@ -73,6 +83,9 @@ internal static class NpcDialogueLauncher
         }
         catch (Exception ex)
         {
+            AwakeDialogueSessionCoordinator.Close(
+                string.IsNullOrWhiteSpace(entrySource) ? "unknown" : entrySource,
+                target?.StableId ?? string.Empty);
             AwakeLog.Write("npc_dialogue_launcher_error target=" + (target?.StableId ?? "unknown") + " source=" + entrySource + " error=" + ex.Message);
             return NpcDialogueLaunchResult.None;
         }

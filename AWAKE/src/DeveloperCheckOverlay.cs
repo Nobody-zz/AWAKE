@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using MarcusAIFramework.Api;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.InputSystem;
@@ -7,9 +9,9 @@ using TaleWorlds.ScreenSystem;
 
 namespace Awake;
 
-internal sealed class AwakeMessengerOverlay
+internal sealed class DeveloperCheckOverlay
 {
-    private static AwakeMessengerOverlay _active;
+    private static DeveloperCheckOverlay _active;
 
     internal static bool IsOpen => _active != null && !_active._closed;
 
@@ -18,32 +20,23 @@ internal sealed class AwakeMessengerOverlay
         try
         {
             CloseActive();
-            if (!AwakeDialogueSessionCoordinator.TryAcquire("messenger", "contacts"))
-            {
-                AwakeLog.Write("awake_messenger_open_failed reason=dialogue_busy");
-                return false;
-            }
             ScreenBase screen = ScreenManager.TopScreen;
             if (screen == null)
             {
-                AwakeLog.Write("awake_messenger_open_failed reason=no_top_screen");
-                AwakeDialogueSessionCoordinator.Close("messenger", "contacts");
+                AwakeLog.Write("developer_check_open_failed reason=no_top_screen");
                 return false;
             }
-            AwakeMessengerOverlay overlay = new AwakeMessengerOverlay(screen);
+            IMarcusAiFrameworkHost host = AwakeRuntime.ResolveHost();
+            IReadOnlyList<KeyValuePair<string, string>> rows = AwakeDeveloperReport.BuildRows(host, AwakeSettings.Current);
+            DeveloperCheckOverlay overlay = new DeveloperCheckOverlay(screen, rows);
             overlay.OpenLayer();
-            if (!ReferenceEquals(ScreenManager.FocusedLayer, overlay._layer))
-            {
-                AwakeLog.Write("awake_messenger_focus_pending");
-            }
             _active = overlay;
-            AwakeLog.Write("awake_messenger_panel_opened");
+            AwakeLog.Write("developer_check_panel_opened rows=" + rows.Count);
             return true;
         }
         catch (Exception ex)
         {
-            AwakeDialogueSessionCoordinator.Close("messenger", "contacts");
-            AwakeLog.Write("awake_messenger_open_error error=" + ex.Message);
+            AwakeLog.Write("developer_check_open_error error=" + ex.Message);
             return false;
         }
     }
@@ -52,7 +45,7 @@ internal sealed class AwakeMessengerOverlay
     {
         try
         {
-            AwakeMessengerOverlay active = _active;
+            DeveloperCheckOverlay active = _active;
             if (active == null) return;
             if (active._closed || !ReferenceEquals(ScreenManager.TopScreen, active._screen))
             {
@@ -62,13 +55,11 @@ internal sealed class AwakeMessengerOverlay
             if (active._layer.Input.IsKeyPressed(InputKey.Escape))
             {
                 active._dataSource.ExecuteClose();
-                return;
             }
-            active._dataSource.OnFrameTick();
         }
         catch (Exception ex)
         {
-            AwakeLog.Write("awake_messenger_tick_failed error=" + ex.Message);
+            AwakeLog.Write("developer_check_tick_failed error=" + ex.Message);
         }
     }
 
@@ -79,22 +70,20 @@ internal sealed class AwakeMessengerOverlay
 
     private readonly ScreenBase _screen;
     private readonly GauntletLayer _layer;
-    private readonly AwakeMessengerVM _dataSource;
-    private readonly string _entrySource = "messenger";
-    private readonly string _targetId = "contacts";
+    private readonly DeveloperCheckVM _dataSource;
     private object _movie;
     private bool _closed;
 
-    private AwakeMessengerOverlay(ScreenBase screen)
+    private DeveloperCheckOverlay(ScreenBase screen, IReadOnlyList<KeyValuePair<string, string>> rows)
     {
         _screen = screen;
-        _dataSource = new AwakeMessengerVM(Close);
-        _layer = new GauntletLayer("AwakeMessenger", 542, false);
+        _dataSource = new DeveloperCheckVM(Close, rows);
+        _layer = new GauntletLayer("DeveloperCheck", 545, false);
     }
 
     private void OpenLayer()
     {
-        _movie = _layer.LoadMovie("AwakeMessenger", _dataSource);
+        _movie = _layer.LoadMovie("DeveloperCheck", _dataSource);
         _screen.AddLayer(_layer);
         _layer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
         _layer.IsFocusLayer = true;
@@ -115,16 +104,7 @@ internal sealed class AwakeMessengerOverlay
         catch
         {
         }
-        try
-        {
-            _dataSource.OnFinalize();
-        }
-        catch (Exception ex)
-        {
-            AwakeLog.Write("awake_messenger_finalize_error error=" + ex.Message);
-        }
         if (ReferenceEquals(_active, this)) _active = null;
-        AwakeDialogueSessionCoordinator.Close(_entrySource, _targetId);
-        AwakeLog.Write("awake_messenger_panel_closed");
+        AwakeLog.Write("developer_check_panel_closed");
     }
 }

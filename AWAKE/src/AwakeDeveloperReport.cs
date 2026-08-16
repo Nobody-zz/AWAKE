@@ -32,6 +32,103 @@ internal static class AwakeDeveloperReport
         return Truncate(builder.ToString());
     }
 
+    internal static IReadOnlyList<KeyValuePair<string, string>> BuildRows(
+        IMarcusAiFrameworkHost host,
+        AwakeConfig config)
+    {
+        List<KeyValuePair<string, string>> rows = new List<KeyValuePair<string, string>>();
+        rows.Add(NewRow("version", AwakeVersion.Version));
+        rows.Add(NewRow("host", host == null ? "unavailable" : "connected"));
+        rows.Add(NewRow("session", host?.CurrentSession == null ? "not_ready" : "ready"));
+        rows.Add(NewRow("player", string.IsNullOrWhiteSpace(AwakeRuntime.CurrentHeroId) ? "unbound" : "bound"));
+        rows.Add(NewRow("world_state", AwakeRuntime.WorldStateStore == null ? "not_started" : "ready"));
+        rows.Add(NewRow("permissions", PermissionCatalog.All.Length.ToString()));
+        rows.Add(NewRow("cloud_export", config != null && config.EnableCloudExport ? "enabled" : "disabled"));
+        rows.Add(NewRow("cloud_categories", CloudExportPolicy.DescribeAllowed(config)));
+        if (host == null || host.Diagnostics == null)
+        {
+            rows.Add(NewRow("health", "unavailable"));
+            return rows;
+        }
+        try
+        {
+            HealthSnapshot health = host.Diagnostics.GetHealth();
+            int componentCount = health?.Components?.Count ?? 0;
+            rows.Add(NewRow("health_count", componentCount.ToString()));
+            if (health?.Components != null)
+            {
+                int shown = 0;
+                foreach (HealthComponent component in health.Components)
+                {
+                    if (component == null || shown >= 10) continue;
+                    rows.Add(NewRow(
+                        "health." + component.Id,
+                        component.Level.ToString()
+                        + (string.IsNullOrWhiteSpace(component.Code) ? string.Empty : " (" + component.Code + ")")
+                        + (string.IsNullOrWhiteSpace(component.Summary) ? string.Empty : " " + component.Summary)));
+                    shown++;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("developer_report_rows_health_failed error=" + ex.Message);
+            rows.Add(NewRow("health", "unavailable"));
+        }
+        try
+        {
+            IReadOnlyList<CapabilityDescriptor> report = host.Diagnostics.GetCompatibilityReport();
+            int count = report?.Count ?? 0;
+            rows.Add(NewRow("compatibility_count", count.ToString()));
+            if (report != null)
+            {
+                int shown = 0;
+                foreach (CapabilityDescriptor descriptor in report)
+                {
+                    if (descriptor == null || shown >= 10) continue;
+                    rows.Add(NewRow(
+                        "compatibility." + (descriptor.Id?.Value ?? "unknown"),
+                        (descriptor.Availability.ToString() ?? "unknown")));
+                    shown++;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("developer_report_rows_compatibility_failed error=" + ex.Message);
+            rows.Add(NewRow("compatibility", "unavailable"));
+        }
+        try
+        {
+            IReadOnlyList<ExtensionManifest> extensions = host.Diagnostics.GetExtensions();
+            int count = extensions?.Count ?? 0;
+            rows.Add(NewRow("extensions_count", count.ToString()));
+            if (extensions != null)
+            {
+                int shown = 0;
+                foreach (ExtensionManifest manifest in extensions)
+                {
+                    if (manifest == null || shown >= 10) continue;
+                    rows.Add(NewRow(
+                        "extension." + (manifest.ExtensionId?.Value ?? "unknown"),
+                        manifest.Version ?? "unknown"));
+                    shown++;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("developer_report_rows_extensions_failed error=" + ex.Message);
+            rows.Add(NewRow("extensions", "unavailable"));
+        }
+        return rows;
+    }
+
+    private static KeyValuePair<string, string> NewRow(string name, string value)
+    {
+        return new KeyValuePair<string, string>(name ?? string.Empty, value ?? string.Empty);
+    }
+
     private static void AppendHealth(IDiagnosticsService diagnostics, StringBuilder builder)
     {
         try

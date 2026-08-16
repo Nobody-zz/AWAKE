@@ -80,6 +80,7 @@ public sealed class SubModule : MBSubModuleBase
         AwakeMessengerOverlay.OnApplicationTick();
         WorldEventInboxOverlay.OnApplicationTick();
         WeeklyReportBrowserOverlay.OnApplicationTick();
+        DeveloperCheckOverlay.OnApplicationTick();
         NpcDialogueOverlay.OnApplicationTick();
         DrainEventDialogueQueue();
     }
@@ -108,6 +109,8 @@ public sealed class SubModule : MBSubModuleBase
         NpcDialogueLauncher.ClearCache();
         EventDialogueQueue.ClearForTesting();
         NpcProactiveService.ShutdownCurrent();
+        AwakeDialogueSessionCoordinator.CloseAll();
+        AwakeOnboardingService.ResetForCampaign();
     }
 
     private static void DrainEventDialogueQueue()

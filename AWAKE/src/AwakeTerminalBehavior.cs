@@ -104,6 +104,10 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
             return;
         }
         _lastOpenRealTime = now;
+        if (AwakeOnboardingService.TryShowGuide())
+        {
+            return;
+        }
         OpenRootMenu();
     }
 
@@ -742,14 +746,20 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     {
         try
         {
-            string report = AwakeDeveloperReport.Build(AwakeRuntime.ResolveHost(), AwakeSettings.Current);
-            ShowMessage(
-                AwakeLocalization.Resolve("awake.menu.developer_check", "开发者检查"),
-                report);
+            if (DeveloperCheckOverlay.Open())
+            {
+                return;
+            }
+            AwakeFeedback.ShowError(AwakeLocalization.Resolve(
+                "awake.mcm.actions.developer_unavailable",
+                "开发者检查暂不可用。"));
         }
         catch (Exception ex)
         {
             AwakeLog.Write("awake_developer_report_error error=" + ex.Message);
+            AwakeFeedback.ShowError(AwakeLocalization.Resolve(
+                "awake.mcm.actions.developer_unavailable",
+                "开发者检查暂不可用。"));
         }
     }
 

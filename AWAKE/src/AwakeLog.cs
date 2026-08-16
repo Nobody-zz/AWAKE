@@ -52,6 +52,11 @@ internal static class AwakeLog
         }
     }
 
+    internal static void WriteCode(string code, string message)
+    {
+        Write("[" + (code ?? "unknown") + "] " + (message ?? string.Empty));
+    }
+
     private static void TryRotate(string path)
     {
         try

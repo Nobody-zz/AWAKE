@@ -13,7 +13,7 @@ internal sealed class NpcDialogueOverlay
 
     internal static bool IsOpen => _active != null && !_active._closed;
 
-    internal static bool Open(NpcDialogueService service)
+    internal static bool Open(NpcDialogueService service, string entrySource = null, string targetId = null)
     {
         try
         {
@@ -44,7 +44,7 @@ internal sealed class NpcDialogueOverlay
                 return false;
             }
 
-            NpcDialogueOverlay overlay = new NpcDialogueOverlay(screen, service);
+            NpcDialogueOverlay overlay = new NpcDialogueOverlay(screen, service, entrySource, targetId);
             overlay.OpenLayer();
             if (!ReferenceEquals(ScreenManager.FocusedLayer, overlay._layer))
             {
@@ -101,13 +101,21 @@ internal sealed class NpcDialogueOverlay
     private readonly GauntletLayer _layer;
     private readonly NpcDialogueVM _dataSource;
     private readonly NpcDialogueService _service;
+    private readonly string _entrySource;
+    private readonly string _targetId;
     private object _movie;
     private bool _closed;
 
-    private NpcDialogueOverlay(ScreenBase screen, NpcDialogueService service)
+    private NpcDialogueOverlay(
+        ScreenBase screen,
+        NpcDialogueService service,
+        string entrySource,
+        string targetId)
     {
         _screen = screen;
         _service = service;
+        _entrySource = entrySource ?? string.Empty;
+        _targetId = targetId ?? string.Empty;
         _dataSource = new NpcDialogueVM(service, Close);
         _layer = new GauntletLayer("NpcDialogue", 541, false);
     }
@@ -152,6 +160,7 @@ internal sealed class NpcDialogueOverlay
             AwakeLog.Write("npc_dialogue_service_dispose_error error=" + ex.Message);
         }
         if (ReferenceEquals(_active, this)) _active = null;
+        AwakeDialogueSessionCoordinator.Close(_entrySource, _targetId);
         AwakeLog.Write("npc_dialogue_panel_closed");
     }
 }

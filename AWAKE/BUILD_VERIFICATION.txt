@@ -2284,3 +2284,15 @@ Bug Scan Fixes (2026-08-16, no version bump)
 - tools/release_check.ps1 -> RELEASE_CHECK_OK.
 - Awake.dll SHA-256 136346F0E461AA3A39692EAB69767D2320BFD1AFEA5AC1524F216EB7A07B88D8.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+B-Class Complete (2026-08-16, no version bump)
+- B2: Added AwakeDialogueSessionCoordinator; NpcDialogueOverlay and AwakeMessengerOverlay now share a single active-session gate and release on close.
+- B8-Messenger: Messenger overlay participates in the unified session coordinator; duplicate overlay entry is rejected while a dialogue session is active.
+- B8-Developer: Added DeveloperCheckOverlay + DeveloperCheckVM + DeveloperCheckRowVM + DeveloperCheck.xml; developer check now opens a structured diagnostics panel instead of a text inquiry.
+- B8-Onboarding: Added AwakeOnboardingService; first-run guide appears once per campaign and only when AI health does not report a healthy provider/model/route.
+- B9: AwakePerfProbe now tracks record/slow counts and exposes PerfProbeSnapshot; AwakeLog.WriteCode added; AwakeStorageContract provides schema constants, known-schema validation, and missing-schema normalization wired into WorldStateStore.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (32 paths).
+- LOCALIZATION_OK source=136 en=154 cn=154.
+- Awake.dll SHA-256 EA5F03795AE00051197AAD318EBE2393263517722B6F98313F303F04A6A8C6CE.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

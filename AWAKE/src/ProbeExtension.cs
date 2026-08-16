@@ -203,6 +203,7 @@ internal sealed class AwakeExtension : IFrameworkExtension
                     {
                         AwakeLog.Write("dialogue_overlay_session_end_close_error error=" + ex.Message);
                     }
+                    AwakeDialogueSessionCoordinator.CloseAll();
                     WorldStateStore worldStore = AwakeRuntime.WorldStateStore;
                     NpcMemoryService memoryServiceForDrain = NpcMemoryService.Current;
                     if (memoryServiceForDrain != null)
@@ -258,6 +259,7 @@ internal sealed class AwakeExtension : IFrameworkExtension
                     {
                         AwakeLog.Write("dialogue_overlay_unregistered_close_error error=" + ex.Message);
                     }
+                    AwakeDialogueSessionCoordinator.CloseAll();
                     NpcMemoryService.ShutdownCurrent();
                     KnowledgeRuntime.ShutdownCurrent();
                     WorldbookRuntime.ShutdownCurrent();
