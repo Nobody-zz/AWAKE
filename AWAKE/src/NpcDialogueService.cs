@@ -12,6 +12,9 @@ namespace Awake;
 
 internal sealed class NpcDialogueService : IDisposable
 {
+    private static readonly HashSet<string> PromptRegistrationAttempts = new HashSet<string>(StringComparer.Ordinal);
+    private static readonly object PromptRegistrationGate = new object();
+
     private readonly object _gate = new object();
     private readonly IMarcusAiFrameworkHost _host;
     private readonly AiTaskGateway _gateway;
@@ -467,6 +470,14 @@ internal sealed class NpcDialogueService : IDisposable
 
     private async Task RegisterPromptBestEffortAsync(RequestContext sourceContext, CancellationToken cancellationToken)
     {
+        string promptId = _isSceneShout ? NpcDialogueConstants.SceneShoutPromptId : NpcDialogueConstants.PromptId;
+        string promptVersion = _isSceneShout ? NpcDialogueConstants.SceneShoutPromptVersion : NpcDialogueConstants.PromptVersion;
+        string promptRevision = _isSceneShout ? NpcDialogueConstants.SceneShoutPromptRevision : NpcDialogueConstants.PromptRevision;
+        string attemptKey = promptId + "|" + promptVersion + "|" + promptRevision;
+        lock (PromptRegistrationGate)
+        {
+            if (!PromptRegistrationAttempts.Add(attemptKey)) return;
+        }
         lock (_gate)
         {
             if (_promptRegistered) return;
@@ -523,6 +534,14 @@ internal sealed class NpcDialogueService : IDisposable
                 _playerName = result.Value.Hero?.Name ?? string.Empty;
                 _clanName = result.Value.Clan?.Name ?? string.Empty;
                 _kingdomName = result.Value.Kingdom?.Name ?? string.Empty;
+                if (string.IsNullOrWhiteSpace(_clanName) && Hero.MainHero?.Clan != null)
+                {
+                    _clanName = Hero.MainHero.Clan.Name?.ToString() ?? string.Empty;
+                }
+                if (string.IsNullOrWhiteSpace(_kingdomName) && Hero.MainHero?.Clan?.Kingdom != null)
+                {
+                    _kingdomName = Hero.MainHero.Clan.Kingdom.Name?.ToString() ?? string.Empty;
+                }
                 _playerKnownRefreshDay = day;
                 AwakeLog.Write("npc_player_known_loaded hero=" + _heroId + " player=" + _playerName);
             }

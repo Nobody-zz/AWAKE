@@ -42,6 +42,7 @@ public sealed class SubModule : MBSubModuleBase
     {
         base.OnGameStart(game, gameStarterObject);
         ResetCampaignState();
+        AwakeSettings.NormalizeLegacySceneShoutKey();
         if (gameStarterObject is CampaignGameStarter campaignStarter)
         {
             try

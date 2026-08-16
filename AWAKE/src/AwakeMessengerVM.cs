@@ -223,6 +223,52 @@ internal sealed class AwakeMessengerVM : ViewModel
         AwakeUiDispatcher.Enqueue(() => PopulateHistory(lines));
     }
 
+    private async Task RefreshRelationshipAsync(AwakeContactInfo contact)
+    {
+        if (contact?.Target == null) return;
+        string heroId = contact.Target.StableId;
+        string expectedTargetId = contact.TargetId;
+        if (string.IsNullOrWhiteSpace(heroId)) return;
+        WorldStateStore store = AwakeRuntime.WorldStateStore;
+        if (store == null) return;
+        try
+        {
+            Newtonsoft.Json.Linq.JObject doc = await store.GetRelationshipAsync(
+                heroId,
+                null,
+                CancellationToken.None).ConfigureAwait(false);
+            if (doc == null) return;
+            int trust = IntValue(doc["trust"]);
+            int love = IntValue(doc["love"]);
+            int hostility = IntValue(doc["hostility"]);
+            string summary = "信任 " + trust + "；爱意 " + love + "；敌意 " + hostility;
+            AwakeUiDispatcher.Enqueue(() =>
+            {
+                if (StringComparer.Ordinal.Equals(_activeTargetId, expectedTargetId))
+                {
+                    _selectedCard.SetRelationship(summary);
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("awake_messenger_relationship_load_error hero=" + heroId + " error=" + ex.Message);
+        }
+    }
+
+    private static int IntValue(Newtonsoft.Json.Linq.JToken token)
+    {
+        if (token == null || token.Type != Newtonsoft.Json.Linq.JTokenType.Integer) return 0;
+        try
+        {
+            return (int)token;
+        }
+        catch
+        {
+            return 0;
+        }
+    }
+
     private void PopulateHistory(List<AwakeTranscriptLine> lines)
     {
         string expectedKey = _activeContactKey;
@@ -425,6 +471,7 @@ internal sealed class AwakeMessengerVM : ViewModel
             return;
         }
         _selectedCard.Show(contact);
+        _ = RefreshRelationshipAsync(contact);
         _activeTargetId = contact.TargetId;
         _activeContactKey = contact.CanonicalContactKey;
         _ = LoadHistoryAsync(contact.CanonicalContactKey);

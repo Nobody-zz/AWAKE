@@ -141,6 +141,16 @@ internal sealed class AwakeExtension : IFrameworkExtension
             new[] { "1.3.15" }),
             new AwakeRelationshipDeltaAdapter(),
             "relationship_delta");
+
+        RegisterWorldCommand(registration, new CommandDescriptor(
+            AiTaskConstants.WorldEffectRecordCommandId,
+            Owner,
+            CommandRiskTier.R2Gameplay,
+            AiTaskConstants.CommandInputSchema(AiTaskConstants.WorldEffectRecordCommandId),
+            AiTaskConstants.CommandOutputSchema(AiTaskConstants.WorldEffectRecordCommandId),
+            new[] { "1.3.15" }),
+            new AwakeWorldEffectRecordAdapter(),
+            "world_effect_record");
     }
 
     private static void RegisterWorldCommand(IExtensionRegistration registration, CommandDescriptor descriptor, ICommandAdapter adapter, string label)

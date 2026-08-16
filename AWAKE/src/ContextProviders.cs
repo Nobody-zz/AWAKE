@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MarcusAIFramework.Api;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TaleWorlds.CampaignSystem;
 
 namespace Awake;
 
@@ -95,12 +96,22 @@ internal sealed class PlayerContextProvider : BaseAwakeContextProvider
             }
 
             PlayerSnapshotDto snapshot = result.Value;
+            string clanName = snapshot.Clan?.Name ?? string.Empty;
+            string kingdomName = snapshot.Kingdom?.Name ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(clanName) && Hero.MainHero?.Clan != null)
+            {
+                clanName = Hero.MainHero.Clan.Name?.ToString() ?? string.Empty;
+            }
+            if (string.IsNullOrWhiteSpace(kingdomName) && Hero.MainHero?.Clan?.Kingdom != null)
+            {
+                kingdomName = Hero.MainHero.Clan.Kingdom.Name?.ToString() ?? string.Empty;
+            }
             JObject payload = new JObject
             {
                 ["heroId"] = snapshot.Hero.Id?.StableId ?? string.Empty,
                 ["playerName"] = snapshot.Hero.Name ?? string.Empty,
-                ["clanName"] = snapshot.Clan?.Name ?? string.Empty,
-                ["kingdomName"] = snapshot.Kingdom?.Name ?? string.Empty,
+                ["clanName"] = clanName,
+                ["kingdomName"] = kingdomName,
                 ["snapshotToken"] = snapshot.SnapshotToken ?? string.Empty
             };
             ContextContribution contribution = new ContextContribution(

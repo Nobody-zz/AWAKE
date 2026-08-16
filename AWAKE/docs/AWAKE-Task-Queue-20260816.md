@@ -352,3 +352,10 @@
 - P1 下一轮：`npc_prompt_register_failed code=unknown` 深挖；首次读取 `storage.key_not_found` 日志收敛；MCM 场景喊话键显示与存档回退统一；世界书占位符审计工具；记忆摘要成功后持久化验收。
 - P1/P2 机制：世界书检索相关性过滤、玩家王国/身份上下文补全、统一会话、ContactHubHistory 游戏内验收、Interactions、事件内容规则、命令层世界效果。
 - P2 体验：开发者检查完整 UI、通讯录头像/关系摘要、写信、Messenger 群聊/媒体/TTS、多步引导、群聊整理候选。
+
+## 离线改进批次 C（2026-08-17）
+
+- 完成：`storage.key_not_found` 读取日志收敛；Prompt 注册改为每个 prompt id 只尝试一次；MCM 场景喊话键 C/U 归一化为 V 并保存；世界书占位符审计脚本；世界书检索相关性过滤；世界书 textMappings 可读回退；玩家家族/王国上下文回退；`awake.world.effect.record.v1` 世界事件命令；开发者检查“打开日志目录”；通讯录人物卡关系摘要。
+- 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化 208/237/237；资产检查 107；release_check OK；DLL SHA-256 `7E706B9BA0F9C01805954803CD76383EFB1554B7B4ED2D783503FBE96E8E7A7B` 已同步 `_build_out/dist/游戏目录`。
+- 仍待离线实现：多步引导数据模型与状态机、Messenger 写信基础、统一会话核心、Interactions 命令/恢复服务；这些或依赖已 APPROVED PLAN，或仍需 grill-me 后再落地。
+- 游戏内验收仍挂起：FB-20260817-10/11/12、ContactHubHistory、世界书真机命中、存储/记忆真机。

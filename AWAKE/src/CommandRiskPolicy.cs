@@ -8,7 +8,8 @@ internal static class CommandRiskPolicy
 {
     private static readonly Dictionary<string, CommandRiskTier> KnownCommands = new Dictionary<string, CommandRiskTier>(StringComparer.Ordinal)
     {
-        [AiTaskConstants.RelationshipDeltaCommandId] = CommandRiskTier.R2Gameplay
+        [AiTaskConstants.RelationshipDeltaCommandId] = CommandRiskTier.R2Gameplay,
+        [AiTaskConstants.WorldEffectRecordCommandId] = CommandRiskTier.R2Gameplay
     };
 
     internal static bool TryGetRiskTier(string commandId, out CommandRiskTier tier)

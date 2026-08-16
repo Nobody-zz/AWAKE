@@ -12,6 +12,7 @@ internal sealed class AwakeContactCardVM : ViewModel
     private string _identity = string.Empty;
     private string _status = string.Empty;
     private string _location = string.Empty;
+    private string _relationship = string.Empty;
     private string _canTalkText = string.Empty;
     private bool _canTalk;
     private bool _visible;
@@ -45,6 +46,13 @@ internal sealed class AwakeContactCardVM : ViewModel
     {
         get => _location;
         private set => Set(ref _location, value, nameof(Location));
+    }
+
+    [DataSourceProperty]
+    public string RelationshipText
+    {
+        get => _relationship;
+        private set => Set(ref _relationship, value, nameof(RelationshipText));
     }
 
     [DataSourceProperty]
@@ -87,6 +95,7 @@ internal sealed class AwakeContactCardVM : ViewModel
         Location = string.IsNullOrWhiteSpace(contact.Location)
             ? AwakeLocalization.Resolve("awake.ui.contact_location_unknown", "位置未知")
             : contact.Location;
+        RelationshipText = AwakeLocalization.Resolve("awake.ui.card_relationship", "关系尚未记录");
         CanTalk = contact.CanTalk;
         CanTalkText = AwakeLocalization.Resolve(
             contact.CanTalk ? "awake.ui.card_can_talk" : "awake.ui.card_cannot_talk",
@@ -98,6 +107,15 @@ internal sealed class AwakeContactCardVM : ViewModel
     internal void Clear()
     {
         Visible = false;
+    }
+
+    internal void SetRelationship(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return;
+        RelationshipText = AwakeLocalization.Resolve(
+            "awake.ui.card_relationship_value",
+            "关系：" + text,
+            new System.Collections.Generic.Dictionary<string, string> { ["RELATIONSHIP"] = text });
     }
 
     private void TryBuildPortrait(Hero hero)

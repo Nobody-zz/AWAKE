@@ -23,7 +23,8 @@ internal static class NpcDialogueConstants
     internal static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(90);
     internal static readonly string[] AllowedCommandIds = new[]
     {
-        AiTaskConstants.RelationshipDeltaCommandId
+        AiTaskConstants.RelationshipDeltaCommandId,
+        AiTaskConstants.WorldEffectRecordCommandId
     };
 
     internal static readonly string[] SceneShoutAllowedCommandIds = Array.Empty<string>();

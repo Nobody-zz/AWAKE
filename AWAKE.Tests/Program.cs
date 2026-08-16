@@ -44,6 +44,7 @@ internal static class Program
 		RunSceneShoutContractSmoke();
 		RunAwakeEventEngineCoreSmoke();
 		RunRelationshipCommandSmoke();
+		RunWorldEffectCommandSmoke();
 		await RunStoragePipelineSmokeAsync();
 		RunNpcMemorySmoke();
 		RunWorldbookSmoke();
@@ -943,6 +944,54 @@ internal static class Program
 			throw new InvalidOperationException("worldbook persona injection mismatch.");
 		}
 
+		WorldbookDocument relevanceDocument = new WorldbookDocument
+		{
+			Rules = new List<WorldbookRule>
+			{
+				new WorldbookRule
+				{
+					Id = "rule.global.unrelated",
+					Content = "与当前人物和场景无关的通用知识。"
+				},
+				new WorldbookRule
+				{
+					Id = "rule.scene.tavern",
+					Context = new WorldbookContext
+					{
+						SceneKeywords = new List<string> { "酒馆" }
+					},
+					Content = "酒馆里的热闹与传闻。"
+				}
+			},
+			Personas = new List<WorldbookPersona>()
+		};
+		WorldbookService relevanceService = new WorldbookService(relevanceDocument);
+		WorldbookQuery genericQuery = new WorldbookQuery
+		{
+			PlayerText = "你好",
+			SceneKeywords = new List<string> { "市集" },
+			ContentTier = "pure",
+			MaximumBytes = 100000
+		};
+		WorldbookQueryResult genericResult = relevanceService.Query(genericQuery);
+		if (genericResult.RetrievedText.IndexOf("rule.global.unrelated", StringComparison.Ordinal) >= 0
+			|| genericResult.RetrievedText.IndexOf("rule.scene.tavern", StringComparison.Ordinal) >= 0)
+		{
+			throw new InvalidOperationException("unrelated worldbook rules should not be injected.");
+		}
+		WorldbookQuery tavernQuery = new WorldbookQuery
+		{
+			PlayerText = "你好",
+			SceneKeywords = new List<string> { "酒馆" },
+			ContentTier = "pure",
+			MaximumBytes = 100000
+		};
+		WorldbookQueryResult tavernResult = relevanceService.Query(tavernQuery);
+		if (tavernResult.RetrievedText.IndexOf("rule.scene.tavern", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("scene keyword rule should be injected.");
+		}
+
 		WorldbookTextMapping deadMapping = new WorldbookTextMapping
 		{
 			SourceText = "A",
@@ -1523,6 +1572,34 @@ internal static class Program
 			throw new InvalidOperationException("relationship state formatting mismatch.");
 		}
 		Console.WriteLine("PASS relationship command smoke");
+	}
+
+	private static void RunWorldEffectCommandSmoke()
+	{
+		if (!CommandRiskPolicy.IsWorldBridgeAllowed(AiTaskConstants.WorldEffectRecordCommandId)
+			|| Array.IndexOf(NpcDialogueConstants.AllowedCommandIds, AiTaskConstants.WorldEffectRecordCommandId) < 0)
+		{
+			throw new InvalidOperationException("world effect command should be allowed.");
+		}
+		Newtonsoft.Json.Linq.JObject valid = new Newtonsoft.Json.Linq.JObject
+		{
+			["kind"] = "rumor",
+			["text"] = "酒馆里开始流传关于玩家的消息。"
+		};
+		string error;
+		if (!AwakeWorldEffectRecordAdapter.Validate(valid, out error))
+		{
+			throw new InvalidOperationException("valid world effect arguments should pass: " + error);
+		}
+		Newtonsoft.Json.Linq.JObject invalid = new Newtonsoft.Json.Linq.JObject
+		{
+			["text"] = ""
+		};
+		if (AwakeWorldEffectRecordAdapter.Validate(invalid, out _))
+		{
+			throw new InvalidOperationException("empty world effect text should fail.");
+		}
+		Console.WriteLine("PASS world effect command smoke");
 	}
 
 	private static void RunAwakeEventEngineCoreSmoke()

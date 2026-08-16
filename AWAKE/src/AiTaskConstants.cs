@@ -33,6 +33,7 @@ internal static class AiTaskConstants
     internal const string ContactsUpsertCommandId = "awake.contacts.upsert.v1";
 
     internal const string RelationshipDeltaCommandId = "awake.relationship.delta.v1";
+    internal const string WorldEffectRecordCommandId = "awake.world.effect.record.v1";
 
     internal const string PreprocessOutputSchema = "awake.preprocess.output.v1";
     internal const string PostprocessOutputSchema = "awake.postprocess.output.v1";
@@ -77,7 +78,8 @@ internal static class AiTaskConstants
 
     internal static readonly string[] NewCommandIds = new[]
     {
-        RelationshipDeltaCommandId
+        RelationshipDeltaCommandId,
+        WorldEffectRecordCommandId
     };
 
     internal static readonly string[] StorageNamespaceIds = new[]

@@ -193,6 +193,34 @@ internal static class AwakeSettings
         }
     }
 
+    internal static void NormalizeLegacySceneShoutKey()
+    {
+        try
+        {
+            AwakeConfig config = Current;
+            string raw = (config.SceneShoutKey ?? string.Empty).Trim();
+            if (!StringComparer.OrdinalIgnoreCase.Equals(raw, "C")
+                && !StringComparer.OrdinalIgnoreCase.Equals(raw, "U"))
+            {
+                return;
+            }
+            config.SceneShoutKey = "V";
+            try
+            {
+                BaseSettingsProvider.Instance?.SaveSettings(config);
+            }
+            catch (Exception saveEx)
+            {
+                AwakeLog.Write("mcm_scene_shout_key_normalize_save_failed error=" + saveEx.Message);
+            }
+            AwakeLog.Write("mcm_scene_shout_key_normalized raw=" + raw);
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("mcm_scene_shout_key_normalize_failed error=" + ex.Message);
+        }
+    }
+
     internal static void LogConfigPresence()
     {
         AwakeLog.Write("mcm_ai_config_loaded provider=marcus_framework_in_game");

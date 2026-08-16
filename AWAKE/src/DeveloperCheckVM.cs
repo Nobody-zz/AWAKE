@@ -10,6 +10,7 @@ internal sealed class DeveloperCheckVM : ViewModel
     private readonly Action _refresh;
     private readonly Action _openAiSetup;
     private readonly Action _openDiagnostics;
+    private readonly Action _openLogs;
     private readonly MBBindingList<DeveloperCheckRowVM> _rows = new MBBindingList<DeveloperCheckRowVM>();
     private string _titleText;
     private string _statusText;
@@ -40,17 +41,22 @@ internal sealed class DeveloperCheckVM : ViewModel
     [DataSourceProperty]
     public string DiagnosticsText => AwakeLocalization.Resolve("awake.dev_check.diagnostics", "Diagnostics");
 
+    [DataSourceProperty]
+    public string OpenLogsText => AwakeLocalization.Resolve("awake.dev_check.logs", "Open Logs");
+
     internal DeveloperCheckVM(
         Action close,
         Action refresh,
         Action openAiSetup,
         Action openDiagnostics,
+        Action openLogs,
         IReadOnlyList<KeyValuePair<string, string>> rows)
     {
         _close = close;
         _refresh = refresh;
         _openAiSetup = openAiSetup;
         _openDiagnostics = openDiagnostics;
+        _openLogs = openLogs;
         TitleText = AwakeLocalization.Resolve("awake.dev_check.title", "AWAKE Developer Check");
         StatusText = AwakeLocalization.Resolve("awake.dev_check.status", "Runtime diagnostics");
         Reload(rows);
@@ -87,6 +93,11 @@ internal sealed class DeveloperCheckVM : ViewModel
     public void ExecuteOpenDiagnostics()
     {
         _openDiagnostics?.Invoke();
+    }
+
+    public void ExecuteOpenLogs()
+    {
+        _openLogs?.Invoke();
     }
 
     private bool Set(ref string field, string value, string name)

@@ -99,7 +99,10 @@ internal sealed class WorldbookService
         foreach (WorldbookRule rule in _rules)
         {
             if (!PassesHardGate(rule, query)) continue;
-            if (WhenMatches(rule.When, query)) identityPool.Add(rule);
+            if (WhenMatches(rule.When, query) && HasIdentityConstraints(rule.When))
+            {
+                identityPool.Add(rule);
+            }
         }
 
         List<WorldbookRule> keywordCandidates = new List<WorldbookRule>();
@@ -114,6 +117,12 @@ internal sealed class WorldbookService
                 if (!PassesHardGate(rule, query) || !WhenMatches(rule.When, query)) continue;
                 AddUnique(keywordCandidates, rule);
             }
+        }
+
+        foreach (WorldbookRule rule in _rules)
+        {
+            if (!PassesHardGate(rule, query) || !WhenMatches(rule.When, query)) continue;
+            if (ContextMatches(rule.Context, query)) AddUnique(keywordCandidates, rule);
         }
 
         HashSet<string> matchedNgrams = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -236,6 +245,43 @@ internal sealed class WorldbookService
             return false;
         }
         return true;
+    }
+
+    private static bool HasIdentityConstraints(WorldbookWhen when)
+    {
+        if (when == null) return false;
+        return when.HeroIds.Count > 0
+            || when.CharacterIds.Count > 0
+            || when.IdentityIds.Count > 0
+            || when.Cultures.Count > 0
+            || when.KingdomIds.Count > 0
+            || when.SettlementIds.Count > 0
+            || when.Roles.Count > 0
+            || when.IsFemale != null
+            || when.IsClanLeader != null
+            || when.MinAge != null
+            || when.MaxAge != null
+            || when.SkillMin.Count > 0;
+    }
+
+    private static bool ContextMatches(WorldbookContext context, WorldbookQuery query)
+    {
+        if (context == null || query == null) return false;
+        if (query.SceneKeywords != null)
+        {
+            foreach (string keyword in query.SceneKeywords)
+            {
+                if (ContainsIgnoreCase(context.SceneKeywords, keyword)) return true;
+            }
+        }
+        if (query.ContextModes != null)
+        {
+            foreach (string mode in query.ContextModes)
+            {
+                if (ContainsIgnoreCase(context.ContextModes, mode)) return true;
+            }
+        }
+        return false;
     }
 
     internal static bool WhenMatches(WorldbookWhen when, WorldbookQuery query)

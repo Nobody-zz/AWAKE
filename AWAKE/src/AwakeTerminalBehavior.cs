@@ -623,6 +623,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
             || StringComparer.OrdinalIgnoreCase.Equals(shoutRaw, "U"))
         {
             _cachedSceneShoutKey = InputKey.V;
+            AwakeSettings.Current.SceneShoutKey = "V";
         }
     }
 

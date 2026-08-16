@@ -184,3 +184,123 @@ internal sealed class AwakeRelationshipDeltaAdapter : BaseAwakeCommandAdapter
             owner: AwakeConstants.OwnerValue));
     }
 }
+
+internal sealed class AwakeWorldEffectRecordAdapter : BaseAwakeCommandAdapter
+{
+    public override OperationResult<CommandAdapterPreflight> Preflight(CommandRequest request, RequestContext context)
+    {
+        if (context == null || context.IsExpired) return Denied("awake.world_state.context_expired", context?.CorrelationId);
+        JObject args = ParseArguments(request);
+        if (args == null || !Validate(args, out string _))
+        {
+            return Denied("awake.world_state.world_effect.invalid", context.CorrelationId);
+        }
+        return OperationResult<CommandAdapterPreflight>.Succeeded(new CommandAdapterPreflight(
+            "记录世界事件：" + ((string)args["text"] ?? string.Empty),
+            SnapshotFromArguments(request)));
+    }
+
+    public override OperationResult<CommandAdapterResult> Execute(
+        CommandRequest request,
+        RequestContext context,
+        string expectedSnapshotToken)
+    {
+        if (context == null || context.IsExpired) return ResultFailed("awake.world_state.context_expired", context?.CorrelationId);
+        if (!TokenMatches(expectedSnapshotToken, SnapshotFromArguments(request)))
+        {
+            return ResultFailed("awake.world_state.world_effect.snapshot_mismatch", context.CorrelationId);
+        }
+        JObject args = ParseArguments(request);
+        if (args == null || !Validate(args, out string _))
+        {
+            return ResultFailed("awake.world_state.world_effect.invalid", context.CorrelationId);
+        }
+        if (AwakeRuntime.SessionEnded) return ResultFailed("awake.world_state.session_ended", context.CorrelationId);
+        WorldStateStore store = AwakeRuntime.WorldStateStore;
+        if (store == null) return ResultFailed("awake.world_state.store_unavailable", context.CorrelationId);
+
+        int day = TryInt(args["day"]) ?? AwakeRuntime.CurrentGameDay();
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.WorldEventsNamespace,
+            AiTaskConstants.WorldEventsKey,
+            "awake.world.events.append",
+            request.IdempotencyKey,
+            string.Empty,
+            WorldStateKind.WorldEvents,
+            new JObject
+            {
+                ["day"] = day,
+                ["kind"] = (string)args["kind"] ?? "event",
+                ["text"] = (string)args["text"] ?? string.Empty
+            },
+            DateTimeOffset.UtcNow,
+            context.CorrelationId);
+        if (!store.TryEnqueue(command))
+        {
+            return ResultFailed("awake.world_state.session_ended", context.CorrelationId);
+        }
+        return OperationResult<CommandAdapterResult>.Succeeded(
+            new CommandAdapterResult(CommandState.Succeeded, "世界事件已记录。"));
+    }
+
+    internal static bool Validate(JObject args, out string error)
+    {
+        error = string.Empty;
+        if (args == null)
+        {
+            error = "args";
+            return false;
+        }
+        string text = (string)args["text"];
+        if (string.IsNullOrWhiteSpace(text) || text.Length > 2000)
+        {
+            error = "text";
+            return false;
+        }
+        string kind = (string)args["kind"];
+        if (!string.IsNullOrWhiteSpace(kind) && kind.Length > 80)
+        {
+            error = "kind";
+            return false;
+        }
+        if (args["day"] != null && args["day"].Type != JTokenType.Integer)
+        {
+            error = "day";
+            return false;
+        }
+        return true;
+    }
+
+    private static int? TryInt(JToken token)
+    {
+        if (token == null || token.Type != JTokenType.Integer) return null;
+        try
+        {
+            return (int)token;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private static OperationResult<CommandAdapterPreflight> Denied(string code, string correlationId)
+    {
+        return OperationResult<CommandAdapterPreflight>.Failed(FrameworkErrors.Create(
+            code,
+            FrameworkErrorCategory.InvalidRequest,
+            "World effect command rejected.",
+            correlationId,
+            owner: AwakeConstants.OwnerValue));
+    }
+
+    private static OperationResult<CommandAdapterResult> ResultFailed(string code, string correlationId)
+    {
+        return OperationResult<CommandAdapterResult>.Failed(FrameworkErrors.Create(
+            code,
+            FrameworkErrorCategory.InvalidRequest,
+            "World effect command failed.",
+            correlationId,
+            owner: AwakeConstants.OwnerValue));
+    }
+}

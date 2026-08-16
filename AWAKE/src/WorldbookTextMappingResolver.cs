@@ -29,7 +29,7 @@ internal static class WorldbookTextMappingResolver
         if (status.HasValue)
         {
             string text = status.Value ? mapping.TrueText : mapping.FalseText;
-            return FirstNonEmpty(text, mapping.EmptyValueText, mapping.SourceText);
+            return FirstNonEmpty(text, mapping.EmptyValueText, FallbackText(mapping));
         }
 
         string targetId = mapping.TargetId ?? string.Empty;
@@ -140,7 +140,7 @@ internal static class WorldbookTextMappingResolver
     private static string ValueOrSource(string value, WorldbookTextMapping mapping)
     {
         return string.IsNullOrWhiteSpace(value)
-            ? FirstNonEmpty(mapping.EmptyValueText, mapping.SourceText)
+            ? FirstNonEmpty(mapping.EmptyValueText, FallbackText(mapping))
             : value;
     }
 
@@ -157,7 +157,7 @@ internal static class WorldbookTextMappingResolver
         {
             return value;
         }
-        return FirstNonEmpty(mapping.EmptyValueText, mapping.SourceText);
+        return FirstNonEmpty(mapping.EmptyValueText, FallbackText(mapping));
     }
 
     private static string ListValue(
@@ -177,7 +177,42 @@ internal static class WorldbookTextMappingResolver
                 .Distinct(StringComparer.Ordinal)
                 .OrderBy(value => value, StringComparer.Ordinal));
         }
-        return FirstNonEmpty(mapping.EmptyValueText, mapping.SourceText);
+        return FirstNonEmpty(mapping.EmptyValueText, FallbackText(mapping));
+    }
+
+    private static string FallbackText(WorldbookTextMapping mapping)
+    {
+        string kind = (mapping?.Kind ?? string.Empty).Trim();
+        switch (kind)
+        {
+            case "hero_name":
+            case "clan_name":
+            case "kingdom_name":
+            case "settlement_name":
+            case "kingdom_leader_name":
+            case "clan_leader_name":
+            case "settlement_owner_clan_name":
+            case "settlement_owner_leader_name":
+            case "bound_hero_name":
+            case "bound_hero_title":
+            case "bound_clan_name":
+            case "bound_settlement_name":
+            case "bound_settlement_owner_clan_name":
+            case "bound_settlement_owner_leader_name":
+            case "bound_kingdom_name":
+            case "bound_item_name":
+            case "bound_troop_name":
+            case "bound_deity_name":
+            case "bound_event_name":
+            case "bound_region_name":
+                return "未知";
+            case "clan_all_towns":
+            case "clan_all_villages":
+            case "clan_all_settlements":
+                return "其领地";
+            default:
+                return mapping?.SourceText ?? string.Empty;
+        }
     }
 
     private static string FirstNonEmpty(params string[] values)

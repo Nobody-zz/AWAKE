@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using MarcusAIFramework.Api;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.GauntletUI;
@@ -82,7 +85,7 @@ internal sealed class DeveloperCheckOverlay
     private DeveloperCheckOverlay(ScreenBase screen, IReadOnlyList<KeyValuePair<string, string>> rows)
     {
         _screen = screen;
-        _dataSource = new DeveloperCheckVM(Close, Refresh, OpenAiSetup, OpenDiagnostics, rows);
+        _dataSource = new DeveloperCheckVM(Close, Refresh, OpenAiSetup, OpenDiagnostics, OpenLogs, rows);
         _layer = new GauntletLayer("DeveloperCheck", 545, false);
     }
 
@@ -110,6 +113,37 @@ internal sealed class DeveloperCheckOverlay
     private static void OpenDiagnostics()
     {
         AwakeMarcusLinkService.OpenDiagnostics();
+    }
+
+    private static void OpenLogs()
+    {
+        try
+        {
+            string moduleDir = ResolveModuleDirectory();
+            string logs = Path.Combine(moduleDir, "Logs");
+            Directory.CreateDirectory(logs);
+            Process.Start("explorer.exe", "\"" + logs + "\"");
+            AwakeLog.Write("developer_check_open_logs path=" + logs);
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("developer_check_open_logs_error error=" + ex.Message);
+        }
+    }
+
+    private static string ResolveModuleDirectory()
+    {
+        string assemblyDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".";
+        DirectoryInfo current = new DirectoryInfo(assemblyDir);
+        for (int i = 0; i < 6 && current != null; i++)
+        {
+            if (File.Exists(Path.Combine(current.FullName, "SubModule.xml")))
+            {
+                return current.FullName;
+            }
+            current = current.Parent;
+        }
+        return assemblyDir;
     }
 
     private void OpenLayer()

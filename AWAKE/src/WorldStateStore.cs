@@ -144,6 +144,13 @@ internal sealed class WorldCommandResultRecord
 
 internal sealed class WorldStateStore
 {
+    private static bool IsStorageKeyNotFound(OperationResult<string> result)
+    {
+        return result != null
+            && !result.IsSuccess
+            && StringComparer.Ordinal.Equals(result.Error?.Code, "storage.key_not_found");
+    }
+
     private readonly IMarcusAiFrameworkHost _host;
     private readonly SessionRef _sessionRef;
     private readonly object _gate = new object();
@@ -386,7 +393,10 @@ internal sealed class WorldStateStore
         OperationResult<string> loaded = await store.GetAsync(HeroKey(heroId), context ?? CreateContext(), cancellationToken).ConfigureAwait(false);
         if (!loaded.IsSuccess)
         {
-            AwakeLog.Write("world_state_memory_load_failed hero=" + heroId + " code=" + (loaded.Error?.Code ?? "unknown"));
+            if (!IsStorageKeyNotFound(loaded))
+            {
+                AwakeLog.Write("world_state_memory_load_failed hero=" + heroId + " code=" + (loaded.Error?.Code ?? "unknown"));
+            }
             return null;
         }
         if (string.IsNullOrWhiteSpace(loaded.Value)) return null;
@@ -427,7 +437,10 @@ internal sealed class WorldStateStore
         OperationResult<string> loaded = await store.GetAsync(key, context ?? CreateContext(), cancellationToken).ConfigureAwait(false);
         if (!loaded.IsSuccess)
         {
-            AwakeLog.Write("world_state_relationship_load_failed hero=" + heroId + " code=" + (loaded.Error?.Code ?? "unknown"));
+            if (!IsStorageKeyNotFound(loaded))
+            {
+                AwakeLog.Write("world_state_relationship_load_failed hero=" + heroId + " code=" + (loaded.Error?.Code ?? "unknown"));
+            }
             return null;
         }
         if (string.IsNullOrWhiteSpace(loaded.Value)) return NewRelationshipState(heroId);
@@ -454,7 +467,10 @@ internal sealed class WorldStateStore
         OperationResult<string> loaded = await store.GetAsync(AiTaskConstants.EventMetaKey, context ?? CreateContext(), cancellationToken).ConfigureAwait(false);
         if (!loaded.IsSuccess)
         {
-            AwakeLog.Write("world_state_event_meta_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            if (!IsStorageKeyNotFound(loaded))
+            {
+                AwakeLog.Write("world_state_event_meta_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            }
             return null;
         }
         if (string.IsNullOrWhiteSpace(loaded.Value)) return NewEventMetaState();
@@ -545,7 +561,10 @@ internal sealed class WorldStateStore
             cancellationToken).ConfigureAwait(false);
         if (!loaded.IsSuccess)
         {
-            AwakeLog.Write("world_state_proactive_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            if (!IsStorageKeyNotFound(loaded))
+            {
+                AwakeLog.Write("world_state_proactive_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            }
             return null;
         }
         if (string.IsNullOrWhiteSpace(loaded.Value)) return NewProactiveState();
@@ -599,7 +618,10 @@ internal sealed class WorldStateStore
             cancellationToken).ConfigureAwait(false);
         if (!loaded.IsSuccess)
         {
-            AwakeLog.Write("world_state_world_events_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            if (!IsStorageKeyNotFound(loaded))
+            {
+                AwakeLog.Write("world_state_world_events_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            }
             return null;
         }
         if (string.IsNullOrWhiteSpace(loaded.Value)) return NewWorldEventsState();
@@ -657,7 +679,10 @@ internal sealed class WorldStateStore
             cancellationToken).ConfigureAwait(false);
         if (!loaded.IsSuccess)
         {
-            AwakeLog.Write("world_state_messenger_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            if (!IsStorageKeyNotFound(loaded))
+            {
+                AwakeLog.Write("world_state_messenger_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            }
             return null;
         }
         if (string.IsNullOrWhiteSpace(loaded.Value)) return NewMessengerState();
