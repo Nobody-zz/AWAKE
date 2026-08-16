@@ -225,6 +225,34 @@
 - 已有玩家可调行为时必须提供 MCM 入口，默认值 fail-safe；改动同步检查分组、中英文、预设联动与 `Config.json` 兼容。
 - 已写入 `AWAKE/AGENTS.md` 的 `MCM 菜单规则`。
 
+## 最新游戏反馈（2026-08-17）
+
+- `FB-20260817-1`：大地图 NPC 对话入口割裂。
+  - 证据：用户实测；只读核查显示通讯录 `IsNearby` 依赖 `NpcDialogueLauncher.GetNearbyTargets`，遭遇菜单有“面谈（醒世）”，但相遇后缺少可直接调出 AI 对话菜单的入口。
+  - 建议方向：先定范围 -> 定格画面 -> 选择具体人物/公开喊话（参考 AF），并统一场景/地图/通讯录入口。
+  - 优先级：P1；状态：`queued`；分类：`non_blocking`。
+- `FB-20260817-2`：C 键默认冲突。
+  - 证据：`AwakeConfig.SceneShoutKey` 默认 `"C"`，`AwakeTerminalBehavior` 绑定 `InputKey.C`；游戏本身已占用 C。
+  - 建议：更换默认键并保留 MCM 可配置；必要时加按键冲突探测。
+  - 优先级：P1；状态：`queued`；分类：`non_blocking`。
+- `FB-20260817-3`：主动对话无逻辑、纯概率触发。
+  - 证据：`NpcProactiveService.EvaluateAsync` 目前是 `BaseChance + affinity` 随机抽取，motive 按权重随机，OpeningHint 通用，缺少“当前处境/事件/身份/关系事实”驱动。
+  - 建议：先做确定性触发条件（关系阶段、近期事件、身份、地点、需求），概率只做最终扰动；并给触发写可解释理由。
+  - 优先级：P1；状态：`queued`；分类：`non_blocking`。
+- `FB-20260817-4`：通讯录 UI 继续补头像等信息。
+  - 已有人物卡头像基础，继续扩展联系人列表/卡片信息。
+  - 优先级：P2；状态：`queued`；分类：`non_blocking`。
+- `FB-20260817-5`：开发者检查目前是摆设。
+  - 证据：DeveloperCheckOverlay/VM 已有，但只有静态行展示，无可操作入口/刷新/跳转/测试触发。
+  - 建议：补状态刷新、测试触发、日志跳转、命令诊断。
+  - 优先级：P2；状态：`queued`；分类：`non_blocking`。
+- `FB-20260817-6`：世界书管理功能几乎没有。
+  - 证据：只有 WorldbookLoader/Service/Runtime 的加载与查询，无游戏内管理、重载、校验、编辑、检索调试面板。
+  - 优先级：P2；状态：`queued`；分类：`non_blocking`。
+- `FB-20260817-7`：Slaanesh 路由残留与对话路由疑点。
+  - 证据：源码/游戏模块文本未找到 `Slaanesh` 路由文件，当前路由为 `AWAKE.route.npc.dialogue`；Companion 日志出现 `ai.cloud_export_denied`。马库斯侧称仍残留 Slaanesh 文件名相关路由文件，需进一步查 `platform.db`/Companion 配置并验证对话路由。
+  - 优先级：P1；状态：`queued` / `decision_needed`；分类：`non_blocking`。
+
 ## 可行性核验（2026-08-16）
 
 - API probe：`Hero.Gold` 可读可写；`PartyBase.ItemRoster` 存在；`HeroVM(Hero, bool)` 提供 `ImageIdentifier`。
