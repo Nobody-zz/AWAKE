@@ -2195,6 +2195,17 @@ Event Inbox Gauntlet UI (2026-08-16, no version bump)
 - Awake.dll SHA-256 4CFCF6C3452BA35AC8ADEC007E1ECFADC9B241B83B34E5B78B7F6688CE6BFC81.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
 
+Weekly Report Browser UI (2026-08-16, no version bump)
+- Added WeeklyReportBrowserOverlay, WeeklyReportBrowserVM, and WeeklyReportBrowser.xml prefab.
+- Command deck weekly report and developer test weekly report now open the overlay.
+- Prefab uses only AWAKE/game standard assets; no AF art assets.
+- Added docs/PLAN-WeeklyReportBrowser-20260816.md and review log.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (25 paths).
+- LOCALIZATION_OK source=88 en=106 cn=106.
+- Awake.dll SHA-256 6107222D944EE7CD3554D2D3E7522CEBEAD771646EB45BF6AE577D0D8FA56B87.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
 Messenger History Persistence (2026-08-16, no version bump)
 - Added awake.messenger namespace and WorldStateKind.Messenger.
 - Added AwakeMessengerHistory cache + outbox persistence, grouped by TargetId.

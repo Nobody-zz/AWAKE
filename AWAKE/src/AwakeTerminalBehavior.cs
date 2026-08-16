@@ -725,9 +725,12 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
             int day = AwakeRuntime.CurrentGameDay();
             List<WorldEventRecord> week = WorldEventLedger.SnapshotWeek(day);
             string text = NarrativeReportBuilder.Build(week, day);
-            ShowMessage(
-                AwakeLocalization.Resolve("awake.menu.weekly_report", "世界周报"),
-                text);
+            if (!WeeklyReportBrowserOverlay.Open(text))
+            {
+                AwakeFeedback.ShowError(AwakeLocalization.Resolve(
+                    "awake.feedback.weekly_report_open_failed",
+                    "无法打开世界周报。"));
+            }
         }
         catch (Exception ex)
         {

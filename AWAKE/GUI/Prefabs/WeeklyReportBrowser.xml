@@ -1,0 +1,29 @@
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#000000FF" AlphaFactor="0.82" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+      <Children>
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="1100" SuggestedHeight="680" HorizontalAlignment="Center" VerticalAlignment="Center" Sprite="StdAssets\Popup\canvas" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+          <Children>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="58" Sprite="General\CharacterCreation\character_creation_background_gradient" AlphaFactor="0.35" DoNotAcceptEvents="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="60" MarginRight="60" Brush="Popup.Title.Text" Brush.FontSize="28" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@TitleText" DoNotAcceptEvents="true" />
+              </Children>
+            </Widget>
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" HorizontalAlignment="Right" VerticalAlignment="Top" MarginRight="12" MarginTop="9" Brush="Popup.CloseButton" Command.Click="ExecuteClose" DoNotPassEventsToChildren="true" UpdateChildrenStates="true" />
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" MarginLeft="24" MarginRight="24" MarginTop="70" Brush="Popup.Description.Text" Brush.FontSize="17" Text="@StatusText" CanBreakWords="true" DoNotAcceptEvents="true" />
+            <ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="24" MarginRight="24" MarginTop="106" MarginBottom="24" AutoHideScrollBars="true" ClipRect="ReportClip" InnerPanel="ReportClip\ReportInner" MouseScrollAxis="Vertical" VerticalScrollbar="..\ReportScrollbar\Scrollbar" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+              <Children>
+                <Widget Id="ReportClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true" MarginRight="8">
+                  <Children>
+                    <RichTextWidget Id="ReportInner" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" Brush="Popup.Description.Text" Brush.FontSize="19" Text="@ReportText" CanBreakWords="true" DoNotAcceptEvents="true" />
+                  </Children>
+                </Widget>
+              </Children>
+            </ScrollablePanel>
+            <Standard.VerticalScrollbar Id="ReportScrollbar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Bottom" MarginTop="106" MarginBottom="24" MarginRight="2" />
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>
