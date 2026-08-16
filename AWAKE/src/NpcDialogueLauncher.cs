@@ -57,9 +57,9 @@ internal static class NpcDialogueLauncher
             }
             service.Dispose();
 
-            if (StringComparer.Ordinal.Equals(entrySource, "scene") && !target.IsHero)
+            if (StringComparer.Ordinal.Equals(entrySource, "scene"))
             {
-                AwakeLog.Write("npc_dialogue_launcher_scene_nonhero_native_skipped target=" + target.StableId);
+                AwakeLog.Write("npc_dialogue_launcher_scene_native_skipped target=" + target.StableId);
                 return NpcDialogueLaunchResult.None;
             }
 

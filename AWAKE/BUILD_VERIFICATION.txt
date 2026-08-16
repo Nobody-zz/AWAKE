@@ -2230,10 +2230,21 @@ UI Layout and Localization Audit (2026-08-16, no version bump)
 
 Scene Native Fallback Crash Guard + Overlay Focus Fix (2026-08-16, no version bump)
 - Awake.log showed scene target npc:merchant_empire:a27 failed overlay with no_focus, then fell back to native conversation; E.htm stack pointed to FlattenedTroopRoster.GenerateUniqueNoFromParty NRE.
-- Scene source now skips native conversation fallback for non-hero targets; hero fallback is retained.
+- Scene source now skips native conversation fallback for all targets; native conversation AI mode is planned as a separate coexisting overlay.
 - All four overlays no longer treat an immediately-pending focus as a hard failure; focus changes are logged as focus_pending while the panel stays open.
 - dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
 - SdkSmoke: PASS ALL Awake.SdkSmoke (25 paths).
 - LOCALIZATION_OK source=130 en=148 cn=148.
 - Awake.dll SHA-256 47784507A0FD4EAEF6A36BF8FAA201862AC66B1C6BEF578C4362DD3F2F92AA40.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Scene Visual Selection + Native Conversation AI Mode PLAN (2026-08-16, no code beyond scene fallback rule)
+- Added docs/PLAN-SceneVisualSelection-20260816.md and docs/PLAN-SceneVisualSelection-REVIEW-LOG-20260816.md.
+- Plan defines two dialogue modes from the first version: scene AI dialogue via AWAKE overlay, and a coexisting AI mode inside the original conversation window.
+- Independent read-only review: Round 1 REVISE, Round 2 REVISE, Round 3 APPROVED.
+- Scene source native fallback now disabled for all targets; no other feature code implemented until user signs off the plan.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (25 paths).
+- LOCALIZATION_OK source=130 en=148 cn=148.
+- Awake.dll SHA-256 5F3F69D83A42BCE35228208775E0436F89EB8C8560A16FF058094DEC14B1D4FC.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
