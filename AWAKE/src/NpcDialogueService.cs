@@ -38,6 +38,8 @@ internal sealed class NpcDialogueService : IDisposable
     private string _kingdomName = string.Empty;
     private string _heroGender = "unknown";
     private string _heroCulture = string.Empty;
+    private string _heroRole = "hero";
+    private int _heroAge;
     private string _openingHint = string.Empty;
     private string _memoryBlock = string.Empty;
     private string _npcState = string.Empty;
@@ -543,6 +545,8 @@ internal sealed class NpcDialogueService : IDisposable
             {
                 _heroGender = _target.IsFemale ? "female" : "male";
                 _heroCulture = _target.CultureId ?? string.Empty;
+                _heroRole = string.IsNullOrWhiteSpace(_target.UnnamedRank) ? "unknown" : _target.UnnamedRank;
+                _heroAge = (int)_target.Age;
                 return;
             }
             if (Campaign.Current?.CampaignObjectManager?.AliveHeroes == null) return;
@@ -550,7 +554,9 @@ internal sealed class NpcDialogueService : IDisposable
             {
                 if (hero == null || !StringComparer.Ordinal.Equals(hero.StringId, _heroId)) continue;
                 _heroGender = hero.IsFemale ? "female" : "male";
-                _heroCulture = hero.Culture?.Name?.ToString() ?? string.Empty;
+                _heroCulture = hero.Culture?.StringId ?? string.Empty;
+                _heroRole = "hero";
+                _heroAge = (int)hero.Age;
                 return;
             }
         }
@@ -569,6 +575,20 @@ internal sealed class NpcDialogueService : IDisposable
         return NpcDialogueStateFormatter.FormatIdentity(_heroName, _heroGender, _heroCulture);
     }
 
+    private static List<string> SplitSceneKeywords(string text)
+    {
+        List<string> result = new List<string>();
+        if (string.IsNullOrWhiteSpace(text)) return result;
+        foreach (string item in text.Split(
+            new[] { ' ', '　', '\t', '，', '。', '！', '？', '、', '；', '：', '\r', '\n' },
+            StringSplitOptions.RemoveEmptyEntries))
+        {
+            string value = item.Trim();
+            if (value.Length > 0) result.Add(value);
+        }
+        return result;
+    }
+
     private async Task<string> BuildPromptInputAsync(
         IReadOnlyList<NpcDialogueChatEntry> history,
         string playerText,
@@ -583,16 +603,33 @@ internal sealed class NpcDialogueService : IDisposable
         }
 
         string retrievedKnowledge = string.Empty;
-        KnowledgeService knowledge = KnowledgeRuntime.Current;
-        if (knowledge != null)
+        WorldbookService worldbook = WorldbookRuntime.Current;
+        if (worldbook != null)
         {
             try
             {
-                retrievedKnowledge = await knowledge.RetrieveLocalAsync(
-                    playerText,
-                    _sceneKeywords,
-                    KnowledgeConstants.MaximumRetrievedBlockBytes,
-                    cancellationToken).ConfigureAwait(false);
+                WorldbookQuery worldbookQuery = new WorldbookQuery
+                {
+                    HeroId = _heroId,
+                    CharacterId = _target?.Character?.StringId ?? string.Empty,
+                    IdentityId = _target?.UnnamedKey ?? string.Empty,
+                    CultureId = _heroCulture,
+                    Role = _heroRole,
+                    IsFemale = StringComparer.Ordinal.Equals(_heroGender, "female") ? true
+                        : StringComparer.Ordinal.Equals(_heroGender, "male") ? false : (bool?)null,
+                    Age = _heroAge,
+                    ContentTier = "pure",
+                    SceneKeywords = SplitSceneKeywords(_sceneKeywords),
+                    PlayerText = playerText,
+                    MaximumBytes = KnowledgeConstants.MaximumRetrievedBlockBytes
+                };
+                WorldbookQueryResult worldbookResult = worldbook.Query(worldbookQuery);
+                retrievedKnowledge = worldbookResult.RetrievedText;
+                if (worldbookResult.Errors.Count > 0)
+                {
+                    AwakeLog.Write("npc_dialogue_worldbook_errors hero=" + _heroId
+                        + " errors=" + string.Join(",", worldbookResult.Errors));
+                }
             }
             catch (OperationCanceledException)
             {
@@ -604,6 +641,32 @@ internal sealed class NpcDialogueService : IDisposable
                     + " correlation=" + (context?.CorrelationId ?? "none")
                     + " error=" + ex.Message);
                 retrievedKnowledge = string.Empty;
+            }
+        }
+        else
+        {
+            KnowledgeService knowledge = KnowledgeRuntime.Current;
+            if (knowledge != null)
+            {
+                try
+                {
+                    retrievedKnowledge = await knowledge.RetrieveLocalAsync(
+                        playerText,
+                        _sceneKeywords,
+                        KnowledgeConstants.MaximumRetrievedBlockBytes,
+                        cancellationToken).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    AwakeLog.Write("npc_dialogue_knowledge_error hero=" + _heroId
+                        + " correlation=" + (context?.CorrelationId ?? "none")
+                        + " error=" + ex.Message);
+                    retrievedKnowledge = string.Empty;
+                }
             }
         }
 

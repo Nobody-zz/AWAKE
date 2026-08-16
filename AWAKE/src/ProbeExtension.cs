@@ -189,6 +189,8 @@ internal sealed class AwakeExtension : IFrameworkExtension
                         KnowledgeRuntime.EnsureCreated(knowledgeHost);
                         AwakeLog.Write("knowledge_runtime_initialized");
                     }
+                    WorldbookRuntime.ShutdownCurrent();
+                    WorldbookRuntime.EnsureCreated();
                     break;
                 case ExtensionLifecycleStage.SessionEnding:
                     try
@@ -225,6 +227,7 @@ internal sealed class AwakeExtension : IFrameworkExtension
                     }
                     AwakeRuntime.BeginSessionEnd();
                     KnowledgeRuntime.ShutdownCurrent();
+                    WorldbookRuntime.ShutdownCurrent();
                     if (worldStore != null)
                     {
                         try
@@ -254,6 +257,7 @@ internal sealed class AwakeExtension : IFrameworkExtension
                     }
                     NpcMemoryService.ShutdownCurrent();
                     KnowledgeRuntime.ShutdownCurrent();
+                    WorldbookRuntime.ShutdownCurrent();
                     break;
             }
         }
