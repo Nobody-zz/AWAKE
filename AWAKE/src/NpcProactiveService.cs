@@ -287,9 +287,11 @@ internal sealed class NpcProactiveService
             NpcProactiveMotive motive = Math.Abs(affinity) >= 20
                 ? NpcProactiveMotive.Relationship
                 : NpcProactiveMotive.Casual;
-            double chance = NpcProactiveConstants.BaseChance
-                + affinity * NpcProactiveConstants.RelationshipBonusPerPoint;
-            chance = Math.Max(0.03, Math.Min(NpcProactiveConstants.ChanceMaximum, chance));
+            int chancePercent = Clamp(AwakeSettings.Current.NpcProactiveChance, 0, 100);
+            double chance = (NpcProactiveConstants.BaseChance
+                + affinity * NpcProactiveConstants.RelationshipBonusPerPoint)
+                * (chancePercent / 35.0);
+            chance = Math.Min(NpcProactiveConstants.ChanceMaximum, chance);
             if (_random.NextDouble() >= chance) continue;
 
             lock (_gate)

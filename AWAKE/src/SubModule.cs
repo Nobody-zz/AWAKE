@@ -63,6 +63,7 @@ public sealed class SubModule : MBSubModuleBase
             NpcProactiveHooks.IsMessengerOpen = () => AwakeMessengerOverlay.IsOpen;
             NpcProactiveHooks.RecordDialogueContext = (heroId, hint) => NpcDialogueContext.Record(heroId, hint);
             NpcProactiveHooks.EnqueueDialogue = (heroId, hint) => EventDialogueQueue.Enqueue(heroId, hint);
+            AwakeMcmActions.ShowDeveloperReport = AwakeTerminalBehavior.ShowDeveloperReportForMcm;
         }
         AwakeLog.Write("game_start version=" + AwakeVersion.Version);
     }

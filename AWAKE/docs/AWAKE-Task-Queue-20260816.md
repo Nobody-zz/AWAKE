@@ -38,6 +38,7 @@
   - AF Batch 2-5 代码落地：命令台收件箱/周报、记忆日结、UI 审计、回复规范化与性能探针
   - AF 五批次 grillme 复查文档 `GRILLME-AF-BATCHES-20260816.md`
   - AF 反馈层：`AwakeFeedback` 统一游戏内操作反馈
+  - MCM 菜单重排、预设与操作按钮
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）

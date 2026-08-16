@@ -21,10 +21,10 @@
     <string id="awake.terminal.close" text="关闭" />
     <string id="awake.menu.developer_check" text="开发者检查" />
     <string id="awake.dialogue.npc_title" text="醒世·与 {HERO} 交谈" />
-    <string id="awake.mcm.group.ai_link" text="AI 链路" />
-    <string id="awake.mcm.group.data_debug" text="数据与调试" />
-    <string id="awake.mcm.group.behavior" text="档位与行为" />
-    <string id="awake.mcm.group.scene" text="场景对话" />
+    <string id="awake.mcm.group.ai_link" text="0. AI 链路" />
+    <string id="awake.mcm.group.data_debug" text="4. 数据与调试" />
+    <string id="awake.mcm.group.behavior" text="2. 主动行为" />
+    <string id="awake.mcm.group.scene" text="1. 对话与场景" />
     <string id="awake.mcm.ai_status.name" text="AI 链路状态" />
     <string id="awake.mcm.ai_status.hint" text="只读显示：Companion 连接、路由能力与候选 Provider 状态。Provider 配置请在 MCM → Marcus AI Framework → 01 Companion 完成，Route ID 使用模组 README 中的四条逻辑路由。" />
     <string id="awake.mcm.cloud_export.name" text="启用云外发" />
@@ -37,7 +37,7 @@
     <string id="awake.mcm.terminal_key.hint" text="输入 InputKey 名称，例如 U、K、H。" />
     <string id="awake.mcm.scene_max_range.name" text="场景选人最大距离（米）" />
     <string id="awake.mcm.scene_max_range.hint" text="按住 T 的最大搜索半径，默认 60。使用三维空间距离，过高会把隔墙或上下楼层的人也纳入候选。" />
-    <string id="awake.mcm.group.command" text="命令台" />
+    <string id="awake.mcm.group.command" text="3. 命令台" />
     <string id="awake.mcm.world_effects.name" text="启用世界效果" />
     <string id="awake.mcm.world_effects.hint" text="默认开启。关闭后女神输出的世界命令与神谕效果都会被拒绝；该开关计划在 0.2.x 实际接入。" />
     <string id="awake.mcm.boon_offers.name" text="启用愿力提案" />
@@ -46,6 +46,18 @@
     <string id="awake.mcm.npc_proactive.hint" text="默认开启。附近 NPC 有概率按关系与当前场合主动发起谈话。" />
     <string id="awake.mcm.npc_proactive_chance.name" text="NPC 主动概率" />
     <string id="awake.mcm.npc_proactive_chance.hint" text="NPC 主动发起的概率百分比，0-100，默认 35。" />
+    <string id="awake.mcm.sync_routes.name" text="同步路由" />
+    <string id="awake.mcm.sync_routes.content" text="同步路由" />
+    <string id="awake.mcm.sync_routes.hint" text="路由由框架自动声明；如需手动同步，请到 AI 设置台点击“同步路由”。" />
+    <string id="awake.mcm.refresh_status.name" text="AI 自检" />
+    <string id="awake.mcm.refresh_status.content" text="AI 自检" />
+    <string id="awake.mcm.refresh_status.hint" text="刷新 Companion 连接状态并显示结果。" />
+    <string id="awake.mcm.developer_report.name" text="开发者检查" />
+    <string id="awake.mcm.developer_report.content" text="打开" />
+    <string id="awake.mcm.developer_report.hint" text="打开运行时诊断报告。" />
+    <string id="awake.mcm.actions.sync_routes_result" text="路由由框架自动同步；如需手动同步请到 AI 设置台。" />
+    <string id="awake.mcm.actions.status_refreshed" text="AI 状态已刷新。" />
+    <string id="awake.mcm.actions.developer_unavailable" text="开发者检查暂不可用。" />
     <string id="awake.mcm.event_engine.name" text="启用事件引擎" />
     <string id="awake.mcm.event_engine.hint" text="默认开启。事件引擎只负责触发、冷却与对话动作队列；具体事件由后续内容包注册。" />
     <string id="awake.preset.default" text="默认" />

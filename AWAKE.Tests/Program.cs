@@ -52,8 +52,36 @@ internal static class Program
 		RunMemoryOverviewSmoke();
 		RunGuardPerfSmoke();
 		RunFeedbackSmoke();
+		RunMcmPresetSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunMcmPresetSmoke()
+	{
+		if (new AwakeConfig().NpcProactiveChance != 35)
+		{
+			throw new InvalidOperationException("mcm proactive chance default should be 35.");
+		}
+		bool sawStrict = false;
+		foreach (MCM.Abstractions.ISettingsPreset preset in AwakePresetCatalog.Build())
+		{
+			AwakeConfig template = preset.LoadPreset() as AwakeConfig;
+			if (template == null || template.NpcProactiveChance < 0 || template.NpcProactiveChance > 100)
+			{
+				throw new InvalidOperationException("mcm preset template invalid.");
+			}
+			if (StringComparer.Ordinal.Equals(preset.Id, "strict") && template.EnableNpcProactive)
+			{
+				throw new InvalidOperationException("strict preset should disable proactive chat.");
+			}
+			if (StringComparer.Ordinal.Equals(preset.Id, "strict")) sawStrict = true;
+		}
+		if (!sawStrict)
+		{
+			throw new InvalidOperationException("mcm preset catalog missing strict preset.");
+		}
+		Console.WriteLine("PASS mcm preset smoke");
 	}
 
 	private static void RunFeedbackSmoke()

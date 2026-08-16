@@ -651,6 +651,11 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         }
     }
 
+    internal static void ShowDeveloperReportForMcm()
+    {
+        ShowDeveloperReport();
+    }
+
     private static void ShowMessage(string title, string text)
     {
         try

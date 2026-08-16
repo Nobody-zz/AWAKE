@@ -21,10 +21,10 @@
     <string id="awake.terminal.close" text="Close" />
     <string id="awake.menu.developer_check" text="Developer Check" />
     <string id="awake.dialogue.npc_title" text="AWAKE - Talk with {HERO}" />
-    <string id="awake.mcm.group.ai_link" text="AI Link" />
-    <string id="awake.mcm.group.data_debug" text="Data and Debug" />
-    <string id="awake.mcm.group.behavior" text="Presets and Behavior" />
-    <string id="awake.mcm.group.scene" text="Scene Dialogue" />
+    <string id="awake.mcm.group.ai_link" text="0. AI Link" />
+    <string id="awake.mcm.group.data_debug" text="4. Data and Debug" />
+    <string id="awake.mcm.group.behavior" text="2. Proactive Behavior" />
+    <string id="awake.mcm.group.scene" text="1. Dialogue and Scene" />
     <string id="awake.mcm.ai_status.name" text="AI Link Status" />
     <string id="awake.mcm.ai_status.hint" text="Read-only: Companion connection, route capabilities and candidate providers. Configure Provider under MCM → Marcus AI Framework → 01 Companion; use the four logical routes from the README." />
     <string id="awake.mcm.cloud_export.name" text="Enable Cloud Export" />
@@ -37,7 +37,7 @@
     <string id="awake.mcm.terminal_key.hint" text="Input an InputKey name, e.g. U, K or H." />
     <string id="awake.mcm.scene_max_range.name" text="Scene Target Max Range (m)" />
     <string id="awake.mcm.scene_max_range.hint" text="Maximum search radius while holding T. Default 60. Uses 3D distance; very high values include people across walls or floors." />
-    <string id="awake.mcm.group.command" text="Command Deck" />
+    <string id="awake.mcm.group.command" text="3. Command Deck" />
     <string id="awake.mcm.world_effects.name" text="Enable World Effects" />
     <string id="awake.mcm.world_effects.hint" text="Enabled by default. When disabled, world commands and oracle effects from goddess output are rejected; actual gameplay wiring is planned for 0.2.x." />
     <string id="awake.mcm.boon_offers.name" text="Enable Divine Proposals" />
@@ -46,6 +46,18 @@
     <string id="awake.mcm.npc_proactive.hint" text="Enabled by default. Nearby NPCs may proactively start a conversation based on relationship and current situation." />
     <string id="awake.mcm.npc_proactive_chance.name" text="NPC Proactive Chance" />
     <string id="awake.mcm.npc_proactive_chance.hint" text="Chance percentage for NPC proactive initiations, 0-100, default 35." />
+    <string id="awake.mcm.sync_routes.name" text="Sync Routes" />
+    <string id="awake.mcm.sync_routes.content" text="Sync Routes" />
+    <string id="awake.mcm.sync_routes.hint" text="Routes are auto-provisioned by the framework; click Sync Routes in the AI setup console if needed." />
+    <string id="awake.mcm.refresh_status.name" text="AI Self Check" />
+    <string id="awake.mcm.refresh_status.content" text="Self Check" />
+    <string id="awake.mcm.refresh_status.hint" text="Refresh Companion connection status and show the result." />
+    <string id="awake.mcm.developer_report.name" text="Developer Check" />
+    <string id="awake.mcm.developer_report.content" text="Open" />
+    <string id="awake.mcm.developer_report.hint" text="Open the runtime diagnostics report." />
+    <string id="awake.mcm.actions.sync_routes_result" text="Routes are synced by the framework; open the AI setup console if needed." />
+    <string id="awake.mcm.actions.status_refreshed" text="AI status refreshed." />
+    <string id="awake.mcm.actions.developer_unavailable" text="Developer check is unavailable right now." />
     <string id="awake.mcm.event_engine.name" text="Enable Event Engine" />
     <string id="awake.mcm.event_engine.hint" text="Enabled by default. The event engine owns triggers, cooldowns and dialogue-action queues; concrete events are registered by content packs later." />
     <string id="awake.preset.default" text="Default" />

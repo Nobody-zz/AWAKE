@@ -2139,3 +2139,15 @@ AF Feedback Layer (2026-08-16, no version bump)
 - LOCALIZATION_OK source=49 en=72 cn=72.
 - Awake.dll SHA-256 91F62D8503962F3A30BC007C5D9759FC4F26A1BC5212AA5638ED8A5FB405A7BD.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+MCM Menu Restructure (2026-08-16, no version bump)
+- Reordered MCM groups: 0 AI Link / 1 Dialogue and Scene / 2 Proactive Behavior / 3 Command Deck / 4 Data and Debug.
+- Added Sync Routes, AI Self Check, and Developer Check buttons via AwakeMcmActions.
+- Added AwakePresetCatalog with Default/Easy/Standard/Slow Burn/Strict presets.
+- Added NpcProactiveChance MCM setting and wired it into NpcProactiveService chance scaling.
+- Added docs/AWAKE-MCM-Reference-20260816.md.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (23 paths including mcm preset smoke).
+- LOCALIZATION_OK source=65 en=84 cn=84.
+- Awake.dll SHA-256 15EA2511767DE27E01775018B4D4F44704C6481A5F673E5B26A5EAD8D20BB0AD.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
