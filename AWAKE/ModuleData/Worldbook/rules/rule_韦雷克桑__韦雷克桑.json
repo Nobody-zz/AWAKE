@@ -1,0 +1,66 @@
+{
+    "id":  "rule_韦雷克桑",
+    "keywords":  [
+                     "韦雷克桑"
+                 ],
+    "ragShortTexts":  [
+                          "韦雷克桑村庄利用奥克斯湖水种植小麦，供应城堡。"
+                      ],
+    "semanticPrototypes":  [
+
+                           ],
+    "kind":  "background",
+    "scope":  "npc",
+    "persistence":  "persistent",
+    "priority":  0,
+    "variantSelection":  "af-best",
+    "variants":  [
+                     {
+                         "priority":  0,
+                         "content":  "韦雷克桑是韦雷克桑堡附近的一座村庄，位于奥克斯湖的湖边。当地村民在湖边平坦的草原上种植小麦，利用湖水灌溉，出产的粮食供应给城堡和周边地区。"
+                     },
+                     {
+                         "When":  {
+                                      "cultures":  [
+                                                       "vlandia"
+                                                   ]
+                                  },
+                         "priority":  0,
+                         "content":  "韦雷克桑在奥克斯湖边上，湖边的地平整，水源也方便，种小麦再合适不过。韦雷克桑堡的守军吃粮不愁，山下村子打的麦子直接送上去。这地方安稳，离巴旦尼亚远，种地的人不用提心吊胆。"
+                     },
+                     {
+                         "When":  {
+                                      "cultures":  [
+                                                       "vlandia"
+                                                   ],
+                                      "roles":  [
+                                                    "merchant",
+                                                    "townsfolk"
+                                                ]
+                                  },
+                         "priority":  0,
+                         "content":  "韦雷克桑的小麦产量稳，奥克斯湖的水不怕旱。一季一季都是好收成，除了供给城堡，多余的还往奥克斯·霍尔那边运。湖边的黑土越种越肥，这村子是瓦兰迪亚少数不愁吃的地方之一。"
+                     },
+                     {
+                         "When":  {
+                                      "roles":  [
+                                                    "wanderer"
+                                                ]
+                                  },
+                         "priority":  0,
+                         "content":  "韦雷克桑靠着奥克斯湖，风景不错。早上湖面起雾，白蒙蒙一片，麦田沿着湖边铺开，绿得晃眼。村民用湖水浇地，水车吱吱呀呀转个不停。那地方安静，鸟叫比人声还多。"
+                     }
+                 ],
+    "textMappings":  [
+                         {
+                             "sourceText":  "韦雷克桑",
+                             "kind":  "bound_settlement_name",
+                             "targetId":  "__bound_settlement__"
+                         },
+                         {
+                             "sourceText":  "韦雷克桑堡",
+                             "kind":  "bound_settlement_name",
+                             "targetId":  "__bound_settlement__"
+                         }
+                     ]
+}

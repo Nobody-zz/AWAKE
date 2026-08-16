@@ -1,0 +1,66 @@
+{
+    "id":  "rule_鲁兰德",
+    "keywords":  [
+                     "鲁兰德"
+                 ],
+    "ragShortTexts":  [
+                          "鲁兰德村庄位于特朗林谷，靠近帕拉汶德，以橡子喂猪。"
+                      ],
+    "semanticPrototypes":  [
+
+                           ],
+    "kind":  "background",
+    "scope":  "npc",
+    "persistence":  "persistent",
+    "priority":  0,
+    "variantSelection":  "af-best",
+    "variants":  [
+                     {
+                         "priority":  0,
+                         "content":  "鲁兰德是帕拉汶德附近的一座村庄，位于特朗中部的林谷中。村民们以橡树林地的橡子为饲料来饲养猪，猪肉和熏肉供给帕拉汶德的市场。"
+                     },
+                     {
+                         "When":  {
+                                      "cultures":  [
+                                                       "vlandia"
+                                                   ]
+                                  },
+                         "priority":  0,
+                         "content":  "鲁兰德的猪是在橡树林里放养的，吃橡子长大的猪肉有一股特别的香味。帕拉汶德那边王宫里办宴会，烤乳猪有不少就是从鲁兰德运过去的。"
+                     },
+                     {
+                         "When":  {
+                                      "cultures":  [
+                                                       "vlandia"
+                                                   ],
+                                      "roles":  [
+                                                    "merchant",
+                                                    "townsfolk"
+                                                ]
+                                  },
+                         "priority":  0,
+                         "content":  "鲁兰德的熏肉在帕拉汶德的市场上很受欢迎。林谷里的橡树秋天落一地橡子，猪吃得膘肥体壮，肉又紧又香。价比别处稍贵一点，但值。"
+                     },
+                     {
+                         "When":  {
+                                      "roles":  [
+                                                    "wanderer"
+                                                ]
+                                  },
+                         "priority":  0,
+                         "content":  "我在鲁兰德歇过脚，那地方在林谷里，安静得很，到处是橡树。秋天的时候，林子地上铺满了橡子，猪在上面拱来拱去，吃得比人还自在。"
+                     }
+                 ],
+    "textMappings":  [
+                         {
+                             "sourceText":  "鲁兰德",
+                             "kind":  "bound_settlement_name",
+                             "targetId":  "__bound_settlement__"
+                         },
+                         {
+                             "sourceText":  "帕拉汶德",
+                             "kind":  "bound_settlement_name",
+                             "targetId":  "__bound_settlement__"
+                         }
+                     ]
+}

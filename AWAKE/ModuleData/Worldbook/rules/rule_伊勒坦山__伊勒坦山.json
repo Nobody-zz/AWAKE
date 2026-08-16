@@ -1,0 +1,47 @@
+{
+    "id":  "rule_伊勒坦山",
+    "keywords":  [
+                     "伊勒坦山"
+                 ],
+    "ragShortTexts":  [
+                          "伊勒坦运输线从伊勒坦山向帝国运输牛羊谷物"
+                      ],
+    "semanticPrototypes":  [
+
+                           ],
+    "kind":  "background",
+    "scope":  "npc",
+    "persistence":  "persistent",
+    "priority":  0,
+    "variantSelection":  "af-best",
+    "variants":  [
+                     {
+                         "When":  {
+
+                                  },
+                         "priority":  0,
+                         "content":  "伊勒坦山是哪？不知道，听名字像库赛特的山"
+                     },
+                     {
+                         "When":  {
+                                      "cultures":  [
+                                                       "aserai"
+                                                   ]
+                                  },
+                         "priority":  0,
+                         "content":  "apple u，伊勒坦山是我们和斯特吉亚的界山呀"
+                     },
+                     {
+                         "When":  {
+                                      "skillMin":  {
+                                                       "scouting":  120
+                                                   }
+                                  },
+                         "priority":  0,
+                         "content":  "伊勒坦山坐落于卡拉迪亚大陆东北角，是库赛特与斯特基亚的界山，著名的伊勒坦运输线就是从这里发源，向帝国源源不断地运输牛羊和谷物"
+                     }
+                 ],
+    "textMappings":  [
+
+                     ]
+}

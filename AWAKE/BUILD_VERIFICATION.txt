@@ -2078,3 +2078,10 @@ AF Worldbook One-Time Migration Tool (2026-08-16, no version bump)
 - SdkSmoke: PASS ALL Awake.SdkSmoke (explicit variantSelection parse + unsupported warning paths).
 - Awake.dll SHA-256 C0C44241AE2AA530581130CB729DC9E38640952E70D548FBEBCA8A95ED6A1526.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Bundled Calradic Chronicle Worldbook (2026-08-16, no version bump)
+- Migrated PlayerExports/卡拉迪亚编年史 into ModuleData/Worldbook with manifest id awake.calradia.chronicle and sourceFormat=awake.
+- 337 rules + 415 personas + auxiliary directories = 759 files, ~3 MB; all JSON parse, no PascalCase leftovers, variantSelection=af-best on all 337 rule files.
+- Worldbook directory is byte-identical across project ModuleData, dist Modules/AWAKE, and game Modules/AWAKE (aggregate SHA-256 AD655791521FE34FEA7F6B94152A0FEB09A2C5C6712F2F751C032A7E768E278D).
+- Awake.dll SHA-256 remains C0C44241AE2AA530581130CB729DC9E38640952E70D548FBEBCA8A95ED6A1526.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

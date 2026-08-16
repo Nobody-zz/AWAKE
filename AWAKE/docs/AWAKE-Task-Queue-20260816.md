@@ -2,7 +2,7 @@
 
 > 日期：2026-08-16
 > 规则：每轮开始先读本文件；延续候选必须列出并等待用户决策，不自动选择下一项。
-> 本轮：世界书 TextMappings 22 种 AF Kind 覆盖，SdkSmoke 通过，未提版。
+> 本轮：卡拉迪亚编年史已迁移嵌入 AWAKE，游戏内验收待用户执行，未提版。
 
 ## 当前主线
 
@@ -29,6 +29,7 @@
   - 世界书一次性迁移脚本 `tools/migrate_af_worldbook.ps1`
   - 世界书迁移规范 `AWAKE-Worldbook-Migration-Spec-20260816.md`
   - 世界书 `variantSelection` 显式解析与校验
+  - 卡拉迪亚编年史嵌入 `ModuleData/Worldbook`（759 文件，约 3 MB）
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）
@@ -50,10 +51,12 @@
 - Preprocess/Postprocess 路由：已注册但无调用方。
 - 无名 NPC：有身份回退，无永久记忆与命令边界。
 - 遭遇面谈 / 场景 T/Y / 通讯录：入口存在，统一会话未完成。
+- 世界书游戏内验收：世界书已嵌入，等待用户进游戏验证 `worldbook_runtime_initialized`、NPC 对话命中、TextMappings、persona 注入。
 
 ## 远程同步说明
 
 - 远端 `main` 原为更早版本的无共同祖先根提交 `8ae927d Add files via upload`；用户确认后，以本地最新 `main` 为权威，强推覆盖远端。
+- `Bundle Calradic Chronicle worldbook` 本地提交 `2b32d2c` 已建；推送因 GitHub 连接失败待网络恢复后重试。
 
 ## 排队中（新想法/建议，不打断当前任务）
 

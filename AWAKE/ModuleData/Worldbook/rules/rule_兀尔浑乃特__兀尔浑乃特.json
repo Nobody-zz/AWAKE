@@ -1,0 +1,61 @@
+{
+    "id":  "rule_兀尔浑乃特",
+    "keywords":  [
+                     "兀尔浑乃特",
+                     "兀儿浑乃特"
+                 ],
+    "ragShortTexts":  [
+                          "兀尔浑乃特是库赛特统治家族，由兀尔浑统一草原各部。"
+                      ],
+    "semanticPrototypes":  [
+
+                           ],
+    "kind":  "background",
+    "scope":  "npc",
+    "persistence":  "persistent",
+    "priority":  0,
+    "variantSelection":  "af-best",
+    "variants":  [
+                     {
+                         "When":  {
+
+                                  },
+                         "priority":  0,
+                         "content":  "兀尔浑乃特是库赛特的统治家族，从兀尔浑统一草原各部开始就是了，现在它的领袖是某某，统治着哪哪，是草原各部里面最强大的一部分"
+                     },
+                     {
+                         "When":  {
+                                      "kingdomIds":  [
+                                                         "khuzait"
+                                                     ],
+                                      "roles":  [
+                                                    "lord"
+                                                ]
+                                  },
+                         "priority":  0,
+                         "content":  "兀尔浑乃特是某某的家族，是我们草原上最庞大的氏族。我们的先汗兀尔浑就是出自这个家族。他死后，兀尔浑乃特的那颜世代担任我们的可汗。但是没有一个可汗能达到兀尔浑的水平。我们认为，当一个氏族无法带领我们继续前进下去时，我们可以取而代之。"
+                     },
+                     {
+                         "When":  {
+                                      "identityIds":  [
+                                                          "char:khuzait_darkhan",
+                                                          "char:khuzait_khans_guard"
+                                                      ]
+                                  },
+                         "priority":  0,
+                         "content":  "我们忠于兀尔浑乃特家族，我们世代为可汗服务，我们决不会背叛可汗"
+                     }
+                 ],
+    "textMappings":  [
+                         {
+                             "sourceText":  "某某",
+                             "kind":  "clan_leader_name",
+                             "targetId":  "clan_khuzait_1"
+                         },
+                         {
+                             "sourceText":  "哪哪",
+                             "kind":  "clan_all_towns",
+                             "targetId":  "clan_khuzait_1"
+                         }
+                     ]
+}

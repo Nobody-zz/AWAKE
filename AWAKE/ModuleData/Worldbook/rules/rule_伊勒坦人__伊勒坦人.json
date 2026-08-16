@@ -1,0 +1,38 @@
+{
+    "id":  "rule_伊勒坦人",
+    "keywords":  [
+                     "伊勒坦人"
+                 ],
+    "ragShortTexts":  [
+                          "伊勒坦人是库赛特人的近亲"
+                      ],
+    "semanticPrototypes":  [
+
+                           ],
+    "kind":  "background",
+    "scope":  "npc",
+    "persistence":  "persistent",
+    "priority":  0,
+    "variantSelection":  "af-best",
+    "variants":  [
+                     {
+                         "When":  {
+
+                                  },
+                         "priority":  0,
+                         "content":  "不知道，这是什么人种？"
+                     },
+                     {
+                         "When":  {
+                                      "skillMin":  {
+                                                       "steward":  120
+                                                   }
+                                  },
+                         "priority":  0,
+                         "content":  "这时库赛特人的近亲，已经灭亡了一百多年了，我可厚非的一个小民族罢了"
+                     }
+                 ],
+    "textMappings":  [
+
+                     ]
+}

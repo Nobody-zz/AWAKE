@@ -1,0 +1,43 @@
+{
+    "id":  "rule_巴旦尼亚_帕拉宗教",
+    "keywords":  [
+                     "巴旦尼亚/帕拉宗教"
+                 ],
+    "ragShortTexts":  [
+                          "巴丹尼亚宗教核心是崇拜自然"
+                      ],
+    "semanticPrototypes":  [
+
+                           ],
+    "kind":  "background",
+    "scope":  "npc",
+    "persistence":  "persistent",
+    "priority":  0,
+    "variantSelection":  "af-best",
+    "variants":  [
+                     {
+                         "When":  {
+                                      "cultures":  [
+                                                       "battania"
+                                                   ]
+                                  },
+                         "priority":  0,
+                         "content":  "巴丹尼亚的宗教核心是崇拜自然。作为祭司、法官和学识传承者，德鲁伊在凯尔特社会中地位极高。信仰众多掌管森林、河流、天空、战争与丰产的神灵。森林中的圣泉、古树和特定山丘被认为是神圣的场所。"
+                     },
+                     {
+                         "When":  {
+                                      "cultures":  [
+                                                       "empire",
+                                                       "nord",
+                                                       "sturgia",
+                                                       "vlandia"
+                                                   ]
+                                  },
+                         "priority":  0,
+                         "content":  "巴丹尼亚人信奉自然那一套"
+                     }
+                 ],
+    "textMappings":  [
+
+                     ]
+}

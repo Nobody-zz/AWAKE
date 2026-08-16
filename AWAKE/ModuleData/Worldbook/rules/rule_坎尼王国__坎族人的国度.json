@@ -1,0 +1,58 @@
+{
+    "id":  "rule_坎尼王国",
+    "keywords":  [
+                     "坎族人的国度",
+                     "坎尼共和国",
+                     "坎尼人的国度"
+                 ],
+    "ragShortTexts":  [
+                          "坎尼人曾建商业共和国于西帝国与阿塞莱交界，后被双方瓜分，虽居故土但已失话事权。"
+                      ],
+    "semanticPrototypes":  [
+
+                           ],
+    "kind":  "background",
+    "scope":  "npc",
+    "persistence":  "persistent",
+    "priority":  0,
+    "variantSelection":  "af-best",
+    "variants":  [
+                     {
+                         "When":  {
+                                      "kingdomIds":  [
+                                                         "aserai",
+                                                         "empire_w"
+                                                     ],
+                                      "settlementIds":  [
+                                                            "town_a1",
+                                                            "town_ew4"
+                                                        ],
+                                      "roles":  [
+                                                    "lord"
+                                                ],
+                                      "skillMin":  {
+                                                       "steward":  60
+                                                   }
+                                  },
+                         "priority":  0,
+                         "content":  "坎尼人曾经在西帝国和阿塞莱交界处建立过十分强大的商业共和国，不过因为帝国和阿塞莱的发展，坎尼人的国家最后也被帝国的领主和阿塞莱的商人瓜分了。\n坎尼人虽然仍然继续居住在他们的故土，但不再拥有话事权。"
+                     },
+                     {
+                         "When":  {
+                                      "cultures":  [
+                                                       "aserai",
+                                                       "empire"
+                                                   ],
+                                      "roles":  [
+                                                    "lord",
+                                                    "notable"
+                                                ]
+                                  },
+                         "priority":  0,
+                         "content":  "坎尼人曾经好像建立过一个国家，不过后来销声匿迹了。"
+                     }
+                 ],
+    "textMappings":  [
+
+                     ]
+}

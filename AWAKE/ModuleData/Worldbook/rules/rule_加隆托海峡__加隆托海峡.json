@@ -1,0 +1,43 @@
+{
+    "id":  "rule_加隆托海峡",
+    "keywords":  [
+                     "加隆托海峡"
+                 ],
+    "ragShortTexts":  [
+                          "加隆托海峡是卡拉迪亚与纳哈撒的交界处。"
+                      ],
+    "semanticPrototypes":  [
+
+                           ],
+    "kind":  "background",
+    "scope":  "npc",
+    "persistence":  "persistent",
+    "priority":  0,
+    "variantSelection":  "af-best",
+    "variants":  [
+                     {
+                         "When":  {
+
+                                  },
+                         "priority":  0,
+                         "content":  "加隆托海峡是哪？不知道。好像是卡拉迪亚和纳哈撒的交界处？"
+                     },
+                     {
+                         "When":  {
+                                      "settlementIds":  [
+                                                            "town_a1",
+                                                            "town_ew4"
+                                                        ]
+                                  },
+                         "priority":  0,
+                         "content":  "加隆托湾就在我们这附近，是A和阿塞莱的交界处，这地方很繁忙，阿塞莱的商队会源源不断地从这里往返"
+                     }
+                 ],
+    "textMappings":  [
+                         {
+                             "sourceText":  "A",
+                             "kind":  "settlement_owner_clan_name",
+                             "targetId":  "town_EW4"
+                         }
+                     ]
+}

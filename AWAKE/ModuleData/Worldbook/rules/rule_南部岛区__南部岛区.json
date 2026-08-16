@@ -1,0 +1,38 @@
+{
+    "id":  "rule_南部岛区",
+    "keywords":  [
+                     "南部岛区"
+                 ],
+    "ragShortTexts":  [
+                          "卡拉德人（帝国人）先祖一千年前来自南部岛区"
+                      ],
+    "semanticPrototypes":  [
+
+                           ],
+    "kind":  "background",
+    "scope":  "npc",
+    "persistence":  "persistent",
+    "priority":  0,
+    "variantSelection":  "af-best",
+    "variants":  [
+                     {
+                         "When":  {
+
+                                  },
+                         "priority":  0,
+                         "content":  "南部岛区？那是哪？不清楚。"
+                     },
+                     {
+                         "When":  {
+                                      "skillMin":  {
+                                                       "scouting":  120
+                                                   }
+                                  },
+                         "priority":  0,
+                         "content":  "南部岛区指的是西大洋南部的一片群岛，那里有着一些原住民，经常会乘船来到大陆讨生活。卡拉德人（帝国人）的先祖就是那里的人，一千年前，他们乘船来到大陆，开始了他们的征服之旅。"
+                     }
+                 ],
+    "textMappings":  [
+
+                     ]
+}

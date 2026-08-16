@@ -1,0 +1,38 @@
+{
+    "id":  "rule_狄亚特马",
+    "keywords":  [
+                     "狄亚特马",
+                     "北行在"
+                 ],
+    "ragShortTexts":  [
+                          "帝国将军在德律亚神殿废墟上建狄亚特马"
+                      ],
+    "semanticPrototypes":  [
+
+                           ],
+    "kind":  "background",
+    "scope":  "npc",
+    "persistence":  "persistent",
+    "priority":  0,
+    "variantSelection":  "af-best",
+    "variants":  [
+                     {
+                         "When":  {
+                                      "roles":  [
+                                                    "lord"
+                                                ]
+                                  },
+                         "priority":  0,
+                         "content":  "狄亚特马，圣裁之城，一位帝国将军在能俯瞰拉科尼斯湖的德律亚神殿的废墟之上建立了这座城市。德律亚人一一最北边的帕拉人一一在此地打了最后一战，他们掀起了反抗帝国的叛乱，随后又被剿灭。根据传说，他们被包围在湖的浅滩处，勇敢地战至最后一人，猩红的湖水将他们吞没\n\n狄亚特马是卢孔的首都。A"
+                     }
+                 ],
+    "textMappings":  [
+                         {
+                             "sourceText":  "A",
+                             "kind":  "status|clan|has_any_town",
+                             "targetId":  "clan_empire_north_1",
+                             "trueText":  "卢孔及其后继者的统治依旧稳固",
+                             "falseText":  "狄亚特马已落入敌手"
+                         }
+                     ]
+}

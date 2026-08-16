@@ -1,0 +1,63 @@
+{
+    "id":  "rule_克洛托耳",
+    "keywords":  [
+                     "克洛托耳",
+                     "克洛托耳元帅",
+                     "克帅"
+                 ],
+    "ragShortTexts":  [
+                          "克洛托耳元帅战无不胜，效忠西帝国。"
+                      ],
+    "semanticPrototypes":  [
+
+                           ],
+    "kind":  "background",
+    "scope":  "npc",
+    "persistence":  "persistent",
+    "priority":  0,
+    "variantSelection":  "af-best",
+    "variants":  [
+                     {
+                         "When":  {
+
+                                  },
+                         "priority":  0,
+                         "content":  "谁不认识克洛托耳？他家世代镇守帝国西疆，满门忠烈，这大家都知道。而且他战无不胜，是加里俄斯的得力助手，效忠于西帝国。A"
+                     },
+                     {
+                         "When":  {
+                                      "kingdomIds":  [
+                                                         "clan_empire_west_1"
+                                                     ]
+                                  },
+                         "priority":  0,
+                         "content":  "哎呀，克大帅可是我们的重臣呀，他和我们家唇齿相依呀，离了谁都不行，A，科穆诺斯和狄俄尼科斯永远是一家"
+                     },
+                     {
+                         "When":  {
+                                      "kingdomIds":  [
+                                                         "empire_w"
+                                                     ],
+                                      "roles":  [
+                                                    "lord"
+                                                ]
+                                  },
+                         "priority":  0,
+                         "content":  "克大帅可是我们帝国的肱骨之臣呀，他们家世代镇守帝国西疆，满门忠烈呀，他本人，他儿子，他妻子，甚至她女儿都是极其出色的将领。分家后，加里俄斯皇帝很器重他，他也没有辜负加皇帝的信任，他真是一个极其好的将领，一个纯粹为国家着想的人，A"
+                     }
+                 ],
+    "textMappings":  [
+                         {
+                             "sourceText":  "B",
+                             "kind":  "clan_leader_name",
+                             "targetId":  "clan_empire_west_3"
+                         },
+                         {
+                             "sourceText":  "A",
+                             "kind":  "status|hero|is_dead",
+                             "targetId":  "lord_1_11",
+                             "trueText":  "他已经与世长辞了",
+                             "falseText":  "他依旧活着，是在世传奇"
+                         }
+                     ]
+}
