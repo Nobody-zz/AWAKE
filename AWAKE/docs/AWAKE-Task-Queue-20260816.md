@@ -228,14 +228,22 @@
 
 ## 最新游戏反馈（2026-08-17）
 
+- `FB-20260817-10`：地图 AI 对话不会写入通讯录历史。
+  - 来源：`Awake.log` 18:28:58 `transcript_turn_rejected key=hero:lord_1_177 source=map`。
+  - 证据：`AwakeTranscriptConstants.ValidSources` 只含 `messenger/scene/encounter/event/proactive/letter/system`，没有 `map`；地图对话 `NpcDialogueLauncher.TryOpenDialogue(hero, "map")` 会以 `source=map` 调 transcript，被校验拒绝。
+  - 优先级：P1；状态：`queued`；分类：`non_blocking`。
+- `FB-20260817-11`：记忆日结路由仍被云外发拒绝。
+  - 来源：`companion.log` 02:29:01 / 02:30:49 `AWAKE.route.memory.daily | Code: ai.cloud_export_denied`；`Awake.log` 同步 `ai_task_submit_accepted route=AWAKE.route.memory.daily`。
+  - 证据：`NpcMemoryService.SummarizeAsync` 固定传 `CloudExportPolicy.None`，云 Provider 下该路由仍被框架拒绝；NPC 对话改为 `player_state` 后已能成功，但记忆摘要没有走同一云外发分类。
+  - 优先级：P1；状态：`queued`；分类：`non_blocking`。
 - `FB-20260817-9`：载入存档后始终进不了大地图。
   - 来源：用户实测 + `AwakeProbe.log` / `framework.log`。
   - 证据：`CampaignSessionStarting` 已记录，但 `CampaignSessionReady` 始终未出现；`Awake.log` 在 `game_start` 后停止；进程 CPU 持续增长，日志不再增长；`save054.sav` 只含 AWAKE + MarcusAIFramework，模块列表与当前一致。
   - 关联：`195c263` 新增的 `TryShowAutoGuide` 会在 `Campaign.Current != null && Mission.Current == null` 时尝试弹出首启向导，读档阶段正好满足该条件。
-  - 优先级：P0；状态：`fixed_pending_game`；分类：`blocking_current`。
+  - 优先级：P0；状态：`done`；分类：`blocking_current`。
   - 修复：`AwakeTerminalBehavior.TryShowAutoGuide` 现在要求 `GameStateManager.Current?.ActiveState is MapState` 且 `Campaign.Current.CurrentMenuContext == null` 才弹首启向导；`AwakeOnboardingService` 实际弹窗时会记录 `awake_onboarding_show active_state=...`。
   - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产检查通过；DLL SHA-256 `46C4616689704808126FBE725FAC53BE9ED231A5A74438EFFB8A8A4D0687A51C` 已同步 `_build_out/dist/游戏目录`，`release_check OK`。
-  - 下一步：进游戏加载 `save054.sav`，确认能进入大地图且首启向导只在进入地图后出现。
+  - 游戏内验收：`CampaignSessionReady` 已到达，`worldbook_runtime_initialized` 正常，`awake_onboarding_show active_state=MapState` 证明首启向导只在进入地图后弹出；`FB-20260817-9` 关闭。
 - `FB-20260817-1`：大地图 NPC 对话入口割裂。
   - 证据：用户实测；只读核查显示通讯录 `IsNearby` 依赖 `NpcDialogueLauncher.GetNearbyTargets`，遭遇菜单有“面谈（醒世）”，但相遇后缺少可直接调出 AI 对话菜单的入口。
   - 建议方向：先定范围 -> 定格画面 -> 选择具体人物/公开喊话（参考 AF），并统一场景/地图/通讯录入口。
