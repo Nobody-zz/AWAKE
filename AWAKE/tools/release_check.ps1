@@ -12,6 +12,7 @@ $subModuleXml = Join-Path $ProjectRoot "SubModule.xml"
 $awakeConstants = Join-Path $ProjectRoot "src\AwakeConstants.cs"
 $subModuleCs = Join-Path $ProjectRoot "src\SubModule.cs"
 $validateScript = Join-Path $ProjectRoot "tools\validate_localization.ps1"
+$assetLintScript = Join-Path $ProjectRoot "tools\asset_boundary_lint.ps1"
 $failed = $false
 
 function Assert-True([string]$Message, [bool]$Condition) {
@@ -83,6 +84,7 @@ $required = @(
     "GUI\Prefabs\AwakeMessenger.xml",
     "GUI\Prefabs\WorldEventInbox.xml",
     "GUI\Prefabs\WeeklyReportBrowser.xml",
+    "GUI\Prefabs\SceneDialogueStatus.xml",
     "ModuleData\Languages\awake_strings.xml",
     "ModuleData\Languages\CNs\awake_strings-zh-HANS.xml",
     "ModuleData\Worldbook\manifest.json"
@@ -103,6 +105,15 @@ if (Test-Path $validateScript) {
         (($localizationOutput | Out-String) -match 'LOCALIZATION_OK')
 } else {
     Assert-True "Localization validator exists" $false
+}
+
+if (Test-Path $assetLintScript) {
+    $assetOutput = & powershell -NoProfile -ExecutionPolicy Bypass -File $assetLintScript 2>&1
+    $assetOutput | ForEach-Object { Write-Output "ASSET_LINT $_" }
+    Assert-True "Asset boundary lint passed" `
+        (($assetOutput | Out-String) -match 'ASSET_BOUNDARY_OK')
+} else {
+    Assert-True "Asset boundary lint exists" $false
 }
 
 if ($failed) {

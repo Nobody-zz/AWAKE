@@ -77,7 +77,9 @@ internal sealed class NpcDialogueVM : ViewModel
     public bool CanSend => _service != null && _service.IsAvailable && !_isLoading && !string.IsNullOrWhiteSpace(_inputText);
 
     [DataSourceProperty]
-    public string SendButtonText => AwakeLocalization.Resolve("awake.ui.talk", "交谈");
+    public string SendButtonText => AwakeLocalization.Resolve(
+        _service != null && _service.IsSceneShout ? "awake.scene_shout.send" : "awake.ui.talk",
+        _service != null && _service.IsSceneShout ? "喊话" : "交谈");
 
     [DataSourceProperty]
     public string CloseButtonText => AwakeLocalization.Resolve("awake.ui.close", "离开");
@@ -90,8 +92,12 @@ internal sealed class NpcDialogueVM : ViewModel
         _service = service;
         _close = close;
         _titleText = service.DisplayTitle;
-        _noticeText = AwakeLocalization.Resolve("awake.ui.notice_opening", "对方似乎有话想对你说。");
-        _statusText = AwakeLocalization.Resolve("awake.ui.status_starting", "对话正在苏醒……");
+        _noticeText = AwakeLocalization.Resolve(
+            service.IsSceneShout ? "awake.scene_shout.notice" : "awake.ui.notice_opening",
+            service.IsSceneShout ? "你向场景喊了一句，声音在人群里传开。" : "对方似乎有话想对你说。");
+        _statusText = AwakeLocalization.Resolve(
+            service.IsSceneShout ? "awake.scene_shout.status_starting" : "awake.ui.status_starting",
+            service.IsSceneShout ? "场景正在回应……" : "对话正在苏醒……");
         AddChatRow(service.SpeakerName, _noticeText);
     }
 
@@ -184,10 +190,12 @@ internal sealed class NpcDialogueVM : ViewModel
                 StreamingText = string.Empty;
                 AddChatRow(_service.SpeakerName, turnResult.Reply);
                 NoticeText = string.IsNullOrWhiteSpace(turnResult.Mood)
-                    ? AwakeLocalization.Resolve("awake.ui.replied", "对方已回应。")
+                    ? AwakeLocalization.Resolve(
+                        _service.IsSceneShout ? "awake.scene_shout.replied" : "awake.ui.replied",
+                        _service.IsSceneShout ? "场景有了回应。" : "对方已回应。")
                     : AwakeLocalization.Resolve(
-                        "awake.ui.replied_mood",
-                        "对方已回应（" + turnResult.Mood + "）。",
+                        _service.IsSceneShout ? "awake.scene_shout.replied_mood" : "awake.ui.replied_mood",
+                        _service.IsSceneShout ? "场景有了回应（" + turnResult.Mood + "）。" : "对方已回应（" + turnResult.Mood + "）。",
                         new System.Collections.Generic.Dictionary<string, string> { ["MOOD"] = turnResult.Mood });
                 IsLoading = false;
                 break;

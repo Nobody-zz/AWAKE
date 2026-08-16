@@ -32,7 +32,11 @@ internal static class NpcDialogueOutputValidator
             error = "empty_output";
             return false;
         }
-        if (!StringComparer.Ordinal.Equals(expectedContractId, NpcDialogueConstants.OutputContractId))
+        bool sceneContract = StringComparer.Ordinal.Equals(
+            expectedContractId,
+            NpcDialogueConstants.SceneShoutOutputContractId);
+        if (!StringComparer.Ordinal.Equals(expectedContractId, NpcDialogueConstants.OutputContractId)
+            && !sceneContract)
         {
             error = "contract_mismatch";
             return false;
@@ -88,6 +92,11 @@ internal static class NpcDialogueOutputValidator
         NpcDialogueCommandProposal command = null;
         if (root["command"] != null)
         {
+            if (sceneContract)
+            {
+                error = "command_not_allowed";
+                return false;
+            }
             if (root["command"] is not JObject commandObject)
             {
                 error = "invalid_command";

@@ -16,11 +16,21 @@
     <Reference Include="TaleWorlds.CampaignSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.CampaignSystem.dll" Private="true" />
     <Reference Include="TaleWorlds.Core" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Core.dll" Private="true" />
     <Reference Include="TaleWorlds.Library" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Library.dll" Private="true" />
+    <Reference Include="TaleWorlds.InputSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.InputSystem.dll" Private="true" />
     <Reference Include="TaleWorlds.Localization" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Localization.dll" Private="true" />
     <Reference Include="TaleWorlds.ObjectSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.ObjectSystem.dll" Private="true" />
     <Compile Include="..\AWAKE\src\AwakeConfig.cs" Link="AwakeConfig.cs" />
     <Compile Include="..\AWAKE\src\AwakeConstants.cs" Link="AwakeConstants.cs" />
     <Compile Include="..\AWAKE\src\SceneDialogueSelection.cs" Link="SceneDialogueSelection.cs" />
+    <Compile Include="..\AWAKE\src\SceneSelectionController.cs" Link="SceneSelectionController.cs" />
+    <Compile Include="..\AWAKE\src\SceneDialoguePreviewMath.cs" Link="SceneDialoguePreviewMath.cs" />
+    <Compile Include="..\AWAKE\src\SceneShoutAvailability.cs" Link="SceneShoutAvailability.cs" />
+    <Compile Include="..\AWAKE\src\SceneDialogueModePolicy.cs" Link="SceneDialogueModePolicy.cs" />
+    <Compile Include="..\AWAKE\src\SceneInputKeyMapper.cs" Link="SceneInputKeyMapper.cs" />
+    <Compile Include="..\AWAKE\src\AwakeTranscriptModels.cs" Link="AwakeTranscriptModels.cs" />
+    <Compile Include="..\AWAKE\src\AwakeTranscriptKeys.cs" Link="AwakeTranscriptKeys.cs" />
+    <Compile Include="..\AWAKE\src\AwakeTranscriptService.cs" Link="AwakeTranscriptService.cs" />
+    <Compile Include="..\AWAKE\src\AwakeTranscriptMigration.cs" Link="AwakeTranscriptMigration.cs" />
     <Compile Include="..\AWAKE\src\AwakeEventModels.cs" Link="AwakeEventModels.cs" />
     <Compile Include="..\AWAKE\src\AwakeEventEngineCore.cs" Link="AwakeEventEngineCore.cs" />
     <Compile Include="..\AWAKE\src\AwakeEventEffectRules.cs" Link="AwakeEventEffectRules.cs" />

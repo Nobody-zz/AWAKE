@@ -7,9 +7,9 @@
 
 ## 当前检查点
 
-- 当前任务：B 类推完 + 大审核（已完成）。
-- 最近完成：B 类 B2/B8/B9 实现完成；双版本构建、SdkSmoke、本地化、发布校验、prefab XML 与代码审查全部通过；审计修复已推送。
-- 下一步：等待用户选择 C 类或进游戏验收。
+- 当前任务：`PLAN-ContactHubHistory-20260816.md` 代码完成，状态 `pending_game`。
+- 最近完成：Messenger 旧历史写入已弃用，通讯录聊天/历史统一走 transcript；`AwakeMessengerHistory` 仅保留旧档迁移读取；双版本构建、SdkSmoke、本地化、发布校验全部通过，DLL 已同步 dist/游戏目录。
+- 下一步：用户进游戏验收通讯录/历史 Tab/固定/transcript-only 联系人；通过后切 `PLAN-Interactions`。
 - 阻塞：游戏内验收需用户运行游戏。
 
 ### A 类当前状态
@@ -185,6 +185,7 @@
 
 - Messenger 群聊、头像、媒体、TTS。
 - 记忆分级、承诺账本、秘闻传播。
+- `FB-20260816-2`：通讯录升级为“关系中心 / 对话历史管理器 / 人物卡片 / 写信 / 交互动作 / 统一对话入口”，方案见 `docs/AWAKE-ContactPanel-Concept-20260816.md`；状态 `queued`，等用户确定分阶段范围后走 grill-me。
 - 世界事件 / 政令。
 - 内容包接入后的事件内容批次。
 - 体验与测试改进建议：见 `docs/AWAKE-UX-Dev-Improvements-20260816.md`；含首启向导、收件箱/周报 UI、开发者检查面板、游戏内测试触发器、结构化日志等。
@@ -196,6 +197,67 @@
 - 内容包公开 API 落地。
 - 女神人格、情色机制。
 - 旧 AF / 爱与恨兼容。
+
+## 最新游戏反馈（2026-08-16）
+
+- `FB-20260816-1`：场景选人范围框选不明显，难以选中具体对象；希望增加“近→远”和“远→近”两个循环键，并支持不选具体人物直接场景喊话。
+  - 来源：用户实测反馈 + `Awake.log` 显示场景 overlay 多次成功打开（`a23`、`a20`），无崩溃。
+  - 关联：`PLAN-SceneVisualSelection-20260816.md`（已 APPROVED，待用户签收；当前只落了 T/Y 基础循环，未落地面扇形与候选可视化）。
+  - 优先级：P1；状态：`fixed_pending_game`；分类：`non_blocking`，不打断当前任务。
+  - 硬性验收红线：标记必须非常明显。地面范围、候选高亮、当前目标高亮三者要能一眼分辨，不得出现“有标记但看不清、被环境色吞掉、远距离不可见”的情况。
+  - 下一步：已签收并实施，代码完成待游戏内验收。
+  - 本轮实施：双键往返、场景喊话、地面扇形 + 候选/目标高亮、持续状态条、场景模式服务与独立输出契约；双版本构建 0 警告 0 错误，SdkSmoke 34 条 PASS，本地化 156/180/180，release_check OK，DLL 已同步 dist/游戏目录。
+
+## 评估原则反馈（2026-08-16）
+
+- `FB-20260816-3`：设计出发点不能只问效率和可行性，必须同时考虑“玩家观感”与“开发者制作/维护难度”。
+- 已纳入：`AWAKE-ContactPanel-Concept-20260816.md`、`Five-Corrections-Revised-20260816.md`、`docs/grill/Grill-Summary-20260816.md`。
+- 后续 GRILLME / PLAN 审查统一加入两条轴；玩家可理解优先，高维护成本默认先做低维护版本。
+
+- `FB-20260816-4`：重新判断 GRILLME 轮次，不再默认每条 50 轮。
+- 新策略：默认 PLAN `MAX_ROUNDS=5`；统一会话/交互命令高风险项 `MAX_ROUNDS=8`；资产边界/历史命令低风险项 `MAX_ROUNDS=3`；APPROVED 提前终止，5 轮仍 REVISE 就交用户拆解。
+- 已写入 `docs/grill/Grill-Summary-20260816.md`。
+
+## 可行性核验（2026-08-16）
+
+- API probe：`Hero.Gold` 可读可写；`PartyBase.ItemRoster` 存在；`HeroVM(Hero, bool)` 提供 `ImageIdentifier`。
+- 三份 PLAN 均可行；给金币不因原生 API 阻塞，portrait 可用原生角色头像。
+- 主要风险是范围/回归而非不可实现：建议按 ContactHubHistory → Interactions → UnifiedDialogueSession 分批实施。
+
+## 排队中（新增）
+
+- 场景选人体验增强：`FB-20260816-1`，双键往返选人 + 无目标场景喊话。
+
+## 本轮实施（待游戏内验收）
+
+- 场景选人 UX：`[` 近到远、`]` 远到近、`C` 场景喊话；按住 `T` 显示地面扇形、候选金色轮廓、当前目标品红脉冲。
+- 无目标场景喊话：独立 `scene_shout` 会话、场景专用 prompt/output 契约、拒绝关系命令、不写 NPC 记忆/关系。
+- 持续状态条与轮廓能力探测，不可用时走文字兜底。
+
+## 新概念方案（未进入实现）
+
+- `FB-20260816-2`：通讯录关系中心。参考 AIInfluenceHistoryManager 面板与 AliceMM 对话/写信结构，已拆成 Phase A-E：关系中心核心、历史管理、写信、交互动作、统一对话入口。
+- 关键修正：原始对话、压缩记忆、关系状态分成三层；交互动作走代码保底而非自由文本；场景/地图/通讯录共用同一会话模型。
+- 等待用户拍板：保留天数、固定上限、历史管理器可见性、第一批交互动作、信件送达规则、场景对话是否并入面板。
+
+## 进行中（2026-08-16）
+
+- `GRILL-20260816-2`：已完成两轮。五个关键修正每轮各用独立 Codex 只读审查生成 50 个对抗检查点，累计每项 100 点；第二轮五条均为 REVISE。
+- 结论：概念文字无法收敛，必须转成 schema/命令/存储/UI/测试契约后再 APPROVED。修订版见 `docs/Five-Corrections-Revised-20260816.md`，两轮产物见 `docs/grill/`。
+- 下一步：等用户拍板 Phase A 边界（是否 v1 只做给金币+请求承诺、历史是否升级 transcript v1、场景入口是否保留轻量覆盖层），然后分别写成 PLAN 契约再收敛。
+
+- `PLAN-20260816-3`：三份 PLAN 全部 APPROVED。
+  - `PLAN-ContactHubHistory-20260816.md`：Round 7 APPROVED。
+  - `PLAN-Interactions-20260816.md`：Round 9 APPROVED。
+  - `PLAN-UnifiedDialogueSession-20260816.md`：Round 5 APPROVED。
+  - 用户已签收。当前任务：`PLAN-ContactHubHistory-20260816.md` 代码完成，状态 `pending_game`。
+  - 实现顺序：ContactHubHistory → Interactions → UnifiedDialogueSession。
+- `PLAN-ContactHubHistory` 当前进度：
+  - 完成：canonical key、transcript/contacts/audit schema 与 applier、AwakeTranscriptService、chunk 字节上限、右侧人物卡片、Messenger VM 异步历史加载、联系人按 canonical 去重、回合双行单命令写入、NpcDialogueService transcript sink、asset boundary lint、历史 Tab、transcript-only 联系人发现。
+  - 完成：Messenger 旧历史写入已移除，聊天/历史 Tab 均从 transcript 读取；`AwakeMessengerHistory` 保留为旧档迁移读取源。
+  - 自检修复：ChunkIndex 支持跨 chunk 固定、turn 幂等键加序号、历史加载竞态防护、pin 只在实际成功后刷新、迁移分批防超限；首次历史读取等待迁移完成，避免旧档漏读。
+  - 下一步：游戏内验收通讯录/历史 Tab/固定/transcript-only 联系人；通过后切 `PLAN-Interactions`。
+  - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；localization 165/193/193；asset lint 107 文件 OK；release_check OK；DLL SHA-256 5578473BE803345485C78E514850758B932406F5B21CF0E1DF0DEE594F5E68D1 已同步 _build_out/dist/游戏目录。
 
 ## 远程同步
 

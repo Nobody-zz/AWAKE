@@ -19,6 +19,9 @@ internal sealed class NpcDialogueService : IDisposable
     private readonly string _heroId;
     private readonly string _heroName;
     private readonly string _sceneKeywords;
+    private readonly bool _isSceneShout;
+    private readonly string _contactKey;
+    private readonly string _entrySource;
     private readonly ConcurrentQueue<NpcDialogueUiEvent> _uiEvents = new ConcurrentQueue<NpcDialogueUiEvent>();
     private readonly List<NpcDialogueChatEntry> _history = new List<NpcDialogueChatEntry>();
     private readonly object _commandGate = new object();
@@ -46,21 +49,54 @@ internal sealed class NpcDialogueService : IDisposable
     private string _memoryBlock = string.Empty;
     private string _npcState = string.Empty;
     private string _memoryConversationId = string.Empty;
+    private string _transcriptConversationId = string.Empty;
+    private int _transcriptTurnSequence;
 
     internal NpcDialogueService(IMarcusAiFrameworkHost host, string heroId, string heroName, string sceneKeywords)
+        : this(host, heroId, heroName, sceneKeywords, false, "npc_dialogue")
+    {
+    }
+
+    internal NpcDialogueService(
+        IMarcusAiFrameworkHost host,
+        string heroId,
+        string heroName,
+        string sceneKeywords,
+        bool isSceneShout,
+        string entrySource = "npc_dialogue")
     {
         _host = host ?? throw new ArgumentNullException(nameof(host));
         _target = null;
         _heroId = heroId ?? string.Empty;
         _heroName = string.IsNullOrWhiteSpace(heroName) ? _heroId : heroName;
         _sceneKeywords = sceneKeywords ?? string.Empty;
+        _isSceneShout = isSceneShout;
+        _entrySource = string.IsNullOrWhiteSpace(entrySource) ? "npc_dialogue" : entrySource;
+        _contactKey = ResolveContactKey(heroId);
         _gateway = new AiTaskGateway(host);
     }
 
     internal NpcDialogueService(IMarcusAiFrameworkHost host, AwakeNpcTarget target, string sceneKeywords)
-        : this(host, target.StableId, target.DisplayName, sceneKeywords)
+        : this(host, target.StableId, target.DisplayName, sceneKeywords, false, "npc_dialogue")
     {
         _target = target;
+    }
+
+    internal NpcDialogueService(IMarcusAiFrameworkHost host, AwakeNpcTarget target, string sceneKeywords, string entrySource)
+        : this(host, target.StableId, target.DisplayName, sceneKeywords, false, entrySource)
+    {
+        _target = target;
+    }
+
+    internal static NpcDialogueService CreateSceneShout(IMarcusAiFrameworkHost host, string sceneKeywords)
+    {
+        return new NpcDialogueService(
+            host,
+            "scene:current",
+            AwakeLocalization.Resolve("awake.scene_shout.speaker", "附近的人们"),
+            sceneKeywords,
+            true,
+            "scene_shout");
     }
 
     internal bool IsAvailable
@@ -92,10 +128,16 @@ internal sealed class NpcDialogueService : IDisposable
         }
     }
 
+    internal bool IsSceneShout => _isSceneShout;
+
     internal string DisplayTitle
     {
         get
         {
+            if (_isSceneShout)
+            {
+                return AwakeLocalization.Resolve("awake.scene_shout.title", "向场景喊话");
+            }
             return AwakeLocalization.Resolve(
                 "awake.dialogue.npc_title",
                 "醒世·与 " + _heroName + " 交谈",
@@ -190,7 +232,9 @@ internal sealed class NpcDialogueService : IDisposable
             AiTaskSubmitResult submitted = await _gateway.SubmitAsync(
                 NpcDialogueConstants.RouteId,
                 inputText,
-                NpcDialogueConstants.OutputContractId,
+                _isSceneShout
+                    ? NpcDialogueConstants.SceneShoutOutputContractId
+                    : NpcDialogueConstants.OutputContractId,
                 CloudExportPolicy.None,
                 true,
                 onEvent,
@@ -284,21 +328,24 @@ internal sealed class NpcDialogueService : IDisposable
             if (_disposed) return;
             _disposed = true;
             _waitingSinceUtc = null;
-            NpcMemoryService memory = NpcMemoryService.Current;
-            bool hasContent = _history.Count > 0;
-            if (!hasContent)
+            if (!_isSceneShout)
             {
-                lock (_commandGate) hasContent = _settledFacts.Count > 0;
-            }
-            if (memory != null && !string.IsNullOrWhiteSpace(_heroId) && hasContent)
-            {
-                string conversationId;
-                if (memory.Reserve(_heroId, "npc_dialogue", AwakeRuntime.CurrentGameDay(), out conversationId))
+                NpcMemoryService memory = NpcMemoryService.Current;
+                bool hasContent = _history.Count > 0;
+                if (!hasContent)
                 {
-                    _memoryConversationId = conversationId;
-                    string hint = BuildMemorySummaryHint();
-                    Task closeTask = CloseConversationAfterCommandsAsync(memory, conversationId, AwakeRuntime.CurrentGameDay(), hint);
-                    memory.TrackBackground(closeTask);
+                    lock (_commandGate) hasContent = _settledFacts.Count > 0;
+                }
+                if (memory != null && !string.IsNullOrWhiteSpace(_heroId) && hasContent)
+                {
+                    string conversationId;
+                    if (memory.Reserve(_heroId, "npc_dialogue", AwakeRuntime.CurrentGameDay(), out conversationId))
+                    {
+                        _memoryConversationId = conversationId;
+                        string hint = BuildMemorySummaryHint();
+                        Task closeTask = CloseConversationAfterCommandsAsync(memory, conversationId, AwakeRuntime.CurrentGameDay(), hint);
+                        memory.TrackBackground(closeTask);
+                    }
                 }
             }
             if (!_openingHintConsumed)
@@ -329,6 +376,10 @@ internal sealed class NpcDialogueService : IDisposable
             AwakeLog.Write("npc_dialogue_gateway_dispose_error error=" + ex.Message);
         }
         AwakeLog.Write("npc_dialogue_service_disposed hero=" + _heroId);
+        if (_isSceneShout)
+        {
+            AwakeLog.Write("scene_shout_closed");
+        }
     }
 
     private async Task InitializeCoreAsync()
@@ -344,8 +395,11 @@ internal sealed class NpcDialogueService : IDisposable
             RequestContext context = AwakeRuntime.CreateContext(_host, Guid.NewGuid().ToString("N"));
             RefreshHeroInfo();
             await RefreshPlayerKnownAsync(context, CancellationToken.None).ConfigureAwait(false);
-            await LoadMemoryBlockAsync(CancellationToken.None).ConfigureAwait(false);
-            await LoadNpcStateAsync(CancellationToken.None).ConfigureAwait(false);
+            if (!_isSceneShout)
+            {
+                await LoadMemoryBlockAsync(CancellationToken.None).ConfigureAwait(false);
+                await LoadNpcStateAsync(CancellationToken.None).ConfigureAwait(false);
+            }
             await RegisterPromptBestEffortAsync(context, CancellationToken.None).ConfigureAwait(false);
             lock (_gate) _ready = true;
             PushStatus("对话已就绪。");
@@ -400,8 +454,11 @@ internal sealed class NpcDialogueService : IDisposable
         await RegisterPromptBestEffortAsync(context, cancellationToken).ConfigureAwait(false);
         RefreshHeroInfo();
         await RefreshPlayerKnownAsync(context, cancellationToken).ConfigureAwait(false);
-        await LoadMemoryBlockAsync(cancellationToken).ConfigureAwait(false);
-        await LoadNpcStateAsync(cancellationToken).ConfigureAwait(false);
+        if (!_isSceneShout)
+        {
+            await LoadMemoryBlockAsync(cancellationToken).ConfigureAwait(false);
+            await LoadNpcStateAsync(cancellationToken).ConfigureAwait(false);
+        }
         lock (_gate) _ready = true;
         PushStatus("对话已就绪。");
         return new NpcDialogueTurnResult(true, string.Empty, string.Empty, string.Empty);
@@ -413,7 +470,7 @@ internal sealed class NpcDialogueService : IDisposable
         {
             RequestContext registerContext = AwakeRuntime.CreateContext(_host, sourceContext.CorrelationId);
             OperationResult<bool> registered = await _host.Prompts.RegisterAsync(
-                NpcPromptTemplate.CreateDefinition(),
+                _isSceneShout ? NpcPromptTemplate.CreateSceneShoutDefinition() : NpcPromptTemplate.CreateDefinition(),
                 registerContext,
                 cancellationToken).ConfigureAwait(false);
             if (!registered.IsSuccess || !registered.Value)
@@ -470,6 +527,7 @@ internal sealed class NpcDialogueService : IDisposable
 
     private async Task LoadMemoryBlockAsync(CancellationToken cancellationToken)
     {
+        if (_isSceneShout) return;
         try
         {
             NpcMemoryService memory = NpcMemoryService.Current;
@@ -490,6 +548,7 @@ internal sealed class NpcDialogueService : IDisposable
 
     private async Task LoadNpcStateAsync(CancellationToken cancellationToken)
     {
+        if (_isSceneShout) return;
         try
         {
             WorldStateStore store = AwakeRuntime.WorldStateStore;
@@ -568,6 +627,7 @@ internal sealed class NpcDialogueService : IDisposable
 
     private void RefreshHeroInfo()
     {
+        if (_isSceneShout) return;
         try
         {
             if (_target != null && !_target.IsHero)
@@ -597,11 +657,45 @@ internal sealed class NpcDialogueService : IDisposable
 
     private string BuildNpcIdentity()
     {
+        if (_isSceneShout)
+        {
+            return AwakeLocalization.Resolve("awake.scene_shout.identity", "场景中的人们");
+        }
         if (_target != null && !_target.IsHero)
         {
             return AwakeUnnamedProfileService.BuildIdentity(_target);
         }
         return NpcDialogueStateFormatter.FormatIdentity(_heroName, _heroGender, _heroCulture);
+    }
+
+    private static string ResolveContactKey(string heroId)
+    {
+        if (string.IsNullOrWhiteSpace(heroId)) return string.Empty;
+        if (heroId.StartsWith("hero:", StringComparison.Ordinal))
+        {
+            return heroId;
+        }
+        if (heroId.StartsWith("npc:", StringComparison.Ordinal))
+        {
+            string rest = heroId.Substring(4);
+            int agentMarker = rest.IndexOf(":a", StringComparison.Ordinal);
+            return agentMarker > 0 ? "npc:" + rest.Substring(0, agentMarker) : "npc:" + rest;
+        }
+        return string.Empty;
+    }
+
+    private static string BuildScenePeopleBlock()
+    {
+        List<string> names = new List<string>();
+        foreach (AwakeNpcTarget target in NpcDialogueLauncher.GetSceneCandidates())
+        {
+            if (target == null || string.IsNullOrWhiteSpace(target.DisplayName)) continue;
+            names.Add(target.DisplayName);
+            if (names.Count >= 16) break;
+        }
+        return names.Count == 0
+            ? "附近没有可辨认的人。"
+            : "在场可辨认的人：" + string.Join("、", names);
     }
 
     private static List<string> SplitSceneKeywords(string text)
@@ -623,6 +717,11 @@ internal sealed class NpcDialogueService : IDisposable
         WorldbookMappingContext context = new WorldbookMappingContext();
         try
         {
+            if (_isSceneShout)
+            {
+                context.BoundSettlementName = Settlement.CurrentSettlement?.Name?.ToString() ?? string.Empty;
+                return context;
+            }
             if (_target != null && !_target.IsHero)
             {
                 context.BoundHeroName = _heroName;
@@ -823,31 +922,42 @@ internal sealed class NpcDialogueService : IDisposable
         }
 
         string npcState = _npcState ?? string.Empty;
-        string unnamedConstraint = AwakeUnnamedProfileService.BuildStateConstraint(_target);
-        if (!string.IsNullOrWhiteSpace(unnamedConstraint))
+        if (_isSceneShout)
         {
-            npcState = string.IsNullOrWhiteSpace(npcState)
-                ? unnamedConstraint
-                : unnamedConstraint + "\n" + npcState;
+            npcState = "场景喊话不结算个人状态。";
         }
-        if (string.IsNullOrWhiteSpace(npcState)) npcState = "当前没有已记录的角色状态。";
+        else
+        {
+            string unnamedConstraint = AwakeUnnamedProfileService.BuildStateConstraint(_target);
+            if (!string.IsNullOrWhiteSpace(unnamedConstraint))
+            {
+                npcState = string.IsNullOrWhiteSpace(npcState)
+                    ? unnamedConstraint
+                    : unnamedConstraint + "\n" + npcState;
+            }
+            if (string.IsNullOrWhiteSpace(npcState)) npcState = "当前没有已记录的角色状态。";
+        }
 
         Dictionary<string, string> rawVariables = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["retrieved_knowledge"] = retrievedKnowledge,
-            ["npc_memory"] = _memoryBlock ?? string.Empty,
+            ["npc_memory"] = _isSceneShout ? string.Empty : (_memoryBlock ?? string.Empty),
             ["npc_identity"] = BuildNpcIdentity(),
             ["npc_state"] = npcState,
             ["player_known"] = SerializePlayerKnown(_playerName, _clanName, _kingdomName),
             ["scene"] = _sceneKeywords,
+            ["scene_people"] = _isSceneShout ? BuildScenePeopleBlock() : string.Empty,
             ["opening_hint"] = openingHint,
             ["player_turn"] = playerText,
             ["npc_id"] = _heroId
         };
+        string template = _isSceneShout
+            ? NpcPromptTemplate.SceneShoutTemplateText
+            : NpcPromptTemplate.TemplateText;
         NpcPromptBoundedResult bounded = NpcDialoguePromptPipeline.BuildBounded(
             rawVariables,
             history,
-            NpcPromptTemplate.TemplateText,
+            template,
             NpcDialogueConstants.MaxPromptUtf8Bytes);
         if (bounded.IsDirectOnly)
         {
@@ -855,7 +965,10 @@ internal sealed class NpcDialogueService : IDisposable
         }
 
         PermissionDefinition promptPermission;
-        if (!PermissionCatalog.TryGet(NpcDialogueConstants.PermissionPromptCompile, out promptPermission))
+        string promptPermissionId = _isSceneShout
+            ? NpcDialogueConstants.PermissionSceneShoutPromptCompile
+            : NpcDialogueConstants.PermissionPromptCompile;
+        if (!PermissionCatalog.TryGet(promptPermissionId, out promptPermission))
         {
             return bounded.DirectText;
         }
@@ -868,9 +981,9 @@ internal sealed class NpcDialogueService : IDisposable
         {
             OperationResult<PromptCompilation> compiled = await _host.Prompts.CompileAsync(
                 new PromptCompileRequest(
-                    NpcDialogueConstants.PromptId,
-                    NpcDialogueConstants.PromptVersion,
-                    NpcDialogueConstants.PromptRevision,
+                    _isSceneShout ? NpcDialogueConstants.SceneShoutPromptId : NpcDialogueConstants.PromptId,
+                    _isSceneShout ? NpcDialogueConstants.SceneShoutPromptVersion : NpcDialogueConstants.PromptVersion,
+                    _isSceneShout ? NpcDialogueConstants.SceneShoutPromptRevision : NpcDialogueConstants.PromptRevision,
                     bounded.BoundedVariables),
                 context,
                 cancellationToken).ConfigureAwait(false);
@@ -932,7 +1045,9 @@ internal sealed class NpcDialogueService : IDisposable
         string error;
         bool valid = NpcDialogueOutputValidator.TryValidate(
             evt.Text,
-            NpcDialogueConstants.OutputContractId,
+            _isSceneShout
+                ? NpcDialogueConstants.SceneShoutOutputContractId
+                : NpcDialogueConstants.OutputContractId,
             out output,
             out error);
         if (!valid)
@@ -954,6 +1069,7 @@ internal sealed class NpcDialogueService : IDisposable
             _history.Add(new NpcDialogueChatEntry("npc", normalizedReply));
             while (_history.Count > NpcDialogueConstants.HistoryCapacity) _history.RemoveAt(0);
         }
+        AppendTranscriptTurn(playerText, normalizedReply);
 
         string persistCorrelation = string.IsNullOrWhiteSpace(correlationId) ? Guid.NewGuid().ToString("N") : correlationId;
         if (output.Command != null)
@@ -966,10 +1082,60 @@ internal sealed class NpcDialogueService : IDisposable
         PushTurnCompleted(normalizedReply, output.Mood);
     }
 
+    private void AppendTranscriptTurn(string playerText, string npcText)
+    {
+        if (_isSceneShout || string.IsNullOrWhiteSpace(_contactKey))
+        {
+            return;
+        }
+        try
+        {
+            string conversationId;
+            lock (_gate)
+            {
+                if (string.IsNullOrWhiteSpace(_transcriptConversationId))
+                {
+                    _transcriptConversationId = "conv|" + Guid.NewGuid().ToString("N");
+                }
+                conversationId = _transcriptConversationId;
+            }
+            string contactKey = _contactKey;
+            string source = _entrySource;
+            string npcName = _heroName;
+            int day = AwakeRuntime.CurrentGameDay();
+            string location = Settlement.CurrentSettlement?.Name?.ToString() ?? string.Empty;
+            int sequence;
+            lock (_gate) sequence = ++_transcriptTurnSequence;
+            AwakeBackgroundTask.Run(
+                () => AwakeTranscriptService.AppendTurnAsync(
+                    contactKey,
+                    conversationId,
+                    day,
+                    location,
+                    playerText,
+                    npcText,
+                    npcName,
+                    source,
+                    "turn|" + conversationId + "|" + day + "|" + sequence,
+                    System.Threading.CancellationToken.None),
+                "transcript_turn");
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("npc_dialogue_transcript_append_error error=" + ex.Message);
+        }
+    }
+
     private async Task ExecuteCommandAsync(NpcDialogueCommandProposal proposal, string turnIntentId)
     {
         try
         {
+            if (_isSceneShout)
+            {
+                PushStatus("场景喊话不结算单条关系。");
+                AwakeLog.Write("scene_shout_command_rejected command=" + (proposal?.CommandId ?? "unknown"));
+                return;
+            }
             if (proposal == null || Array.IndexOf(NpcDialogueConstants.AllowedCommandIds, proposal.CommandId) < 0)
             {
                 PushStatus("对方的要求没有越过界线。");

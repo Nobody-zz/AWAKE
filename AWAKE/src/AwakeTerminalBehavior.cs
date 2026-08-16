@@ -34,8 +34,18 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     private float _sceneCurrentRangeMeters = SceneDialogueSelection.MinRangeMeters;
     private float _lastOpenRealTime = -999f;
     private float _nextTerminalKeyRefreshRealTime = -999f;
+    private float _nextSceneKeyRefreshRealTime = -999f;
+    private float _nextSceneCandidateRefreshRealTime = -999f;
     private InputKey _cachedTerminalKey = InputKey.U;
+    private InputKey _cachedSceneNearKey = InputKey.OpenBraces;
+    private InputKey _cachedSceneFarKey = InputKey.CloseBraces;
+    private InputKey _cachedSceneShoutKey = InputKey.C;
     private string _cachedTerminalKeyRaw = string.Empty;
+    private bool _sceneShoutMode;
+    private bool _sceneVisualEnabled;
+    private readonly SceneSelectionController _sceneController = new SceneSelectionController();
+    private readonly List<AwakeNpcTarget> _sceneCandidateTargets = new List<AwakeNpcTarget>();
+    private float _sceneLastRangeMeters = -1f;
     private static string _lastBlockReason = string.Empty;
 
     internal AwakeTerminalBehavior()
@@ -142,10 +152,17 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 _sceneHoldActive = true;
                 _sceneHoldStartRealTime = now;
                 _sceneCurrentRangeMeters = SceneDialogueSelection.CurrentRange(0f, GetSceneMaxRange());
+                _sceneShoutMode = false;
+                _sceneVisualEnabled = AwakeSettings.Current.EnableSceneVisualSelection;
+                _sceneLastRangeMeters = -1f;
+                RefreshSceneKeys(now);
                 ClearSceneSelection();
-                ShowSceneMessage(AwakeLocalization.Resolve(
-                    "awake.scene.hold_hint",
-                    "按住 T 扩大距离范围，按 Y 切换，松开 T 开始对话。"));
+                if (_sceneVisualEnabled)
+                {
+                    SceneDialogueVisualCapabilities.Probe(Mission.Current?.MainAgent);
+                    SceneDialogueStatusOverlay.Open(BuildSceneStatusText());
+                }
+                ShowSceneMessage(BuildSceneHintText());
             }
             else
             {
@@ -154,10 +171,20 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                     GetSceneMaxRange());
             }
 
-            if (Input.IsKeyPressed(InputKey.Y))
+            RefreshSceneCandidates(now);
+            if (Input.IsKeyPressed(InputKey.Y) || Input.IsKeyPressed(GetSceneNearKey(now)))
             {
-                CycleSceneTarget();
+                CycleSceneTarget(1);
             }
+            else if (Input.IsKeyPressed(GetSceneFarKey(now)))
+            {
+                CycleSceneTarget(-1);
+            }
+            else if (Input.IsKeyPressed(GetSceneShoutKey(now)))
+            {
+                ToggleSceneShoutMode();
+            }
+            UpdateSceneVisuals();
             return true;
         }
 
@@ -167,11 +194,157 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 Math.Max(0f, (float)TerminalClock.Elapsed.TotalSeconds - _sceneHoldStartRealTime),
                 GetSceneMaxRange());
             _sceneHoldActive = false;
-            ConfirmSceneTarget();
+            CloseSceneSelectionVisuals();
+            if (_sceneShoutMode)
+            {
+                OpenSceneShoutAfterHold();
+            }
+            else
+            {
+                ConfirmSceneTarget();
+            }
             return true;
         }
 
         return true;
+    }
+
+    private void RefreshSceneCandidates(float now)
+    {
+        if (now < _nextSceneCandidateRefreshRealTime
+            && Math.Abs(_sceneCurrentRangeMeters - _sceneLastRangeMeters) < 1f)
+        {
+            return;
+        }
+        _nextSceneCandidateRefreshRealTime = now + 0.2f;
+        _sceneLastRangeMeters = _sceneCurrentRangeMeters;
+
+        Agent mainAgent = Mission.Current?.MainAgent ?? Agent.Main;
+        if (mainAgent == null || !mainAgent.IsActive())
+        {
+            _sceneCandidateTargets.Clear();
+            _sceneController.SetCandidates(new List<SceneSelectionItem>());
+            return;
+        }
+
+        List<Tuple<AwakeNpcTarget, float>> scored = new List<Tuple<AwakeNpcTarget, float>>();
+        float rangeSquared = _sceneCurrentRangeMeters * _sceneCurrentRangeMeters;
+        float halfAngle = SceneDialoguePreviewMath.CurrentHalfAngle(
+            Math.Max(0f, (float)TerminalClock.Elapsed.TotalSeconds - _sceneHoldStartRealTime));
+        foreach (AwakeNpcTarget target in NpcDialogueLauncher.GetSceneCandidates())
+        {
+            if (target == null || target.AgentIndex < 0
+                || !NpcDialogueLauncher.IsEligibleNpcTarget(target))
+            {
+                continue;
+            }
+            Agent agent = NpcDialogueLauncher.GetActiveAgent(target.AgentIndex);
+            if (agent == null || !agent.IsActive()) continue;
+            float distanceSquared = mainAgent.Position.DistanceSquared(agent.Position);
+            if (float.IsNaN(distanceSquared)
+                || float.IsInfinity(distanceSquared)
+                || distanceSquared > rangeSquared)
+            {
+                continue;
+            }
+            if (!SceneDialoguePreviewMath.IsWithinCone(
+                    mainAgent.Position,
+                    mainAgent.LookDirection,
+                    agent.Position,
+                    halfAngle)
+                || !HasSceneLineOfSight(mainAgent, agent, (float)Math.Sqrt(distanceSquared)))
+            {
+                continue;
+            }
+            scored.Add(Tuple.Create(target, (float)Math.Sqrt(distanceSquared)));
+        }
+
+        scored.Sort((a, b) =>
+        {
+            int byDistance = a.Item2.CompareTo(b.Item2);
+            if (byDistance != 0) return byDistance;
+            return StringComparer.Ordinal.Compare(a.Item1.StableId, b.Item1.StableId);
+        });
+
+        _sceneCandidateTargets.Clear();
+        List<SceneSelectionItem> items = new List<SceneSelectionItem>();
+        string preferredId = _sceneController.Selected?.Id ?? _sceneSelectedTargetId;
+        foreach (Tuple<AwakeNpcTarget, float> item in scored)
+        {
+            if (items.Count >= SceneSelectionController.MaximumCandidates) break;
+            AwakeNpcTarget target = item.Item1;
+            _sceneCandidateTargets.Add(target);
+            items.Add(new SceneSelectionItem(
+                BuildSceneSelectionKey(target),
+                target.DisplayName,
+                item.Item2));
+        }
+        _sceneController.SetCandidates(items, preferredId);
+    }
+
+    private static bool HasSceneLineOfSight(Agent mainAgent, Agent target, float targetDistance)
+    {
+        try
+        {
+            Mission mission = Mission.Current;
+            if (mission == null || mainAgent == null || target == null) return true;
+            Vec3 from = mainAgent.Position + new Vec3(0f, 0f, 1.4f);
+            Vec3 to = target.Position + new Vec3(0f, 0f, 1.2f);
+            float hitDistance;
+            Agent blocker = mission.RayCastForClosestAgent(from, to, -1, targetDistance, out hitDistance);
+            if (blocker == null || blocker == Agent.Main || blocker.IsMainAgent) return true;
+            if (ReferenceEquals(blocker, target)) return true;
+            return hitDistance >= targetDistance - 0.5f;
+        }
+        catch
+        {
+            return true;
+        }
+    }
+
+    private void ToggleSceneShoutMode()
+    {
+        _sceneShoutMode = !_sceneShoutMode;
+        if (_sceneShoutMode)
+        {
+            _sceneController.ClearSelection();
+            ClearSceneSelection();
+            ShowSceneMessage(AwakeLocalization.Resolve(
+                "awake.scene.shout_mode",
+                "已切换到场景喊话，松开 T 后不指定具体人物。"));
+        }
+        else
+        {
+            float now = (float)TerminalClock.Elapsed.TotalSeconds;
+            ShowSceneMessage(AwakeLocalization.Resolve(
+                "awake.scene.target_mode",
+                "已切回选人模式，按 " + SceneKeyDisplay(GetSceneNearKey(now)) + " 或 "
+                + SceneKeyDisplay(GetSceneFarKey(now)) + " 选择目标。",
+                new Dictionary<string, string>
+                {
+                    ["NEAR_KEY"] = SceneKeyDisplay(GetSceneNearKey(now)),
+                    ["FAR_KEY"] = SceneKeyDisplay(GetSceneFarKey(now))
+                }));
+        }
+        UpdateSceneVisuals();
+    }
+
+    private void UpdateSceneVisuals()
+    {
+        if (!_sceneVisualEnabled)
+        {
+            return;
+        }
+        int selectedAgentIndex = _sceneShoutMode ? -1 : _sceneSelectedAgentIndex;
+        SceneDialoguePreview.Update(
+            Mission.Current,
+            Mission.Current?.MainAgent ?? Agent.Main,
+            _sceneCandidateTargets,
+            selectedAgentIndex,
+            _sceneShoutMode,
+            SceneDialogueVisualCapabilities.ContourCapable,
+            _sceneCurrentRangeMeters);
+        SceneDialogueStatusOverlay.Update(BuildSceneStatusText());
     }
 
     private bool CanUseSceneDialogue()
@@ -221,47 +394,30 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         }
     }
 
-    private void CycleSceneTarget()
+    private void CycleSceneTarget(int direction)
     {
-        List<AwakeNpcTarget> candidates = GetSceneCandidates();
-        if (candidates.Count == 0)
+        if (_sceneController.Count == 0)
         {
             ClearSceneSelection();
             ShowSceneMessage(AwakeLocalization.Resolve("awake.scene.no_candidates", "附近没有可以对话的人物。"));
             return;
         }
-
-        int currentIndex = -1;
-        for (int i = 0; i < candidates.Count; i++)
+        _sceneController.Cycle(direction);
+        int index = _sceneController.SelectedIndex;
+        if (index < 0 || index >= _sceneCandidateTargets.Count)
         {
-            if (candidates[i].AgentIndex == _sceneSelectedAgentIndex
-                || StringComparer.Ordinal.Equals(candidates[i].StableId, _sceneSelectedTargetId))
-            {
-                currentIndex = i;
-                break;
-            }
+            return;
         }
-        int nextIndex = currentIndex < 0 ? 0 : (currentIndex + 1) % candidates.Count;
-        SelectSceneTarget(candidates[nextIndex]);
+        SelectSceneTarget(_sceneCandidateTargets[index]);
     }
 
     private void ConfirmSceneTarget()
     {
-        List<AwakeNpcTarget> candidates = GetSceneCandidates();
-        AwakeNpcTarget target = null;
-        foreach (AwakeNpcTarget candidate in candidates)
-        {
-            if (candidate.AgentIndex == _sceneSelectedAgentIndex
-                || StringComparer.Ordinal.Equals(candidate.StableId, _sceneSelectedTargetId))
-            {
-                target = candidate;
-                break;
-            }
-        }
-        if (target == null && candidates.Count > 0)
-        {
-            target = candidates[0];
-        }
+        AwakeNpcTarget target = _sceneController.Selected != null
+            && _sceneController.SelectedIndex >= 0
+            && _sceneController.SelectedIndex < _sceneCandidateTargets.Count
+                ? _sceneCandidateTargets[_sceneController.SelectedIndex]
+                : (_sceneCandidateTargets.Count > 0 ? _sceneCandidateTargets[0] : null);
         if (target == null)
         {
             ClearSceneSelection();
@@ -288,12 +444,15 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         _sceneSelectedAgentIndex = target.AgentIndex;
         _sceneSelectedTargetId = target.StableId;
         SetSceneAgentHighlight(_sceneSelectedAgentIndex, true);
+        UpdateSceneVisuals();
         if (showHint)
         {
             string rangeText = _sceneCurrentRangeMeters.ToString("0");
             ShowSceneMessage(AwakeLocalization.Resolve(
                 "awake.scene.select_hint",
-                "已选中 " + target.DisplayName + "（" + rangeText + "m），按 Y 切换，松开 T 开始对话。",
+                "已选中 " + target.DisplayName + "（" + rangeText + "m），按 "
+                + SceneKeyDisplay(GetSceneNearKey((float)TerminalClock.Elapsed.TotalSeconds)) + " 近到远、"
+                + SceneKeyDisplay(GetSceneFarKey((float)TerminalClock.Elapsed.TotalSeconds)) + " 远到近，松开 T 开始对话。",
                 new Dictionary<string, string>
                 {
                     ["NAME"] = target.DisplayName,
@@ -302,57 +461,131 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         }
     }
 
-    private List<AwakeNpcTarget> GetSceneCandidates()
-    {
-        Agent mainAgent = Mission.Current?.MainAgent ?? Agent.Main;
-        if (mainAgent == null || !mainAgent.IsActive())
-        {
-            return new List<AwakeNpcTarget>();
-        }
-
-        float rangeSquared = _sceneCurrentRangeMeters * _sceneCurrentRangeMeters;
-        List<Tuple<AwakeNpcTarget, float>> scored = new List<Tuple<AwakeNpcTarget, float>>();
-        foreach (AwakeNpcTarget target in NpcDialogueLauncher.GetSceneTargets(64))
-        {
-            if (target == null
-                || target.AgentIndex < 0
-                || !NpcDialogueLauncher.IsEligibleNpcTarget(target))
-            {
-                continue;
-            }
-            Agent agent = NpcDialogueLauncher.GetActiveAgent(target.AgentIndex);
-            if (agent == null || !agent.IsActive())
-            {
-                continue;
-            }
-
-            float distanceSquared = mainAgent.Position.DistanceSquared(agent.Position);
-            if (float.IsNaN(distanceSquared)
-                || float.IsInfinity(distanceSquared)
-                || distanceSquared > rangeSquared)
-            {
-                continue;
-            }
-
-            float distanceMeters = (float)Math.Sqrt(distanceSquared);
-            scored.Add(Tuple.Create(target, distanceMeters));
-        }
-
-        scored.Sort((a, b) => a.Item2.CompareTo(b.Item2));
-        List<AwakeNpcTarget> result = new List<AwakeNpcTarget>();
-        foreach (Tuple<AwakeNpcTarget, float> item in scored)
-        {
-            result.Add(item.Item1);
-        }
-        return result;
-    }
-
     private void AbortSceneSelection()
     {
         _sceneHoldActive = false;
         _sceneHoldStartRealTime = -999f;
         _sceneCurrentRangeMeters = SceneDialogueSelection.MinRangeMeters;
+        _sceneShoutMode = false;
+        _sceneCandidateTargets.Clear();
+        _sceneController.Clear();
+        CloseSceneSelectionVisuals();
         ClearSceneSelection();
+    }
+
+    private void CloseSceneSelectionVisuals()
+    {
+        SceneDialogueStatusOverlay.CloseActive();
+        SceneDialoguePreview.Clear();
+        _sceneLastRangeMeters = -1f;
+    }
+
+    private void OpenSceneShoutAfterHold()
+    {
+        SceneShoutAvailabilityResult availability = NpcDialogueLauncher.EvaluateSceneShoutAvailability();
+        if (availability != SceneShoutAvailabilityResult.Available)
+        {
+            string message = availability == SceneShoutAvailabilityResult.NoPeople
+                ? AwakeLocalization.Resolve("awake.scene.shout_no_people", "当前场合没有人能听见你的喊话。")
+                : AwakeLocalization.Resolve("awake.scene.shout_unavailable", "当前场合无法喊话。");
+            ShowSceneMessage(message);
+            return;
+        }
+        NpcDialogueLaunchResult result = NpcDialogueLauncher.TryOpenSceneShout(NpcDialogueLauncher.CurrentSceneKeywords());
+        if (result == NpcDialogueLaunchResult.None)
+        {
+            ShowSceneMessage(AwakeLocalization.Resolve(
+                "awake.scene.shout_open_failed",
+                "场景喊话暂时无法打开。"));
+        }
+    }
+
+    private string BuildSceneHintText()
+    {
+        float now = (float)TerminalClock.Elapsed.TotalSeconds;
+        return AwakeLocalization.Resolve(
+            "awake.scene.hold_hint",
+            "按住 T 扩大距离；" + SceneKeyDisplay(GetSceneNearKey(now)) + " 近到远、"
+            + SceneKeyDisplay(GetSceneFarKey(now)) + " 远到近、"
+            + SceneKeyDisplay(GetSceneShoutKey(now)) + " 场景喊话；松开 T 开始对话。",
+            new Dictionary<string, string>
+            {
+                ["NEAR_KEY"] = SceneKeyDisplay(GetSceneNearKey(now)),
+                ["FAR_KEY"] = SceneKeyDisplay(GetSceneFarKey(now)),
+                ["SHOUT_KEY"] = SceneKeyDisplay(GetSceneShoutKey(now))
+            });
+    }
+
+    private string BuildSceneStatusText()
+    {
+        string mode = _sceneShoutMode
+            ? AwakeLocalization.Resolve("awake.scene.status_shout_mode", "场景喊话")
+            : AwakeLocalization.Resolve("awake.scene.status_target_mode", "选人");
+        string target = _sceneShoutMode
+            ? AwakeLocalization.Resolve("awake.scene.status_no_target", "无目标")
+            : (_sceneController.Selected?.DisplayName
+                ?? AwakeLocalization.Resolve("awake.scene.status_no_selection", "未选择"));
+        return AwakeLocalization.Resolve(
+            "awake.scene.status_line",
+            "模式 " + mode + "；目标 " + target + "；范围 " + _sceneCurrentRangeMeters.ToString("0") + " 米；候选 "
+            + _sceneController.Count,
+            new Dictionary<string, string>
+            {
+                ["MODE"] = mode,
+                ["TARGET"] = target,
+                ["RANGE"] = _sceneCurrentRangeMeters.ToString("0"),
+                ["COUNT"] = _sceneController.Count.ToString()
+            });
+    }
+
+    private static string BuildSceneSelectionKey(AwakeNpcTarget target)
+    {
+        if (target == null) return string.Empty;
+        string missionPart = Mission.Current == null ? "m0" : "m" + Mission.Current.GetHashCode();
+        string characterId = target.IsHero && target.Hero != null
+            ? target.Hero.StringId
+            : target.Character?.StringId ?? string.Empty;
+        return missionPart + ":" + characterId + ":a" + target.AgentIndex;
+    }
+
+    private static string SceneKeyDisplay(InputKey key)
+    {
+        if (key == InputKey.OpenBraces) return "[";
+        if (key == InputKey.CloseBraces) return "]";
+        return key.ToString();
+    }
+
+    private InputKey GetSceneNearKey(float now)
+    {
+        RefreshSceneKeys(now);
+        return _cachedSceneNearKey;
+    }
+
+    private InputKey GetSceneFarKey(float now)
+    {
+        RefreshSceneKeys(now);
+        return _cachedSceneFarKey;
+    }
+
+    private InputKey GetSceneShoutKey(float now)
+    {
+        RefreshSceneKeys(now);
+        return _cachedSceneShoutKey;
+    }
+
+    private void RefreshSceneKeys(float now)
+    {
+        if (now < _nextSceneKeyRefreshRealTime) return;
+        _nextSceneKeyRefreshRealTime = now + 1f;
+        _cachedSceneNearKey = SceneInputKeyMapper.ParseOrDefault(
+            AwakeSettings.Current.SceneCycleNearToFarKey,
+            InputKey.OpenBraces);
+        _cachedSceneFarKey = SceneInputKeyMapper.ParseOrDefault(
+            AwakeSettings.Current.SceneCycleFarToNearKey,
+            InputKey.CloseBraces);
+        _cachedSceneShoutKey = SceneInputKeyMapper.ParseOrDefault(
+            AwakeSettings.Current.SceneShoutKey,
+            InputKey.C);
     }
 
     private static float GetSceneMaxRange()

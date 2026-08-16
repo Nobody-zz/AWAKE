@@ -2308,3 +2308,97 @@ Big Audit Fixes (2026-08-16, no version bump)
 - tools/release_check.ps1 -> RELEASE_CHECK_OK.
 - Awake.dll SHA-256 19C1158E515C6DF12A7C497EC483219B1D310F4A2D6423A5A5AF9FC56F17BCD0.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Scene Selection UX (2026-08-16, no version bump)
+- Added SceneSelectionController, SceneDialoguePreviewMath, SceneShoutAvailability, SceneDialogueModePolicy, and SceneInputKeyMapper as pure testable components.
+- Scene selection now supports [ near-to-far and ] far-to-near cycling with configurable MCM keys; Y remains a near-to-far alias.
+- Added C scene-shout mode: holding T then pressing C releases into an untargeted scene dialogue overlay with its own prompt/output contract; relationship commands are rejected and no NPC memory/relationship state is touched.
+- Added SceneDialoguePreview with ground fan markers, gold candidate contours, magenta current target, and a persistent SceneDialogueStatusOverlay; contour capability is probed and text fallback is used when unavailable.
+- Scene candidates are filtered by range, cone, LOS, sorted by distance with deterministic tie-break, cached at 0.2s thresholds, and capped at 48 after sorting.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (34 paths including scene selection ux and scene shout contract).
+- LOCALIZATION_OK source=156 en=180 cn=180.
+- Awake.dll SHA-256 242676C21CF2BFDC29E99BEC7C886829DFBB3B92CE1DF59DD0692332C1EDF6D1 identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Contact Hub History Data Layer (2026-08-16, no version bump)
+- Added AwakeNpcTarget.CanonicalContactKey (hero:<id> / npc:<CharacterId>).
+- Added AwakeTranscriptModels and AwakeTranscriptKeys: transcript v1 line/meta schema, source/kind enums, line/chunk byte caps, URL-safe contact key encoding.
+- Added transcript / contacts / audit namespaces, WorldStateKind values, storage schemas, and appliers for append/pin/roll/upsert/audit in WorldStateStore.
+- Added WorldStateStore transcript append/pin/get, contact upsert/get methods.
+- Added AwakeTranscriptService: AppendTurnAsync/GetHistoryAsync/PinLineAsync/LoadContactKeysAsync; chunk appender enforces 128KB byte cap.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (storage pipeline now covers transcript append/pin and contact index).
+- LOCALIZATION_OK source=156 en=180 cn=180.
+- Awake.dll SHA-256 A5E8E5F4ADA5BEC48CC52C54F64F9AC9C3D3D231D23E60DA66D12B840F2F57FC identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Messenger Character Card Slice (2026-08-16, no version bump)
+- Added AwakeContactInfo/RowVM fields: canonical key, canTalk, location.
+- Added AwakeContactCardVM with native portrait (HeroVM.ImageIdentifier), name, identity, status, location, canTalk state.
+- AwakeMessenger.xml now renders a right character card and narrows the chat area.
+- Added EN/CN keys for location unknown and card talk state.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=157 en=183 cn=183; prefab XML OK.
+- Awake.dll SHA-256 F64F36A7DD812E880FBE98BD6FE3DF537FEE10194E4E89AB7394A4D5F53AD084 identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Self-Check Fixes (2026-08-16, no version bump)
+- Transcript turn writes now append player and NPC lines in one command, avoiding half-persisted turns.
+- Messenger VM no longer blocks on synchronous history load; history reloads asynchronously and refreshes the active chat.
+- Contact list dedupes by CanonicalContactKey instead of StableId, merging same-troop unnamed NPCs.
+- Character card clears the portrait when switching to a non-hero contact and refreshes CanTalkText.
+- Added transcript turn rejection logging.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=157 en=183 cn=183; prefab XML OK.
+- Awake.dll SHA-256 46DC86EFFC49EDC48F534F89D802CC0C4B615FD0B8CE83994D317FA66313F234 identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Transcript Sink + Asset Lint (2026-08-16, no version bump)
+- NpcDialogueService now appends completed player/NPC turns through AwakeTranscriptService with a shared conversationId.
+- Entry source is propagated from launcher/messenger; scene shout still skips transcript persistence.
+- Added tools/asset_boundary_lint.ps1 and wired it into release_check.ps1; 105 files scanned, no Alice/AF/AIInfluence/LoveHate/Slaanesh/Goddess identifiers in src/GUI.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=157 en=183 cn=183; release_check OK.
+- Awake.dll SHA-256 174B1B7DA37A07DA681E957D4B4C09E3086EB450563824DDD3546FC1883E606B identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+History Tab + Transcript-Only Contacts (2026-08-16, no version bump)
+- Added AwakeTranscriptRowVM and Messenger chat/history tab switching.
+- History tab loads transcript rows per contact, shows day/speaker/text, and supports pin/unpin.
+- Transcript-only canonical keys are added to the contact list from awake.contacts.v1 and open as read-only history contacts.
+- Added EN/CN keys for chat/history tabs, pin/unpin, history count/empty, and history-only contact states.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=165 en=193 cn=193; prefab XML OK.
+- Awake.dll SHA-256 751BD31FC59FA758CE038E59E007726954D86D09C76D6F3026B7389FF4A11512 identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Transcript Migration + Multi-Chunk Read (2026-08-16, no version bump)
+- Added AwakeTranscriptMigration: reads awake.messenger.v1, canonicalizes legacy keys, appends legacy lines to transcript, and updates contact index.
+- AwakeTranscriptService.GetHistoryAsync now reads chunks 0..63 until missing and merges pinned state.
+- SdkSmoke covers legacy migration and second-chunk read.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=165 en=193 cn=193; asset lint 107 files OK.
+- Awake.dll SHA-256 F699A04618C484CA754CEE423E1B452F1C92DBBF5A1737942B5A0D2E04D2467A identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Self-Check Fixes Round 2 (2026-08-16, no version bump)
+- Transcript lines now carry ChunkIndex; pin/unpin targets the correct chunk.
+- NpcDialogueService transcript turn idempotency includes a per-turn sequence, preventing same-day duplicate rejection.
+- Messenger history population guards against stale async loads after switching contacts.
+- Messenger pin updates only after PinLineAsync succeeds.
+- AwakeTranscriptMigration batches legacy lines to stay under chunk limits.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=165 en=193 cn=193; asset lint 107 files OK.
+- Awake.dll SHA-256 CB6DEF27E136697C779EA34FDAEEF37DA378CD01E206E06A61CC1BE6FE22DD90 identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Transcript Authoritative History (2026-08-16, no version bump)
+- AwakeMessengerVM no longer writes or eagerly loads AwakeMessengerHistory; the legacy messenger cache is read-only migration input only.
+- Messenger chat and history tabs both load from AwakeTranscriptService.GetHistoryAsync; transcript history is inserted into the chat before live turns and old connecting rows are replaced.
+- First contact history load waits for the transcript index/migration task, so legacy messenger lines are visible before the initial chat renders.
+- AwakeMessengerHistory is kept only for old-save migration reads and campaign reset; no production write path remains.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=165 en=193 cn=193; asset lint 107 files OK; release_check OK.
+- Awake.dll SHA-256 5578473BE803345485C78E514850758B932406F5B21CF0E1DF0DEE594F5E68D1 identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

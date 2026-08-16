@@ -7,6 +7,7 @@ using MarcusAIFramework.Api;
 using MarcusAIFramework.Sdk.FakeHost;
 using MarcusAIFramework.Sdk.TestKit;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 
 namespace Awake.SdkSmoke;
@@ -39,6 +40,8 @@ internal static class Program
 		RunNpcTargetStableIdSmoke();
 		RunUnnamedProfileSmoke();
 		RunSceneDialogueRangeSmoke();
+		RunSceneSelectionUxSmoke();
+		RunSceneShoutContractSmoke();
 		RunAwakeEventEngineCoreSmoke();
 		RunRelationshipCommandSmoke();
 		await RunStoragePipelineSmokeAsync();
@@ -1038,12 +1041,16 @@ internal static class Program
 		FakeKeyValueStore proactiveStore = new FakeKeyValueStore();
 		FakeKeyValueStore worldEventsStore = new FakeKeyValueStore();
 		FakeKeyValueStore messengerStore = new FakeKeyValueStore();
+		FakeKeyValueStore transcriptStore = new FakeKeyValueStore();
+		FakeKeyValueStore contactsStore = new FakeKeyValueStore();
 		store.InjectStoreForTesting(AiTaskConstants.NpcMemoriesNamespace, memoryStore);
 		store.InjectStoreForTesting(AiTaskConstants.EventMetaNamespace, eventMetaStore);
 		store.InjectStoreForTesting(AiTaskConstants.RelationshipsNamespace, relationshipStore);
 		store.InjectStoreForTesting(AiTaskConstants.ProactiveNamespace, proactiveStore);
 		store.InjectStoreForTesting(AiTaskConstants.WorldEventsNamespace, worldEventsStore);
 		store.InjectStoreForTesting(AiTaskConstants.MessengerNamespace, messengerStore);
+		store.InjectStoreForTesting(AiTaskConstants.TranscriptNamespace, transcriptStore);
+		store.InjectStoreForTesting(AiTaskConstants.ContactsNamespace, contactsStore);
 
 		RequestContext context = new FakeClock(DateTimeOffset.UtcNow).Context("awake.smoke", session, "storage-smoke");
 		Newtonsoft.Json.Linq.JArray facts = new Newtonsoft.Json.Linq.JArray { "共同经历" };
@@ -1195,6 +1202,140 @@ internal static class Program
 			|| !StringComparer.Ordinal.Equals((string)chatLines[0]["text"], "你好"))
 		{
 			throw new InvalidOperationException("messenger storage roundtrip mismatch.");
+		}
+
+		string contactKey = "hero:hero-1";
+		AwakeTranscriptLine transcriptLine = new AwakeTranscriptLine(
+			"line-1",
+			5,
+			"卡拉迪亚",
+			"英雄甲",
+			"你好",
+			"messenger",
+			"conv-1",
+			"npc");
+		bool transcriptAppended = await store.AppendTranscriptAsync(
+			contactKey,
+			0,
+			transcriptLine,
+			"transcript-idem-1",
+			CancellationToken.None).ConfigureAwait(false);
+		if (!transcriptAppended) throw new InvalidOperationException("transcript append should succeed.");
+		Newtonsoft.Json.Linq.JObject transcript = await store.GetTranscriptChunkAsync(
+			contactKey,
+			0,
+			context,
+			CancellationToken.None).ConfigureAwait(false);
+		if (transcript == null
+			|| !(transcript["entries"] is Newtonsoft.Json.Linq.JArray transcriptEntries)
+			|| transcriptEntries.Count != 1
+			|| !StringComparer.Ordinal.Equals((string)transcriptEntries[0]["text"], "你好"))
+		{
+			throw new InvalidOperationException("transcript storage roundtrip mismatch.");
+		}
+
+		bool pinned = await store.PinTranscriptAsync(
+			contactKey,
+			0,
+			"line-1",
+			true,
+			"transcript-pin-1",
+			CancellationToken.None).ConfigureAwait(false);
+		if (!pinned) throw new InvalidOperationException("transcript pin should succeed.");
+		Newtonsoft.Json.Linq.JObject pinnedChunk = await store.GetTranscriptChunkAsync(
+			contactKey,
+			0,
+			context,
+			CancellationToken.None).ConfigureAwait(false);
+		if (pinnedChunk == null
+			|| !(pinnedChunk["pinnedIds"] is Newtonsoft.Json.Linq.JArray pinnedIds)
+			|| pinnedIds.Count != 1
+			|| !StringComparer.Ordinal.Equals((string)pinnedIds[0], "line-1"))
+		{
+			throw new InvalidOperationException("transcript pin roundtrip mismatch.");
+		}
+
+		bool contactAdded = await store.EnsureContactAsync(
+			contactKey,
+			"contact-idem-1",
+			CancellationToken.None).ConfigureAwait(false);
+		if (!contactAdded) throw new InvalidOperationException("contact upsert should succeed.");
+		Newtonsoft.Json.Linq.JObject contacts = await store.GetContactsAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (contacts == null
+			|| !(contacts["contacts"] is Newtonsoft.Json.Linq.JArray contactList)
+			|| contactList.Count != 1
+			|| !StringComparer.Ordinal.Equals((string)contactList[0], contactKey))
+		{
+			throw new InvalidOperationException("contacts storage roundtrip mismatch.");
+		}
+
+		AwakeRuntime.SetWorldStateStore(store);
+		try
+		{
+			bool turnAppended = await AwakeTranscriptService.AppendTurnAsync(
+				"hero:hero-1",
+				"conv-2",
+				5,
+				"卡拉迪亚",
+				"你好",
+				"你好，旅人",
+				"英雄甲",
+				"messenger",
+				"turn-idem-1",
+				CancellationToken.None).ConfigureAwait(false);
+			if (!turnAppended) throw new InvalidOperationException("transcript turn append should succeed.");
+			List<AwakeTranscriptLine> history = await AwakeTranscriptService.GetHistoryAsync(
+				"hero:hero-1",
+				CancellationToken.None).ConfigureAwait(false);
+			if (history.Count < 3
+				|| !StringComparer.Ordinal.Equals(history[history.Count - 1].Text, "你好，旅人"))
+			{
+				throw new InvalidOperationException("transcript service history mismatch.");
+			}
+
+			AwakeTranscriptMigration.ResetForTesting();
+			await AwakeTranscriptMigration.MigrateAsync(CancellationToken.None).ConfigureAwait(false);
+			List<AwakeTranscriptLine> migratedHistory = await AwakeTranscriptService.GetHistoryAsync(
+				"hero:hero-1",
+				CancellationToken.None).ConfigureAwait(false);
+			if (migratedHistory.Count <= history.Count)
+			{
+				throw new InvalidOperationException("transcript migration should append legacy messenger lines.");
+			}
+
+			AwakeTranscriptLine chunkTwoLine = new AwakeTranscriptLine(
+				"chunk1-line",
+				6,
+				"卡拉迪亚",
+				"英雄甲",
+				"第二块历史",
+				"messenger",
+				"conv-3",
+				"npc");
+			bool chunkTwoAppended = await store.AppendTranscriptAsync(
+				"hero:hero-1",
+				1,
+				chunkTwoLine,
+				"chunk1-idem",
+				CancellationToken.None).ConfigureAwait(false);
+			if (!chunkTwoAppended) throw new InvalidOperationException("second transcript chunk append should succeed.");
+			List<AwakeTranscriptLine> multiChunkHistory = await AwakeTranscriptService.GetHistoryAsync(
+				"hero:hero-1",
+				CancellationToken.None).ConfigureAwait(false);
+			bool sawChunkTwo = false;
+			foreach (AwakeTranscriptLine line in multiChunkHistory)
+			{
+				if (StringComparer.Ordinal.Equals(line.Id, "chunk1-line"))
+				{
+					sawChunkTwo = true;
+					break;
+				}
+			}
+			if (!sawChunkTwo) throw new InvalidOperationException("multi-chunk transcript read should include later chunks.");
+		}
+		finally
+		{
+			AwakeRuntime.SetWorldStateStore(null);
 		}
 
 		Console.WriteLine("PASS storage pipeline smoke");
@@ -1476,6 +1617,178 @@ internal static class Program
 			throw new InvalidOperationException("scene dialogue range clamp mismatch.");
 		}
 		Console.WriteLine("PASS scene dialogue range curve");
+	}
+
+	private static void RunSceneSelectionUxSmoke()
+	{
+		SceneSelectionController controller = new SceneSelectionController();
+		controller.SetCandidates(new[]
+		{
+			new SceneSelectionItem("npc-a", "A", 5f),
+			new SceneSelectionItem("npc-b", "B", 8f),
+			new SceneSelectionItem("npc-c", "C", 12f)
+		});
+		if (controller.Count != 3 || !StringComparer.Ordinal.Equals(controller.Selected.Id, "npc-a"))
+		{
+			throw new InvalidOperationException("scene selection should default to nearest candidate.");
+		}
+		controller.Cycle(1);
+		if (!StringComparer.Ordinal.Equals(controller.Selected.Id, "npc-b"))
+		{
+			throw new InvalidOperationException("near to far cycle mismatch.");
+		}
+		controller.Cycle(1);
+		controller.Cycle(1);
+		if (!StringComparer.Ordinal.Equals(controller.Selected.Id, "npc-a"))
+		{
+			throw new InvalidOperationException("near to far wrap mismatch.");
+		}
+		controller.Cycle(-1);
+		if (!StringComparer.Ordinal.Equals(controller.Selected.Id, "npc-c"))
+		{
+			throw new InvalidOperationException("far to near wrap mismatch.");
+		}
+		controller.SetCandidates(new[]
+		{
+			new SceneSelectionItem("npc-x", "X", 3f),
+			new SceneSelectionItem("npc-a", "A", 5f)
+		}, "npc-a");
+		if (!StringComparer.Ordinal.Equals(controller.Selected.Id, "npc-a"))
+		{
+			throw new InvalidOperationException("selection should preserve candidate by id.");
+		}
+
+		if (SceneDialoguePreviewMath.CurrentHalfAngle(0f) != SceneDialoguePreviewMath.MinHalfAngleDegrees
+			|| SceneDialoguePreviewMath.CurrentHalfAngle(999f) != SceneDialoguePreviewMath.MaxHalfAngleDegrees)
+		{
+			throw new InvalidOperationException("scene fan half angle clamp mismatch.");
+		}
+		if (SceneDialoguePreviewMath.IsWithinCone(
+			new Vec3(0f, 0f, 0f),
+			new Vec3(1f, 0f, 0f),
+			new Vec3(5f, 0f, 0f),
+			45f) != true)
+		{
+			throw new InvalidOperationException("scene fan should include forward target.");
+		}
+		if (SceneDialoguePreviewMath.IsWithinCone(
+			new Vec3(0f, 0f, 0f),
+			new Vec3(1f, 0f, 0f),
+			new Vec3(-5f, 0f, 0f),
+			45f))
+		{
+			throw new InvalidOperationException("scene fan should reject behind target.");
+		}
+
+		if (SceneShoutAvailability.Evaluate(
+				true,
+				SceneShoutMissionState.Free,
+				false,
+				false,
+				true,
+				0)
+			!= SceneShoutAvailabilityResult.Available)
+		{
+			throw new InvalidOperationException("scene shout should be available in settlement without people.");
+		}
+		if (SceneShoutAvailability.Evaluate(
+				true,
+				SceneShoutMissionState.Battle,
+				false,
+				false,
+				false,
+				5)
+			!= SceneShoutAvailabilityResult.WrongContext)
+		{
+			throw new InvalidOperationException("scene shout should reject battle context.");
+		}
+		if (SceneShoutAvailability.Evaluate(
+				true,
+				SceneShoutMissionState.Free,
+				false,
+				false,
+				false,
+				0)
+			!= SceneShoutAvailabilityResult.NoPeople)
+		{
+			throw new InvalidOperationException("scene shout should require people outside settlement context.");
+		}
+		if (SceneShoutAvailability.Evaluate(
+				true,
+				SceneShoutMissionState.Free,
+				true,
+				false,
+				false,
+				5)
+			!= SceneShoutAvailabilityResult.ConversationActive)
+		{
+			throw new InvalidOperationException("scene shout should reject active conversation.");
+		}
+		if (SceneShoutAvailability.Evaluate(
+				true,
+				SceneShoutMissionState.Free,
+				false,
+				true,
+				false,
+				5)
+			!= SceneShoutAvailabilityResult.BlockedByOverlay)
+		{
+			throw new InvalidOperationException("scene shout should reject blocking overlay.");
+		}
+
+		SceneDialogueModePolicy policy = SceneDialogueModePolicy.Instance;
+		if (policy.AllowsNpcMemory
+			|| policy.AllowsRelationshipState
+			|| policy.AllowsCommands
+			|| !StringComparer.Ordinal.Equals(SceneDialogueModePolicy.OutputContractId, "awake.scene_shout.output.v1"))
+		{
+			throw new InvalidOperationException("scene dialogue mode policy mismatch.");
+		}
+
+		InputKey key;
+		if (!SceneInputKeyMapper.TryParse("[", out key) || key != InputKey.OpenBraces
+			|| !SceneInputKeyMapper.TryParse("]", out key) || key != InputKey.CloseBraces
+			|| !SceneInputKeyMapper.TryParse("C", out key) || key != InputKey.C
+			|| SceneInputKeyMapper.TryParse("not-a-key", out key))
+		{
+			throw new InvalidOperationException("scene input key mapping mismatch.");
+		}
+
+		Console.WriteLine("PASS scene selection ux smoke");
+	}
+
+	private static void RunSceneShoutContractSmoke()
+	{
+		NpcDialogueValidatedOutput output;
+		string error;
+		bool validSceneShout = NpcDialogueOutputValidator.TryValidate(
+			"{\"reply\":\"有人在吗？\",\"mood\":\"警惕\",\"effects\":[]}",
+			NpcDialogueConstants.SceneShoutOutputContractId,
+			out output,
+			out error);
+		if (!validSceneShout)
+		{
+			throw new InvalidOperationException("valid scene shout output should parse: " + error);
+		}
+		if (output == null || output.Reply != "有人在吗？")
+		{
+			throw new InvalidOperationException("valid scene shout output should preserve reply.");
+		}
+		if (NpcDialogueOutputValidator.TryValidate(
+			"{\"reply\":\"有人在吗？\",\"mood\":\"警惕\",\"effects\":[],\"command\":{\"commandId\":\"awake.relationship.delta.v1\",\"arguments\":{}}}",
+			NpcDialogueConstants.SceneShoutOutputContractId,
+			out output,
+			out error)
+			|| !StringComparer.Ordinal.Equals(error, "command_not_allowed"))
+		{
+			throw new InvalidOperationException("scene shout output must reject commands.");
+		}
+		if (NpcPromptTemplate.SceneShoutTemplateText.IndexOf("awake.relationship.delta.v1", StringComparison.Ordinal) >= 0
+			|| NpcDialogueConstants.SceneShoutAllowedCommandIds.Length != 0)
+		{
+			throw new InvalidOperationException("scene shout prompt/contract should not allow relationship commands.");
+		}
+		Console.WriteLine("PASS scene shout contract smoke");
 	}
 
 	private static void RunUnnamedProfileSmoke()

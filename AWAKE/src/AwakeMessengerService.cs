@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Settlements;
 
 namespace Awake;
 
@@ -8,24 +9,33 @@ internal sealed class AwakeContactInfo
 {
     internal AwakeNpcTarget Target { get; }
     internal string TargetId { get; }
+    internal string CanonicalContactKey { get; }
     internal string DisplayName { get; }
     internal string Identity { get; }
     internal string Status { get; }
     internal bool IsNearby { get; }
+    internal bool CanTalk { get; }
+    internal string Location { get; }
 
     internal AwakeContactInfo(
         AwakeNpcTarget target,
         string displayName,
         string identity,
         string status,
-        bool isNearby)
+        bool isNearby,
+        bool canTalk,
+        string location,
+        string canonicalContactKey = null)
     {
         Target = target;
-        TargetId = target?.StableId ?? string.Empty;
+        CanonicalContactKey = target?.CanonicalContactKey ?? canonicalContactKey ?? string.Empty;
+        TargetId = target?.StableId ?? CanonicalContactKey;
         DisplayName = displayName ?? string.Empty;
         Identity = identity ?? string.Empty;
         Status = status ?? string.Empty;
         IsNearby = isNearby;
+        CanTalk = canTalk;
+        Location = location ?? string.Empty;
     }
 }
 
@@ -39,7 +49,8 @@ internal static class AwakeMessengerService
         {
             foreach (AwakeNpcTarget target in NpcDialogueLauncher.GetNearbyTargets(24))
             {
-                if (target == null || !seen.Add(target.StableId)) continue;
+                if (target == null || string.IsNullOrWhiteSpace(target.CanonicalContactKey)
+                    || !seen.Add(target.CanonicalContactKey)) continue;
                 result.Add(ToContact(target, true));
             }
             if (Campaign.Current?.CampaignObjectManager?.AliveHeroes != null)
@@ -48,7 +59,8 @@ internal static class AwakeMessengerService
                 {
                     if (hero == null || hero == Hero.MainHero || !hero.HasMet) continue;
                     AwakeNpcTarget target = AwakeNpcTarget.FromHero(hero);
-                    if (target == null || !seen.Add(target.StableId)) continue;
+                    if (target == null || string.IsNullOrWhiteSpace(target.CanonicalContactKey)
+                        || !seen.Add(target.CanonicalContactKey)) continue;
                     result.Add(ToContact(target, false));
                 }
             }
@@ -80,6 +92,27 @@ internal static class AwakeMessengerService
         string status = isNearby
             ? AwakeLocalization.Resolve("awake.ui.contact_status_nearby", "附近")
             : AwakeLocalization.Resolve("awake.ui.contact_status_remote", "远方");
-        return new AwakeContactInfo(target, target.DisplayName, identity, status, isNearby);
+        string location = ResolveLocation(target);
+        bool canTalk = isNearby && NpcDialogueLauncher.IsEligibleNpcTarget(target);
+        return new AwakeContactInfo(target, target.DisplayName, identity, status, isNearby, canTalk, location);
+    }
+
+    private static string ResolveLocation(AwakeNpcTarget target)
+    {
+        try
+        {
+            if (target?.Hero != null)
+            {
+                return target.Hero.CurrentSettlement?.Name?.ToString()
+                    ?? target.Hero.StayingInSettlement?.Name?.ToString()
+                    ?? target.Hero.PartyBelongedTo?.CurrentSettlement?.Name?.ToString()
+                    ?? string.Empty;
+            }
+            return Settlement.CurrentSettlement?.Name?.ToString() ?? string.Empty;
+        }
+        catch
+        {
+            return string.Empty;
+        }
     }
 }

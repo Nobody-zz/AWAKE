@@ -40,6 +40,9 @@
 | `PLAN-Awake-Dialogue-BatchC-20260816.md` | draft | 远程写信/来信待锁定 |
 | `PLAN-Awake-Dialogue-GrillBatch-20260816.md` | draft | 对话功能整理稿 |
 | `PLAN-Awake-Messenger-20260816.md` | draft | Messenger 统一会话待锁定 |
+| `PLAN-ContactHubHistory-20260816.md` | approved | Round 7 APPROVED；待用户签收 |
+| `PLAN-Interactions-20260816.md` | approved | Round 9 APPROVED；待用户签收 |
+| `PLAN-UnifiedDialogueSession-20260816.md` | approved | Round 5 APPROVED；待用户签收，前置 ContactHubHistory 已 APPROVED |
 | `FEATURE-BRAINSTORM-20260813.md` | reference | 候选池，不是承诺 |
 | `FEATURE-FEASIBILITY-RANKING-20260813.md` | reference | 候选排序，需重新对齐现状 |
 

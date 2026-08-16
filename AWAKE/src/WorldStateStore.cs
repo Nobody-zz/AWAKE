@@ -17,7 +17,10 @@ internal enum WorldStateKind
     EventMeta,
     Proactive,
     WorldEvents,
-    Messenger
+    Messenger,
+    Transcript,
+    Contacts,
+    Audit
 }
 
 internal sealed class MemoryReservation
@@ -702,6 +705,156 @@ internal sealed class WorldStateStore
         return true;
     }
 
+    internal async Task<JObject> GetTranscriptChunkAsync(
+        string contactKey,
+        int chunkIndex,
+        RequestContext context,
+        CancellationToken cancellationToken)
+    {
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.TranscriptNamespace, out store);
+        if (store == null) return null;
+        string key = AwakeTranscriptKeys.TranscriptChunkKey(contactKey, chunkIndex);
+        OperationResult<string> loaded = await store.GetAsync(key, context ?? CreateContext(), cancellationToken).ConfigureAwait(false);
+        if (!loaded.IsSuccess) return null;
+        if (string.IsNullOrWhiteSpace(loaded.Value)) return null;
+        try
+        {
+            JObject doc = JObject.Parse(loaded.Value);
+            return doc.Type == JTokenType.Object ? doc : null;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    internal async Task<bool> AppendTranscriptAsync(
+        string contactKey,
+        int chunkIndex,
+        AwakeTranscriptLine line,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        return await AppendTranscriptLinesAsync(
+            contactKey,
+            chunkIndex,
+            new[] { line },
+            idempotencyKey,
+            cancellationToken).ConfigureAwait(false);
+    }
+
+    internal async Task<bool> AppendTranscriptLinesAsync(
+        string contactKey,
+        int chunkIndex,
+        IReadOnlyList<AwakeTranscriptLine> lines,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(contactKey) || lines == null || lines.Count == 0 || string.IsNullOrWhiteSpace(idempotencyKey)) return false;
+        JArray lineArray = new JArray();
+        foreach (AwakeTranscriptLine line in lines)
+        {
+            if (line == null) return false;
+            lineArray.Add(line.ToJson());
+        }
+        JObject arguments = new JObject
+        {
+            ["mode"] = "append",
+            ["contactKey"] = contactKey,
+            ["chunkIndex"] = chunkIndex,
+            ["lines"] = lineArray
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.TranscriptNamespace,
+            AwakeTranscriptKeys.TranscriptChunkKey(contactKey, chunkIndex),
+            AiTaskConstants.TranscriptAppendCommandId,
+            idempotencyKey,
+            string.Empty,
+            WorldStateKind.Transcript,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
+    internal async Task<bool> PinTranscriptAsync(
+        string contactKey,
+        int chunkIndex,
+        string lineId,
+        bool pin,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(contactKey) || string.IsNullOrWhiteSpace(lineId) || string.IsNullOrWhiteSpace(idempotencyKey)) return false;
+        JObject arguments = new JObject
+        {
+            ["mode"] = "pin",
+            ["contactKey"] = contactKey,
+            ["chunkIndex"] = chunkIndex,
+            ["lineId"] = lineId,
+            ["pin"] = pin
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.TranscriptNamespace,
+            AwakeTranscriptKeys.TranscriptChunkKey(contactKey, chunkIndex),
+            AiTaskConstants.TranscriptPinCommandId,
+            idempotencyKey,
+            string.Empty,
+            WorldStateKind.Transcript,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
+    internal async Task<bool> EnsureContactAsync(
+        string contactKey,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(contactKey) || string.IsNullOrWhiteSpace(idempotencyKey)) return false;
+        JObject arguments = new JObject { ["contactKey"] = contactKey };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.ContactsNamespace,
+            AwakeTranscriptKeys.ContactsKey,
+            AiTaskConstants.ContactsUpsertCommandId,
+            idempotencyKey,
+            string.Empty,
+            WorldStateKind.Contacts,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
+    internal async Task<JObject> GetContactsAsync(RequestContext context, CancellationToken cancellationToken)
+    {
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.ContactsNamespace, out store);
+        if (store == null) return null;
+        OperationResult<string> loaded = await store.GetAsync(
+            AwakeTranscriptKeys.ContactsKey,
+            context ?? CreateContext(),
+            cancellationToken).ConfigureAwait(false);
+        if (!loaded.IsSuccess || string.IsNullOrWhiteSpace(loaded.Value)) return null;
+        try
+        {
+            JObject doc = JObject.Parse(loaded.Value);
+            return doc.Type == JTokenType.Object ? doc : null;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     internal async Task BeginFinalDrainAsync()
     {
         bool started;
@@ -1130,6 +1283,15 @@ internal sealed class WorldStateStore
             case WorldStateKind.Messenger:
                 applyError = ApplyMessenger(state, command);
                 break;
+            case WorldStateKind.Transcript:
+                applyError = ApplyTranscript(state, command);
+                break;
+            case WorldStateKind.Contacts:
+                applyError = ApplyContacts(state, command);
+                break;
+            case WorldStateKind.Audit:
+                applyError = ApplyAudit(state, command);
+                break;
         }
         if (!string.IsNullOrWhiteSpace(applyError))
         {
@@ -1177,6 +1339,9 @@ internal sealed class WorldStateStore
             case WorldStateKind.Proactive: return NewProactiveState();
             case WorldStateKind.WorldEvents: return NewWorldEventsState();
             case WorldStateKind.Messenger: return NewMessengerState();
+            case WorldStateKind.Transcript: return NewTranscriptChunkState();
+            case WorldStateKind.Contacts: return NewContactsState();
+            case WorldStateKind.Audit: return NewAuditState();
             default: return new JObject();
         }
     }
@@ -1238,6 +1403,219 @@ internal sealed class WorldStateStore
             ["chats"] = new JObject(),
             ["appliedKeys"] = new JArray()
         };
+    }
+
+    private static JObject NewTranscriptChunkState()
+    {
+        return new JObject
+        {
+            ["schema"] = AwakeTranscriptConstants.Schema,
+            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+            ["chunkIndex"] = -1,
+            ["contactKey"] = string.Empty,
+            ["entries"] = new JArray(),
+            ["pinnedIds"] = new JArray(),
+            ["appliedKeys"] = new JArray()
+        };
+    }
+
+    private static JObject NewContactsState()
+    {
+        return new JObject
+        {
+            ["schema"] = AwakeTranscriptConstants.ContactsSchema,
+            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+            ["contacts"] = new JArray(),
+            ["appliedKeys"] = new JArray()
+        };
+    }
+
+    private static JObject NewAuditState()
+    {
+        return new JObject
+        {
+            ["schema"] = AwakeTranscriptConstants.AuditSchema,
+            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+            ["entries"] = new JArray(),
+            ["appliedKeys"] = new JArray()
+        };
+    }
+
+    private static void EnsureTranscriptChunkShape(JObject state, string contactKey, int chunkIndex)
+    {
+        state["schema"] = AwakeTranscriptConstants.Schema;
+        state["chunkIndex"] = chunkIndex;
+        state["contactKey"] = contactKey ?? string.Empty;
+        if (!(state["entries"] is JArray)) state["entries"] = new JArray();
+        if (!(state["pinnedIds"] is JArray)) state["pinnedIds"] = new JArray();
+        if (!(state["appliedKeys"] is JArray)) state["appliedKeys"] = new JArray();
+    }
+
+    private static string ApplyTranscript(JObject state, WorldStateCommand command)
+    {
+        string mode = (string)command.Arguments["mode"] ?? "append";
+        string contactKey = (string)command.Arguments["contactKey"] ?? string.Empty;
+        int chunkIndex = IntValue(command.Arguments["chunkIndex"]);
+        EnsureTranscriptChunkShape(state, contactKey, chunkIndex);
+        JArray entries = (JArray)state["entries"];
+        JArray appliedKeys = (JArray)state["appliedKeys"];
+
+        if (StringComparer.Ordinal.Equals(mode, "append"))
+        {
+            List<AwakeTranscriptLine> newLines = new List<AwakeTranscriptLine>();
+            if (command.Arguments["lines"] is JArray lineArray)
+            {
+                foreach (JToken token in lineArray)
+                {
+                    AwakeTranscriptLine line = AwakeTranscriptLine.FromJson(token);
+                    if (line == null) return "awake.world_state.transcript.invalid_line";
+                    newLines.Add(line);
+                }
+            }
+            else
+            {
+                AwakeTranscriptLine line = AwakeTranscriptLine.FromJson(command.Arguments["line"]);
+                if (line != null) newLines.Add(line);
+            }
+            if (newLines.Count == 0) return "awake.world_state.transcript.invalid_line";
+            foreach (AwakeTranscriptLine line in newLines)
+            {
+                string error;
+                if (!AwakeTranscriptValidator.ValidateLine(line, out error))
+                {
+                    return "awake.world_state.transcript.invalid_line." + error;
+                }
+                entries.Add(line.ToJson());
+            }
+            if (entries.Count > AwakeTranscriptConstants.MaximumLinesPerContact)
+            {
+                return "awake.world_state.transcript.too_many_lines";
+            }
+            if (Encoding.UTF8.GetByteCount(state.ToString(Formatting.None)) > AwakeTranscriptConstants.MaximumChunkUtf8Bytes)
+            {
+                return "awake.world_state.transcript.chunk_full";
+            }
+            appliedKeys.Add(command.IdempotencyKey);
+            Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+            return string.Empty;
+        }
+
+        if (StringComparer.Ordinal.Equals(mode, "pin"))
+        {
+            string lineId = (string)command.Arguments["lineId"] ?? string.Empty;
+            bool pin = BoolValue(command.Arguments["pin"]);
+            if (string.IsNullOrWhiteSpace(lineId)) return "awake.world_state.transcript.invalid_lineId";
+            bool found = false;
+            foreach (JToken token in entries)
+            {
+                if (token is JObject obj && StringComparer.Ordinal.Equals((string)obj["id"], lineId))
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) return "awake.world_state.transcript.line_not_found";
+            JArray pinned = (JArray)state["pinnedIds"];
+            if (pinned == null)
+            {
+                pinned = new JArray();
+                state["pinnedIds"] = pinned;
+            }
+            if (pin)
+            {
+                if (pinned.Count >= AwakeTranscriptConstants.MaximumPinnedLines)
+                {
+                    return "awake.world_state.transcript.pin_limit";
+                }
+                if (!ContainsString(pinned, lineId)) pinned.Add(lineId);
+            }
+            else
+            {
+                for (int i = pinned.Count - 1; i >= 0; i--)
+                {
+                    if (StringComparer.Ordinal.Equals((string)pinned[i], lineId)) pinned.RemoveAt(i);
+                }
+            }
+            appliedKeys.Add(command.IdempotencyKey);
+            Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+            return string.Empty;
+        }
+
+        if (StringComparer.Ordinal.Equals(mode, "roll"))
+        {
+            int cutoffDay = IntValue(command.Arguments["cutoffDay"]);
+            for (int i = entries.Count - 1; i >= 0; i--)
+            {
+                if (entries[i] is not JObject obj) continue;
+                string id = (string)obj["id"] ?? string.Empty;
+                JArray pinned = state["pinnedIds"] as JArray;
+                bool pinnedLine = pinned != null && ContainsString(pinned, id);
+                if (!pinnedLine && IntValue(obj["day"]) < cutoffDay)
+                {
+                    entries.RemoveAt(i);
+                }
+            }
+            appliedKeys.Add(command.IdempotencyKey);
+            Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+            return string.Empty;
+        }
+
+        return "awake.world_state.transcript.invalid_mode";
+    }
+
+    private static void EnsureContactsShape(JObject state)
+    {
+        state["schema"] = AwakeTranscriptConstants.ContactsSchema;
+        if (!(state["contacts"] is JArray)) state["contacts"] = new JArray();
+        if (!(state["appliedKeys"] is JArray)) state["appliedKeys"] = new JArray();
+    }
+
+    private static string ApplyContacts(JObject state, WorldStateCommand command)
+    {
+        EnsureContactsShape(state);
+        string contactKey = (string)command.Arguments["contactKey"] ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(contactKey)) return "awake.world_state.contacts.invalid_key";
+        JArray contacts = (JArray)state["contacts"];
+        if (!ContainsString(contacts, contactKey))
+        {
+            contacts.Add(contactKey);
+            Trim(contacts, 1000);
+        }
+        JArray appliedKeys = (JArray)state["appliedKeys"];
+        appliedKeys.Add(command.IdempotencyKey);
+        Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+        return string.Empty;
+    }
+
+    private static void EnsureAuditShape(JObject state)
+    {
+        state["schema"] = AwakeTranscriptConstants.AuditSchema;
+        if (!(state["entries"] is JArray)) state["entries"] = new JArray();
+        if (!(state["appliedKeys"] is JArray)) state["appliedKeys"] = new JArray();
+    }
+
+    private static string ApplyAudit(JObject state, WorldStateCommand command)
+    {
+        EnsureAuditShape(state);
+        JArray entries = (JArray)state["entries"];
+        entries.Insert(0, new JObject
+        {
+            ["rollId"] = (string)command.Arguments["rollId"] ?? string.Empty,
+            ["lineId"] = (string)command.Arguments["lineId"] ?? string.Empty,
+            ["action"] = (string)command.Arguments["action"] ?? string.Empty,
+            ["day"] = IntValue(command.Arguments["day"]),
+            ["correlation"] = command.CorrelationId,
+            ["memoryWriteId"] = (string)command.Arguments["memoryWriteId"] ?? string.Empty,
+            ["conversationId"] = (string)command.Arguments["conversationId"] ?? string.Empty,
+            ["phase"] = (string)command.Arguments["phase"] ?? "intent",
+            ["chunkIndexes"] = command.Arguments["chunkIndexes"] ?? new JArray(),
+            ["status"] = (string)command.Arguments["status"] ?? "pending"
+        });
+        Trim(entries, AwakeTranscriptConstants.MaximumAuditEntries);
+        JArray appliedKeys = (JArray)state["appliedKeys"];
+        appliedKeys.Add(command.IdempotencyKey);
+        Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+        return string.Empty;
     }
 
     private static JObject NewRelationshipState(string heroId)
@@ -1563,6 +1941,16 @@ internal sealed class WorldStateStore
     {
         if (items == null) return;
         while (items.Count > maximum) items.RemoveAt(items.Count - 1);
+    }
+
+    private static bool ContainsString(JArray items, string value)
+    {
+        if (items == null) return false;
+        foreach (JToken token in items)
+        {
+            if (StringComparer.Ordinal.Equals((string)token, value)) return true;
+        }
+        return false;
     }
 
     private static double DoubleValue(JToken token)

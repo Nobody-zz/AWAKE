@@ -9,15 +9,22 @@ internal static class NpcDialogueConstants
     internal const string PromptVersion = "v1";
     internal const string PromptRevision = "release";
     internal const string OutputContractId = "awake.npc.output.v1";
+    internal const string SceneShoutPromptId = SceneDialogueModePolicy.PromptId;
+    internal const string SceneShoutPromptVersion = SceneDialogueModePolicy.PromptVersion;
+    internal const string SceneShoutPromptRevision = SceneDialogueModePolicy.PromptRevision;
+    internal const string SceneShoutOutputContractId = SceneDialogueModePolicy.OutputContractId;
     internal const int HistoryCapacity = 12;
     internal const int MaxPlayerInputLength = 4000;
     internal const int MaxPromptUtf8Bytes = 32768;
     internal const int LongWaitCancelSeconds = 60;
     internal const string PermissionRouteInvoke = "ai.route.invoke:" + RouteId;
     internal const string PermissionPromptCompile = "prompt.compile:" + PromptId;
+    internal const string PermissionSceneShoutPromptCompile = "prompt.compile:" + SceneShoutPromptId;
     internal static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(90);
     internal static readonly string[] AllowedCommandIds = new[]
     {
         AiTaskConstants.RelationshipDeltaCommandId
     };
+
+    internal static readonly string[] SceneShoutAllowedCommandIds = Array.Empty<string>();
 }

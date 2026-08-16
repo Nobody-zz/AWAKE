@@ -11,6 +11,10 @@ internal static class AwakeStorageContract
     internal const string ProactiveSchema = "awake.npc.proactive.v1";
     internal const string WorldEventsSchema = "awake.world_events.v1";
     internal const string MessengerSchema = "awake.messenger.v1";
+    internal const string TranscriptSchema = AwakeTranscriptConstants.Schema;
+    internal const string TranscriptMetaSchema = AwakeTranscriptConstants.MetaSchema;
+    internal const string ContactsSchema = AwakeTranscriptConstants.ContactsSchema;
+    internal const string AuditSchema = AwakeTranscriptConstants.AuditSchema;
 
     internal static bool IsKnownSchema(string schema)
     {
@@ -19,7 +23,11 @@ internal static class AwakeStorageContract
             || StringComparer.Ordinal.Equals(schema, EventMetaSchema)
             || StringComparer.Ordinal.Equals(schema, ProactiveSchema)
             || StringComparer.Ordinal.Equals(schema, WorldEventsSchema)
-            || StringComparer.Ordinal.Equals(schema, MessengerSchema);
+            || StringComparer.Ordinal.Equals(schema, MessengerSchema)
+            || StringComparer.Ordinal.Equals(schema, TranscriptSchema)
+            || StringComparer.Ordinal.Equals(schema, TranscriptMetaSchema)
+            || StringComparer.Ordinal.Equals(schema, ContactsSchema)
+            || StringComparer.Ordinal.Equals(schema, AuditSchema);
     }
 
     internal static string ExpectedSchema(WorldStateKind kind)
@@ -38,6 +46,12 @@ internal static class AwakeStorageContract
                 return WorldEventsSchema;
             case WorldStateKind.Messenger:
                 return MessengerSchema;
+            case WorldStateKind.Transcript:
+                return TranscriptSchema;
+            case WorldStateKind.Contacts:
+                return ContactsSchema;
+            case WorldStateKind.Audit:
+                return AuditSchema;
             default:
                 return string.Empty;
         }

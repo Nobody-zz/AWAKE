@@ -14,13 +14,22 @@ internal sealed class AwakeContactRowVM : ViewModel
     public string DisplayName => _contact.DisplayName;
 
     [DataSourceProperty]
+    public string CanonicalContactKey => _contact.CanonicalContactKey;
+
+    [DataSourceProperty]
     public string Identity => _contact.Identity;
 
     [DataSourceProperty]
     public string Status => _contact.Status;
 
     [DataSourceProperty]
+    public string Location => _contact.Location;
+
+    [DataSourceProperty]
     public bool IsNearby => _contact.IsNearby;
+
+    [DataSourceProperty]
+    public bool CanTalk => _contact.CanTalk;
 
     [DataSourceProperty]
     public string StatusColor => _contact.IsNearby ? "#FF88CC88" : "#FF888888";
@@ -32,7 +41,9 @@ internal sealed class AwakeContactRowVM : ViewModel
             AwakeLocalization.Resolve("awake.ui.contact_unknown", "未知"),
             string.Empty,
             AwakeLocalization.Resolve("awake.ui.contact_unavailable", "不可用"),
-            false);
+            false,
+            false,
+            string.Empty);
         _onSelect = onSelect;
     }
 

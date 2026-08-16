@@ -55,7 +55,7 @@ internal static class NpcDialogueLauncher
                 return NpcDialogueLaunchResult.None;
             }
 
-            NpcDialogueService service = new NpcDialogueService(host, target, CurrentSceneKeywords());
+            NpcDialogueService service = new NpcDialogueService(host, target, CurrentSceneKeywords(), sourceKey);
             service.Initialize();
             bool opened = NpcDialogueOverlay.Open(service, sourceKey, target.StableId);
             if (opened)
@@ -131,6 +131,138 @@ internal static class NpcDialogueLauncher
             AwakeLog.Write("npc_dialogue_launcher_scene_targets_error error=" + ex.Message);
         }
         return result;
+    }
+
+    internal static List<AwakeNpcTarget> GetSceneCandidates()
+    {
+        List<AwakeNpcTarget> result = new List<AwakeNpcTarget>();
+        HashSet<string> seen = new HashSet<string>(StringComparer.Ordinal);
+        try
+        {
+            AddMissionAgents(result, seen, int.MaxValue);
+            AddLocationCharacters(result, seen, int.MaxValue);
+            AddSceneHeroCandidates(result, seen, int.MaxValue);
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("npc_dialogue_scene_candidates_error error=" + ex.Message);
+        }
+        return result;
+    }
+
+    internal static int CountScenePeopleUnfiltered()
+    {
+        int count = 0;
+        Mission mission = Mission.Current;
+        if (mission?.Agents == null) return 0;
+        foreach (Agent agent in mission.Agents)
+        {
+            if (agent == null || !agent.IsActive() || agent == Agent.Main || agent.IsMainAgent) continue;
+            count++;
+        }
+        return count;
+    }
+
+    internal static NpcDialogueLaunchResult TryOpenSceneShout(string sceneKeywords)
+    {
+        string sourceKey = "scene_shout";
+        string targetId = "scene:current";
+        try
+        {
+            SceneShoutAvailabilityResult availability = EvaluateSceneShoutAvailability();
+            if (availability != SceneShoutAvailabilityResult.Available)
+            {
+                AwakeLog.Write("scene_shout_unavailable result=" + availability);
+                return NpcDialogueLaunchResult.None;
+            }
+            IMarcusAiFrameworkHost host = AwakeRuntime.ResolveHost();
+            if (host == null)
+            {
+                AwakeLog.Write("scene_shout_open_failed reason=no_host");
+                return NpcDialogueLaunchResult.None;
+            }
+            if (!AwakeDialogueSessionCoordinator.TryAcquire(sourceKey, targetId))
+            {
+                AwakeLog.Write("scene_shout_open_failed reason=busy active=" + AwakeDialogueSessionCoordinator.ActiveSource);
+                return NpcDialogueLaunchResult.None;
+            }
+
+            NpcDialogueService service = NpcDialogueService.CreateSceneShout(host, sceneKeywords);
+            service.Initialize();
+            bool opened = NpcDialogueOverlay.Open(service, sourceKey, targetId);
+            if (opened)
+            {
+                AwakeLog.Write("scene_shout_open_success");
+                return NpcDialogueLaunchResult.Overlay;
+            }
+            service.Dispose();
+            AwakeDialogueSessionCoordinator.Close(sourceKey, targetId);
+            AwakeLog.Write("scene_shout_open_failed reason=overlay_open_failed");
+            return NpcDialogueLaunchResult.None;
+        }
+        catch (Exception ex)
+        {
+            AwakeDialogueSessionCoordinator.Close(sourceKey, targetId);
+            AwakeLog.Write("scene_shout_open_error error=" + ex.Message);
+            return NpcDialogueLaunchResult.None;
+        }
+    }
+
+    internal static SceneShoutAvailabilityResult EvaluateSceneShoutAvailability()
+    {
+        if (Mission.Current == null || Campaign.Current == null)
+        {
+            return SceneShoutAvailabilityResult.WrongContext;
+        }
+        SceneShoutMissionState missionState = SceneShoutMissionState.Free;
+        try
+        {
+            switch (Mission.Current.Mode)
+            {
+                case MissionMode.Battle:
+                    missionState = SceneShoutMissionState.Battle;
+                    break;
+                case MissionMode.Deployment:
+                    missionState = SceneShoutMissionState.Deployment;
+                    break;
+                case MissionMode.Duel:
+                    missionState = SceneShoutMissionState.Duel;
+                    break;
+                case MissionMode.Stealth:
+                    missionState = SceneShoutMissionState.Stealth;
+                    break;
+                case MissionMode.Tournament:
+                    missionState = SceneShoutMissionState.Tournament;
+                    break;
+            }
+        }
+        catch
+        {
+        }
+        bool conversationActive = false;
+        try
+        {
+            conversationActive = Campaign.Current?.ConversationManager?.IsConversationInProgress ?? false;
+        }
+        catch
+        {
+        }
+        bool blockingOverlayOpen = NpcDialogueOverlay.IsOpen
+            || AwakeMessengerOverlay.IsOpen
+            || WorldEventInboxOverlay.IsOpen
+            || WeeklyReportBrowserOverlay.IsOpen
+            || DeveloperCheckOverlay.IsOpen;
+        bool hasSettlementContext = Settlement.CurrentSettlement != null
+            || LocationComplex.Current != null
+            || PartyBase.MainParty?.MobileParty?.IsCurrentlyAtSea == true;
+        int people = CountScenePeopleUnfiltered();
+        return SceneShoutAvailability.Evaluate(
+            true,
+            missionState,
+            conversationActive,
+            blockingOverlayOpen,
+            hasSettlementContext,
+            people);
     }
 
     internal static List<Hero> GetNearbyHeroes(int limit)

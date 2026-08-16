@@ -81,6 +81,22 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyGroup("{=awake.mcm.group.scene}1. 对话与场景", GroupOrder = 0)]
     public int SceneMaxRangeMeters { get; set; } = (int)SceneDialogueSelection.DefaultMaxRangeMeters;
 
+    [SettingPropertyBool("{=awake.mcm.scene_visual_selection.name}启用场景可视化选人", Order = 1, RequireRestart = false, HintText = "{=awake.mcm.scene_visual_selection.hint}默认开启。按住 T 时显示地面范围、候选轮廓与当前目标脉冲；关闭时回退为基础文字提示。")]
+    [SettingPropertyGroup("{=awake.mcm.group.scene}1. 对话与场景", GroupOrder = 0)]
+    public bool EnableSceneVisualSelection { get; set; } = true;
+
+    [SettingPropertyText("{=awake.mcm.scene_near_to_far_key.name}近到远选人键", Order = 2, RequireRestart = false, HintText = "{=awake.mcm.scene_near_to_far_key.hint}输入 InputKey 名称或 [ ] 字面键，默认 [。")]
+    [SettingPropertyGroup("{=awake.mcm.group.scene}1. 对话与场景", GroupOrder = 0)]
+    public string SceneCycleNearToFarKey { get; set; } = "[";
+
+    [SettingPropertyText("{=awake.mcm.scene_far_to_near_key.name}远到近选人键", Order = 3, RequireRestart = false, HintText = "{=awake.mcm.scene_far_to_near_key.hint}输入 InputKey 名称或 [ ] 字面键，默认 ]。")]
+    [SettingPropertyGroup("{=awake.mcm.group.scene}1. 对话与场景", GroupOrder = 0)]
+    public string SceneCycleFarToNearKey { get; set; } = "]";
+
+    [SettingPropertyText("{=awake.mcm.scene_shout_key.name}场景喊话键", Order = 4, RequireRestart = false, HintText = "{=awake.mcm.scene_shout_key.hint}按住 T 后按此键进入无目标场景喊话，默认 C。")]
+    [SettingPropertyGroup("{=awake.mcm.group.scene}1. 对话与场景", GroupOrder = 0)]
+    public string SceneShoutKey { get; set; } = "C";
+
     [SettingPropertyBool("{=awake.mcm.npc_proactive.name}启用 NPC 主动", Order = 0, RequireRestart = false, HintText = "{=awake.mcm.npc_proactive.hint}默认开启。开启后附近 NPC 有概率按关系与场合主动发起谈话。")]
     [SettingPropertyGroup("{=awake.mcm.group.behavior}2. 主动行为", GroupOrder = 1)]
     public bool EnableNpcProactive { get; set; } = true;

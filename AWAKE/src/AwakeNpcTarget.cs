@@ -22,6 +22,21 @@ internal sealed class AwakeNpcTarget
     internal float Age { get; }
 
     internal bool IsHero => Hero != null;
+    internal string CanonicalContactKey
+    {
+        get
+        {
+            if (IsHero && Hero != null && !string.IsNullOrWhiteSpace(Hero.StringId))
+            {
+                return "hero:" + Hero.StringId;
+            }
+            if (Character != null && !string.IsNullOrWhiteSpace(Character.StringId))
+            {
+                return "npc:" + Character.StringId;
+            }
+            return string.Empty;
+        }
+    }
 
     private AwakeNpcTarget(
         Hero hero,

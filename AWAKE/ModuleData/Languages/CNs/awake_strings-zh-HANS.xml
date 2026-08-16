@@ -8,10 +8,28 @@
     <string id="AWAKE.Description" text="基于马库斯 AI 框架的通用 AI 世界运行时。" />
     <string id="awake.menu.messenger" text="通讯录（醒世）" />
     <string id="awake.menu.encounter_talk" text="面谈（醒世）" />
-    <string id="awake.scene.hold_hint" text="按住 T 扩大距离范围，按 Y 切换，松开 T 开始对话。" />
-    <string id="awake.scene.select_hint" text="已选中 {NAME}（{RANGE} 米），按 Y 切换，松开 T 开始对话。" />
+    <string id="awake.scene.hold_hint" text="按住 T 扩大距离；{NEAR_KEY} 近到远、{FAR_KEY} 远到近、{SHOUT_KEY} 场景喊话；松开 T 开始。" />
+    <string id="awake.scene.select_hint" text="已选中 {NAME}（{RANGE} 米），用 {NEAR_KEY}/{FAR_KEY} 往返选择，松开 T 开始对话。" />
     <string id="awake.scene.no_candidates" text="附近没有可以对话的人物。" />
     <string id="awake.scene.confirm_unavailable" text="对方暂时无法交谈。" />
+    <string id="awake.scene.shout_mode" text="已切换到场景喊话，松开 T 后不指定具体人物。" />
+    <string id="awake.scene.target_mode" text="已切回选人模式，使用 {NEAR_KEY}/{FAR_KEY} 选择目标。" />
+    <string id="awake.scene.shout_no_people" text="当前场合没有人能听见你的喊话。" />
+    <string id="awake.scene.shout_unavailable" text="当前场合无法喊话。" />
+    <string id="awake.scene.shout_open_failed" text="场景喊话暂时无法打开。" />
+    <string id="awake.scene.status_shout_mode" text="场景喊话" />
+    <string id="awake.scene.status_target_mode" text="选人" />
+    <string id="awake.scene.status_no_target" text="无目标" />
+    <string id="awake.scene.status_no_selection" text="未选择" />
+    <string id="awake.scene.status_line" text="模式 {MODE}；目标 {TARGET}；范围 {RANGE} 米；候选 {COUNT}" />
+    <string id="awake.scene_shout.speaker" text="附近的人们" />
+    <string id="awake.scene_shout.title" text="向场景喊话" />
+    <string id="awake.scene_shout.identity" text="场景中的人们" />
+    <string id="awake.scene_shout.notice" text="你向场景喊了一句，声音在人群里传开。" />
+    <string id="awake.scene_shout.status_starting" text="场景正在回应……" />
+    <string id="awake.scene_shout.send" text="喊话" />
+    <string id="awake.scene_shout.replied" text="场景有了回应。" />
+    <string id="awake.scene_shout.replied_mood" text="场景有了回应（{MOOD}）。" />
     <string id="awake.event.discuss" text="参与话题" />
     <string id="awake.event.confirm" text="确定" />
     <string id="awake.event.leave" text="离开" />
@@ -50,6 +68,14 @@
     <string id="awake.mcm.terminal_key.hint" text="输入 InputKey 名称，例如 U、K、H。" />
     <string id="awake.mcm.scene_max_range.name" text="场景选人最大距离（米）" />
     <string id="awake.mcm.scene_max_range.hint" text="按住 T 的最大搜索半径，默认 60。使用三维空间距离，过高会把隔墙或上下楼层的人也纳入候选。" />
+    <string id="awake.mcm.scene_visual_selection.name" text="启用场景可视化选人" />
+    <string id="awake.mcm.scene_visual_selection.hint" text="默认开启。按住 T 时显示地面范围、候选轮廓与当前目标脉冲；关闭时回退为基础文字提示。" />
+    <string id="awake.mcm.scene_near_to_far_key.name" text="近到远选人键" />
+    <string id="awake.mcm.scene_near_to_far_key.hint" text="输入 InputKey 名称或 [ ] 字面键，默认 [。" />
+    <string id="awake.mcm.scene_far_to_near_key.name" text="远到近选人键" />
+    <string id="awake.mcm.scene_far_to_near_key.hint" text="输入 InputKey 名称或 [ ] 字面键，默认 ]。" />
+    <string id="awake.mcm.scene_shout_key.name" text="场景喊话键" />
+    <string id="awake.mcm.scene_shout_key.hint" text="按住 T 后按此键进入无目标场景喊话，默认 C。" />
     <string id="awake.mcm.group.command" text="3. 命令台" />
     <string id="awake.mcm.world_effects.name" text="启用世界效果" />
     <string id="awake.mcm.world_effects.hint" text="默认开启。关闭后女神输出的世界命令与神谕效果都会被拒绝；该开关计划在 0.2.x 实际接入。" />
@@ -124,6 +150,19 @@
     <string id="awake.ui.contact_hero" text="英雄" />
     <string id="awake.ui.contact_status_nearby" text="附近" />
     <string id="awake.ui.contact_status_remote" text="远方" />
+    <string id="awake.ui.contact_location_unknown" text="位置未知" />
+    <string id="awake.ui.card_can_talk" text="可以交谈" />
+    <string id="awake.ui.card_cannot_talk" text="当前无法交谈" />
+    <string id="awake.ui.chat_tab" text="对话" />
+    <string id="awake.ui.history_tab" text="历史" />
+    <string id="awake.ui.history_empty" text="暂无历史记录" />
+    <string id="awake.ui.history_count" text="{COUNT} 条记录" />
+    <string id="awake.ui.history_pin" text="固定" />
+    <string id="awake.ui.history_unpin" text="取消固定" />
+    <string id="awake.ui.contact_history" text="历史联系人" />
+    <string id="awake.ui.contact_status_history" text="历史" />
+    <string id="awake.ui.contact_history_only" text="历史联系人" />
+    <string id="awake.ui.contact_cannot_send" text="当前无法发起新对话。" />
     <string id="awake.ui.dialogue_unavailable_title" text="AWAKE·对话" />
     <string id="awake.ui.dialogue_unavailable" text="对方还没有准备好交谈。" />
     <string id="awake.ui.ok" text="确定" />

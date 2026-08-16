@@ -20,6 +20,7 @@ internal sealed class AwakeMessengerChatLine
     }
 }
 
+// Legacy messenger cache: kept for old-save migration reads only. New history writes go through AwakeTranscriptService.
 internal static class AwakeMessengerHistory
 {
     private const int MaximumLinesPerContact = 200;

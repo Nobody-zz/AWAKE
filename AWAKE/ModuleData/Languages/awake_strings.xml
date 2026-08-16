@@ -8,10 +8,28 @@
     <string id="AWAKE.Description" text="Generic AI world runtime for Bannerlord, powered by Marcus AI Framework." />
     <string id="awake.menu.messenger" text="Messenger (AWAKE)" />
     <string id="awake.menu.encounter_talk" text="Face Talk (AWAKE)" />
-    <string id="awake.scene.hold_hint" text="Hold T to widen the range, press Y to switch, release T to talk." />
-    <string id="awake.scene.select_hint" text="Selected {NAME} ({RANGE}m). Press Y to switch, release T to talk." />
+    <string id="awake.scene.hold_hint" text="Hold T to widen the range; {NEAR_KEY} near-to-far, {FAR_KEY} far-to-near, {SHOUT_KEY} scene call; release T to act." />
+    <string id="awake.scene.select_hint" text="Selected {NAME} ({RANGE}m). Use {NEAR_KEY}/{FAR_KEY} to cycle; release T to talk." />
     <string id="awake.scene.no_candidates" text="There is no one nearby to talk with." />
     <string id="awake.scene.confirm_unavailable" text="They cannot talk right now." />
+    <string id="awake.scene.shout_mode" text="Scene shout mode. Release T to call out without a specific target." />
+    <string id="awake.scene.target_mode" text="Target mode. Use {NEAR_KEY}/{FAR_KEY} to choose who to talk with." />
+    <string id="awake.scene.shout_no_people" text="No one nearby can hear your call." />
+    <string id="awake.scene.shout_unavailable" text="You cannot call out in this situation." />
+    <string id="awake.scene.shout_open_failed" text="The scene call could not open." />
+    <string id="awake.scene.status_shout_mode" text="Scene shout" />
+    <string id="awake.scene.status_target_mode" text="Target" />
+    <string id="awake.scene.status_no_target" text="No target" />
+    <string id="awake.scene.status_no_selection" text="None selected" />
+    <string id="awake.scene.status_line" text="Mode {MODE}; target {TARGET}; range {RANGE} m; candidates {COUNT}" />
+    <string id="awake.scene_shout.speaker" text="Nearby voices" />
+    <string id="awake.scene_shout.title" text="Call out to the scene" />
+    <string id="awake.scene_shout.identity" text="the people in this scene" />
+    <string id="awake.scene_shout.notice" text="Your call carries through the crowd." />
+    <string id="awake.scene_shout.status_starting" text="The scene is responding..." />
+    <string id="awake.scene_shout.send" text="Call out" />
+    <string id="awake.scene_shout.replied" text="The scene responded." />
+    <string id="awake.scene_shout.replied_mood" text="The scene responded ({MOOD})." />
     <string id="awake.event.discuss" text="Join the topic" />
     <string id="awake.event.confirm" text="Confirm" />
     <string id="awake.event.leave" text="Leave" />
@@ -50,6 +68,14 @@
     <string id="awake.mcm.terminal_key.hint" text="Input an InputKey name, e.g. U, K or H." />
     <string id="awake.mcm.scene_max_range.name" text="Scene Target Max Range (m)" />
     <string id="awake.mcm.scene_max_range.hint" text="Maximum search radius while holding T. Default 60. Uses 3D distance; very high values include people across walls or floors." />
+    <string id="awake.mcm.scene_visual_selection.name" text="Enable Scene Visual Selection" />
+    <string id="awake.mcm.scene_visual_selection.hint" text="Enabled by default. Shows the ground range, candidate outlines, and a pulsing current target while holding T." />
+    <string id="awake.mcm.scene_near_to_far_key.name" text="Near-to-Far Target Key" />
+    <string id="awake.mcm.scene_near_to_far_key.hint" text="Input an InputKey name or a literal [ or ] key. Default [." />
+    <string id="awake.mcm.scene_far_to_near_key.name" text="Far-to-Near Target Key" />
+    <string id="awake.mcm.scene_far_to_near_key.hint" text="Input an InputKey name or a literal [ or ] key. Default ]." />
+    <string id="awake.mcm.scene_shout_key.name" text="Scene Shout Key" />
+    <string id="awake.mcm.scene_shout_key.hint" text="While holding T, press this key to switch to an untargeted scene call. Default C." />
     <string id="awake.mcm.group.command" text="3. Command Deck" />
     <string id="awake.mcm.world_effects.name" text="Enable World Effects" />
     <string id="awake.mcm.world_effects.hint" text="Enabled by default. When disabled, world commands and oracle effects from goddess output are rejected; actual gameplay wiring is planned for 0.2.x." />
@@ -124,6 +150,19 @@
     <string id="awake.ui.contact_hero" text="Hero" />
     <string id="awake.ui.contact_status_nearby" text="Nearby" />
     <string id="awake.ui.contact_status_remote" text="Remote" />
+    <string id="awake.ui.contact_location_unknown" text="Unknown location" />
+    <string id="awake.ui.card_can_talk" text="Can talk" />
+    <string id="awake.ui.card_cannot_talk" text="Cannot talk now" />
+    <string id="awake.ui.chat_tab" text="Chat" />
+    <string id="awake.ui.history_tab" text="History" />
+    <string id="awake.ui.history_empty" text="No history yet." />
+    <string id="awake.ui.history_count" text="{COUNT} records" />
+    <string id="awake.ui.history_pin" text="Pin" />
+    <string id="awake.ui.history_unpin" text="Unpin" />
+    <string id="awake.ui.contact_history" text="History contact" />
+    <string id="awake.ui.contact_status_history" text="History" />
+    <string id="awake.ui.contact_history_only" text="History contact" />
+    <string id="awake.ui.contact_cannot_send" text="Cannot start a new conversation now." />
     <string id="awake.ui.dialogue_unavailable_title" text="AWAKE · Dialogue" />
     <string id="awake.ui.dialogue_unavailable" text="They are not ready to talk yet." />
     <string id="awake.ui.ok" text="OK" />

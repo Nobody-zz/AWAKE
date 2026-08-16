@@ -85,7 +85,7 @@ public interface IRouteRegistry
 
 1. MarcusAIFramework
 2. AWAKE（初始化 API 版本与注册表）
-3. 内容包（声明 `AwakeApiVersion=1`）
+3. SlaneshsEmbrace 内容包（声明 `AwakeApiVersion=1`）
 
 ## 5. 权限集成
 
