@@ -119,6 +119,39 @@ internal static class WorldbookLoader
                 }
             }
         }
+        LoadOptionalJsonFile(
+            document,
+            baseDir,
+            manifest.UnnamedPersonaDirectory,
+            "UnnamedNpcProfiles.json",
+            "unnamed_persona_data",
+            value => document.UnnamedPersonaData = value);
+        LoadOptionalJsonFile(
+            document,
+            baseDir,
+            manifest.VoiceMappingDirectory,
+            "VoiceMapping.json",
+            "voice_mapping_data",
+            value => document.VoiceMappingData = value);
+        LoadEventData(document, baseDir, manifest.EventDataDirectory);
+        LoadFirstJsonInDirectory(
+            document,
+            baseDir,
+            manifest.DebtDirectory,
+            "debt_data",
+            value => document.DebtData = value);
+        LoadFirstJsonInDirectory(
+            document,
+            baseDir,
+            manifest.DialogueHistoryDirectory,
+            "dialogue_history_data",
+            value => document.DialogueHistoryData = value);
+        LoadFirstJsonInDirectory(
+            document,
+            baseDir,
+            manifest.CompressedMemoryDirectory,
+            "compressed_memory_data",
+            value => document.CompressedMemoryData = value);
         EnforceUniqueIds(document);
         if (document.Rules.Count == 0)
         {
@@ -304,6 +337,78 @@ internal static class WorldbookLoader
             }
         }
         return mappings;
+    }
+
+    private static void LoadOptionalJsonFile(
+        WorldbookDocument document,
+        string baseDir,
+        string directory,
+        string fileName,
+        string warningCode,
+        Action<JToken> assign)
+    {
+        string path = ResolvePath(baseDir, directory);
+        if (!Directory.Exists(path)) return;
+        string file = Path.Combine(path, fileName);
+        if (!File.Exists(file)) return;
+        try
+        {
+            assign(JToken.Parse(File.ReadAllText(file)));
+        }
+        catch (Exception ex)
+        {
+            document.Warnings.Add(new WorldbookImportWarning(fileName, warningCode, ex.Message));
+        }
+    }
+
+    private static void LoadFirstJsonInDirectory(
+        WorldbookDocument document,
+        string baseDir,
+        string directory,
+        string warningCode,
+        Action<JToken> assign)
+    {
+        string path = ResolvePath(baseDir, directory);
+        if (!Directory.Exists(path)) return;
+        string[] files = Directory.GetFiles(path, "*.json", SearchOption.TopDirectoryOnly);
+        if (files.Length == 0) return;
+        try
+        {
+            assign(JToken.Parse(File.ReadAllText(files[0])));
+        }
+        catch (Exception ex)
+        {
+            document.Warnings.Add(new WorldbookImportWarning(Path.GetFileName(files[0]), warningCode, ex.Message));
+        }
+    }
+
+    private static void LoadEventData(WorldbookDocument document, string baseDir, string directory)
+    {
+        string path = ResolvePath(baseDir, directory);
+        if (!Directory.Exists(path)) return;
+        Newtonsoft.Json.Linq.JObject eventData = new Newtonsoft.Json.Linq.JObject();
+        LoadOptionalJsonFile(
+            document,
+            baseDir,
+            directory,
+            "EventRecords.json",
+            "event_records_data",
+            value => eventData["eventRecords"] = value);
+        LoadOptionalJsonFile(
+            document,
+            baseDir,
+            directory,
+            "KingdomOpeningSummaries.json",
+            "kingdom_opening_summaries_data",
+            value => eventData["kingdomOpeningSummaries"] = value);
+        LoadOptionalJsonFile(
+            document,
+            baseDir,
+            directory,
+            "WorldOpeningSummary.json",
+            "world_opening_summary_data",
+            value => eventData["worldOpeningSummary"] = value);
+        if (eventData.Count > 0) document.EventData = eventData;
     }
 
     private static void ValidateManifest(WorldbookManifest manifest, List<WorldbookImportWarning> warnings)

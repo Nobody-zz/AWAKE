@@ -98,6 +98,12 @@ internal sealed class WorldbookDocument
     internal List<WorldbookRule> Rules { get; set; } = new List<WorldbookRule>();
     internal List<WorldbookPersona> Personas { get; set; } = new List<WorldbookPersona>();
     internal List<WorldbookImportWarning> Warnings { get; set; } = new List<WorldbookImportWarning>();
+    internal JToken UnnamedPersonaData { get; set; }
+    internal JToken VoiceMappingData { get; set; }
+    internal JToken EventData { get; set; }
+    internal JToken DebtData { get; set; }
+    internal JToken DialogueHistoryData { get; set; }
+    internal JToken CompressedMemoryData { get; set; }
 }
 
 internal sealed class WorldbookImportWarning
