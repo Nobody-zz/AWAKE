@@ -66,6 +66,13 @@ internal sealed class NpcDialogueOverlay
             }
             if (active._layer.Input.IsKeyPressed(InputKey.Escape))
             {
+                if (active._service != null
+                    && active._service.IsSending
+                    && !active._service.CanEscCancel)
+                {
+                    active._dataSource.ShowWaitingHint();
+                    return;
+                }
                 active._dataSource.ExecuteClose();
                 return;
             }

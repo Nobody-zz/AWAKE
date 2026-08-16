@@ -43,7 +43,7 @@
     <string id="awake.mcm.boon_offers.name" text="Enable Divine Proposals" />
     <string id="awake.mcm.boon_offers.hint" text="Enabled by default. When disabled, no new divine candidates are generated, unsettled proposals are cleared, and in-flight settlement may finish." />
     <string id="awake.mcm.npc_proactive.name" text="Enable NPC Proactive" />
-    <string id="awake.mcm.npc_proactive.hint" text="Disabled by default. When enabled, NPCs may proactively approach based on estrus and relationship state; chance is controlled by the next option." />
+    <string id="awake.mcm.npc_proactive.hint" text="Enabled by default. Nearby NPCs may proactively start a conversation based on relationship and current situation." />
     <string id="awake.mcm.npc_proactive_chance.name" text="NPC Proactive Chance" />
     <string id="awake.mcm.npc_proactive_chance.hint" text="Chance percentage for NPC proactive initiations, 0-100, default 35." />
     <string id="awake.mcm.event_engine.name" text="Enable Event Engine" />
@@ -65,5 +65,11 @@
     <string id="awake.status.candidates_empty" text="none" />
     <string id="awake.status.route_error" text="Route capability: {CODE}" />
     <string id="awake.status.route_query_failed" text="Route capability: Query failed" />
+    <string id="awake.proactive.popup.title" text="A Call" />
+    <string id="awake.proactive.popup.text" text="{NAME} wants to talk with you." />
+    <string id="awake.proactive.accept" text="Talk" />
+    <string id="awake.proactive.decline" text="Later" />
+    <string id="awake.proactive.opening_hint" text="The other person initiated this conversation." />
+    <string id="awake.dialogue.long_wait_hint" text="Still responding. You can close and cancel after 60 seconds." />
   </strings>
 </base>

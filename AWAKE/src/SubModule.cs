@@ -57,6 +57,12 @@ public sealed class SubModule : MBSubModuleBase
             {
                 AwakeLog.Write("awake_terminal_behavior_add_failed error=" + ex.Message);
             }
+            NpcProactiveHooks.GetNearbyHeroes = limit => NpcDialogueLauncher.GetNearbyHeroes(limit);
+            NpcProactiveHooks.FindHeroById = heroId => NpcDialogueLauncher.FindHeroById(heroId);
+            NpcProactiveHooks.IsDialogueOpen = () => NpcDialogueOverlay.IsOpen;
+            NpcProactiveHooks.IsMessengerOpen = () => AwakeMessengerOverlay.IsOpen;
+            NpcProactiveHooks.RecordDialogueContext = (heroId, hint) => NpcDialogueContext.Record(heroId, hint);
+            NpcProactiveHooks.EnqueueDialogue = (heroId, hint) => EventDialogueQueue.Enqueue(heroId, hint);
         }
         AwakeLog.Write("game_start version=" + AwakeVersion.Version);
     }
@@ -65,6 +71,7 @@ public sealed class SubModule : MBSubModuleBase
     {
         base.OnApplicationTick(dt);
         AwakeTerminalBehavior.TickCurrent();
+        NpcProactiveService.Current?.OnApplicationTick();
         AwakeUiDispatcher.InitializeGameThread();
         AwakeUiDispatcher.Drain();
         AwakeMessengerOverlay.OnApplicationTick();
@@ -94,6 +101,7 @@ public sealed class SubModule : MBSubModuleBase
         NpcDialogueContext.ClearForTesting();
         NpcDialogueLauncher.ClearCache();
         EventDialogueQueue.ClearForTesting();
+        NpcProactiveService.ShutdownCurrent();
     }
 
     private static void DrainEventDialogueQueue()

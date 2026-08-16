@@ -14,7 +14,8 @@ internal enum WorldStateKind
 {
     Memory,
     Relationship,
-    EventMeta
+    EventMeta,
+    Proactive
 }
 
 internal sealed class MemoryReservation
@@ -498,6 +499,60 @@ internal sealed class WorldStateStore
         return true;
     }
 
+    internal async Task<JObject> GetProactiveAsync(RequestContext context, CancellationToken cancellationToken)
+    {
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.ProactiveNamespace, out store);
+        if (store == null) return null;
+
+        OperationResult<string> loaded = await store.GetAsync(
+            NpcProactiveConstants.Key,
+            context ?? CreateContext(),
+            cancellationToken).ConfigureAwait(false);
+        if (!loaded.IsSuccess)
+        {
+            AwakeLog.Write("world_state_proactive_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            return null;
+        }
+        if (string.IsNullOrWhiteSpace(loaded.Value)) return NewProactiveState();
+        try
+        {
+            JObject doc = JObject.Parse(loaded.Value);
+            if (doc.Type != JTokenType.Object) throw new InvalidOperationException("proactive root is not object");
+            return doc;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_state_proactive_corrupt error=" + ex.Message);
+            return null;
+        }
+    }
+
+    internal async Task<bool> UpdateProactiveAsync(
+        JArray candidates,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (candidates == null) return false;
+        JObject arguments = new JObject
+        {
+            ["candidates"] = (JArray)candidates.DeepClone()
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.ProactiveNamespace,
+            NpcProactiveConstants.Key,
+            "awake.npc.proactive.upsert",
+            idempotencyKey,
+            string.Empty,
+            WorldStateKind.Proactive,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
     internal async Task BeginFinalDrainAsync()
     {
         bool started;
@@ -910,6 +965,9 @@ internal sealed class WorldStateStore
             case WorldStateKind.EventMeta:
                 applyError = ApplyEventMeta(state, command);
                 break;
+            case WorldStateKind.Proactive:
+                applyError = ApplyProactive(state, command);
+                break;
         }
         if (!string.IsNullOrWhiteSpace(applyError))
         {
@@ -954,6 +1012,7 @@ internal sealed class WorldStateStore
             case WorldStateKind.Memory: return NewMemoryState(heroId);
             case WorldStateKind.Relationship: return NewRelationshipState(heroId);
             case WorldStateKind.EventMeta: return NewEventMetaState();
+            case WorldStateKind.Proactive: return NewProactiveState();
             default: return new JObject();
         }
     }
@@ -983,6 +1042,17 @@ internal sealed class WorldStateStore
         };
     }
 
+    private static JObject NewProactiveState()
+    {
+        return new JObject
+        {
+            ["schema"] = NpcProactiveConstants.Schema,
+            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+            ["candidates"] = new JArray(),
+            ["appliedKeys"] = new JArray()
+        };
+    }
+
     private static JObject NewRelationshipState(string heroId)
     {
         return new JObject
@@ -1004,6 +1074,26 @@ internal sealed class WorldStateStore
         if (!(state["versions"] is JObject)) state["versions"] = new JObject();
         if (!(state["cooldowns"] is JObject)) state["cooldowns"] = new JObject();
         if (!(state["daily"] is JObject)) state["daily"] = new JObject();
+    }
+
+    private static void EnsureProactiveShape(JObject state)
+    {
+        state["schema"] = NpcProactiveConstants.Schema;
+        if (!(state["candidates"] is JArray)) state["candidates"] = new JArray();
+        if (!(state["appliedKeys"] is JArray)) state["appliedKeys"] = new JArray();
+    }
+
+    private static string ApplyProactive(JObject state, WorldStateCommand command)
+    {
+        EnsureProactiveShape(state);
+        JArray candidates = command.Arguments["candidates"] as JArray;
+        if (candidates == null) return "awake.world_state.proactive.invalid_candidates";
+        state["candidates"] = (JArray)candidates.DeepClone();
+        state["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
+        JArray appliedKeys = (JArray)state["appliedKeys"];
+        appliedKeys.Add(command.IdempotencyKey);
+        Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+        return string.Empty;
     }
 
     private static string ApplyEventMeta(JObject state, WorldStateCommand command)

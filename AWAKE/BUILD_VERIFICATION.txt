@@ -2106,3 +2106,15 @@ Command Deck Default Hotkey U (2026-08-16, no version bump)
 - SdkSmoke: PASS ALL Awake.SdkSmoke (15 paths including terminal hotkey smoke).
 - Awake.dll SHA-256 B258F72F9A5DCE5ABBFADCAC8A0A87369482A06ED317036AA096B2C8D6ADB68C.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+AF Batch 1: Proactive Chat + Long-Wait Esc (2026-08-16, no version bump)
+- Added NpcProactiveModels.cs and NpcProactiveService.cs with Pending/Opening/Accepted/Rejected state machine, nearby-hero evaluation, cooldown, fatigue, and persistence.
+- Added awake.npc.proactive namespace and WorldStateKind.Proactive roundtrip in WorldStateStore.
+- Added AwakeConfig.EnableNpcProactive (default true) and wired hourly evaluation plus application-tick popup.
+- Added NpcDialogueService.IsSending/WaitingSinceUtc/CanEscCancel and NpcDialogueOverlay 60-second Esc gate; VM shows localized waiting hint.
+- Added EN/CN localization keys for proactive popup and long-wait hint.
+- Runtime dependencies are injected through NpcProactiveHooks so SdkSmoke stays UI-free.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (17 paths including proactive model/storage and long-wait constant).
+- Awake.dll SHA-256 8EFA2A14F97680D945D764C1AF5B3FCD389F0535A1D5E16AC360EBC8E07FE44A.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

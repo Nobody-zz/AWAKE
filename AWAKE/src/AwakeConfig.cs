@@ -61,6 +61,10 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyGroup("{=awake.mcm.group.scene}场景对话", GroupOrder = 2)]
     public int SceneMaxRangeMeters { get; set; } = (int)SceneDialogueSelection.DefaultMaxRangeMeters;
 
+    [SettingPropertyBool("{=awake.mcm.npc_proactive.name}启用 NPC 主动", Order = 0, RequireRestart = false, HintText = "{=awake.mcm.npc_proactive.hint}默认开启。开启后附近 NPC 有概率按关系与场合主动发起谈话。")]
+    [SettingPropertyGroup("{=awake.mcm.group.behavior}档位与行为", GroupOrder = 1)]
+    public bool EnableNpcProactive { get; set; } = true;
+
     [SettingPropertyBool("{=awake.mcm.event_engine.name}启用事件引擎", Order = 1, RequireRestart = false, HintText = "{=awake.mcm.event_engine.hint}默认开启。事件引擎只负责运行时的触发、冷却与对话动作队列；具体事件内容由后续内容包注册。")]
     [SettingPropertyGroup("{=awake.mcm.group.behavior}档位与行为", GroupOrder = 1)]
     public bool EnableEventEngine { get; set; } = true;

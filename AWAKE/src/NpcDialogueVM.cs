@@ -121,6 +121,14 @@ internal sealed class NpcDialogueVM : ViewModel
         }
     }
 
+    internal void ShowWaitingHint()
+    {
+        if (_closed) return;
+        NoticeText = AwakeLocalization.Resolve(
+            "awake.dialogue.long_wait_hint",
+            "对方仍在回应。等待 60 秒后可关闭并取消生成。");
+    }
+
     public void ExecuteSend()
     {
         if (!CanSend) return;

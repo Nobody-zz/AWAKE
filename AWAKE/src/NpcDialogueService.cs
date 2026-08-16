@@ -33,6 +33,7 @@ internal sealed class NpcDialogueService : IDisposable
     private int _generation;
     private int _lastCompletedGeneration = -1;
     private string _pendingPlayerText = string.Empty;
+    private DateTimeOffset? _waitingSinceUtc;
     private int _playerKnownRefreshDay = -1;
     private string _playerName = string.Empty;
     private string _clanName = string.Empty;
@@ -65,6 +66,30 @@ internal sealed class NpcDialogueService : IDisposable
     internal bool IsAvailable
     {
         get { lock (_gate) return !_disposed && _host != null; }
+    }
+
+    internal bool IsSending
+    {
+        get { lock (_gate) return _sending; }
+    }
+
+    internal DateTimeOffset? WaitingSinceUtc
+    {
+        get { lock (_gate) return _waitingSinceUtc; }
+    }
+
+    internal bool CanEscCancel
+    {
+        get
+        {
+            lock (_gate)
+            {
+                return _sending
+                    && _waitingSinceUtc.HasValue
+                    && (DateTimeOffset.UtcNow - _waitingSinceUtc.Value).TotalSeconds
+                        >= NpcDialogueConstants.LongWaitCancelSeconds;
+            }
+        }
     }
 
     internal string DisplayTitle
@@ -210,6 +235,7 @@ internal sealed class NpcDialogueService : IDisposable
             }
             AwakeLog.Write("npc_dialogue_submit_accepted hero=" + _heroId + " generation=" + generation + " route=" + NpcDialogueConstants.RouteId);
             PushStatus(_heroName + "正在回应……");
+            lock (_gate) _waitingSinceUtc = DateTimeOffset.UtcNow;
             return new NpcDialogueTurnResult(true, string.Empty, string.Empty, string.Empty);
         }
         catch (OperationCanceledException)
@@ -246,6 +272,7 @@ internal sealed class NpcDialogueService : IDisposable
             _sending = false;
             _pendingPlayerText = string.Empty;
             _generation++;
+            _waitingSinceUtc = null;
         }
         _gateway?.CancelRoute(NpcDialogueConstants.RouteId);
     }
@@ -256,6 +283,7 @@ internal sealed class NpcDialogueService : IDisposable
         {
             if (_disposed) return;
             _disposed = true;
+            _waitingSinceUtc = null;
             NpcMemoryService memory = NpcMemoryService.Current;
             bool hasContent = _history.Count > 0;
             if (!hasContent)
@@ -1017,6 +1045,7 @@ internal sealed class NpcDialogueService : IDisposable
             if (generation != _generation) return;
             _sending = false;
             _pendingPlayerText = string.Empty;
+            _waitingSinceUtc = null;
         }
         _gateway?.FinishTurn(NpcDialogueConstants.RouteId, generation);
     }
@@ -1027,6 +1056,7 @@ internal sealed class NpcDialogueService : IDisposable
         {
             _sending = false;
             _pendingPlayerText = string.Empty;
+            _waitingSinceUtc = null;
         }
     }
 

@@ -12,6 +12,7 @@ internal static class NpcDialogueConstants
     internal const int HistoryCapacity = 12;
     internal const int MaxPlayerInputLength = 4000;
     internal const int MaxPromptUtf8Bytes = 32768;
+    internal const int LongWaitCancelSeconds = 60;
     internal const string PermissionRouteInvoke = "ai.route.invoke:" + RouteId;
     internal const string PermissionPromptCompile = "prompt.compile:" + PromptId;
     internal static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(90);

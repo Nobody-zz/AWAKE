@@ -43,7 +43,7 @@
     <string id="awake.mcm.boon_offers.name" text="启用愿力提案" />
     <string id="awake.mcm.boon_offers.hint" text="默认开启。关闭后女神不再生成新的赐福/供奉候选，已挂起且未结算的提案会被清理；结算中的提案允许完成。" />
     <string id="awake.mcm.npc_proactive.name" text="启用 NPC 主动" />
-    <string id="awake.mcm.npc_proactive.hint" text="默认关闭。开启后 NPC 有概率按发情与关系状态主动发起互动；概率由下一项控制。" />
+    <string id="awake.mcm.npc_proactive.hint" text="默认开启。附近 NPC 有概率按关系与当前场合主动发起谈话。" />
     <string id="awake.mcm.npc_proactive_chance.name" text="NPC 主动概率" />
     <string id="awake.mcm.npc_proactive_chance.hint" text="NPC 主动发起的概率百分比，0-100，默认 35。" />
     <string id="awake.mcm.event_engine.name" text="启用事件引擎" />
@@ -65,5 +65,11 @@
     <string id="awake.status.candidates_empty" text="无" />
     <string id="awake.status.route_error" text="路由能力：{CODE}" />
     <string id="awake.status.route_query_failed" text="路由能力：查询失败" />
+    <string id="awake.proactive.popup.title" text="某人的呼唤" />
+    <string id="awake.proactive.popup.text" text="{NAME} 想和你谈谈。" />
+    <string id="awake.proactive.accept" text="谈谈" />
+    <string id="awake.proactive.decline" text="改天" />
+    <string id="awake.proactive.opening_hint" text="对方主动发起了这次谈话。" />
+    <string id="awake.dialogue.long_wait_hint" text="对方仍在回应。等待 60 秒后可关闭并取消生成。" />
   </strings>
 </base>

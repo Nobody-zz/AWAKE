@@ -44,8 +44,55 @@ internal static class Program
 		RunWorldbookSmoke();
 		RunRouteContractSmoke();
 		RunTerminalHotkeySmoke();
+		RunNpcProactiveSmoke();
+		RunLongWaitSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunNpcProactiveSmoke()
+	{
+		NpcProactiveCandidate candidate = new NpcProactiveCandidate
+		{
+			HeroId = "hero-1",
+			Motive = NpcProactiveMotive.Relationship,
+			Affinity = 25,
+			State = NpcProactiveState.Pending,
+			Day = 10,
+			ExpiresAtDay = 11,
+			CooldownDay = 12,
+			Fatigue = 1,
+			OpeningHint = "hint"
+		};
+		Newtonsoft.Json.Linq.JObject json = candidate.ToJson();
+		NpcProactiveCandidate parsed = NpcProactiveCandidate.FromJson(json);
+		if (!StringComparer.Ordinal.Equals(parsed.HeroId, "hero-1")
+			|| parsed.Motive != NpcProactiveMotive.Relationship
+			|| parsed.State != NpcProactiveState.Pending
+			|| parsed.Day != 10
+			|| parsed.ExpiresAtDay != 11
+			|| parsed.CooldownDay != 12
+			|| parsed.Fatigue != 1
+			|| !StringComparer.Ordinal.Equals(parsed.OpeningHint, "hint"))
+		{
+			throw new InvalidOperationException("npc proactive candidate roundtrip mismatch.");
+		}
+		if (NpcProactiveConstants.MaximumFatigue <= 0
+			|| NpcProactiveConstants.CooldownDays <= 0
+			|| NpcProactiveConstants.ExpiresAfterDays <= 0)
+		{
+			throw new InvalidOperationException("npc proactive constants should be positive.");
+		}
+		Console.WriteLine("PASS npc proactive smoke");
+	}
+
+	private static void RunLongWaitSmoke()
+	{
+		if (NpcDialogueConstants.LongWaitCancelSeconds != 60)
+		{
+			throw new InvalidOperationException("long wait cancel threshold should be 60 seconds.");
+		}
+		Console.WriteLine("PASS long wait smoke");
 	}
 
 	private static void RunTerminalHotkeySmoke()
@@ -439,9 +486,11 @@ internal static class Program
 		FakeKeyValueStore memoryStore = new FakeKeyValueStore();
 		FakeKeyValueStore eventMetaStore = new FakeKeyValueStore();
 		FakeKeyValueStore relationshipStore = new FakeKeyValueStore();
+		FakeKeyValueStore proactiveStore = new FakeKeyValueStore();
 		store.InjectStoreForTesting(AiTaskConstants.NpcMemoriesNamespace, memoryStore);
 		store.InjectStoreForTesting(AiTaskConstants.EventMetaNamespace, eventMetaStore);
 		store.InjectStoreForTesting(AiTaskConstants.RelationshipsNamespace, relationshipStore);
+		store.InjectStoreForTesting(AiTaskConstants.ProactiveNamespace, proactiveStore);
 
 		RequestContext context = new FakeClock(DateTimeOffset.UtcNow).Context("awake.smoke", session, "storage-smoke");
 		Newtonsoft.Json.Linq.JArray facts = new Newtonsoft.Json.Linq.JArray { "共同经历" };
@@ -533,6 +582,32 @@ internal static class Program
 			|| (int)relationshipAfterDuplicate["love"] != 1)
 		{
 			throw new InvalidOperationException("relationship idempotency mismatch.");
+		}
+
+		Newtonsoft.Json.Linq.JArray proactiveCandidates = new Newtonsoft.Json.Linq.JArray
+		{
+			new NpcProactiveCandidate
+			{
+				HeroId = "hero-1",
+				Motive = NpcProactiveMotive.Casual,
+				State = NpcProactiveState.Pending,
+				Day = 5,
+				ExpiresAtDay = 6,
+				CooldownDay = 7
+			}.ToJson()
+		};
+		bool proactiveUpdated = await store.UpdateProactiveAsync(
+			proactiveCandidates,
+			"proactive-idem-1",
+			CancellationToken.None).ConfigureAwait(false);
+		if (!proactiveUpdated) throw new InvalidOperationException("proactive update should succeed.");
+		Newtonsoft.Json.Linq.JObject proactive = await store.GetProactiveAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (proactive == null
+			|| !(proactive["candidates"] is Newtonsoft.Json.Linq.JArray storedCandidates)
+			|| storedCandidates.Count != 1
+			|| !StringComparer.Ordinal.Equals((string)storedCandidates[0]["heroId"], "hero-1"))
+		{
+			throw new InvalidOperationException("proactive storage roundtrip mismatch.");
 		}
 
 		Console.WriteLine("PASS storage pipeline smoke");

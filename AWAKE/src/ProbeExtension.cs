@@ -191,6 +191,7 @@ internal sealed class AwakeExtension : IFrameworkExtension
                     }
                     WorldbookRuntime.ShutdownCurrent();
                     WorldbookRuntime.EnsureCreated();
+                    NpcProactiveService.SetCurrent(new NpcProactiveService());
                     break;
                 case ExtensionLifecycleStage.SessionEnding:
                     try
@@ -228,6 +229,7 @@ internal sealed class AwakeExtension : IFrameworkExtension
                     AwakeRuntime.BeginSessionEnd();
                     KnowledgeRuntime.ShutdownCurrent();
                     WorldbookRuntime.ShutdownCurrent();
+                    NpcProactiveService.ShutdownCurrent();
                     if (worldStore != null)
                     {
                         try
@@ -258,6 +260,7 @@ internal sealed class AwakeExtension : IFrameworkExtension
                     NpcMemoryService.ShutdownCurrent();
                     KnowledgeRuntime.ShutdownCurrent();
                     WorldbookRuntime.ShutdownCurrent();
+                    NpcProactiveService.ShutdownCurrent();
                     break;
             }
         }

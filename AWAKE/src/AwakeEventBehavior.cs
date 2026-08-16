@@ -26,6 +26,7 @@ internal sealed class AwakeEventBehavior : CampaignBehaviorBase
             if (!AwakeSettings.Current.EnableEventEngine) return;
             if (NpcDialogueOverlay.IsOpen || AwakeMessengerOverlay.IsOpen) return;
             _ = _engine.OnHourlyTickAsync(CancellationToken.None);
+            _ = NpcProactiveService.Current?.OnHourlyTickAsync(CancellationToken.None);
         }
         catch (Exception ex)
         {

@@ -34,6 +34,7 @@
   - Companion 路由恢复：`profiles.awake.deepseek.routes.json` 已同步四条 AWAKE 路由
   - 命令台默认快捷键改为 `U`
   - AF 结构落地方案文档 `AF-Structures-Landing-Plan-20260816.md`
+  - AF Batch 1 代码落地：`NpcProactiveService` 主动聊天状态机 + 覆盖层 60 秒 Esc 解锁
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）
@@ -57,6 +58,7 @@
 - 无名 NPC：有身份回退，无永久记忆与命令边界。
 - 遭遇面谈 / 场景 T/Y / 通讯录：入口存在，统一会话未完成。
 - 世界书游戏内验收：世界书已嵌入，等待用户进游戏验证 `worldbook_runtime_initialized`、NPC 对话命中、TextMappings、persona 注入。
+- AF Batch 1 游戏内验收：等待用户验证主动弹窗 → 深谈、拒绝冷却、AI 等待超 60 秒 Esc 取消。
 
 ## 远程同步说明
 
