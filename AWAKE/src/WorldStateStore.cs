@@ -21,7 +21,8 @@ internal enum WorldStateKind
     Transcript,
     Contacts,
     Audit,
-    Onboarding
+    Onboarding,
+    PendingDialogue
 }
 
 internal sealed class MemoryReservation
@@ -794,6 +795,105 @@ internal sealed class WorldStateStore
         return true;
     }
 
+    internal async Task<JObject> GetDialogueQueueAsync(RequestContext context, CancellationToken cancellationToken)
+    {
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.DialogueQueueNamespace, out store);
+        if (store == null) return null;
+        OperationResult<string> loaded = await store.GetAsync(
+            AiTaskConstants.DialogueQueueKey,
+            context ?? CreateContext(),
+            cancellationToken).ConfigureAwait(false);
+        if (!loaded.IsSuccess)
+        {
+            if (!IsStorageKeyNotFound(loaded))
+            {
+                AwakeLog.Write("world_state_dialogue_queue_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            }
+            return null;
+        }
+        if (string.IsNullOrWhiteSpace(loaded.Value)) return NewDialogueQueueState();
+        try
+        {
+            JObject doc = JObject.Parse(loaded.Value);
+            return doc.Type == JTokenType.Object ? doc : null;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_state_dialogue_queue_corrupt error=" + ex.Message);
+            return null;
+        }
+    }
+
+    internal async Task<bool> EnqueueDialogueAsync(
+        string id,
+        string source,
+        string targetId,
+        string canonicalContactKey,
+        string openingHint,
+        string motive,
+        int day,
+        int expiryDay,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(targetId) || string.IsNullOrWhiteSpace(idempotencyKey))
+        {
+            return false;
+        }
+        JObject arguments = new JObject
+        {
+            ["id"] = id,
+            ["source"] = source ?? "unknown",
+            ["targetId"] = targetId,
+            ["canonicalContactKey"] = canonicalContactKey ?? targetId,
+            ["openingHint"] = openingHint ?? string.Empty,
+            ["motive"] = motive ?? string.Empty,
+            ["day"] = day,
+            ["expiryDay"] = expiryDay,
+            ["state"] = "pending"
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.DialogueQueueNamespace,
+            AiTaskConstants.DialogueQueueKey,
+            AiTaskConstants.DialogueQueueEnqueueCommandId,
+            idempotencyKey,
+            string.Empty,
+            WorldStateKind.PendingDialogue,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
+    internal async Task<bool> ConsumeDialogueAsync(
+        string id,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(idempotencyKey)) return false;
+        JObject arguments = new JObject
+        {
+            ["id"] = id,
+            ["state"] = "consumed"
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.DialogueQueueNamespace,
+            AiTaskConstants.DialogueQueueKey,
+            AiTaskConstants.DialogueQueueConsumeCommandId,
+            idempotencyKey,
+            string.Empty,
+            WorldStateKind.PendingDialogue,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
     internal async Task<JObject> GetTranscriptChunkAsync(
         string contactKey,
         int chunkIndex,
@@ -1385,6 +1485,9 @@ internal sealed class WorldStateStore
             case WorldStateKind.Onboarding:
                 applyError = ApplyOnboarding(state, command);
                 break;
+            case WorldStateKind.PendingDialogue:
+                applyError = ApplyDialogueQueue(state, command);
+                break;
         }
         if (!string.IsNullOrWhiteSpace(applyError))
         {
@@ -1436,6 +1539,7 @@ internal sealed class WorldStateStore
             case WorldStateKind.Contacts: return NewContactsState();
             case WorldStateKind.Audit: return NewAuditState();
             case WorldStateKind.Onboarding: return NewOnboardingState();
+            case WorldStateKind.PendingDialogue: return NewDialogueQueueState();
             default: return new JObject();
         }
     }
@@ -1545,6 +1649,17 @@ internal sealed class WorldStateStore
             ["skippedThisCampaign"] = false,
             ["permanentlySkipped"] = false,
             ["lastReminderDay"] = -1,
+            ["appliedKeys"] = new JArray()
+        };
+    }
+
+    private static JObject NewDialogueQueueState()
+    {
+        return new JObject
+        {
+            ["schema"] = AwakeStorageContract.DialogueQueueSchema,
+            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+            ["entries"] = new JArray(),
             ["appliedKeys"] = new JArray()
         };
     }
@@ -1760,6 +1875,66 @@ internal sealed class WorldStateStore
         appliedKeys.Add(command.IdempotencyKey);
         Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
         return string.Empty;
+    }
+
+    private static void EnsureDialogueQueueShape(JObject state)
+    {
+        state["schema"] = AwakeStorageContract.DialogueQueueSchema;
+        if (!(state["entries"] is JArray)) state["entries"] = new JArray();
+        if (!(state["appliedKeys"] is JArray)) state["appliedKeys"] = new JArray();
+    }
+
+    private static string ApplyDialogueQueue(JObject state, WorldStateCommand command)
+    {
+        EnsureDialogueQueueShape(state);
+        JArray entries = (JArray)state["entries"];
+        JArray appliedKeys = (JArray)state["appliedKeys"];
+        if (StringComparer.Ordinal.Equals(command.CommandId, AiTaskConstants.DialogueQueueEnqueueCommandId))
+        {
+            string id = (string)command.Arguments["id"] ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(id)) return "awake.world_state.dialogue_queue.invalid_id";
+            if (FindQueueEntry(entries, id) != null) return "awake.world_state.dialogue_queue.duplicate";
+            entries.Add(new JObject
+            {
+                ["id"] = id,
+                ["source"] = (string)command.Arguments["source"] ?? "unknown",
+                ["targetId"] = (string)command.Arguments["targetId"] ?? string.Empty,
+                ["canonicalContactKey"] = (string)command.Arguments["canonicalContactKey"] ?? string.Empty,
+                ["openingHint"] = ClampTextElements((string)command.Arguments["openingHint"] ?? string.Empty, 240),
+                ["motive"] = ClampTextElements((string)command.Arguments["motive"] ?? string.Empty, 120),
+                ["day"] = IntValue(command.Arguments["day"]),
+                ["expiryDay"] = IntValue(command.Arguments["expiryDay"]),
+                ["state"] = (string)command.Arguments["state"] ?? "pending"
+            });
+            Trim(entries, 64);
+        }
+        else if (StringComparer.Ordinal.Equals(command.CommandId, AiTaskConstants.DialogueQueueConsumeCommandId))
+        {
+            string id = (string)command.Arguments["id"] ?? string.Empty;
+            JObject entry = FindQueueEntry(entries, id);
+            if (entry == null) return "awake.world_state.dialogue_queue.not_found";
+            entry["state"] = (string)command.Arguments["state"] ?? "consumed";
+        }
+        else
+        {
+            return "awake.world_state.dialogue_queue.invalid_command";
+        }
+        appliedKeys.Add(command.IdempotencyKey);
+        Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+        return string.Empty;
+    }
+
+    private static JObject FindQueueEntry(JArray entries, string id)
+    {
+        if (entries == null) return null;
+        foreach (JToken token in entries)
+        {
+            if (token is JObject obj && StringComparer.Ordinal.Equals((string)obj["id"], id))
+            {
+                return obj;
+            }
+        }
+        return null;
     }
 
     private static JObject NewRelationshipState(string heroId)

@@ -67,6 +67,7 @@ internal static class Program
 		RunProactiveMotiveRegistrySmoke();
 		RunContentApiSmoke();
 		RunDialogueSessionCoordinatorSmoke();
+		RunDialogueQueueSmoke();
 		RunOnboardingSmoke();
 		RunB9InfraSmoke();
 		RunMarcusLinkSmoke();
@@ -699,6 +700,26 @@ internal static class Program
 		Console.WriteLine("PASS dialogue session coordinator smoke");
 	}
 
+	private static void RunDialogueQueueSmoke()
+	{
+		EventDialogueQueue.ClearForTesting();
+		EventDialogueQueue.Enqueue("hero-1", "开场提示");
+		EventDialogueQueue.Enqueue("hero-2", null);
+		if (EventDialogueQueue.Count != 2)
+		{
+			throw new InvalidOperationException("dialogue queue should keep enqueued items.");
+		}
+		PendingDialogue first;
+		if (!EventDialogueQueue.TryDequeue(out first)
+			|| !StringComparer.Ordinal.Equals(first.HeroId, "hero-1")
+			|| EventDialogueQueue.Count != 1)
+		{
+			throw new InvalidOperationException("dialogue queue dequeue mismatch.");
+		}
+		EventDialogueQueue.ClearForTesting();
+		Console.WriteLine("PASS dialogue queue smoke");
+	}
+
 	private static void RunOnboardingSmoke()
 	{
 		AwakeOnboardingService.ResetForTesting();
@@ -762,7 +783,10 @@ internal static class Program
 				AwakeStorageContract.MessengerSchema)
 			|| !StringComparer.Ordinal.Equals(
 				AwakeStorageContract.ExpectedSchema(WorldStateKind.Onboarding),
-				AwakeStorageContract.OnboardingSchema))
+				AwakeStorageContract.OnboardingSchema)
+			|| !StringComparer.Ordinal.Equals(
+				AwakeStorageContract.ExpectedSchema(WorldStateKind.PendingDialogue),
+				AwakeStorageContract.DialogueQueueSchema))
 		{
 			throw new InvalidOperationException("storage contract schema mapping mismatch.");
 		}

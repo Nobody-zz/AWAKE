@@ -2505,3 +2505,12 @@ Unified Dialogue Session Core (2026-08-17, no version bump)
 - SdkSmoke PASS ALL; LOCALIZATION_OK source=212 en=241 cn=241; asset lint 108 files OK; release_check OK.
 - Awake.dll SHA-256 CEB4D1FD43EA7F3C68C5C465B8D849A7BB4AB43F05DEF4C3B0132DB6199E634B identical across _build_out, dist, and game Modules/AWAKE after sync.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Persistent Dialogue Queue (2026-08-17, no version bump)
+- Added WorldStateKind.PendingDialogue with schema awake.dialogue.queue.v1 and Get/Enqueue/Consume storage methods.
+- EventDialogueQueue now persists enqueue/consume through WorldStateStore, reloads pending entries at CampaignSessionReady, and expires entries by game day.
+- SdkSmoke covers queue enqueue/dequeue and storage contract schema mapping.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=212 en=241 cn=241; asset lint 108 files OK; release_check OK.
+- Awake.dll SHA-256 F74E3AC959470C8DAFF0529E779C43145041E5CA879FE4BA30A91400FD246B0A identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

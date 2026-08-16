@@ -374,3 +374,9 @@
 - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产/发布检查通过；DLL SHA-256 `CEB4D1FD43EA7F3C68C5C465B8D849A7BB4AB43F05DEF4C3B0132DB6199E634B` 已同步。
 - 仍待离线实现：持久对话队列、统一 hub 生命周期、`PLAN-Interactions` 命令/恢复服务、通讯录写信 UI、多步引导 UI。
 - 推送：本地离线批次 C/D/E 均已推送到远端 `main`（当前顶点 `7756d31`）。
+
+## 离线改进批次 F（2026-08-17）
+
+- 完成：持久对话队列 `awake.dialogue.queue.v1`、`WorldStateKind.PendingDialogue`、Enqueue/Consume 存储命令；`EventDialogueQueue` 在会话就绪时恢复 pending，支持按游戏日过期。
+- 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产/发布检查通过；DLL SHA-256 `F74E3AC959470C8DAFF0529E779C43145041E5CA879FE4BA30A91400FD246B0A` 已同步。
+- 仍待离线实现：统一 hub 生命周期、`PLAN-Interactions` 命令/恢复服务、通讯录写信 UI、多步引导 UI。
