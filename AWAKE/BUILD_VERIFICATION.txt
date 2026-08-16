@@ -2129,3 +2129,13 @@ AF Batch 2-5 (2026-08-16, no version bump)
 - LOCALIZATION_OK source=46 en=69 cn=69.
 - Awake.dll SHA-256 61AAEA5FF5D71EA749E899A6413A28465147DEB93C0B9EA48B30B62E66E0A9E6.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+AF Feedback Layer (2026-08-16, no version bump)
+- Added AwakeFeedback with Info/Success/Warning/Error tones and color mapping.
+- Wired command-deck blocked warning, proactive accept/decline feedback, and localized strings.
+- Added docs/AF-Feedback-Learning-20260816.md.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (22 paths including feedback smoke).
+- LOCALIZATION_OK source=49 en=72 cn=72.
+- Awake.dll SHA-256 91F62D8503962F3A30BC007C5D9759FC4F26A1BC5212AA5638ED8A5FB405A7BD.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

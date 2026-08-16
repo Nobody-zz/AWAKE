@@ -7,6 +7,7 @@ using MarcusAIFramework.Api;
 using MarcusAIFramework.Sdk.FakeHost;
 using MarcusAIFramework.Sdk.TestKit;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.Library;
 
 namespace Awake.SdkSmoke;
 
@@ -50,8 +51,20 @@ internal static class Program
 		RunEventInboxSmoke();
 		RunMemoryOverviewSmoke();
 		RunGuardPerfSmoke();
+		RunFeedbackSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunFeedbackSmoke()
+	{
+		if (!AwakeFeedback.ColorFor(AwakeFeedbackTone.Success).Equals(new Color(0.35f, 1f, 0.35f, 1f))
+			|| !AwakeFeedback.ColorFor(AwakeFeedbackTone.Warning).Equals(new Color(1f, 0.95f, 0.25f, 1f))
+			|| !AwakeFeedback.ColorFor(AwakeFeedbackTone.Error).Equals(new Color(1f, 0.3f, 0.3f, 1f)))
+		{
+			throw new InvalidOperationException("feedback tone color mapping mismatch.");
+		}
+		Console.WriteLine("PASS feedback smoke");
 	}
 
 	private static void RunGuardPerfSmoke()

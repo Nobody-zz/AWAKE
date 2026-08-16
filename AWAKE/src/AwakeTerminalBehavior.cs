@@ -91,6 +91,9 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         {
             _wasKeyDown = true;
             AwakeLog.Write("awake_terminal_blocked reason=" + _lastBlockReason);
+            AwakeFeedback.ShowWarning(AwakeLocalization.Resolve(
+                "awake.feedback.terminal_blocked",
+                "当前无法打开命令台。"));
             return;
         }
         _wasKeyDown = true;

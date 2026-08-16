@@ -391,6 +391,9 @@ internal sealed class NpcProactiveService
         string hint = snapshot?.OpeningHint ?? string.Empty;
         NpcProactiveHooks.RecordDialogueContext?.Invoke(heroId, hint);
         NpcProactiveHooks.EnqueueDialogue?.Invoke(heroId, hint);
+        AwakeFeedback.ShowSuccess(AwakeLocalization.Resolve(
+            "awake.feedback.proactive_accepted",
+            "对方愿意谈谈。"));
         _ = SaveAsync(CancellationToken.None);
         AwakeLog.Write("npc_proactive_accepted hero=" + heroId);
     }
@@ -406,6 +409,9 @@ internal sealed class NpcProactiveService
             candidate.CooldownDay = day + NpcProactiveConstants.RejectCooldownDays;
             candidate.Fatigue = Math.Min(NpcProactiveConstants.MaximumFatigue, candidate.Fatigue + 1);
         }
+        AwakeFeedback.ShowWarning(AwakeLocalization.Resolve(
+            "awake.feedback.proactive_declined",
+            "你决定改天再说。"));
         _ = SaveAsync(CancellationToken.None);
         AwakeLog.Write("npc_proactive_declined hero=" + heroId);
     }

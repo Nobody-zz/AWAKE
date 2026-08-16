@@ -21,6 +21,7 @@
 | 待定 | 事件收件箱（大地图通知 + 弹窗） | `MyBehavior.cs` + `AnimusForgeWorldEventInboxPopup.xml` | 计划：`WorldEventLedger` UI | 自建 VM/prefab，不复制 XML |
 | 2026-08-16 Batch 1 | NPC 主动聊天状态机（Pending/Opening/冷却/疲劳） | `CompanionProactiveChatBehavior.cs` | `NpcProactiveService` + `NpcProactiveModels` + `awake.npc.proactive` 存储 | 只保留动机/冷却/状态概念，候选池限定附近英雄，运行时依赖用钩子注入，不复制 AF 会话实现 |
 | 2026-08-16 Batch 1 | 长等待 Esc 解锁 | `AnimusForgeNativeConversationOverlay.cs` | `NpcDialogueService.CanEscCancel` + `NpcDialogueOverlay` 60 秒门控 | 自己定义等待起始时间与取消语义，不再使用 AF 覆盖层代码 |
+| 2026-08-16 反馈层 | 游戏内操作反馈（绿/黄/红 + 原因） | `InformationManager.DisplayMessage` 全库用法 | `AwakeFeedback` 统一反馈层 | 只抽象反馈语义和颜色，不搬 AF 具体文案 |
 
 ## 反模式登记（明确不学）
 
