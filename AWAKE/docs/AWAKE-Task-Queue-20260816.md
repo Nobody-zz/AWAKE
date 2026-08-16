@@ -41,6 +41,7 @@
   - MCM 菜单重排、预设与操作按钮
   - 世界事件持久化与周报自动生成
   - Messenger 会话历史持久化
+  - UI 借鉴映射文档 `AWAKE-UI-Borrow-Map-20260816.md`
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）
@@ -70,7 +71,7 @@
 ## 远程同步说明
 
 - 远端 `main` 原为更早版本的无共同祖先根提交 `8ae927d Add files via upload`；用户确认后，以本地最新 `main` 为权威，强推覆盖远端。
-- 本地待推送提交：`6742aa9 Persist world events and generate weekly report`、`341ed27 Persist messenger chat history`；推送因 GitHub 连接失败待重试。
+- 本地待推送提交：`6742aa9`、`341ed27`、`7be56f2`、`079cc1b`；推送因 GitHub 连接失败待重试。
 
 ## 当前检查点
 
