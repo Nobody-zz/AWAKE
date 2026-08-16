@@ -324,3 +324,4 @@
 - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；LOCALIZATION_OK source=205 en=234 cn=234；asset lint 107 文件 OK；release_check OK；DLL SHA-256 `382609372A9AB6DC4E46F351882AC26A1A519829F313F713E4E7F9EEBED2EF32` 已同步 `_build_out/dist/游戏目录`。
 - 下一步：进入游戏确认 MCM 按钮可用、点击后两个开关开启并弹出 AI 设置台；仍需在 Marcus AI 设置台允许 `AWAKE.route.npc.dialogue` 云外发。
 - 待办：`ContactHubHistory` 游戏内验收保持 `paused`；完成后按原顺序继续 `PLAN-Interactions`。
+- 推送：本地已提交 `720293e Add one-click cloud dialogue enable` 及后续队列检查点提交；远端 push 被 `Connection was reset` / `Could not connect` 阻断，网络恢复后需补推。
