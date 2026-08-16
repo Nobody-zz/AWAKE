@@ -53,9 +53,9 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyGroup("{=awake.mcm.group.data_debug}数据与调试", GroupOrder = 0)]
     public bool EnableDeveloperMenu { get; set; }
 
-    [SettingPropertyText("{=awake.mcm.terminal_key.name}命令台快捷键", Order = 3, RequireRestart = false, HintText = "{=awake.mcm.terminal_key.hint}输入 InputKey 名称，例如 Y、K、H。")]
+    [SettingPropertyText("{=awake.mcm.terminal_key.name}命令台快捷键", Order = 3, RequireRestart = false, HintText = "{=awake.mcm.terminal_key.hint}输入 InputKey 名称，例如 U、K、H。")]
     [SettingPropertyGroup("{=awake.mcm.group.command}命令台", GroupOrder = 1)]
-    public string TerminalKey { get; set; } = "Y";
+    public string TerminalKey { get; set; } = "U";
 
     [SettingPropertyInteger("{=awake.mcm.scene_max_range.name}场景选人最大距离（米）", 8, 150, Order = 0, RequireRestart = false, HintText = "{=awake.mcm.scene_max_range.hint}按住 T 的最大搜索半径，默认 60。使用三维空间距离，过高会把隔墙或上下楼层的人也纳入候选。")]
     [SettingPropertyGroup("{=awake.mcm.group.scene}场景对话", GroupOrder = 2)]

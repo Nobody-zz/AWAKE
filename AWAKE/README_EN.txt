@@ -11,7 +11,7 @@ AWAKE is a generic AI world runtime for Mount & Blade II: Bannerlord. NPC intell
 - Runtime source and localization file names now use `Awake*` / `awake_*`; the `SlaneshsEmbraceContent` pack keeps its own Slaanesh identity.
 - Content-pack base and goddess/erotic branches are frozen under `SlaneshsEmbraceContent/frozen`.
 - Build: 0 warnings, 0 errors; `Awake.SdkSmoke` PASS ALL; localization validation passes.
-- NPC deep-talk now lives in the AWAKE command deck: press the command-deck hotkey (default `Y`, configurable in MCM) to open a dedicated panel with "Deep Talk (AWAKE)" and "Developer Check", then reuse `NpcDialogueLauncher` for the overlay or native dialogue fallback. No extra town-menu options are injected.
+- NPC deep-talk now lives in the AWAKE command deck: press the command-deck hotkey (default `U`, configurable in MCM) to open a dedicated panel with "Deep Talk (AWAKE)" and "Developer Check", then reuse `NpcDialogueLauncher` for the overlay or native dialogue fallback. No extra town-menu options are injected.
 - Runtime user-facing copy now uses AWAKE/醒世; Slanesh-era wording no longer leaks into permission prompts, menus, or dialogue titles.
 
 ## Directory layout

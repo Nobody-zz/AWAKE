@@ -33,7 +33,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     private float _sceneCurrentRangeMeters = SceneDialogueSelection.MinRangeMeters;
     private float _lastOpenRealTime = -999f;
     private float _nextTerminalKeyRefreshRealTime = -999f;
-    private InputKey _cachedTerminalKey = InputKey.Y;
+    private InputKey _cachedTerminalKey = InputKey.U;
     private string _cachedTerminalKeyRaw = string.Empty;
 
     internal AwakeTerminalBehavior()
@@ -410,7 +410,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         _nextTerminalKeyRefreshRealTime = now + TerminalKeyRefreshIntervalSeconds;
         try
         {
-            string raw = AwakeSettings.Current.TerminalKey ?? "Y";
+            string raw = AwakeSettings.Current.TerminalKey ?? "U";
             raw = raw.Trim();
             if (!StringComparer.Ordinal.Equals(raw, _cachedTerminalKeyRaw))
             {
@@ -421,7 +421,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         catch
         {
             _cachedTerminalKeyRaw = string.Empty;
-            _cachedTerminalKey = InputKey.Y;
+            _cachedTerminalKey = InputKey.U;
         }
         return _cachedTerminalKey;
     }
@@ -434,7 +434,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         {
             return parsed;
         }
-        return InputKey.Y;
+        return InputKey.U;
     }
 
     private static bool CanOpenTerminal()

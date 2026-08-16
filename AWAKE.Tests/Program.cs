@@ -43,8 +43,18 @@ internal static class Program
 		RunNpcMemorySmoke();
 		RunWorldbookSmoke();
 		RunRouteContractSmoke();
+		RunTerminalHotkeySmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunTerminalHotkeySmoke()
+	{
+		if (!StringComparer.Ordinal.Equals(new AwakeConfig().TerminalKey, "U"))
+		{
+			throw new InvalidOperationException("terminal hotkey default should be U.");
+		}
+		Console.WriteLine("PASS terminal hotkey smoke");
 	}
 
 	private static void RunRouteContractSmoke()

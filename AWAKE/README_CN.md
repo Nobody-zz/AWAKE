@@ -11,7 +11,7 @@ AWAKE 是《骑马与砍杀2：霸主》的通用 AI 世界运行时：NPC 智�
 - 运行时源码与本地化文件名也已统一为 `Awake*` / `awake_*`；`SlaneshsEmbraceContent` 内容包保留自己的 Slaanesh 身份。
 - 内容包基础与女神/情色支线冻结在 `SlaneshsEmbraceContent/frozen`。
 - 构建：0 警告 0 错误；`Awake.SdkSmoke` `PASS ALL`；本地化校验通过。
-- NPC 深谈入口改为 AWAKE 命令台：按命令台快捷键（默认 `Y`，可在 MCM 修改）呼出独立面板，内附“深谈（醒世）”与“开发者检查”，选择目标后复用 `NpcDialogueLauncher` 打开覆盖层或回退原版对话；不再向城镇菜单插入选项。
+- NPC 深谈入口改为 AWAKE 命令台：按命令台快捷键（默认 `U`，可在 MCM 修改）呼出独立面板，内附“深谈（醒世）”与“开发者检查”，选择目标后复用 `NpcDialogueLauncher` 打开覆盖层或回退原版对话；不再向城镇菜单插入选项。
 - 运行时用户可见措辞已改为 AWAKE/醒世，不再把斯拉涅斯内容写进运行时权限提示、菜单与对话标题。
 
 ## 目录结构
