@@ -114,7 +114,7 @@ internal sealed class NpcDialogueOverlay
     {
         _screen = screen;
         _service = service;
-        _entrySource = entrySource ?? string.Empty;
+        _entrySource = string.IsNullOrWhiteSpace(entrySource) ? "npc_dialogue" : entrySource;
         _targetId = targetId ?? string.Empty;
         _dataSource = new NpcDialogueVM(service, Close);
         _layer = new GauntletLayer("NpcDialogue", 541, false);

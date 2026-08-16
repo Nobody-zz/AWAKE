@@ -1088,7 +1088,13 @@ internal sealed class WorldStateStore
                 return new WorldApplyResult { Retryable = false, Code = "awake.world_state.corrupt" };
             }
         }
-        AwakeStorageContract.TryNormalizeSchema(state, AwakeStorageContract.ExpectedSchema(command.Kind));
+        string expectedSchema = AwakeStorageContract.ExpectedSchema(command.Kind);
+        if (!AwakeStorageContract.TryNormalizeSchema(state, expectedSchema))
+        {
+            AwakeLog.Write("world_state_schema_mismatch key=" + command.Key
+                + " current=" + (string)state["schema"]
+                + " expected=" + expectedSchema);
+        }
 
         if (command.Kind != WorldStateKind.EventMeta)
         {

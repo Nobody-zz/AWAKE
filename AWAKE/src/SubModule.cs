@@ -63,6 +63,11 @@ public sealed class SubModule : MBSubModuleBase
             NpcProactiveHooks.IsMessengerOpen = () => AwakeMessengerOverlay.IsOpen
                 || WorldEventInboxOverlay.IsOpen
                 || WeeklyReportBrowserOverlay.IsOpen;
+            AwakeDialogueSessionCoordinator.IsOverlayOpen = () => NpcDialogueOverlay.IsOpen
+                || AwakeMessengerOverlay.IsOpen
+                || WorldEventInboxOverlay.IsOpen
+                || WeeklyReportBrowserOverlay.IsOpen
+                || DeveloperCheckOverlay.IsOpen;
             NpcProactiveHooks.RecordDialogueContext = (heroId, hint) => NpcDialogueContext.Record(heroId, hint);
             NpcProactiveHooks.EnqueueDialogue = (heroId, hint) => EventDialogueQueue.Enqueue(heroId, hint);
             AwakeMcmActions.ShowDeveloperReport = AwakeTerminalBehavior.ShowDeveloperReportForMcm;

@@ -19,6 +19,11 @@ internal sealed class DeveloperCheckOverlay
     {
         try
         {
+            if (AwakeDialogueSessionCoordinator.IsActive)
+            {
+                AwakeLog.Write("developer_check_open_failed reason=dialogue_active");
+                return false;
+            }
             CloseActive();
             ScreenBase screen = ScreenManager.TopScreen;
             if (screen == null)

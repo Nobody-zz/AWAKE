@@ -4,6 +4,7 @@ namespace Awake;
 
 internal static class AwakeDialogueSessionCoordinator
 {
+    internal static Func<bool> IsOverlayOpen;
     private static readonly object Gate = new object();
     private static string _activeSource = string.Empty;
     private static string _activeTargetId = string.Empty;
@@ -27,6 +28,10 @@ internal static class AwakeDialogueSessionCoordinator
     internal static bool TryAcquire(string source, string targetId)
     {
         if (string.IsNullOrWhiteSpace(source)) return false;
+        if (IsOverlayOpen?.Invoke() ?? false)
+        {
+            return false;
+        }
         lock (Gate)
         {
             if (_active) return false;
