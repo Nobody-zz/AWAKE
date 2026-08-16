@@ -258,6 +258,11 @@
   - 证据：AWAKE 日志大量 `world_state_memory_load_failed`、`world_state_relationship_load_failed`、`world_state_messenger_load_failed`、`world_state_proactive_load_failed` 均为 `storage.key_not_found`；`world_state_write_failed_dropped ... code=storage.key_not_found attempts=3`；会话结束 `world_state_final_drain_failed pending_writes=20 dropped=2`。
   - 优先级：P1；状态：`queued`；分类：`non_blocking`。
 
+## 修复方案（2026-08-17）
+
+- 已整理 `docs/AWAKE-Repair-Plan-20260817.md`，分 Batch 1（云外发、存储缺 key、Prompt 诊断、C 键）、Batch 2（主动对话逻辑化、地图对话入口）、Batch 3（开发者检查、世界书管理、通讯录 UI）。
+- 状态：待用户批准；批准后先执行 Batch 1，再对 Batch 2 走 grill-me / PLAN。
+
 ## 可行性核验（2026-08-16）
 
 - API probe：`Hero.Gold` 可读可写；`PartyBase.ItemRoster` 存在；`HeroVM(Hero, bool)` 提供 `ImageIdentifier`。
