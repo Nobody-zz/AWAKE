@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MarcusAIFramework.Api;
@@ -46,8 +47,88 @@ internal static class Program
 		RunTerminalHotkeySmoke();
 		RunNpcProactiveSmoke();
 		RunLongWaitSmoke();
+		RunEventInboxSmoke();
+		RunMemoryOverviewSmoke();
+		RunGuardPerfSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	private static void RunGuardPerfSmoke()
+	{
+		string normalized = NpcDialogueReplyNormalizer.Normalize("你好\r\n\n\n   \0世界  ");
+		if (normalized.IndexOf("你好", StringComparison.Ordinal) < 0
+			|| normalized.IndexOf("世界", StringComparison.Ordinal) < 0
+			|| normalized.IndexOf('\r') >= 0
+			|| normalized.IndexOf('\0') >= 0
+			|| normalized.IndexOf("\n\n", StringComparison.Ordinal) >= 0)
+		{
+			throw new InvalidOperationException("reply normalizer mismatch: " + normalized);
+		}
+		long start = AwakePerfProbe.StartMilliseconds();
+		AwakePerfProbe.Record("smoke", start);
+		Console.WriteLine("PASS guard perf smoke");
+	}
+
+	private static void RunMemoryOverviewSmoke()
+	{
+		Newtonsoft.Json.Linq.JObject doc = new Newtonsoft.Json.Linq.JObject
+		{
+			["memories"] = new Newtonsoft.Json.Linq.JArray
+			{
+				new Newtonsoft.Json.Linq.JObject
+				{
+					["id"] = "m-high",
+					["day"] = 11,
+					["weight"] = 3,
+					["type"] = "shared_experience",
+					["summary"] = "重要记忆",
+					["facts"] = new Newtonsoft.Json.Linq.JArray { "事实甲" }
+				},
+				new Newtonsoft.Json.Linq.JObject
+				{
+					["id"] = "m-low",
+					["day"] = 12,
+					["weight"] = 1,
+					["type"] = "event",
+					["summary"] = "旧事",
+					["facts"] = new Newtonsoft.Json.Linq.JArray()
+				}
+			}
+		};
+		string overview = NpcMemoryOverviewBuilder.BuildOverview(doc, 12);
+		if (overview.IndexOf("重要记忆", StringComparison.Ordinal) < 0
+			|| overview.IndexOf("旧事", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("memory overview builder mismatch.");
+		}
+		if (Encoding.UTF8.GetByteCount(NpcMemoryOverviewBuilder.BuildOverview(doc, 12, 50)) > 50)
+		{
+			throw new InvalidOperationException("memory overview byte budget mismatch.");
+		}
+		Console.WriteLine("PASS memory overview smoke");
+	}
+
+	private static void RunEventInboxSmoke()
+	{
+		List<WorldEventRecord> week = new List<WorldEventRecord>
+		{
+			new WorldEventRecord(10, "event", "攻城战结束"),
+			new WorldEventRecord(12, "event", "商队抵达")
+		};
+		string text = WorldEventInboxFormatter.Format(week, 12);
+		if (text.IndexOf("攻城战结束", StringComparison.Ordinal) < 0
+			|| text.IndexOf("商队抵达", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("world event inbox formatter mismatch.");
+		}
+		if (!StringComparer.Ordinal.Equals(
+			WorldEventInboxFormatter.Format(new List<WorldEventRecord>(), 12),
+			"本周没有记录。"))
+		{
+			throw new InvalidOperationException("world event inbox empty text mismatch.");
+		}
+		Console.WriteLine("PASS event inbox smoke");
 	}
 
 	private static void RunNpcProactiveSmoke()

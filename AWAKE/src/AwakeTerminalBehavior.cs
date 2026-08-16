@@ -35,6 +35,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     private float _nextTerminalKeyRefreshRealTime = -999f;
     private InputKey _cachedTerminalKey = InputKey.U;
     private string _cachedTerminalKeyRaw = string.Empty;
+    private static string _lastBlockReason = string.Empty;
 
     internal AwakeTerminalBehavior()
     {
@@ -89,6 +90,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         if (!CanOpenTerminal())
         {
             _wasKeyDown = true;
+            AwakeLog.Write("awake_terminal_blocked reason=" + _lastBlockReason);
             return;
         }
         _wasKeyDown = true;
@@ -443,6 +445,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         {
             if (Campaign.Current == null)
             {
+                _lastBlockReason = "no_campaign";
                 return false;
             }
             if (Mission.Current != null)
@@ -456,27 +459,32 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                         || mode == MissionMode.Stealth
                         || mode == MissionMode.Tournament)
                     {
+                        _lastBlockReason = "mission_mode:" + mode;
                         return false;
                     }
                 }
                 catch
                 {
+                    _lastBlockReason = "mission_mode_error";
                     return false;
                 }
             }
             if (Campaign.Current.ConversationManager != null
                 && Campaign.Current.ConversationManager.IsConversationInProgress)
             {
+                _lastBlockReason = "conversation_in_progress";
                 return false;
             }
             if (NpcDialogueOverlay.IsOpen || AwakeMessengerOverlay.IsOpen)
             {
+                _lastBlockReason = "overlay_open";
                 return false;
             }
             try
             {
                 if (InformationManager.IsAnyInquiryActive())
                 {
+                    _lastBlockReason = "inquiry_active";
                     return false;
                 }
             }
@@ -487,6 +495,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
             {
                 if (Input.IsOnScreenKeyboardActive)
                 {
+                    _lastBlockReason = "onscreen_keyboard";
                     return false;
                 }
             }
@@ -498,12 +507,14 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 ScreenLayer focusedLayer = ScreenManager.FocusedLayer;
                 if (focusedLayer != null && focusedLayer.IsFocusedOnInput())
                 {
+                    _lastBlockReason = "input_focused";
                     return false;
                 }
             }
             catch
             {
             }
+            _lastBlockReason = string.Empty;
             return true;
         }
         catch (Exception ex)
@@ -518,6 +529,18 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         _terminalUiActive = true;
         List<InquiryElement> elements = new List<InquiryElement>
         {
+            new InquiryElement(
+                "inbox",
+                AwakeLocalization.Resolve("awake.menu.inbox", "事件收件箱"),
+                (ImageIdentifier)null,
+                true,
+                "查看近期世界事件"),
+            new InquiryElement(
+                "weekly_report",
+                AwakeLocalization.Resolve("awake.menu.weekly_report", "世界周报"),
+                (ImageIdentifier)null,
+                true,
+                "查看本周世界摘要"),
             new InquiryElement(
                 "messenger",
                 AwakeLocalization.Resolve("awake.menu.messenger", "通讯录（醒世）"),
@@ -555,6 +578,16 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     {
         if (selected == null || selected.Count == 0) return;
         string id = selected[0].Identifier as string;
+        if (StringComparer.Ordinal.Equals(id, "inbox"))
+        {
+            ShowWorldInbox();
+            return;
+        }
+        if (StringComparer.Ordinal.Equals(id, "weekly_report"))
+        {
+            ShowWeeklyReport();
+            return;
+        }
         if (StringComparer.Ordinal.Equals(id, "messenger"))
         {
             AwakeMessengerOverlay.Open();
@@ -563,6 +596,40 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         if (StringComparer.Ordinal.Equals(id, "developer_report"))
         {
             ShowDeveloperReport();
+        }
+    }
+
+    private static void ShowWorldInbox()
+    {
+        try
+        {
+            int day = AwakeRuntime.CurrentGameDay();
+            List<WorldEventRecord> week = WorldEventLedger.SnapshotWeek(day);
+            string text = WorldEventInboxFormatter.Format(week, day);
+            ShowMessage(
+                AwakeLocalization.Resolve("awake.menu.inbox", "事件收件箱"),
+                text);
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("awake_world_inbox_error error=" + ex.Message);
+        }
+    }
+
+    private static void ShowWeeklyReport()
+    {
+        try
+        {
+            int day = AwakeRuntime.CurrentGameDay();
+            List<WorldEventRecord> week = WorldEventLedger.SnapshotWeek(day);
+            string text = NarrativeReportBuilder.Build(week, day);
+            ShowMessage(
+                AwakeLocalization.Resolve("awake.menu.weekly_report", "世界周报"),
+                text);
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("awake_weekly_report_error error=" + ex.Message);
         }
     }
 

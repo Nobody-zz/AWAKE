@@ -752,6 +752,7 @@ internal sealed class NpcDialogueService : IDisposable
         }
 
         string retrievedKnowledge = string.Empty;
+        long perfStart = AwakePerfProbe.StartMilliseconds();
         WorldbookService worldbook = WorldbookRuntime.Current;
         if (worldbook != null)
         {
@@ -779,6 +780,7 @@ internal sealed class NpcDialogueService : IDisposable
                     AwakeLog.Write("npc_dialogue_worldbook_errors hero=" + _heroId
                         + " errors=" + string.Join(",", worldbookResult.Errors));
                 }
+                AwakePerfProbe.Record("worldbook_query", perfStart);
             }
             catch (OperationCanceledException)
             {
@@ -816,6 +818,7 @@ internal sealed class NpcDialogueService : IDisposable
                         + " error=" + ex.Message);
                     retrievedKnowledge = string.Empty;
                 }
+                AwakePerfProbe.Record("knowledge_query", perfStart);
             }
         }
 
@@ -940,6 +943,7 @@ internal sealed class NpcDialogueService : IDisposable
             return;
         }
 
+        string normalizedReply = NpcDialogueReplyNormalizer.Normalize(output.Reply);
         string playerText;
         lock (_gate)
         {
@@ -947,7 +951,7 @@ internal sealed class NpcDialogueService : IDisposable
             playerText = _pendingPlayerText ?? string.Empty;
             _pendingPlayerText = string.Empty;
             _history.Add(new NpcDialogueChatEntry("player", playerText));
-            _history.Add(new NpcDialogueChatEntry("npc", output.Reply));
+            _history.Add(new NpcDialogueChatEntry("npc", normalizedReply));
             while (_history.Count > NpcDialogueConstants.HistoryCapacity) _history.RemoveAt(0);
         }
 
@@ -959,7 +963,7 @@ internal sealed class NpcDialogueService : IDisposable
         }
 
         FinishTurn(generation);
-        PushTurnCompleted(output.Reply, output.Mood);
+        PushTurnCompleted(normalizedReply, output.Mood);
     }
 
     private async Task ExecuteCommandAsync(NpcDialogueCommandProposal proposal, string turnIntentId)

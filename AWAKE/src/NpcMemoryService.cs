@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MarcusAIFramework.Api;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TaleWorlds.CampaignSystem;
 
 namespace Awake;
 
@@ -30,6 +31,19 @@ internal sealed class NpcMemoryFact
     internal NpcMemoryFact(string text)
     {
         Text = text ?? string.Empty;
+    }
+}
+
+internal sealed class NpcMemoryRetryJob
+{
+    internal string HeroId { get; }
+    internal int Day { get; }
+    internal int Attempts { get; set; }
+
+    internal NpcMemoryRetryJob(string heroId, int day)
+    {
+        HeroId = heroId ?? string.Empty;
+        Day = day;
     }
 }
 
@@ -184,6 +198,8 @@ internal sealed class NpcMemoryService : IDisposable
     private readonly CancellationTokenSource _cts = new CancellationTokenSource();
     private readonly object _backgroundGate = new object();
     private readonly List<Task> _backgroundTasks = new List<Task>();
+    private readonly Queue<NpcMemoryRetryJob> _retryJobs = new Queue<NpcMemoryRetryJob>();
+    private int _lastConsolidationDay = -1;
     private bool _disposed;
 
     internal static NpcMemoryService Current
@@ -374,6 +390,102 @@ internal sealed class NpcMemoryService : IDisposable
         {
             AwakeLog.Write("npc_memory_event_fact_error hero=" + heroId + " error=" + ex.Message);
             return false;
+        }
+    }
+
+    internal async Task ConsolidateDailyForNearbyHeroesAsync(int day, CancellationToken cancellationToken)
+    {
+        if (_disposed || day <= _lastConsolidationDay) return;
+        _lastConsolidationDay = day;
+
+        int limit = 0;
+        if (Campaign.Current?.CampaignObjectManager?.AliveHeroes != null)
+        {
+            foreach (Hero hero in Campaign.Current.CampaignObjectManager.AliveHeroes)
+            {
+                if (hero == null || string.IsNullOrWhiteSpace(hero.StringId)) continue;
+                if (limit >= 8) break;
+                await ConsolidateDailyAsync(hero.StringId, day, cancellationToken).ConfigureAwait(false);
+                limit++;
+            }
+        }
+        await ProcessConsolidationJobsAsync(cancellationToken).ConfigureAwait(false);
+    }
+
+    internal async Task<bool> ConsolidateDailyAsync(
+        string heroId,
+        int day,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(heroId) || _disposed) return false;
+        try
+        {
+            WorldStateStore store = AwakeRuntime.WorldStateStore;
+            if (store == null) return false;
+            RequestContext context = AwakeRuntime.CreateContext(_host, Guid.NewGuid().ToString("N"));
+            JObject doc = await store.GetMemoriesAsync(heroId, context, cancellationToken).ConfigureAwait(false);
+            string overview = NpcMemoryOverviewBuilder.BuildOverview(doc, day);
+            if (string.IsNullOrWhiteSpace(overview)) return false;
+
+            string conversationId = "overview|" + heroId + "|" + day;
+            JArray facts = new JArray { overview };
+            bool written = await store.FlushMemoryFactsAsync(
+                heroId,
+                conversationId,
+                day,
+                "memory_overview",
+                facts,
+                overview,
+                2,
+                "memory_overview",
+                cancellationToken).ConfigureAwait(false);
+            if (!written)
+            {
+                EnqueueRetry(heroId, day);
+            }
+            return written;
+        }
+        catch (OperationCanceledException)
+        {
+            return false;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("npc_memory_consolidate_error hero=" + heroId + " day=" + day + " error=" + ex.Message);
+            EnqueueRetry(heroId, day);
+            return false;
+        }
+    }
+
+    private void EnqueueRetry(string heroId, int day)
+    {
+        lock (_backgroundGate)
+        {
+            foreach (NpcMemoryRetryJob existing in _retryJobs)
+            {
+                if (StringComparer.Ordinal.Equals(existing.HeroId, heroId) && existing.Day == day) return;
+            }
+            _retryJobs.Enqueue(new NpcMemoryRetryJob(heroId, day));
+        }
+    }
+
+    private async Task ProcessConsolidationJobsAsync(CancellationToken cancellationToken)
+    {
+        while (true)
+        {
+            NpcMemoryRetryJob job;
+            lock (_backgroundGate)
+            {
+                if (_retryJobs.Count == 0) return;
+                job = _retryJobs.Dequeue();
+            }
+            if (job.Attempts >= 3) continue;
+            job.Attempts++;
+            bool ok = await ConsolidateDailyAsync(job.HeroId, job.Day, cancellationToken).ConfigureAwait(false);
+            if (!ok && job.Attempts < 3)
+            {
+                lock (_backgroundGate) _retryJobs.Enqueue(job);
+            }
         }
     }
 

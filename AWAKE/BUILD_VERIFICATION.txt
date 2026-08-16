@@ -2118,3 +2118,14 @@ AF Batch 1: Proactive Chat + Long-Wait Esc (2026-08-16, no version bump)
 - SdkSmoke: PASS ALL Awake.SdkSmoke (17 paths including proactive model/storage and long-wait constant).
 - Awake.dll SHA-256 8EFA2A14F97680D945D764C1AF5B3FCD389F0535A1D5E16AC360EBC8E07FE44A.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+AF Batch 2-5 (2026-08-16, no version bump)
+- Batch 2: command deck adds Event Inbox and Weekly Report; CanOpenTerminal logs blocked reasons; WorldEventInboxFormatter added.
+- Batch 3: NpcMemoryOverviewBuilder and daily consolidation with idempotent overview writes and in-memory retry queue (max 3).
+- Batch 4: AF UI asset audit documented in docs/AF-UI-Assets-Inventory-20260816.md; text-based inbox/report keep UI light.
+- Batch 5: NpcDialogueReplyNormalizer cleans replies; AwakePerfProbe records worldbook/knowledge query timing.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (21 paths including inbox, memory overview, guard/perf).
+- LOCALIZATION_OK source=46 en=69 cn=69.
+- Awake.dll SHA-256 61AAEA5FF5D71EA749E899A6413A28465147DEB93C0B9EA48B30B62E66E0A9E6.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
