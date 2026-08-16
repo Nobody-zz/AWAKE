@@ -140,6 +140,21 @@ internal sealed class WorldbookQuery
     internal int MaximumBytes { get; set; } = 4096;
 }
 
+internal sealed class WorldbookMappingContext
+{
+    internal bool? HeroIsDead { get; set; }
+    internal bool? ClanHasTown { get; set; }
+    internal Dictionary<string, string> KingdomLeaderNames { get; set; } =
+        new Dictionary<string, string>(StringComparer.Ordinal);
+    internal Dictionary<string, string> SettlementOwnerLeaderNames { get; set; } =
+        new Dictionary<string, string>(StringComparer.Ordinal);
+    internal string BoundHeroName { get; set; } = string.Empty;
+    internal string BoundClanName { get; set; } = string.Empty;
+    internal string BoundSettlementName { get; set; } = string.Empty;
+    internal string BoundItemName { get; set; } = string.Empty;
+    internal string BoundTroopName { get; set; } = string.Empty;
+}
+
 internal sealed class WorldbookQueryResult
 {
     internal List<WorldbookRule> IdentityRules { get; } = new List<WorldbookRule>();

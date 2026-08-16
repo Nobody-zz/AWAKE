@@ -156,6 +156,42 @@ internal static class Program
 		{
 			throw new InvalidOperationException("worldbook persona injection mismatch.");
 		}
+
+		WorldbookTextMapping deadMapping = new WorldbookTextMapping
+		{
+			SourceText = "A",
+			Kind = "status|hero|is_dead",
+			TrueText = "他已去世",
+			FalseText = "他还活着"
+		};
+		WorldbookMappingContext deadContext = new WorldbookMappingContext { HeroIsDead = true };
+		if (!StringComparer.Ordinal.Equals(
+			WorldbookTextMappingResolver.Resolve(deadMapping, deadContext),
+			"他已去世"))
+		{
+			throw new InvalidOperationException("worldbook text mapping status resolution mismatch.");
+		}
+		string mappedText = WorldbookTextMappingResolver.Apply(
+			"国王A，统治着B",
+			new List<WorldbookTextMapping>
+			{
+				deadMapping,
+				new WorldbookTextMapping
+				{
+					SourceText = "B",
+					Kind = "bound_settlement_name"
+				}
+			},
+			new WorldbookMappingContext
+			{
+				HeroIsDead = true,
+				BoundSettlementName = "龙堡"
+			});
+		if (mappedText.IndexOf("国王他已去世", StringComparison.Ordinal) < 0
+			|| mappedText.IndexOf("统治着龙堡", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("worldbook text mapping apply mismatch.");
+		}
 		Console.WriteLine("PASS worldbook smoke");
 	}
 

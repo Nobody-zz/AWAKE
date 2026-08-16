@@ -49,7 +49,7 @@ internal sealed class WorldbookService
         }
     }
 
-    internal WorldbookQueryResult Query(WorldbookQuery query)
+    internal WorldbookQueryResult Query(WorldbookQuery query, WorldbookMappingContext mappingContext = null)
     {
         WorldbookQueryResult result = new WorldbookQueryResult();
         result.Warnings.AddRange(_warnings);
@@ -132,7 +132,7 @@ internal sealed class WorldbookService
         foreach (WorldbookRule rule in identityPool)
         {
             result.IdentityRules.Add(rule);
-            if (!TryAppendRule(builder, rule, query, budget, injectedIds)) continue;
+            if (!TryAppendRule(builder, rule, query, budget, injectedIds, mappingContext)) continue;
             result.HitIds.Add(rule.Id);
         }
 
@@ -140,7 +140,7 @@ internal sealed class WorldbookService
         {
             if (injectedIds.Contains(rule.Id)) continue;
             result.TopicRules.Add(rule);
-            if (!TryAppendRule(builder, rule, query, budget, injectedIds)) continue;
+            if (!TryAppendRule(builder, rule, query, budget, injectedIds, mappingContext)) continue;
             result.HitIds.Add(rule.Id);
         }
 
@@ -233,10 +233,11 @@ internal sealed class WorldbookService
         WorldbookRule rule,
         WorldbookQuery query,
         int maximumBytes,
-        HashSet<string> injectedIds)
+        HashSet<string> injectedIds,
+        WorldbookMappingContext mappingContext)
     {
         if (injectedIds.Contains(rule.Id)) return false;
-        string content = ResolveContent(rule, query);
+        string content = ResolveContent(rule, query, mappingContext);
         if (string.IsNullOrWhiteSpace(content)) return false;
         string line = "· [" + rule.Id + "] " + content;
         int current = Encoding.UTF8.GetByteCount(builder.ToString());
@@ -251,9 +252,17 @@ internal sealed class WorldbookService
         return true;
     }
 
-    internal static string ResolveContent(WorldbookRule rule, WorldbookQuery query)
+    internal static string ResolveContent(
+        WorldbookRule rule,
+        WorldbookQuery query,
+        WorldbookMappingContext mappingContext = null)
     {
-        if (rule.Variants.Count == 0) return rule.Content;
+        string content = rule.Variants.Count == 0 ? rule.Content : ResolveVariantContent(rule, query);
+        return WorldbookTextMappingResolver.Apply(content, rule.TextMappings, mappingContext);
+    }
+
+    private static string ResolveVariantContent(WorldbookRule rule, WorldbookQuery query)
+    {
         List<WorldbookVariant> matching = new List<WorldbookVariant>();
         foreach (WorldbookVariant variant in rule.Variants)
         {

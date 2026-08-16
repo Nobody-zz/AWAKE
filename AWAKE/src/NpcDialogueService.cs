@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MarcusAIFramework.Api;
 using Newtonsoft.Json.Linq;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Settlements;
 
 namespace Awake;
 
@@ -589,6 +590,46 @@ internal sealed class NpcDialogueService : IDisposable
         return result;
     }
 
+    private WorldbookMappingContext BuildMappingContext()
+    {
+        WorldbookMappingContext context = new WorldbookMappingContext();
+        try
+        {
+            if (_target != null && !_target.IsHero)
+            {
+                context.BoundHeroName = _heroName;
+                context.BoundSettlementName = Settlement.CurrentSettlement?.Name?.ToString() ?? string.Empty;
+                return context;
+            }
+            if (Campaign.Current?.CampaignObjectManager?.AliveHeroes == null) return context;
+            foreach (Hero hero in Campaign.Current.CampaignObjectManager.AliveHeroes)
+            {
+                if (hero == null || !StringComparer.Ordinal.Equals(hero.StringId, _heroId)) continue;
+                context.BoundHeroName = hero.Name?.ToString() ?? string.Empty;
+                context.HeroIsDead = hero.IsDead;
+                context.BoundClanName = hero.Clan?.Name?.ToString() ?? string.Empty;
+                context.BoundSettlementName = hero.CurrentSettlement?.Name?.ToString() ?? string.Empty;
+                if (hero.Clan?.Kingdom != null && hero.Clan.Kingdom.Leader != null)
+                {
+                    context.KingdomLeaderNames[hero.Clan.Kingdom.StringId] =
+                        hero.Clan.Kingdom.Leader.Name?.ToString() ?? string.Empty;
+                }
+                break;
+            }
+            Settlement settlement = Settlement.CurrentSettlement;
+            if (settlement?.OwnerClan?.Leader != null)
+            {
+                context.SettlementOwnerLeaderNames[settlement.StringId] =
+                    settlement.OwnerClan.Leader.Name?.ToString() ?? string.Empty;
+            }
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("npc_dialogue_mapping_context_error error=" + ex.Message);
+        }
+        return context;
+    }
+
     private async Task<string> BuildPromptInputAsync(
         IReadOnlyList<NpcDialogueChatEntry> history,
         string playerText,
@@ -623,7 +664,7 @@ internal sealed class NpcDialogueService : IDisposable
                     PlayerText = playerText,
                     MaximumBytes = KnowledgeConstants.MaximumRetrievedBlockBytes
                 };
-                WorldbookQueryResult worldbookResult = worldbook.Query(worldbookQuery);
+                WorldbookQueryResult worldbookResult = worldbook.Query(worldbookQuery, BuildMappingContext());
                 retrievedKnowledge = worldbookResult.RetrievedText;
                 if (worldbookResult.Errors.Count > 0)
                 {

@@ -24,6 +24,7 @@
   - 世界书加载/索引/查询服务骨架
   - 世界书运行时接入 NPC 对话
   - 世界书附加目录数据加载
+  - 世界书 TextMappings 基础解析器
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）
