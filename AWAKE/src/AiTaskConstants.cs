@@ -18,6 +18,8 @@ internal static class AiTaskConstants
     internal const string EventMetaNamespace = "awake.event_meta";
     internal const string RelationshipsNamespace = "awake.relationships";
     internal const string ProactiveNamespace = "awake.npc.proactive";
+    internal const string WorldEventsNamespace = "awake.world.events";
+    internal const string WorldEventsKey = "campaign.world_events.v1";
     internal const string EventMetaKey = "campaign.event_meta.v1";
 
     internal const string RelationshipDeltaCommandId = "awake.relationship.delta.v1";
@@ -73,7 +75,8 @@ internal static class AiTaskConstants
         NpcMemoriesNamespace,
         EventMetaNamespace,
         RelationshipsNamespace,
-        ProactiveNamespace
+        ProactiveNamespace,
+        WorldEventsNamespace
     };
 
     internal static string RoutePermission(string routeId) => "ai.route.invoke:" + routeId;

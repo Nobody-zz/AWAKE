@@ -39,6 +39,7 @@
   - AF 五批次 grillme 复查文档 `GRILLME-AF-BATCHES-20260816.md`
   - AF 反馈层：`AwakeFeedback` 统一游戏内操作反馈
   - MCM 菜单重排、预设与操作按钮
+  - 世界事件持久化与周报自动生成
   - `awake-task-continuity` 任务连续性 skill
 
 ## 待用户决策（延续候选）
@@ -56,7 +57,7 @@
 
 - `EventDialogueQueue`：引擎已生产，但没有内容规则。
 - 命令层：只有关系命令，世界效果未接。
-- `WorldEventLedger` / `NarrativeReportBuilder`：周报未接线。
+- `WorldEventLedger` / `NarrativeReportBuilder`：持久化与周报生成已接；收件箱 UI 仍为文本弹窗。
 - 开发者检查：仍是文本报告，无完整诊断面板。
 - Preprocess/Postprocess 路由：已注册但无调用方。
 - 无名 NPC：有身份回退，无永久记忆与命令边界。

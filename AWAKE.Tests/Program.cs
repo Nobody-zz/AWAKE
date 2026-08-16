@@ -609,10 +609,12 @@ internal static class Program
 		FakeKeyValueStore eventMetaStore = new FakeKeyValueStore();
 		FakeKeyValueStore relationshipStore = new FakeKeyValueStore();
 		FakeKeyValueStore proactiveStore = new FakeKeyValueStore();
+		FakeKeyValueStore worldEventsStore = new FakeKeyValueStore();
 		store.InjectStoreForTesting(AiTaskConstants.NpcMemoriesNamespace, memoryStore);
 		store.InjectStoreForTesting(AiTaskConstants.EventMetaNamespace, eventMetaStore);
 		store.InjectStoreForTesting(AiTaskConstants.RelationshipsNamespace, relationshipStore);
 		store.InjectStoreForTesting(AiTaskConstants.ProactiveNamespace, proactiveStore);
+		store.InjectStoreForTesting(AiTaskConstants.WorldEventsNamespace, worldEventsStore);
 
 		RequestContext context = new FakeClock(DateTimeOffset.UtcNow).Context("awake.smoke", session, "storage-smoke");
 		Newtonsoft.Json.Linq.JArray facts = new Newtonsoft.Json.Linq.JArray { "共同经历" };
@@ -730,6 +732,22 @@ internal static class Program
 			|| !StringComparer.Ordinal.Equals((string)storedCandidates[0]["heroId"], "hero-1"))
 		{
 			throw new InvalidOperationException("proactive storage roundtrip mismatch.");
+		}
+
+		bool worldAppended = await store.AppendWorldEventAsync(
+			5,
+			"event",
+			"攻城战结束",
+			"world-idem-1",
+			CancellationToken.None).ConfigureAwait(false);
+		if (!worldAppended) throw new InvalidOperationException("world event append should succeed.");
+		Newtonsoft.Json.Linq.JObject worldEvents = await store.GetWorldEventsAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (worldEvents == null
+			|| !(worldEvents["records"] is Newtonsoft.Json.Linq.JArray records)
+			|| records.Count != 1
+			|| !StringComparer.Ordinal.Equals((string)records[0]["text"], "攻城战结束"))
+		{
+			throw new InvalidOperationException("world event storage roundtrip mismatch.");
 		}
 
 		Console.WriteLine("PASS storage pipeline smoke");

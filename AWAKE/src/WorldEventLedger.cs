@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Awake;
 
@@ -22,6 +25,7 @@ internal static class WorldEventLedger
 {
     private const int Capacity = 50;
     private static readonly Queue<WorldEventRecord> Records = new Queue<WorldEventRecord>();
+    private static bool _loaded;
 
     internal static int Count
     {
@@ -38,6 +42,52 @@ internal static class WorldEventLedger
         {
             Records.Enqueue(new WorldEventRecord(day, safeKind, safeText));
             while (Records.Count > Capacity) Records.Dequeue();
+        }
+        try
+        {
+            WorldStateStore store = AwakeRuntime.WorldStateStore;
+            if (store != null)
+            {
+                _ = store.AppendWorldEventAsync(
+                    day,
+                    safeKind,
+                    safeText,
+                    "event|" + Guid.NewGuid().ToString("N"),
+                    CancellationToken.None);
+            }
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_event_persist_error error=" + ex.Message);
+        }
+    }
+
+    internal static async Task LoadFromStoreAsync(CancellationToken cancellationToken)
+    {
+        if (_loaded) return;
+        WorldStateStore store = AwakeRuntime.WorldStateStore;
+        if (store == null)
+        {
+            _loaded = true;
+            return;
+        }
+        JObject doc = await store.GetWorldEventsAsync(null, cancellationToken).ConfigureAwait(false);
+        lock (Records)
+        {
+            Records.Clear();
+            if (doc?["records"] is JArray records)
+            {
+                foreach (JToken token in records)
+                {
+                    if (token is not JObject record) continue;
+                    Records.Enqueue(new WorldEventRecord(
+                        IntValue(record["day"]),
+                        (string)record["kind"] ?? "event",
+                        (string)record["text"] ?? string.Empty));
+                }
+                while (Records.Count > Capacity) Records.Dequeue();
+            }
+            _loaded = true;
         }
     }
 
@@ -83,6 +133,16 @@ internal static class WorldEventLedger
 
     internal static void ClearForTesting()
     {
-        lock (Records) Records.Clear();
+        lock (Records)
+        {
+            Records.Clear();
+            _loaded = false;
+        }
+    }
+
+    private static int IntValue(JToken token)
+    {
+        if (token == null || token.Type != JTokenType.Integer) return 0;
+        try { return (int)token; } catch { return 0; }
     }
 }

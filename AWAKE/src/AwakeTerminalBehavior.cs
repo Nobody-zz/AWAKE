@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.CampaignSystem.Party;
@@ -606,6 +607,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     {
         try
         {
+            WorldEventLedger.LoadFromStoreAsync(CancellationToken.None).GetAwaiter().GetResult();
             int day = AwakeRuntime.CurrentGameDay();
             List<WorldEventRecord> week = WorldEventLedger.SnapshotWeek(day);
             string text = WorldEventInboxFormatter.Format(week, day);
@@ -623,6 +625,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     {
         try
         {
+            WorldEventLedger.LoadFromStoreAsync(CancellationToken.None).GetAwaiter().GetResult();
             int day = AwakeRuntime.CurrentGameDay();
             List<WorldEventRecord> week = WorldEventLedger.SnapshotWeek(day);
             string text = NarrativeReportBuilder.Build(week, day);

@@ -15,7 +15,8 @@ internal enum WorldStateKind
     Memory,
     Relationship,
     EventMeta,
-    Proactive
+    Proactive,
+    WorldEvents
 }
 
 internal sealed class MemoryReservation
@@ -553,6 +554,64 @@ internal sealed class WorldStateStore
         return true;
     }
 
+    internal async Task<JObject> GetWorldEventsAsync(RequestContext context, CancellationToken cancellationToken)
+    {
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.WorldEventsNamespace, out store);
+        if (store == null) return null;
+
+        OperationResult<string> loaded = await store.GetAsync(
+            AiTaskConstants.WorldEventsKey,
+            context ?? CreateContext(),
+            cancellationToken).ConfigureAwait(false);
+        if (!loaded.IsSuccess)
+        {
+            AwakeLog.Write("world_state_world_events_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            return null;
+        }
+        if (string.IsNullOrWhiteSpace(loaded.Value)) return NewWorldEventsState();
+        try
+        {
+            JObject doc = JObject.Parse(loaded.Value);
+            if (doc.Type != JTokenType.Object) throw new InvalidOperationException("world events root is not object");
+            return doc;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_state_world_events_corrupt error=" + ex.Message);
+            return null;
+        }
+    }
+
+    internal async Task<bool> AppendWorldEventAsync(
+        int day,
+        string kind,
+        string text,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(idempotencyKey)) return false;
+        JObject arguments = new JObject
+        {
+            ["day"] = day,
+            ["kind"] = kind ?? "event",
+            ["text"] = text ?? string.Empty
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.WorldEventsNamespace,
+            AiTaskConstants.WorldEventsKey,
+            "awake.world.events.append",
+            idempotencyKey,
+            string.Empty,
+            WorldStateKind.WorldEvents,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
     internal async Task BeginFinalDrainAsync()
     {
         bool started;
@@ -968,6 +1027,9 @@ internal sealed class WorldStateStore
             case WorldStateKind.Proactive:
                 applyError = ApplyProactive(state, command);
                 break;
+            case WorldStateKind.WorldEvents:
+                applyError = ApplyWorldEvents(state, command);
+                break;
         }
         if (!string.IsNullOrWhiteSpace(applyError))
         {
@@ -1013,6 +1075,7 @@ internal sealed class WorldStateStore
             case WorldStateKind.Relationship: return NewRelationshipState(heroId);
             case WorldStateKind.EventMeta: return NewEventMetaState();
             case WorldStateKind.Proactive: return NewProactiveState();
+            case WorldStateKind.WorldEvents: return NewWorldEventsState();
             default: return new JObject();
         }
     }
@@ -1053,6 +1116,17 @@ internal sealed class WorldStateStore
         };
     }
 
+    private static JObject NewWorldEventsState()
+    {
+        return new JObject
+        {
+            ["schema"] = "awake.world_events.v1",
+            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+            ["records"] = new JArray(),
+            ["appliedKeys"] = new JArray()
+        };
+    }
+
     private static JObject NewRelationshipState(string heroId)
     {
         return new JObject
@@ -1089,6 +1163,32 @@ internal sealed class WorldStateStore
         JArray candidates = command.Arguments["candidates"] as JArray;
         if (candidates == null) return "awake.world_state.proactive.invalid_candidates";
         state["candidates"] = (JArray)candidates.DeepClone();
+        state["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
+        JArray appliedKeys = (JArray)state["appliedKeys"];
+        appliedKeys.Add(command.IdempotencyKey);
+        Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+        return string.Empty;
+    }
+
+    private static void EnsureWorldEventsShape(JObject state)
+    {
+        state["schema"] = "awake.world_events.v1";
+        if (!(state["records"] is JArray)) state["records"] = new JArray();
+        if (!(state["appliedKeys"] is JArray)) state["appliedKeys"] = new JArray();
+    }
+
+    private static string ApplyWorldEvents(JObject state, WorldStateCommand command)
+    {
+        EnsureWorldEventsShape(state);
+        JArray records = (JArray)state["records"];
+        records.Insert(0, new JObject
+        {
+            ["id"] = command.IdempotencyKey,
+            ["day"] = IntValue(command.Arguments["day"]),
+            ["kind"] = ClampTextElements((string)command.Arguments["kind"] ?? "event", 40),
+            ["text"] = ClampTextElements((string)command.Arguments["text"] ?? string.Empty, 500)
+        });
+        Trim(records, 200);
         state["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
         JArray appliedKeys = (JArray)state["appliedKeys"];
         appliedKeys.Add(command.IdempotencyKey);

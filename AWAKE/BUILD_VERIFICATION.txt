@@ -2151,3 +2151,14 @@ MCM Menu Restructure (2026-08-16, no version bump)
 - LOCALIZATION_OK source=65 en=84 cn=84.
 - Awake.dll SHA-256 15EA2511767DE27E01775018B4D4F44704C6481A5F673E5B26A5EAD8D20BB0AD.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+World Event Persistence + Weekly Report (2026-08-16, no version bump)
+- Added awake.world.events namespace and WorldStateKind.WorldEvents.
+- WorldEventLedger.Record now persists through WorldStateStore outbox.
+- Command-deck inbox/report reload persisted history before display.
+- AwakeEventBehavior generates a weekly report on every 7th game day and records it.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (23 paths including world event storage roundtrip).
+- LOCALIZATION_OK source=66 en=85 cn=85.
+- Awake.dll SHA-256 E3AD059D119AD20F430CE5DCF02E0766B7DB7B4B175048A8752043592FAABAE2.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
