@@ -77,6 +77,12 @@ internal sealed class NpcDialogueVM : ViewModel
     public bool CanSend => _service != null && _service.IsAvailable && !_isLoading && !string.IsNullOrWhiteSpace(_inputText);
 
     [DataSourceProperty]
+    public string SendButtonText => AwakeLocalization.Resolve("awake.ui.talk", "交谈");
+
+    [DataSourceProperty]
+    public string CloseButtonText => AwakeLocalization.Resolve("awake.ui.close", "离开");
+
+    [DataSourceProperty]
     public MBBindingList<NpcDialogueChatRowVM> ChatRows => _chatRows;
 
     internal NpcDialogueVM(NpcDialogueService service, Action close)
@@ -84,8 +90,8 @@ internal sealed class NpcDialogueVM : ViewModel
         _service = service;
         _close = close;
         _titleText = service.DisplayTitle;
-        _noticeText = "对方似乎有话想对你说。";
-        _statusText = "对话正在苏醒……";
+        _noticeText = AwakeLocalization.Resolve("awake.ui.notice_opening", "对方似乎有话想对你说。");
+        _statusText = AwakeLocalization.Resolve("awake.ui.status_starting", "对话正在苏醒……");
         AddChatRow(service.SpeakerName, _noticeText);
     }
 
@@ -139,7 +145,7 @@ internal sealed class NpcDialogueVM : ViewModel
         }
         InputText = string.Empty;
         StreamingText = string.Empty;
-        AddChatRow("你", text);
+        AddChatRow(AwakeLocalization.Resolve("awake.ui.you", "你"), text);
         IsLoading = true;
         _ = SendAsyncSafe(text);
     }
@@ -177,7 +183,12 @@ internal sealed class NpcDialogueVM : ViewModel
                 NpcDialogueTurnResult turnResult = evt.Turn;
                 StreamingText = string.Empty;
                 AddChatRow(_service.SpeakerName, turnResult.Reply);
-                NoticeText = string.IsNullOrWhiteSpace(turnResult.Mood) ? "对方已回应。" : "对方已回应（" + turnResult.Mood + "）。";
+                NoticeText = string.IsNullOrWhiteSpace(turnResult.Mood)
+                    ? AwakeLocalization.Resolve("awake.ui.replied", "对方已回应。")
+                    : AwakeLocalization.Resolve(
+                        "awake.ui.replied_mood",
+                        "对方已回应（" + turnResult.Mood + "）。",
+                        new System.Collections.Generic.Dictionary<string, string> { ["MOOD"] = turnResult.Mood });
                 IsLoading = false;
                 break;
             case NpcDialogueUiEventKind.TurnFailed:

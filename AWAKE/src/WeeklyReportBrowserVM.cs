@@ -35,8 +35,10 @@ internal sealed class WeeklyReportBrowserVM : ViewModel
     {
         _close = close;
         TitleText = AwakeLocalization.Resolve("awake.menu.weekly_report", "世界周报");
-        StatusText = "本周世界摘要";
-        ReportText = string.IsNullOrWhiteSpace(report) ? "本周没有记录。" : report;
+        StatusText = AwakeLocalization.Resolve("awake.ui.weekly_status", "本周世界摘要");
+        ReportText = string.IsNullOrWhiteSpace(report)
+            ? AwakeLocalization.Resolve("awake.ui.weekly_empty", "本周没有记录。")
+            : report;
     }
 
     public void ExecuteClose()

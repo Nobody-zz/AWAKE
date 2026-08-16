@@ -15,8 +15,8 @@ internal sealed class AwakeMessengerVM : ViewModel
 
     private NpcDialogueService _activeService;
     private string _activeTargetId = string.Empty;
-    private string _titleText = "AWAKE 通讯录";
-    private string _statusText = "选择联系人开始对话。";
+    private string _titleText = AwakeLocalization.Resolve("awake.ui.messenger_title", "AWAKE 通讯录");
+    private string _statusText = AwakeLocalization.Resolve("awake.ui.messenger_choose", "选择联系人开始对话。");
     private string _noticeText = string.Empty;
     private string _inputText = string.Empty;
     private string _streamingText = string.Empty;
@@ -95,6 +95,15 @@ internal sealed class AwakeMessengerVM : ViewModel
         && !_isLoading
         && !string.IsNullOrWhiteSpace(_inputText);
 
+    [DataSourceProperty]
+    public string ContactsTitle => AwakeLocalization.Resolve("awake.ui.contacts", "通讯录");
+
+    [DataSourceProperty]
+    public string SendButtonText => AwakeLocalization.Resolve("awake.ui.send", "发送");
+
+    [DataSourceProperty]
+    public string CloseButtonText => AwakeLocalization.Resolve("awake.ui.close", "离开");
+
     internal AwakeMessengerVM(Action close)
     {
         _close = close;
@@ -127,7 +136,7 @@ internal sealed class AwakeMessengerVM : ViewModel
         }
         else
         {
-            StatusText = "附近暂时没有可对话对象。";
+            StatusText = AwakeLocalization.Resolve("awake.ui.messenger_no_nearby", "附近暂时没有可对话对象。");
         }
     }
 
@@ -173,8 +182,11 @@ internal sealed class AwakeMessengerVM : ViewModel
         }
         InputText = string.Empty;
         StreamingText = string.Empty;
-        AddChatRow("你", text);
-        AwakeMessengerHistory.Append(_activeTargetId, "你", text);
+        AddChatRow(AwakeLocalization.Resolve("awake.ui.you", "你"), text);
+        AwakeMessengerHistory.Append(
+            _activeTargetId,
+            AwakeLocalization.Resolve("awake.ui.you", "你"),
+            text);
         IsLoading = true;
         _ = SendAsyncSafe(text);
     }
@@ -222,22 +234,22 @@ internal sealed class AwakeMessengerVM : ViewModel
         }
         if (contact == null || contact.Target == null)
         {
-            TitleText = "AWAKE 通讯录";
-            StatusText = "联系人已失效。";
+            TitleText = AwakeLocalization.Resolve("awake.ui.messenger_title", "AWAKE 通讯录");
+            StatusText = AwakeLocalization.Resolve("awake.ui.contact_expired", "联系人已失效。");
             return;
         }
         if (!contact.IsNearby || !NpcDialogueLauncher.IsEligibleNpcTarget(contact.Target))
         {
             TitleText = contact.DisplayName;
-            StatusText = "远方联系人；写信功能将在后续版本开放。";
-            NoticeText = "你还没有和对方处于同一地点。";
+            StatusText = AwakeLocalization.Resolve("awake.ui.contact_remote_letter", "远方联系人；写信功能将在后续版本开放。");
+            NoticeText = AwakeLocalization.Resolve("awake.ui.contact_not_same_place", "你还没有和对方处于同一地点。");
             return;
         }
 
         IMarcusAiFrameworkHost host = AwakeRuntime.ResolveHost();
         if (host == null)
         {
-            StatusText = "AWAKE 尚未连接到 AI 宿主。";
+            StatusText = AwakeLocalization.Resolve("awake.ui.host_missing", "AWAKE 尚未连接到 AI 宿主。");
             return;
         }
 
@@ -246,13 +258,15 @@ internal sealed class AwakeMessengerVM : ViewModel
         _activeService = service;
         _activeTargetId = targetId;
         TitleText = service.DisplayTitle;
-        NoticeText = "对方似乎有话想对你说。";
-        StatusText = "对话正在苏醒……";
+        NoticeText = AwakeLocalization.Resolve("awake.ui.notice_opening", "对方似乎有话想对你说。");
+        StatusText = AwakeLocalization.Resolve("awake.ui.status_starting", "对话正在苏醒……");
         foreach (AwakeMessengerChatLine line in AwakeMessengerHistory.GetHistory(targetId))
         {
             AddChatRow(line.Speaker, line.Text);
         }
-        AddChatRow("系统", "正在连接……");
+        AddChatRow(
+            AwakeLocalization.Resolve("awake.ui.system", "系统"),
+            AwakeLocalization.Resolve("awake.ui.connecting", "正在连接……"));
         OnPropertyChangedWithValue(true, nameof(HasActive));
         OnPropertyChangedWithValue(CanSend, nameof(CanSend));
     }
@@ -308,14 +322,22 @@ internal sealed class AwakeMessengerVM : ViewModel
                 StreamingText = string.Empty;
                 AddChatRow(_activeService.SpeakerName, turnResult.Reply);
                 AwakeMessengerHistory.Append(_activeTargetId, _activeService.SpeakerName, turnResult.Reply);
-                NoticeText = string.IsNullOrWhiteSpace(turnResult.Mood) ? "对方已回应。" : "对方已回应（" + turnResult.Mood + "）。";
+                NoticeText = string.IsNullOrWhiteSpace(turnResult.Mood)
+                    ? AwakeLocalization.Resolve("awake.ui.replied", "对方已回应。")
+                    : AwakeLocalization.Resolve(
+                        "awake.ui.replied_mood",
+                        "对方已回应（" + turnResult.Mood + "）。",
+                        new Dictionary<string, string> { ["MOOD"] = turnResult.Mood });
                 IsLoading = false;
                 break;
             case NpcDialogueUiEventKind.TurnFailed:
                 NpcDialogueTurnResult failedResult = evt.Turn;
                 StreamingText = string.Empty;
                 AddChatRow(_activeService.SpeakerName, failedResult.ErrorDisplay);
-                AwakeMessengerHistory.Append(_activeTargetId, "系统", failedResult.ErrorDisplay);
+                AwakeMessengerHistory.Append(
+                    _activeTargetId,
+                    AwakeLocalization.Resolve("awake.ui.system", "系统"),
+                    failedResult.ErrorDisplay);
                 NoticeText = failedResult.ErrorDisplay;
                 IsLoading = false;
                 break;

@@ -32,25 +32,21 @@
             </ScrollablePanel>
             <Standard.VerticalScrollbar Id="ChatScrollbar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Bottom" MarginRight="10" MarginTop="142" MarginBottom="220" />
             <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="44" MarginLeft="24" MarginRight="24" VerticalAlignment="Bottom" MarginBottom="84" Brush="Popup.Description.Text" Brush.FontSize="17" Brush.FontColor="#FFE8D8C8" Text="@StreamingText" CanBreakWords="true" DoNotAcceptEvents="true" />
-            <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="58" MarginLeft="24" MarginRight="24" VerticalAlignment="Bottom" MarginBottom="12" StackLayout.LayoutMethod="HorizontalLeftToRight" Spacing="10" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="58" MarginLeft="24" MarginRight="24" VerticalAlignment="Bottom" MarginBottom="12" Sprite="General\CharacterCreation\name_input_area" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
               <Children>
-                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="General\CharacterCreation\name_input_area" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+                <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="10" MarginRight="230" Brush="Review.NameInput.Text" Brush.FontSize="19" RealText="@InputText" />
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="110" HorizontalAlignment="Right" MarginRight="112" Command.Click="ExecuteSend" IsEnabled="@CanSend" Brush="ButtonBrush1" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                   <Children>
-                    <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="10" MarginRight="10" Brush="Review.NameInput.Text" Brush.FontSize="19" RealText="@InputText" />
-                  </Children>
-                </Widget>
-                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="110" Command.Click="ExecuteSend" IsEnabled="@CanSend" Brush="ButtonBrush1" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
-                  <Children>
-                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="交谈" DoNotAcceptEvents="true" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@SendButtonText" DoNotAcceptEvents="true" />
                   </Children>
                 </ButtonWidget>
-                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="110" Command.Click="ExecuteClose" Brush="ButtonBrush1" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="110" HorizontalAlignment="Right" Command.Click="ExecuteClose" Brush="ButtonBrush1" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                   <Children>
-                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="离开" DoNotAcceptEvents="true" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@CloseButtonText" DoNotAcceptEvents="true" />
                   </Children>
                 </ButtonWidget>
               </Children>
-            </ListPanel>
+            </Widget>
           </Children>
         </Widget>
       </Children>

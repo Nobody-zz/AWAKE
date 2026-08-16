@@ -2216,3 +2216,14 @@ Messenger History Persistence (2026-08-16, no version bump)
 - LOCALIZATION_OK source=66 en=85 cn=85.
 - Awake.dll SHA-256 F005AAD064ACF2422F59A488EE14D14B5DE60B1C014B43D93CB983FEB385A167.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+UI Layout and Localization Audit (2026-08-16, no version bump)
+- NpcDialogue input bar switched from horizontal ListPanel to absolute-positioned Widget layout, matching AwakeMessenger; input keeps right clearance and buttons no longer depend on ListPanel stretch semantics.
+- Command deck root menu order: Messenger, Event Inbox, Weekly Report, Developer Check, Developer Testing.
+- Added localization keys for dialogue/messenger/inbox/weekly report status text, contact labels, terminal descriptions, event hints, and OK button; buttons no longer hardcode Chinese/English text.
+- Prefab XML parse OK for NpcDialogue, AwakeMessenger, WorldEventInbox, WeeklyReportBrowser.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (25 paths).
+- LOCALIZATION_OK source=130 en=148 cn=148.
+- Awake.dll SHA-256 072F5514F4E7F6FEDDF4E00416A632B5B32AFCE475646B1171CC19E2EAF2E7FC.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

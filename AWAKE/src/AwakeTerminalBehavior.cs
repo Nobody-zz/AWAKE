@@ -534,35 +534,35 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         List<InquiryElement> elements = new List<InquiryElement>
         {
             new InquiryElement(
+                "messenger",
+                AwakeLocalization.Resolve("awake.menu.messenger", "通讯录（醒世）"),
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.terminal.messenger_hint", "打开通讯录并开始对话")),
+            new InquiryElement(
                 "inbox",
                 AwakeLocalization.Resolve("awake.menu.inbox", "事件收件箱"),
                 (ImageIdentifier)null,
                 true,
-                "查看近期世界事件"),
+                AwakeLocalization.Resolve("awake.terminal.inbox_hint", "查看近期世界事件")),
             new InquiryElement(
                 "weekly_report",
                 AwakeLocalization.Resolve("awake.menu.weekly_report", "世界周报"),
                 (ImageIdentifier)null,
                 true,
-                "查看本周世界摘要"),
-            new InquiryElement(
-                "messenger",
-                AwakeLocalization.Resolve("awake.menu.messenger", "通讯录（醒世）"),
-                (ImageIdentifier)null,
-                true,
-                "打开通讯录并开始对话"),
+                AwakeLocalization.Resolve("awake.terminal.weekly_hint", "查看本周世界摘要")),
             new InquiryElement(
                 "developer_report",
                 AwakeLocalization.Resolve("awake.menu.developer_check", "开发者检查"),
                 (ImageIdentifier)null,
                 AwakeSettings.Current.EnableDeveloperMenu,
-                "查看运行时诊断"),
+                AwakeLocalization.Resolve("awake.terminal.developer_hint", "查看运行时诊断")),
             new InquiryElement(
                 "dev_tools",
                 AwakeLocalization.Resolve("awake.menu.dev_tools", "开发者测试"),
                 (ImageIdentifier)null,
                 AwakeSettings.Current.EnableDeveloperMenu,
-                "游戏内测试工具")
+                AwakeLocalization.Resolve("awake.terminal.dev_tools_hint", "游戏内测试工具"))
         };
         MultiSelectionInquiryData data = new MultiSelectionInquiryData(
             AwakeLocalization.Resolve("awake.terminal.title", "醒世 · 命令台"),
@@ -624,31 +624,31 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 AwakeLocalization.Resolve("awake.menu.developer_check", "开发者检查"),
                 (ImageIdentifier)null,
                 true,
-                "查看运行时诊断"),
+                AwakeLocalization.Resolve("awake.terminal.developer_hint", "查看运行时诊断")),
             new InquiryElement(
                 "test_dialogue",
                 AwakeLocalization.Resolve("awake.dev_tools.dialogue", "强制附近深谈"),
                 (ImageIdentifier)null,
                 true,
-                "打开最近 NPC 深谈"),
+                AwakeLocalization.Resolve("awake.dev_tools.dialogue_hint", "打开最近 NPC 深谈")),
             new InquiryElement(
                 "test_inbox",
                 AwakeLocalization.Resolve("awake.menu.inbox", "事件收件箱"),
                 (ImageIdentifier)null,
                 true,
-                "打开事件收件箱"),
+                AwakeLocalization.Resolve("awake.dev_tools.inbox_hint", "打开事件收件箱")),
             new InquiryElement(
                 "test_weekly",
                 AwakeLocalization.Resolve("awake.menu.weekly_report", "世界周报"),
                 (ImageIdentifier)null,
                 true,
-                "打开世界周报"),
+                AwakeLocalization.Resolve("awake.dev_tools.weekly_hint", "打开世界周报")),
             new InquiryElement(
                 "reset_proactive",
                 AwakeLocalization.Resolve("awake.dev_tools.reset_proactive", "重置主动状态"),
                 (ImageIdentifier)null,
                 true,
-                "清空 NPC 主动聊天候选")
+                AwakeLocalization.Resolve("awake.dev_tools.reset_proactive_hint", "清空 NPC 主动聊天候选"))
         };
         MultiSelectionInquiryData data = new MultiSelectionInquiryData(
             AwakeLocalization.Resolve("awake.dev_tools.title", "醒世 · 开发者测试"),
@@ -773,7 +773,20 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         try
         {
             InformationManager.ShowInquiry(
-                new InquiryData(title, text, true, false, "确定", "", null, null, "", 0f, null, null, null),
+                new InquiryData(
+                    title,
+                    text,
+                    true,
+                    false,
+                    AwakeLocalization.Resolve("awake.ui.ok", "确定"),
+                    "",
+                    null,
+                    null,
+                    "",
+                    0f,
+                    null,
+                    null,
+                    null),
                 true,
                 false);
         }

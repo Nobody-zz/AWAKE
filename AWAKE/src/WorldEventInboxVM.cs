@@ -33,8 +33,11 @@ internal sealed class WorldEventInboxVM : ViewModel
         _close = close;
         TitleText = AwakeLocalization.Resolve("awake.menu.inbox", "事件收件箱");
         StatusText = records == null || records.Count == 0
-            ? "本周没有记录。"
-            : records.Count + " 条本周记录";
+            ? AwakeLocalization.Resolve("awake.ui.inbox_empty", "本周没有记录。")
+            : AwakeLocalization.Resolve(
+                "awake.ui.inbox_count",
+                records.Count + " 条本周记录",
+                new Dictionary<string, string> { ["COUNT"] = records.Count.ToString() });
         if (records != null)
         {
             foreach (WorldEventRecord record in records)

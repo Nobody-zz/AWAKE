@@ -67,14 +67,24 @@ internal static class AwakeEventPopupService
     {
         List<InquiryElement> elements = new List<InquiryElement>
         {
-            new InquiryElement("a", definition.OptionA, (ImageIdentifier)null, true, "选择此项"),
-            new InquiryElement("b", definition.OptionB, (ImageIdentifier)null, true, "选择此项"),
+            new InquiryElement(
+                "a",
+                definition.OptionA,
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.event.choose_hint", "选择此项")),
+            new InquiryElement(
+                "b",
+                definition.OptionB,
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.event.choose_hint", "选择此项")),
             new InquiryElement(
                 "discuss",
                 AwakeLocalization.Resolve("awake.event.discuss", "参与话题"),
                 (ImageIdentifier)null,
                 true,
-                "进入 AI 对话深入探讨")
+                AwakeLocalization.Resolve("awake.event.discuss_hint", "进入 AI 对话深入探讨"))
         };
         MultiSelectionInquiryData data = new MultiSelectionInquiryData(
             definition.Title,

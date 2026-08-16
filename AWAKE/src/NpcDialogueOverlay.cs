@@ -20,9 +20,19 @@ internal sealed class NpcDialogueOverlay
             if (service == null || !service.IsAvailable)
             {
                 InformationManager.ShowInquiry(new InquiryData(
-                    "AWAKE·对话",
-                    "对方还没有准备好交谈。",
-                    true, false, "确定", "", null, null, "", 0f, null, null, null), true, false);
+                    AwakeLocalization.Resolve("awake.ui.dialogue_unavailable_title", "AWAKE·对话"),
+                    AwakeLocalization.Resolve("awake.ui.dialogue_unavailable", "对方还没有准备好交谈。"),
+                    true,
+                    false,
+                    AwakeLocalization.Resolve("awake.ui.ok", "确定"),
+                    "",
+                    null,
+                    null,
+                    "",
+                    0f,
+                    null,
+                    null,
+                    null), true, false);
                 return false;
             }
 

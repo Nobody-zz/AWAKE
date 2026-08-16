@@ -71,13 +71,15 @@ internal static class AwakeMessengerService
         string identity;
         if (target.IsHero)
         {
-            identity = "英雄";
+            identity = AwakeLocalization.Resolve("awake.ui.contact_hero", "英雄");
         }
         else
         {
             identity = AwakeUnnamedProfileService.BuildIdentity(target);
         }
-        string status = isNearby ? "附近" : "远方";
+        string status = isNearby
+            ? AwakeLocalization.Resolve("awake.ui.contact_status_nearby", "附近")
+            : AwakeLocalization.Resolve("awake.ui.contact_status_remote", "远方");
         return new AwakeContactInfo(target, target.DisplayName, identity, status, isNearby);
     }
 }

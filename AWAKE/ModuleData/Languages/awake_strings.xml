@@ -15,10 +15,17 @@
     <string id="awake.event.discuss" text="Join the topic" />
     <string id="awake.event.confirm" text="Confirm" />
     <string id="awake.event.leave" text="Leave" />
+    <string id="awake.event.choose_hint" text="Choose this option" />
+    <string id="awake.event.discuss_hint" text="Enter AI dialogue for a deeper discussion" />
     <string id="awake.terminal.title" text="AWAKE Command Deck" />
     <string id="awake.terminal.prompt" text="Choose a function:" />
     <string id="awake.terminal.confirm" text="Confirm" />
     <string id="awake.terminal.close" text="Close" />
+    <string id="awake.terminal.messenger_hint" text="Open the messenger and start a conversation." />
+    <string id="awake.terminal.inbox_hint" text="View recent world events." />
+    <string id="awake.terminal.weekly_hint" text="View the weekly world summary." />
+    <string id="awake.terminal.developer_hint" text="View runtime diagnostics." />
+    <string id="awake.terminal.dev_tools_hint" text="In-game testing tools." />
     <string id="awake.menu.developer_check" text="Developer Check" />
     <string id="awake.dialogue.npc_title" text="AWAKE - Talk with {HERO}" />
     <string id="awake.mcm.group.ai_link" text="0. AI Link" />
@@ -77,8 +84,43 @@
     <string id="awake.dev_tools.dialogue_failed" text="Deep talk failed to open." />
     <string id="awake.dev_tools.dialogue_ok" text="Deep talk opened." />
     <string id="awake.dev_tools.proactive_reset" text="NPC proactive state reset." />
+    <string id="awake.dev_tools.dialogue_hint" text="Open deep talk with the nearest NPC." />
+    <string id="awake.dev_tools.inbox_hint" text="Open the event inbox." />
+    <string id="awake.dev_tools.weekly_hint" text="Open the weekly report." />
+    <string id="awake.dev_tools.reset_proactive_hint" text="Clear NPC proactive talk candidates." />
     <string id="awake.feedback.inbox_open_failed" text="Could not open the event inbox." />
     <string id="awake.feedback.weekly_report_open_failed" text="Could not open the weekly report." />
+    <string id="awake.ui.talk" text="Talk" />
+    <string id="awake.ui.send" text="Send" />
+    <string id="awake.ui.close" text="Leave" />
+    <string id="awake.ui.contacts" text="Contacts" />
+    <string id="awake.ui.messenger_title" text="Messenger (AWAKE)" />
+    <string id="awake.ui.messenger_choose" text="Choose a contact to start talking." />
+    <string id="awake.ui.messenger_no_nearby" text="There is no one nearby to talk with." />
+    <string id="awake.ui.contact_expired" text="This contact is no longer available." />
+    <string id="awake.ui.contact_remote_letter" text="Remote contact; writing letters will open in a later version." />
+    <string id="awake.ui.contact_not_same_place" text="You are not in the same place as this person yet." />
+    <string id="awake.ui.host_missing" text="AWAKE is not connected to the AI host." />
+    <string id="awake.ui.status_starting" text="The conversation is waking up..." />
+    <string id="awake.ui.notice_opening" text="They seem to have something to say." />
+    <string id="awake.ui.connecting" text="Connecting..." />
+    <string id="awake.ui.replied" text="They have responded." />
+    <string id="awake.ui.replied_mood" text="They have responded ({MOOD})." />
+    <string id="awake.ui.you" text="You" />
+    <string id="awake.ui.system" text="System" />
+    <string id="awake.ui.inbox_empty" text="No records this week." />
+    <string id="awake.ui.inbox_count" text="{COUNT} records this week" />
+    <string id="awake.ui.weekly_status" text="Weekly world summary" />
+    <string id="awake.ui.weekly_empty" text="No records this week." />
+    <string id="awake.ui.day" text="Day {DAY}" />
+    <string id="awake.ui.contact_unknown" text="Unknown" />
+    <string id="awake.ui.contact_unavailable" text="Unavailable" />
+    <string id="awake.ui.contact_hero" text="Hero" />
+    <string id="awake.ui.contact_status_nearby" text="Nearby" />
+    <string id="awake.ui.contact_status_remote" text="Remote" />
+    <string id="awake.ui.dialogue_unavailable_title" text="AWAKE · Dialogue" />
+    <string id="awake.ui.dialogue_unavailable" text="They are not ready to talk yet." />
+    <string id="awake.ui.ok" text="OK" />
     <string id="awake.mcm.event_engine.name" text="Enable Event Engine" />
     <string id="awake.mcm.event_engine.hint" text="Enabled by default. The event engine owns triggers, cooldowns and dialogue-action queues; concrete events are registered by content packs later." />
     <string id="awake.preset.default" text="Default" />

@@ -14,7 +14,7 @@
             <!-- Contacts sidebar -->
             <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="300" MarginTop="66" MarginBottom="12" MarginLeft="12" Sprite="BlankWhite" Color="#FFFFFFFF" AlphaFactor="0.08">
               <Children>
-                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginLeft="12" MarginRight="12" MarginTop="8" Brush="Popup.Title.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Left" Text="通讯录" DoNotAcceptEvents="true" />
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginLeft="12" MarginRight="12" MarginTop="8" Brush="Popup.Title.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Left" Text="@ContactsTitle" DoNotAcceptEvents="true" />
                 <ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="44" MarginBottom="6" MarginLeft="6" MarginRight="6" AutoHideScrollBars="true" ClipRect="ContactsClip" InnerPanel="ContactsClip\ContactsInner" MouseScrollAxis="Vertical" VerticalScrollbar="..\ContactsScrollbar\Scrollbar" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
                   <Children>
                     <Widget Id="ContactsClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true" MarginRight="8">
@@ -68,12 +68,12 @@
                     <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="10" MarginRight="230" Brush="Review.NameInput.Text" Brush.FontSize="19" RealText="@InputText" />
                     <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="110" HorizontalAlignment="Right" MarginRight="112" Command.Click="ExecuteSend" IsEnabled="@CanSend" Brush="ButtonBrush1" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                       <Children>
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="发送" DoNotAcceptEvents="true" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@SendButtonText" DoNotAcceptEvents="true" />
                       </Children>
                     </ButtonWidget>
                     <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="100" HorizontalAlignment="Right" Command.Click="ExecuteClose" Brush="ButtonBrush1" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                       <Children>
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="离开" DoNotAcceptEvents="true" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@CloseButtonText" DoNotAcceptEvents="true" />
                       </Children>
                     </ButtonWidget>
                   </Children>

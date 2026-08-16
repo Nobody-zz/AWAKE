@@ -27,7 +27,12 @@ internal sealed class AwakeContactRowVM : ViewModel
 
     internal AwakeContactRowVM(AwakeContactInfo contact, Action onSelect)
     {
-        _contact = contact ?? new AwakeContactInfo(null, "未知", string.Empty, "不可用", false);
+        _contact = contact ?? new AwakeContactInfo(
+            null,
+            AwakeLocalization.Resolve("awake.ui.contact_unknown", "未知"),
+            string.Empty,
+            AwakeLocalization.Resolve("awake.ui.contact_unavailable", "不可用"),
+            false);
         _onSelect = onSelect;
     }
 
