@@ -48,9 +48,7 @@ internal sealed class NpcDialogueOverlay
             overlay.OpenLayer();
             if (!ReferenceEquals(ScreenManager.FocusedLayer, overlay._layer))
             {
-                AwakeLog.Write("npc_dialogue_open_failed reason=no_focus");
-                overlay.Close();
-                return false;
+                AwakeLog.Write("npc_dialogue_focus_pending");
             }
             _active = overlay;
             AwakeLog.Write("npc_dialogue_panel_opened");

@@ -28,9 +28,7 @@ internal sealed class WeeklyReportBrowserOverlay
             overlay.OpenLayer();
             if (!ReferenceEquals(ScreenManager.FocusedLayer, overlay._layer))
             {
-                AwakeLog.Write("weekly_report_open_failed reason=no_focus");
-                overlay.Close();
-                return false;
+                AwakeLog.Write("weekly_report_focus_pending");
             }
             _active = overlay;
             AwakeLog.Write("weekly_report_panel_opened");

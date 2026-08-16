@@ -31,9 +31,7 @@ internal sealed class WorldEventInboxOverlay
             overlay.OpenLayer();
             if (!ReferenceEquals(ScreenManager.FocusedLayer, overlay._layer))
             {
-                AwakeLog.Write("world_inbox_open_failed reason=no_focus");
-                overlay.Close();
-                return false;
+                AwakeLog.Write("world_inbox_focus_pending");
             }
             _active = overlay;
             AwakeLog.Write("world_inbox_panel_opened");

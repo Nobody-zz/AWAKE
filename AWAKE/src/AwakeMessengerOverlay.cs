@@ -28,9 +28,7 @@ internal sealed class AwakeMessengerOverlay
             overlay.OpenLayer();
             if (!ReferenceEquals(ScreenManager.FocusedLayer, overlay._layer))
             {
-                AwakeLog.Write("awake_messenger_open_failed reason=no_focus");
-                overlay.Close();
-                return false;
+                AwakeLog.Write("awake_messenger_focus_pending");
             }
             _active = overlay;
             AwakeLog.Write("awake_messenger_panel_opened");

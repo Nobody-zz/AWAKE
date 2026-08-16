@@ -57,6 +57,12 @@ internal static class NpcDialogueLauncher
             }
             service.Dispose();
 
+            if (StringComparer.Ordinal.Equals(entrySource, "scene") && !target.IsHero)
+            {
+                AwakeLog.Write("npc_dialogue_launcher_scene_nonhero_native_skipped target=" + target.StableId);
+                return NpcDialogueLaunchResult.None;
+            }
+
             if (NpcDialogueStarter.TryOpenConversation(target))
             {
                 AwakeLog.Write("npc_dialogue_launcher_result target=" + target.StableId + " source=" + entrySource + " mode=native");
