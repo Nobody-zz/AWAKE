@@ -54,6 +54,12 @@ internal static class Program
 		RunFeedbackSmoke();
 		RunMcmPresetSmoke();
 		RunMessengerHistorySmoke();
+		RunB0StabilitySmoke();
+		RunRuleRegistrySmoke();
+		RunEventDataLoaderSmoke();
+		RunMemoryConsolidatorSmoke();
+		RunProactiveMotiveRegistrySmoke();
+		RunContentApiSmoke();
 		RunMarcusLinkSmoke();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
@@ -91,6 +97,188 @@ internal static class Program
 		}
 		AwakeMessengerHistory.ClearForTesting();
 		Console.WriteLine("PASS messenger history smoke");
+	}
+
+	private static void RunB0StabilitySmoke()
+	{
+		AwakeMessengerHistory.ResetForCampaign();
+		AwakeMessengerHistory.Append("hero-b0", "你", "旧档");
+		AwakeMessengerHistory.ResetForCampaign();
+		if (AwakeMessengerHistory.GetHistory("hero-b0").Count != 0)
+		{
+			throw new InvalidOperationException("messenger history should reset per campaign.");
+		}
+
+		WorldEventLedger.ResetForCampaign();
+		WorldEventLedger.Record(1, "event", "旧事件");
+		WorldEventLedger.ResetForCampaign();
+		if (WorldEventLedger.Count != 0)
+		{
+			throw new InvalidOperationException("world event ledger should reset per campaign.");
+		}
+
+		AwakeBackgroundTask.Run(
+			() => Task.FromException(new InvalidOperationException("expected")),
+			"smoke");
+		AwakeBackgroundTask.Run(() => null, "smoke-null");
+		Console.WriteLine("PASS b0 stability smoke");
+	}
+
+	private static void RunRuleRegistrySmoke()
+	{
+		AwakeRuleRegistry.ResetForTesting();
+		AwakeRuleManifest valid = new AwakeRuleManifest
+		{
+			Id = "test.rule.one",
+			Group = "test",
+			Priority = 50,
+			Enabled = true,
+			Fingerprint = "fp-1",
+			Payload = new Newtonsoft.Json.Linq.JObject { ["key"] = "value" }
+		};
+		if (!AwakeRuleRegistry.Register(valid))
+		{
+			throw new InvalidOperationException("valid rule should register.");
+		}
+		if (!AwakeRuleRegistry.Register(valid))
+		{
+			throw new InvalidOperationException("same id should replace and still register.");
+		}
+		AwakeRuleManifest invalid = new AwakeRuleManifest
+		{
+			Id = "Bad ID",
+			Priority = -1
+		};
+		if (AwakeRuleRegistry.Register(invalid))
+		{
+			throw new InvalidOperationException("invalid rule should be rejected.");
+		}
+		AwakeRuleManifest fetched;
+		if (!AwakeRuleRegistry.TryGet("test.rule.one", out fetched)
+			|| !StringComparer.Ordinal.Equals(fetched.Group, "test"))
+		{
+			throw new InvalidOperationException("registered rule should be queryable.");
+		}
+		AwakeRuleRegistry.ResetForTesting();
+		Console.WriteLine("PASS rule registry smoke");
+	}
+
+	private static void RunEventDataLoaderSmoke()
+	{
+		AwakeRuleRegistry.ResetForTesting();
+		Newtonsoft.Json.Linq.JObject payload = new Newtonsoft.Json.Linq.JObject
+		{
+			["kind"] = "event",
+			["weight"] = 2,
+			["cooldownHours"] = 24,
+			["condition"] = "InSettlement",
+			["event"] = new Newtonsoft.Json.Linq.JObject
+			{
+				["id"] = "event.test",
+				["title"] = "测试事件",
+				["body"] = "事件正文",
+				["optionA"] = "接受",
+				["optionB"] = "拒绝",
+				["source"] = "PresetRule",
+				["context"] = "Settlement",
+				["subject"] = "PlayerNpc",
+				["content"] = "Daily",
+				["resolution"] = "NarrativeOnly",
+				["choiceShape"] = "TwoChoice",
+				["persistence"] = "Repeatable",
+				["effect"] = new Newtonsoft.Json.Linq.JObject
+				{
+					["choice"] = "a",
+					["targetId"] = "hero-1",
+					["trustDelta"] = 1,
+					["loveDelta"] = 0,
+					["hostilityDelta"] = 0
+				}
+			}
+		};
+		AwakeRuleManifest manifest = new AwakeRuleManifest
+		{
+			Id = "event.test.rule",
+			Group = "test",
+			Priority = 10,
+			Enabled = true,
+			Fingerprint = "fp-event",
+			Payload = payload
+		};
+		if (!AwakeRuleRegistry.Register(manifest))
+		{
+			throw new InvalidOperationException("event rule manifest should register.");
+		}
+		AwakeEventRule rule;
+		string error;
+		if (!AwakeEventDataLoader.TryParseRule(payload, out rule, out error)
+			|| rule.CooldownHours != 24
+			|| rule.Condition != AwakeEventCondition.InSettlement)
+		{
+			throw new InvalidOperationException("event rule parse mismatch: " + error);
+		}
+		AwakeRuleRegistry.ResetForTesting();
+		Console.WriteLine("PASS event data loader smoke");
+	}
+
+	private static void RunMemoryConsolidatorSmoke()
+	{
+		Newtonsoft.Json.Linq.JObject doc = new Newtonsoft.Json.Linq.JObject
+		{
+			["memories"] = new Newtonsoft.Json.Linq.JArray
+			{
+				new Newtonsoft.Json.Linq.JObject
+				{
+					["day"] = 10,
+					["weight"] = 1,
+					["summary"] = "旧日常",
+					["type"] = "shared_experience"
+				},
+				new Newtonsoft.Json.Linq.JObject
+				{
+					["day"] = 20,
+					["weight"] = 2,
+					["eventType"] = "meeting",
+					["entityId"] = "hero-1",
+					["summary"] = "第一次会面",
+					["type"] = "event"
+				},
+				new Newtonsoft.Json.Linq.JObject
+				{
+					["day"] = 25,
+					["weight"] = 2,
+					["eventType"] = "meeting",
+					["entityId"] = "hero-1",
+					["summary"] = "第二次会面",
+					["type"] = "event"
+				},
+				new Newtonsoft.Json.Linq.JObject
+				{
+					["day"] = 5,
+					["weight"] = 3,
+					["promise"] = true,
+					["summary"] = "承诺誓言",
+					["type"] = "promise"
+				}
+			},
+			["promises"] = new Newtonsoft.Json.Linq.JArray()
+		};
+		Newtonsoft.Json.Linq.JArray memories;
+		Newtonsoft.Json.Linq.JArray promises;
+		NpcMemoryConsolidationResult result = NpcMemoryConsolidator.Consolidate(
+			doc,
+			100,
+			out memories,
+			out promises);
+		if (result.Removed != 1 || result.Merged != 1 || !result.Changed)
+		{
+			throw new InvalidOperationException("memory consolidation counters mismatch.");
+		}
+		if (memories.Count != 1 || promises.Count != 1)
+		{
+			throw new InvalidOperationException("memory consolidation output mismatch.");
+		}
+		Console.WriteLine("PASS memory consolidator smoke");
 	}
 
 	private static void RunMcmPresetSmoke()
@@ -214,6 +402,7 @@ internal static class Program
 		{
 			HeroId = "hero-1",
 			Motive = NpcProactiveMotive.Relationship,
+			MotiveId = "relationship",
 			Affinity = 25,
 			State = NpcProactiveState.Pending,
 			Day = 10,
@@ -226,6 +415,7 @@ internal static class Program
 		NpcProactiveCandidate parsed = NpcProactiveCandidate.FromJson(json);
 		if (!StringComparer.Ordinal.Equals(parsed.HeroId, "hero-1")
 			|| parsed.Motive != NpcProactiveMotive.Relationship
+			|| !StringComparer.Ordinal.Equals(parsed.MotiveId, "relationship")
 			|| parsed.State != NpcProactiveState.Pending
 			|| parsed.Day != 10
 			|| parsed.ExpiresAtDay != 11
@@ -243,6 +433,109 @@ internal static class Program
 		}
 		NpcProactiveService.ClearForTesting();
 		Console.WriteLine("PASS npc proactive smoke");
+	}
+
+	private static void RunProactiveMotiveRegistrySmoke()
+	{
+		AwakeRuleRegistry.ResetForTesting();
+		NpcProactiveMotiveRegistry.ResetForTesting();
+		Newtonsoft.Json.Linq.JObject payload = new Newtonsoft.Json.Linq.JObject
+		{
+			["kind"] = "proactive_motive",
+			["id"] = "test.motive",
+			["displayName"] = "测试动机",
+			["baseWeight"] = 5,
+			["openingHint"] = "测试动机开场",
+			["minAffinity"] = -50,
+			["maxAffinity"] = 50
+		};
+		AwakeRuleManifest manifest = new AwakeRuleManifest
+		{
+			Id = "test.motive.manifest",
+			Group = "test",
+			Priority = 20,
+			Enabled = true,
+			Fingerprint = "fp-motive",
+			Payload = payload
+		};
+		if (!AwakeRuleRegistry.Register(manifest))
+		{
+			throw new InvalidOperationException("motive rule manifest should register.");
+		}
+		NpcProactiveMotiveRegistry.LoadFromRuleRegistry();
+		IReadOnlyList<NpcProactiveMotiveDefinition> definitions = NpcProactiveMotiveRegistry.All();
+		if (definitions.Count != 1
+			|| !StringComparer.Ordinal.Equals(definitions[0].Id, "test.motive")
+			|| definitions[0].BaseWeight != 5)
+		{
+			throw new InvalidOperationException("proactive motive registry mismatch.");
+		}
+		NpcProactiveMotiveRegistry.ResetForTesting();
+		AwakeRuleRegistry.ResetForTesting();
+		Console.WriteLine("PASS proactive motive registry smoke");
+	}
+
+	private sealed class TestContentPack : IAwakeContentPack
+	{
+		public string Id => "test.content.pack";
+
+		public void Register(IAwakeContentRegistry registry)
+		{
+			registry.RegisterRule(new AwakeContentRule
+			{
+				Id = "test.rule.content",
+				PayloadJson = "{\"kind\":\"custom\",\"value\":1}"
+			});
+			registry.RegisterEvent(new AwakeContentEvent
+			{
+				Id = "event.content",
+				Title = "内容事件",
+				Body = "内容正文",
+				OptionA = "接受",
+				OptionB = "拒绝",
+				Source = "PresetRule",
+				Context = "Settlement",
+				Subject = "PlayerNpc",
+				Content = "Daily",
+				Resolution = "NarrativeOnly",
+				ChoiceShape = "TwoChoice",
+				Persistence = "Repeatable"
+			});
+			registry.RegisterProactiveMotive(new AwakeContentMotive
+			{
+				Id = "motive.content",
+				DisplayName = "内容动机",
+				BaseWeight = 2,
+				OpeningHint = "内容开场"
+			});
+		}
+	}
+
+	private static void RunContentApiSmoke()
+	{
+		AwakeRuleRegistry.ResetForTesting();
+		AwakeContentPackManager.Register(new TestContentPack());
+		IReadOnlyList<AwakeRuleManifest> manifests = AwakeRuleRegistry.All();
+		if (manifests.Count != 3)
+		{
+			throw new InvalidOperationException("content pack should register three manifests.");
+		}
+		bool sawEvent = false;
+		bool sawMotive = false;
+		bool sawRule = false;
+		foreach (AwakeRuleManifest manifest in manifests)
+		{
+			string kind = (string)manifest.Payload["kind"];
+			if (StringComparer.Ordinal.Equals(kind, "event")) sawEvent = true;
+			if (StringComparer.Ordinal.Equals(kind, "proactive_motive")) sawMotive = true;
+			if (StringComparer.Ordinal.Equals(kind, "custom")) sawRule = true;
+		}
+		if (!sawEvent || !sawMotive || !sawRule)
+		{
+			throw new InvalidOperationException("content pack kinds missing.");
+		}
+		AwakeRuleRegistry.ResetForTesting();
+		Console.WriteLine("PASS content api smoke");
 	}
 
 	private static void RunLongWaitSmoke()

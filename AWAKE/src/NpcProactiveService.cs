@@ -21,12 +21,14 @@ internal static class NpcProactiveHooks
 
 internal sealed class NpcProactiveService
 {
+    private const long LoadRetryIntervalMilliseconds = 10000;
     private static NpcProactiveService _current;
     private readonly object _gate = new object();
     private readonly List<NpcProactiveCandidate> _candidates = new List<NpcProactiveCandidate>();
     private readonly Random _random = new Random();
     private bool _loaded;
     private bool _disposed;
+    private long _lastLoadAttemptUtcTicks;
 
     internal static NpcProactiveService Current
     {
@@ -70,6 +72,7 @@ internal sealed class NpcProactiveService
         {
             service._candidates.Clear();
             service._loaded = false;
+            service._lastLoadAttemptUtcTicks = 0;
         }
     }
 
@@ -139,11 +142,11 @@ internal sealed class NpcProactiveService
             if (hero == null)
             {
                 MarkExpired(selected.HeroId);
-                _ = SaveAsync(CancellationToken.None);
+                AwakeBackgroundTask.Run(() => SaveAsync(CancellationToken.None), "npc_proactive_save");
                 return;
             }
 
-            _ = SaveAsync(CancellationToken.None);
+            AwakeBackgroundTask.Run(() => SaveAsync(CancellationToken.None), "npc_proactive_save");
             ShowInquiry(selected, hero);
         }
         catch (Exception ex)
@@ -154,14 +157,32 @@ internal sealed class NpcProactiveService
 
     private async Task EnsureLoadedAsync(CancellationToken cancellationToken)
     {
-        if (_loaded) return;
+        lock (_gate)
+        {
+            if (_loaded) return;
+            long now = DateTimeOffset.UtcNow.UtcTicks;
+            if (now - _lastLoadAttemptUtcTicks < LoadRetryIntervalMilliseconds * TimeSpan.TicksPerMillisecond)
+            {
+                return;
+            }
+            _lastLoadAttemptUtcTicks = now;
+        }
+        NpcProactiveMotiveRegistry.LoadFromRuleRegistry();
         WorldStateStore store = AwakeRuntime.WorldStateStore;
         if (store == null)
         {
-            _loaded = true;
             return;
         }
-        JObject doc = await store.GetProactiveAsync(null, cancellationToken).ConfigureAwait(false);
+        JObject doc = null;
+        try
+        {
+            doc = await store.GetProactiveAsync(null, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("npc_proactive_load_error error=" + ex.Message);
+            return;
+        }
         lock (_gate)
         {
             _candidates.Clear();
@@ -295,9 +316,7 @@ internal sealed class NpcProactiveService
                 }
             }
 
-            NpcProactiveMotive motive = Math.Abs(affinity) >= 20
-                ? NpcProactiveMotive.Relationship
-                : NpcProactiveMotive.Casual;
+            NpcProactiveMotiveDefinition motiveDefinition = SelectMotive(affinity);
             int chancePercent = Clamp(AwakeSettings.Current.NpcProactiveChance, 0, 100);
             double chance = (NpcProactiveConstants.BaseChance
                 + affinity * NpcProactiveConstants.RelationshipBonusPerPoint)
@@ -311,7 +330,8 @@ internal sealed class NpcProactiveService
                 _candidates.Add(new NpcProactiveCandidate
                 {
                     HeroId = hero.StringId,
-                    Motive = motive,
+                    Motive = MapMotive(motiveDefinition.Id),
+                    MotiveId = motiveDefinition.Id,
                     Urgency = Math.Abs(affinity) >= 50 ? 2 : 1,
                     Affinity = affinity,
                     State = NpcProactiveState.Pending,
@@ -319,15 +339,57 @@ internal sealed class NpcProactiveService
                     ExpiresAtDay = day + NpcProactiveConstants.ExpiresAfterDays,
                     CooldownDay = day + NpcProactiveConstants.CooldownDays,
                     Fatigue = 1,
-                    OpeningHint = AwakeLocalization.Resolve(
-                        "awake.proactive.opening_hint",
-                        "对方主动想和你谈谈。")
+                    OpeningHint = string.IsNullOrWhiteSpace(motiveDefinition.OpeningHint)
+                        ? AwakeLocalization.Resolve(
+                            "awake.proactive.opening_hint",
+                            "对方主动想和你谈谈。")
+                        : motiveDefinition.OpeningHint
                 });
             }
-            AwakeLog.Write("npc_proactive_candidate_created hero=" + hero.StringId + " motive=" + motive);
+            AwakeLog.Write("npc_proactive_candidate_created hero=" + hero.StringId
+                + " motive=" + motiveDefinition.Id);
             return true;
         }
         return false;
+    }
+
+    private NpcProactiveMotiveDefinition SelectMotive(int affinity)
+    {
+        List<NpcProactiveMotiveDefinition> candidates = new List<NpcProactiveMotiveDefinition>();
+        foreach (NpcProactiveMotiveDefinition definition in NpcProactiveMotiveRegistry.All())
+        {
+            if (definition == null) continue;
+            if (affinity < definition.MinAffinity || affinity > definition.MaxAffinity) continue;
+            candidates.Add(definition);
+        }
+        if (candidates.Count > 0)
+        {
+            int total = 0;
+            foreach (NpcProactiveMotiveDefinition definition in candidates) total += definition.BaseWeight;
+            int roll = _random.Next(0, total);
+            int cursor = 0;
+            foreach (NpcProactiveMotiveDefinition definition in candidates)
+            {
+                cursor += definition.BaseWeight;
+                if (roll < cursor) return definition;
+            }
+            return candidates[candidates.Count - 1];
+        }
+        return new NpcProactiveMotiveDefinition
+        {
+            Id = Math.Abs(affinity) >= 20 ? "relationship" : "casual",
+            BaseWeight = 1,
+            MinAffinity = -100,
+            MaxAffinity = 100,
+            OpeningHint = string.Empty
+        };
+    }
+
+    private static NpcProactiveMotive MapMotive(string motiveId)
+    {
+        return StringComparer.Ordinal.Equals(motiveId, "relationship")
+            ? NpcProactiveMotive.Relationship
+            : NpcProactiveMotive.Casual;
     }
 
     private NpcProactiveCandidate FindCandidate(string heroId)
@@ -407,7 +469,7 @@ internal sealed class NpcProactiveService
         AwakeFeedback.ShowSuccess(AwakeLocalization.Resolve(
             "awake.feedback.proactive_accepted",
             "对方愿意谈谈。"));
-        _ = SaveAsync(CancellationToken.None);
+        AwakeBackgroundTask.Run(() => SaveAsync(CancellationToken.None), "npc_proactive_save");
         AwakeLog.Write("npc_proactive_accepted hero=" + heroId);
     }
 
@@ -425,7 +487,7 @@ internal sealed class NpcProactiveService
         AwakeFeedback.ShowWarning(AwakeLocalization.Resolve(
             "awake.feedback.proactive_declined",
             "你决定改天再说。"));
-        _ = SaveAsync(CancellationToken.None);
+        AwakeBackgroundTask.Run(() => SaveAsync(CancellationToken.None), "npc_proactive_save");
         AwakeLog.Write("npc_proactive_declined hero=" + heroId);
     }
 

@@ -103,6 +103,7 @@ public sealed class SubModule : MBSubModuleBase
             AwakeLog.Write("campaign_reset_overlay_close_error error=" + ex.Message);
         }
         WorldEventLedger.ClearForTesting();
+        AwakeMessengerHistory.ResetForCampaign();
         NpcDialogueContext.ClearForTesting();
         NpcDialogueLauncher.ClearCache();
         EventDialogueQueue.ClearForTesting();

@@ -2248,3 +2248,22 @@ Scene Visual Selection + Native Conversation AI Mode PLAN (2026-08-16, no code b
 - LOCALIZATION_OK source=130 en=148 cn=148.
 - Awake.dll SHA-256 5F3F69D83A42BCE35228208775E0436F89EB8C8560A16FF058094DEC14B1D4FC.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+A-Class B0-B7 Complete (2026-08-16, no version bump)
+- B0-1: AwakeMessengerHistory now resets with campaign and retries storage load instead of permanently skipping.
+- B0-2: WorldEventLedger and NpcProactiveService retry storage loads with a 10s throttle instead of marking loaded on failure.
+- B0-3: Added AwakeBackgroundTask safe wrapper for fire-and-forget writes; used by Messenger history, world events, proactive saves, and Marcus route sync.
+- B0-4: AwakeEventBehavior persists last weekly report day through SyncData.
+- B0-5: MCM AI self-check now includes session state and up to 6 health components (provider/model/route summaries).
+- B0-6: Added tools/release_check.ps1 with version, hash, required-file, disallowed-file, and localization checks.
+- B3: Added AwakeRuleRegistry + AwakeRuleManifest with schema validation, duplicate replacement, file loading from ModuleData/Rules, and smoke coverage.
+- B4: Added AwakeEventDataLoader; event definitions now load from rule registry payloads (kind=event), removing hardcoded event content from runtime.
+- B5: Added NpcMemoryConsolidator for structured memory decay/merge/promise separation; WorldStateStore persists consolidated memories/promises.
+- B6: Added NpcProactiveMotiveRegistry; proactive motives load from rule registry payloads (kind=proactive_motive) and candidates carry stable motiveId.
+- B7: Added public IAwakeContentPack/IAwakeContentRegistry/IAwakeContentPackManager API for content packs to register rules, events, and motives.
+- dotnet build -c Release -p:BannerlordApi=1.3.15 -> 0 warnings, 0 errors.
+- SdkSmoke: PASS ALL Awake.SdkSmoke (30 paths).
+- LOCALIZATION_OK source=130 en=148 cn=148.
+- tools/release_check.ps1 -> RELEASE_CHECK_OK.
+- Awake.dll SHA-256 EA5357A5F19FB6FD4C396B82F65500A131459B401F6B246A12703F3EA7CCE125.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

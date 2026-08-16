@@ -191,6 +191,7 @@ internal sealed class AwakeExtension : IFrameworkExtension
                     }
                     WorldbookRuntime.ShutdownCurrent();
                     WorldbookRuntime.EnsureCreated();
+                    AwakeRuleRegistry.EnsureLoaded();
                     NpcProactiveService.SetCurrent(new NpcProactiveService());
                     break;
                 case ExtensionLifecycleStage.SessionEnding:

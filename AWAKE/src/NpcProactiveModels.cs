@@ -39,6 +39,7 @@ internal sealed class NpcProactiveCandidate
 {
     internal string HeroId { get; set; } = string.Empty;
     internal NpcProactiveMotive Motive { get; set; } = NpcProactiveMotive.Casual;
+    internal string MotiveId { get; set; } = "casual";
     internal int Urgency { get; set; } = 1;
     internal int Affinity { get; set; }
     internal NpcProactiveState State { get; set; } = NpcProactiveState.Pending;
@@ -54,6 +55,7 @@ internal sealed class NpcProactiveCandidate
         {
             ["heroId"] = HeroId ?? string.Empty,
             ["motive"] = Motive.ToString().ToLowerInvariant(),
+            ["motiveId"] = MotiveId ?? string.Empty,
             ["urgency"] = Urgency,
             ["affinity"] = Affinity,
             ["state"] = State.ToString().ToLowerInvariant(),
@@ -71,6 +73,13 @@ internal sealed class NpcProactiveCandidate
         if (token is not JObject obj) return candidate;
         candidate.HeroId = (string)obj["heroId"] ?? string.Empty;
         candidate.Motive = ParseMotive((string)obj["motive"]);
+        candidate.MotiveId = (string)obj["motiveId"] ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(candidate.MotiveId))
+        {
+            candidate.MotiveId = candidate.Motive == NpcProactiveMotive.Relationship
+                ? "relationship"
+                : "casual";
+        }
         candidate.Urgency = IntValue(obj["urgency"]);
         candidate.Affinity = IntValue(obj["affinity"]);
         candidate.State = ParseState((string)obj["state"]);

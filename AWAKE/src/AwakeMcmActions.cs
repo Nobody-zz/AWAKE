@@ -13,7 +13,7 @@ internal static class AwakeMcmActions
 
     internal static void SyncRoutes()
     {
-        _ = AwakeMarcusLinkService.SyncRoutesAsync(CancellationToken.None);
+        AwakeBackgroundTask.Run(() => AwakeMarcusLinkService.SyncRoutesAsync(CancellationToken.None), "marcus_sync_routes");
     }
 
     internal static void RefreshAiStatus()

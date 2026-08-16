@@ -424,6 +424,18 @@ internal sealed class NpcMemoryService : IDisposable
             if (store == null) return false;
             RequestContext context = AwakeRuntime.CreateContext(_host, Guid.NewGuid().ToString("N"));
             JObject doc = await store.GetMemoriesAsync(heroId, context, cancellationToken).ConfigureAwait(false);
+            if (doc != null)
+            {
+                Newtonsoft.Json.Linq.JArray consolidatedMemories;
+                Newtonsoft.Json.Linq.JArray consolidatedPromises;
+                NpcMemoryConsolidator.Consolidate(doc, day, out consolidatedMemories, out consolidatedPromises);
+                await store.ConsolidateMemoryAsync(
+                    heroId,
+                    consolidatedMemories,
+                    consolidatedPromises,
+                    "consolidate|" + heroId + "|" + day,
+                    cancellationToken).ConfigureAwait(false);
+            }
             string overview = NpcMemoryOverviewBuilder.BuildOverview(doc, day);
             if (string.IsNullOrWhiteSpace(overview)) return false;
 

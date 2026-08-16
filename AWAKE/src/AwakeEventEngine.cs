@@ -22,6 +22,7 @@ internal sealed class AwakeEventEngine
     private readonly Dictionary<string, int> _dailyDays = new Dictionary<string, int>(StringComparer.Ordinal);
     private readonly Dictionary<string, int> _metaVersions = new Dictionary<string, int>(StringComparer.Ordinal);
     private bool _metaLoaded;
+    private bool _registryLoaded;
     private bool _busy;
 
     internal int RuleCount
@@ -66,9 +67,36 @@ internal sealed class AwakeEventEngine
             _dailyDays.Clear();
             _metaVersions.Clear();
             _metaLoaded = false;
+            _registryLoaded = false;
         }
         _busy = false;
         EventDialogueQueue.ClearForTesting();
+    }
+
+    internal void EnsureRulesLoadedFromRegistry()
+    {
+        lock (_gate)
+        {
+            if (_registryLoaded) return;
+            _registryLoaded = true;
+        }
+        AwakeRuleRegistry.EnsureLoaded();
+        foreach (AwakeRuleManifest manifest in AwakeRuleRegistry.All())
+        {
+            if (manifest == null || !manifest.Enabled) continue;
+            JObject payload = manifest.Payload;
+            if (payload == null || !StringComparer.Ordinal.Equals((string)payload["kind"], "event")) continue;
+            AwakeEventRule rule;
+            string error;
+            if (AwakeEventDataLoader.TryParseRule(payload, out rule, out error))
+            {
+                Register(rule);
+            }
+            else
+            {
+                AwakeLog.Write("awake_event_registry_parse_failed id=" + manifest.Id + " error=" + error);
+            }
+        }
     }
 
     internal async Task OnHourlyTickAsync(CancellationToken cancellationToken)

@@ -24,8 +24,10 @@ internal sealed class WorldEventRecord
 internal static class WorldEventLedger
 {
     private const int Capacity = 50;
+    private const long LoadRetryIntervalMilliseconds = 10000;
     private static readonly Queue<WorldEventRecord> Records = new Queue<WorldEventRecord>();
     private static bool _loaded;
+    private static long _lastLoadAttemptUtcTicks;
 
     internal static int Count
     {
@@ -48,12 +50,14 @@ internal static class WorldEventLedger
             WorldStateStore store = AwakeRuntime.WorldStateStore;
             if (store != null)
             {
-                _ = store.AppendWorldEventAsync(
-                    day,
-                    safeKind,
-                    safeText,
-                    "event|" + Guid.NewGuid().ToString("N"),
-                    CancellationToken.None);
+                AwakeBackgroundTask.Run(
+                    () => store.AppendWorldEventAsync(
+                        day,
+                        safeKind,
+                        safeText,
+                        "event|" + Guid.NewGuid().ToString("N"),
+                        CancellationToken.None),
+                    "world_event");
             }
         }
         catch (Exception ex)
@@ -64,14 +68,31 @@ internal static class WorldEventLedger
 
     internal static async Task LoadFromStoreAsync(CancellationToken cancellationToken)
     {
-        if (_loaded) return;
+        lock (Records)
+        {
+            if (_loaded) return;
+            long now = DateTimeOffset.UtcNow.UtcTicks;
+            if (now - _lastLoadAttemptUtcTicks < LoadRetryIntervalMilliseconds * TimeSpan.TicksPerMillisecond)
+            {
+                return;
+            }
+            _lastLoadAttemptUtcTicks = now;
+        }
         WorldStateStore store = AwakeRuntime.WorldStateStore;
         if (store == null)
         {
-            _loaded = true;
             return;
         }
-        JObject doc = await store.GetWorldEventsAsync(null, cancellationToken).ConfigureAwait(false);
+        JObject doc = null;
+        try
+        {
+            doc = await store.GetWorldEventsAsync(null, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_event_load_error error=" + ex.Message);
+            return;
+        }
         lock (Records)
         {
             Records.Clear();
@@ -133,10 +154,16 @@ internal static class WorldEventLedger
 
     internal static void ClearForTesting()
     {
+        ResetForCampaign();
+    }
+
+    internal static void ResetForCampaign()
+    {
         lock (Records)
         {
             Records.Clear();
             _loaded = false;
+            _lastLoadAttemptUtcTicks = 0;
         }
     }
 

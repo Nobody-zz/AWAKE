@@ -23,9 +23,11 @@ internal sealed class AwakeMessengerChatLine
 internal static class AwakeMessengerHistory
 {
     private const int MaximumLinesPerContact = 200;
+    private const long LoadRetryIntervalMilliseconds = 10000;
     private static readonly Dictionary<string, List<AwakeMessengerChatLine>> Chats =
         new Dictionary<string, List<AwakeMessengerChatLine>>(StringComparer.Ordinal);
     private static bool _loaded;
+    private static long _lastLoadAttemptUtcTicks;
 
     internal static void Append(string targetId, string speaker, string text)
     {
@@ -46,13 +48,15 @@ internal static class AwakeMessengerHistory
             WorldStateStore store = AwakeRuntime.WorldStateStore;
             if (store != null)
             {
-                _ = store.AppendMessengerMessageAsync(
-                    targetId,
-                    speaker,
-                    text,
-                    AwakeRuntime.CurrentGameDay(),
-                    "msg|" + Guid.NewGuid().ToString("N"),
-                    CancellationToken.None);
+                AwakeBackgroundTask.Run(
+                    () => store.AppendMessengerMessageAsync(
+                        targetId,
+                        speaker,
+                        text,
+                        AwakeRuntime.CurrentGameDay(),
+                        "msg|" + Guid.NewGuid().ToString("N"),
+                        CancellationToken.None),
+                    "messenger_history");
             }
         }
         catch (Exception ex)
@@ -63,14 +67,31 @@ internal static class AwakeMessengerHistory
 
     internal static async Task LoadAsync(CancellationToken cancellationToken)
     {
-        if (_loaded) return;
+        lock (Chats)
+        {
+            if (_loaded) return;
+            long now = DateTimeOffset.UtcNow.UtcTicks;
+            if (now - _lastLoadAttemptUtcTicks < LoadRetryIntervalMilliseconds * TimeSpan.TicksPerMillisecond)
+            {
+                return;
+            }
+            _lastLoadAttemptUtcTicks = now;
+        }
         WorldStateStore store = AwakeRuntime.WorldStateStore;
         if (store == null)
         {
-            _loaded = true;
             return;
         }
-        JObject doc = await store.GetMessengerAsync(null, cancellationToken).ConfigureAwait(false);
+        JObject doc = null;
+        try
+        {
+            doc = await store.GetMessengerAsync(null, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("messenger_history_load_error error=" + ex.Message);
+            return;
+        }
         lock (Chats)
         {
             Chats.Clear();
@@ -112,10 +133,16 @@ internal static class AwakeMessengerHistory
 
     internal static void ClearForTesting()
     {
+        ResetForCampaign();
+    }
+
+    internal static void ResetForCampaign()
+    {
         lock (Chats)
         {
             Chats.Clear();
             _loaded = false;
+            _lastLoadAttemptUtcTicks = 0;
         }
     }
 

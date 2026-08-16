@@ -501,6 +501,35 @@ internal sealed class WorldStateStore
         return true;
     }
 
+    internal async Task<bool> ConsolidateMemoryAsync(
+        string heroId,
+        JArray memories,
+        JArray promises,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(heroId) || memories == null || promises == null) return false;
+        JObject arguments = new JObject
+        {
+            ["mode"] = "consolidate",
+            ["memories"] = (JArray)memories.DeepClone(),
+            ["promises"] = (JArray)promises.DeepClone()
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.NpcMemoriesNamespace,
+            HeroKey(heroId),
+            "awake.memory.consolidate",
+            string.IsNullOrWhiteSpace(idempotencyKey) ? Guid.NewGuid().ToString("N") : idempotencyKey,
+            heroId,
+            WorldStateKind.Memory,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
     internal async Task<JObject> GetProactiveAsync(RequestContext context, CancellationToken cancellationToken)
     {
         IKeyValueStore store;
@@ -1153,6 +1182,7 @@ internal sealed class WorldStateStore
             ["heroId"] = heroId ?? string.Empty,
             ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
             ["memories"] = new JArray(),
+            ["promises"] = new JArray(),
             ["nextConversationSequence"] = 0,
             ["appliedKeys"] = new JArray()
         };
@@ -1334,6 +1364,7 @@ internal sealed class WorldStateStore
         state["schema"] = "awake.npc.memory.v1";
         if (state["heroId"] == null) state["heroId"] = heroId ?? string.Empty;
         if (!(state["memories"] is JArray)) state["memories"] = new JArray();
+        if (!(state["promises"] is JArray)) state["promises"] = new JArray();
         if (!(state["nextConversationSequence"] is JValue) || state["nextConversationSequence"].Type != JTokenType.Integer)
         {
             state["nextConversationSequence"] = 0;
@@ -1348,6 +1379,22 @@ internal sealed class WorldStateStore
         JArray memories = (JArray)state["memories"];
         JArray appliedKeys = (JArray)state["appliedKeys"];
         string mode = (string)command.Arguments["mode"] ?? "append";
+
+        if (StringComparer.Ordinal.Equals(mode, "consolidate"))
+        {
+            JArray consolidatedMemories = command.Arguments["memories"] as JArray;
+            JArray consolidatedPromises = command.Arguments["promises"] as JArray;
+            if (consolidatedMemories == null || consolidatedPromises == null)
+            {
+                return "awake.world_state.memory.consolidate_invalid";
+            }
+            state["memories"] = (JArray)consolidatedMemories.DeepClone();
+            state["promises"] = (JArray)consolidatedPromises.DeepClone();
+            appliedKeys.Add(command.IdempotencyKey);
+            Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+            state["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
+            return string.Empty;
+        }
 
         if (StringComparer.Ordinal.Equals(mode, "patch"))
         {
@@ -1389,6 +1436,11 @@ internal sealed class WorldStateStore
             ["facts"] = ClampFacts(command.Arguments["facts"] as JArray),
             ["weight"] = weight,
             ["source"] = (string)command.Arguments["source"] ?? "npc_dialogue",
+            ["eventType"] = (string)command.Arguments["eventType"] ?? string.Empty,
+            ["location"] = (string)command.Arguments["location"] ?? string.Empty,
+            ["entityId"] = (string)command.Arguments["entityId"] ?? string.Empty,
+            ["result"] = (string)command.Arguments["result"] ?? string.Empty,
+            ["promise"] = BoolValue(command.Arguments["promise"]),
             ["conversationId"] = (string)command.Arguments["conversationId"] ?? string.Empty
         };
         if (Encoding.UTF8.GetByteCount(entry.ToString(Formatting.None)) > AiTaskConstants.MemoryEntryMaximumBytes)
@@ -1509,6 +1561,11 @@ internal sealed class WorldStateStore
         if (token == null) return 0d;
         try { return Convert.ToDouble(token, System.Globalization.CultureInfo.InvariantCulture); }
         catch { return 0d; }
+    }
+
+    private static bool BoolValue(JToken token)
+    {
+        return token != null && token.Type == JTokenType.Boolean && (bool)token;
     }
 
     private static int Clamp(int value, int minimum, int maximum)

@@ -19,6 +19,7 @@ internal sealed class AwakeEventBehavior : CampaignBehaviorBase
 
     public override void SyncData(IDataStore dataStore)
     {
+        dataStore.SyncData("awake_last_weekly_report_day", ref _lastWeeklyReportDay);
     }
 
     private void OnHourlyTick()
@@ -27,6 +28,7 @@ internal sealed class AwakeEventBehavior : CampaignBehaviorBase
         {
             if (!AwakeSettings.Current.EnableEventEngine) return;
             if (NpcDialogueOverlay.IsOpen || AwakeMessengerOverlay.IsOpen) return;
+            _engine.EnsureRulesLoadedFromRegistry();
             _ = _engine.OnHourlyTickAsync(CancellationToken.None);
             _ = NpcProactiveService.Current?.OnHourlyTickAsync(CancellationToken.None);
             _ = NpcMemoryService.Current?.ConsolidateDailyForNearbyHeroesAsync(

@@ -20,7 +20,7 @@ internal static class AwakeMarcusLinkService
 
             int declared = AiTaskConstants.AllRouteIds.Length;
 
-            string health = string.Empty;
+            List<string> health = new List<string>();
             try
             {
                 if (host.Diagnostics != null)
@@ -28,14 +28,15 @@ internal static class AwakeMarcusLinkService
                     IReadOnlyList<HealthComponent> components = host.Diagnostics.GetHealth().Components;
                     if (components != null)
                     {
-                        List<string> summaries = new List<string>();
                         foreach (HealthComponent component in components)
                         {
-                            if (component == null || string.IsNullOrWhiteSpace(component.Summary)) continue;
-                            summaries.Add(component.Id + ":" + component.Summary);
-                            if (summaries.Count >= 3) break;
+                            if (component == null) continue;
+                            string summary = string.IsNullOrWhiteSpace(component.Summary)
+                                ? component.Level.ToString()
+                                : component.Summary;
+                            health.Add(component.Id + ":" + summary);
+                            if (health.Count >= 6) break;
                         }
-                        health = string.Join(" | ", summaries);
                     }
                 }
             }
@@ -55,8 +56,12 @@ internal static class AwakeMarcusLinkService
                 "awake.status.route",
                 "Route: {ROUTE}",
                 new Dictionary<string, string> { ["ROUTE"] = declared.ToString() });
-            string result = companion + " | " + route;
-            if (!string.IsNullOrWhiteSpace(health)) result += " | " + health;
+            string session = host.CurrentSession == null
+                ? "session:not_ready"
+                : "session:ready";
+            List<string> parts = new List<string> { companion, route, session };
+            if (health.Count > 0) parts.Add("health:" + string.Join(",", health));
+            string result = string.Join(" | ", parts);
             return result;
         }
         catch (Exception ex)
