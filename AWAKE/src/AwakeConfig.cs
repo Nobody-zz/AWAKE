@@ -113,6 +113,14 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyGroup("{=awake.mcm.group.behavior}2. 主动行为", GroupOrder = 1)]
     public bool EnableEventEngine { get; set; } = true;
 
+    [SettingPropertyBool("{=awake.mcm.guide.name}启用游戏内引导", Order = 3, RequireRestart = false, HintText = "{=awake.mcm.guide.hint}默认开启。新战役在安全地图状态自动提醒完成首启引导；可在命令台手动重开。")]
+    [SettingPropertyGroup("{=awake.mcm.group.behavior}2. 主动行为", GroupOrder = 1)]
+    public bool EnableInGameGuide { get; set; } = true;
+
+    [SettingPropertyInteger("{=awake.mcm.guide_interval.name}引导重复间隔（天）", 1, 14, Order = 4, RequireRestart = false, HintText = "{=awake.mcm.guide_interval.hint}未完成引导时每隔多少游戏日提醒一次，默认 2。")]
+    [SettingPropertyGroup("{=awake.mcm.group.behavior}2. 主动行为", GroupOrder = 1)]
+    public int GuideRepeatIntervalDays { get; set; } = 2;
+
     public AwakeConfig()
     {
         _instance = this;

@@ -2484,3 +2484,14 @@ Offline P1/P2 Batch C (2026-08-17, no version bump)
 - SdkSmoke PASS ALL; LOCALIZATION_OK source=208 en=237 cn=237; asset lint 107 files OK; release_check OK.
 - Awake.dll SHA-256 7E706B9BA0F9C01805954803CD76383EFB1554B7B4ED2D783503FBE96E8E7A7B identical across _build_out, dist, and game Modules/AWAKE after sync.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
+
+Offline Guide + Letter Base (2026-08-17, no version bump)
+- Added WorldStateKind.Onboarding with schema awake.onboarding.v1, Get/Update storage methods, and a state machine in AwakeOnboardingService.
+- Onboarding steps cover Welcome/AiConfig/CommandDeck/FirstDialogue/ContactHistory/Complete; supports campaign skip, permanent skip, last reminder day, and persistence through WorldStateStore.
+- MCM adds EnableInGameGuide and GuideRepeatIntervalDays; automatic reminder obeys the toggle and interval.
+- Added AwakeLetterService and AwakeTranscriptService.AppendLetterAsync so letters are written as transcript source=letter player lines and contacts are ensured.
+- SdkSmoke covers onboarding step transitions, skip states, onboarding schema mapping, letter-capable transcript source, and existing guide behavior.
+- dotnet build 1.3.15 and 1.4.8 -> 0 warnings, 0 errors.
+- SdkSmoke PASS ALL; LOCALIZATION_OK source=212 en=241 cn=241; asset lint 108 files OK; release_check OK.
+- Awake.dll SHA-256 C0E0C97B3505CFBEDE634516044520208EA4E8AEA6FDC5854189FAA435AD6859 identical across _build_out, dist, and game Modules/AWAKE after sync.
+- Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.

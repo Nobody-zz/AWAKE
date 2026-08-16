@@ -697,6 +697,25 @@ internal static class Program
 		{
 			throw new InvalidOperationException("onboarding reset should allow showing again.");
 		}
+		AwakeOnboardingService.MarkStepCompleted(AwakeOnboardingStep.Welcome);
+		AwakeOnboardingService.MarkStepCompleted(AwakeOnboardingStep.Complete);
+		if (AwakeOnboardingService.ShouldShowGuide()
+			|| !AwakeOnboardingService.Current.CompletedSteps.Contains(AwakeOnboardingStep.Complete.ToString()))
+		{
+			throw new InvalidOperationException("completed onboarding should not show again.");
+		}
+		AwakeOnboardingService.ResetForTesting();
+		AwakeOnboardingService.MarkSkippedThisCampaign();
+		if (AwakeOnboardingService.ShouldShowGuide())
+		{
+			throw new InvalidOperationException("campaign-skipped onboarding should not show.");
+		}
+		AwakeOnboardingService.ResetForTesting();
+		AwakeOnboardingService.MarkSkippedForever();
+		if (AwakeOnboardingService.ShouldShowGuide())
+		{
+			throw new InvalidOperationException("permanently skipped onboarding should not show.");
+		}
 		AwakeOnboardingService.ResetForTesting();
 		Console.WriteLine("PASS onboarding smoke");
 	}
@@ -721,7 +740,10 @@ internal static class Program
 		if (!AwakeStorageContract.IsKnownSchema(AwakeStorageContract.WorldEventsSchema)
 			|| !StringComparer.Ordinal.Equals(
 				AwakeStorageContract.ExpectedSchema(WorldStateKind.Messenger),
-				AwakeStorageContract.MessengerSchema))
+				AwakeStorageContract.MessengerSchema)
+			|| !StringComparer.Ordinal.Equals(
+				AwakeStorageContract.ExpectedSchema(WorldStateKind.Onboarding),
+				AwakeStorageContract.OnboardingSchema))
 		{
 			throw new InvalidOperationException("storage contract schema mapping mismatch.");
 		}

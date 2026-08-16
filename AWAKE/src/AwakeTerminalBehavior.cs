@@ -135,7 +135,8 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 || Campaign.Current == null
                 || Mission.Current != null
                 || !(GameStateManager.Current?.ActiveState is MapState)
-                || Campaign.Current.CurrentMenuContext != null)
+                || Campaign.Current.CurrentMenuContext != null
+                || !AwakeSettings.Current.EnableInGameGuide)
             {
                 return;
             }
@@ -145,6 +146,13 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 return;
             }
             _nextOnboardingCheckRealTime = now;
+            int day = AwakeRuntime.CurrentGameDay();
+            int lastReminder = AwakeOnboardingService.Current.LastReminderDay;
+            if (lastReminder >= 0
+                && day - lastReminder < AwakeSettings.Current.GuideRepeatIntervalDays)
+            {
+                return;
+            }
             AwakeOnboardingService.TryShowGuide();
         }
         catch (Exception ex)

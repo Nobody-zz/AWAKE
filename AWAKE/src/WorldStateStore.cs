@@ -20,7 +20,8 @@ internal enum WorldStateKind
     Messenger,
     Transcript,
     Contacts,
-    Audit
+    Audit,
+    Onboarding
 }
 
 internal sealed class MemoryReservation
@@ -730,6 +731,69 @@ internal sealed class WorldStateStore
         return true;
     }
 
+    internal async Task<JObject> GetOnboardingAsync(RequestContext context, CancellationToken cancellationToken)
+    {
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.OnboardingNamespace, out store);
+        if (store == null) return null;
+        OperationResult<string> loaded = await store.GetAsync(
+            AiTaskConstants.OnboardingKey,
+            context ?? CreateContext(),
+            cancellationToken).ConfigureAwait(false);
+        if (!loaded.IsSuccess)
+        {
+            if (!IsStorageKeyNotFound(loaded))
+            {
+                AwakeLog.Write("world_state_onboarding_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            }
+            return null;
+        }
+        if (string.IsNullOrWhiteSpace(loaded.Value)) return NewOnboardingState();
+        try
+        {
+            JObject doc = JObject.Parse(loaded.Value);
+            return doc.Type == JTokenType.Object ? doc : null;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_state_onboarding_corrupt error=" + ex.Message);
+            return null;
+        }
+    }
+
+    internal async Task<bool> UpdateOnboardingAsync(
+        IReadOnlyList<string> completedSteps,
+        bool skippedThisCampaign,
+        bool permanentlySkipped,
+        int lastReminderDay,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(idempotencyKey)) return false;
+        JObject arguments = new JObject
+        {
+            ["completedSteps"] = completedSteps == null
+                ? new JArray()
+                : new JArray(completedSteps),
+            ["skippedThisCampaign"] = skippedThisCampaign,
+            ["permanentlySkipped"] = permanentlySkipped,
+            ["lastReminderDay"] = lastReminderDay
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.OnboardingNamespace,
+            AiTaskConstants.OnboardingKey,
+            AiTaskConstants.OnboardingUpsertCommandId,
+            idempotencyKey,
+            string.Empty,
+            WorldStateKind.Onboarding,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
     internal async Task<JObject> GetTranscriptChunkAsync(
         string contactKey,
         int chunkIndex,
@@ -1318,6 +1382,9 @@ internal sealed class WorldStateStore
             case WorldStateKind.Audit:
                 applyError = ApplyAudit(state, command);
                 break;
+            case WorldStateKind.Onboarding:
+                applyError = ApplyOnboarding(state, command);
+                break;
         }
         if (!string.IsNullOrWhiteSpace(applyError))
         {
@@ -1368,6 +1435,7 @@ internal sealed class WorldStateStore
             case WorldStateKind.Transcript: return NewTranscriptChunkState();
             case WorldStateKind.Contacts: return NewContactsState();
             case WorldStateKind.Audit: return NewAuditState();
+            case WorldStateKind.Onboarding: return NewOnboardingState();
             default: return new JObject();
         }
     }
@@ -1463,6 +1531,20 @@ internal sealed class WorldStateStore
             ["schema"] = AwakeTranscriptConstants.AuditSchema,
             ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
             ["entries"] = new JArray(),
+            ["appliedKeys"] = new JArray()
+        };
+    }
+
+    private static JObject NewOnboardingState()
+    {
+        return new JObject
+        {
+            ["schema"] = AwakeStorageContract.OnboardingSchema,
+            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+            ["completedSteps"] = new JArray(),
+            ["skippedThisCampaign"] = false,
+            ["permanentlySkipped"] = false,
+            ["lastReminderDay"] = -1,
             ["appliedKeys"] = new JArray()
         };
     }
@@ -1638,6 +1720,42 @@ internal sealed class WorldStateStore
             ["status"] = (string)command.Arguments["status"] ?? "pending"
         });
         Trim(entries, AwakeTranscriptConstants.MaximumAuditEntries);
+        JArray appliedKeys = (JArray)state["appliedKeys"];
+        appliedKeys.Add(command.IdempotencyKey);
+        Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+        return string.Empty;
+    }
+
+    private static void EnsureOnboardingShape(JObject state)
+    {
+        state["schema"] = AwakeStorageContract.OnboardingSchema;
+        if (!(state["completedSteps"] is JArray)) state["completedSteps"] = new JArray();
+        if (state["skippedThisCampaign"] == null) state["skippedThisCampaign"] = false;
+        if (state["permanentlySkipped"] == null) state["permanentlySkipped"] = false;
+        if (state["lastReminderDay"] == null) state["lastReminderDay"] = -1;
+        if (!(state["appliedKeys"] is JArray)) state["appliedKeys"] = new JArray();
+    }
+
+    private static string ApplyOnboarding(JObject state, WorldStateCommand command)
+    {
+        EnsureOnboardingShape(state);
+        JArray completedSteps = (JArray)state["completedSteps"];
+        if (command.Arguments["completedSteps"] is JArray newSteps)
+        {
+            foreach (JToken token in newSteps)
+            {
+                string step = token?.ToString() ?? string.Empty;
+                if (!string.IsNullOrWhiteSpace(step) && !ContainsString(completedSteps, step))
+                {
+                    completedSteps.Add(step);
+                }
+            }
+        }
+        Trim(completedSteps, 32);
+        state["skippedThisCampaign"] = BoolValue(command.Arguments["skippedThisCampaign"]) || (bool)state["skippedThisCampaign"];
+        state["permanentlySkipped"] = BoolValue(command.Arguments["permanentlySkipped"]) || (bool)state["permanentlySkipped"];
+        int reminderDay = IntValue(command.Arguments["lastReminderDay"]);
+        if (reminderDay >= 0) state["lastReminderDay"] = reminderDay;
         JArray appliedKeys = (JArray)state["appliedKeys"];
         appliedKeys.Add(command.IdempotencyKey);
         Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);

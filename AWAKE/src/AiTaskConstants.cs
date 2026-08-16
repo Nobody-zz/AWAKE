@@ -26,11 +26,14 @@ internal static class AiTaskConstants
     internal const string TranscriptNamespace = "awake.transcripts";
     internal const string ContactsNamespace = "awake.contacts";
     internal const string AuditNamespace = "awake.history.audit";
+    internal const string OnboardingNamespace = "awake.onboarding";
+    internal const string OnboardingKey = "campaign.onboarding.v1";
 
     internal const string TranscriptAppendCommandId = "awake.transcript.append.v1";
     internal const string TranscriptPinCommandId = "awake.transcript.pin.v1";
     internal const string TranscriptRollCommandId = "awake.transcript.roll.v1";
     internal const string ContactsUpsertCommandId = "awake.contacts.upsert.v1";
+    internal const string OnboardingUpsertCommandId = "awake.onboarding.upsert.v1";
 
     internal const string RelationshipDeltaCommandId = "awake.relationship.delta.v1";
     internal const string WorldEffectRecordCommandId = "awake.world.effect.record.v1";
@@ -92,7 +95,8 @@ internal static class AiTaskConstants
         MessengerNamespace,
         TranscriptNamespace,
         ContactsNamespace,
-        AuditNamespace
+        AuditNamespace,
+        OnboardingNamespace
     };
 
     internal static string RoutePermission(string routeId) => "ai.route.invoke:" + routeId;

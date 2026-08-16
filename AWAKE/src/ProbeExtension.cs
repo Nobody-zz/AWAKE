@@ -171,6 +171,8 @@ internal sealed class AwakeExtension : IFrameworkExtension
             {
                 case ExtensionLifecycleStage.CampaignSessionReady:
                     AwakeRuntime.ResetSessionStateForCampaign();
+                    AwakeOnboardingService.ResetForCampaign();
+                    _ = AwakeOnboardingService.LoadFromStoreAsync(CancellationToken.None);
                     try
                     {
                         DialogueOverlayLifecycle.CloseAll?.Invoke();

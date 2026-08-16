@@ -70,6 +70,50 @@ internal static class AwakeTranscriptService
         return true;
     }
 
+    internal static async Task<bool> AppendLetterAsync(
+        string contactKey,
+        string conversationId,
+        int day,
+        string location,
+        string text,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        WorldStateStore store = AwakeRuntime.WorldStateStore;
+        if (store == null
+            || string.IsNullOrWhiteSpace(contactKey)
+            || string.IsNullOrWhiteSpace(idempotencyKey)
+            || string.IsNullOrWhiteSpace(text))
+        {
+            AwakeLog.Write("letter_rejected key=" + (contactKey ?? "null"));
+            return false;
+        }
+        AwakeTranscriptLine line = new AwakeTranscriptLine(
+            "letter|" + idempotencyKey,
+            day,
+            location ?? string.Empty,
+            AwakeLocalization.Resolve("awake.ui.you", "你"),
+            text,
+            "letter",
+            conversationId ?? string.Empty,
+            "player");
+        string error;
+        if (!AwakeTranscriptValidator.ValidateLine(line, out error))
+        {
+            AwakeLog.Write("letter_invalid key=" + contactKey + " error=" + error);
+            return false;
+        }
+        bool appended = await store.AppendTranscriptLinesAsync(
+            contactKey,
+            0,
+            new[] { line },
+            idempotencyKey + ":letter",
+            cancellationToken).ConfigureAwait(false);
+        if (!appended) return false;
+        await store.EnsureContactAsync(contactKey, idempotencyKey + ":contact", cancellationToken).ConfigureAwait(false);
+        return true;
+    }
+
     internal static async Task<List<AwakeTranscriptLine>> GetHistoryAsync(
         string contactKey,
         CancellationToken cancellationToken)
