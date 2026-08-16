@@ -140,9 +140,9 @@ internal static class Program
 		{
 			throw new InvalidOperationException("valid rule should register.");
 		}
-		if (!AwakeRuleRegistry.Register(valid))
+		if (AwakeRuleRegistry.Register(valid))
 		{
-			throw new InvalidOperationException("same id should replace and still register.");
+			throw new InvalidOperationException("duplicate rule id should be rejected.");
 		}
 		AwakeRuleManifest invalid = new AwakeRuleManifest
 		{

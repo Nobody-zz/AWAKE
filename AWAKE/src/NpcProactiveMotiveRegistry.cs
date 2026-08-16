@@ -19,6 +19,8 @@ internal static class NpcProactiveMotiveRegistry
     private static readonly object Gate = new object();
     private static readonly Dictionary<string, NpcProactiveMotiveDefinition> Motives =
         new Dictionary<string, NpcProactiveMotiveDefinition>(StringComparer.Ordinal);
+    private static bool _loaded;
+    private static long _loadedRevision = -1;
 
     internal static bool Register(NpcProactiveMotiveDefinition definition)
     {
@@ -79,7 +81,18 @@ internal static class NpcProactiveMotiveRegistry
 
     internal static void LoadFromRuleRegistry()
     {
+        long revision = AwakeRuleRegistry.Revision;
+        lock (Gate)
+        {
+            if (_loaded && revision == _loadedRevision) return;
+        }
         AwakeRuleRegistry.EnsureLoaded();
+        long loadedRevision = AwakeRuleRegistry.Revision;
+        lock (Gate)
+        {
+            _loaded = true;
+            _loadedRevision = loadedRevision;
+        }
         foreach (AwakeRuleManifest manifest in AwakeRuleRegistry.All())
         {
             if (manifest == null || !manifest.Enabled) continue;
@@ -95,6 +108,8 @@ internal static class NpcProactiveMotiveRegistry
         lock (Gate)
         {
             Motives.Clear();
+            _loaded = false;
+            _loadedRevision = -1;
         }
     }
 

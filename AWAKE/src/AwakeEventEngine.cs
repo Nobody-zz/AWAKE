@@ -23,6 +23,7 @@ internal sealed class AwakeEventEngine
     private readonly Dictionary<string, int> _metaVersions = new Dictionary<string, int>(StringComparer.Ordinal);
     private bool _metaLoaded;
     private bool _registryLoaded;
+    private long _lastRegistryRevision = -1;
     private bool _busy;
 
     internal int RuleCount
@@ -68,6 +69,7 @@ internal sealed class AwakeEventEngine
             _metaVersions.Clear();
             _metaLoaded = false;
             _registryLoaded = false;
+            _lastRegistryRevision = -1;
         }
         _busy = false;
         EventDialogueQueue.ClearForTesting();
@@ -75,12 +77,18 @@ internal sealed class AwakeEventEngine
 
     internal void EnsureRulesLoadedFromRegistry()
     {
+        long revision = AwakeRuleRegistry.Revision;
         lock (_gate)
         {
-            if (_registryLoaded) return;
-            _registryLoaded = true;
+            if (_registryLoaded && revision == _lastRegistryRevision) return;
         }
         AwakeRuleRegistry.EnsureLoaded();
+        long loadedRevision = AwakeRuleRegistry.Revision;
+        lock (_gate)
+        {
+            _registryLoaded = true;
+            _lastRegistryRevision = loadedRevision;
+        }
         foreach (AwakeRuleManifest manifest in AwakeRuleRegistry.All())
         {
             if (manifest == null || !manifest.Enabled) continue;

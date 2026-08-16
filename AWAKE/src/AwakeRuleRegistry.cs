@@ -29,6 +29,12 @@ internal static class AwakeRuleRegistry
         "^[a-z0-9][a-z0-9_.-]{0,127}$",
         RegexOptions.Compiled | RegexOptions.CultureInvariant);
     private static bool _loaded;
+    private static long _revision;
+
+    internal static long Revision
+    {
+        get { lock (Gate) return _revision; }
+    }
 
     internal static bool Register(AwakeRuleManifest manifest)
     {
@@ -40,7 +46,13 @@ internal static class AwakeRuleRegistry
         }
         lock (Gate)
         {
-            Rules[manifest.Id] = manifest;
+            if (Rules.ContainsKey(manifest.Id))
+            {
+                AwakeLog.Write("awake_rule_register_duplicate id=" + manifest.Id);
+                return false;
+            }
+            Rules.Add(manifest.Id, manifest);
+            _revision++;
             return true;
         }
     }
@@ -129,6 +141,7 @@ internal static class AwakeRuleRegistry
         {
             Rules.Clear();
             _loaded = false;
+            _revision = 0;
         }
     }
 

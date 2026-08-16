@@ -2256,7 +2256,7 @@ A-Class B0-B7 Complete (2026-08-16, no version bump)
 - B0-4: AwakeEventBehavior persists last weekly report day through SyncData.
 - B0-5: MCM AI self-check now includes session state and up to 6 health components (provider/model/route summaries).
 - B0-6: Added tools/release_check.ps1 with version, hash, required-file, disallowed-file, and localization checks.
-- B3: Added AwakeRuleRegistry + AwakeRuleManifest with schema validation, duplicate replacement, file loading from ModuleData/Rules, and smoke coverage.
+- B3: Added AwakeRuleRegistry + AwakeRuleManifest with schema validation, duplicate rejection, revision-based reload, file loading from ModuleData/Rules, and smoke coverage.
 - B4: Added AwakeEventDataLoader; event definitions now load from rule registry payloads (kind=event), removing hardcoded event content from runtime.
 - B5: Added NpcMemoryConsolidator for structured memory decay/merge/promise separation; WorldStateStore persists consolidated memories/promises.
 - B6: Added NpcProactiveMotiveRegistry; proactive motives load from rule registry payloads (kind=proactive_motive) and candidates carry stable motiveId.
@@ -2265,5 +2265,5 @@ A-Class B0-B7 Complete (2026-08-16, no version bump)
 - SdkSmoke: PASS ALL Awake.SdkSmoke (30 paths).
 - LOCALIZATION_OK source=130 en=148 cn=148.
 - tools/release_check.ps1 -> RELEASE_CHECK_OK.
-- Awake.dll SHA-256 EA5357A5F19FB6FD4C396B82F65500A131459B401F6B246A12703F3EA7CCE125.
+- Awake.dll SHA-256 14B2C1840B6725FFBDB1860EC5A657E5D0C562AA6165552FC5D26A1B576069CF.
 - Version remains v0.2.0 in SubModule.xml, assembly, README, and this verification record.
