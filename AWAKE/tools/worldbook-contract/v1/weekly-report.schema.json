@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.weekly-report.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "reportId",
+    "period",
+    "generatedBy",
+    "sections"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "awake.worldbook.weekly-report.v1"
+    },
+    "reportId": {
+      "$ref": "common.schema.json#/$defs/stable_id"
+    },
+    "period": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ],
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "generatedBy": {
+      "type": "string",
+      "const": "awake:system:weekly-report-generator"
+    },
+    "sourceEventIds": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/stable_id"
+      },
+      "uniqueItems": true
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sectionId",
+          "domain",
+          "title",
+          "items"
+        ],
+        "properties": {
+          "sectionId": {
+            "$ref": "common.schema.json#/$defs/stable_id"
+          },
+          "domain": {
+            "$ref": "common.schema.json#/$defs/event_domain"
+          },
+          "title": {
+            "$ref": "common.schema.json#/$defs/localized"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "itemId",
+                "text",
+                "sourceEventIds"
+              ],
+              "properties": {
+                "itemId": {
+                  "$ref": "common.schema.json#/$defs/stable_id"
+                },
+                "text": {
+                  "$ref": "common.schema.json#/$defs/localized"
+                },
+                "sourceEventIds": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "common.schema.json#/$defs/stable_id"
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true
+                },
+                "entryId": {
+                  "$ref": "common.schema.json#/$defs/stable_id"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "extensions": {
+      "$ref": "common.schema.json#/$defs/extensions"
+    }
+  }
+}

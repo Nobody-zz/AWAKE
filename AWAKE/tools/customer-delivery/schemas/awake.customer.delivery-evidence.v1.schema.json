@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.customer.delivery-evidence.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "batch", "build_id", "generated_at_utc", "sections"],
+  "properties": {
+    "schema_version": { "const": "awake.customer.delivery-evidence.v1" },
+    "batch": { "const": "AWAKE-CUSTOMER-DELIVERY-20260904" },
+    "build_id": { "type": "string", "pattern": "^awake-customer-[A-Za-z0-9._-]+$" },
+    "generated_at_utc": { "type": "string", "format": "date-time" },
+    "sections": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["automated", "package", "offline_customer", "local_worker", "user_verified", "game_runtime", "unverified"],
+      "properties": {
+        "automated": { "$ref": "#/$defs/section" },
+        "package": { "$ref": "#/$defs/section" },
+        "offline_customer": { "$ref": "#/$defs/section" },
+        "local_worker": { "$ref": "#/$defs/section" },
+        "user_verified": { "$ref": "#/$defs/section" },
+        "game_runtime": { "$ref": "#/$defs/section" },
+        "unverified": { "$ref": "#/$defs/section" }
+      }
+    }
+  },
+  "$defs": {
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "command", "inputs", "cases"],
+      "properties": {
+        "status": { "enum": ["passed", "failed", "not_run", "unverified"] },
+        "command": { "type": "string" },
+        "inputs": { "type": "array", "items": { "type": "string" } },
+        "cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["case_id", "status"],
+            "properties": {
+              "case_id": { "type": "string", "minLength": 1 },
+              "status": { "enum": ["passed", "failed", "not_run", "unverified"] },
+              "details": { "type": "string" },
+              "artifact": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

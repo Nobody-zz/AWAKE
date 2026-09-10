@@ -1,0 +1,300 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.contract.common.v1",
+  "$defs": {
+    "stable_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*:[a-z][a-z0-9_-]*:[a-z][a-z0-9_.-]*$"
+    },
+    "package_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*:[a-z][a-z0-9_.-]*$"
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "localized": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minProperties": 1
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "knowledge_domain": {
+      "enum": [
+        "politics",
+        "economy",
+        "culture",
+        "war",
+        "geography"
+      ]
+    },
+    "event_domain": {
+      "enum": [
+        "politics",
+        "economy",
+        "culture",
+        "war"
+      ]
+    },
+    "knowledge_state": {
+      "type": "string",
+      "enum": [
+        "known",
+        "partial",
+        "referral",
+        "not_found",
+        "blocked"
+      ]
+    },
+    "detail_level": {
+      "type": "string",
+      "enum": [
+        "rumor",
+        "summary",
+        "detail",
+        "secret"
+      ]
+    },
+    "scope": {
+      "type": "string",
+      "enum": [
+        "local",
+        "regional",
+        "national",
+        "faction",
+        "elite",
+        "private"
+      ]
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "identity_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "awake.worldbook.contract.common.v1#/$defs/stable_id"
+          },
+          "uniqueItems": true
+        },
+        "culture_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "awake.worldbook.contract.common.v1#/$defs/stable_id"
+          },
+          "uniqueItems": true
+        },
+        "kingdom_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "awake.worldbook.contract.common.v1#/$defs/stable_id"
+          },
+          "uniqueItems": true
+        },
+        "settlement_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "awake.worldbook.contract.common.v1#/$defs/stable_id"
+          },
+          "uniqueItems": true
+        },
+        "role_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "awake.worldbook.contract.common.v1#/$defs/stable_id"
+          },
+          "uniqueItems": true
+        },
+        "is_female": {
+          "type": "boolean"
+        },
+        "is_clan_leader": {
+          "type": "boolean"
+        },
+        "min_age": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_age": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "min_management": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "min_skill": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "source_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "source_hash"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/stable_id"
+        },
+        "source_hash": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/hash"
+        },
+        "locator": {
+          "type": "string"
+        }
+      }
+    },
+    "knowledge_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity_id",
+        "scope",
+        "min_detail"
+      ],
+      "properties": {
+        "identity_id": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/stable_id"
+        },
+        "scope": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/scope"
+        },
+        "min_detail": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/detail_level"
+        },
+        "conditions": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/condition"
+        },
+        "referral_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "awake.worldbook.contract.common.v1#/$defs/stable_id"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "knowledge_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "domain",
+        "title",
+        "summary",
+        "expressions",
+        "keywords"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/stable_id"
+        },
+        "domain": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/knowledge_domain"
+        },
+        "title": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/localized"
+        },
+        "summary": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/localized"
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "expressions": {
+          "type": "array",
+          "items": {
+            "$ref": "awake.worldbook.contract.common.v1#/$defs/expression"
+          },
+          "minItems": 1
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "awake.worldbook.contract.common.v1#/$defs/source_ref"
+          },
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/extensions"
+        },
+        "subdomain": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "related_domains": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "$ref": "awake.worldbook.contract.common.v1#/$defs/knowledge_domain"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "expression": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "detail",
+        "text",
+        "grants",
+        "denies"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/stable_id"
+        },
+        "detail": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/detail_level"
+        },
+        "text": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/localized"
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "awake.worldbook.contract.common.v1#/$defs/knowledge_rule"
+          },
+          "uniqueItems": true
+        },
+        "denies": {
+          "type": "array",
+          "items": {
+            "$ref": "awake.worldbook.contract.common.v1#/$defs/knowledge_rule"
+          },
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "awake.worldbook.contract.common.v1#/$defs/extensions"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1764 @@
+{
+  "schema_version": "awake.worldbook.studio.a3-3.preview-golden.v1",
+  "baseline_capture": {
+    "captured_before_extraction": true,
+    "application_cs_sha256": "68288A751781E8193A56A39118E9D8BF7F297CBCE21734CB277735A1EE4B1AD1",
+    "capture_command": "dotnet run --project \u003CTEMP\u003E\\capture.csproj -- \u003CschemaRoot\u003E \u003CgoldenPath\u003E \u003Capplication.cs\u003E",
+    "runtime_version": "10.0.9",
+    "input_files": [
+      {
+        "path": "authoring/demo.json",
+        "sha256": "B211C336ACC97AEAB2A9434809D9644C9BDEFBC782DEDA38E3E197D72C00E4AD"
+      },
+      {
+        "path": "authoring/sources/source-demo.txt",
+        "sha256": "0D53F08678D8101B0C7E5053B30224FC671C55051770BA18207435EAD7AD37BD"
+      },
+      {
+        "path": "authoring/sources/source-demo.yaml",
+        "sha256": "39CDB78D5F0A7EAE8D619CCD417F99981C12CE97FBDDF7739663A70DF1DC6894"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/audit-event.v1.schema.json",
+        "sha256": "6E9611C924B7E280BDFB7500094D61135DC93E56DC37C16994DE106E33F15473"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json",
+        "sha256": "8886DBC429EE9D71C6824EB77E48EA646978DE70090374F6F5249C0D16675CF3"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/content-graph.v1.schema.json",
+        "sha256": "1FBB31FA6D3F41D6BCAF8EA903DDBD03D550174346A18E16610843C76E5F7187"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/current-pointer.v1.schema.json",
+        "sha256": "4372E54B6D665CF372FEE781E2D4AADD01578BC1835D0C94306726CE1C7711E0"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/id-ledger.v1.schema.json",
+        "sha256": "910A0660BF7DF051A46751E3DC116B100483877A5DC92D7CF8DABA429528803D"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.json",
+        "sha256": "8BDF0666E7368709F5C2DEDABA4273BDADA209793A9996A5D32921B0D192FC88"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.schema.json",
+        "sha256": "572A6D1C24FA7B9E5131C2E610149B24530B0171E0C9BD7A7E14CF27985F44CD"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/preview-fixture.v1.schema.json",
+        "sha256": "9912670758E8A2C71743B8C0A2B1077F8AF82F63C0A744B0BA2C58D94B099EF7"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.json",
+        "sha256": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.schema.json",
+        "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.json",
+        "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.schema.json",
+        "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/source.registry.v1.schema.json",
+        "sha256": "AD03E181F1E600238D56E3B48530BA3682FFFCB34EB2AE98609BB4E143310700"
+      }
+    ],
+    "capture_harness_source_sha256": "88B0814E2CFC2D27108C71E2FE229D0C3FE0CCB1A7D31ECF83F8710DC4556008"
+  },
+  "cases": {
+    "baseline_commoner": {
+      "profile_id": "profile.commoner",
+      "identity": {
+        "SnapshotId": "a33.baseline",
+        "ProfileId": "profile.commoner",
+        "CultureId": null,
+        "KingdomId": null,
+        "SettlementId": null,
+        "Age": null,
+        "Steward": null,
+        "Scope": null
+      },
+      "input_document_sha256": "B211C336ACC97AEAB2A9434809D9644C9BDEFBC782DEDA38E3E197D72C00E4AD",
+      "input_files": [
+        {
+          "path": "authoring/demo.json",
+          "sha256": "B211C336ACC97AEAB2A9434809D9644C9BDEFBC782DEDA38E3E197D72C00E4AD"
+        },
+        {
+          "path": "authoring/sources/source-demo.txt",
+          "sha256": "0D53F08678D8101B0C7E5053B30224FC671C55051770BA18207435EAD7AD37BD"
+        },
+        {
+          "path": "authoring/sources/source-demo.yaml",
+          "sha256": "39CDB78D5F0A7EAE8D619CCD417F99981C12CE97FBDDF7739663A70DF1DC6894"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/audit-event.v1.schema.json",
+          "sha256": "6E9611C924B7E280BDFB7500094D61135DC93E56DC37C16994DE106E33F15473"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json",
+        "sha256": "8886DBC429EE9D71C6824EB77E48EA646978DE70090374F6F5249C0D16675CF3"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/content-graph.v1.schema.json",
+          "sha256": "1FBB31FA6D3F41D6BCAF8EA903DDBD03D550174346A18E16610843C76E5F7187"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/current-pointer.v1.schema.json",
+          "sha256": "4372E54B6D665CF372FEE781E2D4AADD01578BC1835D0C94306726CE1C7711E0"
+        },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/id-ledger.v1.schema.json",
+        "sha256": "910A0660BF7DF051A46751E3DC116B100483877A5DC92D7CF8DABA429528803D"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.json",
+        "sha256": "8BDF0666E7368709F5C2DEDABA4273BDADA209793A9996A5D32921B0D192FC88"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.schema.json",
+        "sha256": "572A6D1C24FA7B9E5131C2E610149B24530B0171E0C9BD7A7E14CF27985F44CD"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/preview-fixture.v1.schema.json",
+        "sha256": "9912670758E8A2C71743B8C0A2B1077F8AF82F63C0A744B0BA2C58D94B099EF7"
+      },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.json",
+          "sha256": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.schema.json",
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.json",
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.schema.json",
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/source.registry.v1.schema.json",
+          "sha256": "AD03E181F1E600238D56E3B48530BA3682FFFCB34EB2AE98609BB4E143310700"
+        }
+      ],
+      "snapshot_report_diagnostics": [],
+      "result_diagnostics": [],
+      "envelope": {
+        "fixture_id": "a33.baseline_commoner",
+        "profile_id": "profile.commoner",
+        "profile_registry": {
+          "version": "1.0.0",
+          "hash": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        "referral_registry": {
+          "version": "1.0.0",
+          "hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        "npc_preview": {
+          "fixture_id": "a33.baseline_commoner",
+          "profile_id": "profile.commoner",
+          "results": [
+            {
+              "knowledge_id": "expr.demo",
+              "status": "visible",
+              "text": {
+                "zh-CN": "\u793A\u4F8B\u8868\u8FBE"
+              },
+              "layer": "summary"
+            }
+          ]
+        },
+        "author_diagnostics": {
+          "fixture_id": "a33.baseline_commoner",
+          "profile_id": "profile.commoner",
+          "compile_version": "51A3126D8060EE0659C678049CDAC59B2D1C406A4C1188773E92AF84F01E774F",
+          "identity_snapshot": {
+            "snapshot_id": "a33.baseline",
+            "profile_id": "profile.commoner",
+            "culture_id": null,
+            "kingdom_id": null,
+            "settlement_id": null,
+            "age": null,
+            "steward": null
+          },
+          "results": [
+            {
+              "document_id": "doc.politics.demo",
+              "knowledge_id": "expr.demo",
+              "status": "visible",
+              "rule_ids": [
+                "expr.demo.grant.0"
+              ],
+              "source_ids": [
+                "source.demo"
+              ],
+              "final_layer": "summary",
+              "explanation_chain": [
+                "\u547D\u4E2D\u663E\u5F0F grant"
+              ],
+              "rejection_code": null
+            }
+          ]
+        }
+      },
+      "envelope_json": "{\u0022fixture_id\u0022:\u0022a33.baseline_commoner\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022profile_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u0022309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5\u0022},\u0022referral_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022},\u0022npc_preview\u0022:{\u0022fixture_id\u0022:\u0022a33.baseline_commoner\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022results\u0022:[{\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022visible\u0022,\u0022text\u0022:{\u0022zh-CN\u0022:\u0022\\u793A\\u4F8B\\u8868\\u8FBE\u0022},\u0022layer\u0022:\u0022summary\u0022}]},\u0022author_diagnostics\u0022:{\u0022fixture_id\u0022:\u0022a33.baseline_commoner\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022compile_version\u0022:\u002251A3126D8060EE0659C678049CDAC59B2D1C406A4C1188773E92AF84F01E774F\u0022,\u0022identity_snapshot\u0022:{\u0022snapshot_id\u0022:\u0022a33.baseline\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022culture_id\u0022:null,\u0022kingdom_id\u0022:null,\u0022settlement_id\u0022:null,\u0022age\u0022:null,\u0022steward\u0022:null},\u0022results\u0022:[{\u0022document_id\u0022:\u0022doc.politics.demo\u0022,\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022visible\u0022,\u0022rule_ids\u0022:[\u0022expr.demo.grant.0\u0022],\u0022source_ids\u0022:[\u0022source.demo\u0022],\u0022final_layer\u0022:\u0022summary\u0022,\u0022explanation_chain\u0022:[\u0022\\u547D\\u4E2D\\u663E\\u5F0F grant\u0022],\u0022rejection_code\u0022:null}]}}",
+      "envelope_utf8_sha256": "0406EF73034EFE4AF5E6C875A823F425634340067E0938D6110AEE2624C39382",
+      "envelope_utf8_base64": "eyJmaXh0dXJlX2lkIjoiYTMzLmJhc2VsaW5lX2NvbW1vbmVyIiwicHJvZmlsZV9pZCI6InByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlX3JlZ2lzdHJ5Ijp7InZlcnNpb24iOiIxLjAuMCIsImhhc2giOiIzMDlEMTA1ODNFN0I0QUYwNUYyOERFMkMyRTY3QTI1MjhDQjNENkM0NTc1MjM2OUMwRjdEMTYwRkFCQzNGM0E1In0sInJlZmVycmFsX3JlZ2lzdHJ5Ijp7InZlcnNpb24iOiIxLjAuMCIsImhhc2giOiI2RTE3MDc1RjFGOTY3QkUyOEMwNDM3MTIxREI1MEU1QzMwODA5QzRFRkMzRDJBNUYyMkFEOUJCMEIzQjkyNkNEIn0sIm5wY19wcmV2aWV3Ijp7ImZpeHR1cmVfaWQiOiJhMzMuYmFzZWxpbmVfY29tbW9uZXIiLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsInJlc3VsdHMiOlt7Imtub3dsZWRnZV9pZCI6ImV4cHIuZGVtbyIsInN0YXR1cyI6InZpc2libGUiLCJ0ZXh0Ijp7InpoLUNOIjoiXHU3OTNBXHU0RjhCXHU4ODY4XHU4RkJFIn0sImxheWVyIjoic3VtbWFyeSJ9XX0sImF1dGhvcl9kaWFnbm9zdGljcyI6eyJmaXh0dXJlX2lkIjoiYTMzLmJhc2VsaW5lX2NvbW1vbmVyIiwicHJvZmlsZV9pZCI6InByb2ZpbGUuY29tbW9uZXIiLCJjb21waWxlX3ZlcnNpb24iOiI1MUEzMTI2RDgwNjBFRTA2NTlDNjc4MDQ5Q0RBQzU5QjJEMUM0MDZBNEMxMTg4NzczRTkyQUY4NEYwMUU3NzRGIiwiaWRlbnRpdHlfc25hcHNob3QiOnsic25hcHNob3RfaWQiOiJhMzMuYmFzZWxpbmUiLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsImN1bHR1cmVfaWQiOm51bGwsImtpbmdkb21faWQiOm51bGwsInNldHRsZW1lbnRfaWQiOm51bGwsImFnZSI6bnVsbCwic3Rld2FyZCI6bnVsbH0sInJlc3VsdHMiOlt7ImRvY3VtZW50X2lkIjoiZG9jLnBvbGl0aWNzLmRlbW8iLCJrbm93bGVkZ2VfaWQiOiJleHByLmRlbW8iLCJzdGF0dXMiOiJ2aXNpYmxlIiwicnVsZV9pZHMiOlsiZXhwci5kZW1vLmdyYW50LjAiXSwic291cmNlX2lkcyI6WyJzb3VyY2UuZGVtbyJdLCJmaW5hbF9sYXllciI6InN1bW1hcnkiLCJleHBsYW5hdGlvbl9jaGFpbiI6WyJcdTU0N0RcdTRFMkRcdTY2M0VcdTVGMEYgZ3JhbnQiXSwicmVqZWN0aW9uX2NvZGUiOm51bGx9XX19",
+      "envelope_canonical_hash": "F957EF6EF553802C75AFA3933ECBF3BEC4143651E51FBCB908D57641721A1100",
+      "items": [
+        {
+          "DocumentId": "expr.demo",
+          "Title": "expr.demo",
+          "Layer": "summary",
+          "Visibility": "visible",
+          "Text": "\u793A\u4F8B\u8868\u8FBE",
+          "ReferralIds": null
+        }
+      ],
+      "valid": true,
+      "status": "has_items"
+    },
+    "denied_noble": {
+      "profile_id": "profile.noble",
+      "identity": {
+        "SnapshotId": "a33.denied",
+        "ProfileId": "profile.noble",
+        "CultureId": null,
+        "KingdomId": null,
+        "SettlementId": null,
+        "Age": 40,
+        "Steward": 20,
+        "Scope": null
+      },
+      "input_document_sha256": "2236B4EA723D4066D3B34232F75C3658DC2581DFC5EEA0ABC00A9133307C82C7",
+      "input_files": [
+        {
+          "path": "authoring/demo.json",
+          "sha256": "2236B4EA723D4066D3B34232F75C3658DC2581DFC5EEA0ABC00A9133307C82C7"
+        },
+        {
+          "path": "authoring/sources/source-demo.txt",
+          "sha256": "0D53F08678D8101B0C7E5053B30224FC671C55051770BA18207435EAD7AD37BD"
+        },
+        {
+          "path": "authoring/sources/source-demo.yaml",
+          "sha256": "39CDB78D5F0A7EAE8D619CCD417F99981C12CE97FBDDF7739663A70DF1DC6894"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/audit-event.v1.schema.json",
+          "sha256": "6E9611C924B7E280BDFB7500094D61135DC93E56DC37C16994DE106E33F15473"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json",
+        "sha256": "8886DBC429EE9D71C6824EB77E48EA646978DE70090374F6F5249C0D16675CF3"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/content-graph.v1.schema.json",
+          "sha256": "1FBB31FA6D3F41D6BCAF8EA903DDBD03D550174346A18E16610843C76E5F7187"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/current-pointer.v1.schema.json",
+          "sha256": "4372E54B6D665CF372FEE781E2D4AADD01578BC1835D0C94306726CE1C7711E0"
+        },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/id-ledger.v1.schema.json",
+        "sha256": "910A0660BF7DF051A46751E3DC116B100483877A5DC92D7CF8DABA429528803D"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.json",
+        "sha256": "8BDF0666E7368709F5C2DEDABA4273BDADA209793A9996A5D32921B0D192FC88"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.schema.json",
+        "sha256": "572A6D1C24FA7B9E5131C2E610149B24530B0171E0C9BD7A7E14CF27985F44CD"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/preview-fixture.v1.schema.json",
+        "sha256": "9912670758E8A2C71743B8C0A2B1077F8AF82F63C0A744B0BA2C58D94B099EF7"
+      },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.json",
+          "sha256": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.schema.json",
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.json",
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.schema.json",
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/source.registry.v1.schema.json",
+          "sha256": "AD03E181F1E600238D56E3B48530BA3682FFFCB34EB2AE98609BB4E143310700"
+        }
+      ],
+      "snapshot_report_diagnostics": [],
+      "result_diagnostics": [],
+      "envelope": {
+        "fixture_id": "a33.denied_noble",
+        "profile_id": "profile.noble",
+        "profile_registry": {
+          "version": "1.0.0",
+          "hash": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        "referral_registry": {
+          "version": "1.0.0",
+          "hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        "npc_preview": {
+          "fixture_id": "a33.denied_noble",
+          "profile_id": "profile.noble",
+          "results": [
+            {
+              "knowledge_id": "expr.demo",
+              "status": "redacted",
+              "layer": "summary"
+            }
+          ]
+        },
+        "author_diagnostics": {
+          "fixture_id": "a33.denied_noble",
+          "profile_id": "profile.noble",
+          "compile_version": "2D6FE249C507B3181DDDE8ACD95FDF13190B5735453A841017A3E73AB4F65F0F",
+          "identity_snapshot": {
+            "snapshot_id": "a33.denied",
+            "profile_id": "profile.noble",
+            "culture_id": null,
+            "kingdom_id": null,
+            "settlement_id": null,
+            "age": 40,
+            "steward": 20
+          },
+          "results": [
+            {
+              "document_id": "doc.politics.demo",
+              "knowledge_id": "expr.demo",
+              "status": "redacted",
+              "rule_ids": [
+                "expr.demo.deny.0",
+                "expr.demo.deny.1",
+                "expr.demo.grant.0",
+                "expr.demo.grant.1"
+              ],
+              "source_ids": [
+                "source.demo"
+              ],
+              "final_layer": "unknown",
+              "explanation_chain": [
+                "deny \u4F18\u5148"
+              ],
+              "rejection_code": "WB-PERMISSION-002"
+            }
+          ]
+        }
+      },
+      "envelope_json": "{\u0022fixture_id\u0022:\u0022a33.denied_noble\u0022,\u0022profile_id\u0022:\u0022profile.noble\u0022,\u0022profile_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u0022309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5\u0022},\u0022referral_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022},\u0022npc_preview\u0022:{\u0022fixture_id\u0022:\u0022a33.denied_noble\u0022,\u0022profile_id\u0022:\u0022profile.noble\u0022,\u0022results\u0022:[{\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022redacted\u0022,\u0022layer\u0022:\u0022summary\u0022}]},\u0022author_diagnostics\u0022:{\u0022fixture_id\u0022:\u0022a33.denied_noble\u0022,\u0022profile_id\u0022:\u0022profile.noble\u0022,\u0022compile_version\u0022:\u00222D6FE249C507B3181DDDE8ACD95FDF13190B5735453A841017A3E73AB4F65F0F\u0022,\u0022identity_snapshot\u0022:{\u0022snapshot_id\u0022:\u0022a33.denied\u0022,\u0022profile_id\u0022:\u0022profile.noble\u0022,\u0022culture_id\u0022:null,\u0022kingdom_id\u0022:null,\u0022settlement_id\u0022:null,\u0022age\u0022:40,\u0022steward\u0022:20},\u0022results\u0022:[{\u0022document_id\u0022:\u0022doc.politics.demo\u0022,\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022redacted\u0022,\u0022rule_ids\u0022:[\u0022expr.demo.deny.0\u0022,\u0022expr.demo.deny.1\u0022,\u0022expr.demo.grant.0\u0022,\u0022expr.demo.grant.1\u0022],\u0022source_ids\u0022:[\u0022source.demo\u0022],\u0022final_layer\u0022:\u0022unknown\u0022,\u0022explanation_chain\u0022:[\u0022deny \\u4F18\\u5148\u0022],\u0022rejection_code\u0022:\u0022WB-PERMISSION-002\u0022}]}}",
+      "envelope_utf8_sha256": "4F543EFDB7713729208EC47ACA03D5BFC69DA74332179C9574176BB82EAEAD32",
+      "envelope_utf8_base64": "eyJmaXh0dXJlX2lkIjoiYTMzLmRlbmllZF9ub2JsZSIsInByb2ZpbGVfaWQiOiJwcm9maWxlLm5vYmxlIiwicHJvZmlsZV9yZWdpc3RyeSI6eyJ2ZXJzaW9uIjoiMS4wLjAiLCJoYXNoIjoiMzA5RDEwNTgzRTdCNEFGMDVGMjhERTJDMkU2N0EyNTI4Q0IzRDZDNDU3NTIzNjlDMEY3RDE2MEZBQkMzRjNBNSJ9LCJyZWZlcnJhbF9yZWdpc3RyeSI6eyJ2ZXJzaW9uIjoiMS4wLjAiLCJoYXNoIjoiNkUxNzA3NUYxRjk2N0JFMjhDMDQzNzEyMURCNTBFNUMzMDgwOUM0RUZDM0QyQTVGMjJBRDlCQjBCM0I5MjZDRCJ9LCJucGNfcHJldmlldyI6eyJmaXh0dXJlX2lkIjoiYTMzLmRlbmllZF9ub2JsZSIsInByb2ZpbGVfaWQiOiJwcm9maWxlLm5vYmxlIiwicmVzdWx0cyI6W3sia25vd2xlZGdlX2lkIjoiZXhwci5kZW1vIiwic3RhdHVzIjoicmVkYWN0ZWQiLCJsYXllciI6InN1bW1hcnkifV19LCJhdXRob3JfZGlhZ25vc3RpY3MiOnsiZml4dHVyZV9pZCI6ImEzMy5kZW5pZWRfbm9ibGUiLCJwcm9maWxlX2lkIjoicHJvZmlsZS5ub2JsZSIsImNvbXBpbGVfdmVyc2lvbiI6IjJENkZFMjQ5QzUwN0IzMTgxRERERThBQ0Q5NUZERjEzMTkwQjU3MzU0NTNBODQxMDE3QTNFNzNBQjRGNjVGMEYiLCJpZGVudGl0eV9zbmFwc2hvdCI6eyJzbmFwc2hvdF9pZCI6ImEzMy5kZW5pZWQiLCJwcm9maWxlX2lkIjoicHJvZmlsZS5ub2JsZSIsImN1bHR1cmVfaWQiOm51bGwsImtpbmdkb21faWQiOm51bGwsInNldHRsZW1lbnRfaWQiOm51bGwsImFnZSI6NDAsInN0ZXdhcmQiOjIwfSwicmVzdWx0cyI6W3siZG9jdW1lbnRfaWQiOiJkb2MucG9saXRpY3MuZGVtbyIsImtub3dsZWRnZV9pZCI6ImV4cHIuZGVtbyIsInN0YXR1cyI6InJlZGFjdGVkIiwicnVsZV9pZHMiOlsiZXhwci5kZW1vLmRlbnkuMCIsImV4cHIuZGVtby5kZW55LjEiLCJleHByLmRlbW8uZ3JhbnQuMCIsImV4cHIuZGVtby5ncmFudC4xIl0sInNvdXJjZV9pZHMiOlsic291cmNlLmRlbW8iXSwiZmluYWxfbGF5ZXIiOiJ1bmtub3duIiwiZXhwbGFuYXRpb25fY2hhaW4iOlsiZGVueSBcdTRGMThcdTUxNDgiXSwicmVqZWN0aW9uX2NvZGUiOiJXQi1QRVJNSVNTSU9OLTAwMiJ9XX19",
+      "envelope_canonical_hash": "261EF033CCA0EB70A3FF33EAA99712DE2049AC0CCB73A396D48FE8D65E26CF6F",
+      "items": [
+        {
+          "DocumentId": "expr.demo",
+          "Title": "expr.demo",
+          "Layer": "summary",
+          "Visibility": "redacted",
+          "Text": "redacted",
+          "ReferralIds": null
+        }
+      ],
+      "valid": true,
+      "status": "has_items"
+    },
+    "unknown_public_referral": {
+      "profile_id": "profile.commoner",
+      "identity": {
+        "SnapshotId": "a33.unknown",
+        "ProfileId": "profile.commoner",
+        "CultureId": null,
+        "KingdomId": null,
+        "SettlementId": null,
+        "Age": null,
+        "Steward": null,
+        "Scope": null
+      },
+      "input_document_sha256": "88EF42E87EECCEB4B4B93CCA2DC51B00557F05F15B2B333D349C55436CA9278C",
+      "input_files": [
+        {
+          "path": "authoring/demo.json",
+          "sha256": "88EF42E87EECCEB4B4B93CCA2DC51B00557F05F15B2B333D349C55436CA9278C"
+        },
+        {
+          "path": "authoring/sources/source-demo.txt",
+          "sha256": "0D53F08678D8101B0C7E5053B30224FC671C55051770BA18207435EAD7AD37BD"
+        },
+        {
+          "path": "authoring/sources/source-demo.yaml",
+          "sha256": "39CDB78D5F0A7EAE8D619CCD417F99981C12CE97FBDDF7739663A70DF1DC6894"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/audit-event.v1.schema.json",
+          "sha256": "6E9611C924B7E280BDFB7500094D61135DC93E56DC37C16994DE106E33F15473"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json",
+        "sha256": "8886DBC429EE9D71C6824EB77E48EA646978DE70090374F6F5249C0D16675CF3"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/content-graph.v1.schema.json",
+          "sha256": "1FBB31FA6D3F41D6BCAF8EA903DDBD03D550174346A18E16610843C76E5F7187"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/current-pointer.v1.schema.json",
+          "sha256": "4372E54B6D665CF372FEE781E2D4AADD01578BC1835D0C94306726CE1C7711E0"
+        },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/id-ledger.v1.schema.json",
+        "sha256": "910A0660BF7DF051A46751E3DC116B100483877A5DC92D7CF8DABA429528803D"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.json",
+        "sha256": "8BDF0666E7368709F5C2DEDABA4273BDADA209793A9996A5D32921B0D192FC88"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.schema.json",
+        "sha256": "572A6D1C24FA7B9E5131C2E610149B24530B0171E0C9BD7A7E14CF27985F44CD"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/preview-fixture.v1.schema.json",
+        "sha256": "9912670758E8A2C71743B8C0A2B1077F8AF82F63C0A744B0BA2C58D94B099EF7"
+      },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.json",
+          "sha256": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.schema.json",
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.json",
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.schema.json",
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/source.registry.v1.schema.json",
+          "sha256": "AD03E181F1E600238D56E3B48530BA3682FFFCB34EB2AE98609BB4E143310700"
+        }
+      ],
+      "snapshot_report_diagnostics": [],
+      "result_diagnostics": [],
+      "envelope": {
+        "fixture_id": "a33.unknown_public_referral",
+        "profile_id": "profile.commoner",
+        "profile_registry": {
+          "version": "1.0.0",
+          "hash": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        "referral_registry": {
+          "version": "1.0.0",
+          "hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        "npc_preview": {
+          "fixture_id": "a33.unknown_public_referral",
+          "profile_id": "profile.commoner",
+          "results": [
+            {
+              "knowledge_id": "expr.demo",
+              "status": "unknown",
+              "layer": "summary",
+              "fallback_referral_ids": [
+                "referral.notary_merchant",
+                "referral.tavernkeeper"
+              ]
+            }
+          ]
+        },
+        "author_diagnostics": {
+          "fixture_id": "a33.unknown_public_referral",
+          "profile_id": "profile.commoner",
+          "compile_version": "471848AA4B322840C2FDC3D883E9CEB77BDA8A0ECF7D9902FE06400932D9BE6C",
+          "identity_snapshot": {
+            "snapshot_id": "a33.unknown",
+            "profile_id": "profile.commoner",
+            "culture_id": null,
+            "kingdom_id": null,
+            "settlement_id": null,
+            "age": null,
+            "steward": null
+          },
+          "results": [
+            {
+              "document_id": "doc.politics.demo",
+              "knowledge_id": "expr.demo",
+              "status": "unknown",
+              "rule_ids": [],
+              "source_ids": [
+                "source.demo"
+              ],
+              "final_layer": "unknown",
+              "explanation_chain": [
+                "\u65E0\u5339\u914D\u6743\u9650"
+              ],
+              "rejection_code": null
+            }
+          ]
+        }
+      },
+      "envelope_json": "{\u0022fixture_id\u0022:\u0022a33.unknown_public_referral\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022profile_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u0022309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5\u0022},\u0022referral_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022},\u0022npc_preview\u0022:{\u0022fixture_id\u0022:\u0022a33.unknown_public_referral\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022results\u0022:[{\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022unknown\u0022,\u0022layer\u0022:\u0022summary\u0022,\u0022fallback_referral_ids\u0022:[\u0022referral.notary_merchant\u0022,\u0022referral.tavernkeeper\u0022]}]},\u0022author_diagnostics\u0022:{\u0022fixture_id\u0022:\u0022a33.unknown_public_referral\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022compile_version\u0022:\u0022471848AA4B322840C2FDC3D883E9CEB77BDA8A0ECF7D9902FE06400932D9BE6C\u0022,\u0022identity_snapshot\u0022:{\u0022snapshot_id\u0022:\u0022a33.unknown\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022culture_id\u0022:null,\u0022kingdom_id\u0022:null,\u0022settlement_id\u0022:null,\u0022age\u0022:null,\u0022steward\u0022:null},\u0022results\u0022:[{\u0022document_id\u0022:\u0022doc.politics.demo\u0022,\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022unknown\u0022,\u0022rule_ids\u0022:[],\u0022source_ids\u0022:[\u0022source.demo\u0022],\u0022final_layer\u0022:\u0022unknown\u0022,\u0022explanation_chain\u0022:[\u0022\\u65E0\\u5339\\u914D\\u6743\\u9650\u0022],\u0022rejection_code\u0022:null}]}}",
+      "envelope_utf8_sha256": "F904EF95A5082D0A994B37B827920536E4E727AC2AB57AAD583944AC82BB5580",
+      "envelope_utf8_base64": "eyJmaXh0dXJlX2lkIjoiYTMzLnVua25vd25fcHVibGljX3JlZmVycmFsIiwicHJvZmlsZV9pZCI6InByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlX3JlZ2lzdHJ5Ijp7InZlcnNpb24iOiIxLjAuMCIsImhhc2giOiIzMDlEMTA1ODNFN0I0QUYwNUYyOERFMkMyRTY3QTI1MjhDQjNENkM0NTc1MjM2OUMwRjdEMTYwRkFCQzNGM0E1In0sInJlZmVycmFsX3JlZ2lzdHJ5Ijp7InZlcnNpb24iOiIxLjAuMCIsImhhc2giOiI2RTE3MDc1RjFGOTY3QkUyOEMwNDM3MTIxREI1MEU1QzMwODA5QzRFRkMzRDJBNUYyMkFEOUJCMEIzQjkyNkNEIn0sIm5wY19wcmV2aWV3Ijp7ImZpeHR1cmVfaWQiOiJhMzMudW5rbm93bl9wdWJsaWNfcmVmZXJyYWwiLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsInJlc3VsdHMiOlt7Imtub3dsZWRnZV9pZCI6ImV4cHIuZGVtbyIsInN0YXR1cyI6InVua25vd24iLCJsYXllciI6InN1bW1hcnkiLCJmYWxsYmFja19yZWZlcnJhbF9pZHMiOlsicmVmZXJyYWwubm90YXJ5X21lcmNoYW50IiwicmVmZXJyYWwudGF2ZXJua2VlcGVyIl19XX0sImF1dGhvcl9kaWFnbm9zdGljcyI6eyJmaXh0dXJlX2lkIjoiYTMzLnVua25vd25fcHVibGljX3JlZmVycmFsIiwicHJvZmlsZV9pZCI6InByb2ZpbGUuY29tbW9uZXIiLCJjb21waWxlX3ZlcnNpb24iOiI0NzE4NDhBQTRCMzIyODQwQzJGREMzRDg4M0U5Q0VCNzdCREE4QTBFQ0Y3RDk5MDJGRTA2NDAwOTMyRDlCRTZDIiwiaWRlbnRpdHlfc25hcHNob3QiOnsic25hcHNob3RfaWQiOiJhMzMudW5rbm93biIsInByb2ZpbGVfaWQiOiJwcm9maWxlLmNvbW1vbmVyIiwiY3VsdHVyZV9pZCI6bnVsbCwia2luZ2RvbV9pZCI6bnVsbCwic2V0dGxlbWVudF9pZCI6bnVsbCwiYWdlIjpudWxsLCJzdGV3YXJkIjpudWxsfSwicmVzdWx0cyI6W3siZG9jdW1lbnRfaWQiOiJkb2MucG9saXRpY3MuZGVtbyIsImtub3dsZWRnZV9pZCI6ImV4cHIuZGVtbyIsInN0YXR1cyI6InVua25vd24iLCJydWxlX2lkcyI6W10sInNvdXJjZV9pZHMiOlsic291cmNlLmRlbW8iXSwiZmluYWxfbGF5ZXIiOiJ1bmtub3duIiwiZXhwbGFuYXRpb25fY2hhaW4iOlsiXHU2NUUwXHU1MzM5XHU5MTREXHU2NzQzXHU5NjUwIl0sInJlamVjdGlvbl9jb2RlIjpudWxsfV19fQ==",
+      "envelope_canonical_hash": "E301223DEBD2953229F9CA75C2E30E49FA14C84D3DC121E9663673F186E3BF79",
+      "items": [
+        {
+          "DocumentId": "expr.demo",
+          "Title": "expr.demo",
+          "Layer": "summary",
+          "Visibility": "unknown",
+          "Text": "unknown",
+          "ReferralIds": [
+            "referral.notary_merchant",
+            "referral.tavernkeeper"
+          ]
+        }
+      ],
+      "valid": true,
+      "status": "has_items"
+    },
+    "rumor_commoner": {
+      "profile_id": "profile.commoner",
+      "identity": {
+        "SnapshotId": "a33.rumor",
+        "ProfileId": "profile.commoner",
+        "CultureId": null,
+        "KingdomId": null,
+        "SettlementId": null,
+        "Age": null,
+        "Steward": null,
+        "Scope": null
+      },
+      "input_document_sha256": "513BD12D721403EFE1201EA7510130D787BE9E388D33542EEF87BC9D500180E8",
+      "input_files": [
+        {
+          "path": "authoring/demo.json",
+          "sha256": "513BD12D721403EFE1201EA7510130D787BE9E388D33542EEF87BC9D500180E8"
+        },
+        {
+          "path": "authoring/sources/source-demo.txt",
+          "sha256": "0D53F08678D8101B0C7E5053B30224FC671C55051770BA18207435EAD7AD37BD"
+        },
+        {
+          "path": "authoring/sources/source-demo.yaml",
+          "sha256": "39CDB78D5F0A7EAE8D619CCD417F99981C12CE97FBDDF7739663A70DF1DC6894"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/audit-event.v1.schema.json",
+          "sha256": "6E9611C924B7E280BDFB7500094D61135DC93E56DC37C16994DE106E33F15473"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json",
+        "sha256": "8886DBC429EE9D71C6824EB77E48EA646978DE70090374F6F5249C0D16675CF3"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/content-graph.v1.schema.json",
+          "sha256": "1FBB31FA6D3F41D6BCAF8EA903DDBD03D550174346A18E16610843C76E5F7187"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/current-pointer.v1.schema.json",
+          "sha256": "4372E54B6D665CF372FEE781E2D4AADD01578BC1835D0C94306726CE1C7711E0"
+        },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/id-ledger.v1.schema.json",
+        "sha256": "910A0660BF7DF051A46751E3DC116B100483877A5DC92D7CF8DABA429528803D"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.json",
+        "sha256": "8BDF0666E7368709F5C2DEDABA4273BDADA209793A9996A5D32921B0D192FC88"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.schema.json",
+        "sha256": "572A6D1C24FA7B9E5131C2E610149B24530B0171E0C9BD7A7E14CF27985F44CD"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/preview-fixture.v1.schema.json",
+        "sha256": "9912670758E8A2C71743B8C0A2B1077F8AF82F63C0A744B0BA2C58D94B099EF7"
+      },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.json",
+          "sha256": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.schema.json",
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.json",
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.schema.json",
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/source.registry.v1.schema.json",
+          "sha256": "AD03E181F1E600238D56E3B48530BA3682FFFCB34EB2AE98609BB4E143310700"
+        }
+      ],
+      "snapshot_report_diagnostics": [],
+      "result_diagnostics": [],
+      "envelope": {
+        "fixture_id": "a33.rumor_commoner",
+        "profile_id": "profile.commoner",
+        "profile_registry": {
+          "version": "1.0.0",
+          "hash": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        "referral_registry": {
+          "version": "1.0.0",
+          "hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        "npc_preview": {
+          "fixture_id": "a33.rumor_commoner",
+          "profile_id": "profile.commoner",
+          "results": [
+            {
+              "knowledge_id": "expr.demo",
+              "status": "unknown",
+              "layer": "rumor"
+            }
+          ]
+        },
+        "author_diagnostics": {
+          "fixture_id": "a33.rumor_commoner",
+          "profile_id": "profile.commoner",
+          "compile_version": "9C96EC286266F0080E0FD831E16A6FA367C644C1B20CE0E0C41D12262D01BD61",
+          "identity_snapshot": {
+            "snapshot_id": "a33.rumor",
+            "profile_id": "profile.commoner",
+            "culture_id": null,
+            "kingdom_id": null,
+            "settlement_id": null,
+            "age": null,
+            "steward": null
+          },
+          "results": [
+            {
+              "document_id": "doc.politics.demo",
+              "knowledge_id": "expr.demo",
+              "status": "unknown",
+              "rule_ids": [],
+              "source_ids": [
+                "source.demo"
+              ],
+              "final_layer": "unknown",
+              "explanation_chain": [
+                "\u65E0\u5339\u914D\u6743\u9650"
+              ],
+              "rejection_code": null
+            }
+          ]
+        }
+      },
+      "envelope_json": "{\u0022fixture_id\u0022:\u0022a33.rumor_commoner\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022profile_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u0022309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5\u0022},\u0022referral_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022},\u0022npc_preview\u0022:{\u0022fixture_id\u0022:\u0022a33.rumor_commoner\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022results\u0022:[{\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022unknown\u0022,\u0022layer\u0022:\u0022rumor\u0022}]},\u0022author_diagnostics\u0022:{\u0022fixture_id\u0022:\u0022a33.rumor_commoner\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022compile_version\u0022:\u00229C96EC286266F0080E0FD831E16A6FA367C644C1B20CE0E0C41D12262D01BD61\u0022,\u0022identity_snapshot\u0022:{\u0022snapshot_id\u0022:\u0022a33.rumor\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022culture_id\u0022:null,\u0022kingdom_id\u0022:null,\u0022settlement_id\u0022:null,\u0022age\u0022:null,\u0022steward\u0022:null},\u0022results\u0022:[{\u0022document_id\u0022:\u0022doc.politics.demo\u0022,\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022unknown\u0022,\u0022rule_ids\u0022:[],\u0022source_ids\u0022:[\u0022source.demo\u0022],\u0022final_layer\u0022:\u0022unknown\u0022,\u0022explanation_chain\u0022:[\u0022\\u65E0\\u5339\\u914D\\u6743\\u9650\u0022],\u0022rejection_code\u0022:null}]}}",
+      "envelope_utf8_sha256": "2EF9F680CF4637335489936079A7C96B337381C9391B6187CEFD0A03A73932C3",
+      "envelope_utf8_base64": "eyJmaXh0dXJlX2lkIjoiYTMzLnJ1bW9yX2NvbW1vbmVyIiwicHJvZmlsZV9pZCI6InByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlX3JlZ2lzdHJ5Ijp7InZlcnNpb24iOiIxLjAuMCIsImhhc2giOiIzMDlEMTA1ODNFN0I0QUYwNUYyOERFMkMyRTY3QTI1MjhDQjNENkM0NTc1MjM2OUMwRjdEMTYwRkFCQzNGM0E1In0sInJlZmVycmFsX3JlZ2lzdHJ5Ijp7InZlcnNpb24iOiIxLjAuMCIsImhhc2giOiI2RTE3MDc1RjFGOTY3QkUyOEMwNDM3MTIxREI1MEU1QzMwODA5QzRFRkMzRDJBNUYyMkFEOUJCMEIzQjkyNkNEIn0sIm5wY19wcmV2aWV3Ijp7ImZpeHR1cmVfaWQiOiJhMzMucnVtb3JfY29tbW9uZXIiLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsInJlc3VsdHMiOlt7Imtub3dsZWRnZV9pZCI6ImV4cHIuZGVtbyIsInN0YXR1cyI6InVua25vd24iLCJsYXllciI6InJ1bW9yIn1dfSwiYXV0aG9yX2RpYWdub3N0aWNzIjp7ImZpeHR1cmVfaWQiOiJhMzMucnVtb3JfY29tbW9uZXIiLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsImNvbXBpbGVfdmVyc2lvbiI6IjlDOTZFQzI4NjI2NkYwMDgwRTBGRDgzMUUxNkE2RkEzNjdDNjQ0QzFCMjBDRTBFMEM0MUQxMjI2MkQwMUJENjEiLCJpZGVudGl0eV9zbmFwc2hvdCI6eyJzbmFwc2hvdF9pZCI6ImEzMy5ydW1vciIsInByb2ZpbGVfaWQiOiJwcm9maWxlLmNvbW1vbmVyIiwiY3VsdHVyZV9pZCI6bnVsbCwia2luZ2RvbV9pZCI6bnVsbCwic2V0dGxlbWVudF9pZCI6bnVsbCwiYWdlIjpudWxsLCJzdGV3YXJkIjpudWxsfSwicmVzdWx0cyI6W3siZG9jdW1lbnRfaWQiOiJkb2MucG9saXRpY3MuZGVtbyIsImtub3dsZWRnZV9pZCI6ImV4cHIuZGVtbyIsInN0YXR1cyI6InVua25vd24iLCJydWxlX2lkcyI6W10sInNvdXJjZV9pZHMiOlsic291cmNlLmRlbW8iXSwiZmluYWxfbGF5ZXIiOiJ1bmtub3duIiwiZXhwbGFuYXRpb25fY2hhaW4iOlsiXHU2NUUwXHU1MzM5XHU5MTREXHU2NzQzXHU5NjUwIl0sInJlamVjdGlvbl9jb2RlIjpudWxsfV19fQ==",
+      "envelope_canonical_hash": "43562D683D685E7E15440BE9105E5FBC4B85249E1D3247B34BC2E6BD82850868",
+      "items": [
+        {
+          "DocumentId": "expr.demo",
+          "Title": "expr.demo",
+          "Layer": "rumor",
+          "Visibility": "unknown",
+          "Text": "unknown",
+          "ReferralIds": null
+        }
+      ],
+      "valid": true,
+      "status": "has_items"
+    },
+    "empty_rules": {
+      "profile_id": "profile.commoner",
+      "identity": {
+        "SnapshotId": "a33.empty",
+        "ProfileId": "profile.commoner",
+        "CultureId": null,
+        "KingdomId": null,
+        "SettlementId": null,
+        "Age": null,
+        "Steward": null,
+        "Scope": null
+      },
+      "input_document_sha256": "9B73A171DEC37E7F2EF7CF98EB2FA49A05A13F77F5A46615C95189DD9BE60076",
+      "input_files": [
+        {
+          "path": "authoring/demo.json",
+          "sha256": "9B73A171DEC37E7F2EF7CF98EB2FA49A05A13F77F5A46615C95189DD9BE60076"
+        },
+        {
+          "path": "authoring/sources/source-demo.txt",
+          "sha256": "0D53F08678D8101B0C7E5053B30224FC671C55051770BA18207435EAD7AD37BD"
+        },
+        {
+          "path": "authoring/sources/source-demo.yaml",
+          "sha256": "39CDB78D5F0A7EAE8D619CCD417F99981C12CE97FBDDF7739663A70DF1DC6894"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/audit-event.v1.schema.json",
+          "sha256": "6E9611C924B7E280BDFB7500094D61135DC93E56DC37C16994DE106E33F15473"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json",
+        "sha256": "8886DBC429EE9D71C6824EB77E48EA646978DE70090374F6F5249C0D16675CF3"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/content-graph.v1.schema.json",
+          "sha256": "1FBB31FA6D3F41D6BCAF8EA903DDBD03D550174346A18E16610843C76E5F7187"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/current-pointer.v1.schema.json",
+          "sha256": "4372E54B6D665CF372FEE781E2D4AADD01578BC1835D0C94306726CE1C7711E0"
+        },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/id-ledger.v1.schema.json",
+        "sha256": "910A0660BF7DF051A46751E3DC116B100483877A5DC92D7CF8DABA429528803D"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.json",
+        "sha256": "8BDF0666E7368709F5C2DEDABA4273BDADA209793A9996A5D32921B0D192FC88"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.schema.json",
+        "sha256": "572A6D1C24FA7B9E5131C2E610149B24530B0171E0C9BD7A7E14CF27985F44CD"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/preview-fixture.v1.schema.json",
+        "sha256": "9912670758E8A2C71743B8C0A2B1077F8AF82F63C0A744B0BA2C58D94B099EF7"
+      },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.json",
+          "sha256": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.schema.json",
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.json",
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.schema.json",
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/source.registry.v1.schema.json",
+          "sha256": "AD03E181F1E600238D56E3B48530BA3682FFFCB34EB2AE98609BB4E143310700"
+        }
+      ],
+      "snapshot_report_diagnostics": [],
+      "result_diagnostics": [],
+      "envelope": {
+        "fixture_id": "a33.empty_rules",
+        "profile_id": "profile.commoner",
+        "profile_registry": {
+          "version": "1.0.0",
+          "hash": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        "referral_registry": {
+          "version": "1.0.0",
+          "hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        "npc_preview": {
+          "fixture_id": "a33.empty_rules",
+          "profile_id": "profile.commoner",
+          "results": [
+            {
+              "knowledge_id": "expr.demo",
+              "status": "unknown",
+              "layer": "summary"
+            }
+          ]
+        },
+        "author_diagnostics": {
+          "fixture_id": "a33.empty_rules",
+          "profile_id": "profile.commoner",
+          "compile_version": "886DF04C7DC6BFFF327DF52612F193B68ECC8A90B971AEB8B1B4B3922D7D3DF6",
+          "identity_snapshot": {
+            "snapshot_id": "a33.empty",
+            "profile_id": "profile.commoner",
+            "culture_id": null,
+            "kingdom_id": null,
+            "settlement_id": null,
+            "age": null,
+            "steward": null
+          },
+          "results": [
+            {
+              "document_id": "doc.politics.demo",
+              "knowledge_id": "expr.demo",
+              "status": "unknown",
+              "rule_ids": [],
+              "source_ids": [
+                "source.demo"
+              ],
+              "final_layer": "unknown",
+              "explanation_chain": [
+                "\u65E0\u5339\u914D\u6743\u9650"
+              ],
+              "rejection_code": null
+            }
+          ]
+        }
+      },
+      "envelope_json": "{\u0022fixture_id\u0022:\u0022a33.empty_rules\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022profile_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u0022309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5\u0022},\u0022referral_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022},\u0022npc_preview\u0022:{\u0022fixture_id\u0022:\u0022a33.empty_rules\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022results\u0022:[{\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022unknown\u0022,\u0022layer\u0022:\u0022summary\u0022}]},\u0022author_diagnostics\u0022:{\u0022fixture_id\u0022:\u0022a33.empty_rules\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022compile_version\u0022:\u0022886DF04C7DC6BFFF327DF52612F193B68ECC8A90B971AEB8B1B4B3922D7D3DF6\u0022,\u0022identity_snapshot\u0022:{\u0022snapshot_id\u0022:\u0022a33.empty\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022culture_id\u0022:null,\u0022kingdom_id\u0022:null,\u0022settlement_id\u0022:null,\u0022age\u0022:null,\u0022steward\u0022:null},\u0022results\u0022:[{\u0022document_id\u0022:\u0022doc.politics.demo\u0022,\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022unknown\u0022,\u0022rule_ids\u0022:[],\u0022source_ids\u0022:[\u0022source.demo\u0022],\u0022final_layer\u0022:\u0022unknown\u0022,\u0022explanation_chain\u0022:[\u0022\\u65E0\\u5339\\u914D\\u6743\\u9650\u0022],\u0022rejection_code\u0022:null}]}}",
+      "envelope_utf8_sha256": "8160F9814F260712F7365EE4C3A4D3AA4F9AA62EA7A84E4B102026ECB6CA2934",
+      "envelope_utf8_base64": "eyJmaXh0dXJlX2lkIjoiYTMzLmVtcHR5X3J1bGVzIiwicHJvZmlsZV9pZCI6InByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlX3JlZ2lzdHJ5Ijp7InZlcnNpb24iOiIxLjAuMCIsImhhc2giOiIzMDlEMTA1ODNFN0I0QUYwNUYyOERFMkMyRTY3QTI1MjhDQjNENkM0NTc1MjM2OUMwRjdEMTYwRkFCQzNGM0E1In0sInJlZmVycmFsX3JlZ2lzdHJ5Ijp7InZlcnNpb24iOiIxLjAuMCIsImhhc2giOiI2RTE3MDc1RjFGOTY3QkUyOEMwNDM3MTIxREI1MEU1QzMwODA5QzRFRkMzRDJBNUYyMkFEOUJCMEIzQjkyNkNEIn0sIm5wY19wcmV2aWV3Ijp7ImZpeHR1cmVfaWQiOiJhMzMuZW1wdHlfcnVsZXMiLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsInJlc3VsdHMiOlt7Imtub3dsZWRnZV9pZCI6ImV4cHIuZGVtbyIsInN0YXR1cyI6InVua25vd24iLCJsYXllciI6InN1bW1hcnkifV19LCJhdXRob3JfZGlhZ25vc3RpY3MiOnsiZml4dHVyZV9pZCI6ImEzMy5lbXB0eV9ydWxlcyIsInByb2ZpbGVfaWQiOiJwcm9maWxlLmNvbW1vbmVyIiwiY29tcGlsZV92ZXJzaW9uIjoiODg2REYwNEM3REM2QkZGRjMyN0RGNTI2MTJGMTkzQjY4RUNDOEE5MEI5NzFBRUI4QjFCNEIzOTIyRDdEM0RGNiIsImlkZW50aXR5X3NuYXBzaG90Ijp7InNuYXBzaG90X2lkIjoiYTMzLmVtcHR5IiwicHJvZmlsZV9pZCI6InByb2ZpbGUuY29tbW9uZXIiLCJjdWx0dXJlX2lkIjpudWxsLCJraW5nZG9tX2lkIjpudWxsLCJzZXR0bGVtZW50X2lkIjpudWxsLCJhZ2UiOm51bGwsInN0ZXdhcmQiOm51bGx9LCJyZXN1bHRzIjpbeyJkb2N1bWVudF9pZCI6ImRvYy5wb2xpdGljcy5kZW1vIiwia25vd2xlZGdlX2lkIjoiZXhwci5kZW1vIiwic3RhdHVzIjoidW5rbm93biIsInJ1bGVfaWRzIjpbXSwic291cmNlX2lkcyI6WyJzb3VyY2UuZGVtbyJdLCJmaW5hbF9sYXllciI6InVua25vd24iLCJleHBsYW5hdGlvbl9jaGFpbiI6WyJcdTY1RTBcdTUzMzlcdTkxNERcdTY3NDNcdTk2NTAiXSwicmVqZWN0aW9uX2NvZGUiOm51bGx9XX19",
+      "envelope_canonical_hash": "3E315473CC66810281AC422FFD8719CB2481A3E2CC4C06BE16E7AD4C5A927802",
+      "items": [
+        {
+          "DocumentId": "expr.demo",
+          "Title": "expr.demo",
+          "Layer": "summary",
+          "Visibility": "unknown",
+          "Text": "unknown",
+          "ReferralIds": null
+        }
+      ],
+      "valid": true,
+      "status": "has_items"
+    },
+    "identity_match": {
+      "profile_id": "profile.commoner",
+      "identity": {
+        "SnapshotId": "a33.identity-match",
+        "ProfileId": "profile.commoner",
+        "CultureId": "entity.culture.test",
+        "KingdomId": "entity.kingdom.test",
+        "SettlementId": "entity.settlement.test",
+        "Age": 35,
+        "Steward": 7,
+        "Scope": null
+      },
+      "input_document_sha256": "512CC96D344F20E7CED735D9C1501E9C32330547A8DB4AB7AB8BE124367F7BD6",
+      "input_files": [
+        {
+          "path": "authoring/demo.json",
+          "sha256": "512CC96D344F20E7CED735D9C1501E9C32330547A8DB4AB7AB8BE124367F7BD6"
+        },
+        {
+          "path": "authoring/sources/source-demo.txt",
+          "sha256": "0D53F08678D8101B0C7E5053B30224FC671C55051770BA18207435EAD7AD37BD"
+        },
+        {
+          "path": "authoring/sources/source-demo.yaml",
+          "sha256": "39CDB78D5F0A7EAE8D619CCD417F99981C12CE97FBDDF7739663A70DF1DC6894"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/audit-event.v1.schema.json",
+          "sha256": "6E9611C924B7E280BDFB7500094D61135DC93E56DC37C16994DE106E33F15473"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json",
+        "sha256": "8886DBC429EE9D71C6824EB77E48EA646978DE70090374F6F5249C0D16675CF3"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/content-graph.v1.schema.json",
+          "sha256": "1FBB31FA6D3F41D6BCAF8EA903DDBD03D550174346A18E16610843C76E5F7187"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/current-pointer.v1.schema.json",
+          "sha256": "4372E54B6D665CF372FEE781E2D4AADD01578BC1835D0C94306726CE1C7711E0"
+        },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/id-ledger.v1.schema.json",
+        "sha256": "910A0660BF7DF051A46751E3DC116B100483877A5DC92D7CF8DABA429528803D"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.json",
+        "sha256": "8BDF0666E7368709F5C2DEDABA4273BDADA209793A9996A5D32921B0D192FC88"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.schema.json",
+        "sha256": "572A6D1C24FA7B9E5131C2E610149B24530B0171E0C9BD7A7E14CF27985F44CD"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/preview-fixture.v1.schema.json",
+        "sha256": "9912670758E8A2C71743B8C0A2B1077F8AF82F63C0A744B0BA2C58D94B099EF7"
+      },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.json",
+          "sha256": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.schema.json",
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.json",
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.schema.json",
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/source.registry.v1.schema.json",
+          "sha256": "AD03E181F1E600238D56E3B48530BA3682FFFCB34EB2AE98609BB4E143310700"
+        }
+      ],
+      "snapshot_report_diagnostics": [],
+      "result_diagnostics": [],
+      "envelope": {
+        "fixture_id": "a33.identity_match",
+        "profile_id": "profile.commoner",
+        "profile_registry": {
+          "version": "1.0.0",
+          "hash": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        "referral_registry": {
+          "version": "1.0.0",
+          "hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        "npc_preview": {
+          "fixture_id": "a33.identity_match",
+          "profile_id": "profile.commoner",
+          "results": [
+            {
+              "knowledge_id": "expr.demo",
+              "status": "visible",
+              "text": {
+                "zh-CN": "\u793A\u4F8B\u8868\u8FBE"
+              },
+              "layer": "summary"
+            }
+          ]
+        },
+        "author_diagnostics": {
+          "fixture_id": "a33.identity_match",
+          "profile_id": "profile.commoner",
+          "compile_version": "56ED295F0F14BB9B2B166C2A5FD6F508FA3D39EE94932595944AB978CFDFCC2B",
+          "identity_snapshot": {
+            "snapshot_id": "a33.identity-match",
+            "profile_id": "profile.commoner",
+            "culture_id": "entity.culture.test",
+            "kingdom_id": "entity.kingdom.test",
+            "settlement_id": "entity.settlement.test",
+            "age": 35,
+            "steward": 7
+          },
+          "results": [
+            {
+              "document_id": "doc.politics.demo",
+              "knowledge_id": "expr.demo",
+              "status": "visible",
+              "rule_ids": [
+                "expr.demo.grant.0"
+              ],
+              "source_ids": [
+                "source.demo"
+              ],
+              "final_layer": "summary",
+              "explanation_chain": [
+                "\u547D\u4E2D\u663E\u5F0F grant"
+              ],
+              "rejection_code": null
+            }
+          ]
+        }
+      },
+      "envelope_json": "{\u0022fixture_id\u0022:\u0022a33.identity_match\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022profile_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u0022309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5\u0022},\u0022referral_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022},\u0022npc_preview\u0022:{\u0022fixture_id\u0022:\u0022a33.identity_match\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022results\u0022:[{\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022visible\u0022,\u0022text\u0022:{\u0022zh-CN\u0022:\u0022\\u793A\\u4F8B\\u8868\\u8FBE\u0022},\u0022layer\u0022:\u0022summary\u0022}]},\u0022author_diagnostics\u0022:{\u0022fixture_id\u0022:\u0022a33.identity_match\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022compile_version\u0022:\u002256ED295F0F14BB9B2B166C2A5FD6F508FA3D39EE94932595944AB978CFDFCC2B\u0022,\u0022identity_snapshot\u0022:{\u0022snapshot_id\u0022:\u0022a33.identity-match\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022culture_id\u0022:\u0022entity.culture.test\u0022,\u0022kingdom_id\u0022:\u0022entity.kingdom.test\u0022,\u0022settlement_id\u0022:\u0022entity.settlement.test\u0022,\u0022age\u0022:35,\u0022steward\u0022:7},\u0022results\u0022:[{\u0022document_id\u0022:\u0022doc.politics.demo\u0022,\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022visible\u0022,\u0022rule_ids\u0022:[\u0022expr.demo.grant.0\u0022],\u0022source_ids\u0022:[\u0022source.demo\u0022],\u0022final_layer\u0022:\u0022summary\u0022,\u0022explanation_chain\u0022:[\u0022\\u547D\\u4E2D\\u663E\\u5F0F grant\u0022],\u0022rejection_code\u0022:null}]}}",
+      "envelope_utf8_sha256": "09DBDDFDBD2D2D003B330C96C0D93C537BD0A2B3C6CC4A2E1F3EB77529C1EDCC",
+      "envelope_utf8_base64": "eyJmaXh0dXJlX2lkIjoiYTMzLmlkZW50aXR5X21hdGNoIiwicHJvZmlsZV9pZCI6InByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlX3JlZ2lzdHJ5Ijp7InZlcnNpb24iOiIxLjAuMCIsImhhc2giOiIzMDlEMTA1ODNFN0I0QUYwNUYyOERFMkMyRTY3QTI1MjhDQjNENkM0NTc1MjM2OUMwRjdEMTYwRkFCQzNGM0E1In0sInJlZmVycmFsX3JlZ2lzdHJ5Ijp7InZlcnNpb24iOiIxLjAuMCIsImhhc2giOiI2RTE3MDc1RjFGOTY3QkUyOEMwNDM3MTIxREI1MEU1QzMwODA5QzRFRkMzRDJBNUYyMkFEOUJCMEIzQjkyNkNEIn0sIm5wY19wcmV2aWV3Ijp7ImZpeHR1cmVfaWQiOiJhMzMuaWRlbnRpdHlfbWF0Y2giLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsInJlc3VsdHMiOlt7Imtub3dsZWRnZV9pZCI6ImV4cHIuZGVtbyIsInN0YXR1cyI6InZpc2libGUiLCJ0ZXh0Ijp7InpoLUNOIjoiXHU3OTNBXHU0RjhCXHU4ODY4XHU4RkJFIn0sImxheWVyIjoic3VtbWFyeSJ9XX0sImF1dGhvcl9kaWFnbm9zdGljcyI6eyJmaXh0dXJlX2lkIjoiYTMzLmlkZW50aXR5X21hdGNoIiwicHJvZmlsZV9pZCI6InByb2ZpbGUuY29tbW9uZXIiLCJjb21waWxlX3ZlcnNpb24iOiI1NkVEMjk1RjBGMTRCQjlCMkIxNjZDMkE1RkQ2RjUwOEZBM0QzOUVFOTQ5MzI1OTU5NDRBQjk3OENGREZDQzJCIiwiaWRlbnRpdHlfc25hcHNob3QiOnsic25hcHNob3RfaWQiOiJhMzMuaWRlbnRpdHktbWF0Y2giLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsImN1bHR1cmVfaWQiOiJlbnRpdHkuY3VsdHVyZS50ZXN0Iiwia2luZ2RvbV9pZCI6ImVudGl0eS5raW5nZG9tLnRlc3QiLCJzZXR0bGVtZW50X2lkIjoiZW50aXR5LnNldHRsZW1lbnQudGVzdCIsImFnZSI6MzUsInN0ZXdhcmQiOjd9LCJyZXN1bHRzIjpbeyJkb2N1bWVudF9pZCI6ImRvYy5wb2xpdGljcy5kZW1vIiwia25vd2xlZGdlX2lkIjoiZXhwci5kZW1vIiwic3RhdHVzIjoidmlzaWJsZSIsInJ1bGVfaWRzIjpbImV4cHIuZGVtby5ncmFudC4wIl0sInNvdXJjZV9pZHMiOlsic291cmNlLmRlbW8iXSwiZmluYWxfbGF5ZXIiOiJzdW1tYXJ5IiwiZXhwbGFuYXRpb25fY2hhaW4iOlsiXHU1NDdEXHU0RTJEXHU2NjNFXHU1RjBGIGdyYW50Il0sInJlamVjdGlvbl9jb2RlIjpudWxsfV19fQ==",
+      "envelope_canonical_hash": "7DB5E80209182F33D9639D50DFDA906461812CCEE7B80BDF86E8D328B3EBE996",
+      "items": [
+        {
+          "DocumentId": "expr.demo",
+          "Title": "expr.demo",
+          "Layer": "summary",
+          "Visibility": "visible",
+          "Text": "\u793A\u4F8B\u8868\u8FBE",
+          "ReferralIds": null
+        }
+      ],
+      "valid": true,
+      "status": "has_items"
+    },
+    "identity_miss": {
+      "profile_id": "profile.commoner",
+      "identity": {
+        "SnapshotId": "a33.identity-miss",
+        "ProfileId": "profile.commoner",
+        "CultureId": "entity.culture.other",
+        "KingdomId": "entity.kingdom.other",
+        "SettlementId": "entity.settlement.other",
+        "Age": 20,
+        "Steward": 2,
+        "Scope": null
+      },
+      "input_document_sha256": "512CC96D344F20E7CED735D9C1501E9C32330547A8DB4AB7AB8BE124367F7BD6",
+      "input_files": [
+        {
+          "path": "authoring/demo.json",
+          "sha256": "512CC96D344F20E7CED735D9C1501E9C32330547A8DB4AB7AB8BE124367F7BD6"
+        },
+        {
+          "path": "authoring/sources/source-demo.txt",
+          "sha256": "0D53F08678D8101B0C7E5053B30224FC671C55051770BA18207435EAD7AD37BD"
+        },
+        {
+          "path": "authoring/sources/source-demo.yaml",
+          "sha256": "39CDB78D5F0A7EAE8D619CCD417F99981C12CE97FBDDF7739663A70DF1DC6894"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/audit-event.v1.schema.json",
+          "sha256": "6E9611C924B7E280BDFB7500094D61135DC93E56DC37C16994DE106E33F15473"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json",
+        "sha256": "8886DBC429EE9D71C6824EB77E48EA646978DE70090374F6F5249C0D16675CF3"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/content-graph.v1.schema.json",
+          "sha256": "1FBB31FA6D3F41D6BCAF8EA903DDBD03D550174346A18E16610843C76E5F7187"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/current-pointer.v1.schema.json",
+          "sha256": "4372E54B6D665CF372FEE781E2D4AADD01578BC1835D0C94306726CE1C7711E0"
+        },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/id-ledger.v1.schema.json",
+        "sha256": "910A0660BF7DF051A46751E3DC116B100483877A5DC92D7CF8DABA429528803D"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.json",
+        "sha256": "8BDF0666E7368709F5C2DEDABA4273BDADA209793A9996A5D32921B0D192FC88"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.schema.json",
+        "sha256": "572A6D1C24FA7B9E5131C2E610149B24530B0171E0C9BD7A7E14CF27985F44CD"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/preview-fixture.v1.schema.json",
+        "sha256": "9912670758E8A2C71743B8C0A2B1077F8AF82F63C0A744B0BA2C58D94B099EF7"
+      },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.json",
+          "sha256": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.schema.json",
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.json",
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.schema.json",
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/source.registry.v1.schema.json",
+          "sha256": "AD03E181F1E600238D56E3B48530BA3682FFFCB34EB2AE98609BB4E143310700"
+        }
+      ],
+      "snapshot_report_diagnostics": [],
+      "result_diagnostics": [],
+      "envelope": {
+        "fixture_id": "a33.identity_miss",
+        "profile_id": "profile.commoner",
+        "profile_registry": {
+          "version": "1.0.0",
+          "hash": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        "referral_registry": {
+          "version": "1.0.0",
+          "hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        "npc_preview": {
+          "fixture_id": "a33.identity_miss",
+          "profile_id": "profile.commoner",
+          "results": [
+            {
+              "knowledge_id": "expr.demo",
+              "status": "unknown",
+              "layer": "summary"
+            }
+          ]
+        },
+        "author_diagnostics": {
+          "fixture_id": "a33.identity_miss",
+          "profile_id": "profile.commoner",
+          "compile_version": "56ED295F0F14BB9B2B166C2A5FD6F508FA3D39EE94932595944AB978CFDFCC2B",
+          "identity_snapshot": {
+            "snapshot_id": "a33.identity-miss",
+            "profile_id": "profile.commoner",
+            "culture_id": "entity.culture.other",
+            "kingdom_id": "entity.kingdom.other",
+            "settlement_id": "entity.settlement.other",
+            "age": 20,
+            "steward": 2
+          },
+          "results": [
+            {
+              "document_id": "doc.politics.demo",
+              "knowledge_id": "expr.demo",
+              "status": "unknown",
+              "rule_ids": [],
+              "source_ids": [
+                "source.demo"
+              ],
+              "final_layer": "unknown",
+              "explanation_chain": [
+                "\u65E0\u5339\u914D\u6743\u9650"
+              ],
+              "rejection_code": null
+            }
+          ]
+        }
+      },
+      "envelope_json": "{\u0022fixture_id\u0022:\u0022a33.identity_miss\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022profile_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u0022309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5\u0022},\u0022referral_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022},\u0022npc_preview\u0022:{\u0022fixture_id\u0022:\u0022a33.identity_miss\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022results\u0022:[{\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022unknown\u0022,\u0022layer\u0022:\u0022summary\u0022}]},\u0022author_diagnostics\u0022:{\u0022fixture_id\u0022:\u0022a33.identity_miss\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022compile_version\u0022:\u002256ED295F0F14BB9B2B166C2A5FD6F508FA3D39EE94932595944AB978CFDFCC2B\u0022,\u0022identity_snapshot\u0022:{\u0022snapshot_id\u0022:\u0022a33.identity-miss\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022culture_id\u0022:\u0022entity.culture.other\u0022,\u0022kingdom_id\u0022:\u0022entity.kingdom.other\u0022,\u0022settlement_id\u0022:\u0022entity.settlement.other\u0022,\u0022age\u0022:20,\u0022steward\u0022:2},\u0022results\u0022:[{\u0022document_id\u0022:\u0022doc.politics.demo\u0022,\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022unknown\u0022,\u0022rule_ids\u0022:[],\u0022source_ids\u0022:[\u0022source.demo\u0022],\u0022final_layer\u0022:\u0022unknown\u0022,\u0022explanation_chain\u0022:[\u0022\\u65E0\\u5339\\u914D\\u6743\\u9650\u0022],\u0022rejection_code\u0022:null}]}}",
+      "envelope_utf8_sha256": "3FF2F7707631CB6CBCE9AF6A0CA8BB55F23DD8F6F66F946B5A32302633A985FA",
+      "envelope_utf8_base64": "eyJmaXh0dXJlX2lkIjoiYTMzLmlkZW50aXR5X21pc3MiLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsInByb2ZpbGVfcmVnaXN0cnkiOnsidmVyc2lvbiI6IjEuMC4wIiwiaGFzaCI6IjMwOUQxMDU4M0U3QjRBRjA1RjI4REUyQzJFNjdBMjUyOENCM0Q2QzQ1NzUyMzY5QzBGN0QxNjBGQUJDM0YzQTUifSwicmVmZXJyYWxfcmVnaXN0cnkiOnsidmVyc2lvbiI6IjEuMC4wIiwiaGFzaCI6IjZFMTcwNzVGMUY5NjdCRTI4QzA0MzcxMjFEQjUwRTVDMzA4MDlDNEVGQzNEMkE1RjIyQUQ5QkIwQjNCOTI2Q0QifSwibnBjX3ByZXZpZXciOnsiZml4dHVyZV9pZCI6ImEzMy5pZGVudGl0eV9taXNzIiwicHJvZmlsZV9pZCI6InByb2ZpbGUuY29tbW9uZXIiLCJyZXN1bHRzIjpbeyJrbm93bGVkZ2VfaWQiOiJleHByLmRlbW8iLCJzdGF0dXMiOiJ1bmtub3duIiwibGF5ZXIiOiJzdW1tYXJ5In1dfSwiYXV0aG9yX2RpYWdub3N0aWNzIjp7ImZpeHR1cmVfaWQiOiJhMzMuaWRlbnRpdHlfbWlzcyIsInByb2ZpbGVfaWQiOiJwcm9maWxlLmNvbW1vbmVyIiwiY29tcGlsZV92ZXJzaW9uIjoiNTZFRDI5NUYwRjE0QkI5QjJCMTY2QzJBNUZENkY1MDhGQTNEMzlFRTk0OTMyNTk1OTQ0QUI5NzhDRkRGQ0MyQiIsImlkZW50aXR5X3NuYXBzaG90Ijp7InNuYXBzaG90X2lkIjoiYTMzLmlkZW50aXR5LW1pc3MiLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsImN1bHR1cmVfaWQiOiJlbnRpdHkuY3VsdHVyZS5vdGhlciIsImtpbmdkb21faWQiOiJlbnRpdHkua2luZ2RvbS5vdGhlciIsInNldHRsZW1lbnRfaWQiOiJlbnRpdHkuc2V0dGxlbWVudC5vdGhlciIsImFnZSI6MjAsInN0ZXdhcmQiOjJ9LCJyZXN1bHRzIjpbeyJkb2N1bWVudF9pZCI6ImRvYy5wb2xpdGljcy5kZW1vIiwia25vd2xlZGdlX2lkIjoiZXhwci5kZW1vIiwic3RhdHVzIjoidW5rbm93biIsInJ1bGVfaWRzIjpbXSwic291cmNlX2lkcyI6WyJzb3VyY2UuZGVtbyJdLCJmaW5hbF9sYXllciI6InVua25vd24iLCJleHBsYW5hdGlvbl9jaGFpbiI6WyJcdTY1RTBcdTUzMzlcdTkxNERcdTY3NDNcdTk2NTAiXSwicmVqZWN0aW9uX2NvZGUiOm51bGx9XX19",
+      "envelope_canonical_hash": "3B4EBE2218F3AD8E649F1CA5575712FF095316265335248DB7156BDE3FF3CF09",
+      "items": [
+        {
+          "DocumentId": "expr.demo",
+          "Title": "expr.demo",
+          "Layer": "summary",
+          "Visibility": "unknown",
+          "Text": "unknown",
+          "ReferralIds": null
+        }
+      ],
+      "valid": true,
+      "status": "has_items"
+    },
+    "invalid_profile": {
+      "profile_id": "profile.missing",
+      "identity": {
+        "SnapshotId": "a33.invalid-profile",
+        "ProfileId": "profile.missing",
+        "CultureId": null,
+        "KingdomId": null,
+        "SettlementId": null,
+        "Age": null,
+        "Steward": null,
+        "Scope": null
+      },
+      "input_document_sha256": "B211C336ACC97AEAB2A9434809D9644C9BDEFBC782DEDA38E3E197D72C00E4AD",
+      "input_files": [
+        {
+          "path": "authoring/demo.json",
+          "sha256": "B211C336ACC97AEAB2A9434809D9644C9BDEFBC782DEDA38E3E197D72C00E4AD"
+        },
+        {
+          "path": "authoring/sources/source-demo.txt",
+          "sha256": "0D53F08678D8101B0C7E5053B30224FC671C55051770BA18207435EAD7AD37BD"
+        },
+        {
+          "path": "authoring/sources/source-demo.yaml",
+          "sha256": "39CDB78D5F0A7EAE8D619CCD417F99981C12CE97FBDDF7739663A70DF1DC6894"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/audit-event.v1.schema.json",
+          "sha256": "6E9611C924B7E280BDFB7500094D61135DC93E56DC37C16994DE106E33F15473"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json",
+        "sha256": "8886DBC429EE9D71C6824EB77E48EA646978DE70090374F6F5249C0D16675CF3"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/content-graph.v1.schema.json",
+          "sha256": "1FBB31FA6D3F41D6BCAF8EA903DDBD03D550174346A18E16610843C76E5F7187"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/current-pointer.v1.schema.json",
+          "sha256": "4372E54B6D665CF372FEE781E2D4AADD01578BC1835D0C94306726CE1C7711E0"
+        },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/id-ledger.v1.schema.json",
+        "sha256": "910A0660BF7DF051A46751E3DC116B100483877A5DC92D7CF8DABA429528803D"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.json",
+        "sha256": "8BDF0666E7368709F5C2DEDABA4273BDADA209793A9996A5D32921B0D192FC88"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.schema.json",
+        "sha256": "572A6D1C24FA7B9E5131C2E610149B24530B0171E0C9BD7A7E14CF27985F44CD"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/preview-fixture.v1.schema.json",
+        "sha256": "9912670758E8A2C71743B8C0A2B1077F8AF82F63C0A744B0BA2C58D94B099EF7"
+      },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.json",
+          "sha256": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.schema.json",
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.json",
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.schema.json",
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/source.registry.v1.schema.json",
+          "sha256": "AD03E181F1E600238D56E3B48530BA3682FFFCB34EB2AE98609BB4E143310700"
+        }
+      ],
+      "snapshot_report_diagnostics": [],
+      "result_diagnostics": [
+        {
+          "code": "WB-PROFILE-001",
+          "severity": "error",
+          "message": "\u9884\u89C8 profile \u4E0D\u5B58\u5728\u3002",
+          "path": "profile.missing",
+          "detail": null
+        }
+      ],
+      "envelope": {
+        "fixture_id": "a33.invalid_profile",
+        "profile_id": "profile.missing",
+        "profile_registry": {
+          "version": "1.0.0",
+          "hash": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        "referral_registry": {
+          "version": "1.0.0",
+          "hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        "npc_preview": {
+          "fixture_id": "a33.invalid_profile",
+          "profile_id": "profile.missing",
+          "results": []
+        },
+        "author_diagnostics": {
+          "fixture_id": "a33.invalid_profile",
+          "profile_id": "profile.missing",
+          "compile_version": "51A3126D8060EE0659C678049CDAC59B2D1C406A4C1188773E92AF84F01E774F",
+          "identity_snapshot": {
+            "snapshot_id": "a33.invalid-profile",
+            "profile_id": "profile.missing",
+            "culture_id": null,
+            "kingdom_id": null,
+            "settlement_id": null,
+            "age": null,
+            "steward": null
+          },
+          "results": []
+        }
+      },
+      "envelope_json": "{\u0022fixture_id\u0022:\u0022a33.invalid_profile\u0022,\u0022profile_id\u0022:\u0022profile.missing\u0022,\u0022profile_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u0022309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5\u0022},\u0022referral_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022},\u0022npc_preview\u0022:{\u0022fixture_id\u0022:\u0022a33.invalid_profile\u0022,\u0022profile_id\u0022:\u0022profile.missing\u0022,\u0022results\u0022:[]},\u0022author_diagnostics\u0022:{\u0022fixture_id\u0022:\u0022a33.invalid_profile\u0022,\u0022profile_id\u0022:\u0022profile.missing\u0022,\u0022compile_version\u0022:\u002251A3126D8060EE0659C678049CDAC59B2D1C406A4C1188773E92AF84F01E774F\u0022,\u0022identity_snapshot\u0022:{\u0022snapshot_id\u0022:\u0022a33.invalid-profile\u0022,\u0022profile_id\u0022:\u0022profile.missing\u0022,\u0022culture_id\u0022:null,\u0022kingdom_id\u0022:null,\u0022settlement_id\u0022:null,\u0022age\u0022:null,\u0022steward\u0022:null},\u0022results\u0022:[]}}",
+      "envelope_utf8_sha256": "8784B7C9EA4175709C49425BAA4448D4512B12E76D56F8625419BABC53A0B118",
+      "envelope_utf8_base64": "eyJmaXh0dXJlX2lkIjoiYTMzLmludmFsaWRfcHJvZmlsZSIsInByb2ZpbGVfaWQiOiJwcm9maWxlLm1pc3NpbmciLCJwcm9maWxlX3JlZ2lzdHJ5Ijp7InZlcnNpb24iOiIxLjAuMCIsImhhc2giOiIzMDlEMTA1ODNFN0I0QUYwNUYyOERFMkMyRTY3QTI1MjhDQjNENkM0NTc1MjM2OUMwRjdEMTYwRkFCQzNGM0E1In0sInJlZmVycmFsX3JlZ2lzdHJ5Ijp7InZlcnNpb24iOiIxLjAuMCIsImhhc2giOiI2RTE3MDc1RjFGOTY3QkUyOEMwNDM3MTIxREI1MEU1QzMwODA5QzRFRkMzRDJBNUYyMkFEOUJCMEIzQjkyNkNEIn0sIm5wY19wcmV2aWV3Ijp7ImZpeHR1cmVfaWQiOiJhMzMuaW52YWxpZF9wcm9maWxlIiwicHJvZmlsZV9pZCI6InByb2ZpbGUubWlzc2luZyIsInJlc3VsdHMiOltdfSwiYXV0aG9yX2RpYWdub3N0aWNzIjp7ImZpeHR1cmVfaWQiOiJhMzMuaW52YWxpZF9wcm9maWxlIiwicHJvZmlsZV9pZCI6InByb2ZpbGUubWlzc2luZyIsImNvbXBpbGVfdmVyc2lvbiI6IjUxQTMxMjZEODA2MEVFMDY1OUM2NzgwNDlDREFDNTlCMkQxQzQwNkE0QzExODg3NzNFOTJBRjg0RjAxRTc3NEYiLCJpZGVudGl0eV9zbmFwc2hvdCI6eyJzbmFwc2hvdF9pZCI6ImEzMy5pbnZhbGlkLXByb2ZpbGUiLCJwcm9maWxlX2lkIjoicHJvZmlsZS5taXNzaW5nIiwiY3VsdHVyZV9pZCI6bnVsbCwia2luZ2RvbV9pZCI6bnVsbCwic2V0dGxlbWVudF9pZCI6bnVsbCwiYWdlIjpudWxsLCJzdGV3YXJkIjpudWxsfSwicmVzdWx0cyI6W119fQ==",
+      "envelope_canonical_hash": "865005ED6EB7BAC633D33D73E98B532DA81DBEDB92F8899C7DECAC14A4B8C3E0",
+      "items": [],
+      "valid": true,
+      "status": "empty"
+    },
+    "missing_text_raw": {
+      "profile_id": "profile.commoner",
+      "identity": {
+        "SnapshotId": "a33.missing-text",
+        "ProfileId": "profile.commoner",
+        "CultureId": null,
+        "KingdomId": null,
+        "SettlementId": null,
+        "Age": null,
+        "Steward": null,
+        "Scope": null
+      },
+      "input_document_sha256": "A644EF4E249780A1CC8D7707FF05246D05C516F96F271A4A2C9423300BE13FDC",
+      "input_files": [
+        {
+          "path": "authoring/demo.json",
+          "sha256": "A644EF4E249780A1CC8D7707FF05246D05C516F96F271A4A2C9423300BE13FDC"
+        },
+        {
+          "path": "authoring/sources/source-demo.txt",
+          "sha256": "0D53F08678D8101B0C7E5053B30224FC671C55051770BA18207435EAD7AD37BD"
+        },
+        {
+          "path": "authoring/sources/source-demo.yaml",
+          "sha256": "39CDB78D5F0A7EAE8D619CCD417F99981C12CE97FBDDF7739663A70DF1DC6894"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/audit-event.v1.schema.json",
+          "sha256": "6E9611C924B7E280BDFB7500094D61135DC93E56DC37C16994DE106E33F15473"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json",
+        "sha256": "8886DBC429EE9D71C6824EB77E48EA646978DE70090374F6F5249C0D16675CF3"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/content-graph.v1.schema.json",
+          "sha256": "1FBB31FA6D3F41D6BCAF8EA903DDBD03D550174346A18E16610843C76E5F7187"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/current-pointer.v1.schema.json",
+          "sha256": "4372E54B6D665CF372FEE781E2D4AADD01578BC1835D0C94306726CE1C7711E0"
+        },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/id-ledger.v1.schema.json",
+        "sha256": "910A0660BF7DF051A46751E3DC116B100483877A5DC92D7CF8DABA429528803D"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.json",
+        "sha256": "8BDF0666E7368709F5C2DEDABA4273BDADA209793A9996A5D32921B0D192FC88"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/knowledge-taxonomy.v1.schema.json",
+        "sha256": "572A6D1C24FA7B9E5131C2E610149B24530B0171E0C9BD7A7E14CF27985F44CD"
+      },
+      {
+        "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/preview-fixture.v1.schema.json",
+        "sha256": "9912670758E8A2C71743B8C0A2B1077F8AF82F63C0A744B0BA2C58D94B099EF7"
+      },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.json",
+          "sha256": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/profile-registry.v1.schema.json",
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.json",
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/referral-registry.v1.schema.json",
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        },
+        {
+          "path": "../../../../../OneDrive/\u6587\u6863/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/source.registry.v1.schema.json",
+          "sha256": "AD03E181F1E600238D56E3B48530BA3682FFFCB34EB2AE98609BB4E143310700"
+        }
+      ],
+      "snapshot_report_diagnostics": [
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "",
+          "detail": "Schema evaluation failed."
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "",
+          "detail": "properties:Some properties did not match the required schema: [\u0022assertions\u0022]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions",
+          "detail": "items:Some items do not match the required schema; failing indexes: [0]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0",
+          "detail": "/assertions/0"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present; not:The subschema passed evaluation but was expected to fail"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/authority",
+          "detail": "properties:Some properties did not match the required schema: [\u0022owner\u0022,\u0022conflict_policy\u0022]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/authority",
+          "detail": "properties:Some properties did not match the required schema: [\u0022owner\u0022,\u0022conflict_policy\u0022]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0",
+          "detail": "properties:Some properties did not match the required schema: [\u0022expressions\u0022]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/authority/owner",
+          "detail": "const:Expected \u0022\\u0022game_state\\u0022\u0022"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/authority/conflict_policy",
+          "detail": "enum:Value should match one of the values specified by the enum"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/authority/owner",
+          "detail": "const:Expected \u0022\\u0022source_only\\u0022\u0022"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/authority/conflict_policy",
+          "detail": "enum:Value should match one of the values specified by the enum"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0/expressions",
+          "detail": "items:Some items do not match the required schema; failing indexes: [0]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0/expressions/0",
+          "detail": "/assertions/0/expressions/0"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present; not:The subschema passed evaluation but was expected to fail"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0/expressions/0",
+          "detail": "required:Required properties [\u0022text\u0022] are not present"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0/expressions/0",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present; not:The subschema passed evaluation but was expected to fail"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0/expressions/0",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0/expressions/0",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present"
+        }
+      ],
+      "result_diagnostics": [
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "",
+          "detail": "Schema evaluation failed."
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "",
+          "detail": "properties:Some properties did not match the required schema: [\u0022assertions\u0022]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions",
+          "detail": "items:Some items do not match the required schema; failing indexes: [0]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0",
+          "detail": "/assertions/0"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present; not:The subschema passed evaluation but was expected to fail"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/authority",
+          "detail": "properties:Some properties did not match the required schema: [\u0022owner\u0022,\u0022conflict_policy\u0022]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/authority",
+          "detail": "properties:Some properties did not match the required schema: [\u0022owner\u0022,\u0022conflict_policy\u0022]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0",
+          "detail": "properties:Some properties did not match the required schema: [\u0022expressions\u0022]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/authority/owner",
+          "detail": "const:Expected \u0022\\u0022game_state\\u0022\u0022"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/authority/conflict_policy",
+          "detail": "enum:Value should match one of the values specified by the enum"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/authority/owner",
+          "detail": "const:Expected \u0022\\u0022source_only\\u0022\u0022"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/authority/conflict_policy",
+          "detail": "enum:Value should match one of the values specified by the enum"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0/expressions",
+          "detail": "items:Some items do not match the required schema; failing indexes: [0]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0/expressions/0",
+          "detail": "/assertions/0/expressions/0"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present; not:The subschema passed evaluation but was expected to fail"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0/expressions/0",
+          "detail": "required:Required properties [\u0022text\u0022] are not present"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0/expressions/0",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present; not:The subschema passed evaluation but was expected to fail"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0/expressions/0",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/assertions/0/expressions/0",
+          "detail": "required:Required properties [\u0022author_created\u0022] are not present"
+        }
+      ],
+      "envelope": {
+        "fixture_id": "a33.missing_text_raw",
+        "profile_id": "profile.commoner",
+        "profile_registry": {
+          "version": "1.0.0",
+          "hash": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        "referral_registry": {
+          "version": "1.0.0",
+          "hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        "npc_preview": {
+          "fixture_id": "a33.missing_text_raw",
+          "profile_id": "profile.commoner",
+          "results": [
+            {
+              "knowledge_id": "expr.demo",
+              "status": "visible",
+              "text": {},
+              "layer": "summary"
+            }
+          ]
+        },
+        "author_diagnostics": {
+          "fixture_id": "a33.missing_text_raw",
+          "profile_id": "profile.commoner",
+          "compile_version": "2F974D7B4614E31A7BB5AA2CA19D9FDECAB06F030E5DCF4D1600CAF5B3304506",
+          "identity_snapshot": {
+            "snapshot_id": "a33.missing-text",
+            "profile_id": "profile.commoner",
+            "culture_id": null,
+            "kingdom_id": null,
+            "settlement_id": null,
+            "age": null,
+            "steward": null
+          },
+          "results": [
+            {
+              "document_id": "doc.politics.demo",
+              "knowledge_id": "expr.demo",
+              "status": "visible",
+              "rule_ids": [
+                "expr.demo.grant.0"
+              ],
+              "source_ids": [
+                "source.demo"
+              ],
+              "final_layer": "summary",
+              "explanation_chain": [
+                "\u547D\u4E2D\u663E\u5F0F grant"
+              ],
+              "rejection_code": null
+            }
+          ]
+        }
+      },
+      "envelope_json": "{\u0022fixture_id\u0022:\u0022a33.missing_text_raw\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022profile_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u0022309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5\u0022},\u0022referral_registry\u0022:{\u0022version\u0022:\u00221.0.0\u0022,\u0022hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022},\u0022npc_preview\u0022:{\u0022fixture_id\u0022:\u0022a33.missing_text_raw\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022results\u0022:[{\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022visible\u0022,\u0022text\u0022:{},\u0022layer\u0022:\u0022summary\u0022}]},\u0022author_diagnostics\u0022:{\u0022fixture_id\u0022:\u0022a33.missing_text_raw\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022compile_version\u0022:\u00222F974D7B4614E31A7BB5AA2CA19D9FDECAB06F030E5DCF4D1600CAF5B3304506\u0022,\u0022identity_snapshot\u0022:{\u0022snapshot_id\u0022:\u0022a33.missing-text\u0022,\u0022profile_id\u0022:\u0022profile.commoner\u0022,\u0022culture_id\u0022:null,\u0022kingdom_id\u0022:null,\u0022settlement_id\u0022:null,\u0022age\u0022:null,\u0022steward\u0022:null},\u0022results\u0022:[{\u0022document_id\u0022:\u0022doc.politics.demo\u0022,\u0022knowledge_id\u0022:\u0022expr.demo\u0022,\u0022status\u0022:\u0022visible\u0022,\u0022rule_ids\u0022:[\u0022expr.demo.grant.0\u0022],\u0022source_ids\u0022:[\u0022source.demo\u0022],\u0022final_layer\u0022:\u0022summary\u0022,\u0022explanation_chain\u0022:[\u0022\\u547D\\u4E2D\\u663E\\u5F0F grant\u0022],\u0022rejection_code\u0022:null}]}}",
+      "envelope_utf8_sha256": "38C64DED0D92880784C246A2F7A11F50DEB63F9F5780591D6D614BC27B7232E4",
+      "envelope_utf8_base64": "eyJmaXh0dXJlX2lkIjoiYTMzLm1pc3NpbmdfdGV4dF9yYXciLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsInByb2ZpbGVfcmVnaXN0cnkiOnsidmVyc2lvbiI6IjEuMC4wIiwiaGFzaCI6IjMwOUQxMDU4M0U3QjRBRjA1RjI4REUyQzJFNjdBMjUyOENCM0Q2QzQ1NzUyMzY5QzBGN0QxNjBGQUJDM0YzQTUifSwicmVmZXJyYWxfcmVnaXN0cnkiOnsidmVyc2lvbiI6IjEuMC4wIiwiaGFzaCI6IjZFMTcwNzVGMUY5NjdCRTI4QzA0MzcxMjFEQjUwRTVDMzA4MDlDNEVGQzNEMkE1RjIyQUQ5QkIwQjNCOTI2Q0QifSwibnBjX3ByZXZpZXciOnsiZml4dHVyZV9pZCI6ImEzMy5taXNzaW5nX3RleHRfcmF3IiwicHJvZmlsZV9pZCI6InByb2ZpbGUuY29tbW9uZXIiLCJyZXN1bHRzIjpbeyJrbm93bGVkZ2VfaWQiOiJleHByLmRlbW8iLCJzdGF0dXMiOiJ2aXNpYmxlIiwidGV4dCI6e30sImxheWVyIjoic3VtbWFyeSJ9XX0sImF1dGhvcl9kaWFnbm9zdGljcyI6eyJmaXh0dXJlX2lkIjoiYTMzLm1pc3NpbmdfdGV4dF9yYXciLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsImNvbXBpbGVfdmVyc2lvbiI6IjJGOTc0RDdCNDYxNEUzMUE3QkI1QUEyQ0ExOUQ5RkRFQ0FCMDZGMDMwRTVEQ0Y0RDE2MDBDQUY1QjMzMDQ1MDYiLCJpZGVudGl0eV9zbmFwc2hvdCI6eyJzbmFwc2hvdF9pZCI6ImEzMy5taXNzaW5nLXRleHQiLCJwcm9maWxlX2lkIjoicHJvZmlsZS5jb21tb25lciIsImN1bHR1cmVfaWQiOm51bGwsImtpbmdkb21faWQiOm51bGwsInNldHRsZW1lbnRfaWQiOm51bGwsImFnZSI6bnVsbCwic3Rld2FyZCI6bnVsbH0sInJlc3VsdHMiOlt7ImRvY3VtZW50X2lkIjoiZG9jLnBvbGl0aWNzLmRlbW8iLCJrbm93bGVkZ2VfaWQiOiJleHByLmRlbW8iLCJzdGF0dXMiOiJ2aXNpYmxlIiwicnVsZV9pZHMiOlsiZXhwci5kZW1vLmdyYW50LjAiXSwic291cmNlX2lkcyI6WyJzb3VyY2UuZGVtbyJdLCJmaW5hbF9sYXllciI6InN1bW1hcnkiLCJleHBsYW5hdGlvbl9jaGFpbiI6WyJcdTU0N0RcdTRFMkRcdTY2M0VcdTVGMEYgZ3JhbnQiXSwicmVqZWN0aW9uX2NvZGUiOm51bGx9XX19",
+      "envelope_canonical_hash": "3051085D006823E672E8641EC91FDF613C86A8BEF611445E7DF165CB788AE7E1",
+      "items": [
+        {
+          "DocumentId": "expr.demo",
+          "Title": "expr.demo",
+          "Layer": "summary",
+          "Visibility": "visible",
+          "Text": null,
+          "ReferralIds": null
+        }
+      ],
+      "valid": false,
+      "status": "has_items"
+    }
+  }
+}

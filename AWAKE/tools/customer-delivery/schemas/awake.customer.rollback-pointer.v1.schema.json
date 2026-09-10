@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.customer.rollback-pointer.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "current_build_id", "previous_build_id", "current_root", "previous_root", "updated_at_utc"],
+  "properties": {
+    "schema_version": { "const": "awake.customer.rollback-pointer.v1" },
+    "current_build_id": { "type": "string", "pattern": "^awake-customer-[A-Za-z0-9._-]+$" },
+    "previous_build_id": { "type": ["string", "null"], "pattern": "^awake-customer-[A-Za-z0-9._-]+$" },
+    "current_root": { "type": "string", "pattern": "^awake-customer-[A-Za-z0-9._-]+$" },
+    "previous_root": { "type": ["string", "null"], "pattern": "^awake-customer-[A-Za-z0-9._-]+$" },
+    "updated_at_utc": { "type": "string", "format": "date-time" }
+  }
+}

@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Awake;
 
@@ -6,8 +8,49 @@ internal static class AwakeVersion
 {
     internal const string Version = "0.2.0";
     internal const string InformationalVersion = "0.2.0+bannerlord.1.3.15";
+    internal const string BuildId = "awake-20260903-awake-runtime-repair-004";
 }
 
+internal static class AwakeBuildIdentity
+{
+    internal static string ComputeSha256(byte[] bytes)
+    {
+        if (bytes == null) return "unknown";
+        using (SHA256 sha256 = SHA256.Create())
+        {
+            return BitConverter.ToString(sha256.ComputeHash(bytes)).Replace("-", string.Empty);
+        }
+    }
+
+    internal static string ComputeSha256Short(byte[] bytes)
+    {
+        string hash = ComputeSha256(bytes);
+        return hash == "unknown" ? hash : hash.Substring(0, 12);
+    }
+
+    internal static string TryComputeFileSha256(string path)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path)) return "unknown";
+            using (FileStream stream = File.OpenRead(path))
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                return BitConverter.ToString(sha256.ComputeHash(stream)).Replace("-", string.Empty);
+            }
+        }
+        catch
+        {
+            return "unknown";
+        }
+    }
+
+    internal static string TryComputeFileSha256Short(string path)
+    {
+        string hash = TryComputeFileSha256(path);
+        return hash == "unknown" ? hash : hash.Substring(0, 12);
+    }
+}
 internal static class AwakeConstants
 {
     internal const string LogFileName = "Awake.log";

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "persona-workbench.approval-receipt.v1",
+  "title": "Persona Workbench local approval receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion","receiptId","localApproval","awakeApproval","documentId","contentSha256","canonicalProofSha256","evidenceId","issuedAtUtc","expiresAtUtc","issuer","session","fence","source","authoring","crosswalk","registry","warnings"],
+  "properties": {
+    "schemaVersion": {"const": "persona-workbench.approval-receipt.v1"},
+    "receiptId": {"type":"string","pattern":"^pwb-receipt-[a-f0-9]{32}$"},
+    "localApproval": {"const":"approved"},
+    "awakeApproval": {"const":"not_requested"},
+    "documentId": {"type":"string","pattern":"^[a-z0-9_]+([.][a-z0-9_]+)*$"},
+    "contentSha256": {"type":"string","pattern":"^[0-9A-F]{64}$"},
+    "canonicalProofSha256": {"type":"string","pattern":"^[0-9A-F]{64}$"},
+    "evidenceId": {"type":"string","minLength":1},
+    "issuedAtUtc": {"type":"string","format":"date-time"},
+    "expiresAtUtc": {"type":"string","format":"date-time"},
+    "issuer": {"$ref":"#/$defs/issuer"},
+    "session": {"$ref":"#/$defs/session"},
+    "fence": {"type":"integer","minimum":1},
+    "source": {"$ref":"#/$defs/fingerprint"},
+    "authoring": {"$ref":"#/$defs/fingerprint"},
+    "crosswalk": {"$ref":"#/$defs/fingerprint"},
+    "registry": {"$ref":"#/$defs/fingerprint"},
+    "warnings": {"type":"array","items":{"type":"string"}}
+  },
+  "$defs": {
+    "sha256": {"type":"string","pattern":"^[0-9A-F]{64}$"},
+    "fingerprint": {"type":"object","additionalProperties":false,"required":["revision","sha256"],"properties":{"revision":{"type":"integer","minimum":1},"sha256":{"$ref":"#/$defs/sha256"}}},
+    "issuer": {"type":"object","additionalProperties":false,"required":["issuerId","sessionId","issuedAtUtc"],"properties":{"issuerId":{"type":"string","pattern":"^pwb-issuer-[a-f0-9]{32}$"},"sessionId":{"type":"string","pattern":"^pwb-session-[a-f0-9]{32}$"},"issuedAtUtc":{"type":"string","format":"date-time"}}},
+    "session": {"type":"object","additionalProperties":false,"required":["sessionId","authorization"],"properties":{"sessionId":{"type":"string","pattern":"^pwb-session-[a-f0-9]{32}$"},"authorization":{"const":"session_csrf"}}}
+  }
+}
+
+

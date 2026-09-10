@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "persona-workbench.authoring-handoff.v1",
+  "title": "Persona Workbench authoring handoff v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion","handoffId","receiptId","awakeApproval","documentId","canonicalJson","contentSha256","canonicalProofSha256","evidenceId","issuedAtUtc","expiresAtUtc","issuer","session","fence","source","authoring","crosswalk","registry","requestFingerprint","envelope"],
+  "properties": {
+    "schemaVersion": {"const":"persona-workbench.authoring-handoff.v1"},
+    "handoffId": {"type":"string","pattern":"^pwb-handoff-[a-f0-9]{32}$"},
+    "receiptId": {"type":"string","pattern":"^pwb-receipt-[a-f0-9]{32}$"},
+    "awakeApproval": {"const":"not_requested"},
+    "documentId": {"type":"string","pattern":"^[a-z0-9_]+([.][a-z0-9_]+)*$"},
+    "canonicalJson": {"type":"string","minLength":2},
+    "contentSha256": {"type":"string","pattern":"^[0-9A-F]{64}$"},
+    "canonicalProofSha256": {"type":"string","pattern":"^[0-9A-F]{64}$"},
+    "evidenceId": {"type":"string","minLength":1},
+    "issuedAtUtc": {"type":"string","format":"date-time"},
+    "expiresAtUtc": {"type":"string","format":"date-time"},
+    "issuer": {"$ref":"#/$defs/issuer"},
+    "session": {"$ref":"#/$defs/session"},
+    "fence": {"type":"integer","minimum":1},
+    "source": {"$ref":"#/$defs/fingerprint"},
+    "authoring": {"$ref":"#/$defs/fingerprint"},
+    "crosswalk": {"$ref":"#/$defs/fingerprint"},
+    "registry": {"$ref":"#/$defs/fingerprint"},
+    "requestFingerprint": {"type":"string","pattern":"^[0-9A-F]{64}$"},
+    "envelope": {"$ref":"#/$defs/envelope"}
+  },
+  "$defs": {
+    "sha256": {"type":"string","pattern":"^[0-9A-F]{64}$"},
+    "fingerprint": {"type":"object","additionalProperties":false,"required":["revision","sha256"],"properties":{"revision":{"type":"integer","minimum":1},"sha256":{"$ref":"#/$defs/sha256"}}},
+    "issuer": {"type":"object","additionalProperties":false,"required":["issuerId","sessionId","issuedAtUtc"],"properties":{"issuerId":{"type":"string","pattern":"^pwb-issuer-[a-f0-9]{32}$"},"sessionId":{"type":"string","pattern":"^pwb-session-[a-f0-9]{32}$"},"issuedAtUtc":{"type":"string","format":"date-time"}}},
+    "session": {"type":"object","additionalProperties":false,"required":["sessionId","authorization"],"properties":{"sessionId":{"type":"string","pattern":"^pwb-session-[a-f0-9]{32}$"},"authorization":{"const":"session_csrf"}}},
+    "provenance": {"type":"object","additionalProperties":false,"required":["producer","authority","receipt_id","evidence_id"],"properties":{"producer":{"const":"persona_workbench"},"authority":{"const":"persona_local_authoring"},"receipt_id":{"type":"string","minLength":1},"evidence_id":{"type":"string","minLength":1}}},
+    "envelope": {
+      "type":"object",
+      "additionalProperties":false,
+      "required":["schema_version","handoff_id","workspace_id","document_id","revision","content_sha256","producer","provenance","review_only","review_status","issued_at_utc","expires_at_utc","payload","request_fingerprint"],
+      "properties":{
+        "schema_version":{"const":"awake.workstation.handoff-envelope.v1"},
+        "handoff_id":{"type":"string","pattern":"^pwb-handoff-[a-f0-9]{32}$"},
+        "workspace_id":{"type":"string","pattern":"^[a-z0-9][a-z0-9._-]{2,127}$"},
+        "document_id":{"type":"string","minLength":1,"maxLength":128,"pattern":"^[^\\u0000-\\u001f\\u007f]+$"},
+        "revision":{"type":"integer","minimum":1},
+        "content_sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+        "producer":{"const":"persona_workbench"},
+        "provenance":{"$ref":"#/$defs/sharedProvenance"},
+        "review_only":{"const":true},
+        "review_status":{"const":"approved_local"},
+        "issued_at_utc":{"type":"string","format":"date-time","pattern":"Z$"},
+        "expires_at_utc":{"type":"string","format":"date-time","pattern":"Z$"},
+        "payload":{"type":"string","minLength":2},
+        "request_fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+      }
+    },
+    "sharedProvenance": {
+      "type":"object",
+      "additionalProperties":false,
+      "required":["source_schema","source_id","source_revision","source_sha256","issuer_id"],
+      "properties":{
+        "source_schema":{"type":"string","minLength":1,"maxLength":256},
+        "source_id":{"type":"string","minLength":1,"maxLength":128},
+        "source_revision":{"type":"integer","minimum":1},
+        "source_sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+        "issuer_id":{"type":"string","minLength":1,"maxLength":128}
+      }
+    }
+  }
+}
+

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.registry.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "registryId", "packages"],
+  "properties": {
+    "schemaVersion": { "const": "awake.worldbook.registry.v1" },
+    "registryId": { "type": "string", "const": "awake:registry:installed" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "packages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["packageId", "version", "kind", "relativePath", "packageHash"],
+        "properties": {
+          "packageId": { "$ref": "common.schema.json#/$defs/package_id" },
+          "version": { "$ref": "common.schema.json#/$defs/version" },
+          "kind": { "enum": ["universe", "extension", "adapter"] },
+          "relativePath": { "type": "string", "pattern": "^(?!/)(?![A-Za-z]:)[^\\\\:*?\"<>|]+$" },
+          "manifestHash": { "$ref": "common.schema.json#/$defs/hash" },
+          "contentHash": { "$ref": "common.schema.json#/$defs/hash" },
+          "packageHash": { "$ref": "common.schema.json#/$defs/hash" },
+          "enabledByDefault": { "type": "boolean" }
+        }
+      }
+    },
+    "extensions": { "$ref": "common.schema.json#/$defs/extensions" }
+  }
+}

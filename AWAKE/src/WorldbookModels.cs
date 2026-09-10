@@ -84,6 +84,8 @@ internal sealed class WorldbookManifest
     internal string SourceFormat { get; set; } = "awake";
     internal string RulesDirectory { get; set; } = "rules";
     internal string PersonaDirectory { get; set; } = "personality_background";
+    internal string PersonaDefinitionDirectory { get; set; } = "persona_definitions/definitions";
+    internal string PersonaTagRegistryFile { get; set; } = "persona_definitions/tag_registry.json";
     internal string UnnamedPersonaDirectory { get; set; } = "unnamed_persona";
     internal string VoiceMappingDirectory { get; set; } = "voice_mapping";
     internal string EventDataDirectory { get; set; } = "event_data";
@@ -97,6 +99,8 @@ internal sealed class WorldbookDocument
     internal WorldbookManifest Manifest { get; set; } = new WorldbookManifest();
     internal List<WorldbookRule> Rules { get; set; } = new List<WorldbookRule>();
     internal List<WorldbookPersona> Personas { get; set; } = new List<WorldbookPersona>();
+    internal List<PersonaDefinition> PersonaDefinitions { get; set; } = new List<PersonaDefinition>();
+    internal PersonaTagRegistryDocument PersonaTagRegistry { get; set; } = new PersonaTagRegistryDocument();
     internal List<WorldbookImportWarning> Warnings { get; set; } = new List<WorldbookImportWarning>();
     internal JToken UnnamedPersonaData { get; set; }
     internal JToken VoiceMappingData { get; set; }
@@ -134,6 +138,11 @@ internal sealed class WorldbookQuery
     internal bool IsClanLeader { get; set; }
     internal Dictionary<string, int> Skills { get; set; } = new Dictionary<string, int>(StringComparer.Ordinal);
     internal string ContentTier { get; set; } = "pure";
+    internal string KnowledgeScope { get; set; } = string.Empty;
+    internal bool KnowledgeScopeAvailable { get; set; }
+    internal string EffectiveDetail { get; set; } = string.Empty;
+    internal bool EffectiveDetailAvailable { get; set; }
+    internal string RequestedDetail { get; set; } = "secret";
     internal List<string> SceneKeywords { get; set; } = new List<string>();
     internal List<string> ContextModes { get; set; } = new List<string>();
     internal string PlayerText { get; set; } = string.Empty;

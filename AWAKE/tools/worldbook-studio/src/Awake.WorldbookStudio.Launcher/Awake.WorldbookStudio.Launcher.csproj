@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>Awake.WorldbookStudio.Launcher</RootNamespace>
+    <AssemblyName>Awake.WorldbookStudio.Launcher</AssemblyName>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Awake.WorldbookStudio.Core\Awake.WorldbookStudio.Core.csproj" />
+  </ItemGroup>
+</Project>

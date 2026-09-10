@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.customer.delivery-manifest.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "build_id",
+    "generated_at_utc",
+    "source_revision",
+    "tools",
+    "documents",
+    "files",
+    "package_sha256",
+    "zip_sha256",
+    "metadata_sha256",
+    "rollback_pointer_sha256",
+    "verification"
+  ],
+  "properties": {
+    "schema_version": { "const": "awake.customer.delivery-manifest.v1" },
+    "build_id": { "type": "string", "pattern": "^awake-customer-[A-Za-z0-9._-]+$" },
+    "generated_at_utc": { "type": "string", "format": "date-time" },
+    "source_revision": { "type": "string", "minLength": 1 },
+    "tools": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tool_id", "source_manifest_sha256", "package_root", "package_tree_sha256", "zip_path", "zip_sha256", "entrypoint", "status"],
+        "properties": {
+          "tool_id": { "enum": ["ui_workstation", "worldbook_studio", "persona_workbench"] },
+          "source_manifest_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "package_root": { "type": "string", "pattern": "^[^/]+$" },
+          "package_tree_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "zip_path": { "type": "string", "pattern": "^[^/]+/[^/]+\\.zip$" },
+          "zip_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "entrypoint": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["verified", "unverified"] }
+        }
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "status"],
+        "properties": {
+          "path": { "type": "string", "pattern": "^docs/[^/]+$" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "status": { "enum": ["verified", "unverified", "not_run"] }
+        }
+      }
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "length"],
+        "properties": {
+          "path": { "type": "string", "pattern": "^(?!/)(?!.*\\.\\.).+$" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "length": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "package_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "zip_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "metadata_sha256": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["delivery-manifest.json", "SHA256SUMS.txt", "BUILD-ID.txt", "package-verification.json"],
+      "properties": {
+        "delivery-manifest.json": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+        "SHA256SUMS.txt": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "BUILD-ID.txt": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "package-verification.json": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "rollback_pointer_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_bound", "tree_bound", "zip_bound", "extracted_bound", "offline_passed", "local_worker_passed", "ready_for_user_verification"],
+      "properties": {
+        "source_bound": { "type": "boolean" },
+        "tree_bound": { "type": "boolean" },
+        "zip_bound": { "type": "boolean" },
+        "extracted_bound": { "type": "boolean" },
+        "offline_passed": { "type": "boolean" },
+        "local_worker_passed": { "type": "boolean" },
+        "ready_for_user_verification": { "type": "boolean" }
+      }
+    }
+  }
+}

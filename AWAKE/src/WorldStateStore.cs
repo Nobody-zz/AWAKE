@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -23,7 +24,24 @@ internal enum WorldStateKind
     Audit,
     Onboarding,
     PendingDialogue,
-    Interaction
+    Interaction,
+    InteractionIndex,
+    PersonaContinuity,
+    PersonaOverride,
+    PersonaRecovery
+}
+
+internal enum WorldStateStoreLifecycle
+{
+    Active,
+    Ending,
+    Ended
+}
+
+internal enum MemoryReservationState
+{
+    Reserved,
+    Enqueued
 }
 
 internal sealed class MemoryReservation
@@ -33,6 +51,13 @@ internal sealed class MemoryReservation
     internal string ConversationId { get; }
     internal int Sequence { get; }
     internal int Day { get; }
+    internal MemoryReservationState State { get; set; }
+    internal string Type { get; set; }
+    internal JArray Facts { get; set; }
+    internal string Summary { get; set; }
+    internal int Weight { get; set; }
+    internal string Source { get; set; }
+    internal bool HasPayload { get; private set; }
 
     internal MemoryReservation(string heroId, string entrySource, string conversationId, int sequence, int day)
     {
@@ -41,6 +66,43 @@ internal sealed class MemoryReservation
         ConversationId = conversationId ?? string.Empty;
         Sequence = sequence;
         Day = day;
+        State = MemoryReservationState.Reserved;
+        Type = "shared_experience";
+        Facts = new JArray();
+        Summary = string.Empty;
+        Weight = 1;
+        Source = entrySource ?? "npc_dialogue";
+        HasPayload = false;
+    }
+
+    internal void SetPayload(
+        string type,
+        JArray facts,
+        string summary,
+        int weight,
+        string source)
+    {
+        Type = string.IsNullOrWhiteSpace(type) ? "shared_experience" : type;
+        Facts = facts == null ? new JArray() : (JArray)facts.DeepClone();
+        Summary = summary ?? string.Empty;
+        Weight = weight;
+        Source = string.IsNullOrWhiteSpace(source) ? EntrySource : source;
+        HasPayload = true;
+    }
+
+    internal WorldStateCommand BuildCommand()
+    {
+        return WorldStateStore.BuildMemoryCommand(
+            HeroId,
+            ConversationId,
+            "append",
+            Day,
+            Type,
+            Facts,
+            Summary,
+            Weight,
+            Source,
+            Sequence);
     }
 }
 
@@ -89,6 +151,9 @@ internal sealed class WorldPendingEvent
     internal string CorrelationId { get; }
     internal string EventKind { get; }
     internal string EventSchema { get; }
+    internal DataAccessScope AccessScope { get; }
+    internal SourceClass SourceClass { get; }
+    internal EpistemicStatus EpistemicStatus { get; }
     internal int Attempts { get; set; }
 
     internal WorldPendingEvent(
@@ -98,7 +163,10 @@ internal sealed class WorldPendingEvent
         JObject payload,
         string correlationId,
         string eventKind = null,
-        string eventSchema = null)
+        string eventSchema = null,
+        DataAccessScope accessScope = DataAccessScope.SensitiveExtension,
+        SourceClass sourceClass = SourceClass.ExtensionProvider,
+        EpistemicStatus epistemicStatus = EpistemicStatus.Fact)
     {
         EventId = eventId ?? Guid.NewGuid().ToString("N");
         CommandId = commandId ?? string.Empty;
@@ -107,6 +175,9 @@ internal sealed class WorldPendingEvent
         CorrelationId = correlationId ?? string.Empty;
         EventKind = eventKind ?? string.Empty;
         EventSchema = eventSchema ?? string.Empty;
+        AccessScope = accessScope;
+        SourceClass = sourceClass;
+        EpistemicStatus = epistemicStatus;
     }
 }
 
@@ -119,6 +190,8 @@ internal sealed class WorldApplyResult
 {
     internal bool Applied { get; set; }
     internal bool Retryable { get; set; }
+    internal bool CommitUnknown { get; set; }
+    internal int Attempts { get; set; }
     internal string Code { get; set; }
     internal WorldPendingEvent Event { get; set; }
 }
@@ -132,6 +205,40 @@ internal sealed class WorldDrainSummary
     internal int EventPublishFailureCount { get; set; }
     internal bool DeferredRetry { get; set; }
     internal bool OwnerCommandObserved { get; set; }
+    internal bool OwnerApplied { get; set; }
+    internal bool OwnerDuplicate { get; set; }
+    internal bool OwnerRetryable { get; set; }
+    internal bool OwnerCommitUnknown { get; set; }
+    internal int OwnerAttempts { get; set; }
+    internal string OwnerCode { get; set; }
+}
+
+internal sealed class WorldFinalDrainResult
+{
+    internal WorldFinalDrainResult(
+        bool succeeded,
+        int pendingWrites,
+        int pendingEvents,
+        int droppedItems,
+        string errorCode)
+    {
+        Succeeded = succeeded;
+        PendingWrites = pendingWrites;
+        PendingEvents = pendingEvents;
+        DroppedItems = droppedItems;
+        ErrorCode = errorCode ?? string.Empty;
+    }
+
+    internal bool Succeeded { get; }
+    internal int PendingWrites { get; }
+    internal int PendingEvents { get; }
+    internal int DroppedItems { get; }
+    internal string ErrorCode { get; }
+
+    internal static WorldFinalDrainResult NotStarted()
+    {
+        return new WorldFinalDrainResult(true, 0, 0, 0, string.Empty);
+    }
 }
 
 internal sealed class WorldCommandResultRecord
@@ -141,12 +248,17 @@ internal sealed class WorldCommandResultRecord
     internal bool Applied { get; set; }
     internal bool Duplicate { get; set; }
     internal bool Retryable { get; set; }
+    internal bool CommitUnknown { get; set; }
+    internal int Attempts { get; set; }
     internal string Code { get; set; }
     internal int EventPublishFailureCount { get; set; }
 }
 
 internal sealed class WorldStateStore
 {
+    private static readonly ConcurrentDictionary<string, SemaphoreSlim> LogicalKeyGates =
+        new ConcurrentDictionary<string, SemaphoreSlim>(StringComparer.Ordinal);
+
     private static bool IsStorageKeyNotFound(OperationResult<string> result)
     {
         return result != null
@@ -165,8 +277,13 @@ internal sealed class WorldStateStore
     private readonly Dictionary<string, MemoryReservation> _memoryReservations = new Dictionary<string, MemoryReservation>(StringComparer.Ordinal);
     private readonly Dictionary<string, int> _memorySequence = new Dictionary<string, int>(StringComparer.Ordinal);
     private readonly SemaphoreSlim _drainGate = new SemaphoreSlim(1, 1);
+    private readonly SemaphoreSlim _namespaceOpenGate = new SemaphoreSlim(1, 1);
     private bool _sessionEnded;
-    private bool _finalDrainStarted;
+    private bool _memoryReservationsQueuedForFinalDrain;
+    private WorldStateStoreLifecycle _lifecycleState = WorldStateStoreLifecycle.Active;
+    private Task<WorldFinalDrainResult> _finalDrainTask;
+    private int _activeDirectMemoryWrites;
+    private TaskCompletionSource<bool> _directMemoryWritesCompletion;
     private int _droppedItems;
 
     internal WorldStateStore(IMarcusAiFrameworkHost host)
@@ -192,37 +309,107 @@ internal sealed class WorldStateStore
         get { lock (_gate) return _sessionEnded; }
     }
 
-    internal async Task<bool> OpenNamespacesAsync(CancellationToken cancellationToken)
+    internal WorldStateStoreLifecycle LifecycleState
     {
-        bool any = false;
-        foreach (string namespaceId in AiTaskConstants.StorageNamespaceIds)
-        {
-            try
-            {
-                RequestContext context = CreateContext();
-                OperationResult<IKeyValueStore> result = await _host.Storage.OpenCampaignNamespaceAsync(namespaceId, context, cancellationToken).ConfigureAwait(false);
-                if (result.IsSuccess && result.Value != null)
-                {
-                    lock (_gate) _stores[namespaceId] = result.Value;
-                    any = true;
-                }
-                else
-                {
-                    AwakeLog.Write("world_state_namespace_open_degraded namespace=" + namespaceId + " code=" + (result.Error?.Code ?? "unknown"));
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                AwakeLog.Write("world_state_namespace_open_error namespace=" + namespaceId + " error=" + ex.Message);
-            }
-        }
-        return any;
+        get { lock (_gate) return _lifecycleState; }
     }
 
+    internal bool HasNamespaces(IReadOnlyCollection<string> namespaceIds)
+    {
+        if (namespaceIds == null || namespaceIds.Count == 0) return true;
+        lock (_gate)
+        {
+            foreach (string namespaceId in namespaceIds)
+            {
+                if (string.IsNullOrWhiteSpace(namespaceId) || !_stores.ContainsKey(namespaceId)) return false;
+            }
+            return true;
+        }
+    }
+
+    internal Task<bool> OpenNamespacesAsync(CancellationToken cancellationToken)
+    {
+        return OpenNamespacesAsync(cancellationToken, null);
+    }
+
+    internal async Task<bool> OpenNamespacesAsync(
+        CancellationToken cancellationToken,
+        IReadOnlyCollection<string> requiredNamespaces)
+    {
+        string[] targetNamespaces = requiredNamespaces == null || requiredNamespaces.Count == 0
+            ? AiTaskConstants.StorageNamespaceIds
+            : new List<string>(requiredNamespaces).ToArray();
+        if (targetNamespaces.Length == 0) return false;
+
+        await _namespaceOpenGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            Dictionary<string, IKeyValueStore> stagedStores = new Dictionary<string, IKeyValueStore>(StringComparer.Ordinal);
+            lock (_gate)
+            {
+                foreach (string namespaceId in targetNamespaces)
+                {
+                    IKeyValueStore existing;
+                    if (!string.IsNullOrWhiteSpace(namespaceId)
+                        && _stores.TryGetValue(namespaceId, out existing)
+                        && existing != null)
+                    {
+                        stagedStores[namespaceId] = existing;
+                    }
+                }
+            }
+
+            foreach (string namespaceId in targetNamespaces)
+            {
+                if (string.IsNullOrWhiteSpace(namespaceId)) return false;
+                if (stagedStores.ContainsKey(namespaceId)) continue;
+                if (_host == null || _host.Storage == null)
+                {
+                    AwakeLog.Write("world_state_namespace_open_unavailable namespace=" + namespaceId);
+                    return false;
+                }
+
+                try
+                {
+                    RequestContext context = CreateContext();
+                    OperationResult<IKeyValueStore> result = await _host.Storage.OpenCampaignNamespaceAsync(
+                        namespaceId,
+                        context,
+                        cancellationToken).ConfigureAwait(false);
+                    if (!result.IsSuccess || result.Value == null)
+                    {
+                        AwakeLog.Write("world_state_namespace_open_failed namespace=" + namespaceId
+                            + " code=" + (result.Error?.Code ?? "unknown"));
+                        return false;
+                    }
+                    stagedStores[namespaceId] = result.Value;
+                }
+                catch (OperationCanceledException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    AwakeLog.Write("world_state_namespace_open_error namespace=" + namespaceId + " error=" + ex.Message);
+                    return false;
+                }
+            }
+
+            lock (_gate)
+            {
+                if (_sessionEnded) return false;
+                foreach (KeyValuePair<string, IKeyValueStore> pair in stagedStores)
+                {
+                    _stores[pair.Key] = pair.Value;
+                }
+            }
+            return HasNamespaces(targetNamespaces);
+        }
+        finally
+        {
+            _namespaceOpenGate.Release();
+        }
+    }
     internal bool TryEnqueue(WorldStateCommand command)
     {
         if (command == null) return false;
@@ -239,26 +426,14 @@ internal sealed class WorldStateStore
         if (pending == null) return;
         _pendingEvents.Enqueue(pending);
     }
-    internal void BeginSessionEnd()
+    internal bool BeginSessionEnd()
     {
         lock (_gate)
         {
-            foreach (MemoryReservation reservation in _memoryReservations.Values)
-            {
-                _pendingWrites.Enqueue(BuildMemoryCommand(
-                    reservation.HeroId,
-                    reservation.ConversationId,
-                    "append",
-                    reservation.Day,
-                    "shared_experience",
-                    new JArray(),
-                    string.Empty,
-                    1,
-                    reservation.EntrySource,
-                    reservation.Sequence));
-            }
-            _memoryReservations.Clear();
+            if (_lifecycleState != WorldStateStoreLifecycle.Active) return false;
+            _lifecycleState = WorldStateStoreLifecycle.Ending;
             _sessionEnded = true;
+            return true;
         }
     }
 
@@ -293,13 +468,19 @@ internal sealed class WorldStateStore
     {
         if (string.IsNullOrWhiteSpace(heroId) || string.IsNullOrWhiteSpace(conversationId)) return false;
         int sequence = 0;
+        MemoryReservation reservation = null;
         lock (_gate)
         {
-            MemoryReservation reservation;
             if (_memoryReservations.TryGetValue(conversationId, out reservation))
             {
                 sequence = reservation.Sequence;
-                _memoryReservations.Remove(conversationId);
+                reservation.SetPayload(
+                    type,
+                    facts,
+                    summary,
+                    weight,
+                    string.IsNullOrWhiteSpace(source) ? "npc_dialogue" : source);
+                reservation.State = MemoryReservationState.Enqueued;
             }
             else
             {
@@ -317,8 +498,30 @@ internal sealed class WorldStateStore
             weight,
             string.IsNullOrWhiteSpace(source) ? "npc_dialogue" : source,
             sequence);
-        if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        if (!TryEnqueue(command))
+        {
+            if (reservation != null)
+            {
+                lock (_gate) reservation.State = MemoryReservationState.Reserved;
+            }
+            return false;
+        }
+        WorldDrainSummary drainSummary = await DrainAsync(
+            command.CommandId,
+            command.IdempotencyKey,
+            cancellationToken).ConfigureAwait(false);
+        if (!IsPersisted(drainSummary))
+        {
+            AwakeLog.Write("world_state_memory_flush_unsettled conversation=" + conversationId
+                + " retryable=" + drainSummary.OwnerRetryable
+                + " unknown=" + drainSummary.OwnerCommitUnknown
+                + " code=" + (drainSummary.OwnerCode ?? "none"));
+            return false;
+        }
+        if (reservation != null && IsPersisted(drainSummary))
+        {
+            lock (_gate) _memoryReservations.Remove(conversationId);
+        }
         return true;
     }
 
@@ -346,8 +549,8 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary drainSummary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(drainSummary);
     }
 
     internal async Task<bool> AppendEventMemoryAsync(
@@ -382,8 +585,8 @@ internal sealed class WorldStateStore
             string.IsNullOrWhiteSpace(source) ? "event" : source,
             sequence);
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
     }
 
     internal async Task<JObject> GetMemoriesAsync(string heroId, RequestContext context, CancellationToken cancellationToken)
@@ -519,8 +722,8 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
     }
 
     internal async Task<bool> ConsolidateMemoryAsync(
@@ -548,8 +751,8 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
     }
 
     internal async Task<JObject> GetProactiveAsync(RequestContext context, CancellationToken cancellationToken)
@@ -605,12 +808,13 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
     }
 
     internal async Task<JObject> GetWorldEventsAsync(RequestContext context, CancellationToken cancellationToken)
     {
+        if (!IsBusinessOperationOpen()) return null;
         IKeyValueStore store;
         lock (_gate) _stores.TryGetValue(AiTaskConstants.WorldEventsNamespace, out store);
         if (store == null) return null;
@@ -619,12 +823,11 @@ internal sealed class WorldStateStore
             AiTaskConstants.WorldEventsKey,
             context ?? CreateContext(),
             cancellationToken).ConfigureAwait(false);
+        if (!IsBusinessOperationOpen()) return null;
         if (!loaded.IsSuccess)
         {
-            if (!IsStorageKeyNotFound(loaded))
-            {
-                AwakeLog.Write("world_state_world_events_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
-            }
+            if (IsStorageKeyNotFound(loaded)) return NewWorldEventsState();
+            AwakeLog.Write("world_state_world_events_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
             return null;
         }
         if (string.IsNullOrWhiteSpace(loaded.Value)) return NewWorldEventsState();
@@ -632,6 +835,7 @@ internal sealed class WorldStateStore
         {
             JObject doc = JObject.Parse(loaded.Value);
             if (doc.Type != JTokenType.Object) throw new InvalidOperationException("world events root is not object");
+            EnsureWorldEventsShape(doc);
             return doc;
         }
         catch (Exception ex)
@@ -641,19 +845,208 @@ internal sealed class WorldStateStore
         }
     }
 
-    internal async Task<bool> AppendWorldEventAsync(
+    internal async Task<List<WeeklyReportApplicationState>> GetWeeklyReportStatesAsync(CancellationToken cancellationToken)
+    {
+        JObject state = await GetWorldEventsAsync(null, cancellationToken).ConfigureAwait(false);
+        if (state == null) return null;
+        var result = new List<WeeklyReportApplicationState>();
+        foreach (JObject value in ((JArray)state["weeklyReports"] ?? new JArray()).Children<JObject>())
+        {
+            string reportId = (string)value["reportId"] ?? string.Empty;
+            if (!WorldEventContract.IsStableId(reportId)) continue;
+            JObject report = value["report"] as JObject;
+            if (report != null
+                && (!StringComparer.Ordinal.Equals((string)report["reportId"], reportId)
+                    || !WorldEventContract.TryValidateWeeklyReport(report, out _)))
+                report = null;
+            result.Add(new WeeklyReportApplicationState
+            {
+                ReportId = reportId,
+                WindowStartDay = IntValue(value["windowStartDay"]),
+                WindowEndDay = IntValue(value["windowEndDay"]),
+                Status = (string)value["status"] ?? "retryable",
+                AttemptCount = IntValue(value["attemptCount"]),
+                LastAttemptDay = IntValue(value["lastAttemptDay"]),
+                LastErrorCode = (string)value["lastErrorCode"] ?? string.Empty,
+                Report = report == null ? null : (JObject)report.DeepClone()
+            });
+        }
+        return result;
+    }
+
+    internal async Task<WeeklyReportStateWriteResult> UpsertWeeklyReportStateAsync(
+        string reportId,
+        int windowStartDay,
+        int windowEndDay,
+        string status,
+        int lastAttemptDay,
+        string lastErrorCode,
+        JObject report,
+        CancellationToken cancellationToken)
+    {
+        if (!IsBusinessOperationOpen())
+        {
+            return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Retryable, Code = "awake.world_state.stale_store_session" };
+        }
+        if (!WorldEventContract.IsStableId(reportId) || (status != "applied" && status != "retryable"))
+        {
+            return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Failed, Code = "awake.world_state.weekly_report.invalid" };
+        }
+        if (report != null
+            && (!WorldEventContract.TryValidateWeeklyReport(report, out _)
+                || !StringComparer.Ordinal.Equals((string)report["reportId"], reportId)))
+        {
+            return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Failed, Code = "awake.world_state.weekly_report.invalid_payload" };
+        }
+        JObject currentState = await GetWorldEventsAsync(null, cancellationToken).ConfigureAwait(false);
+        if (currentState == null)
+        {
+            return new WeeklyReportStateWriteResult
+            {
+                Status = WeeklyReportStateWriteResult.Retryable,
+                Code = SessionEnded ? "awake.world_state.stale_store_session" : "awake.world_state.weekly_report.read_failed"
+            };
+        }
+        JObject current = ((JArray)currentState["weeklyReports"] ?? new JArray()).Children<JObject>()
+            .FirstOrDefault(value => StringComparer.Ordinal.Equals((string)value["reportId"], reportId));
+        bool currentApplied = StringComparer.Ordinal.Equals((string)current?["status"], "applied");
+        bool currentSnapshotValid = currentApplied && IsValidWeeklyReportSnapshot(current["report"], reportId);
+        if (currentApplied && (report == null || currentSnapshotValid))
+        {
+            return new WeeklyReportStateWriteResult
+            {
+                Status = WeeklyReportStateWriteResult.AlreadyApplied,
+                Attempts = IntValue(current["attemptCount"]),
+                Code = string.Empty,
+                Report = current["report"] is JObject appliedReport ? (JObject)appliedReport.DeepClone() : null
+            };
+        }
+        if (currentApplied && !currentSnapshotValid && status == "applied" && IsEmptyWeeklyReport(report))
+        {
+            return new WeeklyReportStateWriteResult
+            {
+                Status = WeeklyReportStateWriteResult.Retryable,
+                Attempts = IntValue(current["attemptCount"]),
+                Code = "awake.world_state.weekly_report.snapshot_unrecoverable"
+            };
+        }
+        int attemptCount = IntValue(current?["attemptCount"]) + 1;
+        string idempotencyKey = "awake:weekly-report-state:" + reportId + ":" + attemptCount;
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.WorldEventsNamespace,
+            AiTaskConstants.WorldEventsKey,
+            "awake.world.weekly_report_state",
+            idempotencyKey,
+            string.Empty,
+            WorldStateKind.WorldEvents,
+            new JObject
+            {
+                ["operation"] = "weekly_report_state",
+                ["reportId"] = reportId,
+                ["windowStartDay"] = windowStartDay,
+                ["windowEndDay"] = windowEndDay,
+                ["status"] = status,
+                ["attemptCount"] = attemptCount,
+                ["lastAttemptDay"] = lastAttemptDay,
+                ["lastErrorCode"] = lastErrorCode ?? string.Empty,
+                ["report"] = report == null ? null : (JObject)report.DeepClone()
+            },
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command))
+        {
+            return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Retryable, Attempts = attemptCount, Code = "awake.world_state.enqueue_failed" };
+        }
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        if (!IsBusinessOperationOpen())
+        {
+            return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Retryable, Attempts = attemptCount, Code = "awake.world_state.stale_store_session" };
+        }
+        if (summary.OwnerApplied)
+        {
+            return new WeeklyReportStateWriteResult
+            {
+                Status = status == "applied" ? WeeklyReportStateWriteResult.Applied : WeeklyReportStateWriteResult.Retryable,
+                Attempts = attemptCount,
+                Code = summary.OwnerCode,
+                Report = report == null ? null : (JObject)report.DeepClone()
+            };
+        }
+        if (summary.OwnerDuplicate && status == "applied")
+        {
+            return new WeeklyReportStateWriteResult
+            {
+                Status = WeeklyReportStateWriteResult.AlreadyApplied,
+                Attempts = attemptCount,
+                Code = summary.OwnerCode,
+                Report = report == null ? null : (JObject)report.DeepClone()
+            };
+        }
+        if (summary.OwnerRetryable || summary.OwnerCommitUnknown)
+        {
+            return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Retryable, Attempts = attemptCount, Code = summary.OwnerCode };
+        }
+        return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Failed, Attempts = attemptCount, Code = summary.HardFailureCode ?? summary.OwnerCode ?? "awake.world_state.weekly_report.write_failed" };
+    }
+
+    internal Task<WeeklyReportStateWriteResult> UpsertWeeklyReportStateAsync(
+        string reportId,
+        int windowStartDay,
+        int windowEndDay,
+        string status,
+        int lastAttemptDay,
+        string lastErrorCode,
+        CancellationToken cancellationToken)
+    {
+        return UpsertWeeklyReportStateAsync(
+            reportId,
+            windowStartDay,
+            windowEndDay,
+            status,
+            lastAttemptDay,
+            lastErrorCode,
+            null,
+            cancellationToken);
+    }
+
+    internal async Task<WorldEventAppendResult> AppendWorldEventAsync(
         int day,
         string kind,
         string text,
         string idempotencyKey,
+        string eventKey,
+        string domain,
+        DateTimeOffset occurredAt,
+        IReadOnlyList<string> visibilityIdentityIds,
         CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(idempotencyKey)) return false;
+        if (!IsBusinessOperationOpen())
+        {
+            return new WorldEventAppendResult
+            {
+                Status = WorldEventAppendResult.PersistenceRetryable,
+                EventId = idempotencyKey ?? string.Empty,
+                EventKey = eventKey ?? idempotencyKey ?? string.Empty,
+                Code = "awake.world_state.stale_store_session"
+            };
+        }
+        if (string.IsNullOrWhiteSpace(idempotencyKey))
+        {
+            return new WorldEventAppendResult
+            {
+                Status = WorldEventAppendResult.PersistenceFailed,
+                Code = "awake.world_event.invalid_idempotency_key"
+            };
+        }
         JObject arguments = new JObject
         {
             ["day"] = day,
             ["kind"] = kind ?? "event",
-            ["text"] = text ?? string.Empty
+            ["text"] = text ?? string.Empty,
+            ["eventKey"] = eventKey ?? idempotencyKey,
+            ["domain"] = domain ?? WeeklyReportService.InferDomain(kind),
+            ["occurredAt"] = occurredAt.ToUniversalTime().ToString("O"),
+            ["visibilityIdentityIds"] = new JArray(WorldEventAudience.Resolve(visibilityIdentityIds).Select(value => (object)value))
         };
         WorldStateCommand command = new WorldStateCommand(
             AiTaskConstants.WorldEventsNamespace,
@@ -665,9 +1058,113 @@ internal sealed class WorldStateStore
             arguments,
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
-        if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        if (!TryEnqueue(command))
+        {
+            return new WorldEventAppendResult
+            {
+                Status = SessionEnded ? WorldEventAppendResult.PersistenceRetryable : WorldEventAppendResult.PersistenceFailed,
+                EventId = idempotencyKey,
+                EventKey = eventKey ?? idempotencyKey,
+                Code = SessionEnded ? "awake.world_state.stale_store_session" : "awake.world_state.enqueue_failed"
+            };
+        }
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        if (!IsBusinessOperationOpen())
+        {
+            return new WorldEventAppendResult
+            {
+                Status = WorldEventAppendResult.PersistenceUnknown,
+                EventId = idempotencyKey,
+                EventKey = eventKey ?? idempotencyKey,
+                Attempts = summary.OwnerAttempts,
+                Code = "awake.world_state.stale_store_session"
+            };
+        }
+        if (summary.OwnerApplied)
+        {
+            return new WorldEventAppendResult
+            {
+                Status = WorldEventAppendResult.Persisted,
+                EventId = idempotencyKey,
+                EventKey = eventKey ?? idempotencyKey,
+                Attempts = summary.OwnerAttempts,
+                Code = summary.OwnerCode
+            };
+        }
+        if (summary.OwnerDuplicate)
+        {
+            return new WorldEventAppendResult
+            {
+                Status = WorldEventAppendResult.DuplicateConfirmed,
+                EventId = idempotencyKey,
+                EventKey = eventKey ?? idempotencyKey,
+                Attempts = summary.OwnerAttempts,
+                Code = summary.OwnerCode
+            };
+        }
+        if (summary.OwnerCommitUnknown)
+        {
+            return new WorldEventAppendResult
+            {
+                Status = WorldEventAppendResult.PersistenceUnknown,
+                EventId = idempotencyKey,
+                EventKey = eventKey ?? idempotencyKey,
+                Attempts = summary.OwnerAttempts,
+                Code = summary.OwnerCode
+            };
+        }
+        if (summary.OwnerRetryable)
+        {
+            return new WorldEventAppendResult
+            {
+                Status = WorldEventAppendResult.PersistenceRetryable,
+                EventId = idempotencyKey,
+                EventKey = eventKey ?? idempotencyKey,
+                Attempts = summary.OwnerAttempts,
+                Code = summary.OwnerCode
+            };
+        }
+        if (StringComparer.Ordinal.Equals(summary.HardFailureCode, "awake.world_state.key_conflict"))
+        {
+            return new WorldEventAppendResult
+            {
+                Status = WorldEventAppendResult.KeyConflict,
+                EventId = idempotencyKey,
+                EventKey = eventKey ?? idempotencyKey,
+                Attempts = summary.OwnerAttempts,
+                Code = summary.HardFailureCode
+            };
+        }
+        return new WorldEventAppendResult
+        {
+            Status = WorldEventAppendResult.PersistenceFailed,
+            EventId = idempotencyKey,
+            EventKey = eventKey ?? idempotencyKey,
+            Attempts = summary.OwnerAttempts,
+            Code = summary.HardFailureCode ?? summary.OwnerCode ?? "awake.world_state.append_failed"
+        };
+    }
+
+    internal Task<WorldEventAppendResult> AppendWorldEventAsync(
+        int day,
+        string kind,
+        string text,
+        string idempotencyKey,
+        string eventKey,
+        string domain,
+        DateTimeOffset occurredAt,
+        CancellationToken cancellationToken)
+    {
+        return AppendWorldEventAsync(
+            day,
+            kind,
+            text,
+            idempotencyKey,
+            eventKey,
+            domain,
+            occurredAt,
+            null,
+            cancellationToken);
     }
 
     internal async Task<JObject> GetMessengerAsync(RequestContext context, CancellationToken cancellationToken)
@@ -729,8 +1226,8 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
     }
 
     internal async Task<JObject> GetOnboardingAsync(RequestContext context, CancellationToken cancellationToken)
@@ -792,8 +1289,8 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
     }
 
     internal async Task<JObject> GetDialogueQueueAsync(RequestContext context, CancellationToken cancellationToken)
@@ -865,8 +1362,8 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
     }
 
     internal async Task<bool> ConsumeDialogueAsync(
@@ -891,8 +1388,8 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
     }
 
     internal async Task<JObject> GetInteractionsAsync(
@@ -930,6 +1427,65 @@ internal sealed class WorldStateStore
         }
     }
 
+    internal async Task<JObject> GetInteractionRecoveryIndexAsync(
+        RequestContext context,
+        CancellationToken cancellationToken)
+    {
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.InteractionsNamespace, out store);
+        if (store == null) return null;
+        OperationResult<string> loaded = await store.GetAsync(
+            AiTaskConstants.InteractionsRecoveryIndexKey,
+            context ?? CreateContext(),
+            cancellationToken).ConfigureAwait(false);
+        if (!loaded.IsSuccess)
+        {
+            if (IsStorageKeyNotFound(loaded)) return NewInteractionRecoveryIndexState();
+            AwakeLog.Write("world_state_interactions_index_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            return null;
+        }
+        if (string.IsNullOrWhiteSpace(loaded.Value)) return NewInteractionRecoveryIndexState();
+        try
+        {
+            JObject doc = JObject.Parse(loaded.Value);
+            return doc.Type == JTokenType.Object ? doc : null;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_state_interactions_index_corrupt error=" + ex.Message);
+            return null;
+        }
+    }
+
+    internal async Task<bool> UpdateInteractionRecoveryIndexAsync(
+        string canonicalContactKey,
+        string interactionId,
+        bool pending,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        JObject arguments = new JObject
+        {
+            ["canonicalContactKey"] = canonicalContactKey ?? string.Empty,
+            ["interactionId"] = interactionId ?? string.Empty,
+            ["pending"] = pending,
+            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O")
+        };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.InteractionsNamespace,
+            AiTaskConstants.InteractionsRecoveryIndexKey,
+            AiTaskConstants.InteractionsIndexUpdateCommandId,
+            idempotencyKey,
+            string.Empty,
+            WorldStateKind.InteractionIndex,
+            arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
+    }
+
     internal async Task<bool> UpsertPromiseAsync(
         string canonicalContactKey,
         JObject promise,
@@ -956,8 +1512,8 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
     }
 
     internal async Task<bool> UpdatePromiseStatusAsync(
@@ -993,8 +1549,8 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
     }
 
     internal async Task<JObject> GetTranscriptChunkAsync(
@@ -1068,8 +1624,13 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        bool persisted = IsPersisted(summary);
+        if (!persisted)
+        {
+            AwakeLog.Write("transcript_write_not_persisted key=" + contactKey + " code=" + (summary.HardFailureCode ?? "deferred"));
+        }
+        return persisted;
     }
 
     internal async Task<bool> PinTranscriptAsync(
@@ -1100,8 +1661,8 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
     }
 
     internal async Task<bool> EnsureContactAsync(
@@ -1109,8 +1670,18 @@ internal sealed class WorldStateStore
         string idempotencyKey,
         CancellationToken cancellationToken)
     {
+        return await EnsureContactAsync(contactKey, string.Empty, idempotencyKey, cancellationToken).ConfigureAwait(false);
+    }
+
+    internal async Task<bool> EnsureContactAsync(
+        string contactKey,
+        string displayName,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
         if (string.IsNullOrWhiteSpace(contactKey) || string.IsNullOrWhiteSpace(idempotencyKey)) return false;
         JObject arguments = new JObject { ["contactKey"] = contactKey };
+        if (!string.IsNullOrWhiteSpace(displayName)) arguments["displayName"] = displayName;
         WorldStateCommand command = new WorldStateCommand(
             AiTaskConstants.ContactsNamespace,
             AwakeTranscriptKeys.ContactsKey,
@@ -1122,8 +1693,13 @@ internal sealed class WorldStateStore
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
-        await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
-        return true;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        bool persisted = IsPersisted(summary);
+        if (!persisted)
+        {
+            AwakeLog.Write("contact_write_not_persisted key=" + contactKey + " code=" + (summary.HardFailureCode ?? "deferred"));
+        }
+        return persisted;
     }
 
     internal async Task<JObject> GetContactsAsync(RequestContext context, CancellationToken cancellationToken)
@@ -1147,34 +1723,85 @@ internal sealed class WorldStateStore
         }
     }
 
-    internal async Task BeginFinalDrainAsync()
+    internal Task<WorldFinalDrainResult> BeginFinalDrainAsync()
     {
-        bool started;
+        TaskCompletionSource<WorldFinalDrainResult> completion = null;
+        Task<WorldFinalDrainResult> existingTask;
+        Task directMemoryWritesTask = Task.CompletedTask;
         lock (_gate)
         {
-            if (_finalDrainStarted)
+            if (_lifecycleState == WorldStateStoreLifecycle.Active)
             {
-                started = false;
+                _lifecycleState = WorldStateStoreLifecycle.Ending;
+                _sessionEnded = true;
             }
-            else
+            if (_lifecycleState == WorldStateStoreLifecycle.Ending && !_memoryReservationsQueuedForFinalDrain)
             {
-                _finalDrainStarted = true;
-                started = true;
+                foreach (MemoryReservation reservation in _memoryReservations.Values)
+                {
+                    _pendingWrites.Enqueue(reservation.BuildCommand());
+                }
+                _memoryReservationsQueuedForFinalDrain = true;
+            }
+            if (_activeDirectMemoryWrites > 0)
+            {
+                if (_directMemoryWritesCompletion == null)
+                {
+                    _directMemoryWritesCompletion = new TaskCompletionSource<bool>(
+                        TaskCreationOptions.RunContinuationsAsynchronously);
+                }
+                directMemoryWritesTask = _directMemoryWritesCompletion.Task;
+            }
+            existingTask = _finalDrainTask;
+            if (existingTask == null)
+            {
+                completion = new TaskCompletionSource<WorldFinalDrainResult>(
+                    TaskCreationOptions.RunContinuationsAsynchronously);
+                _finalDrainTask = completion.Task;
+                existingTask = completion.Task;
             }
         }
-        if (!started) return;
 
+        if (completion == null) return existingTask;
+        _ = CompleteFinalDrainAsync(completion, directMemoryWritesTask);
+        return existingTask;
+    }
+
+    private async Task CompleteFinalDrainAsync(
+        TaskCompletionSource<WorldFinalDrainResult> completion,
+        Task directMemoryWritesTask)
+    {
+        await Task.Yield();
+        WorldFinalDrainResult result = null;
         try
         {
+            await directMemoryWritesTask.ConfigureAwait(false);
             await DrainAsync(CancellationToken.None).ConfigureAwait(false);
-            bool empty;
+            int pendingWrites;
+            int pendingEvents;
+            int droppedItems;
             lock (_gate)
             {
-                empty = _pendingWrites.IsEmpty && _pendingEvents.IsEmpty;
+                pendingWrites = _pendingWrites.Count;
+                pendingEvents = _pendingEvents.Count;
+                droppedItems = _droppedItems;
             }
-            if (_droppedItems > 0 || !empty)
+            bool succeeded = pendingWrites == 0 && pendingEvents == 0 && droppedItems == 0;
+            string errorCode = succeeded
+                ? string.Empty
+                : BuildFinalDrainErrorCode(pendingWrites, pendingEvents, droppedItems);
+            result = new WorldFinalDrainResult(
+                succeeded,
+                pendingWrites,
+                pendingEvents,
+                droppedItems,
+                errorCode);
+            if (!succeeded)
             {
-                AwakeLog.Write("world_state_final_drain_failed pending_writes=" + _pendingWrites.Count + " pending_events=" + _pendingEvents.Count + " dropped=" + _droppedItems);
+                AwakeLog.Write("world_state_final_drain_failed pending_writes=" + pendingWrites
+                    + " pending_events=" + pendingEvents
+                    + " dropped=" + droppedItems
+                    + " code=" + errorCode);
             }
             else
             {
@@ -1183,8 +1810,78 @@ internal sealed class WorldStateStore
         }
         catch (Exception ex)
         {
-            AwakeLog.Write("world_state_final_drain_error error=" + ex.Message);
+            AwakeLog.Write("world_state_final_drain_error code=awake.world_state.final_drain_error error=" + ex.Message);
+            result = new WorldFinalDrainResult(
+                false,
+                _pendingWrites.Count,
+                _pendingEvents.Count,
+                Volatile.Read(ref _droppedItems),
+                "awake.world_state.final_drain_error");
         }
+        finally
+        {
+            lock (_gate)
+            {
+                _lifecycleState = WorldStateStoreLifecycle.Ended;
+                _sessionEnded = true;
+                _memoryReservations.Clear();
+            }
+            completion.TrySetResult(result ?? new WorldFinalDrainResult(
+                false,
+                _pendingWrites.Count,
+                _pendingEvents.Count,
+                Volatile.Read(ref _droppedItems),
+                "awake.world_state.final_drain_error"));
+        }
+    }
+
+    private static string BuildFinalDrainErrorCode(int pendingWrites, int pendingEvents, int droppedItems)
+    {
+        if (droppedItems > 0) return "awake.world_state.final_drain_dropped";
+        if (pendingWrites > 0 || pendingEvents > 0) return "awake.world_state.final_drain_pending";
+        return "awake.world_state.final_drain_incomplete";
+    }
+
+    private bool IsBusinessOperationOpen()
+    {
+        lock (_gate) return _lifecycleState == WorldStateStoreLifecycle.Active && !_sessionEnded;
+    }
+
+    private bool TryBeginDirectMemoryWrite(out IKeyValueStore store)
+    {
+        store = null;
+        if (!ReferenceEquals(AwakeRuntime.WorldStateStore, this)) return false;
+        lock (_gate)
+        {
+            if (_lifecycleState != WorldStateStoreLifecycle.Active || _sessionEnded) return false;
+            if (!_stores.TryGetValue(AiTaskConstants.NpcMemoriesNamespace, out store) || store == null)
+            {
+                store = null;
+                return false;
+            }
+            _activeDirectMemoryWrites++;
+            return true;
+        }
+    }
+
+    private void CompleteDirectMemoryWrite()
+    {
+        TaskCompletionSource<bool> completion = null;
+        lock (_gate)
+        {
+            if (_activeDirectMemoryWrites <= 0) return;
+            _activeDirectMemoryWrites--;
+            if (_activeDirectMemoryWrites == 0)
+            {
+                completion = _directMemoryWritesCompletion;
+            }
+        }
+        if (completion != null) completion.TrySetResult(true);
+    }
+
+    private bool IsCurrentWorldStateStoreOpen()
+    {
+        return ReferenceEquals(AwakeRuntime.WorldStateStore, this) && IsBusinessOperationOpen();
     }
 
     internal async Task<WorldDrainSummary> DrainAsync(CancellationToken cancellationToken)
@@ -1243,6 +1940,12 @@ internal sealed class WorldStateStore
         WorldDrainSummary summary = new WorldDrainSummary
         {
             OwnerCommandObserved = record != null,
+            OwnerApplied = record != null && record.Applied,
+            OwnerDuplicate = record != null && record.Duplicate,
+            OwnerRetryable = record != null && record.Retryable,
+            OwnerCommitUnknown = record != null && record.CommitUnknown,
+            OwnerAttempts = record?.Attempts ?? 0,
+            OwnerCode = record?.Code ?? string.Empty,
             StateWriteCount = record != null && record.Applied ? 1 : 0,
             DuplicateCount = record != null && record.Duplicate ? 1 : 0,
             EventPublishFailureCount = record?.EventPublishFailureCount ?? 0,
@@ -1256,22 +1959,51 @@ internal sealed class WorldStateStore
         return summary;
     }
 
+    private static bool IsPersisted(WorldDrainSummary summary)
+    {
+        return summary != null
+            && summary.OwnerCommandObserved
+            && (summary.OwnerApplied || summary.OwnerDuplicate)
+            && summary.HardFailureCount == 0
+            && !summary.OwnerRetryable
+            && !summary.OwnerCommitUnknown
+            && !summary.DeferredRetry;
+    }
+
     internal async Task<bool> WriteEmptyMemoryAsync(string heroId, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(heroId)) return false;
         IKeyValueStore store;
-        lock (_gate) _stores.TryGetValue(AiTaskConstants.NpcMemoriesNamespace, out store);
-        if (store == null) return false;
-
-        JObject doc = new JObject
+        if (!TryBeginDirectMemoryWrite(out store)) return false;
+        try
         {
-            ["schema"] = "awake.npc.memory.v1",
-            ["heroId"] = heroId,
-            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
-            ["memories"] = new JArray()
-        };
-        OperationResult<bool> stored = await store.SetAsync(HeroKey(heroId), doc.ToString(Formatting.None), CreateContext(), cancellationToken).ConfigureAwait(false);
-        return stored.IsSuccess && stored.Value;
+            JObject doc = new JObject
+            {
+                ["schema"] = "awake.npc.memory.v1",
+                ["heroId"] = heroId,
+                ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+                ["memories"] = new JArray()
+            };
+            string key = HeroKey(heroId);
+            return await WithLogicalKeyGateAsync(
+                AiTaskConstants.NpcMemoriesNamespace,
+                key,
+                async () =>
+                {
+                    if (!IsCurrentWorldStateStoreOpen()) return false;
+                    OperationResult<bool> stored = await store.SetAsync(
+                        key,
+                        doc.ToString(Formatting.None),
+                        CreateContext(),
+                        cancellationToken).ConfigureAwait(false);
+                    return stored.IsSuccess && stored.Value;
+                },
+                cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            CompleteDirectMemoryWrite();
+        }
     }
 
     private async Task<DrainWritePass> DrainWritesOnceAsync(CancellationToken cancellationToken)
@@ -1299,6 +2031,8 @@ internal sealed class WorldStateStore
                     + " error=" + ex.Message);
                 result = new WorldApplyResult { Retryable = true, Code = "awake.world_state.apply_error" };
             }
+            if (result.Retryable && command.Attempts >= AiTaskConstants.DrainMaximumRetries)
+                result.Retryable = false;
             RecordResult(command, result);
             if (result.Applied)
             {
@@ -1330,7 +2064,7 @@ internal sealed class WorldStateStore
         return new DrainWritePass { Any = any, DeferredRetry = deferredRetry };
     }
 
-    private async Task<bool> DrainEventsOnceAsync(CancellationToken cancellationToken)
+    private Task<bool> DrainEventsOnceAsync(CancellationToken cancellationToken)
     {
         bool any = false;
         WorldPendingEvent pending;
@@ -1347,9 +2081,9 @@ internal sealed class WorldStateStore
                 pending.EventKind,
                 pending.CorrelationId,
                 pending.CorrelationId,
-                DataAccessScope.PlayerKnown,
-                SourceClass.ExtensionProvider,
-                EpistemicStatus.Fact,
+                pending.AccessScope,
+                pending.SourceClass,
+                pending.EpistemicStatus,
                 DateTimeOffset.UtcNow,
                 pending.Payload.ToString(Formatting.None));
 
@@ -1383,7 +2117,7 @@ internal sealed class WorldStateStore
                     + " attempts=" + pending.Attempts);
             }
         }
-        return any;
+        return Task.FromResult(any);
     }
 
     private void RecordResult(WorldStateCommand command, WorldApplyResult result)
@@ -1398,6 +2132,8 @@ internal sealed class WorldStateStore
                 Applied = result.Applied,
                 Duplicate = StringComparer.Ordinal.Equals(result.Code, "awake.world_state.duplicate"),
                 Retryable = result.Retryable,
+                CommitUnknown = result.CommitUnknown,
+                Attempts = command.Attempts,
                 Code = result.Code ?? string.Empty
             });
         }
@@ -1463,7 +2199,7 @@ internal sealed class WorldStateStore
         return (commandId ?? string.Empty) + "|" + (idempotencyKey ?? string.Empty);
     }
 
-    private static WorldStateCommand BuildMemoryCommand(
+    internal static WorldStateCommand BuildMemoryCommand(
         string heroId,
         string conversationId,
         string mode,
@@ -1500,7 +2236,40 @@ internal sealed class WorldStateStore
             Guid.NewGuid().ToString("N"));
     }
 
-    private async Task<WorldApplyResult> TryApplyAsync(WorldStateCommand command, RequestContext context, CancellationToken cancellationToken)
+    private static SemaphoreSlim GetLogicalKeyGate(string namespaceId, string key)
+    {
+        string gateKey = (namespaceId ?? string.Empty) + "\u001f" + (key ?? string.Empty);
+        return LogicalKeyGates.GetOrAdd(gateKey, _ => new SemaphoreSlim(1, 1));
+    }
+
+    private static async Task<T> WithLogicalKeyGateAsync<T>(
+        string namespaceId,
+        string key,
+        Func<Task<T>> operation,
+        CancellationToken cancellationToken)
+    {
+        SemaphoreSlim gate = GetLogicalKeyGate(namespaceId, key);
+        await gate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            return await operation().ConfigureAwait(false);
+        }
+        finally
+        {
+            gate.Release();
+        }
+    }
+
+    private Task<WorldApplyResult> TryApplyAsync(WorldStateCommand command, RequestContext context, CancellationToken cancellationToken)
+    {
+        return WithLogicalKeyGateAsync(
+            command.NamespaceId,
+            command.Key,
+            () => TryApplyCoreAsync(command, context, cancellationToken),
+            cancellationToken);
+    }
+
+    private async Task<WorldApplyResult> TryApplyCoreAsync(WorldStateCommand command, RequestContext context, CancellationToken cancellationToken)
     {
         IKeyValueStore store;
         lock (_gate) _stores.TryGetValue(command.NamespaceId, out store);
@@ -1542,13 +2311,22 @@ internal sealed class WorldStateStore
                 + " expected=" + expectedSchema);
         }
 
-        if (command.Kind != WorldStateKind.EventMeta)
+        if (command.Kind != WorldStateKind.EventMeta && !IsWeeklyReportStateCommand(command))
         {
             JArray appliedKeys = (JArray)state["appliedKeys"];
             foreach (JToken keyToken in appliedKeys)
             {
                 if (keyToken.Type == JTokenType.String && StringComparer.Ordinal.Equals((string)keyToken, command.IdempotencyKey))
                 {
+                    if (command.Kind == WorldStateKind.WorldEvents && !IsWeeklyReportStateCommand(command))
+                    {
+                        JArray records = state["records"] as JArray;
+                        JObject existing = records?.Children<JObject>().FirstOrDefault(value =>
+                            StringComparer.Ordinal.Equals((string)value["id"], command.IdempotencyKey)
+                            || StringComparer.Ordinal.Equals((string)value["eventKey"], (string)command.Arguments["eventKey"]));
+                        if (existing != null && !SameWorldEventPayload(existing, command))
+                            return new WorldApplyResult { Applied = false, Retryable = false, Code = "awake.world_state.key_conflict" };
+                    }
                     return new WorldApplyResult { Applied = false, Retryable = false, Code = "awake.world_state.duplicate" };
                 }
             }
@@ -1594,6 +2372,9 @@ internal sealed class WorldStateStore
             case WorldStateKind.Interaction:
                 applyError = ApplyInteraction(state, command);
                 break;
+            case WorldStateKind.InteractionIndex:
+                applyError = ApplyInteractionRecoveryIndex(state, command);
+                break;
         }
         if (!string.IsNullOrWhiteSpace(applyError))
         {
@@ -1610,7 +2391,12 @@ internal sealed class WorldStateStore
         OperationResult<bool> stored = await store.SetAsync(command.Key, json, context, cancellationToken).ConfigureAwait(false);
         if (!stored.IsSuccess || !stored.Value)
         {
-            return new WorldApplyResult { Retryable = true, Code = stored.Error?.Code ?? "awake.world_state.write_failed" };
+            return new WorldApplyResult
+            {
+                Retryable = true,
+                CommitUnknown = !stored.IsSuccess,
+                Code = stored.Error?.Code ?? "awake.world_state.write_failed"
+            };
         }
 
         if (eventPayload != null)
@@ -1631,6 +2417,13 @@ internal sealed class WorldStateStore
         return new WorldApplyResult { Applied = true };
     }
 
+    private static bool IsWeeklyReportStateCommand(WorldStateCommand command)
+    {
+        return command != null
+            && command.Kind == WorldStateKind.WorldEvents
+            && StringComparer.Ordinal.Equals((string)command.Arguments["operation"], "weekly_report_state");
+    }
+
     private static JObject NewState(WorldStateKind kind, string heroId)
     {
         switch (kind)
@@ -1647,6 +2440,7 @@ internal sealed class WorldStateStore
             case WorldStateKind.Onboarding: return NewOnboardingState();
             case WorldStateKind.PendingDialogue: return NewDialogueQueueState();
             case WorldStateKind.Interaction: return NewInteractionState(heroId);
+            case WorldStateKind.InteractionIndex: return NewInteractionRecoveryIndexState();
             default: return new JObject();
         }
     }
@@ -1695,7 +2489,8 @@ internal sealed class WorldStateStore
             ["schema"] = "awake.world_events.v1",
             ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
             ["records"] = new JArray(),
-            ["appliedKeys"] = new JArray()
+            ["appliedKeys"] = new JArray(),
+            ["weeklyReports"] = new JArray()
         };
     }
 
@@ -1731,6 +2526,7 @@ internal sealed class WorldStateStore
             ["schema"] = AwakeTranscriptConstants.ContactsSchema,
             ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
             ["contacts"] = new JArray(),
+            ["contactNames"] = new JObject(),
             ["appliedKeys"] = new JArray()
         };
     }
@@ -1766,6 +2562,16 @@ internal sealed class WorldStateStore
         {
             ["schema"] = AwakeStorageContract.DialogueQueueSchema,
             ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+            ["entries"] = new JArray(),
+            ["appliedKeys"] = new JArray()
+        };
+    }
+
+    private static JObject NewInteractionRecoveryIndexState()
+    {
+        return new JObject
+        {
+            ["schema"] = AwakeStorageContract.InteractionRecoveryIndexSchema,
             ["entries"] = new JArray(),
             ["appliedKeys"] = new JArray()
         };
@@ -1910,6 +2716,7 @@ internal sealed class WorldStateStore
     {
         state["schema"] = AwakeTranscriptConstants.ContactsSchema;
         if (!(state["contacts"] is JArray)) state["contacts"] = new JArray();
+        if (!(state["contactNames"] is JObject)) state["contactNames"] = new JObject();
         if (!(state["appliedKeys"] is JArray)) state["appliedKeys"] = new JArray();
     }
 
@@ -1923,6 +2730,11 @@ internal sealed class WorldStateStore
         {
             contacts.Add(contactKey);
             Trim(contacts, 1000);
+        }
+        string displayName = (string)command.Arguments["displayName"] ?? string.Empty;
+        if (!string.IsNullOrWhiteSpace(displayName))
+        {
+            ((JObject)state["contactNames"])[contactKey] = displayName;
         }
         JArray appliedKeys = (JArray)state["appliedKeys"];
         appliedKeys.Add(command.IdempotencyKey);
@@ -2121,16 +2933,39 @@ internal sealed class WorldStateStore
                 ["correlation"] = command.CorrelationId
             });
         }
-        else if (StringComparer.Ordinal.Equals(mode, "give_gold"))
+        else if (StringComparer.Ordinal.Equals(mode, "give_gold_pending"))
         {
-            interactions.Add(new JObject
+            string interactionId = (string)command.Arguments["interactionId"] ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(interactionId)) return "awake.world_state.interactions.invalid_interaction_id";
+            if (FindInteraction(interactions, interactionId) == null)
             {
-                ["kind"] = "give_gold",
-                ["amount"] = IntValue(command.Arguments["amount"]),
-                ["targetHeroId"] = (string)command.Arguments["targetHeroId"] ?? string.Empty,
-                ["day"] = IntValue(command.Arguments["day"]),
-                ["correlation"] = command.CorrelationId
-            });
+                interactions.Add(new JObject
+                {
+                    ["interactionId"] = interactionId,
+                    ["kind"] = "give_gold",
+                    ["phase"] = "pending",
+                    ["amount"] = IntValue(command.Arguments["amount"]),
+                    ["targetHeroId"] = (string)command.Arguments["targetHeroId"] ?? string.Empty,
+                    ["expectedBalanceBefore"] = IntValue(command.Arguments["expectedBalanceBefore"]),
+                    ["expectedBalanceAfter"] = IntValue(command.Arguments["expectedBalanceAfter"]),
+                    ["sessionId"] = (string)command.Arguments["sessionId"] ?? string.Empty,
+                    ["generation"] = IntValue(command.Arguments["generation"]),
+                    ["snapshotToken"] = (string)command.Arguments["snapshotToken"] ?? string.Empty,
+                    ["day"] = IntValue(command.Arguments["day"]),
+                    ["correlation"] = command.CorrelationId,
+                    ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O")
+                });
+            }
+        }
+        else if (StringComparer.Ordinal.Equals(mode, "give_gold_complete")
+            || StringComparer.Ordinal.Equals(mode, "give_gold_compensated"))
+        {
+            string interactionId = (string)command.Arguments["interactionId"] ?? string.Empty;
+            JObject existing = FindInteraction(interactions, interactionId);
+            if (existing == null) return "awake.world_state.interactions.interaction_not_found";
+            existing["phase"] = StringComparer.Ordinal.Equals(mode, "give_gold_complete") ? "complete" : "compensated";
+            existing["reason"] = ClampTextElements((string)command.Arguments["reason"] ?? string.Empty, 240);
+            existing["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
         }
         else
         {
@@ -2154,6 +2989,66 @@ internal sealed class WorldStateStore
             }
         }
         return null;
+    }
+
+    private static JObject FindInteraction(JArray interactions, string interactionId)
+    {
+        if (interactions == null) return null;
+        foreach (JToken token in interactions)
+        {
+            if (token is JObject obj && StringComparer.Ordinal.Equals((string)obj["interactionId"], interactionId))
+            {
+                return obj;
+            }
+        }
+        return null;
+    }
+
+    private static string ApplyInteractionRecoveryIndex(JObject state, WorldStateCommand command)
+    {
+        state["schema"] = AwakeStorageContract.InteractionRecoveryIndexSchema;
+        if (!(state["entries"] is JArray entries)) state["entries"] = entries = new JArray();
+        if (!(state["appliedKeys"] is JArray appliedKeys)) state["appliedKeys"] = appliedKeys = new JArray();
+        string contactKey = (string)command.Arguments["canonicalContactKey"] ?? string.Empty;
+        string interactionId = (string)command.Arguments["interactionId"] ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(contactKey) || string.IsNullOrWhiteSpace(interactionId))
+        {
+            return "awake.world_state.interactions.invalid_recovery_index_entry";
+        }
+        JObject existing = null;
+        foreach (JToken token in entries)
+        {
+            if (token is JObject obj && StringComparer.Ordinal.Equals((string)obj["interactionId"], interactionId))
+            {
+                existing = obj;
+                break;
+            }
+        }
+        if (BoolValue(command.Arguments["pending"]))
+        {
+            if (existing == null)
+            {
+                entries.Add(new JObject
+                {
+                    ["canonicalContactKey"] = contactKey,
+                    ["interactionId"] = interactionId,
+                    ["updatedUtc"] = (string)command.Arguments["updatedUtc"] ?? DateTimeOffset.UtcNow.ToString("O")
+                });
+            }
+            else
+            {
+                existing["canonicalContactKey"] = contactKey;
+                existing["updatedUtc"] = (string)command.Arguments["updatedUtc"] ?? DateTimeOffset.UtcNow.ToString("O");
+            }
+        }
+        else if (existing != null)
+        {
+            existing.Remove();
+        }
+        Trim(entries, 200);
+        appliedKeys.Add(command.IdempotencyKey);
+        Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
+        return string.Empty;
     }
 
     private static JObject NewRelationshipState(string heroId)
@@ -2204,18 +3099,48 @@ internal sealed class WorldStateStore
         state["schema"] = "awake.world_events.v1";
         if (!(state["records"] is JArray)) state["records"] = new JArray();
         if (!(state["appliedKeys"] is JArray)) state["appliedKeys"] = new JArray();
+        if (!(state["weeklyReports"] is JArray)) state["weeklyReports"] = new JArray();
+        JArray records = (JArray)state["records"];
+        HashSet<string> seen = new HashSet<string>(StringComparer.Ordinal);
+        HashSet<string> seenKeys = new HashSet<string>(StringComparer.Ordinal);
+        for (int index = 0; index < records.Count; index++)
+        {
+            if (!(records[index] is JObject record)) continue;
+            string id = (string)record["id"] ?? string.Empty;
+            string eventKey = (string)record["eventKey"] ?? id;
+            if (string.IsNullOrWhiteSpace(id) || (seen.Add(id) && seenKeys.Add(eventKey))) continue;
+            records.RemoveAt(index--);
+        }
     }
 
     private static string ApplyWorldEvents(JObject state, WorldStateCommand command)
     {
         EnsureWorldEventsShape(state);
+        if (IsWeeklyReportStateCommand(command)) return ApplyWeeklyReportState(state, command);
         JArray records = (JArray)state["records"];
+        string eventId = command.IdempotencyKey;
+        string eventKey = (string)command.Arguments["eventKey"] ?? eventId;
+        foreach (JToken token in records)
+        {
+            if (token is JObject existing
+                && (StringComparer.Ordinal.Equals((string)existing["id"], eventId)
+                    || StringComparer.Ordinal.Equals((string)existing["eventKey"] ?? (string)existing["id"], eventKey)))
+            {
+                return SameWorldEventPayload(existing, command) ? "awake.world_state.duplicate" : "awake.world_state.key_conflict";
+            }
+        }
+        string kind = WorldEventContract.NormalizeEventType((string)command.Arguments["kind"] ?? "event");
+        JArray visibilityIdentityIds = NormalizeIdentityIds(command.Arguments["visibilityIdentityIds"]);
         records.Insert(0, new JObject
         {
-            ["id"] = command.IdempotencyKey,
+            ["id"] = eventId,
             ["day"] = IntValue(command.Arguments["day"]),
-            ["kind"] = ClampTextElements((string)command.Arguments["kind"] ?? "event", 40),
-            ["text"] = ClampTextElements((string)command.Arguments["text"] ?? string.Empty, 500)
+            ["kind"] = ClampTextElements(kind, 40),
+            ["text"] = ClampTextElements((string)command.Arguments["text"] ?? string.Empty, 500),
+            ["eventKey"] = ClampTextElements(eventKey, 200),
+            ["domain"] = WeeklyReportService.NormalizeDomain((string)command.Arguments["domain"], kind),
+            ["occurredAt"] = (string)command.Arguments["occurredAt"] ?? DateTimeOffset.UtcNow.ToString("O"),
+            ["visibilityIdentityIds"] = visibilityIdentityIds
         });
         Trim(records, 200);
         state["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
@@ -2223,6 +3148,110 @@ internal sealed class WorldStateStore
         appliedKeys.Add(command.IdempotencyKey);
         Trim(appliedKeys, AiTaskConstants.AppliedKeysMaximum);
         return string.Empty;
+    }
+
+    private static string ApplyWeeklyReportState(JObject state, WorldStateCommand command)
+    {
+        string reportId = (string)command.Arguments["reportId"] ?? string.Empty;
+        string status = (string)command.Arguments["status"] ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(reportId) || (status != "applied" && status != "retryable"))
+            return "awake.world_state.weekly_report.invalid";
+        JObject incomingReport = command.Arguments["report"] as JObject;
+        if (incomingReport != null
+            && (!WorldEventContract.TryValidateWeeklyReport(incomingReport, out _)
+                || !StringComparer.Ordinal.Equals((string)incomingReport["reportId"], reportId)))
+            return "awake.world_state.weekly_report.invalid_payload";
+        int windowStartDay = IntValue(command.Arguments["windowStartDay"]);
+        int windowEndDay = IntValue(command.Arguments["windowEndDay"]);
+        int attemptCount = IntValue(command.Arguments["attemptCount"]);
+        int lastAttemptDay = IntValue(command.Arguments["lastAttemptDay"]);
+        string lastErrorCode = (string)command.Arguments["lastErrorCode"] ?? string.Empty;
+        JArray reports = (JArray)state["weeklyReports"];
+        JObject current = reports.Children<JObject>().FirstOrDefault(value => StringComparer.Ordinal.Equals((string)value["reportId"], reportId));
+        if (current != null)
+        {
+            bool currentApplied = StringComparer.Ordinal.Equals((string)current["status"], "applied");
+            bool currentSnapshotValid = currentApplied && IsValidWeeklyReportSnapshot(current["report"], reportId);
+            if (currentApplied)
+            {
+                if (currentSnapshotValid) return "awake.world_state.duplicate";
+                if (status == "applied" && IsEmptyWeeklyReport(incomingReport))
+                    return "awake.world_state.weekly_report.snapshot_unrecoverable";
+                if (status == "applied" && incomingReport != null)
+                {
+                    current["report"] = incomingReport.DeepClone();
+                    current["lastAttemptDay"] = lastAttemptDay;
+                    current["lastErrorCode"] = lastErrorCode;
+                    current["attemptCount"] = Math.Max(IntValue(current["attemptCount"]), attemptCount);
+                    state["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
+                    JArray repairKeys = (JArray)state["appliedKeys"];
+                    repairKeys.Add(command.IdempotencyKey);
+                    Trim(repairKeys, AiTaskConstants.AppliedKeysMaximum);
+                    return string.Empty;
+                }
+                return "awake.world_state.duplicate";
+            }
+            if ((current["attemptCount"]?.Value<int>() ?? 0) >= attemptCount) return "awake.world_state.duplicate";
+            current["windowStartDay"] = windowStartDay;
+            current["windowEndDay"] = windowEndDay;
+            current["status"] = status;
+            current["attemptCount"] = attemptCount;
+            current["lastAttemptDay"] = lastAttemptDay;
+            current["lastErrorCode"] = lastErrorCode;
+            if (incomingReport != null) current["report"] = (JObject)incomingReport.DeepClone();
+        }
+        else
+        {
+            reports.Add(new JObject
+            {
+                ["reportId"] = reportId,
+                ["windowStartDay"] = windowStartDay,
+                ["windowEndDay"] = windowEndDay,
+                ["status"] = status,
+                ["attemptCount"] = attemptCount,
+                ["lastAttemptDay"] = lastAttemptDay,
+                ["lastErrorCode"] = lastErrorCode,
+                ["report"] = incomingReport == null ? null : (JObject)incomingReport.DeepClone()
+            });
+        }
+        state["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
+        return string.Empty;
+    }
+
+    private static bool IsValidWeeklyReportSnapshot(JToken value, string reportId)
+    {
+        return value is JObject report
+            && StringComparer.Ordinal.Equals((string)report["reportId"], reportId)
+            && WorldEventContract.TryValidateWeeklyReport(report, out _);
+    }
+
+    private static bool IsEmptyWeeklyReport(JObject report)
+    {
+        return report != null
+            && report["sourceEventIds"] is JArray sourceEventIds
+            && sourceEventIds.Count == 0;
+    }
+
+    private static bool SameWorldEventPayload(JObject existing, WorldStateCommand command)
+    {
+        string kind = WorldEventContract.NormalizeEventType((string)command.Arguments["kind"] ?? "event");
+        string text = ClampTextElements((string)command.Arguments["text"] ?? string.Empty, 500);
+        string eventKey = ClampTextElements((string)command.Arguments["eventKey"] ?? command.IdempotencyKey, 200);
+        string domain = WeeklyReportService.NormalizeDomain((string)command.Arguments["domain"], kind);
+        string occurredAt = (string)command.Arguments["occurredAt"] ?? string.Empty;
+        return IntValue(existing["day"]) == IntValue(command.Arguments["day"])
+            && StringComparer.Ordinal.Equals((string)existing["kind"], ClampTextElements(kind, 40))
+            && StringComparer.Ordinal.Equals((string)existing["text"], text)
+            && StringComparer.Ordinal.Equals((string)existing["eventKey"] ?? (string)existing["id"], eventKey)
+            && StringComparer.Ordinal.Equals((string)existing["domain"], domain)
+            && StringComparer.Ordinal.Equals((string)existing["occurredAt"], occurredAt)
+            && SameIdentityIds(existing["visibilityIdentityIds"], command.Arguments["visibilityIdentityIds"]);
+    }
+
+    private static bool SameIdentityIds(JToken left, JToken right)
+    {
+        return new HashSet<string>(NormalizeIdentityIds(left).Values<string>(), StringComparer.Ordinal)
+            .SetEquals(NormalizeIdentityIds(right).Values<string>());
     }
 
     private static void EnsureMessengerShape(JObject state)
@@ -2467,6 +3496,21 @@ internal sealed class WorldStateStore
             count++;
         }
         return result;
+    }
+
+    private static JArray NormalizeIdentityIds(JToken value)
+    {
+        if (value == null || value.Type == JTokenType.Null)
+            return new JArray(WorldEventAudience.Default.Select(identityId => (object)identityId));
+        if (!(value is JArray array)) return new JArray();
+        var identities = new List<string>();
+        foreach (JToken token in array)
+        {
+            string normalized = WorldbookIdentityEvaluator.NormalizeIdentity((string)token);
+            if (WorldEventContract.IsStableId(normalized) && !identities.Contains(normalized, StringComparer.Ordinal))
+                identities.Add(normalized);
+        }
+        return new JArray(identities.Select(identityId => (object)identityId));
     }
 
     private static int IntValue(JToken token)

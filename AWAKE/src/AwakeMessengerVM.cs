@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
+using TaleWorlds.Core;
 using TaleWorlds.Library;
 
 namespace Awake;
@@ -17,6 +18,7 @@ internal sealed class AwakeMessengerVM : ViewModel
 
     private Task _transcriptIndexTask;
     private NpcDialogueService _activeService;
+    private int _contactGeneration;
     private string _activeTargetId = string.Empty;
     private string _activeContactKey = string.Empty;
     private string _titleText = AwakeLocalization.Resolve("awake.ui.messenger_title", "AWAKE 通讯录");
@@ -25,6 +27,7 @@ internal sealed class AwakeMessengerVM : ViewModel
     private string _inputText = string.Empty;
     private string _streamingText = string.Empty;
     private string _historyStatusText = string.Empty;
+    private bool _canWriteLetter;
     private bool _isLoading;
     private bool _isChatMode = true;
     private bool _isHistoryMode;
@@ -130,6 +133,19 @@ internal sealed class AwakeMessengerVM : ViewModel
         && !string.IsNullOrWhiteSpace(_inputText);
 
     [DataSourceProperty]
+    public bool CanWriteLetter
+    {
+        get => _canWriteLetter;
+        private set
+        {
+            if (Set(ref _canWriteLetter, value, nameof(CanWriteLetter)))
+            {
+                OnPropertyChangedWithValue(WriteLetterText, nameof(WriteLetterText));
+            }
+        }
+    }
+
+    [DataSourceProperty]
     public string ContactsTitle => AwakeLocalization.Resolve("awake.ui.contacts", "通讯录");
 
     [DataSourceProperty]
@@ -143,6 +159,9 @@ internal sealed class AwakeMessengerVM : ViewModel
 
     [DataSourceProperty]
     public string CloseButtonText => AwakeLocalization.Resolve("awake.ui.close", "离开");
+
+    [DataSourceProperty]
+    public string WriteLetterText => AwakeLocalization.Resolve("awake.ui.write_letter", "写信");
 
     internal AwakeMessengerVM(Action close)
     {
@@ -195,9 +214,14 @@ internal sealed class AwakeMessengerVM : ViewModel
         IsHistoryMode = true;
     }
 
-    private async Task LoadHistoryAsync(string contactKey)
+    private async Task LoadHistoryAsync(string contactKey, bool auditLetter = false, int expectedContactGeneration = -1)
     {
         List<AwakeTranscriptLine> lines = new List<AwakeTranscriptLine>();
+        int contactGeneration = expectedContactGeneration < 0 ? _contactGeneration : expectedContactGeneration;
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        WorldStateStore expectedStore = AwakeRuntime.WorldStateStore;
+        CancellationToken cancellationToken = AwakeRuntime.SessionCancellationToken;
+        if (expectedStore == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
         if (_transcriptIndexTask != null)
         {
             try
@@ -213,38 +237,58 @@ internal sealed class AwakeMessengerVM : ViewModel
         {
             try
             {
-                lines = await AwakeTranscriptService.GetHistoryAsync(contactKey, CancellationToken.None).ConfigureAwait(false);
+                lines = await AwakeTranscriptService.GetHistoryAsync(
+                    sessionGeneration,
+                    expectedStore,
+                    contactKey,
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 AwakeLog.Write("awake_messenger_transcript_load_error error=" + ex.Message);
             }
         }
-        AwakeUiDispatcher.Enqueue(() => PopulateHistory(lines));
+        AwakeUiDispatcher.Enqueue(() =>
+        {
+            if (_closed
+                || contactGeneration != _contactGeneration
+                || !AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)
+                || !StringComparer.Ordinal.Equals(_activeContactKey, contactKey)) return;
+            PopulateHistory(lines);
+            if (auditLetter)
+            {
+                AwakeLog.Write("letter_history_reloaded key=" + contactKey + " lines=" + lines.Count);
+            }
+        });
     }
 
-    private async Task RefreshRelationshipAsync(AwakeContactInfo contact)
+    private async Task RefreshRelationshipAsync(AwakeContactInfo contact, int expectedContactGeneration)
     {
         if (contact?.Target == null) return;
         string heroId = contact.Target.StableId;
         string expectedTargetId = contact.TargetId;
         if (string.IsNullOrWhiteSpace(heroId)) return;
         WorldStateStore store = AwakeRuntime.WorldStateStore;
-        if (store == null) return;
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        CancellationToken cancellationToken = AwakeRuntime.SessionCancellationToken;
+        if (store == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
         try
         {
             Newtonsoft.Json.Linq.JObject doc = await store.GetRelationshipAsync(
                 heroId,
                 null,
-                CancellationToken.None).ConfigureAwait(false);
-            if (doc == null) return;
+                cancellationToken).ConfigureAwait(false);
+            if (doc == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
             int trust = IntValue(doc["trust"]);
             int love = IntValue(doc["love"]);
             int hostility = IntValue(doc["hostility"]);
             string summary = "信任 " + trust + "；爱意 " + love + "；敌意 " + hostility;
             AwakeUiDispatcher.Enqueue(() =>
             {
-                if (StringComparer.Ordinal.Equals(_activeTargetId, expectedTargetId))
+                if (!_closed
+                    && expectedContactGeneration == _contactGeneration
+                    && AwakeRuntime.IsCurrentSession(sessionGeneration, store)
+                    && StringComparer.Ordinal.Equals(_activeTargetId, expectedTargetId))
                 {
                     _selectedCard.SetRelationship(summary);
                 }
@@ -330,10 +374,19 @@ internal sealed class AwakeMessengerVM : ViewModel
     {
         if (row?.Line == null || string.IsNullOrWhiteSpace(_activeContactKey)) return;
         bool newPinned = !row.IsPinned;
-        _ = AwakeTranscriptService.PinLineAsync(_activeContactKey, row.Line.ChunkIndex, row.Line.Id, newPinned, CancellationToken.None)
+        string contactKey = _activeContactKey;
+        int contactGeneration = _contactGeneration;
+        _ = AwakeTranscriptService.PinLineAsync(contactKey, row.Line.ChunkIndex, row.Line.Id, newPinned, AwakeRuntime.SessionCancellationToken)
             .ContinueWith(task => AwakeUiDispatcher.Enqueue(() =>
             {
-                if (row.Line != null && task != null && task.IsCompleted && !task.IsFaulted && task.Result)
+                if (!_closed
+                    && contactGeneration == _contactGeneration
+                    && StringComparer.Ordinal.Equals(_activeContactKey, contactKey)
+                    && row.Line != null
+                    && task != null
+                    && task.IsCompleted
+                    && !task.IsFaulted
+                    && task.Result)
                 {
                     row.SetPinned(newPinned);
                 }
@@ -343,19 +396,30 @@ internal sealed class AwakeMessengerVM : ViewModel
     private async Task LoadTranscriptOnlyContactsAsync()
     {
         List<string> keys = new List<string>();
+        Dictionary<string, string> names = new Dictionary<string, string>(StringComparer.Ordinal);
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        WorldStateStore expectedStore = AwakeRuntime.WorldStateStore;
+        CancellationToken sessionCancellationToken = AwakeRuntime.SessionCancellationToken;
         try
         {
-            await AwakeTranscriptMigration.MigrateAsync(CancellationToken.None).ConfigureAwait(false);
-            keys = await AwakeTranscriptService.LoadContactKeysAsync(CancellationToken.None).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
+            await AwakeTranscriptMigration.MigrateAsync(sessionCancellationToken).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
+            keys = await AwakeTranscriptService.LoadContactKeysAsync(sessionCancellationToken).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
+            names = await AwakeTranscriptService.LoadContactDisplayNamesAsync(sessionCancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
             AwakeLog.Write("awake_messenger_contact_index_load_error error=" + ex.Message);
         }
-        AwakeUiDispatcher.Enqueue(() => AddTranscriptOnlyContacts(keys));
+        AwakeUiDispatcher.Enqueue(() =>
+        {
+            if (AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) AddTranscriptOnlyContacts(keys, names);
+        });
     }
 
-    private void AddTranscriptOnlyContacts(List<string> keys)
+    private void AddTranscriptOnlyContacts(List<string> keys, Dictionary<string, string> names)
     {
         if (_closed || keys == null) return;
         foreach (string key in keys)
@@ -371,9 +435,14 @@ internal sealed class AwakeMessengerVM : ViewModel
                 }
             }
             if (exists) continue;
+            AwakeNpcTarget target = NpcDialogueLauncher.FindTargetById(key);
+            string displayName = string.Empty;
+            if (names != null) names.TryGetValue(key, out displayName);
+            if (string.IsNullOrWhiteSpace(displayName)) displayName = target?.DisplayName;
+            if (string.IsNullOrWhiteSpace(displayName)) displayName = AwakeLocalization.Resolve("awake.ui.contact_history", "历史联系人");
             AwakeContactInfo info = new AwakeContactInfo(
-                null,
-                key,
+                target,
+                displayName,
                 AwakeLocalization.Resolve("awake.ui.contact_history", "历史联系人"),
                 AwakeLocalization.Resolve("awake.ui.contact_status_history", "历史"),
                 false,
@@ -405,6 +474,60 @@ internal sealed class AwakeMessengerVM : ViewModel
         {
             AwakeLog.Write("awake_messenger_vm_close_callback_error error=" + ex.Message);
         }
+    }
+
+    public void ExecuteWriteLetter()
+    {
+        if (_closed || string.IsNullOrWhiteSpace(_activeContactKey)) return;
+        InformationManager.ShowTextInquiry(
+            new TextInquiryData(
+                AwakeLocalization.Resolve("awake.ui.letter_title", "写信"),
+                AwakeLocalization.Resolve("awake.ui.letter_prompt", "写下你想寄给对方的信："),
+                true,
+                true,
+                AwakeLocalization.Resolve("awake.ui.letter_send", "寄出"),
+                AwakeLocalization.Resolve("awake.ui.cancel", "取消"),
+                input => _ = SendLetterAsync(input ?? string.Empty),
+                null,
+                false,
+                null,
+                string.Empty,
+                string.Empty),
+            true,
+            false);
+    }
+
+    private async Task SendLetterAsync(string text)
+    {
+        string contactKey = _activeContactKey;
+        int contactGeneration = _contactGeneration;
+        CancellationToken cancellationToken = AwakeRuntime.SessionCancellationToken;
+        if (_closed || string.IsNullOrWhiteSpace(contactKey)) return;
+
+        bool sent = false;
+        try
+        {
+            sent = await AwakeLetterService.SendAsync(
+                contactKey,
+                string.Empty,
+                text,
+                cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("awake_messenger_letter_send_error key=" + contactKey + " error=" + ex.Message);
+        }
+
+        AwakeUiDispatcher.Enqueue(() =>
+        {
+            if (_closed
+                || contactGeneration != _contactGeneration
+                || !StringComparer.Ordinal.Equals(_activeContactKey, contactKey)) return;
+            NoticeText = sent
+                ? AwakeLocalization.Resolve("awake.ui.letter_sent", "信件已写入历史。")
+                : AwakeLocalization.Resolve("awake.ui.letter_failed", "信件写入失败。");
+            if (sent) _ = LoadHistoryAsync(contactKey, true, contactGeneration);
+        });
     }
 
     public void ExecuteSend()
@@ -450,6 +573,7 @@ internal sealed class AwakeMessengerVM : ViewModel
         if (StringComparer.Ordinal.Equals(_activeTargetId, targetId) && _activeService != null) return;
 
         DisposeActiveService();
+        int contactGeneration = _contactGeneration;
         _chatRows.Clear();
         _streamingText = string.Empty;
         _isLoading = false;
@@ -471,10 +595,13 @@ internal sealed class AwakeMessengerVM : ViewModel
             return;
         }
         _selectedCard.Show(contact);
-        _ = RefreshRelationshipAsync(contact);
+        _ = RefreshRelationshipAsync(contact, contactGeneration);
+        CanWriteLetter = contact != null
+            && !string.IsNullOrWhiteSpace(contact.CanonicalContactKey)
+            && !contact.IsNearby;
         _activeTargetId = contact.TargetId;
         _activeContactKey = contact.CanonicalContactKey;
-        _ = LoadHistoryAsync(contact.CanonicalContactKey);
+        _ = LoadHistoryAsync(contact.CanonicalContactKey, false, contactGeneration);
         if (contact.Target == null)
         {
             TitleText = contact.DisplayName;
@@ -485,7 +612,7 @@ internal sealed class AwakeMessengerVM : ViewModel
         if (!contact.IsNearby || !NpcDialogueLauncher.IsEligibleNpcTarget(contact.Target))
         {
             TitleText = contact.DisplayName;
-            StatusText = AwakeLocalization.Resolve("awake.ui.contact_remote_letter", "远方联系人；写信功能将在后续版本开放。");
+            StatusText = AwakeLocalization.Resolve("awake.ui.contact_remote_letter", "远方联系人；可写信。");
             NoticeText = AwakeLocalization.Resolve("awake.ui.contact_not_same_place", "你还没有和对方处于同一地点。");
             return;
         }
@@ -510,6 +637,7 @@ internal sealed class AwakeMessengerVM : ViewModel
 
     private void DisposeActiveService()
     {
+        _contactGeneration++;
         try
         {
             _activeService?.CancelActiveAsync();
@@ -536,14 +664,31 @@ internal sealed class AwakeMessengerVM : ViewModel
 
     private async Task SendAsyncSafe(string text)
     {
+        NpcDialogueService service = _activeService;
+        int contactGeneration = _contactGeneration;
+        string contactKey = _activeContactKey;
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        WorldStateStore expectedStore = AwakeRuntime.WorldStateStore;
+        CancellationToken sessionCancellationToken = AwakeRuntime.SessionCancellationToken;
         try
         {
-            await _activeService.SendAsync(text, CancellationToken.None).ConfigureAwait(false);
+            if (service == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
+            await service.SendAsync(text, sessionCancellationToken).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)
+                || contactGeneration != _contactGeneration
+                || !StringComparer.Ordinal.Equals(contactKey, _activeContactKey)) return;
+        }
+        catch (OperationCanceledException)
+        {
+            return;
         }
         catch (Exception ex)
         {
             AwakeLog.Write("awake_messenger_vm_send_error error=" + ex.Message);
-            AwakeUiDispatcher.Enqueue(() => IsLoading = false);
+            AwakeUiDispatcher.Enqueue(() =>
+            {
+                if (contactGeneration == _contactGeneration && StringComparer.Ordinal.Equals(contactKey, _activeContactKey)) IsLoading = false;
+            });
         }
     }
 

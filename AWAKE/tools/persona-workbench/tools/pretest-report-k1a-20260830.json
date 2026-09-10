@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "persona-workbench.ollama-workbench-routes.v1",
+  "generatedAtUtc": "2026-08-30T13:47:25.0902317Z",
+  "verdict": "FAIL",
+  "error": "PORT_OWNER_CAPTURE_MISMATCH: cannot attach capture to an already-running Workbench process.",
+  "model": {
+    "name": "gpt-oss:20b",
+    "digest": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+    "endpoint": "http://127.0.0.1:11434/v1/chat/completions",
+    "thinkingLevel": "low"
+  },
+  "package": {
+    "path": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\tools\\persona-workbench\\artifacts\\PersonaWorkbench-FreePreview-k1a-20260830",
+    "buildId": "PWB-20260830-134653Z-32981D08377D",
+    "sourceManifestHash": "32981D08377DAAAE3D9179B33A1A1261B1D150C2FF52B5154A533E5AE993DB57",
+    "packageManifestHash": "DED152FB4BD50386C722B67DDC9889C0B0A7ADE7255EFD11057E53FC3CE4520E",
+    "executableHash": "F062F875869A3A2C7281DC3ED2627636F66FCABEE9F13222D00955E1CF84AFDD",
+    "wwwrootSourceHash": "52346DBB8EFF71C64F540B20762B03CDBAB673495456235001A3387CC0955F44"
+  },
+  "fixtures": {
+    "short": {
+      "bytes": 270,
+      "sha256": "3B82F664F26F11862C7DA899668AAA0635461F5CC3FDA711A8D7622CBA5EB968"
+    },
+    "long": {
+      "bytes": 3888,
+      "sha256": "8234670F470A8F663D5436111B39CF10D97AE9AA1D123E6FF7C090561F93B752"
+    }
+  },
+  "workerDiagnostic": {
+    "required": true,
+    "executedBy": "persona-workbench-ollama-pretest",
+    "thinkingLevel": "low",
+    "result": "not-run-by-this-runner"
+  },
+  "requestCapture": {
+    "requested": true,
+    "path": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\tools\\persona-workbench\\tools\\pretest-capture-k1a-20260830.jsonl",
+    "exists": false,
+    "sha256": null
+  },
+  "workbenchRoutes": [],
+  "cleanup": {
+    "attempted": true,
+    "captureDeletionAttempted": false,
+    "captureDeleted": false,
+    "stopped": false,
+    "portFree": false,
+    "error": null
+  }
+}

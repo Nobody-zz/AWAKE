@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 using Newtonsoft.Json.Linq;
 
 [assembly: InternalsVisibleTo("Awake.SdkSmoke")]
@@ -19,7 +19,7 @@ internal static class DialogueOverlayLifecycle
 
 internal static class CampaignResetLifecycle
 {
-    internal static Action Reset = () => { };
+    internal static Action Reset { get; set; }
 }
 
 internal static class ProbeLog
@@ -49,7 +49,7 @@ internal static class ProbeLog
             {
                 TryRotate(path);
                 File.AppendAllText(path,
-                    DateTimeOffset.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + " " + line + Environment.NewLine);
+                    DateTimeOffset.UtcNow.ToString("yyyy-MM-dd HH:mm:ss'Z'") + " " + line + Environment.NewLine);
             }
         }
         catch
@@ -75,10 +75,29 @@ internal static class ProbeLog
     }
 }
 
+internal sealed class AwakeSessionDrainResult
+{
+    internal AwakeSessionDrainResult(bool succeeded, string errorCode)
+    {
+        Succeeded = succeeded;
+        ErrorCode = errorCode ?? string.Empty;
+    }
+
+    internal bool Succeeded { get; }
+    internal string ErrorCode { get; }
+
+    internal static AwakeSessionDrainResult Success()
+    {
+        return new AwakeSessionDrainResult(true, string.Empty);
+    }
+}
+
 internal sealed class AwakeExtension : IFrameworkExtension
 {
     private static readonly ExtensionId Owner = new ExtensionId("AWAKE");
     private static readonly CapabilityId EchoId = new CapabilityId("capability://AWAKE/probe/echo/v1");
+    private static readonly object LifecycleSync = new object();
+    private static Task<AwakeSessionDrainResult> sessionDrainTask = Task.FromResult(AwakeSessionDrainResult.Success());
 
     public ExtensionManifest Manifest { get; } = new ExtensionManifest(
         Owner,
@@ -183,6 +202,11 @@ internal sealed class AwakeExtension : IFrameworkExtension
             "give_gold");
     }
 
+    internal Task<AwakeSessionDrainResult> WaitForSessionEndDrainAsync()
+    {
+        lock (LifecycleSync) return sessionDrainTask;
+    }
+
     private static void RegisterWorldCommand(IExtensionRegistration registration, CommandDescriptor descriptor, ICommandAdapter adapter, string label)
     {
         OperationResult<bool> result = registration.RegisterCommand(descriptor, adapter);
@@ -200,11 +224,51 @@ internal sealed class AwakeExtension : IFrameworkExtension
             switch (stage)
             {
                 case ExtensionLifecycleStage.CampaignSessionReady:
-                    AwakeRuntime.ResetSessionStateForCampaign();
+                    Action campaignReset = CampaignResetLifecycle.Reset;
+                    if (campaignReset != null)
+                    {
+                        campaignReset();
+                    }
+                    else
+                    {
+                        AwakeRuntime.ResetSessionStateForCampaign();
+                    }
+                    Task<NativeReadinessResult> nativeReadiness = AwakeRuntime.EnsureNativeReadinessAsync(
+                        session?.SessionId,
+                        CancellationToken.None);
+                    _ = nativeReadiness.ContinueWith(
+                        task =>
+                        {
+                            if (task.Status == TaskStatus.RanToCompletion && task.Result != null)
+                            {
+                                NativeReadinessResult result = task.Result;
+                                AwakeLog.Write("native_readiness status=" + result.Status
+                                    + " generation=" + result.SessionGeneration
+                                    + " code=" + (result.FailureCode ?? string.Empty));
+                            }
+                        },
+                        CancellationToken.None,
+                        TaskContinuationOptions.ExecuteSynchronously,
+                        TaskScheduler.Default);
+                    _ = nativeReadiness.ContinueWith(
+                        task =>
+                        {
+                            if (task.Status == TaskStatus.RanToCompletion
+                                && task.Result != null
+                                && task.Result.Status == NativeReadinessStatus.Ready
+                                && task.Result.SessionGeneration == AwakeRuntime.SessionGeneration)
+                            {
+                                AwakeBackgroundTask.Run(
+                                    () => RestoreCampaignStateAsync(task.Result.SessionGeneration),
+                                    "awake_campaign_state_restore");
+                            }
+                        },
+                        CancellationToken.None,
+                        TaskContinuationOptions.ExecuteSynchronously,
+                        TaskScheduler.Default);
+                    AwakeGoldSettlementService.ResetForCampaign();
                     AwakeOnboardingService.ResetForCampaign();
-                    _ = AwakeOnboardingService.LoadFromStoreAsync(CancellationToken.None);
                     EventDialogueQueue.ResetForCampaign();
-                    _ = EventDialogueQueue.LoadFromStoreAsync(CancellationToken.None);
                     try
                     {
                         DialogueOverlayLifecycle.CloseAll?.Invoke();
@@ -213,14 +277,6 @@ internal sealed class AwakeExtension : IFrameworkExtension
                     {
                         AwakeLog.Write("dialogue_overlay_campaign_ready_close_error error=" + ex.Message);
                     }
-                    try
-                    {
-                        CampaignResetLifecycle.Reset?.Invoke();
-                    }
-                    catch (Exception ex)
-                    {
-                        AwakeLog.Write("campaign_reset_hook_error error=" + ex.Message);
-                    }
                     NpcMemoryService.ShutdownCurrent();
                     if (FrameworkHostLocator.TryGetHost(out IMarcusAiFrameworkHost memoryHost))
                     {
@@ -228,11 +284,6 @@ internal sealed class AwakeExtension : IFrameworkExtension
                         AwakeLog.Write("npc_memory_service_initialized");
                     }
                     KnowledgeRuntime.ShutdownCurrent();
-                    if (FrameworkHostLocator.TryGetHost(out IMarcusAiFrameworkHost knowledgeHost))
-                    {
-                        KnowledgeRuntime.EnsureCreated(knowledgeHost);
-                        AwakeLog.Write("knowledge_runtime_initialized");
-                    }
                     WorldbookRuntime.ShutdownCurrent();
                     WorldbookRuntime.EnsureCreated();
                     AwakeRuleRegistry.EnsureLoaded();
@@ -248,51 +299,15 @@ internal sealed class AwakeExtension : IFrameworkExtension
                         AwakeLog.Write("dialogue_overlay_session_end_close_error error=" + ex.Message);
                     }
                     AwakeDialogueSessionCoordinator.CloseAll();
-                    WorldStateStore worldStore = AwakeRuntime.WorldStateStore;
+                    Task<WorldFinalDrainResult> worldDrain = AwakeRuntime.BeginSessionEnd();
                     NpcMemoryService memoryServiceForDrain = NpcMemoryService.Current;
-                    if (memoryServiceForDrain != null)
-                    {
-                        try
-                        {
-                            memoryServiceForDrain.DrainBackgroundAsync(5000).GetAwaiter().GetResult();
-                        }
-                        catch (Exception ex)
-                        {
-                            AwakeLog.Write("npc_memory_drain_background_error error=" + ex.Message);
-                        }
-                    }
-                    if (worldStore != null)
-                    {
-                        try
-                        {
-                            worldStore.BeginSessionEnd();
-                        }
-                        catch (Exception ex)
-                        {
-                            AwakeLog.Write("world_state_session_end_error error=" + ex.Message);
-                        }
-                    }
-                    AwakeRuntime.BeginSessionEnd();
+                    Task<AwakeSessionDrainResult> ownDrain = AwakeBackgroundTask.Run<AwakeSessionDrainResult>(
+                        () => DrainAwakeSessionAsync(worldDrain, memoryServiceForDrain),
+                        "awake_session_drain");
+                    lock (LifecycleSync) sessionDrainTask = ownDrain;
                     KnowledgeRuntime.ShutdownCurrent();
                     WorldbookRuntime.ShutdownCurrent();
                     NpcProactiveService.ShutdownCurrent();
-                    if (worldStore != null)
-                    {
-                        try
-                        {
-                            _ = worldStore.BeginFinalDrainAsync().ContinueWith(
-                                _ =>
-                                {
-                                    AwakeRuntime.ReleaseWorldStateStore(worldStore);
-                                    NpcMemoryService.ShutdownCurrent();
-                                },
-                                TaskScheduler.Default);
-                        }
-                        catch (Exception ex)
-                        {
-                            AwakeLog.Write("world_state_final_drain_start_error error=" + ex.Message);
-                        }
-                    }
                     break;
                 case ExtensionLifecycleStage.Unregistered:
                     try
@@ -305,6 +320,7 @@ internal sealed class AwakeExtension : IFrameworkExtension
                     }
                     AwakeDialogueSessionCoordinator.CloseAll();
                     NpcMemoryService.ShutdownCurrent();
+                    CampaignResetLifecycle.Reset = null;
                     KnowledgeRuntime.ShutdownCurrent();
                     WorldbookRuntime.ShutdownCurrent();
                     NpcProactiveService.ShutdownCurrent();
@@ -315,6 +331,70 @@ internal sealed class AwakeExtension : IFrameworkExtension
         {
             AwakeLog.Write("awake_lifecycle_failed stage=" + stage + " error=" + ex.Message);
         }
+    }
+
+    private static async Task RestoreCampaignStateAsync(int sessionGeneration)
+    {
+        CancellationToken cancellationToken = AwakeRuntime.SessionCancellationToken;
+        if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
+        if (!FrameworkHostLocator.TryGetHost(out IMarcusAiFrameworkHost host))
+        {
+            AwakeLog.Write("awake_campaign_state_restore_skipped reason=host_missing");
+            return;
+        }
+        bool ready = await AwakeRuntime.EnsureWorldStateReadyAsync(host, cancellationToken).ConfigureAwait(false);
+        WorldStateStore store = AwakeRuntime.WorldStateStore;
+        if (!ready || store == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, store))
+        {
+            AwakeLog.Write("awake_campaign_state_restore_skipped reason=storage_not_ready");
+            return;
+        }
+        await AwakeOnboardingService.LoadFromStoreAsync(sessionGeneration, store, cancellationToken).ConfigureAwait(false);
+        if (!AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
+        await EventDialogueQueue.LoadFromStoreAsync(cancellationToken).ConfigureAwait(false);
+        if (!AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
+        await AwakeRuntime.EnsureKnowledgeReadyIfNativeReadyAsync(cancellationToken).ConfigureAwait(false);
+        AwakeLog.Write("awake_campaign_state_restore_completed generation=" + sessionGeneration);
+    }
+
+    private static async Task<AwakeSessionDrainResult> DrainAwakeSessionAsync(
+        Task<WorldFinalDrainResult> worldDrain,
+        NpcMemoryService memoryService)
+    {
+        WorldFinalDrainResult worldResult;
+        try
+        {
+            worldResult = await (worldDrain ?? Task.FromResult(WorldFinalDrainResult.NotStarted())).ConfigureAwait(false);
+            AwakeLog.Write("world_state_final_drain_observed succeeded=" + (worldResult?.Succeeded == true)
+                + " pending_writes=" + (worldResult?.PendingWrites ?? 0)
+                + " pending_events=" + (worldResult?.PendingEvents ?? 0)
+                + " dropped=" + (worldResult?.DroppedItems ?? 0)
+                + " code=" + (worldResult?.ErrorCode ?? "awake.world_state.final_drain_error"));
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_state_final_drain_observe_error error=" + ex.Message);
+            worldResult = new WorldFinalDrainResult(false, 0, 0, 0, "awake.world_state.final_drain_error");
+        }
+
+        bool memorySucceeded = true;
+        try
+        {
+            if (memoryService != null) await memoryService.DrainBackgroundAsync(5000).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            memorySucceeded = false;
+            AwakeLog.Write("npc_memory_drain_background_error error=" + ex.Message);
+        }
+
+        if (!worldResult.Succeeded || !memorySucceeded)
+        {
+            return new AwakeSessionDrainResult(false, worldResult.ErrorCode ?? "awake.session.drain_failed");
+        }
+
+        NpcMemoryService.ShutdownCurrent();
+        return AwakeSessionDrainResult.Success();
     }
 
     internal static Task<OperationResult<string>> HandleEchoAsync(

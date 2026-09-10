@@ -18,6 +18,11 @@ internal static class AwakeStorageContract
     internal const string OnboardingSchema = "awake.onboarding.v1";
     internal const string DialogueQueueSchema = "awake.dialogue.queue.v1";
     internal const string InteractionSchema = "awake.interactions.v1";
+    internal const string InteractionRecoveryIndexSchema = "awake.interactions.recovery-index.v1";
+    internal const string PersonaContinuitySchema = "awake.persona.continuity.v1";
+    internal const string PersonaOverrideSchema = "awake.persona.override.v1";
+    internal const string PersonaRecoverySchema = "awake.persona.recovery.v1";
+    internal const string WorldbookOverlaySchema = "awake.worldbook.overlay.v1";
 
     internal static bool IsKnownSchema(string schema)
     {
@@ -33,7 +38,11 @@ internal static class AwakeStorageContract
             || StringComparer.Ordinal.Equals(schema, AuditSchema)
             || StringComparer.Ordinal.Equals(schema, OnboardingSchema)
             || StringComparer.Ordinal.Equals(schema, DialogueQueueSchema)
-            || StringComparer.Ordinal.Equals(schema, InteractionSchema);
+            || StringComparer.Ordinal.Equals(schema, InteractionSchema)
+            || StringComparer.Ordinal.Equals(schema, InteractionRecoveryIndexSchema)
+            || StringComparer.Ordinal.Equals(schema, PersonaContinuitySchema)
+            || StringComparer.Ordinal.Equals(schema, PersonaOverrideSchema)
+            || StringComparer.Ordinal.Equals(schema, PersonaRecoverySchema);
     }
 
     internal static string ExpectedSchema(WorldStateKind kind)
@@ -64,6 +73,14 @@ internal static class AwakeStorageContract
                 return DialogueQueueSchema;
             case WorldStateKind.Interaction:
                 return InteractionSchema;
+            case WorldStateKind.InteractionIndex:
+                return InteractionRecoveryIndexSchema;
+            case WorldStateKind.PersonaContinuity:
+                return PersonaContinuitySchema;
+            case WorldStateKind.PersonaOverride:
+                return PersonaOverrideSchema;
+            case WorldStateKind.PersonaRecovery:
+                return PersonaRecoverySchema;
             default:
                 return string.Empty;
         }

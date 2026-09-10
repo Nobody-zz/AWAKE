@@ -9,6 +9,7 @@ internal sealed class AwakeEventBehavior : CampaignBehaviorBase
 {
     private readonly AwakeEventEngine _engine = new AwakeEventEngine();
     private int _lastWeeklyReportDay = -1;
+    private int _knowledgeRefreshScheduled;
 
     internal AwakeEventEngine Engine => _engine;
 
@@ -28,13 +29,16 @@ internal sealed class AwakeEventBehavior : CampaignBehaviorBase
         {
             if (!AwakeSettings.Current.EnableEventEngine) return;
             if (NpcDialogueOverlay.IsOpen || AwakeMessengerOverlay.IsOpen) return;
+            int sessionGeneration = AwakeRuntime.SessionGeneration;
+            CancellationToken sessionCancellationToken = AwakeRuntime.SessionCancellationToken;
+            if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
             _engine.EnsureRulesLoadedFromRegistry();
-            _ = _engine.OnHourlyTickAsync(CancellationToken.None);
-            _ = NpcProactiveService.Current?.OnHourlyTickAsync(CancellationToken.None);
+            _ = _engine.OnHourlyTickAsync(sessionGeneration, sessionCancellationToken);
+            _ = NpcProactiveService.Current?.OnHourlyTickAsync(sessionCancellationToken);
             _ = NpcMemoryService.Current?.ConsolidateDailyForNearbyHeroesAsync(
                 AwakeRuntime.CurrentGameDay(),
-                CancellationToken.None);
-            MaybeGenerateWeeklyReport();
+                sessionCancellationToken);
+            ScheduleKnowledgeRefresh(sessionGeneration, sessionCancellationToken);
         }
         catch (Exception ex)
         {
@@ -42,24 +46,28 @@ internal sealed class AwakeEventBehavior : CampaignBehaviorBase
         }
     }
 
-    private void MaybeGenerateWeeklyReport()
+    private void ScheduleKnowledgeRefresh(int sessionGeneration, CancellationToken sessionCancellationToken)
     {
-        try
-        {
-            int day = AwakeRuntime.CurrentGameDay();
-            if (day <= 0 || day % 7 != 0 || day == _lastWeeklyReportDay) return;
-            _lastWeeklyReportDay = day;
-            List<WorldEventRecord> week = WorldEventLedger.SnapshotWeek(day);
-            string report = NarrativeReportBuilder.Build(week, day);
-            WorldEventLedger.Record(day, "weekly_report", "世界周报已生成。");
-            AwakeFeedback.ShowSuccess(AwakeLocalization.Resolve(
-                "awake.feedback.weekly_report",
-                "世界周报已生成，可到命令台查看。"));
-            AwakeLog.Write("awake_weekly_report_generated day=" + day);
-        }
-        catch (Exception ex)
-        {
-            AwakeLog.Write("awake_weekly_report_generate_error error=" + ex.Message);
-        }
+        int day = AwakeRuntime.CurrentGameDay();
+        if (day <= 0 || Interlocked.Exchange(ref _knowledgeRefreshScheduled, 1) != 0) return;
+        AwakeBackgroundTask.Run(
+            async () =>
+            {
+                try
+                {
+                    if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
+                    await AwakeRuntime.EnsureKnowledgeReadyIfNativeReadyAsync(sessionCancellationToken).ConfigureAwait(false);
+                    WorldStateStore expectedStore = AwakeRuntime.WorldStateStore;
+                    if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore))
+                    {
+                        AwakeLog.Write("awake_knowledge_refresh_ignored reason=stale_session");
+                    }
+                }
+                finally
+                {
+                    Interlocked.Exchange(ref _knowledgeRefreshScheduled, 0);
+                }
+            },
+            "awake_knowledge_refresh");
     }
 }

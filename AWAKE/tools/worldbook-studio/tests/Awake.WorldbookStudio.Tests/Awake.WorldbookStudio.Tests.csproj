@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Awake.WorldbookStudio.Tests</RootNamespace>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);CS8600;CS8601;CS8602;CS8603;CS8604;CS8618;CS8619;CS8625;CS8632</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Awake.WorldbookStudio.Core\Awake.WorldbookStudio.Core.csproj" />
+    <ProjectReference Include="..\..\src\Awake.WorldbookStudio.Web\Awake.WorldbookStudio.Web.csproj" />
+    <Reference Include="Newtonsoft.Json" HintPath="D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\Newtonsoft.Json.dll" />
+    <Compile Include="..\..\..\..\src\WorldbookPackageIntegrity.cs" Link="WorldbookPackageIntegrity.cs" />
+    <Compile Include="..\..\..\..\src\WorldKnowledgeModels.cs" Link="WorldKnowledgeModels.cs" />
+    <Compile Include="..\..\..\..\src\WorldbookIdentityEvaluator.cs" Link="WorldbookIdentityEvaluator.cs" />
+    <Compile Include="..\..\..\..\src\WorldKnowledgeLoader.cs" Link="WorldKnowledgeLoader.cs" />
+    <Compile Include="..\..\..\..\src\WorldKnowledgeQueryService.cs" Link="WorldKnowledgeQueryService.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,432 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.runtime.v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "version",
+    "worldId",
+    "revision",
+    "entries",
+    "identities",
+    "referrals",
+    "indexes"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "awake.worldbook.v2"
+    },
+    "packageId": {
+      "$ref": "#/$defs/package_id"
+    },
+    "version": {
+      "$ref": "#/$defs/version"
+    },
+    "worldId": {
+      "$ref": "#/$defs/stable_id"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/knowledge_entry"
+      },
+      "minItems": 1
+    },
+    "identities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "displayName",
+          "basePriority"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/stable_id"
+          },
+          "displayName": {
+            "$ref": "#/$defs/localized"
+          },
+          "basePriority": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "parents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/stable_id"
+            },
+            "uniqueItems": true
+          },
+          "referralTargetIds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/stable_id"
+            },
+            "uniqueItems": true
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "referrals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "displayName",
+          "reason",
+          "priority",
+          "publiclyAskable"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/stable_id"
+          },
+          "displayName": {
+            "$ref": "#/$defs/localized"
+          },
+          "reason": {
+            "$ref": "#/$defs/localized"
+          },
+          "priority": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "publiclyAskable": {
+            "type": "boolean"
+          }
+        }
+      },
+      "uniqueItems": true
+    },
+    "indexes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "keywordToEntryIds",
+        "domainToEntryIds"
+      ],
+      "properties": {
+        "keywordToEntryIds": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/stable_id"
+            },
+            "uniqueItems": true
+          }
+        },
+        "domainToEntryIds": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/stable_id"
+            },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "extensions": {
+      "$ref": "#/$defs/extensions"
+    }
+  },
+  "$defs": {
+    "stable_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*:[a-z][a-z0-9_-]*:[a-z][a-z0-9_.-]*$"
+    },
+    "package_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*:[a-z][a-z0-9_.-]*$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "localized": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minProperties": 1
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "knowledge_domain": {
+      "enum": [
+        "politics",
+        "economy",
+        "culture",
+        "war",
+        "geography"
+      ]
+    },
+    "entry_extensions": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "sourceDocumentId": {
+          "type": "string",
+          "pattern": "^doc\\.(politics|economy|culture|war|geography)\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "subdomain": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "relatedDomains": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/knowledge_domain"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "detail_level": {
+      "type": "string",
+      "enum": [
+        "rumor",
+        "summary",
+        "detail",
+        "secret"
+      ]
+    },
+    "scope": {
+      "type": "string",
+      "enum": [
+        "local",
+        "regional",
+        "national",
+        "faction",
+        "elite",
+        "private"
+      ]
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "identity_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/stable_id"
+          },
+          "uniqueItems": true
+        },
+        "culture_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/stable_id"
+          },
+          "uniqueItems": true
+        },
+        "kingdom_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/stable_id"
+          },
+          "uniqueItems": true
+        },
+        "settlement_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/stable_id"
+          },
+          "uniqueItems": true
+        },
+        "role_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/stable_id"
+          },
+          "uniqueItems": true
+        },
+        "is_female": {
+          "type": "boolean"
+        },
+        "is_clan_leader": {
+          "type": "boolean"
+        },
+        "min_age": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_age": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "min_management": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "min_skill": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "source_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "source_hash"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "source_hash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "locator": {
+          "type": "string"
+        }
+      }
+    },
+    "knowledge_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity_id",
+        "scope",
+        "min_detail"
+      ],
+      "properties": {
+        "identity_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "min_detail": {
+          "$ref": "#/$defs/detail_level"
+        },
+        "conditions": {
+          "$ref": "#/$defs/condition"
+        },
+        "referral_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/stable_id"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "expression": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "detail",
+        "text",
+        "grants",
+        "denies"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "detail": {
+          "$ref": "#/$defs/detail_level"
+        },
+        "text": {
+          "$ref": "#/$defs/localized"
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/knowledge_rule"
+          },
+          "uniqueItems": true
+        },
+        "denies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/knowledge_rule"
+          },
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      }
+    },
+    "knowledge_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "domain",
+        "title",
+        "summary",
+        "expressions",
+        "keywords"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "domain": {
+          "$ref": "#/$defs/knowledge_domain"
+        },
+        "title": {
+          "$ref": "#/$defs/localized"
+        },
+        "summary": {
+          "$ref": "#/$defs/localized"
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "expressions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          },
+          "minItems": 1
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          },
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "#/$defs/entry_extensions"
+        }
+      }
+    }
+  }
+}

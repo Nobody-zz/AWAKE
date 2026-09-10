@@ -10,7 +10,7 @@ internal static class NarrativeReportBuilder
     {
         if (week == null || week.Count == 0)
         {
-            return "本周没有记录。世界安静如常，只有女神的目光仍落在卡拉迪亚之上。";
+            return "本周没有记录。世界暂时安静如常。";
         }
 
         StringBuilder builder = new StringBuilder();
@@ -27,7 +27,7 @@ internal static class NarrativeReportBuilder
             builder.AppendLine("……还有 " + (week.Count - 5) + " 件旧事沉入记忆。");
         }
         builder.AppendLine();
-        builder.AppendLine("女神将这些事收入眼底，而你正站在她注视的方向。");
+        builder.AppendLine("这些事已被收入世界的记忆。你仍在卡拉迪亚的风暴之中。");
         return builder.ToString();
     }
 }

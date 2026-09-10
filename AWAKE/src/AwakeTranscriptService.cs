@@ -20,8 +20,38 @@ internal static class AwakeTranscriptService
         string idempotencyKey,
         CancellationToken cancellationToken)
     {
-        WorldStateStore store = AwakeRuntime.WorldStateStore;
+        return await AppendTurnAsync(
+            AwakeRuntime.SessionGeneration,
+            AwakeRuntime.WorldStateStore,
+            contactKey,
+            conversationId,
+            day,
+            location,
+            playerText,
+            npcText,
+            npcName,
+            source,
+            idempotencyKey,
+            cancellationToken).ConfigureAwait(false);
+    }
+
+    internal static async Task<bool> AppendTurnAsync(
+        int sessionGeneration,
+        WorldStateStore expectedStore,
+        string contactKey,
+        string conversationId,
+        int day,
+        string location,
+        string playerText,
+        string npcText,
+        string npcName,
+        string source,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        WorldStateStore store = expectedStore;
         if (store == null
+            || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)
             || string.IsNullOrWhiteSpace(contactKey)
             || string.IsNullOrWhiteSpace(idempotencyKey)
             || !AwakeTranscriptValidator.IsValidSource(source))
@@ -65,9 +95,13 @@ internal static class AwakeTranscriptService
             new[] { playerLine, npcLine },
             idempotencyKey + ":turn",
             cancellationToken).ConfigureAwait(false);
-        if (!appended) return false;
-        await store.EnsureContactAsync(contactKey, idempotencyKey + ":contact", cancellationToken).ConfigureAwait(false);
-        return true;
+        if (!appended || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return false;
+        bool contactPersisted = await store.EnsureContactAsync(
+            contactKey,
+            npcName,
+            idempotencyKey + ":contact",
+            cancellationToken).ConfigureAwait(false);
+        return contactPersisted && AwakeRuntime.IsCurrentSession(sessionGeneration, store);
     }
 
     internal static async Task<bool> AppendLetterAsync(
@@ -80,12 +114,25 @@ internal static class AwakeTranscriptService
         CancellationToken cancellationToken)
     {
         WorldStateStore store = AwakeRuntime.WorldStateStore;
-        if (store == null
-            || string.IsNullOrWhiteSpace(contactKey)
-            || string.IsNullOrWhiteSpace(idempotencyKey)
-            || string.IsNullOrWhiteSpace(text))
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        if (store == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, store))
         {
-            AwakeLog.Write("letter_rejected key=" + (contactKey ?? "null"));
+            AwakeLog.Write("letter_rejected key=" + (contactKey ?? "null") + " reason=storage_not_ready");
+            return false;
+        }
+        if (string.IsNullOrWhiteSpace(contactKey))
+        {
+            AwakeLog.Write("letter_rejected key=" + (contactKey ?? "null") + " reason=contact_missing");
+            return false;
+        }
+        if (string.IsNullOrWhiteSpace(idempotencyKey))
+        {
+            AwakeLog.Write("letter_rejected key=" + contactKey + " reason=idempotency_missing");
+            return false;
+        }
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            AwakeLog.Write("letter_rejected key=" + contactKey + " reason=text_missing");
             return false;
         }
         AwakeTranscriptLine line = new AwakeTranscriptLine(
@@ -109,8 +156,15 @@ internal static class AwakeTranscriptService
             new[] { line },
             idempotencyKey + ":letter",
             cancellationToken).ConfigureAwait(false);
-        if (!appended) return false;
-        await store.EnsureContactAsync(contactKey, idempotencyKey + ":contact", cancellationToken).ConfigureAwait(false);
+        if (!appended || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return false;
+        AwakeLog.Write("transcript_write_persisted key=" + contactKey + " source=letter");
+        bool contactPersisted = await store.EnsureContactAsync(contactKey, idempotencyKey + ":contact", cancellationToken).ConfigureAwait(false);
+        if (!contactPersisted || !AwakeRuntime.IsCurrentSession(sessionGeneration, store))
+        {
+            AwakeLog.Write("letter_contact_index_failed key=" + contactKey);
+            return false;
+        }
+        AwakeLog.Write("contact_index_persisted key=" + contactKey + " source=letter");
         return true;
     }
 
@@ -118,9 +172,24 @@ internal static class AwakeTranscriptService
         string contactKey,
         CancellationToken cancellationToken)
     {
+        return await GetHistoryAsync(
+            AwakeRuntime.SessionGeneration,
+            AwakeRuntime.WorldStateStore,
+            contactKey,
+            cancellationToken).ConfigureAwait(false);
+    }
+
+    internal static async Task<List<AwakeTranscriptLine>> GetHistoryAsync(
+        int sessionGeneration,
+        WorldStateStore expectedStore,
+        string contactKey,
+        CancellationToken cancellationToken)
+    {
         List<AwakeTranscriptLine> result = new List<AwakeTranscriptLine>();
-        WorldStateStore store = AwakeRuntime.WorldStateStore;
-        if (store == null || string.IsNullOrWhiteSpace(contactKey)) return result;
+        WorldStateStore store = expectedStore;
+        if (store == null
+            || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)
+            || string.IsNullOrWhiteSpace(contactKey)) return result;
         for (int chunkIndex = 0; chunkIndex < 64; chunkIndex++)
         {
             JObject chunk = await store.GetTranscriptChunkAsync(
@@ -128,6 +197,7 @@ internal static class AwakeTranscriptService
                 chunkIndex,
                 null,
                 cancellationToken).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return new List<AwakeTranscriptLine>();
             if (chunk == null) break;
             if (chunk["entries"] is JArray entries)
             {
@@ -165,14 +235,19 @@ internal static class AwakeTranscriptService
         CancellationToken cancellationToken)
     {
         WorldStateStore store = AwakeRuntime.WorldStateStore;
-        if (store == null || string.IsNullOrWhiteSpace(contactKey) || string.IsNullOrWhiteSpace(lineId)) return false;
-        return await store.PinTranscriptAsync(
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        if (store == null
+            || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)
+            || string.IsNullOrWhiteSpace(contactKey)
+            || string.IsNullOrWhiteSpace(lineId)) return false;
+        bool pinned = await store.PinTranscriptAsync(
             contactKey,
             chunkIndex,
             lineId,
             pin,
             "pin|" + lineId + "|" + pin,
             cancellationToken).ConfigureAwait(false);
+        return pinned && AwakeRuntime.IsCurrentSession(sessionGeneration, store);
     }
 
     internal static async Task<List<string>> LoadContactKeysAsync(CancellationToken cancellationToken)
@@ -187,6 +262,26 @@ internal static class AwakeTranscriptService
             {
                 string key = (string)token;
                 if (!string.IsNullOrWhiteSpace(key)) result.Add(key);
+            }
+        }
+        return result;
+    }
+
+    internal static async Task<Dictionary<string, string>> LoadContactDisplayNamesAsync(CancellationToken cancellationToken)
+    {
+        Dictionary<string, string> result = new Dictionary<string, string>(StringComparer.Ordinal);
+        WorldStateStore store = AwakeRuntime.WorldStateStore;
+        if (store == null) return result;
+        JObject contacts = await store.GetContactsAsync(null, cancellationToken).ConfigureAwait(false);
+        if (contacts?["contactNames"] is JObject names)
+        {
+            foreach (JProperty property in names.Properties())
+            {
+                string value = (string)property.Value;
+                if (!string.IsNullOrWhiteSpace(property.Name) && !string.IsNullOrWhiteSpace(value))
+                {
+                    result[property.Name] = value;
+                }
             }
         }
         return result;

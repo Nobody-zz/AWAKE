@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "awake.worldbook.error-codes.v1",
+  "codes": {
+    "WB2-MANIFEST-MISSING": "v2 package manifest missing",
+    "WB2-SCHEMA-UNSUPPORTED": "unsupported worldbook schema version",
+    "WB2-HASH-MISMATCH": "package hash verification failed",
+    "WB2-PATH-ESCAPE": "package path escapes trusted root",
+    "WB2-WORLD-CONFLICT": "more than one primary world is active",
+    "WB2-DEPENDENCY-CYCLE": "package dependency cycle detected",
+    "WB2-REFERENCE-MISSING": "stable reference is not present in the active closure",
+    "WB2-OVERLAY-CAS": "overlay revision does not match current revision",
+    "WB2-OVERLAY-FORBIDDEN": "overlay attempts to edit a protected field",
+    "WB2-IMPORT-QUOTA": "import exceeds resource quota",
+    "WB2-QUERY-BLOCKED": "query blocked by campaign or content gate",
+    "WB2-QUERY-NOT-FOUND": "no matching knowledge entry",
+    "WB2-QUERY-REFERRAL": "knowledge is unavailable but a referral exists"
+  }
+}

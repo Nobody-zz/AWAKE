@@ -1,0 +1,192 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "persona-workbench.ai-link-evidence.v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "candidate",
+    "baseline",
+    "model",
+    "fixtures",
+    "workerDiagnostic",
+    "matrix",
+    "workbenchStages",
+    "verdicts",
+    "cleanup"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "persona-workbench.ai-link-evidence.v2" },
+    "candidate": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["buildId", "sourceManifestHash", "packageManifestHash"],
+      "properties": {
+        "buildId": { "type": "string", "pattern": "^PWB-[0-9]{8}-[0-9]{6}Z-[0-9A-F]{12}$" },
+        "sourceManifestHash": { "type": "string", "pattern": "^[0-9A-F]{64}$" },
+        "packageManifestHash": { "type": "string", "pattern": "^[0-9A-F]{64}$" }
+      }
+    },
+    "baseline": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["buildId", "sourceManifestHash", "packageManifestHash"],
+      "properties": {
+        "buildId": { "type": "string", "pattern": "^PWB-[0-9]{8}-[0-9]{6}Z-[0-9A-F]{12}$" },
+        "sourceManifestHash": { "type": "string", "pattern": "^[0-9A-F]{64}$" },
+        "packageManifestHash": { "type": "string", "pattern": "^[0-9A-F]{64}$" }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "digest", "thinkingLevel"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "thinkingLevel": { "type": "string", "enum": ["low"] }
+      }
+    },
+    "fixtures": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["short", "long"],
+      "properties": {
+        "short": { "$ref": "#/definitions/fixture" },
+        "long": { "$ref": "#/definitions/fixture" }
+      }
+    },
+    "workerDiagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reportSha256", "model", "modelDigest", "thinkingLevel"],
+      "properties": {
+        "reportSha256": { "type": "string", "pattern": "^[0-9A-F]{64}$" },
+        "model": { "type": "string", "minLength": 1 },
+        "modelDigest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "thinkingLevel": { "type": "string", "enum": ["low"] }
+      }
+    },
+    "matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["revision", "sha256"],
+      "properties": {
+        "revision": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9A-F]{64}$" }
+      }
+    },
+    "workbenchStages": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "$ref": "#/definitions/stage" }
+    },
+    "verdicts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["transport", "quality", "performance", "overall"],
+      "properties": {
+        "transport": { "$ref": "#/definitions/verdict" },
+        "quality": { "$ref": "#/definitions/verdict" },
+        "performance": { "$ref": "#/definitions/verdict" },
+        "overall": { "$ref": "#/definitions/verdict" }
+      }
+    },
+    "cleanup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "captureDeletionAttempted", "captureDeleted", "processStopped", "portFree", "error"],
+      "properties": {
+        "state": { "type": "string", "enum": ["pending", "complete"] },
+        "captureDeletionAttempted": { "type": "boolean" },
+        "captureDeleted": { "type": "boolean" },
+        "processStopped": { "type": "boolean" },
+        "portFree": { "type": "boolean" },
+        "error": { "type": ["string", "null"] }
+      }
+    }
+  },
+  "definitions": {
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bytes", "sha256"],
+      "properties": {
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9A-F]{64}$" }
+      }
+    },
+    "verdict": { "type": "string", "enum": ["PASS", "FAIL", "IN_DOUBT"] },
+    "stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage",
+        "operation",
+        "input",
+        "protocol",
+        "endpointClass",
+        "model",
+        "requestSha256",
+        "requestBytes",
+        "systemPromptBytes",
+        "envelopeBytes",
+        "promptSha256",
+        "numCtx",
+        "numPredict",
+        "completionReason",
+        "envelopeKind",
+        "usage",
+        "durationMs",
+        "transportVerdict",
+        "qualityVerdict",
+        "performanceVerdict",
+        "accepted",
+        "failureNoAcceptedPayload"
+      ],
+      "properties": {
+        "stage": { "type": "string", "enum": ["expand-short", "convert-short", "expand-long", "convert-long"] },
+        "operation": { "type": "string", "enum": ["expand", "convert"] },
+        "input": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source", "bytes", "sha256"],
+          "properties": {
+            "source": { "type": "string", "minLength": 1 },
+            "bytes": { "type": "integer", "minimum": 1 },
+            "sha256": { "type": "string", "pattern": "^[0-9A-F]{64}$" }
+          }
+        },
+        "protocol": { "type": "string", "enum": ["ollama", "openai-compatible"] },
+        "endpointClass": { "type": "string", "enum": ["loopback", "cloud"] },
+        "model": { "type": "string", "minLength": 1 },
+        "requestSha256": { "type": "string", "pattern": "^[0-9A-F]{64}$" },
+        "requestBytes": { "type": "integer", "minimum": 1 },
+        "systemPromptBytes": { "type": "integer", "minimum": 1 },
+        "envelopeBytes": { "type": "integer", "minimum": 1 },
+        "promptSha256": { "type": "string", "pattern": "^[0-9A-F]{64}$" },
+        "numCtx": { "type": "integer", "minimum": 1 },
+        "numPredict": { "type": "integer", "minimum": 1 },
+        "completionReason": { "type": ["string", "null"] },
+        "envelopeKind": { "type": "string", "enum": ["ollama_native", "openai_compatible", "unknown"] },
+        "usage": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["promptTokens", "completionTokens", "totalTokens"],
+          "properties": {
+            "promptTokens": { "type": "integer", "minimum": 0 },
+            "completionTokens": { "type": "integer", "minimum": 0 },
+            "totalTokens": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "durationMs": { "type": "number", "minimum": 0 },
+        "transportVerdict": { "$ref": "#/definitions/verdict" },
+        "qualityVerdict": { "$ref": "#/definitions/verdict" },
+        "performanceVerdict": { "$ref": "#/definitions/verdict" },
+        "accepted": { "type": "boolean" },
+        "failureNoAcceptedPayload": { "type": "boolean" }
+      }
+    }
+  }
+}

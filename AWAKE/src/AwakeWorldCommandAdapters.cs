@@ -1,6 +1,6 @@
 using System;
 using System.Text;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TaleWorlds.CampaignSystem;
@@ -584,34 +584,25 @@ internal sealed class AwakeGiveGoldAdapter : BaseAwakeCommandAdapter
                 context.CorrelationId,
                 owner: AwakeConstants.OwnerValue));
         }
-        Hero.MainHero.Gold -= amount;
-
         WorldStateStore store = AwakeRuntime.WorldStateStore;
         if (store == null) return ResultFailed("awake.world_state.store_unavailable", context.CorrelationId);
         string contactKey = (string)args["canonicalContactKey"] ?? (string)args["targetHeroId"];
-        WorldStateCommand command = new WorldStateCommand(
-            AiTaskConstants.InteractionsNamespace,
-            WorldStateStore.BuildInteractionKey(contactKey),
-            AiTaskConstants.GiveGoldCommandId,
-            request.IdempotencyKey,
+        string interactionId = string.IsNullOrWhiteSpace(request.IdempotencyKey)
+            ? Guid.NewGuid().ToString("N")
+            : request.IdempotencyKey;
+        if (!AwakeGoldSettlementService.TryQueue(
+            store,
+            args,
+            interactionId,
             contactKey,
-            WorldStateKind.Interaction,
-            new JObject
-            {
-                ["mode"] = "give_gold",
-                ["amount"] = amount,
-                ["targetHeroId"] = (string)args["targetHeroId"] ?? string.Empty,
-                ["day"] = AwakeRuntime.CurrentGameDay(),
-                ["reason"] = (string)args["reason"] ?? string.Empty
-            },
-            DateTimeOffset.UtcNow,
-            context.CorrelationId);
-        if (!store.TryEnqueue(command))
+            expectedSnapshotToken,
+            context.CorrelationId,
+            Hero.MainHero.Gold))
         {
             return ResultFailed("awake.world_state.session_ended", context.CorrelationId);
         }
         return OperationResult<CommandAdapterResult>.Succeeded(
-            new CommandAdapterResult(CommandState.Succeeded, "金币已扣除并记录。"));
+            new CommandAdapterResult(CommandState.Succeeded, "金币结算已进入持久化队列。"));
     }
 
     internal static bool Validate(JObject args, out string error)

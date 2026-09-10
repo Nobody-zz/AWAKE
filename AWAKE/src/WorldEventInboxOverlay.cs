@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.InputSystem;
@@ -11,6 +12,7 @@ namespace Awake;
 internal sealed class WorldEventInboxOverlay
 {
     private static WorldEventInboxOverlay _active;
+    private static int _openRequestId;
 
     internal static bool IsOpen => _active != null && !_active._closed;
 
@@ -25,16 +27,28 @@ internal sealed class WorldEventInboxOverlay
                 AwakeLog.Write("world_inbox_open_failed reason=no_top_screen");
                 return false;
             }
-            WorldEventLedger.LoadFromStoreAsync(System.Threading.CancellationToken.None).GetAwaiter().GetResult();
-            List<WorldEventRecord> records = WorldEventLedger.SnapshotWeek(AwakeRuntime.CurrentGameDay());
-            WorldEventInboxOverlay overlay = new WorldEventInboxOverlay(screen, records);
-            overlay.OpenLayer();
-            if (!ReferenceEquals(ScreenManager.FocusedLayer, overlay._layer))
+            int requestId = Interlocked.Increment(ref _openRequestId);
+            int sessionGeneration = AwakeRuntime.SessionGeneration;
+            int day = AwakeRuntime.CurrentGameDay();
+            CancellationToken cancellationToken = AwakeRuntime.SessionCancellationToken;
+            AwakeBackgroundTask.Run(async () =>
             {
-                AwakeLog.Write("world_inbox_focus_pending");
-            }
-            _active = overlay;
-            AwakeLog.Write("world_inbox_panel_opened");
+                try
+                {
+                    await WorldEventServices.Recorder.LoadAsync(cancellationToken).ConfigureAwait(false);
+                    if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
+                    AwakeUiDispatcher.Enqueue(() => OpenLoaded(requestId, sessionGeneration, day, screen));
+                }
+                catch (OperationCanceledException)
+                {
+                    AwakeLog.Write("world_inbox_load_cancelled");
+                }
+                catch (Exception ex)
+                {
+                    AwakeLog.Write("world_inbox_load_error error=" + ex.Message);
+                }
+            }, "world_inbox_load");
+            AwakeLog.Write("world_inbox_load_started");
             return true;
         }
         catch (Exception ex)
@@ -68,7 +82,35 @@ internal sealed class WorldEventInboxOverlay
 
     internal static void CloseActive()
     {
+        Interlocked.Increment(ref _openRequestId);
         _active?.Close();
+    }
+
+    private static void OpenLoaded(int requestId, int sessionGeneration, int day, ScreenBase screen)
+    {
+        if (requestId != Volatile.Read(ref _openRequestId)
+            || !AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)
+            || screen == null
+            || !ReferenceEquals(ScreenManager.TopScreen, screen))
+        {
+            return;
+        }
+        try
+        {
+            IReadOnlyList<WorldEventRecord> records = WorldEventServices.Recorder.SnapshotWeek(day);
+            WorldEventInboxOverlay overlay = new WorldEventInboxOverlay(screen, records);
+            overlay.OpenLayer();
+            if (!ReferenceEquals(ScreenManager.FocusedLayer, overlay._layer))
+            {
+                AwakeLog.Write("world_inbox_focus_pending");
+            }
+            _active = overlay;
+            AwakeLog.Write("world_inbox_panel_opened");
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_inbox_open_error error=" + ex.Message);
+        }
     }
 
     private readonly ScreenBase _screen;

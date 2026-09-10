@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.export.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "exportId", "createdAt", "baseActivation", "overlay"],
+  "properties": {
+    "schemaVersion": { "const": "awake.worldbook.export.v1" },
+    "exportId": { "$ref": "common.schema.json#/$defs/stable_id" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "baseActivation": { "$ref": "campaign-activation.schema.json" },
+    "overlay": { "$ref": "overlay.schema.json" },
+    "notes": { "$ref": "common.schema.json#/$defs/localized" },
+    "extensions": { "$ref": "common.schema.json#/$defs/extensions" }
+  }
+}

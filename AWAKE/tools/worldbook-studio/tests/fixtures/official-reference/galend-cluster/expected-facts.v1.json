@@ -1,0 +1,29 @@
+{
+  "schema_version": "awake.worldbook.galend-expected-facts.v1",
+  "source_extract": "sources/galend-official-cns-extract.txt",
+  "expected_facts": [
+    { "id": "galend-biscan-coast", "markers": ["比斯坎海岸"], "domain": "geography" },
+    { "id": "galend-fishermen-sheep", "markers": ["渔民", "绵羊"], "domain": "economy" },
+    { "id": "galend-royal-line", "markers": ["瓦兰迪亚国王", "奥斯里克"], "domain": "politics" }
+  ],
+  "forbidden": {
+    "year_pattern": "\\d{3,4}\\s*年",
+    "formal_entity_id": "entity\\.",
+    "war_marker": "战争",
+    "place_absent_in_source": ["帕拉汶德", "弗雷吉昂", "Pravend", "Fregian"]
+  },
+  "requirements": {
+    "min_candidates": 1,
+    "max_candidates": 6,
+    "facts_must_be_pending": true,
+    "candidates_must_be_pending": true,
+    "review_only": true,
+    "expressions_expected_when_perspectives_empty": 0,
+    "all_quotes_must_be_verbatim_in_source": true
+  },
+  "expected_anchors": {
+    "must_appear_somewhere": ["entity.settlement.town_v5"],
+    "must_exist_in_registry": true,
+    "alias_map": {}
+  }
+}

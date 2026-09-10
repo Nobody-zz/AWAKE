@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.authoring.v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "version",
+    "kind",
+    "worldId",
+    "title",
+    "entries",
+    "identities",
+    "referrals"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "awake.worldbook.authoring.v2"
+    },
+    "packageId": {
+      "$ref": "common.schema.json#/$defs/package_id"
+    },
+    "version": {
+      "$ref": "common.schema.json#/$defs/version"
+    },
+    "kind": {
+      "enum": [
+        "universe",
+        "extension"
+      ]
+    },
+    "worldId": {
+      "$ref": "common.schema.json#/$defs/stable_id"
+    },
+    "title": {
+      "$ref": "common.schema.json#/$defs/localized"
+    },
+    "description": {
+      "$ref": "common.schema.json#/$defs/localized"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/knowledge_entry"
+      },
+      "minItems": 1
+    },
+    "identities": {
+      "type": "array",
+      "items": {
+        "$ref": "runtime.schema.json#/properties/identities/items"
+      },
+      "minItems": 1
+    },
+    "referrals": {
+      "type": "array",
+      "items": {
+        "$ref": "runtime.schema.json#/properties/referrals/items"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/source_ref"
+      },
+      "uniqueItems": true
+    },
+    "extensions": {
+      "$ref": "common.schema.json#/$defs/extensions"
+    }
+  }
+}

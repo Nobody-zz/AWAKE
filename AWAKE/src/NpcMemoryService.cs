@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TaleWorlds.CampaignSystem;
@@ -14,6 +14,8 @@ internal static class NpcMemoryConstants
 {
     internal const string RouteId = AiTaskConstants.RouteMemoryDaily;
     internal const string PromptId = "awake.npc.memory.summary.v1";
+    internal const string PromptVersion = "v1";
+    internal const string PromptRevision = "release";
     internal const string OutputContractId = "awake.npc.memory.summary.output.v1";
     internal const int SummaryMaximumChars = AiTaskConstants.MemorySummaryMaximumChars;
     internal const int FactsMaximum = AiTaskConstants.MemoryFactsMaximum;
@@ -160,6 +162,36 @@ internal static class NpcMemorySelector
 
 internal static class NpcMemorySummaryTemplate
 {
+    internal const string TemplateText = "{{input}}";
+
+    internal const string OutputSchemaJson =
+@"{
+  ""type"": ""object"",
+  ""properties"": {
+    ""summary"": { ""type"": ""string"", ""minLength"": 1, ""maxLength"": 240 }
+  },
+  ""required"": [ ""summary"" ],
+  ""additionalProperties"": false
+}";
+
+    internal static PromptDefinition CreateDefinition()
+    {
+        return new PromptDefinition(
+            NpcMemoryConstants.PromptId,
+            NpcMemoryConstants.PromptVersion,
+            NpcMemoryConstants.PromptRevision,
+            string.Empty,
+            "text",
+            TemplateText,
+            new[] { "input" },
+            NpcMemoryConstants.OutputContractId,
+            OutputSchemaJson,
+            Array.Empty<string>(),
+            NpcMemoryConstants.RouteId,
+            "invariant",
+            false);
+    }
+
     internal static string BuildInput(string heroId, JArray facts, string summaryHint)
     {
         string factText = facts == null ? string.Empty : string.Join("、", facts);
@@ -512,6 +544,11 @@ internal sealed class NpcMemoryService : IDisposable
         {
             if (_disposed) return string.Empty;
             RequestContext context = AwakeRuntime.CreateContext(_host, Guid.NewGuid().ToString("N"));
+            if (!await RegisterPromptBestEffortAsync(context, cancellationToken).ConfigureAwait(false))
+            {
+                AwakeLog.Write("npc_memory_summary_blocked prompt_registration hero=" + heroId + " conversation=" + conversationId);
+                return string.Empty;
+            }
             TaskCompletionSource<string> completion = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
             Action<AiTaskEvent> onEvent = evt =>
             {
@@ -520,7 +557,8 @@ internal sealed class NpcMemoryService : IDisposable
                     if (evt == null) return;
                     if (evt.Kind == AiTaskEventKind.Completed)
                     {
-                        completion.TrySetResult(NpcMemorySummaryTemplate.ParseSummary(evt.Text));
+                        string response = string.IsNullOrWhiteSpace(evt.StructuredJson) ? evt.Text : evt.StructuredJson;
+                        completion.TrySetResult(NpcMemorySummaryTemplate.ParseSummary(response));
                     }
                     else if (evt.Kind == AiTaskEventKind.Failed || evt.Kind == AiTaskEventKind.Cancelled)
                     {
@@ -547,7 +585,11 @@ internal sealed class NpcMemoryService : IDisposable
                 return string.Empty;
             }
             Task completed = await Task.WhenAny(completion.Task, Task.Delay(TimeSpan.FromSeconds(30), cancellationToken)).ConfigureAwait(false);
-            if (!ReferenceEquals(completed, completion.Task)) return string.Empty;
+            if (!ReferenceEquals(completed, completion.Task))
+            {
+                AwakeLog.Write("npc_memory_summary_timeout hero=" + heroId + " conversation=" + conversationId + " correlation=" + context.CorrelationId);
+                return string.Empty;
+            }
             return await completion.Task.ConfigureAwait(false);
         }
         catch (OperationCanceledException)
@@ -561,6 +603,39 @@ internal sealed class NpcMemoryService : IDisposable
         }
     }
 
+    private async Task<bool> RegisterPromptBestEffortAsync(RequestContext context, CancellationToken cancellationToken)
+    {
+        try
+        {
+            OperationResult<bool> registered = await PromptRegistrationCoordinator.EnsureAsync(
+                NpcMemoryConstants.PromptId + "|" + NpcMemoryConstants.PromptVersion + "|" + NpcMemoryConstants.PromptRevision,
+                token => _host.Prompts.RegisterAsync(
+                    NpcMemorySummaryTemplate.CreateDefinition(),
+                    context,
+                    token),
+                cancellationToken).ConfigureAwait(false);
+            if (!AiTaskConstants.IsPromptRegistrationUsable(registered))
+            {
+                AwakeLog.Write("npc_memory_prompt_register_failed code=" + (registered.Error?.Code ?? "unknown")
+                    + " category=" + (registered.Error?.Category.ToString() ?? "none")
+                    + " retryable=" + (registered.Error?.Retryable.ToString() ?? "false")
+                    + " correlation=" + (registered.Error?.CorrelationId ?? context.CorrelationId)
+                    + " detail=" + (registered.Error?.SafeFallback ?? string.Empty));
+                return false;
+            }
+            return true;
+        }
+        catch (OperationCanceledException)
+        {
+            AwakeLog.Write("npc_memory_prompt_register_cancelled");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("npc_memory_prompt_register_error error=" + ex.Message);
+            return false;
+        }
+    }
     public void Dispose()
     {
         lock (_gate)

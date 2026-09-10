@@ -49,29 +49,63 @@
     <string id="awake.dev_check.status" text="Runtime diagnostics" />
     <string id="awake.dev_check.status_refreshed" text="Runtime diagnostics refreshed" />
     <string id="awake.dev_check.refresh" text="Refresh" />
-    <string id="awake.dev_check.ai_setup" text="AI Setup" />
+    <string id="awake.dev_check.ai_setup" text="AI Configuration (MCM)" />
     <string id="awake.dev_check.diagnostics" text="Diagnostics" />
     <string id="awake.dev_check.logs" text="Open Logs" />
     <string id="awake.onboarding.title" text="AWAKE First Run" />
-    <string id="awake.onboarding.text" text="Before you begin, configure the AI provider, model, and routes. Open the AI Setup console to finish setup, then you can start NPC conversations." />
-    <string id="awake.onboarding.open" text="Open AI Setup" />
+    <string id="awake.onboarding.text" text="Before you begin, configure the AI provider, model, and API key in MCM → AWAKE → AI Link. Routes are managed automatically by the embedded Runtime." />
+    <string id="awake.onboarding.open" text="View AI configuration" />
     <string id="awake.onboarding.later" text="Later" />
+    <string id="awake.onboarding.next" text="Next" />
+    <string id="awake.onboarding.skip" text="Skip" />
+    <string id="awake.onboarding.skip_title" text="Skip guide" />
+    <string id="awake.onboarding.skip_text" text="Skip for this campaign or permanently disable the first-run guide." />
+    <string id="awake.onboarding.skip_campaign" text="This campaign" />
+    <string id="awake.onboarding.skip_forever" text="Disable forever" />
+    <string id="awake.onboarding.welcome.text" text="This guide covers AI setup, controls, first dialogue, and contact history." />
+    <string id="awake.onboarding.aiconfig.text" text="Open MCM → AWAKE → AI Link, enter the service address, model, and API key, then test the connection. AWAKE routes are applied automatically." />
+    <string id="awake.onboarding.commanddeck.text" text="MCM controls cloud export, proactive dialogue, hotkeys, and guide reminders." />
+    <string id="awake.onboarding.firstdialogue.text" text="Select an NPC in a scene or use a map entry; both continue through the unified dialogue session." />
+    <string id="awake.onboarding.contacthistory.text" text="Contacts can continue conversations, show transcript history, and receive letters when remote." />
+    <string id="awake.onboarding.complete.text" text="Basic setup is complete. Use MCM and Developer Check for status and diagnostics." />
     <string id="awake.dialogue.npc_title" text="AWAKE - Talk with {HERO}" />
     <string id="awake.mcm.group.ai_link" text="0. AI Link" />
+    <string id="awake.mcm.provider_kind.name" text="AI service type" />
+    <string id="awake.mcm.provider_kind.hint" text="Choose the AI service you use. OpenAI-compatible also works with some local services." />
+    <string id="awake.mcm.provider_url.name" text="Service address" />
+    <string id="awake.mcm.provider_url.hint" text="Enter the complete HTTP/HTTPS address, such as https://api.openai.com/v1 or http://127.0.0.1:11434. Do not put the API Key in the address." />
+    <string id="awake.mcm.provider_model.name" text="Model name" />
+    <string id="awake.mcm.provider_model.hint" text="Enter the model ID returned by the Provider; you can click “Fetch available models” first." />
+    <string id="awake.mcm.provider_cloud.name" text="Cloud service" />
+    <string id="awake.mcm.provider_cloud.hint" text="Cloud services usually require an API Key; local Ollama normally leaves this off." />
+    <string id="awake.mcm.provider_model_status.name" text="Model fetch status" />
+    <string id="awake.mcm.provider_model_status.hint" text="Read-only result of the most recent model-list request." />
+    <string id="awake.mcm.provider_api_key.name" text="Enter or replace API Key" />
+    <string id="awake.mcm.provider_api_key.content" text="Open input" />
+    <string id="awake.mcm.provider_api_key.hint" text="The input stays visible so you can verify it. The key is stored only in protected local storage and never enters MCM, saves, or logs." />
+    <string id="awake.mcm.provider_apply.name" text="Save and apply configuration" />
+    <string id="awake.mcm.provider_apply.content" text="Save and apply" />
+    <string id="awake.mcm.provider_apply.hint" text="Apply the service type, address, and model to all AWAKE AI routes." />
+    <string id="awake.mcm.provider_models.name" text="Fetch available models" />
+    <string id="awake.mcm.provider_models.content" text="Fetch models" />
+    <string id="awake.mcm.provider_models.hint" text="Apply the current address and service type first, then read the model list returned by the Provider." />
+    <string id="awake.mcm.provider_test.name" text="Test connection" />
+    <string id="awake.mcm.provider_test.content" text="Test connection" />
+    <string id="awake.mcm.provider_test.hint" text="Read the model list to test the Runtime, address, credentials, and Provider connection." />
     <string id="awake.mcm.group.data_debug" text="4. Data and Debug" />
     <string id="awake.mcm.group.behavior" text="2. Proactive Behavior" />
     <string id="awake.mcm.group.scene" text="1. Dialogue and Scene" />
     <string id="awake.mcm.ai_status.name" text="AI Link Status" />
-    <string id="awake.mcm.ai_status.hint" text="Read-only: Companion connection, route capabilities and candidate providers. Configure Provider under MCM → Marcus AI Framework → 01 Companion; use the four logical routes from the README." />
+    <string id="awake.mcm.ai_status.hint" text="Read-only summary of the embedded Runtime, Provider, routes, campaign session, and cloud export state. Configure all player-facing AI settings in this group." />
     <string id="awake.mcm.cloud_export.name" text="Enable Cloud Export" />
     <string id="awake.mcm.cloud_export.hint" text="Enabled by default. Local Ollama and other local links still work when this is off; cloud dialogue still requires framework route permission." />
     <string id="awake.mcm.export_player_state.name" text="Allow Player State Export" />
     <string id="awake.mcm.export_player_state.hint" text="Allows player, hero and relationship state to be exported as player_state in NPC dialogue. Enabled by default." />
     <string id="awake.mcm.enable_cloud_oneclick.name" text="Enable Cloud Dialogue" />
     <string id="awake.mcm.enable_cloud_oneclick.content" text="Enable" />
-    <string id="awake.mcm.enable_cloud_oneclick.hint" text="Enables AWAKE cloud export and player-state export, then opens Marcus AI setup. You still need to allow cloud export for AWAKE.route.npc.dialogue there." />
-    <string id="awake.mcm.actions.cloud_oneclick_ok" text="Cloud export enabled. In the AI setup console, allow cloud export for AWAKE.route.npc.dialogue." />
-    <string id="awake.mcm.actions.cloud_oneclick_session_only" text="Cloud export enabled for this session. Save MCM settings, then allow AWAKE.route.npc.dialogue cloud export in the AI setup console." />
+    <string id="awake.mcm.enable_cloud_oneclick.hint" text="Enables AWAKE cloud export and player-state export. The embedded Runtime applies the route configuration automatically." />
+    <string id="awake.mcm.actions.cloud_oneclick_ok" text="Cloud export enabled. AWAKE applies the route configuration automatically." />
+    <string id="awake.mcm.actions.cloud_oneclick_session_only" text="Cloud export enabled for this session. Save the MCM settings to keep it for future sessions." />
     <string id="awake.mcm.actions.cloud_oneclick_failed" text="One-click cloud enable failed. Enable cloud export manually." />
     <string id="awake.mcm.developer_menu.name" text="Enable Developer Menu" />
     <string id="awake.mcm.developer_menu.hint" text="Disabled by default. Adds AI self-check and developer check entries in town, castle, village and keep menus." />
@@ -89,35 +123,37 @@
     <string id="awake.mcm.scene_shout_key.hint" text="While holding T, press this key to switch to an untargeted scene call. Default V." />
     <string id="awake.mcm.group.command" text="3. Command Deck" />
     <string id="awake.mcm.world_effects.name" text="Enable World Effects" />
-    <string id="awake.mcm.world_effects.hint" text="Enabled by default. When disabled, world commands and oracle effects from goddess output are rejected; actual gameplay wiring is planned for 0.2.x." />
-    <string id="awake.mcm.boon_offers.name" text="Enable Divine Proposals" />
-    <string id="awake.mcm.boon_offers.hint" text="Enabled by default. When disabled, no new divine candidates are generated, unsettled proposals are cleared, and in-flight settlement may finish." />
+    <string id="awake.mcm.world_effects.hint" text="Enabled by default. When disabled, optional content-pack world effects are rejected; actual gameplay wiring is planned for 0.2.x." />
+    <string id="awake.mcm.boon_offers.name" text="Enable Optional Content Proposals" />
+    <string id="awake.mcm.boon_offers.hint" text="Enabled by default. When disabled, optional content packs cannot generate new proposals; unsettled proposals are cleared and in-flight settlement may finish." />
     <string id="awake.mcm.npc_proactive.name" text="Enable NPC Proactive" />
     <string id="awake.mcm.npc_proactive.hint" text="Enabled by default. Nearby NPCs may proactively start a conversation based on relationship and current situation." />
     <string id="awake.mcm.npc_proactive_chance.name" text="NPC Proactive Chance" />
     <string id="awake.mcm.npc_proactive_chance.hint" text="Final variance for NPC proactive initiations, 0-100, default 35. Relationship and event conditions decide the base trigger first." />
     <string id="awake.mcm.sync_routes.name" text="Sync Routes" />
     <string id="awake.mcm.sync_routes.content" text="Sync Routes" />
-    <string id="awake.mcm.sync_routes.hint" text="Routes are auto-provisioned by the framework; click Sync Routes in the AI setup console if needed." />
+    <string id="awake.mcm.sync_routes.hint" text="Routes are declared by AWAKE and applied automatically by the embedded Runtime. You normally do not need to edit route IDs." />
     <string id="awake.mcm.refresh_status.name" text="AI Self Check" />
     <string id="awake.mcm.refresh_status.content" text="Self Check" />
-    <string id="awake.mcm.refresh_status.hint" text="Refresh Companion connection status and show the result." />
+    <string id="awake.mcm.refresh_status.hint" text="Refresh the embedded Runtime, Provider, route, campaign session, and cloud export summary." />
     <string id="awake.mcm.developer_report.name" text="Developer Check" />
     <string id="awake.mcm.developer_report.content" text="Open" />
     <string id="awake.mcm.developer_report.hint" text="Open the runtime diagnostics report." />
     <string id="awake.mcm.actions.sync_routes_result" text="Routes are synced by the framework; open the AI setup console if needed." />
     <string id="awake.mcm.actions.status_refreshed" text="AI status refreshed." />
     <string id="awake.mcm.actions.developer_unavailable" text="Developer check is unavailable right now." />
-    <string id="awake.mcm.open_setup.name" text="Open AI Setup" />
+    <string id="awake.mcm.open_setup.name" text="AI Configuration Guidance" />
     <string id="awake.mcm.open_setup.content" text="Open" />
-    <string id="awake.mcm.open_setup.hint" text="Open the Marcus AI setup console to configure providers, models, and routes." />
+    <string id="awake.mcm.open_setup.hint" text="Shows where to configure the Provider, model, and API key: MCM → AWAKE → AI Link." />
     <string id="awake.mcm.open_diagnostics.name" text="Open Diagnostics" />
     <string id="awake.mcm.open_diagnostics.content" text="Open" />
-    <string id="awake.mcm.open_diagnostics.hint" text="Open the framework diagnostics console." />
-    <string id="awake.feedback.marcus_sync_ok" text="Routes synced." />
-    <string id="awake.feedback.marcus_sync_failed" text="Route sync failed. Open the AI setup console." />
-    <string id="awake.feedback.marcus_open_setup_failed" text="Could not open the AI setup console." />
-    <string id="awake.feedback.marcus_open_diagnostics_failed" text="Could not open the diagnostics console." />
+    <string id="awake.mcm.open_diagnostics.hint" text="Shows the developer-only diagnostics boundary. Detailed logs remain outside the game UI." />
+    <string id="awake.feedback.marcus_sync_ok" text="AWAKE routes are managed by the embedded Runtime." />
+    <string id="awake.feedback.marcus_sync_failed" text="Route application failed. Check the AI Link settings in AWAKE MCM." />
+    <string id="awake.feedback.marcus_open_setup_failed" text="Could not show the AI configuration guidance. Open AWAKE MCM directly." />
+    <string id="awake.feedback.marcus_open_diagnostics_failed" text="Could not show the diagnostics guidance. Check the local AWAKE log." />
+    <string id="awake.feedback.open_mcm" text="Open MCM → AWAKE → AI Link to configure the Provider, model, and API key." />
+    <string id="awake.feedback.open_diagnostics" text="Developer diagnostics stay in AWAKE Developer Check and local logs; detailed logs are not shown in the game UI." />
     <string id="awake.menu.dev_tools" text="Developer Testing" />
     <string id="awake.dev_tools.title" text="AWAKE · Developer Testing" />
     <string id="awake.dev_tools.prompt" text="Choose a test action:" />
@@ -169,7 +205,13 @@
     <string id="awake.ui.messenger_choose" text="Choose a contact to start talking." />
     <string id="awake.ui.messenger_no_nearby" text="There is no one nearby to talk with." />
     <string id="awake.ui.contact_expired" text="This contact is no longer available." />
-    <string id="awake.ui.contact_remote_letter" text="Remote contact; writing letters will open in a later version." />
+    <string id="awake.ui.contact_remote_letter" text="Remote contact; letters are available." />
+    <string id="awake.ui.write_letter" text="Write letter" />
+    <string id="awake.ui.letter_title" text="Write letter" />
+    <string id="awake.ui.letter_prompt" text="Write the letter you want to send:" />
+    <string id="awake.ui.letter_send" text="Send" />
+    <string id="awake.ui.letter_sent" text="Letter written to contact history." />
+    <string id="awake.ui.letter_failed" text="Letter could not be written." />
     <string id="awake.ui.contact_not_same_place" text="You are not in the same place as this person yet." />
     <string id="awake.ui.host_missing" text="AWAKE is not connected to the AI host." />
     <string id="awake.ui.status_starting" text="The conversation is waking up..." />
@@ -218,8 +260,16 @@
     <string id="awake.preset.standard" text="Standard" />
     <string id="awake.preset.slow_burn" text="Slow Burn" />
     <string id="awake.preset.strict" text="Strict" />
-    <string id="awake.status.companion" text="Companion: {STATE}" />
-    <string id="awake.status.route" text="Route: {ROUTE}" />
+    <string id="awake.status.runtime" text="Runtime Service: {STATE}" />
+    <string id="awake.status.provider" text="Provider: {STATE}" />
+    <string id="awake.status.route" text="AI routes: {ROUTE}" />
+    <string id="awake.status.session_ready" text="Campaign session: ready" />
+    <string id="awake.status.session_not_ready" text="Campaign session: not ready" />
+    <string id="awake.status.ready" text="ready" />
+    <string id="awake.status.starting" text="starting" />
+    <string id="awake.status.draining" text="stopping" />
+    <string id="awake.status.recovery_required" text="recovery required" />
+    <string id="awake.status.stopped" text="not running" />
     <string id="awake.status.cloud" text="Cloud: {STATE}" />
     <string id="awake.status.candidates" text="Candidates: {CANDIDATES}" />
     <string id="awake.status.separator" text=" | " />
@@ -237,7 +287,7 @@
     <string id="awake.proactive.decline" text="Later" />
     <string id="awake.proactive.opening_hint" text="The other person initiated this conversation." />
     <string id="awake.dialogue.long_wait_hint" text="Still responding. You can close and cancel after 60 seconds." />
-    <string id="awake.dialogue.cloud_export_denied" text="Cloud export denied: use AWAKE MCM Enable Cloud Dialogue, then allow AWAKE.route.npc.dialogue cloud export in Marcus AI settings." />
+    <string id="awake.dialogue.cloud_export_denied" text="Cloud export was denied: enable cloud export in AWAKE MCM and verify the Provider settings." />
     <string id="awake.dialogue.cloud_export_disabled" text="AWAKE cloud export is disabled: enable it under MCM Data &amp; Debug." />
     <string id="awake.menu.inbox" text="Event Inbox" />
     <string id="awake.menu.weekly_report" text="Weekly Report" />

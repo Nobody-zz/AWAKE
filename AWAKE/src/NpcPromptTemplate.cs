@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 using Newtonsoft.Json;
 
 namespace Awake;
@@ -10,6 +10,10 @@ internal static class NpcPromptTemplate
 {
     internal const string TemplateText =
 @"你是卡拉迪亚的 {{npc_identity}}。你有自己的底线、野心与算盘。你不会因为玩家发话就自动臣服、爱慕、崩溃或献身；态度变化必须有可追溯的触发点。
+
+【角色人格模板】
+{{persona_dsl}}
+该模板是角色塑造约束；不要把模板代码解释给玩家，也不要凭空增加模板未提供的硬事实。
 
 【检索到的知识】
 {{retrieved_knowledge}}
@@ -75,12 +79,12 @@ internal static class NpcPromptTemplate
     ""effects"": { ""type"": ""array"", ""items"": { ""type"": ""string"" }, ""minItems"": 0, ""maxItems"": 8 },
     ""command"": { ""type"": ""object"", ""properties"": { ""commandId"": { ""type"": ""string"", ""minLength"": 1, ""maxLength"": 80 }, ""arguments"": { ""type"": ""object"" }, ""reason"": { ""type"": ""string"", ""minLength"": 1, ""maxLength"": 200 } }, ""required"": [ ""commandId"", ""arguments"" ], ""additionalProperties"": false }
   },
-  ""required"": [ ""reply"", ""mood"", ""effects"" ],
+  ""required"": [ ""reply"", ""mood"" ],
   ""additionalProperties"": false
 }";
 
     internal static readonly string[] RequiredVariables =
-        new[] { "retrieved_knowledge", "npc_memory", "npc_state", "npc_identity", "dialogue_history", "player_known", "scene", "opening_hint", "player_turn", "npc_id" };
+        new[] { "retrieved_knowledge", "npc_memory", "npc_state", "npc_identity", "persona_dsl", "dialogue_history", "player_known", "scene", "opening_hint", "player_turn", "npc_id" };
 
     internal static PromptDefinition CreateDefinition()
     {
@@ -144,7 +148,7 @@ internal static class NpcPromptTemplate
     ""mood"": { ""type"": ""string"", ""minLength"": 1, ""maxLength"": 8 },
     ""effects"": { ""type"": ""array"", ""items"": { ""type"": ""string"" }, ""minItems"": 0, ""maxItems"": 8 }
   },
-  ""required"": [ ""reply"", ""mood"", ""effects"" ],
+  ""required"": [ ""reply"", ""mood"" ],
   ""additionalProperties"": false
 }";
 

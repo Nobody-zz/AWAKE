@@ -43,7 +43,7 @@ internal static class AwakeLog
                 TryRotate(path);
                 File.AppendAllText(
                     path,
-                    DateTimeOffset.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + " " + line + Environment.NewLine);
+                    DateTimeOffset.UtcNow.ToString("yyyy-MM-dd HH:mm:ss'Z'") + " " + line + Environment.NewLine);
             }
         }
         catch

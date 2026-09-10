@@ -104,3 +104,28 @@ internal static class AwakeUnnamedProfileService
         }
     }
 }
+internal static class AwakeContactLabelBuilder
+{
+    internal static string Build(
+        string displayName,
+        string clanName,
+        string kingdomName,
+        string settlementName,
+        bool isWanderer,
+        bool includeSettlement)
+    {
+        string name = string.IsNullOrWhiteSpace(displayName) ? "未知" : displayName.Trim();
+        if (isWanderer) return name;
+        if (!string.IsNullOrWhiteSpace(clanName))
+        {
+            string label = name + " · " + clanName.Trim();
+            if (!string.IsNullOrWhiteSpace(kingdomName)) label += " · " + kingdomName.Trim();
+            return label;
+        }
+        if (includeSettlement && !string.IsNullOrWhiteSpace(settlementName))
+        {
+            return name + " · " + settlementName.Trim();
+        }
+        return name;
+    }
+}

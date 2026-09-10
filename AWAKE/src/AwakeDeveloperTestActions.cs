@@ -57,18 +57,12 @@ internal static class AwakeDeveloperTestActions
 
     internal static void ShowWorldbookStatus()
     {
-        WorldbookService service = WorldbookRuntime.Current;
+        IWorldKnowledgeQuery service = WorldbookRuntime.Knowledge;
         StringBuilder builder = new StringBuilder();
         builder.AppendLine(WorldbookRuntime.BuildStatusText());
         if (service != null)
         {
-            int shown = 0;
-            foreach (WorldbookImportWarning warning in service.Warnings)
-            {
-                if (shown >= 8) break;
-                builder.AppendLine("- " + warning.Source + ": " + warning.Message);
-                shown++;
-            }
+            builder.AppendLine("新读取器已接管 NPC 知识查询。");
         }
         InformationManager.ShowInquiry(
             new InquiryData(
@@ -115,9 +109,72 @@ internal static class AwakeDeveloperTestActions
         AwakeFeedback.ShowSuccess(WorldbookRuntime.BuildStatusText());
     }
 
+    internal static void EditWorldbook()
+    {
+        if (WorldbookRuntime.Knowledge == null)
+        {
+            AwakeFeedback.ShowWarning(AwakeLocalization.Resolve("awake.worldbook.not_loaded", "世界书未加载。"));
+            return;
+        }
+        InformationManager.ShowTextInquiry(
+            new TextInquiryData(
+                "编辑世界知识",
+                "输入要修改的条目 ID（例如 awake:entry:...）：",
+                true,
+                true,
+                "下一步",
+                "取消",
+                input => PromptWorldbookSummary((input ?? string.Empty).Trim()),
+                null,
+                false,
+                null,
+                string.Empty,
+                string.Empty),
+            true,
+            false);
+    }
+
+    internal static void ExportWorldbookOverlay()
+    {
+        string path = WorldbookRuntime.ExportOverlay();
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            AwakeFeedback.ShowWarning("世界书未加载，暂无可导出的修改。");
+            return;
+        }
+        AwakeFeedback.ShowSuccess("世界书修改已导出：" + path);
+    }
+
+    private static void PromptWorldbookSummary(string entryId)
+    {
+        if (string.IsNullOrWhiteSpace(entryId)) return;
+        InformationManager.ShowTextInquiry(
+            new TextInquiryData(
+                "编辑档案摘要",
+                "输入新的摘要文本；这只修改当前战役 Overlay，不改基础世界书：",
+                true,
+                true,
+                "保存",
+                "取消",
+                input =>
+                {
+                    string error;
+                    bool ok = WorldbookRuntime.TryApplyOverlay("replace_summary", entryId, input ?? string.Empty, WorldbookRuntime.OverlayRevision, "玩家在游戏内编辑档案摘要", out error);
+                    if (ok) AwakeFeedback.ShowSuccess("档案已修改，Overlay revision=" + WorldbookRuntime.OverlayRevision);
+                    else AwakeFeedback.ShowError("修改失败：" + error);
+                },
+                null,
+                false,
+                null,
+                string.Empty,
+                string.Empty),
+            true,
+            false);
+    }
+
     private static void ShowWorldbookSearchResults(string input)
     {
-        WorldbookService service = WorldbookRuntime.Current;
+        IWorldKnowledgeQuery service = WorldbookRuntime.Knowledge;
         if (service == null)
         {
             AwakeFeedback.ShowWarning(AwakeLocalization.Resolve(
@@ -125,7 +182,7 @@ internal static class AwakeDeveloperTestActions
                 "Worldbook is not loaded."));
             return;
         }
-        List<WorldbookRule> hits = service.Search(input, 20);
+        List<WorldKnowledgeEntry> hits = service.Search(input, 20);
         StringBuilder builder = new StringBuilder();
         if (hits.Count == 0)
         {
@@ -133,9 +190,9 @@ internal static class AwakeDeveloperTestActions
         }
         else
         {
-            foreach (WorldbookRule rule in hits)
+            foreach (WorldKnowledgeEntry entry in hits)
             {
-                builder.AppendLine("- " + rule.Id + " [priority=" + rule.Priority + "]");
+                builder.AppendLine("- " + entry.Id + " [" + entry.Domain + "] " + entry.Title);
             }
         }
         InformationManager.ShowInquiry(

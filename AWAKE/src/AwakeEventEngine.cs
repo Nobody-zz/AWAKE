@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 using Newtonsoft.Json.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Party;
@@ -107,11 +107,16 @@ internal sealed class AwakeEventEngine
         }
     }
 
-    internal async Task OnHourlyTickAsync(CancellationToken cancellationToken)
+    internal Task OnHourlyTickAsync(CancellationToken cancellationToken)
+    {
+        return OnHourlyTickAsync(AwakeRuntime.SessionGeneration, cancellationToken);
+    }
+
+    internal async Task OnHourlyTickAsync(int sessionGeneration, CancellationToken cancellationToken)
     {
         try
         {
-            await OnHourlyTickCoreAsync(cancellationToken).ConfigureAwait(false);
+            await OnHourlyTickCoreAsync(sessionGeneration, cancellationToken).ConfigureAwait(false);
         }
         catch (OperationCanceledException)
         {
@@ -122,8 +127,9 @@ internal sealed class AwakeEventEngine
         }
     }
 
-    private async Task OnHourlyTickCoreAsync(CancellationToken cancellationToken)
+    private async Task OnHourlyTickCoreAsync(int sessionGeneration, CancellationToken cancellationToken)
     {
+        if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
         if (_busy) return;
         List<AwakeEventRule> snapshot;
         lock (_gate)
@@ -138,7 +144,9 @@ internal sealed class AwakeEventEngine
         {
             double nowHour = CurrentGameHour();
             int day = CurrentGameDay();
-            await EnsureEventMetaLoadedAsync(cancellationToken).ConfigureAwait(false);
+            await EnsureEventMetaLoadedAsync(sessionGeneration, cancellationToken).ConfigureAwait(false);
+            WorldStateStore expectedStore = AwakeRuntime.WorldStateStore;
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
 
             List<AwakeEventRule> eligible = new List<AwakeEventRule>();
             foreach (AwakeEventRule rule in snapshot)
@@ -151,8 +159,19 @@ internal sealed class AwakeEventEngine
 
             AwakeEventRule selected = AwakeEventEngineCore.SelectWeighted(eligible, new Random());
             if (selected == null) return;
-            await RecordTriggerAsync(selected, nowHour, day, cancellationToken).ConfigureAwait(false);
-            bool shown = ShowRule(selected);
+            bool shown = await ShowRuleAsync(
+                selected,
+                sessionGeneration,
+                expectedStore,
+                cancellationToken).ConfigureAwait(false);
+            if (!shown || !AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
+            await RecordTriggerAsync(
+                selected,
+                nowHour,
+                day,
+                sessionGeneration,
+                expectedStore,
+                cancellationToken).ConfigureAwait(false);
             release = !shown;
         }
         catch (OperationCanceledException)
@@ -171,20 +190,38 @@ internal sealed class AwakeEventEngine
         }
     }
 
-    private async Task RunChainAsync(AwakeEventRule rule, double nowHour)
+    private async Task RunChainAsync(
+        AwakeEventRule rule,
+        double nowHour,
+        int sessionGeneration,
+        WorldStateStore expectedStore,
+        CancellationToken cancellationToken)
     {
         bool release = true;
         try
         {
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
             int day = CurrentGameDay();
-            await EnsureEventMetaLoadedAsync(CancellationToken.None).ConfigureAwait(false);
+            await EnsureEventMetaLoadedAsync(sessionGeneration, cancellationToken).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
             if (!CanTriggerSync(rule, nowHour, day))
             {
                 AwakeLog.Write("awake_event_chain_blocked id=" + rule.Definition.Id);
                 return;
             }
-            await RecordTriggerAsync(rule, nowHour, day, CancellationToken.None).ConfigureAwait(false);
-            bool shown = ShowRule(rule);
+            bool shown = await ShowRuleAsync(
+                rule,
+                sessionGeneration,
+                expectedStore,
+                cancellationToken).ConfigureAwait(false);
+            if (!shown || !AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
+            await RecordTriggerAsync(
+                rule,
+                nowHour,
+                day,
+                sessionGeneration,
+                expectedStore,
+                cancellationToken).ConfigureAwait(false);
             release = !shown;
         }
         catch (Exception ex)
@@ -198,7 +235,7 @@ internal sealed class AwakeEventEngine
         }
     }
 
-    private async Task EnsureEventMetaLoadedAsync(CancellationToken cancellationToken)
+    private async Task EnsureEventMetaLoadedAsync(int sessionGeneration, CancellationToken cancellationToken)
     {
         lock (_gate)
         {
@@ -208,16 +245,20 @@ internal sealed class AwakeEventEngine
         IMarcusAiFrameworkHost host = AwakeRuntime.ResolveHost();
         if (host == null)
         {
-            lock (_gate) _metaLoaded = true;
+            if (AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration))
+            {
+                lock (_gate) _metaLoaded = true;
+            }
             return;
         }
         try
         {
             await AwakeRuntime.EnsureWorldStateReadyAsync(host, cancellationToken).ConfigureAwait(false);
             WorldStateStore store = AwakeRuntime.WorldStateStore;
-            if (store == null) return;
+            if (store == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
             RequestContext context = AwakeRuntime.CreateContext(host, Guid.NewGuid().ToString("N"));
             JObject doc = await store.GetEventMetaAsync(context, cancellationToken).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
             if (doc == null)
             {
                 lock (_gate) _metaLoaded = true;
@@ -301,8 +342,15 @@ internal sealed class AwakeEventEngine
         }
     }
 
-    private async Task RecordTriggerAsync(AwakeEventRule rule, double nowHour, int day, CancellationToken cancellationToken)
+    private async Task RecordTriggerAsync(
+        AwakeEventRule rule,
+        double nowHour,
+        int day,
+        int sessionGeneration,
+        WorldStateStore expectedStore,
+        CancellationToken cancellationToken)
     {
+        if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
         int version;
         int count;
         lock (_gate)
@@ -319,18 +367,21 @@ internal sealed class AwakeEventEngine
             _dailyCounts[rule.Definition.Id] = count;
         }
 
-        WorldStateStore store = AwakeRuntime.WorldStateStore;
-        if (store == null) return;
+        if (expectedStore == null) return;
         try
         {
-            await store.UpdateEventMetaAsync(
+            await expectedStore.UpdateEventMetaAsync(
                 rule.Definition.Id,
                 version,
                 nowHour,
                 day,
                 count,
-                AwakeRuntime.SessionGeneration + "|" + rule.Definition.Id + "|" + version,
+                sessionGeneration + "|" + rule.Definition.Id + "|" + version,
                 cancellationToken).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore))
+            {
+                AwakeLog.Write("awake_event_meta_write_ignored id=" + rule.Definition.Id + " reason=stale_session");
+            }
         }
         catch (Exception ex)
         {
@@ -338,8 +389,21 @@ internal sealed class AwakeEventEngine
         }
     }
 
-    private bool ShowRule(AwakeEventRule rule)
+    private Task<bool> ShowRuleAsync(
+        AwakeEventRule rule,
+        int sessionGeneration,
+        WorldStateStore expectedStore,
+        CancellationToken cancellationToken)
     {
+        TaskCompletionSource<bool> completion = new TaskCompletionSource<bool>();
+        if (cancellationToken.CanBeCanceled)
+        {
+            CancellationTokenRegistration registration = cancellationToken.Register(
+                () => completion.TrySetCanceled(cancellationToken));
+            _ = completion.Task.ContinueWith(
+                completed => registration.Dispose(),
+                TaskScheduler.Default);
+        }
         _busy = true;
         AwakeLog.Write("awake_event_engine_fired id=" + rule.Definition.Id + " hour=" + CurrentGameHour());
         try
@@ -348,49 +412,64 @@ internal sealed class AwakeEventEngine
             {
                 try
                 {
-                    if (!CanShowPopup())
+                    if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore) || !CanShowPopup())
                     {
                         _busy = false;
+                        completion.TrySetResult(false);
                         return;
                     }
                     bool shown = AwakeEventPopupService.Show(
                         rule.Definition,
-                        (id, choice) => OnChoice(rule, choice),
+                        (id, choice) => OnChoice(rule, choice, sessionGeneration, expectedStore, cancellationToken),
                         () => _busy = false);
                     if (!shown) _busy = false;
+                    completion.TrySetResult(shown);
                 }
                 catch (Exception ex)
                 {
                     AwakeLog.Write("awake_event_show_error id=" + rule.Definition.Id + " error=" + ex.Message);
                     _busy = false;
+                    completion.TrySetResult(false);
                 }
             });
-            return true;
+            return completion.Task;
         }
         catch (Exception ex)
         {
             AwakeLog.Write("awake_event_show_error id=" + rule.Definition.Id + " error=" + ex.Message);
             _busy = false;
-            return false;
+            completion.TrySetResult(false);
+            return completion.Task;
         }
     }
 
-    private void OnChoice(AwakeEventRule rule, string choice)
+    private void OnChoice(
+        AwakeEventRule rule,
+        string choice,
+        int sessionGeneration,
+        WorldStateStore expectedStore,
+        CancellationToken cancellationToken)
     {
         try
         {
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore))
+            {
+                AwakeLog.Write("awake_event_choice_ignored id=" + rule.Definition.Id + " reason=stale_session");
+                _busy = false;
+                return;
+            }
             _busy = false;
-            WorldEventLedger.Record(CurrentGameDay(), "event", rule.Definition.Title);
+            WorldEventServices.QueueRecord(CurrentGameDay(), "event", rule.Definition.Title);
             TryQueueDialogueAction(rule, choice);
             if (rule.Definition.Effect != null)
             {
-                _ = ApplyEffectAsync(rule, choice);
+                _ = ApplyEffectAsync(rule, choice, sessionGeneration, expectedStore, cancellationToken);
             }
             AwakeEventRule next = AwakeEventChainCore.Resolve(_rulesById, rule.Definition.Id, choice);
             if (next == null) return;
             AwakeLog.Write("awake_event_chain_advanced from=" + rule.Definition.Id + " to=" + next.Definition.Id);
             _busy = true;
-            _ = RunChainAsync(next, CurrentGameHour());
+            _ = RunChainAsync(next, CurrentGameHour(), sessionGeneration, expectedStore, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -399,7 +478,12 @@ internal sealed class AwakeEventEngine
         }
     }
 
-    private static async Task ApplyEffectAsync(AwakeEventRule rule, string choice)
+    private static async Task ApplyEffectAsync(
+        AwakeEventRule rule,
+        string choice,
+        int sessionGeneration,
+        WorldStateStore expectedStore,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -408,7 +492,7 @@ internal sealed class AwakeEventEngine
             string targetId = ResolveDialogueTarget(effect.TargetId);
             if (string.IsNullOrWhiteSpace(targetId))
             {
-                WorldEventLedger.Record(CurrentGameDay(), "event_effect_target_missing", (effect.TargetId ?? "unknown") + ":target_unavailable");
+                WorldEventServices.QueueRecord(CurrentGameDay(), "event_effect_target_missing", (effect.TargetId ?? "unknown") + ":target_unavailable");
                 return;
             }
             Newtonsoft.Json.Linq.JObject args = AwakeEventEffectRules.BuildRelationshipArgs(
@@ -419,14 +503,21 @@ internal sealed class AwakeEventEngine
 
             IMarcusAiFrameworkHost host = AwakeRuntime.ResolveHost();
             if (host == null) return;
-            await AwakeRuntime.EnsureWorldStateReadyAsync(host, CancellationToken.None).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
+            if (!await AwakeRuntime.EnsureWorldStateReadyAsync(host, cancellationToken).ConfigureAwait(false)) return;
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
             OperationResult<string> result = await new WorldCommandBridge(host).ExecuteAsync(
                 new WorldCommandProposal(
                     AiTaskConstants.RelationshipDeltaCommandId,
                     args.ToString(Newtonsoft.Json.Formatting.None),
-                    "事件结算"),
+                "事件结算"),
                 Guid.NewGuid().ToString("N"),
-                CancellationToken.None).ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore))
+            {
+                AwakeLog.Write("awake_event_effect_ignored id=" + rule.Definition.Id + " reason=stale_session");
+                return;
+            }
             AwakeLog.Write("awake_event_effect_applied id=" + rule.Definition.Id
                 + " choice=" + choice
                 + " target=" + targetId
@@ -450,7 +541,7 @@ internal sealed class AwakeEventEngine
             string targetId = ResolveDialogueTarget(action.TargetId);
             if (string.IsNullOrWhiteSpace(targetId))
             {
-                WorldEventLedger.Record(CurrentGameDay(), "npc_dialogue_open_failed", (action.TargetId ?? "unknown") + ":target_unavailable");
+                WorldEventServices.QueueRecord(CurrentGameDay(), "npc_dialogue_open_failed", (action.TargetId ?? "unknown") + ":target_unavailable");
                 return;
             }
             EventDialogueQueue.Enqueue(targetId, AwakeRuntime.TruncateTextElements(action.OpeningHint, 240));

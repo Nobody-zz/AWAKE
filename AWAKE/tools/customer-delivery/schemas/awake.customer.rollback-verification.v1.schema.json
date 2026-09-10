@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.customer.rollback-verification.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "rolled_back_to",
+    "previous_current",
+    "target_package_sha256",
+    "target_zip_sha256",
+    "pointer_sha256",
+    "verified_at_utc"
+  ],
+  "properties": {
+    "schema_version": { "const": "awake.customer.rollback-verification.v1" },
+    "rolled_back_to": { "type": "string", "pattern": "^awake-customer-[A-Za-z0-9._-]+$" },
+    "previous_current": { "type": "string", "pattern": "^awake-customer-[A-Za-z0-9._-]+$" },
+    "target_package_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "target_zip_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "pointer_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "verified_at_utc": { "type": "string", "format": "date-time" }
+  }
+}

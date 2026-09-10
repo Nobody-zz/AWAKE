@@ -1,0 +1,64 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.politics.pravend-succession
+title:
+  zh-CN: 帕拉汶德易主与戴·提尔传承
+status: reference_only
+domain: politics
+subdomain: clans
+related_domains:
+  - geography
+universe: bannerlord_1084
+era:
+  key: historical
+  certainty: bounded
+content_tier: base
+summary:
+  zh-CN: 官方资料记载瓦兰迪亚人“铁壁”奥斯里克入侵后，巴拉维诺斯经协商投降，此后传承到奥斯里克旁支的戴·提尔家族手中。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+entity_ids:
+  - entity.settlement.town_v3
+authority:
+  owner: source_only
+  conflict_policy: report_only
+sources:
+  - source_id: source.bannerlord.sandbox.settlements.history
+    source_version: bannerlord-v1.3.15-cns-extract-v1
+    source_content_hash: 2f06ef6ab1029bdb6a5920c94cc9adfa6a518a98f106c1e5d7e4710d0172f9c7
+    locator: SandBox/ModuleData/Languages/CNs/std_settlements_xml-zho-CN.xml:23
+    quote_hash: f4b24c13e32285bc6bfc179f1b5d78de13032118c2e270aff7e9e9b253425b84
+    quote: >-
+      巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地，并在随后迅速取代沙拉斯，成为了卡拉德人的首都。最终，帝国的统治重心东移，但巴拉维诺斯依旧是西部的经济重镇。当瓦兰迪亚人“铁壁”奥斯里克入侵时，他意识到巴拉维诺斯作为权力的宝座，比作为掠夺的财源更有价值，于是同当地的元老协商让该城投降。此地传承到了奥斯里克的旁支，戴·提尔家族手中，如今人们称其为帕拉汶德。
+assertions:
+  - id: assertion.pravend.osric-surrender
+    revision: 1
+    kind: fact
+    text:
+      zh-CN: 瓦兰迪亚人“铁壁”奥斯里克入侵巴拉维诺斯时，与当地元老协商使该城投降。
+    sources:
+      - source_id: source.bannerlord.sandbox.settlements.history
+        source_version: bannerlord-v1.3.15-cns-extract-v1
+        source_content_hash: 2f06ef6ab1029bdb6a5920c94cc9adfa6a518a98f106c1e5d7e4710d0172f9c7
+        locator: SandBox/ModuleData/Languages/CNs/std_settlements_xml-zho-CN.xml:23
+        quote_hash: 89d23bedb3bf2cc4553ecc8ed0ff8ed53e556280ae1f8dc09a697477c3ed6a4e
+        quote: >-
+          当瓦兰迪亚人“铁壁”奥斯里克入侵时，他意识到巴拉维诺斯作为权力的宝座，比作为掠夺的财源更有价值，于是同当地的元老协商让该城投降。此地传承到了奥斯里克的旁支，戴·提尔家族手中，如今人们称其为帕拉汶德。
+    expressions: []
+  - id: assertion.pravend.dey-tir-inheritance
+    revision: 1
+    kind: relation
+    text:
+      zh-CN: 巴拉维诺斯投降后传承到奥斯里克旁支的戴·提尔家族手中。
+    sources:
+      - source_id: source.bannerlord.sandbox.settlements.history
+        source_version: bannerlord-v1.3.15-cns-extract-v1
+        source_content_hash: 2f06ef6ab1029bdb6a5920c94cc9adfa6a518a98f106c1e5d7e4710d0172f9c7
+        locator: SandBox/ModuleData/Languages/CNs/std_settlements_xml-zho-CN.xml:23
+        quote_hash: 89d23bedb3bf2cc4553ecc8ed0ff8ed53e556280ae1f8dc09a697477c3ed6a4e
+        quote: >-
+          当瓦兰迪亚人“铁壁”奥斯里克入侵时，他意识到巴拉维诺斯作为权力的宝座，比作为掠夺的财源更有价值，于是同当地的元老协商让该城投降。此地传承到了奥斯里克的旁支，戴·提尔家族手中，如今人们称其为帕拉汶德。
+    expressions: []

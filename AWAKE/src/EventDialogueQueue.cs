@@ -84,10 +84,13 @@ internal static class EventDialogueQueue
         lock (Gate) alreadyLoaded = _loaded;
         if (alreadyLoaded) return;
         WorldStateStore store = AwakeRuntime.WorldStateStore;
-        if (store == null) return;
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        int currentDay = AwakeRuntime.CurrentGameDay();
+        if (store == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
         try
         {
             JObject doc = await store.GetDialogueQueueAsync(null, cancellationToken).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
             if (doc == null)
             {
                 lock (Gate) _loaded = true;
@@ -98,13 +101,12 @@ internal static class EventDialogueQueue
                 Items.Clear();
                 if (doc["entries"] is JArray entries)
                 {
-                    int day = AwakeRuntime.CurrentGameDay();
                     foreach (JToken token in entries)
                     {
                         if (token is not JObject entry) continue;
                         if (!StringComparer.Ordinal.Equals((string)entry["state"], "pending")) continue;
                         int expiry = IntValue(entry["expiryDay"]);
-                        if (expiry > 0 && day > expiry) continue;
+                        if (expiry > 0 && currentDay > expiry) continue;
                         string targetId = (string)entry["targetId"] ?? string.Empty;
                         if (string.IsNullOrWhiteSpace(targetId)) continue;
                         if (Items.Count >= MaximumPending) break;
@@ -140,28 +142,41 @@ internal static class EventDialogueQueue
     private static void PersistEnqueue(string id, string heroId, string openingHint)
     {
         WorldStateStore store = AwakeRuntime.WorldStateStore;
-        if (store == null) return;
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        int currentDay = AwakeRuntime.CurrentGameDay();
+        CancellationToken cancellationToken = AwakeRuntime.SessionCancellationToken;
+        if (store == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
         AwakeBackgroundTask.Run(
-            () => store.EnqueueDialogueAsync(
-                id,
-                "event",
-                heroId,
-                heroId,
-                openingHint ?? string.Empty,
-                string.Empty,
-                AwakeRuntime.CurrentGameDay(),
-                0,
-                "enqueue|" + id,
-                CancellationToken.None),
+            async () =>
+            {
+                if (!AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
+                await store.EnqueueDialogueAsync(
+                    id,
+                    "event",
+                    heroId,
+                    heroId,
+                    openingHint ?? string.Empty,
+                    string.Empty,
+                    currentDay,
+                    0,
+                    "enqueue|" + id,
+                    cancellationToken).ConfigureAwait(false);
+            },
             "dialogue_queue_enqueue");
     }
 
     private static void PersistConsume(string id)
     {
         WorldStateStore store = AwakeRuntime.WorldStateStore;
-        if (store == null) return;
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        CancellationToken cancellationToken = AwakeRuntime.SessionCancellationToken;
+        if (store == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
         AwakeBackgroundTask.Run(
-            () => store.ConsumeDialogueAsync(id, "consume|" + id, CancellationToken.None),
+            async () =>
+            {
+                if (!AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
+                await store.ConsumeDialogueAsync(id, "consume|" + id, cancellationToken).ConfigureAwait(false);
+            },
             "dialogue_queue_consume");
     }
 

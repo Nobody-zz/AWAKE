@@ -1,0 +1,9 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"persona-workbench.current-evidence.v1",
+  "type":"object","additionalProperties":false,
+  "required":["schemaVersion","status","evidencePath","supersessionPath","evidenceHash","sourceHash","BuildId","expectedCurrentHash","sessionFence","updatedAtUtc"],
+  "properties":{
+    "schemaVersion":{"const":"persona-workbench.current-evidence.v1"},"status":{"const":"PASS"},"evidencePath":{"type":"string","minLength":1},"supersessionPath":{"type":"string","minLength":1},"evidenceHash":{"type":"string","pattern":"^[0-9A-F]{64}$"},"sourceHash":{"type":"string","pattern":"^[0-9A-F]{64}$"},"packageHash":{"type":["string","null"],"pattern":"^[0-9A-F]{64}$"},"BuildId":{"type":"string","minLength":1},"expectedCurrentHash":{"type":"string","pattern":"^(NONE|[0-9A-F]{64})$"},"sessionFence":{"type":"integer","minimum":1},"updatedAtUtc":{"type":"string","format":"date-time"}
+  }
+}

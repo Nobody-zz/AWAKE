@@ -1,0 +1,64 @@
+{
+  "schema_version": "awake.worldbook.studio.taxonomy-domain-allowlist.v1",
+  "scan_root": "_houkai_merge/AWAKE/tools/worldbook-studio",
+  "include_globs": [
+    "src/Awake.WorldbookStudio.Core/**/*.cs",
+    "src/Awake.WorldbookStudio.Web/wwwroot/**/*.{html,js}",
+    "src/Awake.WorldbookStudio.Cli/**/*.cs",
+    "src/Awake.WorldbookStudio.Launcher/**/*.cs",
+    "新手指引_世界书内容编辑者.md",
+    "README_使用说明.txt"
+  ],
+  "exclude_globs": [
+    "**/bin/**",
+    "**/obj/**",
+    "artifacts/**",
+    "_tmp/**",
+    "tests/**",
+    "scripts/**",
+    "schemas/**",
+    "generated/**"
+  ],
+  "exclude_reasons": {
+    "**/bin/**": "编译输出，不是 Studio 源码权威。",
+    "**/obj/**": "构建中间产物，不是 Studio 源码权威。",
+    "artifacts/**": "发布包和历史产物，不作为静态源审计对象。",
+    "_tmp/**": "一次性捕获和临时文件，不作为实现源。",
+    "tests/**": "旧四类兼容测试由独立合同/兼容矩阵保护，不作为生产硬编码扫描根。",
+    "scripts/**": "构建、打包和发布脚本不属于 Studio 运行时分类入口。",
+    "schemas/**": "发布复制输出由源 taxonomy 与合同 Schema 校验保护。",
+    "generated/**": "生成输出不作为 Studio 源码权威。"
+  },
+  "matching": {
+    "mode": "whole_word",
+    "case_sensitive": true
+  },
+  "unknown_paths_fail": true,
+  "unlisted_literals_fail": true,
+  "rules": [
+    { "path": "src/Awake.WorldbookStudio.Core/**/*.cs", "literal": "politics", "max_occurrences": 0, "reason": "Core 不得保留政治四类硬编码；分类校验必须来自 TaxonomyCatalogService。" },
+    { "path": "src/Awake.WorldbookStudio.Core/**/*.cs", "literal": "economy", "max_occurrences": 0, "reason": "Core 不得保留经济四类硬编码；分类校验必须来自 TaxonomyCatalogService。" },
+    { "path": "src/Awake.WorldbookStudio.Core/**/*.cs", "literal": "culture", "max_occurrences": 0, "reason": "Core 不得保留文化四类硬编码；分类校验必须来自 TaxonomyCatalogService。" },
+    { "path": "src/Awake.WorldbookStudio.Core/**/*.cs", "literal": "war", "max_occurrences": 0, "reason": "Core 不得保留战争四类硬编码；分类校验必须来自 TaxonomyCatalogService。" },
+    { "path": "src/Awake.WorldbookStudio.Web/wwwroot/**/*.{html,js}", "literal": "politics", "max_occurrences": 0, "reason": "Web UI 不得把旧四类作为下拉、模板或校验来源。" },
+    { "path": "src/Awake.WorldbookStudio.Web/wwwroot/**/*.{html,js}", "literal": "economy", "max_occurrences": 0, "reason": "Web UI 不得把旧四类作为下拉、模板或校验来源。" },
+    { "path": "src/Awake.WorldbookStudio.Web/wwwroot/**/*.{html,js}", "literal": "culture", "max_occurrences": 0, "reason": "Web UI 不得把旧四类作为下拉、模板或校验来源。" },
+    { "path": "src/Awake.WorldbookStudio.Web/wwwroot/**/*.{html,js}", "literal": "war", "max_occurrences": 0, "reason": "Web UI 不得把旧四类作为下拉、模板或校验来源。" },
+    { "path": "src/Awake.WorldbookStudio.Cli/**/*.cs", "literal": "politics", "max_occurrences": 0, "reason": "CLI 不得保留旧四类枚举或 fallback。" },
+    { "path": "src/Awake.WorldbookStudio.Cli/**/*.cs", "literal": "economy", "max_occurrences": 0, "reason": "CLI 不得保留旧四类枚举或 fallback。" },
+    { "path": "src/Awake.WorldbookStudio.Cli/**/*.cs", "literal": "culture", "max_occurrences": 0, "reason": "CLI 不得保留旧四类枚举或 fallback。" },
+    { "path": "src/Awake.WorldbookStudio.Cli/**/*.cs", "literal": "war", "max_occurrences": 0, "reason": "CLI 不得保留旧四类枚举或 fallback。" },
+    { "path": "src/Awake.WorldbookStudio.Launcher/**/*.cs", "literal": "politics", "max_occurrences": 0, "reason": "Launcher 不得保留旧四类枚举或 fallback。" },
+    { "path": "src/Awake.WorldbookStudio.Launcher/**/*.cs", "literal": "economy", "max_occurrences": 0, "reason": "Launcher 不得保留旧四类枚举或 fallback。" },
+    { "path": "src/Awake.WorldbookStudio.Launcher/**/*.cs", "literal": "culture", "max_occurrences": 0, "reason": "Launcher 不得保留旧四类枚举或 fallback。" },
+    { "path": "src/Awake.WorldbookStudio.Launcher/**/*.cs", "literal": "war", "max_occurrences": 0, "reason": "Launcher 不得保留旧四类枚举或 fallback。" },
+    { "path": "新手指引_世界书内容编辑者.md", "literal": "politics", "max_occurrences": 0, "reason": "面向编辑者的说明使用中文分类名称，不暴露旧机器 ID。" },
+    { "path": "新手指引_世界书内容编辑者.md", "literal": "economy", "max_occurrences": 0, "reason": "面向编辑者的说明使用中文分类名称，不暴露旧机器 ID。" },
+    { "path": "新手指引_世界书内容编辑者.md", "literal": "culture", "max_occurrences": 0, "reason": "面向编辑者的说明使用中文分类名称，不暴露旧机器 ID。" },
+    { "path": "新手指引_世界书内容编辑者.md", "literal": "war", "max_occurrences": 0, "reason": "面向编辑者的说明使用中文分类名称，不暴露旧机器 ID。" },
+    { "path": "README_使用说明.txt", "literal": "politics", "max_occurrences": 0, "reason": "Studio README 不得保留旧四类说明或 fallback。" },
+    { "path": "README_使用说明.txt", "literal": "economy", "max_occurrences": 0, "reason": "Studio README 不得保留旧四类说明或 fallback。" },
+    { "path": "README_使用说明.txt", "literal": "culture", "max_occurrences": 0, "reason": "Studio README 不得保留旧四类说明或 fallback。" },
+    { "path": "README_使用说明.txt", "literal": "war", "max_occurrences": 0, "reason": "Studio README 不得保留旧四类说明或 fallback。" }
+  ]
+}

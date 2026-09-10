@@ -119,6 +119,7 @@ internal static class WorldbookLoader
                 }
             }
         }
+        PersonaDataLoader.Load(document, baseDir);
         LoadOptionalJsonFile(
             document,
             baseDir,
@@ -174,7 +175,9 @@ internal static class WorldbookLoader
             EventDataDirectory = Str(obj, "eventDataDirectory", "EventDataDirectory") ?? "event_data",
             DebtDirectory = Str(obj, "debtDirectory", "DebtDirectory") ?? "debt",
             DialogueHistoryDirectory = Str(obj, "dialogueHistoryDirectory", "DialogueHistoryDirectory") ?? "dialogue_history",
-            CompressedMemoryDirectory = Str(obj, "compressedMemoryDirectory", "CompressedMemoryDirectory") ?? "compressed_memory"
+            CompressedMemoryDirectory = Str(obj, "compressedMemoryDirectory", "CompressedMemoryDirectory") ?? "compressed_memory",
+            PersonaDefinitionDirectory = Str(obj, "personaDefinitionDirectory", "PersonaDefinitionDirectory") ?? "persona_definitions/definitions",
+            PersonaTagRegistryFile = Str(obj, "personaTagRegistryFile", "PersonaTagRegistryFile") ?? "persona_definitions/tag_registry.json"
         };
         return manifest;
     }

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\..\..\docs\persona-contract\awake.persona.authoring.v2.schema.json" LogicalName="PersonaWorkbench.Core.Contracts.awake.persona.authoring.v2.schema.json" />
+    <EmbeddedResource Include="..\..\..\..\docs\persona-contract\persona-workbench-to-awake.crosswalk.v1.json" LogicalName="PersonaWorkbench.Core.Contracts.persona-workbench-to-awake.crosswalk.v1.json" />
+    <EmbeddedResource Include="..\..\..\..\docs\persona-contract\persona-canonical-json.v1.json" LogicalName="PersonaWorkbench.Core.Contracts.persona-canonical-json.v1.json" />
+    <EmbeddedResource Include="..\..\..\..\ModuleData\Worldbook\persona_definitions\tag_registry.json" LogicalName="PersonaWorkbench.Core.Contracts.tag_registry.json" />
+    <EmbeddedResource Include="..\..\contracts\persona-workbench.approval-receipt.v1.schema.json" LogicalName="PersonaWorkbench.Core.Contracts.persona-workbench.approval-receipt.v1.schema.json" />
+    <EmbeddedResource Include="..\..\contracts\persona-workbench.authoring-handoff.v1.schema.json" LogicalName="PersonaWorkbench.Core.Contracts.persona-workbench.authoring-handoff.v1.schema.json" />
+  </ItemGroup>
+</Project>
+

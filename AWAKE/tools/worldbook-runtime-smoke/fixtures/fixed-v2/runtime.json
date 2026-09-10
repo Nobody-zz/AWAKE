@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "awake.worldbook.v2",
+  "packageId": "awake:test-worldbook",
+  "version": "1.0.0",
+  "worldId": "awake:world:fixed_test",
+  "revision": 1,
+  "entries": [
+    {
+      "id": "awake:entry:grain_tax",
+      "domain": "economy",
+      "title": {
+        "zh-CN": "粮税"
+      },
+      "summary": {
+        "zh-CN": "粮税关系到村庄的收成与领主的征收。"
+      },
+      "keywords": [
+        "粮税",
+        "谷物",
+        "税收"
+      ],
+      "expressions": [
+        {
+          "id": "awake:expression:grain_tax_summary",
+          "detail": "summary",
+          "text": {
+            "zh-CN": "平民知道征粮的大致时节与份额。"
+          },
+          "grants": [
+            {
+              "identity_id": "awake:identity:commoner",
+              "scope": "local",
+              "min_detail": "summary"
+            }
+          ],
+          "denies": []
+        }
+      ]
+    },
+    {
+      "id": "awake:entry:northern_war",
+      "domain": "war",
+      "title": {
+        "zh-CN": "北境战争"
+      },
+      "summary": {
+        "zh-CN": "北境战事牵动边境、军队与领主的安排。"
+      },
+      "keywords": [
+        "北境战争",
+        "边境战事",
+        "军务"
+      ],
+      "expressions": [
+        {
+          "id": "awake:expression:northern_war_soldier",
+          "detail": "detail",
+          "text": {
+            "zh-CN": "士兵知道北境战争的行军、补给与交战经过。"
+          },
+          "grants": [
+            {
+              "identity_id": "awake:identity:soldier",
+              "scope": "national",
+              "min_detail": "detail",
+              "conditions": {
+                "role_ids": [
+                  "soldier"
+                ]
+              }
+            }
+          ],
+          "denies": []
+        },
+        {
+          "id": "awake:expression:northern_war_noble",
+          "detail": "secret",
+          "text": {
+            "zh-CN": "贵族掌握北境战争的调动、盟约与损失。"
+          },
+          "grants": [
+            {
+              "identity_id": "awake:identity:noble",
+              "scope": "elite",
+              "min_detail": "secret"
+            }
+          ],
+          "denies": []
+        }
+      ]
+    }
+  ],
+  "identities": [
+    {
+      "id": "awake:identity:commoner",
+      "displayName": {
+        "zh-CN": "平民"
+      },
+      "basePriority": 0,
+      "parents": []
+    },
+    {
+      "id": "awake:identity:soldier",
+      "displayName": {
+        "zh-CN": "士兵"
+      },
+      "basePriority": 10,
+      "parents": [
+        "awake:identity:commoner"
+      ]
+    },
+    {
+      "id": "awake:identity:noble",
+      "displayName": {
+        "zh-CN": "贵族"
+      },
+      "basePriority": 20,
+      "parents": []
+    }
+  ],
+  "referrals": [],
+  "indexes": {
+    "keywordToEntryIds": {
+      "粮税": [
+        "awake:entry:grain_tax"
+      ],
+      "谷物": [
+        "awake:entry:grain_tax"
+      ],
+      "税收": [
+        "awake:entry:grain_tax"
+      ],
+      "北境战争": [
+        "awake:entry:northern_war"
+      ],
+      "边境战事": [
+        "awake:entry:northern_war"
+      ],
+      "军务": [
+        "awake:entry:northern_war"
+      ]
+    },
+    "domainToEntryIds": {
+      "economy": [
+        "awake:entry:grain_tax"
+      ],
+      "war": [
+        "awake:entry:northern_war"
+      ]
+    }
+  }
+}

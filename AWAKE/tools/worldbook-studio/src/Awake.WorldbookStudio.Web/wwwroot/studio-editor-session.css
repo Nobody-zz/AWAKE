@@ -1,0 +1,31 @@
+.save-status-message {
+  max-width: 260px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.save-status-message.save-saving,
+#dirtyStatus.save-saving {
+  color: var(--accent);
+}
+
+.save-status-message.save-pendingconfirmation,
+#dirtyStatus.save-pendingconfirmation {
+  color: var(--warn);
+}
+
+.save-status-message.save-failed,
+#dirtyStatus.save-failed {
+  color: var(--bad);
+}
+
+.save-status-message.save-conflict,
+#dirtyStatus.save-conflict {
+  color: #ffb2b4;
+}
+
+@media (max-width: 1180px) {
+  .save-status-message {
+    display: none;
+  }
+}

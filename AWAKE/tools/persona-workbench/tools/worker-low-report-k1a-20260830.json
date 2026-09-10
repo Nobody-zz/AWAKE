@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "persona-workbench.worker-low.v1",
+  "generatedAtUtc": "2026-08-30T13:50:59.295Z",
+  "taskId": "pwb-pretest-1788097785150",
+  "model": {
+    "name": "gpt-oss:20b",
+    "digest": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+    "thinkingLevel": "low"
+  },
+  "fixtures": {
+    "short": {
+      "bytes": 270,
+      "sha256": "3B82F664F26F11862C7DA899668AAA0635461F5CC3FDA711A8D7622CBA5EB968"
+    },
+    "long": {
+      "bytes": 3888,
+      "sha256": "8234670F470A8F663D5436111B39CF10D97AE9AA1D123E6FF7C090561F93B752"
+    }
+  },
+  "stages": [
+    {
+      "stage": "expand-short",
+      "fixture": "short",
+      "operation": "expand",
+      "inputSource": "short-fixture",
+      "input": {
+        "bytes": 270,
+        "sha256": "3B82F664F26F11862C7DA899668AAA0635461F5CC3FDA711A8D7622CBA5EB968"
+      },
+      "output": {
+        "accepted": true,
+        "outputFormat": "text",
+        "outputBytes": 396,
+        "outputSha256": "FAD0D62DC5B3EF1FD5112DE1E32EBDF91905B8155CF85C35E46AC44A72C47314",
+        "jsonValid": false
+      },
+      "durationMs": 30756.8,
+      "error": null
+    },
+    {
+      "stage": "convert-short",
+      "fixture": "short",
+      "operation": "convert",
+      "inputSource": "expand-short-output",
+      "input": {
+        "bytes": 396,
+        "sha256": "FAD0D62DC5B3EF1FD5112DE1E32EBDF91905B8155CF85C35E46AC44A72C47314"
+      },
+      "output": {
+        "accepted": true,
+        "outputFormat": "json_object_v1",
+        "outputBytes": 475,
+        "outputSha256": "BAB0846782CB9DBB9510AC86E0406837CECBC9F9AD0C052F2A6E25F4BB7195AB",
+        "jsonValid": true
+      },
+      "durationMs": 31445.5,
+      "error": null
+    },
+    {
+      "stage": "expand-long",
+      "fixture": "long",
+      "operation": "expand",
+      "inputSource": "long-fixture",
+      "input": {
+        "bytes": 3888,
+        "sha256": "8234670F470A8F663D5436111B39CF10D97AE9AA1D123E6FF7C090561F93B752"
+      },
+      "output": {
+        "accepted": true,
+        "outputFormat": "text",
+        "outputBytes": 42,
+        "outputSha256": "B63D2F6A3E40861D9B0A9FCE88057224B365F10EC43F6DB30FFA6A317644C0BB",
+        "jsonValid": false
+      },
+      "durationMs": 8617.3,
+      "error": null
+    },
+    {
+      "stage": "convert-long",
+      "fixture": "long",
+      "operation": "convert",
+      "inputSource": "expand-long-output",
+      "input": {
+        "bytes": 42,
+        "sha256": "B63D2F6A3E40861D9B0A9FCE88057224B365F10EC43F6DB30FFA6A317644C0BB"
+      },
+      "output": {
+        "accepted": true,
+        "outputFormat": "json_object_v1",
+        "outputBytes": 2,
+        "outputSha256": "44136FA355B3678A1146AD16F7E8649E94FB4FC21FE77E8310C060F61CAAFF8A",
+        "jsonValid": true
+      },
+      "durationMs": 3290.6,
+      "error": null
+    }
+  ],
+  "verdict": "PASS"
+}

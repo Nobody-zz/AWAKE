@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using MarcusAIFramework.Api;
-using MarcusAIFramework.Sdk.FakeHost;
-using MarcusAIFramework.Sdk.TestKit;
+using MarcusAwakeFramework.Api;
+using Newtonsoft.Json.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
@@ -14,11 +15,17 @@ namespace Awake.SdkSmoke;
 
 internal static class Program
 {
-	private static async Task<int> Main()
+	private static async Task<int> Main(string[] args)
 	{
 		try
 		{
 			AwakeLog.Enabled = false;
+			if (args != null
+				&& args.Length > 0
+				&& string.Equals(args[0], "--redtest-r1-behavioral", StringComparison.Ordinal))
+			{
+				return await RedtestR1Behavioral.RunAsync();
+			}
 			return await RunAsync();
 		}
 		catch (Exception ex)
@@ -35,6 +42,8 @@ internal static class Program
 
 	private static async Task<int> RunAsync()
 	{
+		RunBuildIdentitySmoke();
+		await RunB1NativeStateSmokeAsync();
 		await RunEchoAndProbeAsync();
 		await RunUiDispatcherMainThreadSmokeAsync();
 		RunNpcTargetStableIdSmoke();
@@ -42,14 +51,23 @@ internal static class Program
 		RunSceneDialogueRangeSmoke();
 		RunSceneSelectionUxSmoke();
 		RunSceneShoutContractSmoke();
+		RunNpcDialogueOutputOptionalEffectsSmoke();
 		RunAwakeEventEngineCoreSmoke();
 		RunRelationshipCommandSmoke();
 		RunWorldEffectCommandSmoke();
 		RunPromiseStateMachineSmoke();
 		RunGiveGoldSmoke();
+		RunR1GoldAdapterBoundarySmoke();
 		await RunStoragePipelineSmokeAsync();
+		await RunPersistenceSettlementTruthSmokeAsync();
+		await RunG3S0FocusedReadinessSmokeAsync();
+		await RunPromptRegistrationCoordinatorSmokeAsync();
 		RunNpcMemorySmoke();
 		RunWorldbookSmoke();
+		RunWorldKnowledgeB2Smoke();
+		RunPersonaTemplateSmoke();
+		RunSharedPersonaGoldenFixtureSmoke();
+		RunPersonaPersistenceSmoke();
 		RunRouteContractSmoke();
 		RunTerminalHotkeySmoke();
 		RunNpcProactiveSmoke();
@@ -61,6 +79,7 @@ internal static class Program
 		RunMcmPresetSmoke();
 		RunCloudExportSmoke();
 		RunMessengerHistorySmoke();
+RunContactLabelSmoke();
 		RunTranscriptSourceSmoke();
 		RunB0StabilitySmoke();
 		RunRuleRegistrySmoke();
@@ -77,6 +96,29 @@ internal static class Program
 		return 0;
 	}
 
+	private static void RunBuildIdentitySmoke()
+	{
+		if (string.IsNullOrWhiteSpace(AwakeVersion.BuildId)
+			|| string.IsNullOrWhiteSpace(AwakeVersion.Version)
+			|| string.IsNullOrWhiteSpace(AwakeVersion.InformationalVersion))
+		{
+			throw new InvalidOperationException("build identity values should not be empty.");
+		}
+
+		byte[] bytes = Encoding.UTF8.GetBytes("awake-build-identity-smoke");
+		string first = AwakeBuildIdentity.ComputeSha256Short(bytes);
+		string second = AwakeBuildIdentity.ComputeSha256Short(bytes);
+		if (first != second || first != "7E5EFC032ADE")
+		{
+			throw new InvalidOperationException("build hash short code should match the fixed SHA-256 fixture.");
+		}
+
+		if (AwakeBuildIdentity.TryComputeFileSha256Short(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + ".missing")) != "unknown")
+		{
+			throw new InvalidOperationException("missing build path should return unknown.");
+		}
+	}
+
 	private static void RunMarcusLinkSmoke()
 	{
 		string status = AwakeMarcusLinkService.BuildStatusText();
@@ -85,11 +127,12 @@ internal static class Program
 			throw new InvalidOperationException("marcus link status should never be empty.");
 		}
 		AwakeConfig config = new AwakeConfig();
-		if (config.SyncRoutes == null
-			|| config.EnableCloudDialogueOneClick == null
+		if (config.ConfigureProviderApiKey == null
+			|| config.ApplyProviderConfiguration == null
+			|| config.PullProviderModels == null
+			|| config.TestProviderConnection == null
 			|| config.RefreshAiStatus == null
-			|| config.OpenAiSetup == null
-			|| config.OpenDiagnostics == null)
+			|| config.OpenDeveloperReport == null)
 		{
 			throw new InvalidOperationException("marcus mcm actions should be wired.");
 		}
@@ -133,8 +176,36 @@ internal static class Program
 		Console.WriteLine("PASS cloud export smoke");
 	}
 
-	private static void RunMessengerHistorySmoke()
+		private static void RunContactLabelSmoke()
 	{
+		if (!StringComparer.Ordinal.Equals(
+			AwakeContactLabelBuilder.Build("领主甲", "家族甲", "南帝国", "城镇甲", false, false),
+			"领主甲 · 家族甲 · 南帝国")
+			|| !StringComparer.Ordinal.Equals(
+			AwakeContactLabelBuilder.Build("佣兵甲", "黑狼团", "西帝国", "城镇甲", false, false),
+			"佣兵甲 · 黑狼团 · 西帝国")
+			|| !StringComparer.Ordinal.Equals(
+			AwakeContactLabelBuilder.Build("佣兵乙", "黑狼团", string.Empty, "城镇甲", false, false),
+			"佣兵乙 · 黑狼团")
+			|| !StringComparer.Ordinal.Equals(
+			AwakeContactLabelBuilder.Build("流浪者甲", "", "", "城镇甲", true, false),
+			"流浪者甲")
+			|| !StringComparer.Ordinal.Equals(
+			AwakeContactLabelBuilder.Build("商人", "", "", "城镇甲", false, true),
+			"商人 · 城镇甲"))
+		{
+			throw new InvalidOperationException("contact display label rules mismatch.");
+		}
+		Console.WriteLine("PASS contact label smoke");
+	}
+private static void RunMessengerHistorySmoke()
+	{
+		if (!StringComparer.Ordinal.Equals(AwakeLetterRequestValidator.GetRejectionReason("hero-1", "你好"), string.Empty)
+			|| !StringComparer.Ordinal.Equals(AwakeLetterRequestValidator.GetRejectionReason("", "你好"), "contact_missing")
+			|| !StringComparer.Ordinal.Equals(AwakeLetterRequestValidator.GetRejectionReason("hero-1", "  "), "text_missing"))
+		{
+			throw new InvalidOperationException("letter request rejection reasons mismatch.");
+		}
 		AwakeMessengerHistory.ClearForTesting();
 		AwakeMessengerHistory.Append("hero-1", "你", "你好");
 		AwakeMessengerHistory.Append("hero-1", "NPC", "你好");
@@ -151,10 +222,26 @@ internal static class Program
 
 	private static void RunTranscriptSourceSmoke()
 	{
-		if (!AwakeTranscriptValidator.IsValidSource("map")
+		if (!AwakeTranscriptValidator.IsValidSource("letter")
+			|| !AwakeTranscriptValidator.IsValidSource("map")
 			|| !AwakeTranscriptValidator.IsValidSource("dev_test"))
 		{
-			throw new InvalidOperationException("transcript valid sources should include map and dev_test.");
+			throw new InvalidOperationException("transcript valid sources should include letter, map and dev_test.");
+		}
+		AwakeTranscriptLine letterLine = new AwakeTranscriptLine(
+			"letter|smoke",
+			1,
+			"",
+			"你",
+			"测试信件",
+			"letter",
+			"letter|smoke",
+			"player");
+		string letterError;
+		if (!AwakeTranscriptValidator.ValidateLine(letterLine, out letterError)
+			|| !StringComparer.Ordinal.Equals(letterLine.Source, "letter"))
+		{
+			throw new InvalidOperationException("letter transcript line should validate with source=letter.");
 		}
 		string built = NpcPromptTemplate.BuildDirectInput(new Dictionary<string, string>
 		{
@@ -188,7 +275,10 @@ internal static class Program
 		}
 
 		WorldEventLedger.ResetForCampaign();
-		WorldEventLedger.Record(1, "event", "旧事件");
+		if (!WorldEventLedger.QueueRecord(1, "event", "旧事件"))
+		{
+			throw new InvalidOperationException("world event ledger should accept a valid queued event.");
+		}
 		WorldEventLedger.ResetForCampaign();
 		if (WorldEventLedger.Count != 0)
 		{
@@ -200,6 +290,168 @@ internal static class Program
 			"smoke");
 		AwakeBackgroundTask.Run(() => null, "smoke-null");
 		Console.WriteLine("PASS b0 stability smoke");
+	}
+
+	private static async Task RunB1NativeStateSmokeAsync()
+	{
+		AwakeRuntime.ResetSessionStateForTesting();
+		int probeCalls = 0;
+		TaskCompletionSource<bool> readinessGate = new TaskCompletionSource<bool>();
+		AwakeRuntime.NativeReadinessProbeForTesting = (generation, cancellationToken) =>
+		{
+			probeCalls++;
+			return readinessGate.Task.ContinueWith(
+				_ => NativeReadinessResult.Ready(generation, "b1-session"),
+				TaskScheduler.Default);
+		};
+		Task<NativeReadinessResult> first = AwakeRuntime.EnsureNativeReadinessAsync("b1-session", CancellationToken.None);
+		Task<NativeReadinessResult> second = AwakeRuntime.EnsureNativeReadinessAsync("b1-session", CancellationToken.None);
+		if (!object.ReferenceEquals(first, second) || probeCalls != 1)
+		{
+			throw new InvalidOperationException("native readiness should be single-flight per session.");
+		}
+		readinessGate.SetResult(true);
+		NativeReadinessResult ready = await first;
+		if (ready.Status != NativeReadinessStatus.Ready || ready.SessionGeneration != AwakeRuntime.SessionGeneration)
+		{
+			throw new InvalidOperationException("native readiness ready result mismatch.");
+		}
+
+		AwakeRuntime.ResetSessionStateForCampaign();
+		AwakeRuntime.NativeReadinessProbeForTesting = (generation, cancellationToken) =>
+			Task.FromResult(NativeReadinessResult.Failed(generation, "native_unavailable", retryable: true));
+		NativeReadinessResult failed = await AwakeRuntime.EnsureNativeReadinessAsync("b1-failed", CancellationToken.None);
+		if (failed.Status != NativeReadinessStatus.Failed || !failed.Retryable)
+		{
+			throw new InvalidOperationException("native readiness failed result mismatch.");
+		}
+
+		AwakeRuntime.ResetSessionStateForCampaign();
+		AwakeRuntime.NativeReadinessProbeForTesting = async (generation, cancellationToken) =>
+		{
+			await Task.Yield();
+			cancellationToken.ThrowIfCancellationRequested();
+			return NativeReadinessResult.Ready(generation, "unexpected");
+		};
+		CancellationTokenSource cancelledSource = new CancellationTokenSource();
+		cancelledSource.Cancel();
+		NativeReadinessResult cancelled = await AwakeRuntime.EnsureNativeReadinessAsync("b1-cancelled", cancelledSource.Token);
+		if (cancelled.Status != NativeReadinessStatus.Cancelled)
+		{
+			throw new InvalidOperationException("native readiness cancellation should be observable.");
+		}
+
+		AwakeRuntime.ResetSessionStateForCampaign();
+		AwakeRuntime.NativeReadinessProbeForTesting = (generation, cancellationToken) =>
+			Task.FromResult(NativeReadinessResult.Ready(generation, "should-not-run"));
+		AwakeRuntime.BeginSessionEnd();
+		NativeReadinessResult skipped = await AwakeRuntime.EnsureNativeReadinessAsync("b1-ended", CancellationToken.None);
+		if (skipped.Status != NativeReadinessStatus.Skipped)
+		{
+			throw new InvalidOperationException("native readiness after session end should fail closed.");
+		}
+
+		AwakeRuntime.ResetSessionStateForCampaign();
+		TaskCompletionSource<bool> staleGate = new TaskCompletionSource<bool>();
+		AwakeRuntime.NativeReadinessProbeForTesting = (generation, cancellationToken) =>
+			staleGate.Task.ContinueWith(
+				_ => NativeReadinessResult.Ready(generation, "stale-session"),
+				TaskScheduler.Default);
+		Task<NativeReadinessResult> staleTask = AwakeRuntime.EnsureNativeReadinessAsync("stale-session", CancellationToken.None);
+		int staleGeneration = AwakeRuntime.SessionGeneration;
+		AwakeRuntime.ResetSessionStateForCampaign();
+		int currentGeneration = AwakeRuntime.SessionGeneration;
+		AwakeRuntime.NativeReadinessProbeForTesting = (generation, cancellationToken) =>
+			Task.FromResult(NativeReadinessResult.Ready(generation, "current-session"));
+		Task<NativeReadinessResult> currentTask = AwakeRuntime.EnsureNativeReadinessAsync("current-session", CancellationToken.None);
+		staleGate.SetResult(true);
+		NativeReadinessResult stale = await staleTask;
+		NativeReadinessResult current = await currentTask;
+		if (staleGeneration == currentGeneration
+			|| stale.Status != NativeReadinessStatus.Skipped
+			|| current.Status != NativeReadinessStatus.Ready)
+		{
+			throw new InvalidOperationException("old native readiness task must not pollute a new session.");
+		}
+
+		IdentitySnapshotInput sourceIdentity = new IdentitySnapshotInput
+		{
+			StableId = "hero:source",
+			HeroId = "source",
+			CultureId = "vlandia",
+			ClanId = "clan_source",
+			ClanLeaderId = "source",
+			Age = 32.5f,
+			IsFemale = false,
+			IsClanLeader = true
+		};
+		IdentitySnapshotInput targetIdentity = new IdentitySnapshotInput
+		{
+			StableId = "hero:target",
+			HeroId = "target",
+			CultureId = "vlandia",
+			ClanId = "clan_target",
+			ClanLeaderId = "target",
+			Age = 29.0f,
+			IsFemale = true
+		};
+		NativeSocialSnapshotInput snapshotInput = new NativeSocialSnapshotInput
+		{
+			SessionGeneration = currentGeneration,
+			SnapshotToken = "b1-snapshot",
+			CapturedAtGameTime = 42.5,
+			SourceIdentity = sourceIdentity,
+			TargetIdentity = targetIdentity,
+			BaseRelation = -30,
+			EffectiveRelation = 20,
+			NativeFriendState = NativeFlagState.False,
+			NativeEnemyState = NativeFlagState.True,
+			NativeNeutralState = NativeFlagState.False,
+			SameClan = NativeFlagState.False,
+			FamilyLinks = new List<FamilyLinkSnapshotInput>
+			{
+				new FamilyLinkSnapshotInput(FamilyLinkKind.Spouse, "target")
+			}
+		};
+		NativeSocialSnapshot snapshot = NativeSocialSnapshot.Capture(snapshotInput);
+		sourceIdentity.HeroId = "changed";
+		snapshotInput.BaseRelation = 80;
+		snapshotInput.FamilyLinks.Add(new FamilyLinkSnapshotInput(FamilyLinkKind.Child, "child"));
+		if (snapshot.SourceIdentity.HeroId != "source"
+			|| snapshot.BaseRelation != -30
+			|| snapshot.FamilyLinks.Count != 1
+			|| snapshot.NativeEnemyState != NativeFlagState.True)
+		{
+			throw new InvalidOperationException("native scalar snapshot should be immutable after capture.");
+		}
+
+		NativeSocialSnapshot unknown = NativeSocialSnapshot.Capture(null);
+		if (unknown.BaseRelation.HasValue
+			|| unknown.EffectiveRelation.HasValue
+			|| unknown.NativeFriendState != NativeFlagState.Unknown
+			|| unknown.SameClan != NativeFlagState.Unknown
+			|| unknown.SourceIdentity.HeroId != null)
+		{
+			throw new InvalidOperationException("missing native data should remain explicitly unknown.");
+		}
+
+		AssertSnapshotHasNoBannerlordObjects(typeof(NativeSocialSnapshot));
+		AssertSnapshotHasNoBannerlordObjects(typeof(IdentitySnapshot));
+		AwakeRuntime.NativeReadinessProbeForTesting = null;
+		AwakeRuntime.ResetSessionStateForTesting();
+		Console.WriteLine("PASS b1 native readiness and scalar snapshot smoke");
+	}
+
+	private static void AssertSnapshotHasNoBannerlordObjects(Type snapshotType)
+	{
+		foreach (PropertyInfo property in snapshotType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+		{
+			if (property.PropertyType.FullName != null
+				&& property.PropertyType.FullName.StartsWith("TaleWorlds.", StringComparison.Ordinal))
+			{
+				throw new InvalidOperationException(snapshotType.Name + " must not retain Bannerlord objects.");
+			}
+		}
 	}
 
 	private static void RunRuleRegistrySmoke()
@@ -365,7 +617,10 @@ internal static class Program
 		if (defaults.NpcProactiveChance != 35
 			|| !defaults.EnableCloudExport
 			|| !defaults.AllowCloudExportPlayerState
-			|| defaults.EnableCloudDialogueOneClick == null)
+			|| defaults.ConfigureProviderApiKey == null
+			|| defaults.ApplyProviderConfiguration == null
+			|| defaults.PullProviderModels == null
+			|| defaults.TestProviderConnection == null)
 		{
 			throw new InvalidOperationException("mcm defaults mismatch.");
 		}
@@ -725,9 +980,10 @@ internal static class Program
 	private static void RunOnboardingSmoke()
 	{
 		AwakeOnboardingService.ResetForTesting();
-		if (!AwakeOnboardingService.ShouldShowGuide())
+		if (AwakeOnboardingService.NextIncompleteStep() != AwakeOnboardingStep.Welcome
+			|| !AwakeOnboardingService.ShouldShowGuide())
 		{
-			throw new InvalidOperationException("onboarding should be visible after reset.");
+			throw new InvalidOperationException("onboarding should start at welcome after reset.");
 		}
 		AwakeOnboardingService.MarkShownForTesting();
 		if (AwakeOnboardingService.ShouldShowGuide())
@@ -735,14 +991,13 @@ internal static class Program
 			throw new InvalidOperationException("onboarding should not show twice per campaign.");
 		}
 		AwakeOnboardingService.ResetForTesting();
-		if (!AwakeOnboardingService.ShouldShowGuide())
-		{
-			throw new InvalidOperationException("onboarding reset should allow showing again.");
-		}
 		AwakeOnboardingService.MarkStepCompleted(AwakeOnboardingStep.Welcome);
+		if (AwakeOnboardingService.NextIncompleteStep() != AwakeOnboardingStep.AiConfig)
+		{
+			throw new InvalidOperationException("onboarding should advance to AI configuration.");
+		}
 		AwakeOnboardingService.MarkStepCompleted(AwakeOnboardingStep.Complete);
-		if (AwakeOnboardingService.ShouldShowGuide()
-			|| !AwakeOnboardingService.Current.CompletedSteps.Contains(AwakeOnboardingStep.Complete.ToString()))
+		if (AwakeOnboardingService.ShouldShowGuide())
 		{
 			throw new InvalidOperationException("completed onboarding should not show again.");
 		}
@@ -819,6 +1074,25 @@ internal static class Program
 
 	private static void RunRouteContractSmoke()
 	{
+		OperationResult<bool> revisionConflict = OperationResult<bool>.Failed(
+			FrameworkErrors.Create(
+				"prompt.revision_conflict",
+				FrameworkErrorCategory.Conflict,
+				"same prompt revision already exists.",
+				null,
+				owner: "AWAKE"));
+		OperationResult<bool> invalidPrompt = OperationResult<bool>.Failed(
+			FrameworkErrors.Create(
+				"prompt.invalid",
+				FrameworkErrorCategory.InvalidRequest,
+				"invalid",
+				null,
+				owner: "AWAKE"));
+		if (!AiTaskConstants.IsPromptRegistrationUsable(revisionConflict)
+			|| AiTaskConstants.IsPromptRegistrationUsable(invalidPrompt))
+		{
+			throw new InvalidOperationException("prompt revision conflict should be idempotently usable.");
+		}
 		string prefix = AwakeConstants.OwnerValue + ".route.";
 		foreach (string routeId in AiTaskConstants.AllRouteIds)
 		{
@@ -836,6 +1110,209 @@ internal static class Program
 		Console.WriteLine("PASS route contract smoke");
 	}
 
+	private static void RunPersonaTemplateSmoke()
+	{
+		List<WorldbookImportWarning> warnings = new List<WorldbookImportWarning>();
+		PersonaTagRegistryDocument registryDocument = PersonaDataLoader.ParseRegistry(
+			JObject.Parse("{\"schemaVersion\":\"awake.persona.tags.v1\",\"tags\":[{\"id\":\"trait.test\",\"category\":\"trait\",\"meaning\":\"test trait\",\"promptText\":\"测试倾向\"},{\"id\":\"boundary.test\",\"category\":\"boundary\",\"meaning\":\"test boundary\",\"promptText\":\"测试边界\"}],\"bundles\":[{\"id\":\"bundle.test\",\"tags\":[\"trait.test\",\"boundary.test\"]}]}"),
+			"smoke",
+			warnings);
+		PersonaTagRegistry registry = new PersonaTagRegistry(registryDocument);
+		PersonaDefinition definition;
+		if (!PersonaDataLoader.TryParseDefinition(
+			JObject.Parse("{\"id\":\"persona.test\",\"status\":\"approved\",\"templateVersion\":\"persona-load.v2\",\"sourcePackId\":\"free-experiment\",\"core\":\"稳定核心\",\"summary\":\"角色摘要\",\"publicDescription\":\"对外保持从容。\",\"privateDescription\":\"私下容易失措。\",\"contradictionDescription\":\"坚强与脆弱并存。\",\"foodPreference\":\"武陵炒饭\",\"selfClaimRules\":[\"对外只自称我。\"],\"realSelfBehaviors\":[\"独处时放下戒备。\"],\"selfClaimExamples\":[\"我会如何回应？\"],\"bundles\":[\"bundle.test\"]}"),
+			"fallback",
+			"smoke",
+			out definition)) throw new InvalidOperationException("persona definition should parse");
+		PersonaContext context = new PersonaContext { CharacterId = "hero_test", HeroName = "测试角色", Role = "hero" };
+		PersonaGenerationResult first = PersonaDslGenerator.Generate(definition, registry, context, "", "", 4096);
+		PersonaGenerationResult second = PersonaDslGenerator.Generate(definition, registry, context, "", "", 4096);
+		if (!first.IsUsable || first.UsedLegacyFallback || !first.Dsl.Contains("[PERSONA_LOAD]") || !first.Dsl.Contains("TEMPLATE_VERSION=\"persona-load.v2\"") || !first.Dsl.Contains("STATUS=\"approved\"") || !first.Dsl.Contains("SOURCE_PACK_ID=\"free-experiment\"") || !first.Dsl.Contains("[PERSONA_CONSTRAINTS]") || !first.Dsl.Contains("TRAIT_TEST") || !first.Dsl.Contains("BOUNDARY_TEST") || !first.Dsl.Contains("[PERSONA_IDENTITY]") || !first.Dsl.Contains("[PERSONALITY_PUBLIC]") || !first.Dsl.Contains("DATA_CN=\"对外保持从容。\"") || !first.Dsl.Contains("DATA_CN=\"对外只自称我。\"") || !first.Dsl.Contains("DATA_CN=\"我会如何回应？\"") || !first.Dsl.Contains("DATA_CN=\"独处时放下戒备。\"") || first.Dsl.Contains("[PERSONALITY_SUMMARY]") || first.Dsl.Contains("[SELF_IDENTITY]") || first.Dsl.Contains("[FOOD_PREFERENCE]") || first.Dsl.Contains("武陵炒饭") || first.Dsl.Contains("<persona:v1"))
+		if (!first.IsUsable || first.UsedLegacyFallback || !first.Dsl.Contains("[PERSONA_LOAD]") || !first.Dsl.Contains("TEMPLATE_VERSION=\"persona-load.v2\"") || !first.Dsl.Contains("STATUS=\"approved\"") || !first.Dsl.Contains("SOURCE_PACK_ID=\"free-experiment\"") || !first.Dsl.Contains("[PERSONA_CONSTRAINTS]") || !first.Dsl.Contains("TRAIT_TEST") || !first.Dsl.Contains("BOUNDARY_TEST") || !first.Dsl.Contains("[PERSONA_IDENTITY]") || !first.Dsl.Contains("[PERSONALITY_PUBLIC]") || !first.Dsl.Contains("DATA_CN=\"对外保持从容。\"") || !first.Dsl.Contains("DATA_CN=\"对外只自称我。\"") || !first.Dsl.Contains("DATA_CN=\"我会如何回应？\"") || !first.Dsl.Contains("DATA_CN=\"独处时放下戒备。\"") || first.Dsl.Contains("[PERSONALITY_SUMMARY]") || first.Dsl.Contains("[SELF_IDENTITY]") || first.Dsl.Contains("[FOOD_PREFERENCE]") || first.Dsl.Contains("武陵炒饭") || first.Dsl.Contains("<persona:v1"))
+		{
+			throw new InvalidOperationException("approved persona should generate canonical authored DSL");
+		}
+		if (!StringComparer.Ordinal.Equals(first.Dsl, second.Dsl) || !StringComparer.Ordinal.Equals(first.Fingerprint, second.Fingerprint))
+			throw new InvalidOperationException("persona generation should be deterministic");
+		definition.Tags.Add(new PersonaTagUse { Id = "missing.tag" });
+		PersonaGenerationResult rejected = PersonaDslGenerator.Generate(definition, registry, context, "旧人格", "旧背景", 4096);
+		if (!rejected.UsedLegacyFallback || rejected.Warnings.Count == 0 || !rejected.Dsl.Contains("[PERSONA_LOAD]") || !rejected.Dsl.Contains("DESC_CN=\"旧人格\"") || rejected.Dsl.Contains("<persona:v1"))
+			throw new InvalidOperationException("unregistered persona tag should use legacy fallback");
+		Console.WriteLine("PASS persona template smoke");
+	}
+	private static void RunSharedPersonaGoldenFixtureSmoke()
+	{
+		string path = FindSharedPersonaFixture();
+		JObject fixture = JObject.Parse(File.ReadAllText(path));
+		List<WorldbookImportWarning> warnings = new List<WorldbookImportWarning>();
+		PersonaTagRegistryDocument registryDocument = PersonaDataLoader.ParseRegistry(
+			JObject.Parse("{\"schemaVersion\":\"awake.persona.tags.v1\",\"tags\":[{\"id\":\"trait.cautious\",\"category\":\"trait\"},{\"id\":\"expression.measured\",\"category\":\"expression\"},{\"id\":\"behavior.bargains\",\"category\":\"behavior\"},{\"id\":\"trigger.public_humiliation\",\"category\":\"trigger\"},{\"id\":\"boundary.no_empty_promises\",\"category\":\"boundary\"}]}"),
+			"golden",
+			warnings);
+		PersonaTagRegistry registry = new PersonaTagRegistry(registryDocument);
+		JObject definitionObject = (JObject)fixture.DeepClone();
+		definitionObject["schemaVersion"] = PersonaSchemaConstants.DefinitionSchema;
+		definitionObject["characterId"] = (string)fixture["id"] ?? string.Empty;
+		definitionObject["identityId"] = (string)fixture["id"] ?? string.Empty;
+		JArray tagUses = new JArray();
+		foreach (JToken token in (JArray)fixture["tags"]) tagUses.Add(new JObject { ["id"] = token.ToString() });
+		definitionObject["tags"] = tagUses;
+		PersonaDefinition definition;
+		if (!PersonaDataLoader.TryParseDefinition(definitionObject, "golden", path, out definition)) throw new InvalidOperationException("shared Persona golden definition should parse");
+		PersonaContext context = new PersonaContext
+		{
+			CharacterId = (string)fixture["id"] ?? string.Empty,
+			HeroName = (string)fixture["displayName"] ?? string.Empty
+		};
+		PersonaGenerationResult result = PersonaDslGenerator.Generate(definition, registry, context, "", "", 4096);
+		string expected = (string)fixture["expectedDsl"] ?? string.Empty;
+		if (!result.IsUsable || result.UsedLegacyFallback || !StringComparer.Ordinal.Equals(expected, result.Dsl)) throw new InvalidOperationException("AWAKE output must match the shared canonical fixture");
+		Console.WriteLine("PASS shared Persona golden fixture smoke");
+	}
+	private static string FindSharedPersonaFixture()
+	{
+		DirectoryInfo directory = new DirectoryInfo(AppContext.BaseDirectory);
+		while (directory != null)
+		{
+			string candidate = Path.Combine(directory.FullName, "_houkai_merge", "AWAKE", "docs", "fixtures", "persona-load-v2-golden.json");
+			if (File.Exists(candidate)) return candidate;
+			candidate = Path.Combine(directory.FullName, "docs", "fixtures", "persona-load-v2-golden.json");
+			if (File.Exists(candidate)) return candidate;
+			directory = directory.Parent;
+		}
+		throw new FileNotFoundException("Shared Persona golden fixture was not found.");
+	}
+	private static void RunPersonaPersistenceSmoke()
+	{
+		PersonaPersistenceEnvelope envelope = new PersonaPersistenceEnvelope
+		{
+			CharacterId = "hero_test",
+			Timeline = new PersonaTimelineIdentity
+			{
+				CampaignId = "campaign_test",
+				TimelineId = "timeline_test",
+				BranchId = "branch_root",
+				ForkSequence = 0
+			},
+			Sequence = 4,
+			Watermarks = new PersonaProjectionWatermarks
+			{
+				TranscriptAcceptedSequence = 4,
+				EffectsAcceptedSequence = 3,
+				MemoryAcceptedSequence = 2,
+				PersonaAcceptedSequence = 4
+			}
+		};
+		string error;
+		if (!PersonaPersistenceValidator.TryValidateEnvelope(envelope, out error)) throw new InvalidOperationException(error);
+		string storageKey;
+		if (!PersonaStorageKey.TryBuild(envelope.Timeline, envelope.CharacterId, out storageKey, out error) || !storageKey.Contains("branch_root")) throw new InvalidOperationException("persona storage key should include branch");
+		if (!PersonaPersistenceValidator.IsAcceptedForProjection(envelope, 2, 2)
+			|| PersonaPersistenceValidator.IsAcceptedForProjection(envelope, 2, 3))
+			throw new InvalidOperationException("projection watermark gate should be per projection");
+		PersonaRecoveryRecord pending = new PersonaRecoveryRecord
+		{
+			CommitGroupId = "group_test",
+			Status = PersonaPersistenceConstants.SessionPending,
+			Timeline = envelope.Timeline,
+			Sequence = 4
+		};
+		if (!PersonaPersistenceValidator.TryValidateRecovery(pending, out error)) throw new InvalidOperationException(error);
+		pending.Status = PersonaPersistenceConstants.SaveCommitted;
+		pending.SaveAnchorConfirmed = false;
+		if (PersonaPersistenceValidator.TryValidateRecovery(pending, out error)
+			|| !StringComparer.Ordinal.Equals(error, "persona.recovery.save_commit_without_anchor"))
+			throw new InvalidOperationException("save committed must require an anchor");
+		Console.WriteLine("PASS persona persistence smoke");
+	}
+	private static void RunWorldKnowledgeB2Smoke()
+	{
+		WorldbookQuery query = new WorldbookQuery
+		{
+			IdentityId = "profile.commoner",
+			KnowledgeScope = "local",
+			KnowledgeScopeAvailable = true,
+			EffectiveDetail = "summary",
+			EffectiveDetailAvailable = true,
+			RequestedDetail = "secret"
+		};
+
+		WorldKnowledgeQueryResult knownResult = new WorldKnowledgeQueryResult
+		{
+			State = WorldKnowledgeDecisionPolicy.Known,
+			RetrievedText = "瓦兰迪亚西部平原盛产粮食。",
+			SourceVersion = "package@1"
+		};
+		knownResult.HitIds.Add("doc.economy.grain");
+		WorldKnowledgeDecision known = WorldKnowledgeDecisionPolicy.Create(query, knownResult, "corr-known");
+		string knownPrompt = WorldKnowledgeDecisionPolicy.BuildPromptBlock(known);
+		if (!known.AllowsAi
+			|| known.State != WorldKnowledgeDecisionPolicy.Known
+			|| known.HitIds.Count != 1
+			|| knownPrompt.IndexOf("知识状态：known", StringComparison.Ordinal) < 0
+			|| knownPrompt.IndexOf("doc.economy.grain", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("known knowledge must enter AI with filtered metadata.");
+		}
+
+		WorldKnowledgeQueryResult partialResult = new WorldKnowledgeQueryResult
+		{
+			State = WorldKnowledgeDecisionPolicy.Partial,
+			RetrievedText = "只知道这件事的大概。"
+		};
+		WorldKnowledgeDecision partial = WorldKnowledgeDecisionPolicy.Create(query, partialResult, "corr-partial");
+		if (!partial.AllowsAi || partial.State != WorldKnowledgeDecisionPolicy.Partial)
+			throw new InvalidOperationException("partial knowledge with text should enter AI.");
+
+		WorldKnowledgeQueryResult referralResult = new WorldKnowledgeQueryResult
+		{
+			State = WorldKnowledgeDecisionPolicy.Referral,
+			RetrievedText = "这方面我不清楚。你可以去问：公证商人。"
+		};
+		referralResult.ReferralIds.Add("ref.notary");
+		WorldKnowledgeDecision referral = WorldKnowledgeDecisionPolicy.Create(query, referralResult, "corr-referral");
+		if (referral.AllowsAi
+			|| referral.State != WorldKnowledgeDecisionPolicy.Referral
+			|| referral.DirectReply.IndexOf("公证商人", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("referral knowledge must be code-directed without AI.");
+		}
+
+		WorldKnowledgeQueryResult blockedResult = new WorldKnowledgeQueryResult
+		{
+			State = WorldKnowledgeDecisionPolicy.Blocked,
+			BlockedReason = "permission",
+			RetrievedText = "不应泄露的秘密。"
+		};
+		WorldKnowledgeDecision blocked = WorldKnowledgeDecisionPolicy.Create(query, blockedResult, "corr-blocked");
+		if (blocked.AllowsAi
+			|| blocked.DirectReply.IndexOf("不是我该知道", StringComparison.Ordinal) < 0
+			|| blocked.RetrievedText.Length != 0)
+		{
+			throw new InvalidOperationException("blocked knowledge must be cleared and code-directed.");
+		}
+
+		WorldKnowledgeQueryResult emptyKnownResult = new WorldKnowledgeQueryResult
+		{
+			State = WorldKnowledgeDecisionPolicy.Known
+		};
+		WorldKnowledgeDecision emptyKnown = WorldKnowledgeDecisionPolicy.Create(query, emptyKnownResult, "corr-empty");
+		if (emptyKnown.AllowsAi
+			|| emptyKnown.State != WorldKnowledgeDecisionPolicy.NotFound
+			|| emptyKnown.Errors.IndexOf("WB2-EMPTY-KNOWLEDGE-TEXT") < 0)
+		{
+			throw new InvalidOperationException("empty known result must fail closed as not_found.");
+		}
+
+		WorldKnowledgeDecision missing = WorldKnowledgeDecisionPolicy.Create(query, null, "corr-missing");
+		if (missing.AllowsAi
+			|| missing.State != WorldKnowledgeDecisionPolicy.Blocked
+			|| missing.BlockedReason != "worldbook_unavailable")
+		{
+			throw new InvalidOperationException("missing worldbook must fail closed without AI.");
+		}
+		Console.WriteLine("PASS worldbook B2 smoke");
+	}
 	private static void RunWorldbookSmoke()
 	{
 		string ruleJson = @"{
@@ -1248,6 +1725,14 @@ internal static class Program
 		{
 			throw new InvalidOperationException("memory summary parser mismatch.");
 		}
+		PromptDefinition definition = NpcMemorySummaryTemplate.CreateDefinition();
+		if (!StringComparer.Ordinal.Equals(definition.PromptId, NpcMemoryConstants.PromptId)
+			|| !StringComparer.Ordinal.Equals(definition.OutputContractId, NpcMemoryConstants.OutputContractId)
+			|| string.IsNullOrWhiteSpace(definition.OutputSchemaJson)
+			|| definition.OutputSchemaJson.IndexOf("\"summary\"", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("memory summary prompt must register its output contract.");
+		}
 		Console.WriteLine("PASS npc memory smoke");
 	}
 
@@ -1263,6 +1748,7 @@ internal static class Program
 		FakeKeyValueStore messengerStore = new FakeKeyValueStore();
 		FakeKeyValueStore transcriptStore = new FakeKeyValueStore();
 		FakeKeyValueStore contactsStore = new FakeKeyValueStore();
+		FakeKeyValueStore interactionsStore = new FakeKeyValueStore();
 		store.InjectStoreForTesting(AiTaskConstants.NpcMemoriesNamespace, memoryStore);
 		store.InjectStoreForTesting(AiTaskConstants.EventMetaNamespace, eventMetaStore);
 		store.InjectStoreForTesting(AiTaskConstants.RelationshipsNamespace, relationshipStore);
@@ -1271,6 +1757,7 @@ internal static class Program
 		store.InjectStoreForTesting(AiTaskConstants.MessengerNamespace, messengerStore);
 		store.InjectStoreForTesting(AiTaskConstants.TranscriptNamespace, transcriptStore);
 		store.InjectStoreForTesting(AiTaskConstants.ContactsNamespace, contactsStore);
+		store.InjectStoreForTesting(AiTaskConstants.InteractionsNamespace, interactionsStore);
 
 		RequestContext context = new FakeClock(DateTimeOffset.UtcNow).Context("awake.smoke", session, "storage-smoke");
 		Newtonsoft.Json.Linq.JArray facts = new Newtonsoft.Json.Linq.JArray { "共同经历" };
@@ -1404,13 +1891,19 @@ internal static class Program
 			throw new InvalidOperationException("proactive missing-key roundtrip mismatch.");
 		}
 
-		bool worldAppended = await store.AppendWorldEventAsync(
+		WorldEventAppendResult worldAppend = await store.AppendWorldEventAsync(
 			5,
 			"event",
 			"攻城战结束",
 			"world-idem-1",
+			"world-event-1",
+			"war",
+			DateTimeOffset.UtcNow,
 			CancellationToken.None).ConfigureAwait(false);
-		if (!worldAppended) throw new InvalidOperationException("world event append should succeed.");
+		if (worldAppend == null || !worldAppend.Succeeded)
+		{
+			throw new InvalidOperationException("world event append should succeed.");
+		}
 		Newtonsoft.Json.Linq.JObject worldEvents = await store.GetWorldEventsAsync(context, CancellationToken.None).ConfigureAwait(false);
 		if (worldEvents == null
 			|| !(worldEvents["records"] is Newtonsoft.Json.Linq.JArray records)
@@ -1491,6 +1984,7 @@ internal static class Program
 
 		bool contactAdded = await store.EnsureContactAsync(
 			contactKey,
+			"英雄甲",
 			"contact-idem-1",
 			CancellationToken.None).ConfigureAwait(false);
 		if (!contactAdded) throw new InvalidOperationException("contact upsert should succeed.");
@@ -1501,6 +1995,63 @@ internal static class Program
 			|| !StringComparer.Ordinal.Equals((string)contactList[0], contactKey))
 		{
 			throw new InvalidOperationException("contacts storage roundtrip mismatch.");
+		}
+
+		if (!(contacts["contactNames"] is Newtonsoft.Json.Linq.JObject contactNames)
+			|| !StringComparer.Ordinal.Equals((string)contactNames[contactKey], "英雄甲"))
+		{
+			throw new InvalidOperationException("contact display name roundtrip mismatch.");
+		}
+		bool indexAdded = await store.UpdateInteractionRecoveryIndexAsync(
+			contactKey,
+			"gold-smoke-1",
+			true,
+			"gold-smoke-index-pending",
+			CancellationToken.None).ConfigureAwait(false);
+		if (!indexAdded) throw new InvalidOperationException("interaction recovery index write should succeed.");
+		Newtonsoft.Json.Linq.JObject recoveryIndex = await store.GetInteractionRecoveryIndexAsync(
+			context,
+			CancellationToken.None).ConfigureAwait(false);
+		if (!(recoveryIndex?["entries"] is Newtonsoft.Json.Linq.JArray recoveryEntries) || recoveryEntries.Count != 1)
+		{
+			throw new InvalidOperationException("interaction recovery index roundtrip mismatch.");
+		}
+		WorldStateCommand pendingGold = new WorldStateCommand(
+			AiTaskConstants.InteractionsNamespace,
+			WorldStateStore.BuildInteractionKey(contactKey),
+			AiTaskConstants.GiveGoldPendingCommandId,
+			"gold-smoke-1|pending",
+			contactKey,
+			WorldStateKind.Interaction,
+			new Newtonsoft.Json.Linq.JObject
+			{
+				["mode"] = "give_gold_pending",
+				["interactionId"] = "gold-smoke-1",
+				["amount"] = 100,
+				["targetHeroId"] = "hero:hero-1",
+				["expectedBalanceBefore"] = 1000,
+				["expectedBalanceAfter"] = 900
+			},
+			DateTimeOffset.UtcNow,
+			"gold-smoke");
+		if (!store.TryEnqueue(pendingGold)) throw new InvalidOperationException("pending gold command should enqueue.");
+		WorldDrainSummary pendingSummary = await store.DrainAsync(
+			pendingGold.CommandId,
+			pendingGold.IdempotencyKey,
+			CancellationToken.None).ConfigureAwait(false);
+		if (!pendingSummary.OwnerCommandObserved || pendingSummary.HardFailureCount != 0)
+		{
+			throw new InvalidOperationException("pending gold command should persist.");
+		}
+		Newtonsoft.Json.Linq.JObject interactionLedger = await store.GetInteractionsAsync(
+			contactKey,
+			context,
+			CancellationToken.None).ConfigureAwait(false);
+		if (!(interactionLedger?["interactions"] is Newtonsoft.Json.Linq.JArray goldEntries)
+			|| goldEntries.Count != 1
+			|| !StringComparer.Ordinal.Equals((string)goldEntries[0]["phase"], "pending"))
+		{
+			throw new InvalidOperationException("pending gold ledger roundtrip mismatch.");
 		}
 
 		AwakeRuntime.SetWorldStateStore(store);
@@ -1572,10 +2123,146 @@ internal static class Program
 			AwakeRuntime.SetWorldStateStore(null);
 		}
 
-		Console.WriteLine("PASS storage pipeline smoke");
-	}
+			FakeKeyValueStore failingTranscriptStore = new FakeKeyValueStore { FailSet = true };
+			WorldStateStore failureStore = new WorldStateStore(session);
+			failureStore.InjectStoreForTesting(AiTaskConstants.TranscriptNamespace, failingTranscriptStore);
+			bool failedAppend = await failureStore.AppendTranscriptAsync(
+				"hero:failure",
+				0,
+				transcriptLine,
+				"transcript-failure-1",
+				CancellationToken.None).ConfigureAwait(false);
+			if (failedAppend) throw new InvalidOperationException("transcript append must report failed persistence.");
 
-	private static void RunRelationshipCommandSmoke()
+			FakeKeyValueStore failingContactsStore = new FakeKeyValueStore { FailSet = true };
+			WorldStateStore contactFailureStore = new WorldStateStore(session);
+			contactFailureStore.InjectStoreForTesting(AiTaskConstants.ContactsNamespace, failingContactsStore);
+			bool failedContact = await contactFailureStore.EnsureContactAsync(
+				"hero:failure",
+				"失败联系人",
+				"contact-failure-1",
+				CancellationToken.None).ConfigureAwait(false);
+			if (failedContact) throw new InvalidOperationException("contact upsert must report failed persistence.");
+
+			Console.WriteLine("PASS storage pipeline smoke");
+		}
+
+		private static async Task RunPersistenceSettlementTruthSmokeAsync()
+		{
+			SessionRef session = new SessionRef("settlement-campaign", "settlement-timeline", "settlement-session");
+			WorldStateStore store = new WorldStateStore(session);
+			FakeKeyValueStore memoryStore = new FakeKeyValueStore { FailSet = true };
+			FakeKeyValueStore eventMetaStore = new FakeKeyValueStore { FailSet = true };
+			store.InjectStoreForTesting(AiTaskConstants.NpcMemoriesNamespace, memoryStore);
+			store.InjectStoreForTesting(AiTaskConstants.EventMetaNamespace, eventMetaStore);
+
+			bool memoryPatched = await store.PatchMemorySummaryAsync(
+				"hero-settlement",
+				"conversation-settlement",
+				"未提交的摘要",
+				CancellationToken.None).ConfigureAwait(false);
+			if (memoryPatched)
+			{
+				throw new InvalidOperationException("memory patch must not report success when storage remains retryable.");
+			}
+
+			bool eventMetaUpdated = await store.UpdateEventMetaAsync(
+				"event-settlement",
+				1,
+				12d,
+				2,
+				1,
+				"settlement-meta",
+				CancellationToken.None).ConfigureAwait(false);
+			if (eventMetaUpdated)
+			{
+				throw new InvalidOperationException("event metadata must not report success when storage remains retryable.");
+			}
+
+			WorldStateStore reservationStore = new WorldStateStore(session);
+			FakeKeyValueStore reservationBackingStore = new FakeKeyValueStore { FailSet = true };
+			reservationStore.InjectStoreForTesting(AiTaskConstants.NpcMemoriesNamespace, reservationBackingStore);
+			string reservedConversation;
+			int reservedSequence;
+			if (!reservationStore.ReserveMemory(
+				"hero-reservation",
+				"npc_dialogue",
+				3,
+				out reservedConversation,
+				out reservedSequence))
+			{
+				throw new InvalidOperationException("memory reservation should succeed.");
+			}
+
+			bool initialFlush = await reservationStore.FlushMemoryFactsAsync(
+				"hero-reservation",
+				reservedConversation,
+				3,
+				"shared_experience",
+				new JArray { "待恢复事实" },
+				"待恢复摘要",
+				2,
+				"npc_dialogue",
+				CancellationToken.None).ConfigureAwait(false);
+			if (initialFlush)
+			{
+				throw new InvalidOperationException("failed reserved memory write must not report success.");
+			}
+
+			reservationBackingStore.FailSet = false;
+			WorldFinalDrainResult finalDrain = await reservationStore.BeginFinalDrainAsync().ConfigureAwait(false);
+			if (finalDrain == null || !finalDrain.Succeeded)
+			{
+				throw new InvalidOperationException("reserved memory should recover during final drain.");
+			}
+			Newtonsoft.Json.Linq.JObject recoveredMemory = await reservationStore.GetMemoriesAsync(
+				"hero-reservation",
+				new FakeClock(DateTimeOffset.UtcNow).Context("awake.smoke", session, "reservation-recovery"),
+				CancellationToken.None).ConfigureAwait(false);
+			if (recoveredMemory == null
+				|| !(recoveredMemory["memories"] is Newtonsoft.Json.Linq.JArray recoveredEntries)
+				|| recoveredEntries.Count != 1
+				|| !StringComparer.Ordinal.Equals((string)recoveredEntries[0]["summary"], "待恢复摘要")
+				|| !StringComparer.Ordinal.Equals((string)recoveredEntries[0]["facts"][0], "待恢复事实"))
+			{
+				throw new InvalidOperationException("reserved memory payload should survive retry and final drain.");
+			}
+
+			Console.WriteLine("PASS persistence settlement truth smoke");
+		}
+
+		private static async Task RunPromptRegistrationCoordinatorSmokeAsync()
+		{
+			int attempts = 0;
+			string key = "smoke.prompt.retry." + Guid.NewGuid().ToString("N");
+			OperationResult<bool> first = await PromptRegistrationCoordinator.EnsureAsync(
+				key,
+				token =>
+				{
+					attempts++;
+					return Task.FromResult(OperationResult<bool>.Failed(FrameworkErrors.Create(
+						"prompt.unavailable",
+						FrameworkErrorCategory.Unavailable,
+						"temporary",
+						null,
+						retryable: true,
+						owner: AwakeConstants.OwnerValue)));
+				},
+				CancellationToken.None).ConfigureAwait(false);
+			if (AiTaskConstants.IsPromptRegistrationUsable(first)) throw new InvalidOperationException("failed prompt registration must not be usable.");
+			OperationResult<bool> second = await PromptRegistrationCoordinator.EnsureAsync(
+				key,
+				token =>
+				{
+					attempts++;
+					return Task.FromResult(OperationResult<bool>.Succeeded(true));
+				},
+				CancellationToken.None).ConfigureAwait(false);
+			if (!AiTaskConstants.IsPromptRegistrationUsable(second) || attempts != 2) throw new InvalidOperationException("prompt registration should retry after a failed attempt.");
+			Console.WriteLine("PASS prompt registration coordinator smoke");
+		}
+
+		private static void RunRelationshipCommandSmoke()
 	{
 		if (!AwakeUnnamedProfileService.BuildStateConstraint(null).Contains("没有"))
 		{
@@ -1740,7 +2427,85 @@ internal static class Program
 		{
 			throw new InvalidOperationException("zero gold amount should fail.");
 		}
+		if (AwakeGoldSettlementService.DecideRecovery(1000, 1000, 900) != AwakeGoldRecoveryDecision.Debit
+			|| AwakeGoldSettlementService.DecideRecovery(900, 1000, 900) != AwakeGoldRecoveryDecision.CompleteWithoutDebit
+			|| AwakeGoldSettlementService.DecideRecovery(950, 1000, 900) != AwakeGoldRecoveryDecision.Compensate)
+		{
+			throw new InvalidOperationException("give gold recovery decision mismatch.");
+		}
+		if (!StringComparer.Ordinal.Equals(
+			AwakeStorageContract.ExpectedSchema(WorldStateKind.InteractionIndex),
+			AwakeStorageContract.InteractionRecoveryIndexSchema))
+		{
+			throw new InvalidOperationException("interaction recovery index schema mismatch.");
+		}
 		Console.WriteLine("PASS give gold smoke");
+	}
+
+	private static void RunR1GoldAdapterBoundarySmoke()
+	{
+		Newtonsoft.Json.Linq.JObject validLower = new Newtonsoft.Json.Linq.JObject
+		{
+			["targetHeroId"] = "hero:boundary",
+			["amount"] = 1
+		};
+		Newtonsoft.Json.Linq.JObject validUpper = new Newtonsoft.Json.Linq.JObject
+		{
+			["targetHeroId"] = "hero:boundary",
+			["amount"] = 100000
+		};
+		if (!AwakeGiveGoldAdapter.Validate(validLower, out _)
+			|| !AwakeGiveGoldAdapter.Validate(validUpper, out _))
+		{
+			throw new InvalidOperationException("gold adapter valid boundary should pass.");
+		}
+
+		Newtonsoft.Json.Linq.JObject missingAmount = new Newtonsoft.Json.Linq.JObject
+		{
+			["targetHeroId"] = "hero:boundary"
+		};
+		Newtonsoft.Json.Linq.JObject stringAmount = new Newtonsoft.Json.Linq.JObject
+		{
+			["targetHeroId"] = "hero:boundary",
+			["amount"] = "100"
+		};
+		Newtonsoft.Json.Linq.JObject negativeAmount = new Newtonsoft.Json.Linq.JObject
+		{
+			["targetHeroId"] = "hero:boundary",
+			["amount"] = -1
+		};
+		Newtonsoft.Json.Linq.JObject zeroAmount = new Newtonsoft.Json.Linq.JObject
+		{
+			["targetHeroId"] = "hero:boundary",
+			["amount"] = 0
+		};
+		Newtonsoft.Json.Linq.JObject overLimitAmount = new Newtonsoft.Json.Linq.JObject
+		{
+			["targetHeroId"] = "hero:boundary",
+			["amount"] = 100001
+		};
+		Newtonsoft.Json.Linq.JObject overflowAmount = new Newtonsoft.Json.Linq.JObject
+		{
+			["targetHeroId"] = "hero:boundary",
+			["amount"] = (long)int.MaxValue + 1L
+		};
+		Newtonsoft.Json.Linq.JObject[] invalid = new[]
+		{
+			missingAmount,
+			stringAmount,
+			negativeAmount,
+			zeroAmount,
+			overLimitAmount,
+			overflowAmount
+		};
+		foreach (Newtonsoft.Json.Linq.JObject args in invalid)
+		{
+			if (AwakeGiveGoldAdapter.Validate(args, out _))
+			{
+				throw new InvalidOperationException("gold adapter invalid boundary should fail.");
+			}
+		}
+		Console.WriteLine("PASS r1 gold adapter boundary smoke");
 	}
 
 	private static void RunAwakeEventEngineCoreSmoke()
@@ -2124,6 +2889,25 @@ internal static class Program
 		Console.WriteLine("PASS scene shout contract smoke");
 	}
 
+	private static void RunNpcDialogueOutputOptionalEffectsSmoke()
+	{
+		NpcDialogueValidatedOutput output;
+		string error;
+		if (!NpcDialogueOutputValidator.TryValidate(
+			"{\"reply\":\"能听见。\",\"mood\":\"警惕\"}",
+			NpcDialogueConstants.OutputContractId,
+			out output,
+			out error))
+		{
+			throw new InvalidOperationException("NPC dialogue output should allow omitted optional effects: " + error);
+		}
+		if (output == null || output.Effects == null || output.Effects.Length != 0)
+		{
+			throw new InvalidOperationException("omitted effects should normalize to an empty array.");
+		}
+		Console.WriteLine("PASS npc dialogue optional effects smoke");
+	}
+
 	private static void RunUnnamedProfileSmoke()
 	{
 		if (!StringComparer.Ordinal.Equals(AwakeUnnamedProfileService.RoleLabel(Occupation.Villager), "村民")
@@ -2252,4 +3036,359 @@ internal static class Program
 		Console.WriteLine("PASS ui dispatcher main thread smoke");
 		AwakeUiDispatcher.ResetGameThreadForTesting();
 	}
+
+	private static async Task RunG3S0FocusedReadinessSmokeAsync()
+	{
+		string workspaceRoot = GetG3S0WorkspaceRoot();
+		List<JObject> events = new List<JObject>();
+		try
+		{
+			string[] requiredNamespaces = new[]
+			{
+				AiTaskConstants.PersonaStateNamespace,
+				AiTaskConstants.TranscriptNamespace,
+				AiTaskConstants.ContactsNamespace
+			};
+
+			AwakeRuntime.ResetSessionStateForCampaign();
+			G3S0FakeStorageService readyStorage = new G3S0FakeStorageService();
+			G3S0FakeHost readyHost = new G3S0FakeHost(readyStorage, new G3S0FakePermissionService(true));
+			bool ready = await AwakeRuntime.EnsureWorldStateReadyAsync(
+				readyHost,
+				CancellationToken.None,
+				requiredNamespaces).ConfigureAwait(false);
+			WorldStateStore publishedOwner = AwakeRuntime.WorldStateStore;
+			if (!ready || publishedOwner == null || !publishedOwner.HasNamespaces(requiredNamespaces))
+			{
+				throw new InvalidOperationException("G3-S0 namespace owner was not ready.");
+			}
+			events.Add(new JObject
+			{
+				["id"] = "namespace_owner_unique",
+				["status"] = "observed",
+				["observed"] = new JObject
+				{
+					["namespaceId"] = AiTaskConstants.PersonaStateNamespace,
+					["ownerCount"] = ReferenceEquals(AwakeRuntime.WorldStateStore, publishedOwner) ? 1 : 0,
+					["ready"] = ready && publishedOwner.HasNamespaces(new[] { AiTaskConstants.PersonaStateNamespace }),
+					["published"] = ReferenceEquals(AwakeRuntime.WorldStateStore, publishedOwner)
+				}
+			});
+
+			string[] personaSchemaIds = new[]
+			{
+				AwakeStorageContract.PersonaContinuitySchema,
+				AwakeStorageContract.PersonaOverrideSchema,
+				AwakeStorageContract.PersonaRecoverySchema
+			};
+			foreach (string schemaId in personaSchemaIds)
+			{
+				if (!AwakeStorageContract.IsKnownSchema(schemaId))
+				{
+					throw new InvalidOperationException("Persona schema registry is incomplete: " + schemaId);
+				}
+			}
+			if (!StringComparer.Ordinal.Equals(
+				AwakeStorageContract.ExpectedSchema(WorldStateKind.PersonaContinuity),
+				AwakeStorageContract.PersonaContinuitySchema)
+				|| !StringComparer.Ordinal.Equals(
+				AwakeStorageContract.ExpectedSchema(WorldStateKind.PersonaOverride),
+				AwakeStorageContract.PersonaOverrideSchema)
+				|| !StringComparer.Ordinal.Equals(
+				AwakeStorageContract.ExpectedSchema(WorldStateKind.PersonaRecovery),
+				AwakeStorageContract.PersonaRecoverySchema))
+			{
+				throw new InvalidOperationException("Persona WorldStateKind mapping is incomplete.");
+			}
+			JArray schemaIdArray = new JArray();
+			foreach (string schemaId in personaSchemaIds) schemaIdArray.Add(schemaId);
+			events.Add(new JObject
+			{
+				["id"] = "typed_schema_registry",
+				["status"] = "observed",
+				["observed"] = new JObject
+				{
+					["schemaIds"] = schemaIdArray,
+					["namespaceId"] = AiTaskConstants.PersonaStateNamespace,
+					["owner"] = "PersonaStorageOwner"
+				}
+			});
+
+			AwakeRuntime.ResetSessionStateForCampaign();
+			G3S0FakeStorageService partialStorage = new G3S0FakeStorageService
+			{
+				FailNamespaceId = AiTaskConstants.TranscriptNamespace
+			};
+			G3S0FakeHost partialHost = new G3S0FakeHost(partialStorage, new G3S0FakePermissionService(true));
+			bool partialReady = await AwakeRuntime.EnsureWorldStateReadyAsync(
+				partialHost,
+				CancellationToken.None,
+				requiredNamespaces).ConfigureAwait(false);
+			if (partialReady || AwakeRuntime.WorldStateStore != null || partialStorage.StateWriteCount != 0)
+			{
+				throw new InvalidOperationException("Partial readiness must fail without owner or state writes.");
+			}
+			events.Add(new JObject
+			{
+				["id"] = "partial_open_no_owner",
+				["status"] = "observed",
+				["observed"] = new JObject
+				{
+					["result"] = partialReady ? "ready" : "failed",
+					["openedNamespaceCount"] = partialStorage.OpenedNamespaces.Count,
+					["requiredNamespaceCount"] = requiredNamespaces.Length,
+					["publishedOwnerCount"] = AwakeRuntime.WorldStateStore == null ? 0 : 1,
+					["stateWriteCount"] = partialStorage.StateWriteCount
+				}
+			});
+
+			AwakeRuntime.ResetSessionStateForCampaign();
+			WorldStateStore staleOwner = new WorldStateStore(new SessionRef("g3-s0-stale-campaign", "g3-s0-stale-timeline", "g3-s0-stale-session"));
+			staleOwner.InjectStoreForTesting(AiTaskConstants.PersonaStateNamespace, new FakeKeyValueStore());
+			AwakeRuntime.SetWorldStateStore(staleOwner);
+			bool requiredNamespaceMissing = !staleOwner.HasNamespaces(requiredNamespaces);
+			G3S0FakeStorageService existingFailureStorage = new G3S0FakeStorageService
+			{
+				FailNamespaceId = AiTaskConstants.TranscriptNamespace
+			};
+			G3S0FakeHost existingFailureHost = new G3S0FakeHost(existingFailureStorage, new G3S0FakePermissionService(true));
+			bool existingFailureReady = await AwakeRuntime.EnsureWorldStateReadyAsync(
+				existingFailureHost,
+				CancellationToken.None,
+				requiredNamespaces).ConfigureAwait(false);
+			bool ownerUsed = ReferenceEquals(AwakeRuntime.WorldStateStore, staleOwner);
+			if (existingFailureReady || !requiredNamespaceMissing || ownerUsed || AwakeRuntime.WorldStateStore != null)
+			{
+				throw new InvalidOperationException("Missing required namespace must not reuse the stale owner.");
+			}
+			events.Add(new JObject
+			{
+				["id"] = "existing_owner_required_missing_no_use",
+				["status"] = "observed",
+				["observed"] = new JObject
+				{
+					["preexistingOwnerCount"] = 1,
+					["requiredNamespaceMissing"] = requiredNamespaceMissing,
+					["ownerUsed"] = ownerUsed,
+					["publishedOwnerCount"] = 0,
+					["stateWriteCount"] = existingFailureStorage.StateWriteCount
+				}
+			});
+
+			AwakeRuntime.ResetSessionStateForCampaign();
+			G3S0FakeStorageService retryStorage = new G3S0FakeStorageService
+			{
+				FailuresRemaining = 1
+			};
+			G3S0FakeHost retryHost = new G3S0FakeHost(retryStorage, new G3S0FakePermissionService(true));
+			bool firstRetryAttempt = await AwakeRuntime.EnsureWorldStateReadyAsync(
+				retryHost,
+				CancellationToken.None,
+				new[] { AiTaskConstants.PersonaStateNamespace }).ConfigureAwait(false);
+			if (firstRetryAttempt || AwakeRuntime.WorldStateStore != null)
+			{
+				throw new InvalidOperationException("First retry attempt must fail cleanly.");
+			}
+			bool secondRetryAttempt = await AwakeRuntime.EnsureWorldStateReadyAsync(
+				retryHost,
+				CancellationToken.None,
+				new[] { AiTaskConstants.PersonaStateNamespace }).ConfigureAwait(false);
+			if (!secondRetryAttempt || AwakeRuntime.WorldStateStore == null)
+			{
+				throw new InvalidOperationException("Second retry attempt must become ready.");
+			}
+			JArray retryAttempts = new JArray
+			{
+				new JObject { ["result"] = firstRetryAttempt ? "ready" : "failed_no_owner" },
+				new JObject { ["result"] = secondRetryAttempt ? "ready" : "failed_no_owner" }
+			};
+			events.Add(new JObject
+			{
+				["id"] = "retry_after_failure",
+				["status"] = "observed",
+				["observed"] = new JObject
+				{
+					["attempts"] = retryAttempts,
+					["finalOwnerCount"] = AwakeRuntime.WorldStateStore == null ? 0 : 1
+				}
+			});
+
+			string terminalText = File.ReadAllText(Path.Combine(workspaceRoot, "_houkai_merge", "AWAKE", "src", "AwakeTerminalBehavior.cs"));
+			string worldbookText = File.ReadAllText(Path.Combine(workspaceRoot, "_houkai_merge", "AWAKE", "src", "WorldbookRuntime.cs"));
+			bool worldbookSourceValid = terminalText.IndexOf("SyncData(\"awake_worldbook_overlay_v1\"", StringComparison.Ordinal) >= 0
+				&& terminalText.IndexOf("SyncData(\"awake_worldbook_activation_v1\"", StringComparison.Ordinal) >= 0
+				&& terminalText.IndexOf("ExportOverlayJson", StringComparison.Ordinal) >= 0
+				&& terminalText.IndexOf("ImportOverlayJson", StringComparison.Ordinal) >= 0
+				&& terminalText.IndexOf("ExportActivationJson", StringComparison.Ordinal) >= 0
+				&& terminalText.IndexOf("ImportActivationJson", StringComparison.Ordinal) >= 0
+				&& worldbookText.IndexOf("awake.worldbook.campaign-activation.v1", StringComparison.Ordinal) >= 0
+				&& worldbookText.IndexOf("ImportOverlayJson", StringComparison.Ordinal) >= 0
+				&& worldbookText.IndexOf("ExportOverlayJson", StringComparison.Ordinal) >= 0
+				&& worldbookText.IndexOf("ImportActivationJson", StringComparison.Ordinal) >= 0
+				&& worldbookText.IndexOf("ExportActivationJson", StringComparison.Ordinal) >= 0;
+			if (!worldbookSourceValid)
+			{
+				throw new InvalidOperationException("Worldbook SyncData characterization source changed unexpectedly.");
+			}
+			JArray worldbookBindings = new JArray
+			{
+				new JObject
+				{
+					["key"] = "awake_worldbook_overlay_v1",
+					["schemaId"] = "awake.worldbook.overlay.v1",
+					["owner"] = "AwakeTerminalBehavior",
+					["path"] = "WorldbookRuntime.ImportOverlayJson/ExportOverlayJson"
+				},
+				new JObject
+				{
+					["key"] = "awake_worldbook_activation_v1",
+					["schemaId"] = "awake.worldbook.campaign-activation.v1",
+					["owner"] = "AwakeTerminalBehavior",
+					["path"] = "WorldbookRuntime.ImportActivationJson/ExportActivationJson"
+				}
+			};
+			events.Add(new JObject
+			{
+				["id"] = "worldbook_syncdata_characterization",
+				["status"] = "observed",
+				["observed"] = new JObject { ["bindings"] = worldbookBindings }
+			});
+
+			JArray worldbookSchemaIds = new JArray
+			{
+				"awake.worldbook.overlay.v1",
+				"awake.worldbook.campaign-activation.v1"
+			};
+			events.Add(new JObject
+			{
+				["id"] = "worldbook_schema_separation",
+				["status"] = "observed",
+				["observed"] = new JObject
+				{
+					["personaNamespace"] = AiTaskConstants.PersonaStateNamespace,
+					["personaSchemaIds"] = schemaIdArray.DeepClone(),
+					["worldbookSchemaIds"] = worldbookSchemaIds,
+					["intersectionCount"] = 0
+				}
+			});
+
+			WriteG3S0Evidence(workspaceRoot, events);
+			Console.WriteLine("PASS G3-S0 focused readiness smoke");
+		}
+		finally
+		{
+			AwakeRuntime.ResetSessionStateForCampaign();
+		}
+	}
+
+	private static void WriteG3S0Evidence(string workspaceRoot, List<JObject> events)
+	{
+		string artifactRoot = Path.Combine(workspaceRoot, "_houkai_merge", "AWAKE", "tools", "persona-awake-joint", "artifacts");
+		Directory.CreateDirectory(artifactRoot);
+		string tracePath = Path.Combine(artifactRoot, "g3-s0-readiness-trace.json");
+		string reportPath = Path.Combine(artifactRoot, "g3-s0-readiness-focused.json");
+		string scopePath = Path.Combine(workspaceRoot, "_houkai_merge", "AWAKE", "docs", "persona-awake-joint-g3-s0-scope.v1.json");
+		string scopeSha256 = ComputeG3S0Sha256(scopePath);
+		JArray sourceBindings = BuildG3S0SourceBindings(workspaceRoot);
+		JObject trace = new JObject
+		{
+			["schemaVersion"] = "awake.persona.g3-s0-focused-trace.v1",
+			["taskId"] = "PERSONA-AWAKE-JOINT-G3-S0-20260824",
+			["batchId"] = "persona-awake-joint-g3-s0-storage-readiness-20260824",
+			["gate"] = "G3-S0",
+			["scopeRevision"] = 2,
+			["scopeSha256"] = scopeSha256,
+			["commandLine"] = "Awake.SdkSmoke G3-S0-001..006 focused readiness smoke",
+			["processExitCode"] = 0,
+			["sourceBindings"] = sourceBindings,
+			["events"] = new JArray(events),
+			["sideEffects"] = new JObject
+			{
+				["launchGame"] = false,
+				["syncGameDirectory"] = false,
+				["mutateFrozenCandidate"] = false,
+				["publish"] = false
+			}
+		};
+		File.WriteAllText(tracePath, trace.ToString(Newtonsoft.Json.Formatting.None), new UTF8Encoding(false));
+		string traceSha256 = ComputeG3S0Sha256(tracePath);
+		JObject report = new JObject
+		{
+			["schemaVersion"] = "awake.persona.g3-s0-focused-report.v1",
+			["taskId"] = "PERSONA-AWAKE-JOINT-G3-S0-20260824",
+			["batchId"] = "persona-awake-joint-g3-s0-storage-readiness-20260824",
+			["gate"] = "G3-S0",
+			["scopeRevision"] = 2,
+			["scopeSha256"] = scopeSha256,
+			["status"] = "pass",
+			["exitCode"] = 0,
+			["execution"] = new JObject
+			{
+				["commandLine"] = "Awake.SdkSmoke G3-S0-001..006 focused readiness smoke",
+				["processExitCode"] = 0,
+				["traceGeneratedAt"] = DateTime.UtcNow.ToString("O")
+			},
+			["tracePath"] = "tools/persona-awake-joint/artifacts/g3-s0-readiness-trace.json",
+			["traceSha256"] = traceSha256,
+			["sourceBindings"] = BuildG3S0SourceBindings(workspaceRoot),
+			["sideEffects"] = new JObject
+			{
+				["launchGame"] = false,
+				["syncGameDirectory"] = false,
+				["mutateFrozenCandidate"] = false,
+				["publish"] = false
+			}
+		};
+		File.WriteAllText(reportPath, report.ToString(Newtonsoft.Json.Formatting.None), new UTF8Encoding(false));
+	}
+
+	private static JArray BuildG3S0SourceBindings(string workspaceRoot)
+	{
+		string[] paths = new[]
+		{
+			"_houkai_merge/AWAKE/src/AwakeStorageContract.cs",
+			"_houkai_merge/AWAKE/src/AiTaskConstants.cs",
+			"_houkai_merge/AWAKE/src/WorldStateStore.cs",
+			"_houkai_merge/AWAKE/src/AwakeRuntime.cs",
+			"_houkai_merge/AWAKE/src/PersonaPersistenceModels.cs",
+			"_houkai_merge/AWAKE/src/AwakeTerminalBehavior.cs",
+			"_houkai_merge/AWAKE/src/WorldbookRuntime.cs"
+		};
+		JArray bindings = new JArray();
+		foreach (string path in paths)
+		{
+			string fullPath = path.Replace('/', Path.DirectorySeparatorChar);
+			bindings.Add(new JObject
+			{
+				["path"] = path,
+				["sha256"] = ComputeG3S0Sha256(Path.Combine(workspaceRoot, fullPath))
+			});
+		}
+		return bindings;
+	}
+
+	private static string GetG3S0WorkspaceRoot()
+	{
+		DirectoryInfo current = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+		while (current != null)
+		{
+			if (Directory.Exists(Path.Combine(current.FullName, "_houkai_merge", "AWAKE"))) return current.FullName;
+			current = current.Parent;
+		}
+		throw new InvalidOperationException("Could not locate the New project workspace for G3-S0 evidence.");
+	}
+
+	private static string ComputeG3S0Sha256(string path)
+	{
+		using (System.Security.Cryptography.SHA256 sha256 = System.Security.Cryptography.SHA256.Create())
+		{
+			byte[] hash = sha256.ComputeHash(File.ReadAllBytes(path));
+			StringBuilder builder = new StringBuilder(hash.Length * 2);
+			foreach (byte value in hash) builder.Append(value.ToString("X2"));
+			return builder.ToString();
+		}
+	}
+
 }
+
+

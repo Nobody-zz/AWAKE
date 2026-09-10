@@ -1,0 +1,2975 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.studio.authoring-action-contract-catalog.v1",
+  "schema_version": "awake.worldbook.studio.authoring-action-contract-catalog.v1",
+  "status": "bound",
+  "authority": "PLAN-WorldbookStudio-AI-AUTHORING-REWORK-20260829.md#36",
+  "coverage": {
+    "source_registry": "authoring-action-route-registry.v1.json#/actions",
+    "action_id_match": "exact_set",
+    "expected_count": 79,
+    "missing_action_is_error": true,
+    "extra_contract_is_error": true
+  },
+  "canonical_mutation_envelope": {
+    "name": "mutation-envelope.v1",
+    "required": [
+      "operation_id",
+      "target_refs",
+      "expected_revisions",
+      "payload"
+    ],
+    "business_fields_location": "payload",
+    "target_refs": "existing resources only; created result is never supplied as a target",
+    "expected_revisions": "same exact set as target_refs; new-resource actions use []",
+    "exact_target_set": true,
+    "conflict_http_status": 409,
+    "idempotency_key": "action_id + route + canonical_target_refs + canonical_expected_revisions + operation_id + retry_of_operation_id when present + canonical_payload_hash",
+    "no_secret_fields": "public envelope has no secrets; provider-configuration.v1 is the only write-only credential exception",
+    "source_refs_authority": "create_job and analyze_coverage use payload.source_refs[] only; do not duplicate with input_snapshot_refs"
+  },
+  "response_payload_catalog": {
+    "source": "authoring-wire-contract.v1.json#/response_schema_catalog/<response_schema>/payload_definition",
+    "all_response_schemas_require": ["payload_contract", "target", "state", "data"],
+    "unknown_payload_definition": "error",
+    "action_specific_overrides": {
+      "operation-result.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "source-import-accepted.v1": {"payload_definition": "#/$defs/source_import_accepted_payload_v1"},
+      "source-import-list.v1": {"payload_definition": "#/$defs/source_import_list_payload_v1"},
+      "source-import-detail.v1": {"payload_definition": "#/$defs/source_import_detail_payload_v1"},
+      "source-import-retry-accepted.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "source-import-reconcile-result.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "source-snapshot-list.v1": {"payload_definition": "#/$defs/source_snapshot_list_payload_v1"},
+      "analysis-accepted.v1": {"payload_definition": "#/$defs/analysis_accepted_payload_v1"},
+      "analysis-list.v1": {"payload_definition": "#/$defs/analysis_list_payload_v1"},
+      "analysis-detail.v1": {"payload_definition": "#/$defs/analysis_detail_payload_v1"},
+      "analysis-retry-accepted.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "analysis-reconcile-result.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "authoring-job-created.v1": {"payload_definition": "#/$defs/job_created_payload_v1"},
+      "job-list.v1": {"payload_definition": "#/$defs/job_list_payload_v1"},
+      "job-detail.v1": {"payload_definition": "#/$defs/job_detail_payload_v1"},
+      "generation-request-updated.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "source-selection-updated.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "provider-list.v1": {"payload_definition": "#/$defs/provider_list_payload_v1"},
+      "provider-selection-updated.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "provider-configuration-status.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "generation-launch-result.v1": {"payload_definition": "#/$defs/generation_launch_result_payload_v1"},
+      "job-launched.v1": {"payload_definition": "#/$defs/job_launched_payload_v1"},
+      "selection-materialized.v1": {"payload_definition": "#/$defs/selection_materialized_payload_v1"},
+      "successor-job-created.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "job-control-accepted.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "job-gaps.v1": {"payload_definition": "#/$defs/job_gaps_payload_v1"},
+      "duplicate-risk-list.v1": {"payload_definition": "#/$defs/duplicate_risk_list_payload_v1"},
+      "job-recovery-result.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "job-recovery-resolution.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "packets-retry-accepted.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "packet-retry-accepted.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "packet-detail.v1": {"payload_definition": "#/$defs/packet_detail_payload_v1"},
+      "zero-output-detail.v1": {"payload_definition": "#/$defs/zero_output_detail_payload_v1"},
+      "quarantine-list.v1": {"payload_definition": "#/$defs/quarantine_list_payload_v1"},
+      "quarantine-resolution-result.v1": {"payload_definition": "#/$defs/quarantine_resolution_payload_v1"},
+      "packet-reconcile-result.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "draft-list.v1": {"payload_definition": "#/$defs/draft_list_payload_v1"},
+      "candidate-detail.v1": {"payload_definition": "#/$defs/candidate_detail_payload_v1"},
+      "candidate-accepted.v1": {"payload_definition": "#/$defs/candidate_accepted_payload_v1"},
+      "bulk-candidate-accept-result.v1": {"payload_definition": "#/$defs/bulk_candidate_accept_payload_v1"},
+      "candidate-rejected.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "candidate-resolutions-result.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "duplicate-resolution-result.v1": {"payload_definition": "#/$defs/duplicate_resolution_payload_v1"},
+      "document-editor-opened.v1": {"payload_definition": "#/$defs/document_editor_opened_payload_v1"},
+      "manual-document-created.v1": {"payload_definition": "#/$defs/manual_document_created_payload_v1"},
+      "document-list.v1": {"payload_definition": "#/$defs/document_list_payload_v1"},
+      "document-editor-projection.v1": {"payload_definition": "#/$defs/document_editor_projection_payload_v1"},
+      "document-saved.v1": {"payload_definition": "#/$defs/document_saved_payload_v1"},
+      "document-resolutions-result.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "document-approved.v1": {"payload_definition": "#/$defs/document_approved_payload_v1"},
+      "bulk-document-approve-result.v1": {"payload_definition": "#/$defs/bulk_document_approve_payload_v1"},
+      "authoring-export-created.v1": {"payload_definition": "#/$defs/authoring_export_created_payload_v1"},
+      "export-list.v1": {"payload_definition": "#/$defs/export_list_payload_v1"},
+      "export-detail.v1": {"payload_definition": "#/$defs/export_detail_payload_v1"},
+      "export-retry-accepted.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "release-compile-accepted.v1": {"payload_definition": "#/$defs/release_compile_accepted_payload_v1"},
+      "compile-reference-selection-result.v1": {"payload_definition": "#/$defs/compile_reference_selection_payload_v1"},
+      "release-list.v1": {"payload_definition": "#/$defs/release_list_payload_v1"},
+      "release-detail.v1": {"payload_definition": "#/$defs/release_detail_payload_v1"},
+      "release-compile-retry-accepted.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "release-publish-accepted.v1": {"payload_definition": "#/$defs/release_publish_accepted_payload_v1"},
+      "release-reconcile-result.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "release-publish-retry-accepted.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "republish-release-created.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "rollback-release-created.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "pointer-reconcile-result.v1": {"payload_definition": "#/$defs/pointer_reconcile_payload_v1"},
+      "pointer-recovery-case-created.v1": {"payload_definition": "#/$defs/recovery_case_created_payload_v1"},
+      "pointer-conflict-resolution-result.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "assistant-run-accepted.v1": {"payload_definition": "#/$defs/assistant_run_accepted_payload_v1"},
+      "assistant-run-list.v1": {"payload_definition": "#/$defs/assistant_run_list_payload_v1"},
+      "assistant-run-detail.v1": {"payload_definition": "#/$defs/assistant_run_detail_payload_v1"},
+      "assistant-run-retry-accepted.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "assistant-run-reconcile-result.v1": {"payload_definition": "#/$defs/operation_result_payload_v1"},
+      "document-suggestion-applied.v1": {"payload_definition": "#/$defs/document_suggestion_applied_payload_v1"}
+    },
+    "non_overridden_schemas": "none; every response schema has an explicit payload_definition override"
+  },
+  "read_request_rule": "GET/query actions do not require mutation-envelope fields; their target is explicit in the catalog.",
+  "actions": {
+    "query_operation": {
+      "action_id": "query_operation",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Operation",
+          "id_parameter": "operationId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "import_sources": {
+      "action_id": "import_sources",
+      "target_binding": {
+        "primary_target": {
+          "kind": "created_resource",
+          "object_type": "SourceImport",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "reference_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace",
+          "role": "action_context"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "SourceImport",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": [
+          "file_token"
+        ]
+      },
+      "expected_revision_rule": {
+        "mode": "new_resource",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "fixed_values": {
+          "target_refs": [],
+          "expected_revisions": []
+        },
+        "created_result": "SourceImport",
+        "conflict_status": 409,
+        "input_rule": "file_token is retained only as an import input; the committed SourceImport owns the resulting immutable snapshot."
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "list_imports": {
+      "action_id": "list_imports",
+      "target_binding": {
+        "primary_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_source_import": {
+      "action_id": "review_source_import",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "SourceImport",
+          "id_parameter": "importId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "retry_source_import": {
+      "action_id": "retry_source_import",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "SourceImport",
+          "id_parameter": "importId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "reconcile_source_import": {
+      "action_id": "reconcile_source_import",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "SourceImport",
+          "id_parameter": "importId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_sources": {
+      "action_id": "review_sources",
+      "target_binding": {
+        "primary_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "materialize_selection": {
+      "action_id": "materialize_selection",
+      "target_binding": {
+        "primary_target": {
+          "kind": "created_resource",
+          "object_type": "SelectionSnapshot",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "reference_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace",
+          "role": "action_context"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "SelectionSnapshot",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": ["payload.query", "payload.explicit_items[]"]
+      },
+      "expected_revision_rule": {
+        "mode": "new_resource",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": ["operation_id", "target_refs", "expected_revisions", "payload"],
+        "fixed_values": {"target_refs": [], "expected_revisions": []},
+        "created_result": "SelectionSnapshot",
+        "conflict_status": 409,
+        "selection": "server resolves the query, validates explicit items, records each item revision and returns one immutable selection_ref"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "analyze_coverage": {
+      "action_id": "analyze_coverage",
+      "target_binding": {
+        "primary_target": {
+          "kind": "created_resource",
+          "object_type": "Analysis",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "reference_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace",
+          "role": "action_context"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Analysis",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": ["payload.source_refs[]"]
+      },
+      "expected_revision_rule": {
+        "mode": "create_with_source_refs",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "fixed_values": {
+          "target_refs": [],
+          "expected_revisions": []
+        },
+        "source_refs_location": "payload.source_refs[]",
+        "source_ref_rule": "each source ref must identify an immutable ready snapshot and its snapshot_hash",
+        "created_result": "Analysis",
+        "conflict_status": 409
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "reanalyze_coverage": {
+      "action_id": "reanalyze_coverage",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Analysis",
+          "id_parameter": "analysisId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Analysis",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": ["payload.source_refs[]"]
+      },
+      "expected_revision_rule": {
+        "mode": "cas_create_successor",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": ["operation_id", "target_refs", "expected_revisions", "payload"],
+        "target_refs": "exactly the stale Analysis target",
+        "expected_revisions": "the current revision of the stale Analysis",
+        "source_refs_location": "payload.source_refs[]",
+        "source_ref_rule": "each source ref must identify an immutable ready snapshot and its snapshot_hash",
+        "created_result": "new Analysis; stale Analysis is never overwritten",
+        "conflict_status": 409,
+        "attempt": {
+          "required_fields": ["attempt_id", "request_id", "idempotency_key", "execution_fence", "dispatch_marker"],
+          "late_response": "persist diagnostic only; old fence cannot mutate either Analysis"
+        }
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "list_analyses": {
+      "action_id": "list_analyses",
+      "target_binding": {
+        "primary_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_analysis": {
+      "action_id": "review_analysis",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Analysis",
+          "id_parameter": "analysisId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "retry_analysis": {
+      "action_id": "retry_analysis",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Analysis",
+          "id_parameter": "analysisId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "retry_operation_rule": "retry_analysis always creates a new operation_id and records retry_of_operation_id; the original operation is replay-only",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        }
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "reconcile_analysis": {
+      "action_id": "reconcile_analysis",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Analysis",
+          "id_parameter": "analysisId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        }
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "create_job": {
+      "action_id": "create_job",
+      "target_binding": {
+        "primary_target": {
+          "kind": "created_resource",
+          "object_type": "Job",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "reference_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace",
+          "role": "action_context"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Job",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": [
+          "payload.source_refs[]"
+        ]
+      },
+      "expected_revision_rule": {
+        "mode": "create_with_source_refs",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "fixed_values": {
+          "target_refs": [],
+          "expected_revisions": []
+        },
+        "source_refs_location": "payload.source_refs[]",
+        "source_ref_rule": "each source ref must identify an immutable ready snapshot and its snapshot_hash",
+        "created_result": "Job",
+        "conflict_status": 409
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "list_jobs": {
+      "action_id": "list_jobs",
+      "target_binding": {
+        "primary_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "get_job": {
+      "action_id": "get_job",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "edit_generation_request": {
+      "action_id": "edit_generation_request",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "select_source_snapshot": {
+      "action_id": "select_source_snapshot",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "list_providers": {
+      "action_id": "list_providers",
+      "target_binding": {
+        "primary_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "select_provider_for_job": {
+      "action_id": "select_provider_for_job",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [
+          {
+            "kind": "payload_reference",
+            "object_type": "Provider",
+            "id_field": "provider_id",
+            "role": "provider",
+            "ownership": "current_workspace"
+          }
+        ],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "configure_provider_credentials": {
+      "action_id": "configure_provider_credentials",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Provider",
+          "id_parameter": "providerId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "request_constraints": {
+        "credential_action": "required enum: set, keep or clear",
+        "api_key": "required only for set; write-only local-loopback input; never persisted in authoring records",
+        "keep": "api_key must be absent",
+        "clear": "api_key must be absent and the secure credential is removed"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "launch_generation": {
+      "action_id": "launch_generation",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        }
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "confirm_completion_direction": {
+      "action_id": "confirm_completion_direction",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [
+          {
+            "kind": "payload_reference",
+            "object_type": "Analysis",
+            "id_field": "analysis_id",
+            "role": "analysis",
+            "ownership": "current_workspace"
+          }
+        ],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "dispatch": "LaunchService creates the external attempt after this decision is committed; the user request does not provide attempt_ref"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "reconfigure_provider": {
+      "action_id": "reconfigure_provider",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Job",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "created_result": "created resource is returned in the same commit; original target is not overwritten"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "create_successor_from_gaps": {
+      "action_id": "create_successor_from_gaps",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Job",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "created_result": "created resource is returned in the same commit; original target is not overwritten"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "pause_generation": {
+      "action_id": "pause_generation",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "resume_generation": {
+      "action_id": "resume_generation",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "cancel_generation": {
+      "action_id": "cancel_generation",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_gaps": {
+      "action_id": "review_gaps",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": [],
+        "result_projection": {
+          "focus_targets": "sorted concrete Packet targets and, when applicable, QuarantineItem targets",
+          "gap_items": "each item includes reason, current status and available action references"
+        }
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_duplicates": {
+      "action_id": "review_duplicates",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "reconcile_recovery": {
+      "action_id": "reconcile_recovery",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": [],
+        "recovery_scope": "server loads the durable Job recovery marker; optional Packet refs are output targets, not request CAS targets"
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "result_target": "run reducer after recovery marker verification"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "resolve_recovery_conflict": {
+      "action_id": "resolve_recovery_conflict",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [
+          {
+            "kind": "payload_reference",
+            "object_type": "RecoveryCase",
+            "id_field": "recovery_case_id",
+            "role": "recovery_case",
+            "ownership": "current_workspace"
+          }
+        ],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "retry_failed_packets": {
+      "action_id": "retry_failed_packets",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+      "secondary_targets": [
+        {
+          "kind": "selection_snapshot_items",
+          "object_type": "Packet",
+          "selection_field": "selection_ref",
+          "role": "selected_packets",
+          "materialize_each_item": true,
+          "ownership": "current_workspace"
+        }
+      ],
+        "created_result": null,
+      "input_snapshots": ["selection_ref"]
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "selection_ref",
+          "payload"
+        ],
+        "target_refs": "primary Job plus one concrete target_ref for each selection_ref Packet item",
+        "expected_revisions": "same object_type/id set as target_refs; Packet revisions come from selection_ref",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        }
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "retry_packet": {
+      "action_id": "retry_packet",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Packet",
+          "id_parameter": "packetId",
+          "ownership": "current_workspace"
+        },
+        "parent_targets": [
+          {
+            "kind": "route_parameter",
+            "object_type": "Job",
+            "id_parameter": "jobId",
+            "ownership": "current_workspace"
+          }
+        ],
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+          "target_refs": "exactly primary_target + parent_targets + unconditional secondary_targets",
+          "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        }
+      },
+      "request_constraints": {
+        "retry_confirmation": "required and true only when Packet=succeeded_zero_output",
+        "retry_authorization": "required and unexpired when Packet=unknown_result",
+        "failed_packet": "requires Packet=failed and retryable=true",
+        "new_attempt": "retry creates a new attempt and never reuses the old attempt ID"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_packet": {
+      "action_id": "review_packet",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Packet",
+          "id_parameter": "packetId",
+          "ownership": "current_workspace"
+        },
+        "parent_targets": [
+          {
+            "kind": "route_parameter",
+            "object_type": "Job",
+            "id_parameter": "jobId",
+            "ownership": "current_workspace"
+          }
+        ],
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": [],
+        "result_projection": {
+          "focus_targets": "the requested Packet and its parent Job context",
+          "evidence": "immutable source refs, response diagnostics and candidate/quarantine summary"
+        }
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_zero_output": {
+      "action_id": "review_zero_output",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Packet",
+          "id_parameter": "packetId",
+          "ownership": "current_workspace"
+        },
+        "parent_targets": [
+          {
+            "kind": "route_parameter",
+            "object_type": "Job",
+            "id_parameter": "jobId",
+            "ownership": "current_workspace"
+          }
+        ],
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_quarantine": {
+      "action_id": "review_quarantine",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Packet",
+          "id_parameter": "packetId",
+          "ownership": "current_workspace"
+        },
+        "parent_targets": [
+          {
+            "kind": "route_parameter",
+            "object_type": "Job",
+            "id_parameter": "jobId",
+            "ownership": "current_workspace"
+          }
+        ],
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": [],
+        "result_projection": {
+          "focus_targets": "the requested Packet plus each concrete quarantine_item_id",
+          "resolution_choices": "only choices valid for the selected quarantine item"
+        }
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "resolve_quarantine": {
+      "action_id": "resolve_quarantine",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Packet",
+          "id_parameter": "packetId",
+          "ownership": "current_workspace"
+        },
+        "parent_targets": [
+          {
+            "kind": "route_parameter",
+            "object_type": "Job",
+            "id_parameter": "jobId",
+            "ownership": "current_workspace"
+          }
+        ],
+        "secondary_targets": [
+          {
+            "kind": "payload_reference",
+            "object_type": "QuarantineItem",
+            "id_field": "quarantine_item_id",
+            "role": "quarantine_item",
+            "ownership": "current_workspace"
+          },
+      {
+        "kind": "conditional_payload_reference",
+        "object_type": "Candidate",
+        "id_field": "candidate_id",
+        "role": "conditional_candidate",
+        "ownership": "current_workspace",
+            "condition": "resolution=manual_draft && draft_source=candidate"
+      }
+        ],
+        "created_result": {
+          "kind": "conditional_created_resource",
+          "object_type": "Document",
+          "id_source": "commit_response_when_resolution=manual_draft",
+          "condition": "resolution=manual_draft",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "Packet + Job + QuarantineItem; Candidate is added only when draft_source=candidate and the candidate index is changed",
+        "expected_revisions": "the exact same object_type/id set as target_refs; the created Document is never included",
+        "conditional_targets": "candidate_id and its revision are required only for draft_source=candidate; raw_output creates a new Document from the preserved raw output without a Candidate target",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "reconcile_unknown": {
+      "action_id": "reconcile_unknown",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Packet",
+          "id_parameter": "packetId",
+          "ownership": "current_workspace"
+        },
+        "parent_targets": [
+          {
+            "kind": "route_parameter",
+            "object_type": "Job",
+            "id_parameter": "jobId",
+            "ownership": "current_workspace"
+          }
+        ],
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+          "target_refs": "exactly primary_target + parent_targets + unconditional secondary_targets",
+          "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        }
+      },
+      "reconcile_protocol": {
+        "probe": "payload.reconcile_stage=probe and resolution absent",
+        "resolve": "payload.reconcile_stage=resolve and resolution required",
+        "retry_gate": "retry_with_duplicate_warning creates retry_authorization only; this action never dispatches"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_drafts": {
+      "action_id": "review_drafts",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_candidate": {
+      "action_id": "review_candidate",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Candidate",
+          "id_parameter": "draftId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "accept_candidate": {
+      "action_id": "accept_candidate",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Candidate",
+          "id_parameter": "draftId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [
+          {
+            "kind": "conditional_payload_reference",
+            "object_type": "Document",
+            "id_field": "editor_session.document_id",
+            "role": "document",
+            "ownership": "current_workspace",
+            "condition": "payload.editor_session != null"
+          }
+        ],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Document",
+          "id_source": "commit_response_when_editor_session_null",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "primary Candidate plus Document only when payload.editor_session is non-null",
+        "expected_revisions": "Candidate revision always; Document revision only when payload.editor_session is non-null",
+        "conditional_targets": "editor_session binds document_id, document_revision, opened_body_hash and current_body_hash; null creates a new Document atomically",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "bulk_accept_candidates": {
+      "action_id": "bulk_accept_candidates",
+      "target_binding": {
+        "primary_target": {
+          "kind": "selection_snapshot",
+          "object_type": "Candidate",
+          "selection_field": "selection_ref",
+          "item_revision_field": "selection_ref.items[].revision",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": [
+          "selection_ref"
+        ]
+      },
+      "expected_revision_rule": {
+        "mode": "selection_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "selection_ref",
+          "payload"
+        ],
+        "target_refs": "selection_ref.items[] plus declared parent targets when the parent projection changes",
+        "expected_revisions": "the exact same object_type/id set as target_refs, with item revisions taken from selection_ref",
+        "selection": {
+          "selection_id": "selection_ref.selection_id",
+          "selection_revision": "selection_ref.revision",
+          "item_revision": "selection_ref.items[].revision"
+        },
+        "per_item_result": "each selected item settles independently",
+        "conflict_status": 409
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "reject_candidate": {
+      "action_id": "reject_candidate",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Candidate",
+          "id_parameter": "draftId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "resolve_candidate_resolutions": {
+      "action_id": "resolve_candidate_resolutions",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Candidate",
+          "id_parameter": "draftId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "resolve_duplicate_risk": {
+      "action_id": "resolve_duplicate_risk",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Candidate",
+          "id_parameter": "draftId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [
+      {
+        "kind": "conditional_payload_reference",
+        "object_type": "Document",
+        "id_field": "duplicate_target_id",
+        "role": "conditional_document",
+        "ownership": "current_workspace",
+        "condition": "resolution=merge"
+      }
+        ],
+        "created_result": {
+          "kind": "conditional_created_resource",
+          "object_type": "Document",
+          "id_source": "commit_response_when_resolution=merge_or_promote_duplicate",
+          "condition": "resolution=merge || resolution=promote_duplicate",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "Candidate plus duplicate Document only when resolution=merge; promote_duplicate has no duplicate Document target",
+        "expected_revisions": "the exact same object_type/id set as target_refs; a created Document is never included",
+        "conditional_targets": "duplicate_target_id and its revision are required only for resolution=merge",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "open_candidate_editor": {
+      "action_id": "open_candidate_editor",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Candidate",
+          "id_parameter": "draftId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Document",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "created_result": "created resource is returned in the same commit; original target is not overwritten"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "open_manual_editor": {
+      "action_id": "open_manual_editor",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Job",
+          "id_parameter": "jobId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Document",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "created_result": "created resource is returned in the same commit; original target is not overwritten"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "create_manual_document": {
+      "action_id": "create_manual_document",
+      "target_binding": {
+        "primary_target": {
+          "kind": "created_resource",
+          "object_type": "Document",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "reference_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace",
+          "role": "action_context"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Document",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "new_resource",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "fixed_values": {
+          "target_refs": [],
+          "expected_revisions": []
+        },
+        "created_result": "Document",
+        "conflict_status": 409
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "list_documents": {
+      "action_id": "list_documents",
+      "target_binding": {
+        "primary_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "open_document_editor": {
+      "action_id": "open_document_editor",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Document",
+          "id_parameter": "documentId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "save_document": {
+      "action_id": "save_document",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Document",
+          "id_parameter": "documentId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "resolve_document_resolutions": {
+      "action_id": "resolve_document_resolutions",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Document",
+          "id_parameter": "documentId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "approve_document": {
+      "action_id": "approve_document",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Document",
+          "id_parameter": "documentId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "bulk_approve_documents": {
+      "action_id": "bulk_approve_documents",
+      "target_binding": {
+        "primary_target": {
+          "kind": "selection_snapshot",
+          "object_type": "Document",
+          "selection_field": "selection_ref",
+          "item_revision_field": "selection_ref.items[].revision",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": [
+          "selection_ref"
+        ]
+      },
+      "expected_revision_rule": {
+        "mode": "selection_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "selection_ref",
+          "payload"
+        ],
+        "target_refs": "selection_ref.items[] plus declared parent targets when the parent projection changes",
+        "expected_revisions": "the exact same object_type/id set as target_refs, with item revisions taken from selection_ref",
+        "selection": {
+          "selection_id": "selection_ref.selection_id",
+          "selection_revision": "selection_ref.revision",
+          "item_revision": "selection_ref.items[].revision"
+        },
+        "per_item_result": "each selected item settles independently",
+        "conflict_status": 409
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "export_authoring_draft": {
+      "action_id": "export_authoring_draft",
+      "target_binding": {
+        "primary_target": {
+          "kind": "selection_snapshot",
+          "object_type": "Document",
+          "selection_field": "selection_ref",
+          "item_revision_field": "selection_ref.items[].revision",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Export",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": [
+          "selection_ref"
+        ]
+      },
+      "expected_revision_rule": {
+        "mode": "selection_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "selection_ref",
+          "payload"
+        ],
+        "target_refs": "selection_ref.items[] plus declared parent targets when the parent projection changes",
+        "expected_revisions": "the exact same object_type/id set as target_refs, with item revisions taken from selection_ref",
+        "selection": {
+          "selection_id": "selection_ref.selection_id",
+          "selection_revision": "selection_ref.revision",
+          "item_revision": "selection_ref.items[].revision"
+        },
+        "per_item_result": "each selected item settles independently",
+        "conflict_status": 409
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "list_exports": {
+      "action_id": "list_exports",
+      "target_binding": {
+        "primary_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_export": {
+      "action_id": "review_export",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Export",
+          "id_parameter": "exportId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "retry_export": {
+      "action_id": "retry_export",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Export",
+          "id_parameter": "exportId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "compile_runtime": {
+      "action_id": "compile_runtime",
+      "target_binding": {
+        "primary_target": {
+          "kind": "selection_snapshot",
+          "object_type": "Document",
+          "selection_field": "selection_ref",
+          "item_revision_field": "selection_ref.items[].revision",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "CompileOperation",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": [
+          "selection_ref"
+        ]
+      },
+      "expected_revision_rule": {
+        "mode": "selection_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "selection_ref",
+          "payload"
+        ],
+        "target_refs": "selection_ref.items[] plus declared parent targets when the parent projection changes",
+        "expected_revisions": "the exact same object_type/id set as target_refs, with item revisions taken from selection_ref",
+        "selection": {
+          "selection_id": "selection_ref.selection_id",
+          "selection_revision": "selection_ref.revision",
+          "item_revision": "selection_ref.items[].revision"
+        },
+        "per_item_result": "each selected item settles independently",
+        "conflict_status": 409
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "resolve_compile_references": {
+      "action_id": "resolve_compile_references",
+      "target_binding": {
+        "primary_target": {
+          "kind": "payload_reference",
+          "object_type": "CompileOperation",
+          "id_field": "compile_operation_id",
+          "role": "existing_target",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": [
+          "selection_ref"
+        ]
+      },
+      "expected_revision_rule": {
+        "mode": "compile_operation_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "selection_ref",
+          "payload"
+        ],
+        "target_refs": "CompileOperation only; selection_ref is an immutable input snapshot, not a mutation target",
+        "expected_revisions": "CompileOperation revision only; selection_ref.revision is checked for input freshness, not added to the target CAS set",
+        "selection_input": "the submitted selection_ref is copied into a new server-owned selection snapshot and reference closure; it is never rewritten in place",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "result_target": "compile_runtime must be called again"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "list_releases": {
+      "action_id": "list_releases",
+      "target_binding": {
+        "primary_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_release": {
+      "action_id": "review_release",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Release",
+          "id_parameter": "releaseId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "retry_compile": {
+      "action_id": "retry_compile",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Release",
+          "id_parameter": "releaseId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Release",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        },
+        "created_result": "new Release; original Release remains read-only"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "publish_release": {
+      "action_id": "publish_release",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Release",
+          "id_parameter": "releaseId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [
+          {
+            "kind": "workspace_singleton",
+            "object_type": "PublishedPointer",
+            "scope": "current_workspace"
+          }
+        ],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        }
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "reconcile_release": {
+      "action_id": "reconcile_release",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Release",
+          "id_parameter": "releaseId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        }
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "retry_publish": {
+      "action_id": "retry_publish",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Release",
+          "id_parameter": "releaseId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [
+          {
+            "kind": "workspace_singleton",
+            "object_type": "PublishedPointer",
+            "scope": "current_workspace"
+          }
+        ],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        }
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "rebase_publish": {
+      "action_id": "rebase_publish",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Release",
+          "id_parameter": "releaseId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [
+          {
+            "kind": "workspace_singleton",
+            "object_type": "PublishedPointer",
+            "scope": "current_workspace"
+          }
+        ],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Release",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        },
+        "created_result": "created resource is returned in the same commit; original target is not overwritten"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "rollback_release": {
+      "action_id": "rollback_release",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "Release",
+          "id_parameter": "sourceReleaseId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [
+          {
+            "kind": "workspace_singleton",
+            "object_type": "PublishedPointer",
+            "scope": "current_workspace"
+          }
+        ],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "Release",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        },
+        "created_result": "created resource is returned in the same commit; original target is not overwritten"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "reconcile_publish_pointer": {
+      "action_id": "reconcile_publish_pointer",
+      "target_binding": {
+        "primary_target": {
+          "kind": "workspace_singleton",
+          "object_type": "PublishedPointer",
+          "scope": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        }
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "start_publish_recovery_case": {
+      "action_id": "start_publish_recovery_case",
+      "target_binding": {
+        "primary_target": {
+          "kind": "workspace_singleton",
+          "object_type": "PublishedPointer",
+          "scope": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "RecoveryCase",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": [],
+        "reopen_lookup": "current workspace + current pointer revision + existing unarchived recovery case"
+      },
+      "expected_revision_rule": {
+        "mode": "create_or_reopen",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "PublishedPointer singleton",
+        "expected_revisions": "current pointer revision",
+        "idempotency": "same workspace + pointer revision + open case returns existing case",
+        "created_result": "RecoveryCase",
+        "conflict_status": 409
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "resolve_publish_pointer_conflict": {
+      "action_id": "resolve_publish_pointer_conflict",
+      "target_binding": {
+        "primary_target": {
+          "kind": "workspace_singleton",
+          "object_type": "PublishedPointer",
+          "scope": "current_workspace"
+        },
+        "secondary_targets": [
+          {
+            "kind": "payload_reference",
+            "object_type": "RecoveryCase",
+            "id_field": "recovery_case_id",
+            "role": "recovery_case",
+            "ownership": "current_workspace"
+          }
+        ],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "assistant_suggest": {
+      "action_id": "assistant_suggest",
+      "target_binding": {
+        "primary_target": {
+          "kind": "created_resource",
+          "object_type": "AssistantRun",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "reference_target": {
+          "kind": "payload_reference",
+          "object_type": "dynamic",
+          "allowed_object_types": ["Candidate", "Document"],
+          "object_type_field": "payload.target_ref.object_type",
+          "id_field": "target_ref",
+          "role": "input_target",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [
+          {
+            "kind": "payload_reference",
+            "object_type": "dynamic",
+            "allowed_object_types": ["Candidate", "Document"],
+            "object_type_field": "payload.target_ref.object_type",
+            "id_field": "target_ref",
+            "role": "input_target",
+            "ownership": "current_workspace"
+          }
+        ],
+        "created_result": {
+          "kind": "created_resource",
+          "object_type": "AssistantRun",
+          "id_source": "commit_response",
+          "ownership": "current_workspace"
+        },
+        "input_snapshots": [
+          "target_ref"
+        ]
+      },
+      "expected_revision_rule": {
+        "mode": "create_with_target_snapshot",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "input target only; no target mutation",
+        "expected_revisions": "input Candidate/Document revision",
+        "created_result": "AssistantRun",
+        "conflict_status": 409
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "list_assistant_runs": {
+      "action_id": "list_assistant_runs",
+      "target_binding": {
+        "primary_target": {
+          "kind": "workspace_scope",
+          "object_type": "Workspace",
+          "scope": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "review_assistant_run": {
+      "action_id": "review_assistant_run",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "AssistantRun",
+          "id_parameter": "runId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "not_applicable",
+        "request_fields": [],
+        "target_refs": "not_applicable",
+        "expected_revisions": "not_applicable"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "retry_assistant_run": {
+      "action_id": "retry_assistant_run",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "AssistantRun",
+          "id_parameter": "runId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        }
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "reconcile_assistant_run": {
+      "action_id": "reconcile_assistant_run",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "AssistantRun",
+          "id_parameter": "runId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "external_cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action",
+        "attempt": {
+          "required_fields": [
+            "attempt_id",
+            "request_id",
+            "idempotency_key",
+            "execution_fence",
+            "dispatch_marker"
+          ],
+          "retry_gate": "only explicit reconcile result retry_allowed=true permits a retry action",
+          "late_response": "persist diagnostic only; old fence cannot mutate business state"
+        }
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    },
+    "apply_assistant_suggestion": {
+      "action_id": "apply_assistant_suggestion",
+      "target_binding": {
+        "primary_target": {
+          "kind": "route_parameter",
+          "object_type": "AssistantRun",
+          "id_parameter": "runId",
+          "ownership": "current_workspace"
+        },
+        "secondary_targets": [
+          {
+            "kind": "payload_reference",
+            "object_type": "Document",
+            "id_field": "document_id",
+            "role": "document",
+            "ownership": "current_workspace"
+          }
+        ],
+        "created_result": null,
+        "input_snapshots": []
+      },
+      "expected_revision_rule": {
+        "mode": "cas",
+        "envelope": "mutation-envelope.v1",
+        "request_fields": [
+          "operation_id",
+          "target_refs",
+          "expected_revisions",
+          "payload"
+        ],
+        "target_refs": "exactly primary_target + unconditional secondary_targets",
+        "expected_revisions": "same object_type/id set as target_refs",
+        "conditional_targets": "conditional_* targets require revision only for the selected resolution/branch",
+        "conflict_status": 409,
+        "stale_response": "return refreshed targets and a compare/review action"
+      },
+      "response_contract": "authoring-action-success.v1",
+      "error_contract": "authoring-action-error.v1",
+      "user_presentation_schema": "authoring-action-presentation.v1"
+    }
+  }
+}

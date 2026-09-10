@@ -1,7 +1,8 @@
 # AWAKE 版本路线图 v0.1.x - v0.9.x
 
 > 日期：2026-08-15
-> 状态：路线图草案，供后续 grill-me 分批锁定
+> 状态：`superseded`。本文件由 `AWAKE-Version-Roadmap-0.2.0-to-1.0.0-20260817.md` 取代，仅保留为历史版本方向。
+> 禁止继续以本文件安排新版本功能。
 > 依据：`PLAN-AwakeSplit-Batch1-20260815.md`、`AwakeSplit-ContentClassification-20260815.md`、`AwakeSplit-SplitScheme-20260815.md`
 
 ## 0. 版本线与当前基线

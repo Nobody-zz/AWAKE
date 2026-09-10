@@ -1,0 +1,78 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.politics.pravend-historical-name
+title:
+  zh-CN: 帕拉汶德历史沿革与旧称巴拉维诺斯
+status: reference_only
+domain: politics
+subdomain: territories
+related_domains:
+  - geography
+universe: bannerlord_1084
+era:
+  key: historical
+  certainty: bounded
+content_tier: base
+summary:
+  zh-CN: 官方资料记载帕拉汶德旧称巴拉维诺斯，先后经历卡拉德殖民与首都时期、帝国重心东移后的西部经济重镇时期。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+entity_ids:
+  - entity.settlement.town_v3
+authority:
+  owner: source_only
+  conflict_policy: report_only
+sources:
+  - source_id: source.bannerlord.sandbox.settlements.history
+    source_version: bannerlord-v1.3.15-cns-extract-v1
+    source_content_hash: 2f06ef6ab1029bdb6a5920c94cc9adfa6a518a98f106c1e5d7e4710d0172f9c7
+    locator: SandBox/ModuleData/Languages/CNs/std_settlements_xml-zho-CN.xml:23
+    quote_hash: f4b24c13e32285bc6bfc179f1b5d78de13032118c2e270aff7e9e9b253425b84
+    quote: >-
+      巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地，并在随后迅速取代沙拉斯，成为了卡拉德人的首都。最终，帝国的统治重心东移，但巴拉维诺斯依旧是西部的经济重镇。当瓦兰迪亚人“铁壁”奥斯里克入侵时，他意识到巴拉维诺斯作为权力的宝座，比作为掠夺的财源更有价值，于是同当地的元老协商让该城投降。此地传承到了奥斯里克的旁支，戴·提尔家族手中，如今人们称其为帕拉汶德。
+assertions:
+  - id: assertion.pravend.founded-by-kaladios
+    revision: 1
+    kind: fact
+    text:
+      zh-CN: 巴拉维诺斯由卡拉狄乌斯大帝建立，是第二座重要殖民地。
+    sources:
+      - source_id: source.bannerlord.sandbox.settlements.history
+        source_version: bannerlord-v1.3.15-cns-extract-v1
+        source_content_hash: 2f06ef6ab1029bdb6a5920c94cc9adfa6a518a98f106c1e5d7e4710d0172f9c7
+        locator: SandBox/ModuleData/Languages/CNs/std_settlements_xml-zho-CN.xml:23
+        quote_hash: 59c8b2083b0a8fd1b33f696058d84000a13174aba182093d430fe614f1e84efc
+        quote: >-
+          巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地，并在随后迅速取代沙拉斯，成为了卡拉德人的首都。
+    expressions: []
+  - id: assertion.pravend.once-capital
+    revision: 1
+    kind: state
+    text:
+      zh-CN: 巴拉维诺斯曾取代沙拉斯成为卡拉德人的首都。
+    sources:
+      - source_id: source.bannerlord.sandbox.settlements.history
+        source_version: bannerlord-v1.3.15-cns-extract-v1
+        source_content_hash: 2f06ef6ab1029bdb6a5920c94cc9adfa6a518a98f106c1e5d7e4710d0172f9c7
+        locator: SandBox/ModuleData/Languages/CNs/std_settlements_xml-zho-CN.xml:23
+        quote_hash: 59c8b2083b0a8fd1b33f696058d84000a13174aba182093d430fe614f1e84efc
+        quote: >-
+          巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地，并在随后迅速取代沙拉斯，成为了卡拉德人的首都。
+    expressions: []
+  - id: assertion.pravend.western-economic-center
+    revision: 1
+    kind: state
+    text:
+      zh-CN: 帝国统治重心东移后，巴拉维诺斯仍是帝国西部的经济重镇。
+    sources:
+      - source_id: source.bannerlord.sandbox.settlements.history
+        source_version: bannerlord-v1.3.15-cns-extract-v1
+        source_content_hash: 2f06ef6ab1029bdb6a5920c94cc9adfa6a518a98f106c1e5d7e4710d0172f9c7
+        locator: SandBox/ModuleData/Languages/CNs/std_settlements_xml-zho-CN.xml:23
+        quote_hash: 8888a1aefe56ecd7506ad014361704b0321655681b07877319f51c58d00c4f0c
+        quote: >-
+          最终，帝国的统治重心东移，但巴拉维诺斯依旧是西部的经济重镇。
+    expressions: []

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.campaign-activation.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "activationId", "mode", "world", "extensions", "contractVersion", "revision"],
+  "properties": {
+    "schemaVersion": { "const": "awake.worldbook.campaign-activation.v1" },
+    "activationId": { "$ref": "common.schema.json#/$defs/stable_id" },
+    "mode": { "enum": ["default", "manual", "imported"] },
+    "world": { "$ref": "#/$defs/package_ref" },
+    "extensions": { "type": "array", "items": { "$ref": "#/$defs/package_ref" }, "uniqueItems": true },
+    "contractVersion": { "const": "awake.worldbook.v2" },
+    "revision": { "type": "integer", "minimum": 1 },
+    "overlayPackageId": { "anyOf": [{ "$ref": "common.schema.json#/$defs/package_id" }, { "type": "null" }] },
+    "extensionsData": { "$ref": "common.schema.json#/$defs/extensions" }
+  },
+  "$defs": {
+    "package_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packageId", "version", "packageHash"],
+      "properties": {
+        "packageId": { "$ref": "common.schema.json#/$defs/package_id" },
+        "version": { "$ref": "common.schema.json#/$defs/version" },
+        "packageHash": { "$ref": "common.schema.json#/$defs/hash" }
+      }
+    }
+  }
+}

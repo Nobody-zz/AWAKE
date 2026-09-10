@@ -1,0 +1,497 @@
+{
+  "schema_version": "awake.worldbook.studio.a3-4.registry-snapshot-golden.v1",
+  "baseline_capture": {
+    "captured_before_extraction": true,
+    "validation_services_cs_sha256": "DE5223B1726F643B2CC44003CB70C3BD515165577B0E55276A3C0561BEFF0B34",
+    "capture_command": "dotnet run --project \u003CTEMP\u003E\\capture.csproj -- \u003CschemaRoot\u003E \u003CgoldenPath\u003E \u003CValidationServices.cs\u003E",
+    "capture_harness_source_sha256": "714991DAB4F4624D824677655D9812BE916BA0ED94628A4BF588774430F2C5A5",
+    "runtime_version": "10.0.9",
+    "archive_path": "tests/fixtures/a3-4-registry-snapshot-golden.v1.json"
+  },
+  "cases": {
+    "baseline": {
+      "input_files": [
+        {
+          "path": "schema/profile-registry.v1.json",
+          "exists": true,
+          "sha256": "F5243B24E9A644A452D0C07B758CD8D2540DD4E9AE3207CD2BA65CD64406243B"
+        },
+        {
+          "path": "schema/referral-registry.v1.json",
+          "exists": true,
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "schema/profile-registry.v1.schema.json",
+          "exists": true,
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "schema/referral-registry.v1.schema.json",
+          "exists": true,
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        }
+      ],
+      "projection": {
+        "profile_version": "1.0.0",
+        "referral_version": "1.0.0",
+        "profile_hash": "F5243B24E9A644A452D0C07B758CD8D2540DD4E9AE3207CD2BA65CD64406243B",
+        "referral_hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD",
+        "profiles_in_input_order": [
+          "profile.villager",
+          "profile.townsfolk",
+          "profile.commoner",
+          "profile.headman",
+          "profile.notable",
+          "profile.merchant",
+          "profile.tavernkeeper",
+          "profile.ransom_broker",
+          "profile.soldier",
+          "profile.noble",
+          "profile.noble_high_steward",
+          "profile.anonymous"
+        ],
+        "referrals_in_input_order": [
+          "referral.notary_merchant",
+          "referral.ransom_broker",
+          "referral.tavernkeeper",
+          "referral.headman"
+        ],
+        "profile_parents": {
+          "profile.anonymous": null,
+          "profile.commoner": null,
+          "profile.headman": "profile.notable",
+          "profile.merchant": "profile.townsfolk",
+          "profile.noble": "profile.notable",
+          "profile.noble_high_steward": "profile.noble",
+          "profile.notable": "profile.commoner",
+          "profile.ransom_broker": "profile.merchant",
+          "profile.soldier": "profile.commoner",
+          "profile.tavernkeeper": "profile.townsfolk",
+          "profile.townsfolk": "profile.commoner",
+          "profile.villager": "profile.commoner"
+        },
+        "publicly_askable_referrals": [
+          "referral.headman",
+          "referral.notary_merchant",
+          "referral.ransom_broker",
+          "referral.tavernkeeper"
+        ],
+        "profile_object_hashes": {
+          "profile.anonymous": "B0CF12A3294C7C33595DFB1EB80B83EB8CB1D17E959FCDD6D4812F568FE753B2",
+          "profile.commoner": "007DD88BAE50875C737224B2BCB6BFDD4767B769A474A39E1FFACA66D9579431",
+          "profile.headman": "8A6AC0A3AC98571F5EAA45ABD97BE4ED86F95B849774E6BD16C86D03DB5536A1",
+          "profile.merchant": "76BB7DBCC582456C1CC9C10F277D0A67AA8F7CF5423EBF3F8FE2C47459ACE16F",
+          "profile.noble": "0FDC27CB19B048EA84583F57F3A34548DE1819E178122840143EBA093A4A9F7B",
+          "profile.noble_high_steward": "5BBAE971E5641F5D889DE92B3A0E8242A03F102A74D20811CCBCA86A308493DC",
+          "profile.notable": "C2622C7BFE0ECE16C28BEDC6CF67B0323D3BE79F55315AD12DA9D89F587511D6",
+          "profile.ransom_broker": "B7E3B23DD8D95F8AC0AAF05A7D79FCC6FE0A3D39C431BD8617D04D006BCE5ADA",
+          "profile.soldier": "3C9CF77EA16FEE0A823C75BC78A795F40472136C38A4D3F2273AE7899EC50A76",
+          "profile.tavernkeeper": "45791EF3B80E6FD9092523E9B0149D8C771F93A711D28E9E957D2F5DB7882269",
+          "profile.townsfolk": "6A25A42273D5726FBB6AB93CCA60529FF95AF357BEADA4027C2B03CFC60AC165",
+          "profile.villager": "4146F63988163BF994D17FB59C2C88847F8F79556C8F7B1CB4779CAFB9200C15"
+        }
+      },
+      "raw_projection_utf8_sha256": "FEBA23B903D9B273D52F0C1A8FB64E38E39872CE37E225EC4F80E1099FC1B6C6",
+      "raw_projection_base64": "eyJwcm9maWxlX3ZlcnNpb24iOiIxLjAuMCIsInJlZmVycmFsX3ZlcnNpb24iOiIxLjAuMCIsInByb2ZpbGVfaGFzaCI6IkY1MjQzQjI0RTlBNjQ0QTQ1MkQwQzA3Qjc1OENEOEQyNTQwREQ0RTlBRTMyMDdDRDJCQTY1Q0Q2NDQwNjI0M0IiLCJyZWZlcnJhbF9oYXNoIjoiNkUxNzA3NUYxRjk2N0JFMjhDMDQzNzEyMURCNTBFNUMzMDgwOUM0RUZDM0QyQTVGMjJBRDlCQjBCM0I5MjZDRCIsInByb2ZpbGVzX2luX2lucHV0X29yZGVyIjpbInByb2ZpbGUudmlsbGFnZXIiLCJwcm9maWxlLnRvd25zZm9sayIsInByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlLmhlYWRtYW4iLCJwcm9maWxlLm5vdGFibGUiLCJwcm9maWxlLm1lcmNoYW50IiwicHJvZmlsZS50YXZlcm5rZWVwZXIiLCJwcm9maWxlLnJhbnNvbV9icm9rZXIiLCJwcm9maWxlLnNvbGRpZXIiLCJwcm9maWxlLm5vYmxlIiwicHJvZmlsZS5ub2JsZV9oaWdoX3N0ZXdhcmQiLCJwcm9maWxlLmFub255bW91cyJdLCJyZWZlcnJhbHNfaW5faW5wdXRfb3JkZXIiOlsicmVmZXJyYWwubm90YXJ5X21lcmNoYW50IiwicmVmZXJyYWwucmFuc29tX2Jyb2tlciIsInJlZmVycmFsLnRhdmVybmtlZXBlciIsInJlZmVycmFsLmhlYWRtYW4iXSwicHJvZmlsZV9wYXJlbnRzIjp7InByb2ZpbGUuYW5vbnltb3VzIjpudWxsLCJwcm9maWxlLmNvbW1vbmVyIjpudWxsLCJwcm9maWxlLmhlYWRtYW4iOiJwcm9maWxlLm5vdGFibGUiLCJwcm9maWxlLm1lcmNoYW50IjoicHJvZmlsZS50b3duc2ZvbGsiLCJwcm9maWxlLm5vYmxlIjoicHJvZmlsZS5ub3RhYmxlIiwicHJvZmlsZS5ub2JsZV9oaWdoX3N0ZXdhcmQiOiJwcm9maWxlLm5vYmxlIiwicHJvZmlsZS5ub3RhYmxlIjoicHJvZmlsZS5jb21tb25lciIsInByb2ZpbGUucmFuc29tX2Jyb2tlciI6InByb2ZpbGUubWVyY2hhbnQiLCJwcm9maWxlLnNvbGRpZXIiOiJwcm9maWxlLmNvbW1vbmVyIiwicHJvZmlsZS50YXZlcm5rZWVwZXIiOiJwcm9maWxlLnRvd25zZm9sayIsInByb2ZpbGUudG93bnNmb2xrIjoicHJvZmlsZS5jb21tb25lciIsInByb2ZpbGUudmlsbGFnZXIiOiJwcm9maWxlLmNvbW1vbmVyIn0sInB1YmxpY2x5X2Fza2FibGVfcmVmZXJyYWxzIjpbInJlZmVycmFsLmhlYWRtYW4iLCJyZWZlcnJhbC5ub3RhcnlfbWVyY2hhbnQiLCJyZWZlcnJhbC5yYW5zb21fYnJva2VyIiwicmVmZXJyYWwudGF2ZXJua2VlcGVyIl0sInByb2ZpbGVfb2JqZWN0X2hhc2hlcyI6eyJwcm9maWxlLmFub255bW91cyI6IkIwQ0YxMkEzMjk0QzdDMzM1OTVERkIxRUI4MEI4M0VCOENCMUQxN0U5NTlGQ0RENkQ0ODEyRjU2OEZFNzUzQjIiLCJwcm9maWxlLmNvbW1vbmVyIjoiMDA3REQ4OEJBRTUwODc1QzczNzIyNEIyQkNCNkJGREQ0NzY3Qjc2OUE0NzRBMzlFMUZGQUNBNjZEOTU3OTQzMSIsInByb2ZpbGUuaGVhZG1hbiI6IjhBNkFDMEEzQUM5ODU3MUY1RUFBNDVBQkQ5N0JFNEVEODZGOTVCODQ5Nzc0RTZCRDE2Qzg2RDAzREI1NTM2QTEiLCJwcm9maWxlLm1lcmNoYW50IjoiNzZCQjdEQkNDNTgyNDU2QzFDQzlDMTBGMjc3RDBBNjdBQThGN0NGNTQyM0VCRjNGOEZFMkM0NzQ1OUFDRTE2RiIsInByb2ZpbGUubm9ibGUiOiIwRkRDMjdDQjE5QjA0OEVBODQ1ODNGNTdGM0EzNDU0OERFMTgxOUUxNzgxMjI4NDAxNDNFQkEwOTNBNEE5RjdCIiwicHJvZmlsZS5ub2JsZV9oaWdoX3N0ZXdhcmQiOiI1QkJBRTk3MUU1NjQxRjVEODg5REU5MkIzQTBFODI0MkEwM0YxMDJBNzREMjA4MTFDQ0JDQTg2QTMwODQ5M0RDIiwicHJvZmlsZS5ub3RhYmxlIjoiQzI2MjJDN0JGRTBFQ0UxNkMyOEJFREM2Q0Y2N0IwMzIzRDNCRTc5RjU1MzE1QUQxMkRBOUQ4OUY1ODc1MTFENiIsInByb2ZpbGUucmFuc29tX2Jyb2tlciI6IkI3RTNCMjNERDhEOTVGOEFDMEFBRjA1QTdENzlGQ0M2RkUwQTNEMzlDNDMxQkQ4NjE3RDA0RDAwNkJDRTVBREEiLCJwcm9maWxlLnNvbGRpZXIiOiIzQzlDRjc3RUExNkZFRTBBODIzQzc1QkM3OEE3OTVGNDA0NzIxMzZDMzhBNEQzRjIyNzNBRTc4OTlFQzUwQTc2IiwicHJvZmlsZS50YXZlcm5rZWVwZXIiOiI0NTc5MUVGM0I4MEU2RkQ5MDkyNTIzRTlCMDE0OUQ4Qzc3MUY5M0E3MTFEMjhFOUU5NTdEMkY1REI3ODgyMjY5IiwicHJvZmlsZS50b3duc2ZvbGsiOiI2QTI1QTQyMjczRDU3MjZGQkI2QUI5M0NDQTYwNTI5RkY5NUFGMzU3QkVBREE0MDI3QzJCMDNDRkM2MEFDMTY1IiwicHJvZmlsZS52aWxsYWdlciI6IjQxNDZGNjM5ODgxNjNCRjk5NEQxN0ZCNTlDMkM4ODg0N0Y4Rjc5NTU2QzhGN0IxQ0I0Nzc5Q0FGQjkyMDBDMTUifX0=",
+      "raw_projection_json": "{\u0022profile_version\u0022:\u00221.0.0\u0022,\u0022referral_version\u0022:\u00221.0.0\u0022,\u0022profile_hash\u0022:\u0022F5243B24E9A644A452D0C07B758CD8D2540DD4E9AE3207CD2BA65CD64406243B\u0022,\u0022referral_hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022,\u0022profiles_in_input_order\u0022:[\u0022profile.villager\u0022,\u0022profile.townsfolk\u0022,\u0022profile.commoner\u0022,\u0022profile.headman\u0022,\u0022profile.notable\u0022,\u0022profile.merchant\u0022,\u0022profile.tavernkeeper\u0022,\u0022profile.ransom_broker\u0022,\u0022profile.soldier\u0022,\u0022profile.noble\u0022,\u0022profile.noble_high_steward\u0022,\u0022profile.anonymous\u0022],\u0022referrals_in_input_order\u0022:[\u0022referral.notary_merchant\u0022,\u0022referral.ransom_broker\u0022,\u0022referral.tavernkeeper\u0022,\u0022referral.headman\u0022],\u0022profile_parents\u0022:{\u0022profile.anonymous\u0022:null,\u0022profile.commoner\u0022:null,\u0022profile.headman\u0022:\u0022profile.notable\u0022,\u0022profile.merchant\u0022:\u0022profile.townsfolk\u0022,\u0022profile.noble\u0022:\u0022profile.notable\u0022,\u0022profile.noble_high_steward\u0022:\u0022profile.noble\u0022,\u0022profile.notable\u0022:\u0022profile.commoner\u0022,\u0022profile.ransom_broker\u0022:\u0022profile.merchant\u0022,\u0022profile.soldier\u0022:\u0022profile.commoner\u0022,\u0022profile.tavernkeeper\u0022:\u0022profile.townsfolk\u0022,\u0022profile.townsfolk\u0022:\u0022profile.commoner\u0022,\u0022profile.villager\u0022:\u0022profile.commoner\u0022},\u0022publicly_askable_referrals\u0022:[\u0022referral.headman\u0022,\u0022referral.notary_merchant\u0022,\u0022referral.ransom_broker\u0022,\u0022referral.tavernkeeper\u0022],\u0022profile_object_hashes\u0022:{\u0022profile.anonymous\u0022:\u0022B0CF12A3294C7C33595DFB1EB80B83EB8CB1D17E959FCDD6D4812F568FE753B2\u0022,\u0022profile.commoner\u0022:\u0022007DD88BAE50875C737224B2BCB6BFDD4767B769A474A39E1FFACA66D9579431\u0022,\u0022profile.headman\u0022:\u00228A6AC0A3AC98571F5EAA45ABD97BE4ED86F95B849774E6BD16C86D03DB5536A1\u0022,\u0022profile.merchant\u0022:\u002276BB7DBCC582456C1CC9C10F277D0A67AA8F7CF5423EBF3F8FE2C47459ACE16F\u0022,\u0022profile.noble\u0022:\u00220FDC27CB19B048EA84583F57F3A34548DE1819E178122840143EBA093A4A9F7B\u0022,\u0022profile.noble_high_steward\u0022:\u00225BBAE971E5641F5D889DE92B3A0E8242A03F102A74D20811CCBCA86A308493DC\u0022,\u0022profile.notable\u0022:\u0022C2622C7BFE0ECE16C28BEDC6CF67B0323D3BE79F55315AD12DA9D89F587511D6\u0022,\u0022profile.ransom_broker\u0022:\u0022B7E3B23DD8D95F8AC0AAF05A7D79FCC6FE0A3D39C431BD8617D04D006BCE5ADA\u0022,\u0022profile.soldier\u0022:\u00223C9CF77EA16FEE0A823C75BC78A795F40472136C38A4D3F2273AE7899EC50A76\u0022,\u0022profile.tavernkeeper\u0022:\u002245791EF3B80E6FD9092523E9B0149D8C771F93A711D28E9E957D2F5DB7882269\u0022,\u0022profile.townsfolk\u0022:\u00226A25A42273D5726FBB6AB93CCA60529FF95AF357BEADA4027C2B03CFC60AC165\u0022,\u0022profile.villager\u0022:\u00224146F63988163BF994D17FB59C2C88847F8F79556C8F7B1CB4779CAFB9200C15\u0022}}",
+      "canonical_hash": "9D1ADB573A6924286045611761646015C21B93B278B228D37E22B1521654AD28",
+      "diagnostics": [],
+      "read_registry_files": [],
+      "missing_file_case": false
+    },
+    "unknown_parent": {
+      "input_files": [
+        {
+          "path": "schema/profile-registry.v1.json",
+          "exists": true,
+          "sha256": "816750AF0EA0509D925F40B4DF18E921FB5EA07B3BEEF9C6C288C836345B7A32"
+        },
+        {
+          "path": "schema/referral-registry.v1.json",
+          "exists": true,
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "schema/profile-registry.v1.schema.json",
+          "exists": true,
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "schema/referral-registry.v1.schema.json",
+          "exists": true,
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        }
+      ],
+      "projection": {
+        "profile_version": "1.0.0",
+        "referral_version": "1.0.0",
+        "profile_hash": "816750AF0EA0509D925F40B4DF18E921FB5EA07B3BEEF9C6C288C836345B7A32",
+        "referral_hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD",
+        "profiles_in_input_order": [
+          "profile.villager",
+          "profile.townsfolk",
+          "profile.commoner",
+          "profile.headman",
+          "profile.notable",
+          "profile.merchant",
+          "profile.tavernkeeper",
+          "profile.ransom_broker",
+          "profile.soldier",
+          "profile.noble",
+          "profile.noble_high_steward",
+          "profile.anonymous",
+          "profile.test_unknown"
+        ],
+        "referrals_in_input_order": [
+          "referral.notary_merchant",
+          "referral.ransom_broker",
+          "referral.tavernkeeper",
+          "referral.headman"
+        ],
+        "profile_parents": {
+          "profile.anonymous": null,
+          "profile.commoner": null,
+          "profile.headman": "profile.notable",
+          "profile.merchant": "profile.townsfolk",
+          "profile.noble": "profile.notable",
+          "profile.noble_high_steward": "profile.noble",
+          "profile.notable": "profile.commoner",
+          "profile.ransom_broker": "profile.merchant",
+          "profile.soldier": "profile.commoner",
+          "profile.tavernkeeper": "profile.townsfolk",
+          "profile.test_unknown": "profile.missing",
+          "profile.townsfolk": "profile.commoner",
+          "profile.villager": "profile.commoner"
+        },
+        "publicly_askable_referrals": [
+          "referral.headman",
+          "referral.notary_merchant",
+          "referral.ransom_broker",
+          "referral.tavernkeeper"
+        ],
+        "profile_object_hashes": {
+          "profile.anonymous": "B0CF12A3294C7C33595DFB1EB80B83EB8CB1D17E959FCDD6D4812F568FE753B2",
+          "profile.commoner": "007DD88BAE50875C737224B2BCB6BFDD4767B769A474A39E1FFACA66D9579431",
+          "profile.headman": "8A6AC0A3AC98571F5EAA45ABD97BE4ED86F95B849774E6BD16C86D03DB5536A1",
+          "profile.merchant": "76BB7DBCC582456C1CC9C10F277D0A67AA8F7CF5423EBF3F8FE2C47459ACE16F",
+          "profile.noble": "0FDC27CB19B048EA84583F57F3A34548DE1819E178122840143EBA093A4A9F7B",
+          "profile.noble_high_steward": "5BBAE971E5641F5D889DE92B3A0E8242A03F102A74D20811CCBCA86A308493DC",
+          "profile.notable": "C2622C7BFE0ECE16C28BEDC6CF67B0323D3BE79F55315AD12DA9D89F587511D6",
+          "profile.ransom_broker": "B7E3B23DD8D95F8AC0AAF05A7D79FCC6FE0A3D39C431BD8617D04D006BCE5ADA",
+          "profile.soldier": "3C9CF77EA16FEE0A823C75BC78A795F40472136C38A4D3F2273AE7899EC50A76",
+          "profile.tavernkeeper": "45791EF3B80E6FD9092523E9B0149D8C771F93A711D28E9E957D2F5DB7882269",
+          "profile.test_unknown": "C52916561B00C5EF748EC572765E9E4246DCB73D78FE58E0D231AD2D846A05FC",
+          "profile.townsfolk": "6A25A42273D5726FBB6AB93CCA60529FF95AF357BEADA4027C2B03CFC60AC165",
+          "profile.villager": "4146F63988163BF994D17FB59C2C88847F8F79556C8F7B1CB4779CAFB9200C15"
+        }
+      },
+      "raw_projection_utf8_sha256": "CEDC37976E61746E26F6C4060001EC92EE0F6432CF7F78DDB33511228FADED95",
+      "raw_projection_base64": "eyJwcm9maWxlX3ZlcnNpb24iOiIxLjAuMCIsInJlZmVycmFsX3ZlcnNpb24iOiIxLjAuMCIsInByb2ZpbGVfaGFzaCI6IjgxNjc1MEFGMEVBMDUwOUQ5MjVGNDBCNERGMThFOTIxRkI1RUEwN0IzQkVFRjlDNkMyODhDODM2MzQ1QjdBMzIiLCJyZWZlcnJhbF9oYXNoIjoiNkUxNzA3NUYxRjk2N0JFMjhDMDQzNzEyMURCNTBFNUMzMDgwOUM0RUZDM0QyQTVGMjJBRDlCQjBCM0I5MjZDRCIsInByb2ZpbGVzX2luX2lucHV0X29yZGVyIjpbInByb2ZpbGUudmlsbGFnZXIiLCJwcm9maWxlLnRvd25zZm9sayIsInByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlLmhlYWRtYW4iLCJwcm9maWxlLm5vdGFibGUiLCJwcm9maWxlLm1lcmNoYW50IiwicHJvZmlsZS50YXZlcm5rZWVwZXIiLCJwcm9maWxlLnJhbnNvbV9icm9rZXIiLCJwcm9maWxlLnNvbGRpZXIiLCJwcm9maWxlLm5vYmxlIiwicHJvZmlsZS5ub2JsZV9oaWdoX3N0ZXdhcmQiLCJwcm9maWxlLmFub255bW91cyIsInByb2ZpbGUudGVzdF91bmtub3duIl0sInJlZmVycmFsc19pbl9pbnB1dF9vcmRlciI6WyJyZWZlcnJhbC5ub3RhcnlfbWVyY2hhbnQiLCJyZWZlcnJhbC5yYW5zb21fYnJva2VyIiwicmVmZXJyYWwudGF2ZXJua2VlcGVyIiwicmVmZXJyYWwuaGVhZG1hbiJdLCJwcm9maWxlX3BhcmVudHMiOnsicHJvZmlsZS5hbm9ueW1vdXMiOm51bGwsInByb2ZpbGUuY29tbW9uZXIiOm51bGwsInByb2ZpbGUuaGVhZG1hbiI6InByb2ZpbGUubm90YWJsZSIsInByb2ZpbGUubWVyY2hhbnQiOiJwcm9maWxlLnRvd25zZm9sayIsInByb2ZpbGUubm9ibGUiOiJwcm9maWxlLm5vdGFibGUiLCJwcm9maWxlLm5vYmxlX2hpZ2hfc3Rld2FyZCI6InByb2ZpbGUubm9ibGUiLCJwcm9maWxlLm5vdGFibGUiOiJwcm9maWxlLmNvbW1vbmVyIiwicHJvZmlsZS5yYW5zb21fYnJva2VyIjoicHJvZmlsZS5tZXJjaGFudCIsInByb2ZpbGUuc29sZGllciI6InByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlLnRhdmVybmtlZXBlciI6InByb2ZpbGUudG93bnNmb2xrIiwicHJvZmlsZS50ZXN0X3Vua25vd24iOiJwcm9maWxlLm1pc3NpbmciLCJwcm9maWxlLnRvd25zZm9sayI6InByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlLnZpbGxhZ2VyIjoicHJvZmlsZS5jb21tb25lciJ9LCJwdWJsaWNseV9hc2thYmxlX3JlZmVycmFscyI6WyJyZWZlcnJhbC5oZWFkbWFuIiwicmVmZXJyYWwubm90YXJ5X21lcmNoYW50IiwicmVmZXJyYWwucmFuc29tX2Jyb2tlciIsInJlZmVycmFsLnRhdmVybmtlZXBlciJdLCJwcm9maWxlX29iamVjdF9oYXNoZXMiOnsicHJvZmlsZS5hbm9ueW1vdXMiOiJCMENGMTJBMzI5NEM3QzMzNTk1REZCMUVCODBCODNFQjhDQjFEMTdFOTU5RkNERDZENDgxMkY1NjhGRTc1M0IyIiwicHJvZmlsZS5jb21tb25lciI6IjAwN0REODhCQUU1MDg3NUM3MzcyMjRCMkJDQjZCRkRENDc2N0I3NjlBNDc0QTM5RTFGRkFDQTY2RDk1Nzk0MzEiLCJwcm9maWxlLmhlYWRtYW4iOiI4QTZBQzBBM0FDOTg1NzFGNUVBQTQ1QUJEOTdCRTRFRDg2Rjk1Qjg0OTc3NEU2QkQxNkM4NkQwM0RCNTUzNkExIiwicHJvZmlsZS5tZXJjaGFudCI6Ijc2QkI3REJDQzU4MjQ1NkMxQ0M5QzEwRjI3N0QwQTY3QUE4RjdDRjU0MjNFQkYzRjhGRTJDNDc0NTlBQ0UxNkYiLCJwcm9maWxlLm5vYmxlIjoiMEZEQzI3Q0IxOUIwNDhFQTg0NTgzRjU3RjNBMzQ1NDhERTE4MTlFMTc4MTIyODQwMTQzRUJBMDkzQTRBOUY3QiIsInByb2ZpbGUubm9ibGVfaGlnaF9zdGV3YXJkIjoiNUJCQUU5NzFFNTY0MUY1RDg4OURFOTJCM0EwRTgyNDJBMDNGMTAyQTc0RDIwODExQ0NCQ0E4NkEzMDg0OTNEQyIsInByb2ZpbGUubm90YWJsZSI6IkMyNjIyQzdCRkUwRUNFMTZDMjhCRURDNkNGNjdCMDMyM0QzQkU3OUY1NTMxNUFEMTJEQTlEODlGNTg3NTExRDYiLCJwcm9maWxlLnJhbnNvbV9icm9rZXIiOiJCN0UzQjIzREQ4RDk1RjhBQzBBQUYwNUE3RDc5RkNDNkZFMEEzRDM5QzQzMUJEODYxN0QwNEQwMDZCQ0U1QURBIiwicHJvZmlsZS5zb2xkaWVyIjoiM0M5Q0Y3N0VBMTZGRUUwQTgyM0M3NUJDNzhBNzk1RjQwNDcyMTM2QzM4QTREM0YyMjczQUU3ODk5RUM1MEE3NiIsInByb2ZpbGUudGF2ZXJua2VlcGVyIjoiNDU3OTFFRjNCODBFNkZEOTA5MjUyM0U5QjAxNDlEOEM3NzFGOTNBNzExRDI4RTlFOTU3RDJGNURCNzg4MjI2OSIsInByb2ZpbGUudGVzdF91bmtub3duIjoiQzUyOTE2NTYxQjAwQzVFRjc0OEVDNTcyNzY1RTlFNDI0NkRDQjczRDc4RkU1OEUwRDIzMUFEMkQ4NDZBMDVGQyIsInByb2ZpbGUudG93bnNmb2xrIjoiNkEyNUE0MjI3M0Q1NzI2RkJCNkFCOTNDQ0E2MDUyOUZGOTVBRjM1N0JFQURBNDAyN0MyQjAzQ0ZDNjBBQzE2NSIsInByb2ZpbGUudmlsbGFnZXIiOiI0MTQ2RjYzOTg4MTYzQkY5OTREMTdGQjU5QzJDODg4NDdGOEY3OTU1NkM4RjdCMUNCNDc3OUNBRkI5MjAwQzE1In19",
+      "raw_projection_json": "{\u0022profile_version\u0022:\u00221.0.0\u0022,\u0022referral_version\u0022:\u00221.0.0\u0022,\u0022profile_hash\u0022:\u0022816750AF0EA0509D925F40B4DF18E921FB5EA07B3BEEF9C6C288C836345B7A32\u0022,\u0022referral_hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022,\u0022profiles_in_input_order\u0022:[\u0022profile.villager\u0022,\u0022profile.townsfolk\u0022,\u0022profile.commoner\u0022,\u0022profile.headman\u0022,\u0022profile.notable\u0022,\u0022profile.merchant\u0022,\u0022profile.tavernkeeper\u0022,\u0022profile.ransom_broker\u0022,\u0022profile.soldier\u0022,\u0022profile.noble\u0022,\u0022profile.noble_high_steward\u0022,\u0022profile.anonymous\u0022,\u0022profile.test_unknown\u0022],\u0022referrals_in_input_order\u0022:[\u0022referral.notary_merchant\u0022,\u0022referral.ransom_broker\u0022,\u0022referral.tavernkeeper\u0022,\u0022referral.headman\u0022],\u0022profile_parents\u0022:{\u0022profile.anonymous\u0022:null,\u0022profile.commoner\u0022:null,\u0022profile.headman\u0022:\u0022profile.notable\u0022,\u0022profile.merchant\u0022:\u0022profile.townsfolk\u0022,\u0022profile.noble\u0022:\u0022profile.notable\u0022,\u0022profile.noble_high_steward\u0022:\u0022profile.noble\u0022,\u0022profile.notable\u0022:\u0022profile.commoner\u0022,\u0022profile.ransom_broker\u0022:\u0022profile.merchant\u0022,\u0022profile.soldier\u0022:\u0022profile.commoner\u0022,\u0022profile.tavernkeeper\u0022:\u0022profile.townsfolk\u0022,\u0022profile.test_unknown\u0022:\u0022profile.missing\u0022,\u0022profile.townsfolk\u0022:\u0022profile.commoner\u0022,\u0022profile.villager\u0022:\u0022profile.commoner\u0022},\u0022publicly_askable_referrals\u0022:[\u0022referral.headman\u0022,\u0022referral.notary_merchant\u0022,\u0022referral.ransom_broker\u0022,\u0022referral.tavernkeeper\u0022],\u0022profile_object_hashes\u0022:{\u0022profile.anonymous\u0022:\u0022B0CF12A3294C7C33595DFB1EB80B83EB8CB1D17E959FCDD6D4812F568FE753B2\u0022,\u0022profile.commoner\u0022:\u0022007DD88BAE50875C737224B2BCB6BFDD4767B769A474A39E1FFACA66D9579431\u0022,\u0022profile.headman\u0022:\u00228A6AC0A3AC98571F5EAA45ABD97BE4ED86F95B849774E6BD16C86D03DB5536A1\u0022,\u0022profile.merchant\u0022:\u002276BB7DBCC582456C1CC9C10F277D0A67AA8F7CF5423EBF3F8FE2C47459ACE16F\u0022,\u0022profile.noble\u0022:\u00220FDC27CB19B048EA84583F57F3A34548DE1819E178122840143EBA093A4A9F7B\u0022,\u0022profile.noble_high_steward\u0022:\u00225BBAE971E5641F5D889DE92B3A0E8242A03F102A74D20811CCBCA86A308493DC\u0022,\u0022profile.notable\u0022:\u0022C2622C7BFE0ECE16C28BEDC6CF67B0323D3BE79F55315AD12DA9D89F587511D6\u0022,\u0022profile.ransom_broker\u0022:\u0022B7E3B23DD8D95F8AC0AAF05A7D79FCC6FE0A3D39C431BD8617D04D006BCE5ADA\u0022,\u0022profile.soldier\u0022:\u00223C9CF77EA16FEE0A823C75BC78A795F40472136C38A4D3F2273AE7899EC50A76\u0022,\u0022profile.tavernkeeper\u0022:\u002245791EF3B80E6FD9092523E9B0149D8C771F93A711D28E9E957D2F5DB7882269\u0022,\u0022profile.test_unknown\u0022:\u0022C52916561B00C5EF748EC572765E9E4246DCB73D78FE58E0D231AD2D846A05FC\u0022,\u0022profile.townsfolk\u0022:\u00226A25A42273D5726FBB6AB93CCA60529FF95AF357BEADA4027C2B03CFC60AC165\u0022,\u0022profile.villager\u0022:\u00224146F63988163BF994D17FB59C2C88847F8F79556C8F7B1CB4779CAFB9200C15\u0022}}",
+      "canonical_hash": "7F1520CE7D9834DAC93BBCC55956876CFE19EEB5D2476D0400E494BCEDBA93C9",
+      "diagnostics": [
+        {
+          "code": "WB-PROFILE-001",
+          "severity": "error",
+          "message": "profile \u7EE7\u627F\u94FE\u5305\u542B\u672A\u77E5 profile\u3002",
+          "path": "profile.test_unknown",
+          "detail": "profile.missing"
+        }
+      ],
+      "read_registry_files": [],
+      "missing_file_case": false
+    },
+    "parent_cycle": {
+      "input_files": [
+        {
+          "path": "schema/profile-registry.v1.json",
+          "exists": true,
+          "sha256": "5EF53217348D97A128919DD9AF1DEDABD12CFA2B8C7CE73BBF8219ADF7399078"
+        },
+        {
+          "path": "schema/referral-registry.v1.json",
+          "exists": true,
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "schema/profile-registry.v1.schema.json",
+          "exists": true,
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "schema/referral-registry.v1.schema.json",
+          "exists": true,
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        }
+      ],
+      "projection": {
+        "profile_version": "1.0.0",
+        "referral_version": "1.0.0",
+        "profile_hash": "5EF53217348D97A128919DD9AF1DEDABD12CFA2B8C7CE73BBF8219ADF7399078",
+        "referral_hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD",
+        "profiles_in_input_order": [
+          "profile.villager",
+          "profile.townsfolk",
+          "profile.commoner",
+          "profile.headman",
+          "profile.notable",
+          "profile.merchant",
+          "profile.tavernkeeper",
+          "profile.ransom_broker",
+          "profile.soldier",
+          "profile.noble",
+          "profile.noble_high_steward",
+          "profile.anonymous",
+          "profile.cycle_a",
+          "profile.cycle_b"
+        ],
+        "referrals_in_input_order": [
+          "referral.notary_merchant",
+          "referral.ransom_broker",
+          "referral.tavernkeeper",
+          "referral.headman"
+        ],
+        "profile_parents": {
+          "profile.anonymous": null,
+          "profile.commoner": null,
+          "profile.cycle_a": "profile.cycle_b",
+          "profile.cycle_b": "profile.cycle_a",
+          "profile.headman": "profile.notable",
+          "profile.merchant": "profile.townsfolk",
+          "profile.noble": "profile.notable",
+          "profile.noble_high_steward": "profile.noble",
+          "profile.notable": "profile.commoner",
+          "profile.ransom_broker": "profile.merchant",
+          "profile.soldier": "profile.commoner",
+          "profile.tavernkeeper": "profile.townsfolk",
+          "profile.townsfolk": "profile.commoner",
+          "profile.villager": "profile.commoner"
+        },
+        "publicly_askable_referrals": [
+          "referral.headman",
+          "referral.notary_merchant",
+          "referral.ransom_broker",
+          "referral.tavernkeeper"
+        ],
+        "profile_object_hashes": {
+          "profile.anonymous": "B0CF12A3294C7C33595DFB1EB80B83EB8CB1D17E959FCDD6D4812F568FE753B2",
+          "profile.commoner": "007DD88BAE50875C737224B2BCB6BFDD4767B769A474A39E1FFACA66D9579431",
+          "profile.cycle_a": "65F190602C0FC8288EDA67D2D3D9ADA081435FCC481C51B08AAC5D92BBB04517",
+          "profile.cycle_b": "C387BE64DBE8A0F1B0FE83DDE57DD681C1E31405CC594A8C309DDF1E7EA31B1F",
+          "profile.headman": "8A6AC0A3AC98571F5EAA45ABD97BE4ED86F95B849774E6BD16C86D03DB5536A1",
+          "profile.merchant": "76BB7DBCC582456C1CC9C10F277D0A67AA8F7CF5423EBF3F8FE2C47459ACE16F",
+          "profile.noble": "0FDC27CB19B048EA84583F57F3A34548DE1819E178122840143EBA093A4A9F7B",
+          "profile.noble_high_steward": "5BBAE971E5641F5D889DE92B3A0E8242A03F102A74D20811CCBCA86A308493DC",
+          "profile.notable": "C2622C7BFE0ECE16C28BEDC6CF67B0323D3BE79F55315AD12DA9D89F587511D6",
+          "profile.ransom_broker": "B7E3B23DD8D95F8AC0AAF05A7D79FCC6FE0A3D39C431BD8617D04D006BCE5ADA",
+          "profile.soldier": "3C9CF77EA16FEE0A823C75BC78A795F40472136C38A4D3F2273AE7899EC50A76",
+          "profile.tavernkeeper": "45791EF3B80E6FD9092523E9B0149D8C771F93A711D28E9E957D2F5DB7882269",
+          "profile.townsfolk": "6A25A42273D5726FBB6AB93CCA60529FF95AF357BEADA4027C2B03CFC60AC165",
+          "profile.villager": "4146F63988163BF994D17FB59C2C88847F8F79556C8F7B1CB4779CAFB9200C15"
+        }
+      },
+      "raw_projection_utf8_sha256": "60554DE1794610BA01D23FCC56844038CA6926BF1B7B8F1968C428B21FCC9D1A",
+      "raw_projection_base64": "eyJwcm9maWxlX3ZlcnNpb24iOiIxLjAuMCIsInJlZmVycmFsX3ZlcnNpb24iOiIxLjAuMCIsInByb2ZpbGVfaGFzaCI6IjVFRjUzMjE3MzQ4RDk3QTEyODkxOUREOUFGMURFREFCRDEyQ0ZBMkI4QzdDRTczQkJGODIxOUFERjczOTkwNzgiLCJyZWZlcnJhbF9oYXNoIjoiNkUxNzA3NUYxRjk2N0JFMjhDMDQzNzEyMURCNTBFNUMzMDgwOUM0RUZDM0QyQTVGMjJBRDlCQjBCM0I5MjZDRCIsInByb2ZpbGVzX2luX2lucHV0X29yZGVyIjpbInByb2ZpbGUudmlsbGFnZXIiLCJwcm9maWxlLnRvd25zZm9sayIsInByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlLmhlYWRtYW4iLCJwcm9maWxlLm5vdGFibGUiLCJwcm9maWxlLm1lcmNoYW50IiwicHJvZmlsZS50YXZlcm5rZWVwZXIiLCJwcm9maWxlLnJhbnNvbV9icm9rZXIiLCJwcm9maWxlLnNvbGRpZXIiLCJwcm9maWxlLm5vYmxlIiwicHJvZmlsZS5ub2JsZV9oaWdoX3N0ZXdhcmQiLCJwcm9maWxlLmFub255bW91cyIsInByb2ZpbGUuY3ljbGVfYSIsInByb2ZpbGUuY3ljbGVfYiJdLCJyZWZlcnJhbHNfaW5faW5wdXRfb3JkZXIiOlsicmVmZXJyYWwubm90YXJ5X21lcmNoYW50IiwicmVmZXJyYWwucmFuc29tX2Jyb2tlciIsInJlZmVycmFsLnRhdmVybmtlZXBlciIsInJlZmVycmFsLmhlYWRtYW4iXSwicHJvZmlsZV9wYXJlbnRzIjp7InByb2ZpbGUuYW5vbnltb3VzIjpudWxsLCJwcm9maWxlLmNvbW1vbmVyIjpudWxsLCJwcm9maWxlLmN5Y2xlX2EiOiJwcm9maWxlLmN5Y2xlX2IiLCJwcm9maWxlLmN5Y2xlX2IiOiJwcm9maWxlLmN5Y2xlX2EiLCJwcm9maWxlLmhlYWRtYW4iOiJwcm9maWxlLm5vdGFibGUiLCJwcm9maWxlLm1lcmNoYW50IjoicHJvZmlsZS50b3duc2ZvbGsiLCJwcm9maWxlLm5vYmxlIjoicHJvZmlsZS5ub3RhYmxlIiwicHJvZmlsZS5ub2JsZV9oaWdoX3N0ZXdhcmQiOiJwcm9maWxlLm5vYmxlIiwicHJvZmlsZS5ub3RhYmxlIjoicHJvZmlsZS5jb21tb25lciIsInByb2ZpbGUucmFuc29tX2Jyb2tlciI6InByb2ZpbGUubWVyY2hhbnQiLCJwcm9maWxlLnNvbGRpZXIiOiJwcm9maWxlLmNvbW1vbmVyIiwicHJvZmlsZS50YXZlcm5rZWVwZXIiOiJwcm9maWxlLnRvd25zZm9sayIsInByb2ZpbGUudG93bnNmb2xrIjoicHJvZmlsZS5jb21tb25lciIsInByb2ZpbGUudmlsbGFnZXIiOiJwcm9maWxlLmNvbW1vbmVyIn0sInB1YmxpY2x5X2Fza2FibGVfcmVmZXJyYWxzIjpbInJlZmVycmFsLmhlYWRtYW4iLCJyZWZlcnJhbC5ub3RhcnlfbWVyY2hhbnQiLCJyZWZlcnJhbC5yYW5zb21fYnJva2VyIiwicmVmZXJyYWwudGF2ZXJua2VlcGVyIl0sInByb2ZpbGVfb2JqZWN0X2hhc2hlcyI6eyJwcm9maWxlLmFub255bW91cyI6IkIwQ0YxMkEzMjk0QzdDMzM1OTVERkIxRUI4MEI4M0VCOENCMUQxN0U5NTlGQ0RENkQ0ODEyRjU2OEZFNzUzQjIiLCJwcm9maWxlLmNvbW1vbmVyIjoiMDA3REQ4OEJBRTUwODc1QzczNzIyNEIyQkNCNkJGREQ0NzY3Qjc2OUE0NzRBMzlFMUZGQUNBNjZEOTU3OTQzMSIsInByb2ZpbGUuY3ljbGVfYSI6IjY1RjE5MDYwMkMwRkM4Mjg4RURBNjdEMkQzRDlBREEwODE0MzVGQ0M0ODFDNTFCMDhBQUM1RDkyQkJCMDQ1MTciLCJwcm9maWxlLmN5Y2xlX2IiOiJDMzg3QkU2NERCRThBMEYxQjBGRTgzRERFNTdERDY4MUMxRTMxNDA1Q0M1OTRBOEMzMDlEREYxRTdFQTMxQjFGIiwicHJvZmlsZS5oZWFkbWFuIjoiOEE2QUMwQTNBQzk4NTcxRjVFQUE0NUFCRDk3QkU0RUQ4NkY5NUI4NDk3NzRFNkJEMTZDODZEMDNEQjU1MzZBMSIsInByb2ZpbGUubWVyY2hhbnQiOiI3NkJCN0RCQ0M1ODI0NTZDMUNDOUMxMEYyNzdEMEE2N0FBOEY3Q0Y1NDIzRUJGM0Y4RkUyQzQ3NDU5QUNFMTZGIiwicHJvZmlsZS5ub2JsZSI6IjBGREMyN0NCMTlCMDQ4RUE4NDU4M0Y1N0YzQTM0NTQ4REUxODE5RTE3ODEyMjg0MDE0M0VCQTA5M0E0QTlGN0IiLCJwcm9maWxlLm5vYmxlX2hpZ2hfc3Rld2FyZCI6IjVCQkFFOTcxRTU2NDFGNUQ4ODlERTkyQjNBMEU4MjQyQTAzRjEwMkE3NEQyMDgxMUNDQkNBODZBMzA4NDkzREMiLCJwcm9maWxlLm5vdGFibGUiOiJDMjYyMkM3QkZFMEVDRTE2QzI4QkVEQzZDRjY3QjAzMjNEM0JFNzlGNTUzMTVBRDEyREE5RDg5RjU4NzUxMUQ2IiwicHJvZmlsZS5yYW5zb21fYnJva2VyIjoiQjdFM0IyM0REOEQ5NUY4QUMwQUFGMDVBN0Q3OUZDQzZGRTBBM0QzOUM0MzFCRDg2MTdEMDREMDA2QkNFNUFEQSIsInByb2ZpbGUuc29sZGllciI6IjNDOUNGNzdFQTE2RkVFMEE4MjNDNzVCQzc4QTc5NUY0MDQ3MjEzNkMzOEE0RDNGMjI3M0FFNzg5OUVDNTBBNzYiLCJwcm9maWxlLnRhdmVybmtlZXBlciI6IjQ1NzkxRUYzQjgwRTZGRDkwOTI1MjNFOUIwMTQ5RDhDNzcxRjkzQTcxMUQyOEU5RTk1N0QyRjVEQjc4ODIyNjkiLCJwcm9maWxlLnRvd25zZm9sayI6IjZBMjVBNDIyNzNENTcyNkZCQjZBQjkzQ0NBNjA1MjlGRjk1QUYzNTdCRUFEQTQwMjdDMkIwM0NGQzYwQUMxNjUiLCJwcm9maWxlLnZpbGxhZ2VyIjoiNDE0NkY2Mzk4ODE2M0JGOTk0RDE3RkI1OUMyQzg4ODQ3RjhGNzk1NTZDOEY3QjFDQjQ3NzlDQUZCOTIwMEMxNSJ9fQ==",
+      "raw_projection_json": "{\u0022profile_version\u0022:\u00221.0.0\u0022,\u0022referral_version\u0022:\u00221.0.0\u0022,\u0022profile_hash\u0022:\u00225EF53217348D97A128919DD9AF1DEDABD12CFA2B8C7CE73BBF8219ADF7399078\u0022,\u0022referral_hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022,\u0022profiles_in_input_order\u0022:[\u0022profile.villager\u0022,\u0022profile.townsfolk\u0022,\u0022profile.commoner\u0022,\u0022profile.headman\u0022,\u0022profile.notable\u0022,\u0022profile.merchant\u0022,\u0022profile.tavernkeeper\u0022,\u0022profile.ransom_broker\u0022,\u0022profile.soldier\u0022,\u0022profile.noble\u0022,\u0022profile.noble_high_steward\u0022,\u0022profile.anonymous\u0022,\u0022profile.cycle_a\u0022,\u0022profile.cycle_b\u0022],\u0022referrals_in_input_order\u0022:[\u0022referral.notary_merchant\u0022,\u0022referral.ransom_broker\u0022,\u0022referral.tavernkeeper\u0022,\u0022referral.headman\u0022],\u0022profile_parents\u0022:{\u0022profile.anonymous\u0022:null,\u0022profile.commoner\u0022:null,\u0022profile.cycle_a\u0022:\u0022profile.cycle_b\u0022,\u0022profile.cycle_b\u0022:\u0022profile.cycle_a\u0022,\u0022profile.headman\u0022:\u0022profile.notable\u0022,\u0022profile.merchant\u0022:\u0022profile.townsfolk\u0022,\u0022profile.noble\u0022:\u0022profile.notable\u0022,\u0022profile.noble_high_steward\u0022:\u0022profile.noble\u0022,\u0022profile.notable\u0022:\u0022profile.commoner\u0022,\u0022profile.ransom_broker\u0022:\u0022profile.merchant\u0022,\u0022profile.soldier\u0022:\u0022profile.commoner\u0022,\u0022profile.tavernkeeper\u0022:\u0022profile.townsfolk\u0022,\u0022profile.townsfolk\u0022:\u0022profile.commoner\u0022,\u0022profile.villager\u0022:\u0022profile.commoner\u0022},\u0022publicly_askable_referrals\u0022:[\u0022referral.headman\u0022,\u0022referral.notary_merchant\u0022,\u0022referral.ransom_broker\u0022,\u0022referral.tavernkeeper\u0022],\u0022profile_object_hashes\u0022:{\u0022profile.anonymous\u0022:\u0022B0CF12A3294C7C33595DFB1EB80B83EB8CB1D17E959FCDD6D4812F568FE753B2\u0022,\u0022profile.commoner\u0022:\u0022007DD88BAE50875C737224B2BCB6BFDD4767B769A474A39E1FFACA66D9579431\u0022,\u0022profile.cycle_a\u0022:\u002265F190602C0FC8288EDA67D2D3D9ADA081435FCC481C51B08AAC5D92BBB04517\u0022,\u0022profile.cycle_b\u0022:\u0022C387BE64DBE8A0F1B0FE83DDE57DD681C1E31405CC594A8C309DDF1E7EA31B1F\u0022,\u0022profile.headman\u0022:\u00228A6AC0A3AC98571F5EAA45ABD97BE4ED86F95B849774E6BD16C86D03DB5536A1\u0022,\u0022profile.merchant\u0022:\u002276BB7DBCC582456C1CC9C10F277D0A67AA8F7CF5423EBF3F8FE2C47459ACE16F\u0022,\u0022profile.noble\u0022:\u00220FDC27CB19B048EA84583F57F3A34548DE1819E178122840143EBA093A4A9F7B\u0022,\u0022profile.noble_high_steward\u0022:\u00225BBAE971E5641F5D889DE92B3A0E8242A03F102A74D20811CCBCA86A308493DC\u0022,\u0022profile.notable\u0022:\u0022C2622C7BFE0ECE16C28BEDC6CF67B0323D3BE79F55315AD12DA9D89F587511D6\u0022,\u0022profile.ransom_broker\u0022:\u0022B7E3B23DD8D95F8AC0AAF05A7D79FCC6FE0A3D39C431BD8617D04D006BCE5ADA\u0022,\u0022profile.soldier\u0022:\u00223C9CF77EA16FEE0A823C75BC78A795F40472136C38A4D3F2273AE7899EC50A76\u0022,\u0022profile.tavernkeeper\u0022:\u002245791EF3B80E6FD9092523E9B0149D8C771F93A711D28E9E957D2F5DB7882269\u0022,\u0022profile.townsfolk\u0022:\u00226A25A42273D5726FBB6AB93CCA60529FF95AF357BEADA4027C2B03CFC60AC165\u0022,\u0022profile.villager\u0022:\u00224146F63988163BF994D17FB59C2C88847F8F79556C8F7B1CB4779CAFB9200C15\u0022}}",
+      "canonical_hash": "ED8CD6A6E8330B63FF25D10F8E391DD5E3B5CE0749A7A89D131B13F2F971B879",
+      "diagnostics": [
+        {
+          "code": "WB-PROFILE-001",
+          "severity": "error",
+          "message": "profile \u7EE7\u627F\u94FE\u5B58\u5728\u5FAA\u73AF\u3002",
+          "path": "profile.cycle_a",
+          "detail": "profile.cycle_a -\u003E profile.cycle_b"
+        },
+        {
+          "code": "WB-PROFILE-001",
+          "severity": "error",
+          "message": "profile \u7EE7\u627F\u94FE\u5B58\u5728\u5FAA\u73AF\u3002",
+          "path": "profile.cycle_b",
+          "detail": "profile.cycle_b -\u003E profile.cycle_a"
+        }
+      ],
+      "read_registry_files": [],
+      "missing_file_case": false
+    },
+    "schema_invalid": {
+      "input_files": [
+        {
+          "path": "schema/profile-registry.v1.json",
+          "exists": true,
+          "sha256": "1781DDE064EFD6CAC01E9AFA1CF7191DF5892C07B1B549D17FD33F7ABB9A5E0B"
+        },
+        {
+          "path": "schema/referral-registry.v1.json",
+          "exists": true,
+          "sha256": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD"
+        },
+        {
+          "path": "schema/profile-registry.v1.schema.json",
+          "exists": true,
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "schema/referral-registry.v1.schema.json",
+          "exists": true,
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        }
+      ],
+      "projection": {
+        "profile_version": "1.0.0",
+        "referral_version": "1.0.0",
+        "profile_hash": "1781DDE064EFD6CAC01E9AFA1CF7191DF5892C07B1B549D17FD33F7ABB9A5E0B",
+        "referral_hash": "6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD",
+        "profiles_in_input_order": [
+          "profile.villager",
+          "profile.townsfolk",
+          "profile.commoner",
+          "profile.headman",
+          "profile.notable",
+          "profile.merchant",
+          "profile.tavernkeeper",
+          "profile.ransom_broker",
+          "profile.soldier",
+          "profile.noble",
+          "profile.noble_high_steward",
+          "profile.anonymous",
+          "profile.schema_invalid"
+        ],
+        "referrals_in_input_order": [
+          "referral.notary_merchant",
+          "referral.ransom_broker",
+          "referral.tavernkeeper",
+          "referral.headman"
+        ],
+        "profile_parents": {
+          "profile.anonymous": null,
+          "profile.commoner": null,
+          "profile.headman": "profile.notable",
+          "profile.merchant": "profile.townsfolk",
+          "profile.noble": "profile.notable",
+          "profile.noble_high_steward": "profile.noble",
+          "profile.notable": "profile.commoner",
+          "profile.ransom_broker": "profile.merchant",
+          "profile.schema_invalid": "profile.missing",
+          "profile.soldier": "profile.commoner",
+          "profile.tavernkeeper": "profile.townsfolk",
+          "profile.townsfolk": "profile.commoner",
+          "profile.villager": "profile.commoner"
+        },
+        "publicly_askable_referrals": [
+          "referral.headman",
+          "referral.notary_merchant",
+          "referral.ransom_broker",
+          "referral.tavernkeeper"
+        ],
+        "profile_object_hashes": {
+          "profile.anonymous": "B0CF12A3294C7C33595DFB1EB80B83EB8CB1D17E959FCDD6D4812F568FE753B2",
+          "profile.commoner": "007DD88BAE50875C737224B2BCB6BFDD4767B769A474A39E1FFACA66D9579431",
+          "profile.headman": "8A6AC0A3AC98571F5EAA45ABD97BE4ED86F95B849774E6BD16C86D03DB5536A1",
+          "profile.merchant": "76BB7DBCC582456C1CC9C10F277D0A67AA8F7CF5423EBF3F8FE2C47459ACE16F",
+          "profile.noble": "0FDC27CB19B048EA84583F57F3A34548DE1819E178122840143EBA093A4A9F7B",
+          "profile.noble_high_steward": "5BBAE971E5641F5D889DE92B3A0E8242A03F102A74D20811CCBCA86A308493DC",
+          "profile.notable": "C2622C7BFE0ECE16C28BEDC6CF67B0323D3BE79F55315AD12DA9D89F587511D6",
+          "profile.ransom_broker": "B7E3B23DD8D95F8AC0AAF05A7D79FCC6FE0A3D39C431BD8617D04D006BCE5ADA",
+          "profile.schema_invalid": "9F1EF3F15128588364F7837657941BBDD87EE154FDF928CB21CEDBC3570DEE56",
+          "profile.soldier": "3C9CF77EA16FEE0A823C75BC78A795F40472136C38A4D3F2273AE7899EC50A76",
+          "profile.tavernkeeper": "45791EF3B80E6FD9092523E9B0149D8C771F93A711D28E9E957D2F5DB7882269",
+          "profile.townsfolk": "6A25A42273D5726FBB6AB93CCA60529FF95AF357BEADA4027C2B03CFC60AC165",
+          "profile.villager": "4146F63988163BF994D17FB59C2C88847F8F79556C8F7B1CB4779CAFB9200C15"
+        }
+      },
+      "raw_projection_utf8_sha256": "3BE1DBD681D8FAEDA47FE40A2C88C45514F422F1F674565D558F10A711CEB6E7",
+      "raw_projection_base64": "eyJwcm9maWxlX3ZlcnNpb24iOiIxLjAuMCIsInJlZmVycmFsX3ZlcnNpb24iOiIxLjAuMCIsInByb2ZpbGVfaGFzaCI6IjE3ODFEREUwNjRFRkQ2Q0FDMDFFOUFGQTFDRjcxOTFERjU4OTJDMDdCMUI1NDlEMTdGRDMzRjdBQkI5QTVFMEIiLCJyZWZlcnJhbF9oYXNoIjoiNkUxNzA3NUYxRjk2N0JFMjhDMDQzNzEyMURCNTBFNUMzMDgwOUM0RUZDM0QyQTVGMjJBRDlCQjBCM0I5MjZDRCIsInByb2ZpbGVzX2luX2lucHV0X29yZGVyIjpbInByb2ZpbGUudmlsbGFnZXIiLCJwcm9maWxlLnRvd25zZm9sayIsInByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlLmhlYWRtYW4iLCJwcm9maWxlLm5vdGFibGUiLCJwcm9maWxlLm1lcmNoYW50IiwicHJvZmlsZS50YXZlcm5rZWVwZXIiLCJwcm9maWxlLnJhbnNvbV9icm9rZXIiLCJwcm9maWxlLnNvbGRpZXIiLCJwcm9maWxlLm5vYmxlIiwicHJvZmlsZS5ub2JsZV9oaWdoX3N0ZXdhcmQiLCJwcm9maWxlLmFub255bW91cyIsInByb2ZpbGUuc2NoZW1hX2ludmFsaWQiXSwicmVmZXJyYWxzX2luX2lucHV0X29yZGVyIjpbInJlZmVycmFsLm5vdGFyeV9tZXJjaGFudCIsInJlZmVycmFsLnJhbnNvbV9icm9rZXIiLCJyZWZlcnJhbC50YXZlcm5rZWVwZXIiLCJyZWZlcnJhbC5oZWFkbWFuIl0sInByb2ZpbGVfcGFyZW50cyI6eyJwcm9maWxlLmFub255bW91cyI6bnVsbCwicHJvZmlsZS5jb21tb25lciI6bnVsbCwicHJvZmlsZS5oZWFkbWFuIjoicHJvZmlsZS5ub3RhYmxlIiwicHJvZmlsZS5tZXJjaGFudCI6InByb2ZpbGUudG93bnNmb2xrIiwicHJvZmlsZS5ub2JsZSI6InByb2ZpbGUubm90YWJsZSIsInByb2ZpbGUubm9ibGVfaGlnaF9zdGV3YXJkIjoicHJvZmlsZS5ub2JsZSIsInByb2ZpbGUubm90YWJsZSI6InByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlLnJhbnNvbV9icm9rZXIiOiJwcm9maWxlLm1lcmNoYW50IiwicHJvZmlsZS5zY2hlbWFfaW52YWxpZCI6InByb2ZpbGUubWlzc2luZyIsInByb2ZpbGUuc29sZGllciI6InByb2ZpbGUuY29tbW9uZXIiLCJwcm9maWxlLnRhdmVybmtlZXBlciI6InByb2ZpbGUudG93bnNmb2xrIiwicHJvZmlsZS50b3duc2ZvbGsiOiJwcm9maWxlLmNvbW1vbmVyIiwicHJvZmlsZS52aWxsYWdlciI6InByb2ZpbGUuY29tbW9uZXIifSwicHVibGljbHlfYXNrYWJsZV9yZWZlcnJhbHMiOlsicmVmZXJyYWwuaGVhZG1hbiIsInJlZmVycmFsLm5vdGFyeV9tZXJjaGFudCIsInJlZmVycmFsLnJhbnNvbV9icm9rZXIiLCJyZWZlcnJhbC50YXZlcm5rZWVwZXIiXSwicHJvZmlsZV9vYmplY3RfaGFzaGVzIjp7InByb2ZpbGUuYW5vbnltb3VzIjoiQjBDRjEyQTMyOTRDN0MzMzU5NURGQjFFQjgwQjgzRUI4Q0IxRDE3RTk1OUZDREQ2RDQ4MTJGNTY4RkU3NTNCMiIsInByb2ZpbGUuY29tbW9uZXIiOiIwMDdERDg4QkFFNTA4NzVDNzM3MjI0QjJCQ0I2QkZERDQ3NjdCNzY5QTQ3NEEzOUUxRkZBQ0E2NkQ5NTc5NDMxIiwicHJvZmlsZS5oZWFkbWFuIjoiOEE2QUMwQTNBQzk4NTcxRjVFQUE0NUFCRDk3QkU0RUQ4NkY5NUI4NDk3NzRFNkJEMTZDODZEMDNEQjU1MzZBMSIsInByb2ZpbGUubWVyY2hhbnQiOiI3NkJCN0RCQ0M1ODI0NTZDMUNDOUMxMEYyNzdEMEE2N0FBOEY3Q0Y1NDIzRUJGM0Y4RkUyQzQ3NDU5QUNFMTZGIiwicHJvZmlsZS5ub2JsZSI6IjBGREMyN0NCMTlCMDQ4RUE4NDU4M0Y1N0YzQTM0NTQ4REUxODE5RTE3ODEyMjg0MDE0M0VCQTA5M0E0QTlGN0IiLCJwcm9maWxlLm5vYmxlX2hpZ2hfc3Rld2FyZCI6IjVCQkFFOTcxRTU2NDFGNUQ4ODlERTkyQjNBMEU4MjQyQTAzRjEwMkE3NEQyMDgxMUNDQkNBODZBMzA4NDkzREMiLCJwcm9maWxlLm5vdGFibGUiOiJDMjYyMkM3QkZFMEVDRTE2QzI4QkVEQzZDRjY3QjAzMjNEM0JFNzlGNTUzMTVBRDEyREE5RDg5RjU4NzUxMUQ2IiwicHJvZmlsZS5yYW5zb21fYnJva2VyIjoiQjdFM0IyM0REOEQ5NUY4QUMwQUFGMDVBN0Q3OUZDQzZGRTBBM0QzOUM0MzFCRDg2MTdEMDREMDA2QkNFNUFEQSIsInByb2ZpbGUuc2NoZW1hX2ludmFsaWQiOiI5RjFFRjNGMTUxMjg1ODgzNjRGNzgzNzY1Nzk0MUJCREQ4N0VFMTU0RkRGOTI4Q0IyMUNFREJDMzU3MERFRTU2IiwicHJvZmlsZS5zb2xkaWVyIjoiM0M5Q0Y3N0VBMTZGRUUwQTgyM0M3NUJDNzhBNzk1RjQwNDcyMTM2QzM4QTREM0YyMjczQUU3ODk5RUM1MEE3NiIsInByb2ZpbGUudGF2ZXJua2VlcGVyIjoiNDU3OTFFRjNCODBFNkZEOTA5MjUyM0U5QjAxNDlEOEM3NzFGOTNBNzExRDI4RTlFOTU3RDJGNURCNzg4MjI2OSIsInByb2ZpbGUudG93bnNmb2xrIjoiNkEyNUE0MjI3M0Q1NzI2RkJCNkFCOTNDQ0E2MDUyOUZGOTVBRjM1N0JFQURBNDAyN0MyQjAzQ0ZDNjBBQzE2NSIsInByb2ZpbGUudmlsbGFnZXIiOiI0MTQ2RjYzOTg4MTYzQkY5OTREMTdGQjU5QzJDODg4NDdGOEY3OTU1NkM4RjdCMUNCNDc3OUNBRkI5MjAwQzE1In19",
+      "raw_projection_json": "{\u0022profile_version\u0022:\u00221.0.0\u0022,\u0022referral_version\u0022:\u00221.0.0\u0022,\u0022profile_hash\u0022:\u00221781DDE064EFD6CAC01E9AFA1CF7191DF5892C07B1B549D17FD33F7ABB9A5E0B\u0022,\u0022referral_hash\u0022:\u00226E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD\u0022,\u0022profiles_in_input_order\u0022:[\u0022profile.villager\u0022,\u0022profile.townsfolk\u0022,\u0022profile.commoner\u0022,\u0022profile.headman\u0022,\u0022profile.notable\u0022,\u0022profile.merchant\u0022,\u0022profile.tavernkeeper\u0022,\u0022profile.ransom_broker\u0022,\u0022profile.soldier\u0022,\u0022profile.noble\u0022,\u0022profile.noble_high_steward\u0022,\u0022profile.anonymous\u0022,\u0022profile.schema_invalid\u0022],\u0022referrals_in_input_order\u0022:[\u0022referral.notary_merchant\u0022,\u0022referral.ransom_broker\u0022,\u0022referral.tavernkeeper\u0022,\u0022referral.headman\u0022],\u0022profile_parents\u0022:{\u0022profile.anonymous\u0022:null,\u0022profile.commoner\u0022:null,\u0022profile.headman\u0022:\u0022profile.notable\u0022,\u0022profile.merchant\u0022:\u0022profile.townsfolk\u0022,\u0022profile.noble\u0022:\u0022profile.notable\u0022,\u0022profile.noble_high_steward\u0022:\u0022profile.noble\u0022,\u0022profile.notable\u0022:\u0022profile.commoner\u0022,\u0022profile.ransom_broker\u0022:\u0022profile.merchant\u0022,\u0022profile.schema_invalid\u0022:\u0022profile.missing\u0022,\u0022profile.soldier\u0022:\u0022profile.commoner\u0022,\u0022profile.tavernkeeper\u0022:\u0022profile.townsfolk\u0022,\u0022profile.townsfolk\u0022:\u0022profile.commoner\u0022,\u0022profile.villager\u0022:\u0022profile.commoner\u0022},\u0022publicly_askable_referrals\u0022:[\u0022referral.headman\u0022,\u0022referral.notary_merchant\u0022,\u0022referral.ransom_broker\u0022,\u0022referral.tavernkeeper\u0022],\u0022profile_object_hashes\u0022:{\u0022profile.anonymous\u0022:\u0022B0CF12A3294C7C33595DFB1EB80B83EB8CB1D17E959FCDD6D4812F568FE753B2\u0022,\u0022profile.commoner\u0022:\u0022007DD88BAE50875C737224B2BCB6BFDD4767B769A474A39E1FFACA66D9579431\u0022,\u0022profile.headman\u0022:\u00228A6AC0A3AC98571F5EAA45ABD97BE4ED86F95B849774E6BD16C86D03DB5536A1\u0022,\u0022profile.merchant\u0022:\u002276BB7DBCC582456C1CC9C10F277D0A67AA8F7CF5423EBF3F8FE2C47459ACE16F\u0022,\u0022profile.noble\u0022:\u00220FDC27CB19B048EA84583F57F3A34548DE1819E178122840143EBA093A4A9F7B\u0022,\u0022profile.noble_high_steward\u0022:\u00225BBAE971E5641F5D889DE92B3A0E8242A03F102A74D20811CCBCA86A308493DC\u0022,\u0022profile.notable\u0022:\u0022C2622C7BFE0ECE16C28BEDC6CF67B0323D3BE79F55315AD12DA9D89F587511D6\u0022,\u0022profile.ransom_broker\u0022:\u0022B7E3B23DD8D95F8AC0AAF05A7D79FCC6FE0A3D39C431BD8617D04D006BCE5ADA\u0022,\u0022profile.schema_invalid\u0022:\u00229F1EF3F15128588364F7837657941BBDD87EE154FDF928CB21CEDBC3570DEE56\u0022,\u0022profile.soldier\u0022:\u00223C9CF77EA16FEE0A823C75BC78A795F40472136C38A4D3F2273AE7899EC50A76\u0022,\u0022profile.tavernkeeper\u0022:\u002245791EF3B80E6FD9092523E9B0149D8C771F93A711D28E9E957D2F5DB7882269\u0022,\u0022profile.townsfolk\u0022:\u00226A25A42273D5726FBB6AB93CCA60529FF95AF357BEADA4027C2B03CFC60AC165\u0022,\u0022profile.villager\u0022:\u00224146F63988163BF994D17FB59C2C88847F8F79556C8F7B1CB4779CAFB9200C15\u0022}}",
+      "canonical_hash": "D0671E4BB449002EAFC80411076A45E091CDC726DD316BA266E527F3EA75FDC3",
+      "diagnostics": [
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "",
+          "detail": "Schema evaluation failed."
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "",
+          "detail": "properties:Some properties did not match the required schema: [\u0022profiles\u0022]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/profiles",
+          "detail": "items:Some items do not match the required schema; failing indexes: [12]"
+        },
+        {
+          "code": "WB-SCHEMA-001",
+          "severity": "error",
+          "message": "Schema \u5B50\u9879\u6821\u9A8C\u5931\u8D25\u3002",
+          "path": "/profiles/12",
+          "detail": "required:Required properties [\u0022display\u0022] are not present"
+        },
+        {
+          "code": "WB-PROFILE-001",
+          "severity": "error",
+          "message": "profile \u7EE7\u627F\u94FE\u5305\u542B\u672A\u77E5 profile\u3002",
+          "path": "profile.schema_invalid",
+          "detail": "profile.missing"
+        }
+      ],
+      "read_registry_files": [],
+      "missing_file_case": false
+    },
+    "missing_registry": {
+      "input_files": [
+        {
+          "path": "schema/profile-registry.v1.json",
+          "exists": true,
+          "sha256": "309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5"
+        },
+        {
+          "path": "schema/referral-registry.v1.json",
+          "exists": false
+        },
+        {
+          "path": "schema/profile-registry.v1.schema.json",
+          "exists": true,
+          "sha256": "8FEEC96815135DA5BE6E480ECAC98CA076374C4BAFD740472D42E129993E4175"
+        },
+        {
+          "path": "schema/referral-registry.v1.schema.json",
+          "exists": true,
+          "sha256": "1A64B30DBD90BEECEF7B9B7084B91DDE6FB110A4D703EFE1D3FD68810E5CAB2B"
+        }
+      ],
+      "projection": {
+        "profile_version": "",
+        "referral_version": "",
+        "profile_hash": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+        "referral_hash": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+        "profiles_in_input_order": [],
+        "referrals_in_input_order": [],
+        "profile_parents": {},
+        "publicly_askable_referrals": [],
+        "profile_object_hashes": {}
+      },
+      "raw_projection_utf8_sha256": "B4539D5CB919BFBEFA0202CBF4998A6FC8BC80CF3FB77CC2EA588DD70E431734",
+      "raw_projection_base64": "eyJwcm9maWxlX3ZlcnNpb24iOiIiLCJyZWZlcnJhbF92ZXJzaW9uIjoiIiwicHJvZmlsZV9oYXNoIjoiRTNCMEM0NDI5OEZDMUMxNDlBRkJGNEM4OTk2RkI5MjQyN0FFNDFFNDY0OUI5MzRDQTQ5NTk5MUI3ODUyQjg1NSIsInJlZmVycmFsX2hhc2giOiJFM0IwQzQ0Mjk4RkMxQzE0OUFGQkY0Qzg5OTZGQjkyNDI3QUU0MUU0NjQ5QjkzNENBNDk1OTkxQjc4NTJCODU1IiwicHJvZmlsZXNfaW5faW5wdXRfb3JkZXIiOltdLCJyZWZlcnJhbHNfaW5faW5wdXRfb3JkZXIiOltdLCJwcm9maWxlX3BhcmVudHMiOnt9LCJwdWJsaWNseV9hc2thYmxlX3JlZmVycmFscyI6W10sInByb2ZpbGVfb2JqZWN0X2hhc2hlcyI6e319",
+      "raw_projection_json": "{\u0022profile_version\u0022:\u0022\u0022,\u0022referral_version\u0022:\u0022\u0022,\u0022profile_hash\u0022:\u0022E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855\u0022,\u0022referral_hash\u0022:\u0022E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855\u0022,\u0022profiles_in_input_order\u0022:[],\u0022referrals_in_input_order\u0022:[],\u0022profile_parents\u0022:{},\u0022publicly_askable_referrals\u0022:[],\u0022profile_object_hashes\u0022:{}}",
+      "canonical_hash": "B56C4B0717D2297D389566804DDA8D1CAD67874BC5C1AB85FCB5D8478DBB499D",
+      "diagnostics": [
+        {
+          "code": "WB-REGISTRY-000",
+          "severity": "error",
+          "message": "profile/referral registry \u7F3A\u5931\u3002",
+          "path": "C:\\Users\\26811\\AppData\\Local\\Temp\\awake-a3-4-registry-capture\\missing_registry\\schema",
+          "detail": null
+        }
+      ],
+      "read_registry_files": [],
+      "missing_file_case": true
+    }
+  }
+}

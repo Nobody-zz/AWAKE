@@ -1,0 +1,39 @@
+{
+  "runtime.json": {
+    "schemaVersion": "awake.worldbook.v2",
+    "packageId": "calradia:base",
+    "version": "1.0.0",
+    "worldId": "calradia:world:calradia",
+    "revision": 1,
+    "entries": [
+      {
+        "id": "calradia:entry:grain_tax",
+        "domain": "economy",
+        "title": { "zh-CN": "粮税" },
+        "summary": { "zh-CN": "村镇领主征收的谷物税。" },
+        "keywords": ["粮税", "谷物", "征收"],
+        "expressions": [
+          {
+            "id": "calradia:expression:grain_tax_summary",
+            "detail": "summary",
+            "text": { "zh-CN": "农民只知道收税的时节与大致份额。" },
+            "grants": [{ "identity_id": "calradia:identity:farmer", "scope": "local", "min_detail": "summary" }],
+            "denies": []
+          }
+        ]
+      }
+    ],
+    "identities": [
+      { "id": "calradia:identity:farmer", "displayName": { "zh-CN": "农民" }, "basePriority": 10 }
+    ],
+    "referrals": [],
+    "indexes": {
+      "keywordToEntryIds": { "粮税": ["calradia:entry:grain_tax"] },
+      "domainToEntryIds": { "economy": ["calradia:entry:grain_tax"] }
+    }
+  },
+  "index.json": {
+    "schemaVersion": "awake.worldbook.index.v1",
+    "entries": ["calradia:entry:grain_tax"]
+  }
+}

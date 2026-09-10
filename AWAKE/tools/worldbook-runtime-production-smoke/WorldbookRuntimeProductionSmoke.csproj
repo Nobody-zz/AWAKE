@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>Awake.WorldbookRuntimeProductionSmoke</RootNamespace>
+    <AssemblyName>Awake.WorldbookRuntimeProductionSmoke</AssemblyName>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>10.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>$(MSBuildThisFileDirectory)artifacts\bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>$(MSBuildThisFileDirectory)artifacts\obj\$(Configuration)\</IntermediateOutputPath>
+    <GamePath Condition="'$(GamePath)' == ''">D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord</GamePath>
+    <MarcusFrameworkPath Condition="'$(MarcusFrameworkPath)' == ''">$(MSBuildThisFileDirectory)..\..\framework\MarcusAwakeFramework\_build_out\Release</MarcusFrameworkPath>
+    <MarcusTransportPath Condition="'$(MarcusTransportPath)' == ''">$(MSBuildThisFileDirectory)..\..\framework\MarcusAwakeTransport\_build_out\Release</MarcusTransportPath>
+    <AssemblySearchPaths>{HintPathFromItem};{CandidateAssemblyFiles};{TargetFrameworkDirectory};{RawFileName}</AssemblySearchPaths>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\src\**\*.cs" Link="AwakeSource\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ProductionSmokeAdapters.cs" />
+    <Compile Include="ProductionSmokeTests.cs" />
+    <Compile Include="ProductionSmokeTestsMore.cs" />
+    <Compile Include="ProductionSmokeTestsBoundary.cs" />
+    <Compile Include="ProductionSmokeData.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MarcusAwakeFramework" HintPath="$(MarcusFrameworkPath)\MarcusAwakeFramework.dll" Private="true" />
+    <Reference Include="MarcusAwakeTransport" HintPath="$(MarcusTransportPath)\MarcusAwakeTransport.dll" Private="true" />
+    <Reference Include="netstandard" HintPath="C:\Windows\Microsoft.Net\assembly\GAC_MSIL\netstandard\v4.0_2.0.0.0__cc7b13ffcd2ddd51\netstandard.dll" Private="false" />
+    <Reference Include="System.ValueTuple" HintPath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Facades\System.ValueTuple.dll" Private="false" />
+    <Reference Include="Newtonsoft.Json" HintPath="$(GamePath)\bin\Win64_Shipping_Client\Newtonsoft.Json.dll" Private="true" />
+    <Reference Include="MCMv5" HintPath="$(GamePath)\Modules\Bannerlord.MBOptionScreen\bin\Win64_Shipping_Client\MCMv5.dll" Private="true" />
+    <Reference Include="TaleWorlds.CampaignSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.CampaignSystem.dll" Private="true" />
+    <Reference Include="TaleWorlds.CampaignSystem.ViewModelCollection" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.CampaignSystem.ViewModelCollection.dll" Private="true" />
+    <Reference Include="TaleWorlds.Core" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Core.dll" Private="true" />
+    <Reference Include="TaleWorlds.Core.ViewModelCollection" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Core.ViewModelCollection.dll" Private="true" />
+    <Reference Include="TaleWorlds.DotNet" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.DotNet.dll" Private="true" />
+    <Reference Include="TaleWorlds.Engine" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Engine.dll" Private="true" />
+    <Reference Include="TaleWorlds.Engine.GauntletUI" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Engine.GauntletUI.dll" Private="true" />
+    <Reference Include="TaleWorlds.GauntletUI" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.GauntletUI.dll" Private="true" />
+    <Reference Include="TaleWorlds.InputSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.InputSystem.dll" Private="true" />
+    <Reference Include="TaleWorlds.Library" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Library.dll" Private="true" />
+    <Reference Include="TaleWorlds.Localization" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Localization.dll" Private="true" />
+    <Reference Include="TaleWorlds.MountAndBlade" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.MountAndBlade.dll" Private="true" />
+    <Reference Include="TaleWorlds.ObjectSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.ObjectSystem.dll" Private="true" />
+    <Reference Include="TaleWorlds.ScreenSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.ScreenSystem.dll" Private="true" />
+    <Reference Include="TaleWorlds.TwoDimension" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.TwoDimension.dll" Private="true" />
+  </ItemGroup>
+
+  <Target Name="ValidateProductionSmokeInputs" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(MarcusFrameworkPath)\MarcusAwakeFramework.dll')" Text="Missing built MarcusAwakeFramework.dll: $(MarcusFrameworkPath)\MarcusAwakeFramework.dll" />
+    <Error Condition="!Exists('$(MarcusTransportPath)\MarcusAwakeTransport.dll')" Text="Missing built MarcusAwakeTransport.dll: $(MarcusTransportPath)\MarcusAwakeTransport.dll" />
+    <Error Condition="!Exists('$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.MountAndBlade.dll')" Text="GamePath does not contain TaleWorlds.MountAndBlade.dll: $(GamePath)" />
+  </Target>
+</Project>

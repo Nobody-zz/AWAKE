@@ -1,10 +1,16 @@
-﻿using System;
-using MarcusAIFramework.Api;
+using System;
+using MarcusAwakeFramework.Api;
 
 namespace Awake;
 
 internal static class AiTaskConstants
 {
+	internal static bool IsPromptRegistrationUsable(OperationResult<bool> result)
+	{
+		return (result.IsSuccess && result.Value)
+			|| StringComparer.Ordinal.Equals(result.Error?.Code, "prompt.revision_conflict");
+	}
+
     // Route IDs must match "<ExtensionId>.route.<name>"; owner is AWAKE.
     internal const string RouteNpcDialogue = "AWAKE.route.npc.dialogue";
     internal const string RoutePreprocess = "AWAKE.route.preprocess";
@@ -31,6 +37,8 @@ internal static class AiTaskConstants
     internal const string DialogueQueueNamespace = "awake.dialogue.queue";
     internal const string DialogueQueueKey = "campaign.dialogue.queue.v1";
     internal const string InteractionsNamespace = "awake.interactions";
+    internal const string InteractionsRecoveryIndexKey = "awake.interactions.recovery_index.v1";
+    internal const string PersonaStateNamespace = "awake.persona.state";
 
     internal const string TranscriptAppendCommandId = "awake.transcript.append.v1";
     internal const string TranscriptPinCommandId = "awake.transcript.pin.v1";
@@ -42,6 +50,10 @@ internal static class AiTaskConstants
     internal const string PromiseRequestCommandId = "awake.action.promise_request.v1";
     internal const string PromiseUpdateCommandId = "awake.action.promise_update.v1";
     internal const string GiveGoldCommandId = "awake.action.give_gold.v1";
+    internal const string GiveGoldPendingCommandId = "awake.action.give_gold.pending.v1";
+    internal const string GiveGoldCompleteCommandId = "awake.action.give_gold.complete.v1";
+    internal const string GiveGoldCompensatedCommandId = "awake.action.give_gold.compensated.v1";
+    internal const string InteractionsIndexUpdateCommandId = "awake.interactions.index.update.v1";
 
     internal const string RelationshipDeltaCommandId = "awake.relationship.delta.v1";
     internal const string WorldEffectRecordCommandId = "awake.world.effect.record.v1";
@@ -109,7 +121,8 @@ internal static class AiTaskConstants
         AuditNamespace,
         OnboardingNamespace,
         DialogueQueueNamespace,
-        InteractionsNamespace
+        InteractionsNamespace,
+        PersonaStateNamespace
     };
 
     internal static string RoutePermission(string routeId) => "ai.route.invoke:" + routeId;

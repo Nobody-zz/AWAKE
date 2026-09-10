@@ -71,7 +71,12 @@ internal static class NpcDialogueOutputValidator
         }
         string mood = moodValue.Value<string>();
 
-        if (root["effects"] is not JArray effects || effects.Count > 8)
+        JArray effects = root["effects"] as JArray;
+        if (effects == null)
+        {
+            effects = new JArray();
+        }
+        if (effects.Count > 8)
         {
             error = "missing_effects";
             return false;
@@ -164,8 +169,8 @@ internal static class NpcDialogueStateFormatter
         {
             parts.Add("关系尚未记录");
         }
-        if (body != null) parts.Add("身体状态由内容包提供");
-        if (estrus != null) parts.Add("发情状态由内容包提供");
+        if (body != null) parts.Add("附加状态由内容包提供");
+        if (estrus != null) parts.Add("附加状态由内容包提供");
         return string.Join("；", parts);
     }
 

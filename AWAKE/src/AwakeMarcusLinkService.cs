@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 
 namespace Awake;
 
@@ -12,49 +12,26 @@ internal static class AwakeMarcusLinkService
     {
         try
         {
-            bool connected = FrameworkHostLocator.TryGetHost(out IMarcusAiFrameworkHost host);
-            if (!connected || host == null)
+            IMarcusAwakeFrameworkHost fullHost = FrameworkHostLocator.Resolve();
+            IMarcusAiFrameworkHost host = fullHost as IMarcusAiFrameworkHost;
+            if (fullHost == null || host == null)
             {
                 return AwakeLocalization.Resolve("awake.status.degraded_offline", "Offline (degraded)");
             }
 
             int declared = AiTaskConstants.AllRouteIds.Length;
-
-            List<string> health = new List<string>();
-            try
-            {
-                if (host.Diagnostics != null)
-                {
-                    IReadOnlyList<HealthComponent> components = host.Diagnostics.GetHealth().Components;
-                    if (components != null)
-                    {
-                        foreach (HealthComponent component in components)
-                        {
-                            if (component == null) continue;
-                            string summary = string.IsNullOrWhiteSpace(component.Summary)
-                                ? component.Level.ToString()
-                                : component.Summary;
-                            health.Add(component.Id + ":" + summary);
-                            if (health.Count >= 6) break;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AwakeLog.Write("marcus_link_health_error error=" + ex.Message);
-            }
-
-            string companion = AwakeLocalization.Resolve(
-                "awake.status.companion",
-                "Companion: {STATE}",
-                new Dictionary<string, string>
-                {
-                    ["STATE"] = AwakeLocalization.Resolve("awake.status.connected", "Connected")
-                });
+            RuntimeServiceStatus runtime = fullHost.Runtime?.Status;
+            string runtimeText = AwakeLocalization.Resolve(
+                "awake.status.runtime",
+                "Runtime Service: {STATE}",
+                new Dictionary<string, string> { ["STATE"] = DescribeRuntimeState(runtime?.State) });
+            string providerText = AwakeLocalization.Resolve(
+                "awake.status.provider",
+                "Provider: {STATE}",
+                new Dictionary<string, string> { ["STATE"] = AwakeProviderConfiguration.Status });
             string route = AwakeLocalization.Resolve(
                 "awake.status.route",
-                "Route: {ROUTE}",
+                "AI routes: {ROUTE}",
                 new Dictionary<string, string> { ["ROUTE"] = declared.ToString() });
             string cloud = AwakeLocalization.Resolve(
                 "awake.status.cloud",
@@ -64,10 +41,9 @@ internal static class AwakeMarcusLinkService
                     ["STATE"] = CloudExportPolicy.DescribeAllowed(AwakeSettings.Current)
                 });
             string session = host.CurrentSession == null
-                ? "session:not_ready"
-                : "session:ready";
-            List<string> parts = new List<string> { companion, route, session, cloud };
-            if (health.Count > 0) parts.Add("health:" + string.Join(",", health));
+                ? AwakeLocalization.Resolve("awake.status.session_not_ready", "Campaign session: not ready")
+                : AwakeLocalization.Resolve("awake.status.session_ready", "Campaign session: ready");
+            List<string> parts = new List<string> { runtimeText, providerText, route, session, cloud };
             string result = string.Join(" | ", parts);
             return result;
         }
@@ -82,17 +58,30 @@ internal static class AwakeMarcusLinkService
     {
         try
         {
-            AwakeFeedback.Show(AwakeLocalization.Resolve(
-                "awake.mcm.actions.sync_routes_result",
-                "路由由框架自动同步；已打开 AI 设置台。"));
-            FrameworkConsole.OpenAiSetup();
+            if (cancellationToken.IsCancellationRequested) return;
+            OperationResult<bool> result = await AwakeProviderConfiguration.ApplyProviderConfigurationAsync(cancellationToken).ConfigureAwait(false);
+            AwakeUiDispatcher.Enqueue(() =>
+            {
+                if (result.IsSuccess)
+                {
+                    AwakeFeedback.Show(AwakeLocalization.Resolve(
+                        "awake.mcm.actions.sync_routes_result",
+                        "AWAKE 路由已由内置 Runtime 完成同步。"));
+                }
+                else
+                {
+                    AwakeFeedback.ShowError(result.Error?.SafeFallback ?? AwakeLocalization.Resolve(
+                        "awake.feedback.marcus_sync_failed",
+                        "路由同步失败，请在 AWAKE MCM 中检查 AI 链路配置。"));
+                }
+            });
         }
         catch (Exception ex)
         {
             AwakeLog.Write("marcus_link_sync_error error=" + ex.Message);
-            AwakeFeedback.ShowError(AwakeLocalization.Resolve(
+            AwakeUiDispatcher.Enqueue(() => AwakeFeedback.ShowError(AwakeLocalization.Resolve(
                 "awake.feedback.marcus_sync_failed",
-                "路由同步失败，请打开 AI 设置台。"));
+                "路由同步失败，请在 AWAKE MCM 中检查 AI 链路配置。")));
         }
     }
 
@@ -100,14 +89,16 @@ internal static class AwakeMarcusLinkService
     {
         try
         {
-            FrameworkConsole.OpenAiSetup();
+            AwakeFeedback.Show(AwakeLocalization.Resolve(
+                "awake.feedback.open_mcm",
+                "请打开 MCM → AWAKE → AI 链路，在游戏内完成 AI 配置。"));
         }
         catch (Exception ex)
         {
             AwakeLog.Write("marcus_link_open_setup_error error=" + ex.Message);
             AwakeFeedback.ShowError(AwakeLocalization.Resolve(
                 "awake.feedback.marcus_open_setup_failed",
-                "无法打开 AI 设置台。"));
+                "无法显示 AI 配置指引，请直接打开 AWAKE MCM。"));
         }
     }
 
@@ -115,14 +106,35 @@ internal static class AwakeMarcusLinkService
     {
         try
         {
-            FrameworkConsole.OpenDiagnostics();
+            AwakeFeedback.Show(AwakeLocalization.Resolve(
+                "awake.feedback.open_diagnostics",
+                "开发者诊断已归 AWAKE Developer Check 与本地日志；不会在游戏内显示完整日志。"));
         }
         catch (Exception ex)
         {
             AwakeLog.Write("marcus_link_open_diagnostics_error error=" + ex.Message);
             AwakeFeedback.ShowError(AwakeLocalization.Resolve(
                 "awake.feedback.marcus_open_diagnostics_failed",
-                "无法打开诊断台。"));
+                "无法显示诊断说明，请查看本地 AWAKE 日志。"));
+        }
+    }
+
+    private static string DescribeRuntimeState(RuntimeServiceState? state)
+    {
+        switch (state)
+        {
+            case RuntimeServiceState.Ready:
+                return AwakeLocalization.Resolve("awake.status.ready", "已就绪");
+            case RuntimeServiceState.Starting:
+                return AwakeLocalization.Resolve("awake.status.starting", "启动中");
+            case RuntimeServiceState.Draining:
+                return AwakeLocalization.Resolve("awake.status.draining", "关闭中");
+            case RuntimeServiceState.RecoveryRequired:
+                return AwakeLocalization.Resolve("awake.status.recovery_required", "需要恢复");
+            case RuntimeServiceState.Stopped:
+                return AwakeLocalization.Resolve("awake.status.stopped", "未运行");
+            default:
+                return AwakeLocalization.Resolve("awake.status.unknown", "未知");
         }
     }
 }

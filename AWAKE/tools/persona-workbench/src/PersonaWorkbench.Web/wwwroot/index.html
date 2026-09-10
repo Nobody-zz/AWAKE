@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Persona Workbench · Free Preview</title>
+  <link rel="stylesheet" href="/site.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="workspace">
+    <header class="hero">
+      <p class="eyebrow">FREE PREVIEW · LOCAL ONLY</p>
+      <h1>Persona Workbench</h1>
+      <p>把角色描述整理成可读、可检验的 Persona DSL。AI 生成必须由你显式设置本次会话密钥并主动触发。</p>
+    </header>
+    <section class="panel batch-panel" aria-labelledby="batch-heading">
+      <div class="section-heading">
+        <p class="step">推荐入口 · AI 批量制作</p>
+        <h2 id="batch-heading">把资料直接变成一批可审阅 Persona</h2>
+      </div>
+      <p class="helper">你只需要提供资料。工作台先在本机整理和分段，不会因为这一步消耗 AI；确认分段后，再一次性顺序生成多条 Persona 草稿。</p>
+      <div class="material-input-grid">
+        <label>粘贴资料<textarea id="material-paste" rows="7" maxlength="524288" placeholder="可粘贴人物档案、设定文档或多段参考资料。段落之间留空行，标题单独一行，分段会更准确。"></textarea></label>
+        <label>选择资料文件<input id="material-files" type="file" multiple accept=".txt,.md,text/plain,text/markdown"><span class="field-hint">支持 .txt 和 .md；文件只在本机读取，不会自动上传。</span></label>
+      </div>
+      <div class="actions">
+        <button id="read-materials" type="button">1. 读取资料</button>
+        <button id="segment-materials" type="button" class="secondary" disabled>2. 整理资料并分段</button>
+      </div>
+      <p id="material-status" class="status" aria-live="polite">尚未读取资料。</p>
+      <div id="material-sources" class="material-sources" aria-live="polite"></div>
+      <div id="material-segments" class="material-segments" aria-live="polite"></div>
+      <div class="actions batch-actions">
+        <button id="generate-batch" type="button" disabled>3. 下一步：进入 AI 批量制作</button>
+        <button id="cancel-batch" type="button" class="secondary" disabled>停止批量制作</button>
+        <button id="download-batch" type="button" class="secondary" disabled>导出批量结果</button>
+      </div>
+      <p id="batch-status" class="status" aria-live="polite">完成分段后，这里会显示下一步。</p>
+      <div id="batch-results" class="batch-results" aria-live="polite"></div>
+    </section>
+    <section class="panel prompt-panel" aria-labelledby="prompt-heading">
+      <div class="section-heading">
+        <p class="step">1 · 先描述人物（推荐入口）</p>
+        <h2 id="prompt-heading">自由描述与人物扩展</h2>
+      </div>
+      <p class="helper">输入几句你对人物的印象即可。AI 只负责扩充成可编辑人物文本，不会自动填写标签、轴值、身份、审核状态或 Persona 文件。</p>
+      <p class="helper">扩充结果会先留在独立文本框中。只有你主动点击采用后，才会填入核心人格；生成 DSL 仍是后续独立步骤。</p>
+      <form id="provider-form" autocomplete="off">
+        <label>人物描述<textarea id="provider-prompt" rows="5" maxlength="4000" placeholder="例如：一个出身贵族、谨慎克制、野心很强，却不愿在公开场合表态的女性领主。"></textarea></label>
+        <details id="expansion-guidance" class="expansion-guidance">
+          <summary>扩写方向与关键词（可选）</summary>
+          <div class="advanced-settings">
+            <p class="helper">留空时按均衡方式扩写。这里仅控制本次扩写重心，不会自动写入 Persona、DSL 或角色事实。</p>
+            <label>扩写方向<textarea id="expansion-direction" rows="3" maxlength="2048" placeholder="例如：重点深化警惕、失去家园后的反应，以及亲密关系中的反差。"></textarea></label>
+            <label>扩写重心<select id="expansion-focus-preset"><option value="balanced">均衡</option><option value="personality_behavior">人格与行为</option><option value="identity_experience">身份与经历</option><option value="relationship_emotion">关系与情感</option><option value="appearance_expression">外貌与表现</option></select></label>
+            <div class="keyword-editor">
+              <label>重点关键词<input id="expansion-keyword-input" maxlength="64" placeholder="输入一个关键词"></label>
+              <label>关注程度<select id="expansion-keyword-weight"><option value="light">轻微</option><option value="medium" selected>适中</option><option value="strong">重点</option></select></label>
+              <button id="add-expansion-keyword" type="button" class="secondary">添加关键词</button>
+            </div>
+            <div id="expansion-keyword-list" class="keyword-list" aria-live="polite"></div>
+            <label>避免或弱化<textarea id="expansion-avoid-topics" rows="2" maxlength="1024" placeholder="用逗号或换行分隔，例如：外貌、战斗细节"></textarea></label>
+          </div>
+        </details>
+        <div class="actions">
+          <button id="generate-provider-draft" type="button">识别并生成 Persona</button>
+          <button id="expand-description" type="button" class="secondary">扩展人物形象（可选）</button>
+          <button id="cancel-provider-draft" type="button" class="secondary" disabled>取消扩展</button>
+        </div>
+        <label>AI 扩充结果（可编辑，不会自动写入 Persona）<textarea id="expanded-description" rows="10" maxlength="24000" placeholder="点击“扩展人物形象”后，AI 结果会显示在这里；你可以先修改，再决定是否用于核心人格或后续 DSL 转换。"></textarea></label>
+        <div class="actions">
+          <button id="use-expanded-description" type="button" class="secondary">将扩充结果填入核心人格</button>
+          <button id="convert-expanded-to-dsl" type="button" class="secondary">将确认文本转换为 DSL</button>
+        </div>
+        <p id="provider-status" class="status" aria-live="polite">尚未配置 AI Provider；可以先手动编辑。</p>
+        <details id="provider-settings">
+          <summary>AI 设置（高级）</summary>
+          <div class="advanced-settings">
+            <p class="provider-guide">按这个顺序操作：① 填完整接口地址 → ② 填模型 ID → ③ 云端才填写 Key → ④ 云端才点击确认 → ⑤ 点击“识别并生成 Persona”。本机服务不需要云端确认。</p>
+            <label>连接类型<select id="provider-mode"><option value="local">本机 Provider</option><option value="cloud">云端 Provider（HTTPS）</option></select></label>
+            <label>本机协议<select id="provider-protocol"><option value="ollama" selected>Ollama（think low）</option><option value="openai_compatible">OpenAI-compatible（不发送 think）</option></select></label>
+            <label>Chat Completions 完整接口地址<input id="provider-endpoint" value="http://127.0.0.1:11434/v1/chat/completions" maxlength="500" inputmode="url" placeholder="本机示例：http://127.0.0.1:11434/v1/chat/completions"><span id="provider-endpoint-hint" class="field-hint">当前识别为本机地址：不会要求云端确认。</span></label>
+            <label>模型 ID<input id="provider-model" placeholder="填写服务端实际可用的模型名，例如 qwen2.5:7b 或你的云端模型 ID" maxlength="160"><span class="field-hint">这不是显示名称，必须与 Provider 已安装或已开通的模型 ID 完全一致。</span></label>
+            <label>本次会话 API Key（云端通常需要，本机通常留空）<input id="provider-api-key" type="password" autocomplete="off" spellcheck="false" maxlength="4096"></label>
+            <p class="helper">Key 只提交给当前本机会话，提交后立即从输入框清除；不会写入浏览器存储、Persona 文件或导出内容。云端只接受 HTTPS，并且必须先确认端点；本机回环地址不会触发云端确认。</p>
+            <div class="actions">
+              <button id="set-provider-key" type="button" class="secondary">设置本次会话 Key</button>
+              <button id="clear-provider-key" type="button" class="secondary">清除会话 Key</button>
+              <button id="confirm-cloud-provider" type="button" class="secondary">我确认使用这个云端地址</button>
+            </div>
+          </div>
+        </details>
+      </form>
+      <ul id="provider-failures" class="failure-list" aria-live="polite"></ul>
+    </section>
+    <section class="panel" aria-labelledby="editor-heading">
+      <div class="section-heading">
+        <p class="step">2 · 确认或修改角色</p>
+        <h2 id="editor-heading">自由实验模式</h2>
+      </div>
+      <form id="preview-form">
+        <label>本地工作区<input id="workspace-root" name="workspaceRoot" placeholder="例如 C:\\PersonaWorkbench" maxlength="500"></label>
+        <label>文件名<input id="file-name" name="fileName" value="persona.persona.json" maxlength="180" required></label>
+        <label>稳定 ID<input id="persona-id" name="id" placeholder="例如 free.generated.colin" maxlength="120" required></label>
+        <label>显示名<input id="display-name" name="displayName" placeholder="例如 科林" maxlength="120" required></label>
+        <label>核心人格<textarea id="core" name="core" rows="4" maxlength="4000" placeholder="AI 转换成功后会填入可编辑核心人格" required></textarea></label>
+        <label>身份事实（可选）<textarea id="identity-facts" name="identityFacts" rows="3" maxlength="2000" placeholder="填写不会随场景变化的身份事实"></textarea></label>
+        <details class="profile-details">
+          <summary>正式模板作者字段（可选）</summary>
+          <div class="advanced-settings">
+            <label>人格摘要（留空则由核心人格回退）<textarea id="persona-summary" rows="3" maxlength="2000"></textarea></label>
+            <label>原始人物描述（仅作来源记录，不直接导出）<textarea id="source-description" rows="3" maxlength="4000"></textarea></label>
+            <label>对外人格补充<textarea id="public-description" rows="3" maxlength="2000"></textarea></label>
+            <label>私下人格补充<textarea id="private-description" rows="3" maxlength="2000"></textarea></label>
+            <label>结构性反差补充<textarea id="contradiction-description" rows="3" maxlength="2000"></textarea></label>
+            <label>自称与称呼规则（每行一条）<textarea id="self-claim-rules" rows="3" maxlength="3000" placeholder="例如：对外只自称“我”或角色名。"></textarea></label>
+            <label>真实自我行为（每行一条）<textarea id="real-self-behaviors" rows="3" maxlength="3000" placeholder="例如：独处时不再维持对外礼仪。"></textarea></label>
+            <label>自称示例（每行一条）<textarea id="self-claim-examples" rows="3" maxlength="3000" placeholder="例如：方宜会如何回应？"></textarea></label>
+            <label>饮食偏好<textarea id="food-preference" rows="2" maxlength="1000"></textarea></label>
+          </div>
+        </details>
+        <fieldset>
+          <legend>性格与行为（按顺序选择即可）</legend>
+          <p class="helper">不懂标签也没关系：每一项只是在两种倾向之间选择程度。未设定不会写入模板，平衡表示角色会视情况采用两边。</p>
+          <div class="tag-groups">
+            <section id="tag-group-impression" class="tag-group" aria-labelledby="tag-group-impression-title">
+              <h3 id="tag-group-impression-title">1 · 整体印象</h3>
+              <div class="axis-grid">
+                <label>风险取向（冒进 ↔ 谨慎）<select id="trait-caution" class="axis-select"><option value="">未设定</option><option value="-2">强烈冒进</option><option value="-1">略偏冒进</option><option value="0">两者平衡</option><option value="1">略偏谨慎</option><option value="2">强烈谨慎</option></select></label>
+                <label>进取取向（安于现状 ↔ 野心进取）<select id="trait-ambition" class="axis-select"><option value="">未设定</option><option value="-2">安于现状</option><option value="-1">略偏知足</option><option value="0">两者平衡</option><option value="1">略有野心</option><option value="2">强烈进取</option></select></label>
+                <label>自我评价（谦抑 ↔ 自尊强烈）<select id="trait-pride" class="axis-select"><option value="">未设定</option><option value="-2">强烈谦抑</option><option value="-1">略偏谦抑</option><option value="0">两者平衡</option><option value="1">略重自尊</option><option value="2">自尊强烈</option></select></label>
+                <label>判断依据（理想原则 ↔ 现实务实）<select id="trait-pragmatism" class="axis-select"><option value="">未设定</option><option value="-2">坚持理想原则</option><option value="-1">略偏理想</option><option value="0">两者平衡</option><option value="1">略偏务实</option><option value="2">高度现实务实</option></select></label>
+                <label>群体忠诚（独立自持 ↔ 护卫自己人）<select id="trait-in-group-loyalty" class="axis-select"><option value="">未设定</option><option value="-2">高度独立自持</option><option value="-1">略偏独立</option><option value="0">两者平衡</option><option value="1">略护自己人</option><option value="2">强烈护卫自己人</option></select></label>
+                <label>传统态度（偏好新变 ↔ 重视传统）<select id="trait-tradition" class="axis-select"><option value="">未设定</option><option value="-2">强烈偏好新变</option><option value="-1">略偏新变</option><option value="0">两者平衡</option><option value="1">略重传统</option><option value="2">强烈重视传统</option></select></label>
+              </div>
+            </section>
+            <section id="tag-group-speech" class="tag-group" aria-labelledby="tag-group-speech-title">
+              <h3 id="tag-group-speech-title">2 · 说话方式</h3>
+              <div class="axis-grid">
+                <label>措辞控制（随性流露 ↔ 措辞克制）<select id="expression-restraint" class="axis-select"><option value="">未设定</option><option value="-2">强烈随性流露</option><option value="-1">略偏随性</option><option value="0">两者平衡</option><option value="1">略偏克制</option><option value="2">高度措辞克制</option></select></label>
+                <label>表达路径（含蓄迂回 ↔ 直白明确）<select id="expression-directness" class="axis-select"><option value="">未设定</option><option value="-2">高度含蓄迂回</option><option value="-1">略偏含蓄</option><option value="0">两者平衡</option><option value="1">略偏直白</option><option value="2">高度直白明确</option></select></label>
+                <label>礼仪程度（随意口语 ↔ 礼貌正式）<select id="expression-formality" class="axis-select"><option value="">未设定</option><option value="-2">高度随意口语</option><option value="-1">略偏随意</option><option value="0">两者平衡</option><option value="1">略偏正式</option><option value="2">高度礼貌正式</option></select></label>
+                <label>戏谑程度（严肃正经 ↔ 戏谑试探）<select id="expression-playfulness" class="axis-select"><option value="">未设定</option><option value="-2">高度严肃正经</option><option value="-1">略偏严肃</option><option value="0">两者平衡</option><option value="1">略带戏谑</option><option value="2">强烈戏谑试探</option></select></label>
+                <label>亲近表达（疏离冷淡 ↔ 温和亲近）<select id="expression-warmth" class="axis-select"><option value="">未设定</option><option value="-2">高度疏离冷淡</option><option value="-1">略偏疏离</option><option value="0">两者平衡</option><option value="1">略偏温和</option><option value="2">高度温和亲近</option></select></label>
+              </div>
+            </section>
+            <section id="tag-group-decisions" class="tag-group" aria-labelledby="tag-group-decisions-title">
+              <h3 id="tag-group-decisions-title">3 · 做事方式</h3>
+              <div class="axis-grid">
+                <label>交换方式（先行付出 ↔ 先谈条件）<select id="behavior-conditionality" class="axis-select"><option value="">未设定</option><option value="-2">经常先行付出</option><option value="-1">略偏先付出</option><option value="0">两者平衡</option><option value="1">略偏谈条件</option><option value="2">凡事先谈条件</option></select></label>
+                <label>行动节奏（先行动 ↔ 先观察）<select id="behavior-deliberation" class="axis-select"><option value="">未设定</option><option value="-2">强烈先行动</option><option value="-1">略偏先行动</option><option value="0">两者平衡</option><option value="1">略偏先观察</option><option value="2">充分观察后行动</option></select></label>
+                <label>信任方式（容易信任 ↔ 试探忠诚）<select id="behavior-trust-testing" class="axis-select"><option value="">未设定</option><option value="-2">很容易信任</option><option value="-1">略容易信任</option><option value="0">两者平衡</option><option value="1">略偏试探</option><option value="2">反复试探忠诚</option></select></label>
+                <label>筹码使用（坦露筹码 ↔ 保留后手）<select id="behavior-leverage" class="axis-select"><option value="">未设定</option><option value="-2">经常坦露筹码</option><option value="-1">略偏坦诚</option><option value="0">两者平衡</option><option value="1">略留后手</option><option value="2">始终保留后手</option></select></label>
+                <label>照顾顺序（一视同仁 ↔ 优先自己人）<select id="behavior-in-group-priority" class="axis-select"><option value="">未设定</option><option value="-2">强烈一视同仁</option><option value="-1">略偏公平</option><option value="0">两者平衡</option><option value="1">略偏自己人</option><option value="2">强烈优先自己人</option></select></label>
+                <label>局面角色（跟随配合 ↔ 主动主导）<select id="behavior-leadership" class="axis-select"><option value="">未设定</option><option value="-2">习惯跟随配合</option><option value="-1">略偏配合</option><option value="0">两者平衡</option><option value="1">略偏主导</option><option value="2">强烈主动主导</option></select></label>
+              </div>
+              <details id="legacy-facet-controls" class="profile-details">
+                <summary>旧标签与旧强度兼容</summary>
+                <p class="helper">只用于打开和维护旧 Persona 文件。新轴已设置时，对应旧标签不会重复进入 DSL。</p>
+                <div class="legacy-facet-grid">
+                  <label>谨慎<select class="facet-strength" data-facet-id="trait.cautious"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>野心进取<select class="facet-strength" data-facet-id="trait.ambitious"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>自尊强烈<select class="facet-strength" data-facet-id="trait.proud"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>现实务实<select class="facet-strength" data-facet-id="trait.pragmatic"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>护卫自己人<select class="facet-strength" data-facet-id="trait.guardian"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>重视传统<select class="facet-strength" data-facet-id="trait.traditional"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>措辞克制<select class="facet-strength" data-facet-id="expression.measured"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>直白明确<select class="facet-strength" data-facet-id="expression.direct"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>礼貌正式<select class="facet-strength" data-facet-id="expression.formal"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>戏谑试探<select class="facet-strength" data-facet-id="expression.teasing"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>温和亲近<select class="facet-strength" data-facet-id="expression.warm"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>先谈条件<select class="facet-strength" data-facet-id="behavior.bargains"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>先观察再行动<select class="facet-strength" data-facet-id="behavior.observes_before_acting"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>试探忠诚<select class="facet-strength" data-facet-id="behavior.tests_loyalty"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>保留后手<select class="facet-strength" data-facet-id="behavior.keeps_leverage"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>优先自己人<select class="facet-strength" data-facet-id="behavior.protects_inner_circle"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                  <label>主动主导<select class="facet-strength" data-facet-id="behavior.takes_command"><option value="">未设定</option><option value="1">轻微</option><option value="2">中等</option><option value="3">强烈</option><option value="4">核心特征</option></select></label>
+                </div>
+              </details>
+            </section>
+            <section id="tag-group-reactions" class="tag-group" aria-labelledby="tag-group-reactions-title">
+              <h3 id="tag-group-reactions-title">4 · 压力与冲突反应</h3>
+              <p class="helper">这里描述角色偏离常态时通常怎样反应；两端都没有好坏之分，未设定也不表示否定。</p>
+              <div class="axis-grid">
+                <label>冲突应对（回避 ↔ 迎击）<select id="reaction-confrontation" class="axis-select"><option value="">未设定</option><option value="-2">强烈回避</option><option value="-1">略偏回避</option><option value="0">两者平衡</option><option value="1">略偏迎击</option><option value="2">强烈迎击</option></select></label>
+                <label>情绪表达（压抑 ↔ 外露）<select id="reaction-expression" class="axis-select"><option value="">未设定</option><option value="-2">强烈压抑</option><option value="-1">略偏压抑</option><option value="0">两者平衡</option><option value="1">略偏外露</option><option value="2">强烈外露</option></select></label>
+                <label>反应时机（延迟 ↔ 即时）<select id="reaction-timing" class="axis-select"><option value="">未设定</option><option value="-2">明显延迟</option><option value="-1">略偏延迟</option><option value="0">两者平衡</option><option value="1">略偏即时</option><option value="2">明显即时</option></select></label>
+                <label>事后态度（缓和 ↔ 记恨）<select id="reaction-resentment" class="axis-select"><option value="">未设定</option><option value="-2">很容易缓和</option><option value="-1">略偏缓和</option><option value="0">两者平衡</option><option value="1">略偏记恨</option><option value="2">长期记恨</option></select></label>
+                <label>依靠方式（独自控制 ↔ 寻求依靠）<select id="reaction-support-seeking" class="axis-select"><option value="">未设定</option><option value="-2">坚持独自控制</option><option value="-1">略偏独自处理</option><option value="0">两者平衡</option><option value="1">略偏寻求依靠</option><option value="2">强烈寻求依靠</option></select></label>
+              </div>
+              <details class="profile-details">
+                <summary>具体条件与旧格式兼容</summary>
+                <div class="advanced-settings">
+                  <label>特别敏感的条件<textarea id="reaction-sensitive-conditions" rows="3" maxlength="2000" placeholder="例如：被迫在众人面前表态；亲近者受到牵连。"></textarea></label>
+                  <label>条件发生后的典型反应<textarea id="reaction-conditional-responses" rows="3" maxlength="2000" placeholder="例如：先观察退路，再决定公开回击还是事后追讨。"></textarea></label>
+                  <label class="legacy-tag"><input type="checkbox" value="trigger.public_humiliation" data-tag-id="trigger.public_humiliation">保留旧标签：遭到公开羞辱时反击</label>
+                </div>
+              </details>
+            </section>
+            <section id="tag-group-boundaries" class="tag-group" aria-labelledby="tag-group-boundaries-title">
+              <h3 id="tag-group-boundaries-title">5 · 价值排序与承诺机制</h3>
+              <p class="helper">这里不是善恶清单，而是角色如何承诺、排序利益，以及在什么代价下才会破例。</p>
+              <div class="axis-grid">
+                <label>承诺方式（轻易 ↔ 谨慎）<select id="commitment-promise-caution" class="axis-select"><option value="">未设定</option><option value="-2">很容易承诺</option><option value="-1">略容易承诺</option><option value="0">两者平衡</option><option value="1">略偏谨慎</option><option value="2">极少轻易承诺</option></select></label>
+                <label>履行方式（灵活 ↔ 坚持）<select id="commitment-promise-persistence" class="axis-select"><option value="">未设定</option><option value="-2">很容易调整</option><option value="-1">允许灵活处理</option><option value="0">两者平衡</option><option value="1">倾向坚持履行</option><option value="2">近乎执拗地履行</option></select></label>
+                <label>价值交换（可交换 ↔ 不可交换）<select id="commitment-value-tradeability" class="axis-select"><option value="">未设定</option><option value="-2">多数事项可以交换</option><option value="-1">较重视现实交换</option><option value="0">视情况权衡</option><option value="1">有较多不可交换项</option><option value="2">核心价值几乎不可交换</option></select></label>
+              </div>
+              <details class="profile-details">
+                <summary>价值、范围、破例和后果</summary>
+                <div class="advanced-settings">
+                  <label>价值优先顺序<textarea id="commitment-priority-order" rows="2" maxlength="1200" placeholder="例如：自己人 > 家族名誉 > 王国命令 > 眼前利益。"></textarea></label>
+                  <label>重点保护的对象或价值<textarea id="commitment-protected-values" rows="2" maxlength="1200"></textarea></label>
+                  <label>这些约束适用于谁、何时、什么场合<textarea id="commitment-applicable-scope" rows="2" maxlength="1200"></textarea></label>
+                  <label>允许破例时必须付出的代价<textarea id="commitment-exception-cost" rows="2" maxlength="1200"></textarea></label>
+                  <label>约束被突破后的典型反应<textarea id="commitment-breach-response" rows="2" maxlength="1200"></textarea></label>
+                  <label class="legacy-tag"><input type="checkbox" value="boundary.no_empty_promises" data-tag-id="boundary.no_empty_promises">保留旧标签：不作空头许诺</label>
+                </div>
+              </details>
+            </section>
+          </div>
+        </fieldset>
+        <p id="review-status" class="status" aria-live="polite">审核状态：草稿</p>
+        <p class="helper">AI 只能生成草稿；只有点击“批准当前 Persona”才会写入 approved。批准后的任何编辑都会退回草稿。</p>
+        <div class="actions">
+          <button type="submit">生成 DSL 预览</button>
+          <button id="load-document" type="button" class="secondary">打开本地文件</button>
+          <button id="save-document" type="button" class="secondary">保存草稿</button>
+          <button id="approve-document" type="button">批准当前 Persona</button>
+        </div>
+      </form>
+    </section>
+    <section class="panel preview-panel" aria-labelledby="preview-heading">
+      <div class="section-heading">
+        <p class="step">3 · 预览结果</p>
+        <h2 id="preview-heading">Persona DSL</h2>
+      </div>
+      <p id="status" class="status" aria-live="polite">尚未生成。</p>
+      <pre id="dsl-output" aria-live="polite">点击“生成只读 DSL 预览”。</pre>
+      <div class="actions authoring-actions">
+        <button id="generate-awake-authoring-preview" type="button" class="secondary">生成 AWAKE authoring-v2 预览</button>
+        <button id="download-awake-authoring" type="button" class="secondary" disabled>下载 authoring-v2 JSON</button>
+      </div>
+      <p id="authoring-preview-status" class="status" aria-live="polite">尚未生成 AWAKE authoring-v2 预览。</p>
+      <pre id="authoring-preview-output" aria-live="polite">这里显示只读迁移预览；它不是 AWAKE 批准文件，也不能直接作为游戏运行时文件。</pre>
+    </section>
+  </main>
+</body>
+</html>
+
+

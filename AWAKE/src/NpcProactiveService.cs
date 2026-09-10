@@ -142,11 +142,11 @@ internal sealed class NpcProactiveService
             if (hero == null)
             {
                 MarkExpired(selected.HeroId);
-                AwakeBackgroundTask.Run(() => SaveAsync(CancellationToken.None), "npc_proactive_save");
+                AwakeBackgroundTask.Run(() => SaveAsync(AwakeRuntime.SessionCancellationToken), "npc_proactive_save");
                 return;
             }
 
-            AwakeBackgroundTask.Run(() => SaveAsync(CancellationToken.None), "npc_proactive_save");
+            AwakeBackgroundTask.Run(() => SaveAsync(AwakeRuntime.SessionCancellationToken), "npc_proactive_save");
             ShowInquiry(selected, hero);
         }
         catch (Exception ex)
@@ -169,7 +169,8 @@ internal sealed class NpcProactiveService
             _lastLoadAttemptUtcTicks = now;
         }
         WorldStateStore store = AwakeRuntime.WorldStateStore;
-        if (store == null)
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        if (store == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, store))
         {
             return;
         }
@@ -177,6 +178,7 @@ internal sealed class NpcProactiveService
         try
         {
             doc = await store.GetProactiveAsync(null, cancellationToken).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
         }
         catch (Exception ex)
         {
@@ -212,11 +214,16 @@ internal sealed class NpcProactiveService
             }
         }
         WorldStateStore store = AwakeRuntime.WorldStateStore;
-        if (store == null) return;
-        await store.UpdateProactiveAsync(
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        if (store == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
+        bool saved = await store.UpdateProactiveAsync(
             candidates,
             "proactive|" + Guid.NewGuid().ToString("N"),
             cancellationToken).ConfigureAwait(false);
+        if (!saved || !AwakeRuntime.IsCurrentSession(sessionGeneration, store))
+        {
+            AwakeLog.Write("npc_proactive_save_not_applied");
+        }
     }
 
     private bool CleanupExpired(int day)
@@ -518,7 +525,7 @@ internal sealed class NpcProactiveService
         AwakeFeedback.ShowSuccess(AwakeLocalization.Resolve(
             "awake.feedback.proactive_accepted",
             "对方愿意谈谈。"));
-        AwakeBackgroundTask.Run(() => SaveAsync(CancellationToken.None), "npc_proactive_save");
+        AwakeBackgroundTask.Run(() => SaveAsync(AwakeRuntime.SessionCancellationToken), "npc_proactive_save");
         AwakeLog.Write("npc_proactive_accepted hero=" + heroId);
     }
 
@@ -536,7 +543,7 @@ internal sealed class NpcProactiveService
         AwakeFeedback.ShowWarning(AwakeLocalization.Resolve(
             "awake.feedback.proactive_declined",
             "你决定改天再说。"));
-        AwakeBackgroundTask.Run(() => SaveAsync(CancellationToken.None), "npc_proactive_save");
+        AwakeBackgroundTask.Run(() => SaveAsync(AwakeRuntime.SessionCancellationToken), "npc_proactive_save");
         AwakeLog.Write("npc_proactive_declined hero=" + heroId);
     }
 

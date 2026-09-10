@@ -17,11 +17,16 @@ internal sealed class WorldbookService
     private readonly Dictionary<string, WorldbookPersona> _personasByCharacterId =
         new Dictionary<string, WorldbookPersona>(StringComparer.Ordinal);
     private readonly List<WorldbookImportWarning> _warnings;
+    private readonly List<PersonaDefinition> _personaDefinitions;
+    private readonly PersonaTagRegistry _personaTagRegistry;
+    private readonly Dictionary<string, PersonaGenerationResult> _personaCache = new Dictionary<string, PersonaGenerationResult>(StringComparer.Ordinal);
 
     internal WorldbookService(WorldbookDocument document)
     {
         _rules = document?.Rules ?? new List<WorldbookRule>();
         _warnings = document?.Warnings ?? new List<WorldbookImportWarning>();
+        _personaDefinitions = document?.PersonaDefinitions ?? new List<PersonaDefinition>();
+        _personaTagRegistry = new PersonaTagRegistry(document?.PersonaTagRegistry ?? new PersonaTagRegistryDocument());
         if (document?.Personas != null)
         {
             foreach (WorldbookPersona persona in document.Personas)
@@ -51,9 +56,44 @@ internal sealed class WorldbookService
 
     internal int RuleCount => _rules.Count;
     internal int PersonaCount => _personasByCharacterId.Count;
+    internal int PersonaDefinitionCount => _personaDefinitions.Count;
+    internal int PersonaTagCount => _personaTagRegistry.Count;
     internal int WarningCount => _warnings.Count;
     internal IReadOnlyList<WorldbookImportWarning> Warnings => _warnings;
 
+    internal PersonaGenerationResult BuildPersona(WorldbookQuery query, WorldbookMappingContext mappingContext, int maximumBytes)
+    {
+        query = query ?? new WorldbookQuery();
+        WorldbookPersona legacy = FindLegacyPersona(query);
+        PersonaDefinition definition = SelectPersonaDefinition(query, out List<string> selectionWarnings);
+        PersonaContext context = new PersonaContext
+        {
+            CharacterId = string.IsNullOrWhiteSpace(query.HeroId) ? query.CharacterId : query.HeroId,
+            HeroName = mappingContext?.BoundHeroName ?? string.Empty,
+            CultureId = query.CultureId,
+            KingdomId = query.KingdomId,
+            KingdomName = mappingContext?.BoundKingdomName ?? string.Empty,
+            ClanName = mappingContext?.BoundClanName ?? string.Empty,
+            Role = query.Role,
+            SceneKeywords = query.SceneKeywords ?? new List<string>(),
+            ContextModes = query.ContextModes ?? new List<string>()
+        };
+        string legacyPersonality = legacy?.Personality ?? string.Empty;
+        string legacyBackground = legacy?.Background ?? string.Empty;
+        string fingerprint = PersonaDslGenerator.ComputeFingerprint(definition, context, legacyPersonality, legacyBackground, maximumBytes);
+        PersonaGenerationResult cached;
+        if (_personaCache.TryGetValue(fingerprint, out cached)) return cached;
+        PersonaGenerationResult generated = PersonaDslGenerator.Generate(
+            definition,
+            _personaTagRegistry,
+            context,
+            legacyPersonality,
+            legacyBackground,
+            maximumBytes);
+        generated.Warnings.AddRange(selectionWarnings);
+        _personaCache[fingerprint] = generated;
+        return generated;
+    }
     internal List<WorldbookRule> Search(string text, int limit)
     {
         List<WorldbookRule> result = new List<WorldbookRule>();
@@ -193,13 +233,61 @@ internal sealed class WorldbookService
         return result;
     }
 
-    private void AppendPersona(WorldbookQuery query, WorldbookQueryResult result)
+    private PersonaDefinition SelectPersonaDefinition(WorldbookQuery query, out List<string> warnings)
+    {
+        warnings = new List<string>();
+        List<Tuple<int, PersonaDefinition>> candidates = new List<Tuple<int, PersonaDefinition>>();
+        foreach (PersonaDefinition definition in _personaDefinitions)
+        {
+            if (definition == null || !StringComparer.Ordinal.Equals(definition.Status, PersonaSchemaConstants.StatusApproved)) continue;
+            int score = PersonaMatchScore(definition, query);
+            if (score >= 0) candidates.Add(Tuple.Create(score, definition));
+        }
+        candidates.Sort((left, right) =>
+        {
+            int score = right.Item1.CompareTo(left.Item1);
+            if (score != 0) return score;
+            int priority = right.Item2.Priority.CompareTo(left.Item2.Priority);
+            return priority != 0 ? priority : string.CompareOrdinal(left.Item2.Id, right.Item2.Id);
+        });
+        if (candidates.Count == 0) return null;
+        Tuple<int, PersonaDefinition> best = candidates[0];
+        List<PersonaDefinition> sameRank = candidates
+            .Where(item => item.Item1 == best.Item1 && item.Item2.Priority == best.Item2.Priority)
+            .Select(item => item.Item2)
+            .ToList();
+        if (sameRank.Count > 1)
+        {
+            warnings.Add("persona.definition_conflict:" + string.Join(",", sameRank.Select(item => item.Id).OrderBy(item => item, StringComparer.Ordinal)));
+            return null;
+        }
+        return best.Item2;
+    }
+
+    private static int PersonaMatchScore(PersonaDefinition definition, WorldbookQuery query)
+    {
+        bool hasCharacter = !string.IsNullOrWhiteSpace(definition.CharacterId);
+        bool hasIdentity = !string.IsNullOrWhiteSpace(definition.IdentityId);
+        bool hasRole = !string.IsNullOrWhiteSpace(definition.Role);
+        if (hasCharacter)
+        {
+            if (!StringComparer.Ordinal.Equals(definition.CharacterId, query.HeroId)
+                && !StringComparer.Ordinal.Equals(definition.CharacterId, query.CharacterId)) return -1;
+            return 1000;
+        }
+        if (hasIdentity && !StringComparer.Ordinal.Equals(definition.IdentityId, query.IdentityId)) return -1;
+        if (hasRole && !StringComparer.Ordinal.Equals(definition.Role, query.Role)) return -1;
+        if (hasIdentity) return 700;
+        if (hasRole) return 500;
+        if (StringComparer.Ordinal.Equals(definition.Scope, "fallback")) return 100;
+        if (!hasIdentity && !hasRole && StringComparer.Ordinal.Equals(definition.Scope, "global")) return 50;
+        return -1;
+    }
+
+    private WorldbookPersona FindLegacyPersona(WorldbookQuery query)
     {
         WorldbookPersona persona = null;
-        if (!string.IsNullOrWhiteSpace(query.CharacterId))
-        {
-            _personasByCharacterId.TryGetValue(query.CharacterId, out persona);
-        }
+        if (!string.IsNullOrWhiteSpace(query.CharacterId)) _personasByCharacterId.TryGetValue(query.CharacterId, out persona);
         if (persona == null && !string.IsNullOrWhiteSpace(query.HeroId))
         {
             foreach (WorldbookPersona candidate in _personasByCharacterId.Values)
@@ -213,6 +301,11 @@ internal sealed class WorldbookService
                 }
             }
         }
+        return persona;
+    }
+    private void AppendPersona(WorldbookQuery query, WorldbookQueryResult result)
+    {
+        WorldbookPersona persona = FindLegacyPersona(query);
         if (persona == null) return;
         result.Personality = persona.Personality;
         result.Background = persona.Background;

@@ -1,6 +1,6 @@
 # AWAKE 计划与文档总索引
 
-> 日期：2026-08-16
+> 日期：2026-08-17
 > 目的：把分散的路线图、改进方向、落地方案、PLAN、审查日志、清单和 AF 学习文档统一成一张索引。
 > 规则：新计划必须先登记到本索引；状态变化必须同步；旧文档进 `docs/archive`，不在正文当权威。
 
@@ -8,16 +8,18 @@
 
 按顺序阅读，避免“方向/计划/任务”互相打架：
 
-1. `AWAKE-Task-Queue-20260816.md`：每日操作队列，轮询当前任务、阻塞、待修复。
-2. `AWAKE-Improvement-Directions-20260816.md`：改进方向，说明“为什么做”。
-3. `AWAKE-Landing-Plan-20260816.md`：B0-B9 落地批次，说明“先做什么、后做什么”。
-4. `PLAN-SceneVisualSelection-20260816.md`：下一份已 APPROVED、待签收的实施方案。
-5. `Awake-Development-Plan.md`：与当前运行时对齐的开发方案。
-6. `Awake-Roadmap-0.1-0.9-20260815.md`：版本级路线图草案。
+1. `AWAKE-Task-Queue-20260816.md`：当前任务、阻塞、反馈和下一动作的唯一操作权威。
+2. `AWAKE-Version-Roadmap-0.2.0-to-1.0.0-20260817.md`：版本重心、功能归属、内容包并行轨和升版门槛。
+3. `AWAKE-Improvement-Directions-20260816.md`：架构与机制方向，说明“为什么做”。
+4. `AWAKE-Landing-Plan-20260816.md`：已执行的 B0-B9 批次记录，后续版本不再直接按旧状态推进。
+5. `Awake-Development-Plan.md`：运行时开发原则与既有方案参考。
+6. `AWAKE-Internal-Test-Gate-20260817.md`：Level 0/1/2 测试门槛。
+7. `Awake-Roadmap-0.1-0.9-20260815.md`：`superseded` 历史路线图，不再作为当前权威。
 
 ## 二、状态图例
 
 - `approved`：已通过独立审查，等待实现或用户签收。
+- `review_pending`：设计已确认并落盘，等待用户审阅最终文档。
 - `draft`：草案，未锁定。
 - `implemented`：代码/文档已落地。
 - `pending_game`：代码已落地，等待游戏内验收。
@@ -25,12 +27,12 @@
 - `archived`：已归档，不作为当前权威。
 - `superseded`：被更新文档取代，仅作历史。
 
-## 三、活跃计划（待执行/待签收/草案）
+## 三、活跃计划（待审阅/待执行/待游戏验收）
 
 | 文档 | 状态 | 下一步 |
 |---|---|---|
-| `PLAN-SceneVisualSelection-20260816.md` | approved | 用户签收后实现双模式对话 |
-| `Awake-Roadmap-0.1-0.9-20260815.md` | draft | 按 Landing Plan 分批锁定 |
+| `PLAN-SceneVisualSelection-20260816.md` | pending_game | 场景可视化与独立场景对话已实现；B1 原版窗口 AI 模式另按路线图 0.3.0 立项 |
+| `AWAKE-Version-Roadmap-0.2.0-to-1.0.0-20260817.md` | approved | 用户已确认；作为版本方向权威，不直接授权具体功能实现 |
 | `Awake-Worldbook-Interface-Spec-20260816.md` | draft | 转成代码接口与校验 |
 | `Awake-API-Contract-20260815.md` | draft | 内容包公开 API 落地 |
 | `Gameplay-Enrichment-Plan-20260815.md` | draft | 并入 Landing Plan B3-B7 |
@@ -40,9 +42,9 @@
 | `PLAN-Awake-Dialogue-BatchC-20260816.md` | draft | 远程写信/来信待锁定 |
 | `PLAN-Awake-Dialogue-GrillBatch-20260816.md` | draft | 对话功能整理稿 |
 | `PLAN-Awake-Messenger-20260816.md` | draft | Messenger 统一会话待锁定 |
-| `PLAN-ContactHubHistory-20260816.md` | approved | Round 7 APPROVED；待用户签收 |
-| `PLAN-Interactions-20260816.md` | approved | Round 9 APPROVED；待用户签收 |
-| `PLAN-UnifiedDialogueSession-20260816.md` | approved | Round 5 APPROVED；待用户签收，前置 ContactHubHistory 已 APPROVED |
+| `PLAN-ContactHubHistory-20260816.md` | pending_game | 核心代码完成，等待 `VAL-20260817-1` |
+| `PLAN-Interactions-20260816.md` | pending_game | 承诺与 give_gold 基础完成，等待真机验收 |
+| `PLAN-UnifiedDialogueSession-20260816.md` | pending_game | token 会话、持久队列和 Hub 生命周期完成，等待真机验收 |
 | `FEATURE-BRAINSTORM-20260813.md` | reference | 候选池，不是承诺 |
 | `FEATURE-FEASIBILITY-RANKING-20260813.md` | reference | 候选排序，需重新对齐现状 |
 
@@ -109,7 +111,8 @@
 |---|---|
 | `PLAN-Awake-Dialogue-BatchA` 的“不做地面预览” | 被 `PLAN-SceneVisualSelection` 取代；场景选人按新版执行 |
 | `UPDATE-PLAN-20260813.md` | 旧 Slaanesh 更新计划，被 `Awake-Development-Plan.md` + `AWAKE-Improvement-Directions` 取代 |
-| `Awake-Roadmap` vs `AWAKE-Landing-Plan` | Roadmap 是版本方向，Landing Plan 是执行批次，二者不是同一层 |
+| 新版 Roadmap vs `AWAKE-Landing-Plan` | 新版 Roadmap 是当前版本方向；Landing Plan 是已执行 B0-B9 的历史批次记录 |
+| `Awake-Roadmap-0.1-0.9-20260815.md` | 已被 `AWAKE-Version-Roadmap-0.2.0-to-1.0.0-20260817.md` 取代 |
 | `FEATURE-BRAINSTORM` / `FEASIBILITY` | 是候选池，不是当前承诺；进入实施前需重新 grill-me |
 | `AF-STANDALONE-MERGE-PLAN` / `AF-REPLACEMENT-STRATEGY` | 历史策略文档，仅作学习，不执行 |
 | `AwakeSplit-*` | 已完成拆分记录，作为边界参考，不重复执行 |
@@ -121,3 +124,4 @@
 3. 被取代的计划标记 `superseded`，正文保留但不再作为执行依据。
 4. 旧文档只进 `docs/archive`，不删除 git 历史。
 5. 每次批次完成同步更新任务队列、本索引和 `BUILD_VERIFICATION.txt`。
+6. 每个 PLAN/Batch/修复包必须登记 `TargetVersion`、`Milestone`、`Dependencies`、`Scope`、`OutOfScope`、`ExitCriteria` 和 `ReleaseImpact`。

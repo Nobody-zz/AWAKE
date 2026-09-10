@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 
 namespace Awake;
 

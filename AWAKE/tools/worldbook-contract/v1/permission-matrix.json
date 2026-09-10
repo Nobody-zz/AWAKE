@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "awake.worldbook.permission-matrix.v1",
+  "resolutionOrder": ["blocked", "identity", "conditions", "denies", "grants", "detail", "referral", "not_found"],
+  "states": {
+    "known": { "meaning": "至少一个表达满足权限且达到请求细节" },
+    "partial": { "meaning": "有表达可见但只能返回低于请求细节的内容" },
+    "referral": { "meaning": "当前身份不可见，且存在可公开指向的知识面广 NPC" },
+    "not_found": { "meaning": "索引中没有可匹配知识" },
+    "blocked": { "meaning": "战役门控、内容层级或明确否定规则阻止返回" }
+  },
+  "overlay": {
+    "allowed": ["replace_text", "replace_title", "replace_summary", "add_keyword", "remove_keyword", "disable_expression", "enable_expression"],
+    "forbidden": ["change_package_id", "change_world_id", "change_domain", "change_identity_grant", "change_denial", "change_source_authority"]
+  },
+  "identityPrecedence": ["explicit_identity", "office", "skill", "age", "culture", "kingdom", "settlement", "base_identity"],
+  "referralPolicy": "only_emit_referral_when_the_target_is_publicly_askable_and_not_blocked"
+}

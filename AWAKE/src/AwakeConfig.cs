@@ -4,6 +4,7 @@ using MCM.Abstractions;
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Base.Global;
+using MCM.Common;
 using Newtonsoft.Json;
 
 namespace Awake;
@@ -27,7 +28,7 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     public override string FormatType => "json";
 
     [JsonIgnore]
-    [SettingPropertyText("{=awake.mcm.ai_status.name}AI 链路状态", Order = 0, RequireRestart = false, HintText = "{=awake.mcm.ai_status.hint}只读显示：Companion 连接、路由能力与候选 Provider 状态。Provider 配置请在 MCM → Marcus AI Framework → 01 Companion 完成，Route ID 使用模组 README 中的四条逻辑路由。")]
+    [SettingPropertyText("{=awake.mcm.ai_status.name}AI 链路状态", Order = 0, RequireRestart = false, HintText = "{=awake.mcm.ai_status.hint}只读显示 AWAKE Runtime、Provider 和当前配置状态。")]
     [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
     public string AiRuntimeStatus
     {
@@ -41,25 +42,50 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
         set { }
     }
 
-    [SettingPropertyButton("{=awake.mcm.sync_routes.name}同步路由", -1, true, "", Content = "{=awake.mcm.sync_routes.content}同步路由", Order = 1, RequireRestart = false, HintText = "{=awake.mcm.sync_routes.hint}点击后提示路由由框架自动同步。")]
+    [SettingPropertyDropdown("{=awake.mcm.provider_kind.name}AI 服务类型", Order = 1, RequireRestart = false, HintText = "{=awake.mcm.provider_kind.hint}选择你实际使用的 AI 服务。OpenAI 兼容也适用于部分本地服务。")]
     [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
-    public Action SyncRoutes { get; set; }
+    public Dropdown<string> ProviderKind { get; set; } = AwakeProviderConfiguration.CreateProviderKindDropdown();
 
-    [SettingPropertyButton("{=awake.mcm.enable_cloud_oneclick.name}一键开启云端对话", -1, true, "", Content = "{=awake.mcm.enable_cloud_oneclick.content}一键开启", Order = 2, RequireRestart = false, HintText = "{=awake.mcm.enable_cloud_oneclick.hint}开启 AWAKE 云外发与玩家状态外发，并打开 Marcus AI 设置台。仍需在设置台允许 AWAKE.route.npc.dialogue 云外发。")]
+    [SettingPropertyText("{=awake.mcm.provider_url.name}服务地址", Order = 2, RequireRestart = false, HintText = "{=awake.mcm.provider_url.hint}填写完整的 HTTP/HTTPS 地址，例如 https://api.openai.com/v1 或 http://127.0.0.1:11434。不要把 API Key 写进地址。")]
     [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
-    public Action EnableCloudDialogueOneClick { get; set; }
+    public string ProviderBaseUrl { get; set; } = "https://api.openai.com/v1";
 
-    [SettingPropertyButton("{=awake.mcm.refresh_status.name}AI 自检", -1, true, "", Content = "{=awake.mcm.refresh_status.content}AI 自检", Order = 3, RequireRestart = false, HintText = "{=awake.mcm.refresh_status.hint}刷新 Companion 连接状态并显示结果。")]
+    [SettingPropertyText("{=awake.mcm.provider_model.name}模型名称", Order = 3, RequireRestart = false, HintText = "{=awake.mcm.provider_model.hint}填写 Provider 返回的模型 ID；可先点击“拉取可用模型”查看。")]
+    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
+    public string ProviderModel { get; set; } = "gpt-4o-mini";
+
+    [SettingPropertyBool("{=awake.mcm.provider_cloud.name}这是云端服务", Order = 4, RequireRestart = false, HintText = "{=awake.mcm.provider_cloud.hint}云端服务通常需要 API Key；本机 Ollama 一般关闭此项。")]
+    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
+    public bool ProviderIsCloud { get; set; } = true;
+
+    [JsonIgnore]
+    [SettingPropertyText("{=awake.mcm.provider_model_status.name}模型读取状态", Order = 5, RequireRestart = false, HintText = "{=awake.mcm.provider_model_status.hint}只读显示最近一次模型列表读取结果。")]
+    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
+    public string ProviderModelStatus
+    {
+        get { return AwakeProviderConfiguration.ModelStatus; }
+        set { }
+    }
+
+    [SettingPropertyButton("{=awake.mcm.provider_api_key.name}输入或替换 API Key", -1, true, "", Content = "{=awake.mcm.provider_api_key.content}打开输入框", Order = 6, RequireRestart = false, HintText = "{=awake.mcm.provider_api_key.hint}输入框保持可见，便于核对；密钥只写入本机保护存储，不进入 MCM、存档或日志。")]
+    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
+    public Action ConfigureProviderApiKey { get; set; }
+
+    [SettingPropertyButton("{=awake.mcm.provider_apply.name}保存配置并应用", -1, true, "", Content = "{=awake.mcm.provider_apply.content}保存并应用", Order = 7, RequireRestart = false, HintText = "{=awake.mcm.provider_apply.hint}把服务类型、地址和模型应用到 AWAKE 的全部 AI 路由。")]
+    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
+    public Action ApplyProviderConfiguration { get; set; }
+
+    [SettingPropertyButton("{=awake.mcm.provider_models.name}拉取可用模型", -1, true, "", Content = "{=awake.mcm.provider_models.content}拉取模型", Order = 8, RequireRestart = false, HintText = "{=awake.mcm.provider_models.hint}先应用当前地址和服务类型，再读取 Provider 返回的模型列表。")]
+    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
+    public Action PullProviderModels { get; set; }
+
+    [SettingPropertyButton("{=awake.mcm.provider_test.name}测试连接", -1, true, "", Content = "{=awake.mcm.provider_test.content}测试连接", Order = 9, RequireRestart = false, HintText = "{=awake.mcm.provider_test.hint}通过读取模型列表测试 Runtime、地址、凭据和 Provider 是否连通。")]
+    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
+    public Action TestProviderConnection { get; set; }
+
+    [SettingPropertyButton("{=awake.mcm.refresh_status.name}AI 自检", -1, true, "", Content = "{=awake.mcm.refresh_status.content}AI 自检", Order = 10, RequireRestart = false, HintText = "{=awake.mcm.refresh_status.hint}刷新 AWAKE Runtime 和 Provider 状态。")]
     [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
     public Action RefreshAiStatus { get; set; }
-
-    [SettingPropertyButton("{=awake.mcm.open_setup.name}打开 AI 设置台", -1, true, "", Content = "{=awake.mcm.open_setup.content}打开", Order = 4, RequireRestart = false, HintText = "{=awake.mcm.open_setup.hint}打开 Marcus AI 设置台配置 Provider、模型与路由。")]
-    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
-    public Action OpenAiSetup { get; set; }
-
-    [SettingPropertyButton("{=awake.mcm.open_diagnostics.name}打开诊断台", -1, true, "", Content = "{=awake.mcm.open_diagnostics.content}打开", Order = 5, RequireRestart = false, HintText = "{=awake.mcm.open_diagnostics.hint}打开框架诊断台。")]
-    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
-    public Action OpenDiagnostics { get; set; }
 
     [SettingPropertyBool("{=awake.mcm.cloud_export.name}启用云外发", Order = 0, RequireRestart = false, HintText = "{=awake.mcm.cloud_export.hint}默认开启。关闭后本机 Ollama 等本地链路不受影响；开启云端对话仍需框架权限授权。")]
     [SettingPropertyGroup("{=awake.mcm.group.data_debug}4. 数据与调试", GroupOrder = 3)]
@@ -69,7 +95,7 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyGroup("{=awake.mcm.group.data_debug}4. 数据与调试", GroupOrder = 3)]
     public bool AllowCloudExportPlayerState { get; set; } = true;
 
-    [SettingPropertyBool("{=awake.mcm.developer_menu.name}启用开发者菜单", Order = 2, RequireRestart = false, HintText = "{=awake.mcm.developer_menu.hint}默认关闭。开启后城镇、城堡、村庄、领主府菜单显示神谕 AI 自检与开发者检查。")]
+    [SettingPropertyBool("{=awake.mcm.developer_menu.name}启用开发者菜单", Order = 2, RequireRestart = false, HintText = "{=awake.mcm.developer_menu.hint}默认关闭。开启后城镇、城堡、村庄、领主府菜单显示 AWAKE 自检与开发者检查。")]
     [SettingPropertyGroup("{=awake.mcm.group.data_debug}4. 数据与调试", GroupOrder = 3)]
     public bool EnableDeveloperMenu { get; set; }
 
@@ -124,12 +150,12 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     public AwakeConfig()
     {
         _instance = this;
-        SyncRoutes = AwakeMcmActions.SyncRoutes;
-        EnableCloudDialogueOneClick = AwakeMcmActions.EnableCloudDialogueOneClick;
+        ConfigureProviderApiKey = AwakeMcmActions.ConfigureProviderApiKey;
+        ApplyProviderConfiguration = AwakeMcmActions.ApplyProviderConfiguration;
+        PullProviderModels = AwakeMcmActions.PullProviderModels;
+        TestProviderConnection = AwakeMcmActions.TestProviderConnection;
         RefreshAiStatus = AwakeMcmActions.RefreshAiStatus;
-        OpenDeveloperReport = AwakeMcmActions.ShowDeveloperReport;
-        OpenAiSetup = AwakeMcmActions.OpenAiSetup;
-        OpenDiagnostics = AwakeMcmActions.OpenDiagnostics;
+        OpenDeveloperReport = () => AwakeMcmActions.ShowDeveloperReport();
     }
 
     internal static new AwakeConfig Instance => _instance;
@@ -143,23 +169,35 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
 
 internal static class AwakeRuntimeStatus
 {
-    internal static string LatestText { get; private set; } = string.Empty;
+    private static readonly object StateGate = new object();
+    private static string latestText = string.Empty;
+
+    internal static string LatestText
+    {
+        get
+        {
+            lock (StateGate) return latestText;
+        }
+    }
 
     internal static void Update(string value)
     {
-        LatestText = string.IsNullOrWhiteSpace(value)
-            ? AwakeLocalization.Resolve("awake.status.not_checked", "Not checked yet")
-            : value;
+        lock (StateGate)
+        {
+            latestText = string.IsNullOrWhiteSpace(value)
+                ? AwakeLocalization.Resolve("awake.status.not_checked", "Not checked yet")
+                : value;
+        }
     }
 
     internal static void ResetForTesting()
     {
-        LatestText = string.Empty;
+        lock (StateGate) latestText = string.Empty;
     }
 
     internal static void RestoreForTesting(string value)
     {
-        LatestText = value ?? string.Empty;
+        lock (StateGate) latestText = value ?? string.Empty;
     }
 }
 
@@ -198,6 +236,53 @@ internal static class AwakeSettings
         catch (Exception ex)
         {
             AwakeLog.Write("mcm_runtime_status_update_failed error=" + ex.Message);
+        }
+    }
+
+    internal static bool TrySaveCurrentConfiguration(out string error)
+    {
+        error = string.Empty;
+        try
+        {
+            AwakeConfig config = Current;
+            if (BaseSettingsProvider.Instance == null)
+            {
+                error = "MCM 设置服务尚未就绪，配置未保存。";
+                return false;
+            }
+
+            BaseSettingsProvider.Instance.SaveSettings(config);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("mcm_configuration_save_failed error=" + ex.Message);
+            error = "MCM 配置保存失败，请稍后重试。";
+            return false;
+        }
+    }
+
+    internal static void NotifyProviderStatusChanged()
+    {
+        try
+        {
+            Current.OnPropertyChanged(nameof(AwakeConfig.AiRuntimeStatus));
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("mcm_provider_status_update_failed error=" + ex.Message);
+        }
+    }
+
+    internal static void NotifyProviderModelStatusChanged()
+    {
+        try
+        {
+            Current.OnPropertyChanged(nameof(AwakeConfig.ProviderModelStatus));
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("mcm_provider_model_status_update_failed error=" + ex.Message);
         }
     }
 

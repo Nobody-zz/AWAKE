@@ -1,0 +1,9 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"persona-workbench.evidence-supersession.v1",
+  "type":"object","additionalProperties":false,
+  "required":["schemaVersion","status","supersededEvidenceHash","superseded_by","newBuildId","newSourceHash","newEvidenceHash","sessionFence","createdAtUtc"],
+  "properties":{
+    "schemaVersion":{"const":"persona-workbench.evidence-supersession.v1"},"status":{"const":"superseded"},"supersededEvidenceHash":{"type":"string","pattern":"^[0-9A-F]{64}$"},"superseded_by":{"type":"string","minLength":1},"newBuildId":{"type":"string","minLength":1},"newSourceHash":{"type":"string","pattern":"^[0-9A-F]{64}$"},"newPackageHash":{"type":["string","null"],"pattern":"^[0-9A-F]{64}$"},"newEvidenceHash":{"type":"string","pattern":"^[0-9A-F]{64}$"},"sessionFence":{"type":"integer","minimum":1},"createdAtUtc":{"type":"string","format":"date-time"}
+  }
+}

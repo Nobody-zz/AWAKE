@@ -1,0 +1,46 @@
+{
+  "schema_version": "awake.worldbook.a1-authority-golden.v1",
+  "canonical_cases": [
+    {
+      "name": "nested-unicode-null-array",
+      "input": {
+        "z": {
+          "b": 2,
+          "a": "\u4E16\u754C"
+        },
+        "arr": [
+          {
+            "d": true,
+            "c": false
+          },
+          null
+        ],
+        "a": 1
+      },
+      "canonical": "{\u0022a\u0022:1,\u0022arr\u0022:[{\u0022c\u0022:false,\u0022d\u0022:true},null],\u0022z\u0022:{\u0022a\u0022:\u0022\\u4E16\\u754C\u0022,\u0022b\u0022:2}}",
+      "hash": "3C225A99299E17BCD29FE3480C9C84845412058C693F4DE165DA2038EDEFAA0A"
+    },
+    {
+      "name": "numeric-spellings",
+      "input": {
+        "n": 1.0,
+        "minus": -0,
+        "exp": 1e3,
+        "big": 9007199254740993
+      },
+      "canonical": "{\u0022big\u0022:9007199254740993,\u0022exp\u0022:1e3,\u0022minus\u0022:-0,\u0022n\u0022:1.0}",
+      "hash": "EB808CCE49C212FC6BDB5E36F64BCCD9EC5D5F617CFE742CFCEC7682928B4D22"
+    }
+  ],
+  "contract_hashes": {
+    "manifest_hash": "E1C304922699EAC296B4C632FA9224EE8547717A59C233A0358E6B9376E6BC8B",
+    "content_hash": "1F6C89DED24C451BDBD418431D3F2D73F0B196661ECF5F6BBC60D48624758EDB",
+    "package_hash": "CFD1BB27923841863316C7658809D62B4DCE0FF38B80CD62574F9076A0E86493"
+  },
+  "object_hash": "3C225A99299E17BCD29FE3480C9C84845412058C693F4DE165DA2038EDEFAA0A",
+  "ledger_record_hash": "5588E44630DE44EC0C605320542B6D1DDA53926260BEBC2B9F1F479C6013D830",
+  "path_collision": {
+    "forward_hash": "02EFC45B1981BE2D748CFBC2B6D4D6E446FC4D9065F075C8600E9BDB97D87AB1",
+    "reverse_hash": "02EFC45B1981BE2D748CFBC2B6D4D6E446FC4D9065F075C8600E9BDB97D87AB1"
+  }
+}

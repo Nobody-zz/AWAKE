@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.adapter.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "packageId", "version", "targetWorldId", "capabilities", "entrypoint"],
+  "properties": {
+    "schemaVersion": { "const": "awake.worldbook.adapter.v1" },
+    "packageId": { "$ref": "common.schema.json#/$defs/package_id" },
+    "version": { "$ref": "common.schema.json#/$defs/version" },
+    "targetWorldId": { "$ref": "common.schema.json#/$defs/stable_id" },
+    "capabilities": { "type": "array", "items": { "enum": ["resolve_identity", "resolve_culture", "resolve_kingdom", "resolve_settlement", "resolve_role", "resolve_skill", "resolve_age", "resolve_event"] }, "uniqueItems": true },
+    "entrypoint": { "type": "string", "pattern": "^(?!/)(?![A-Za-z]:)[^\\\\:*?\"<>|]+$" },
+    "extensions": { "$ref": "common.schema.json#/$defs/extensions" }
+  }
+}

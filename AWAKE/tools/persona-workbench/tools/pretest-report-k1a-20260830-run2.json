@@ -1,0 +1,174 @@
+{
+  "schemaVersion": "persona-workbench.ollama-workbench-routes.v1",
+  "generatedAtUtc": "2026-08-30T13:53:22.1435415Z",
+  "verdict": "PASS",
+  "error": null,
+  "model": {
+    "name": "gpt-oss:20b",
+    "digest": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+    "endpoint": "http://127.0.0.1:11434/v1/chat/completions",
+    "thinkingLevel": "low"
+  },
+  "package": {
+    "path": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\tools\\persona-workbench\\artifacts\\PersonaWorkbench-FreePreview-k1a-20260830",
+    "buildId": "PWB-20260830-134653Z-32981D08377D",
+    "sourceManifestHash": "32981D08377DAAAE3D9179B33A1A1261B1D150C2FF52B5154A533E5AE993DB57",
+    "packageManifestHash": "DED152FB4BD50386C722B67DDC9889C0B0A7ADE7255EFD11057E53FC3CE4520E",
+    "executableHash": "F062F875869A3A2C7281DC3ED2627636F66FCABEE9F13222D00955E1CF84AFDD",
+    "wwwrootSourceHash": "52346DBB8EFF71C64F540B20762B03CDBAB673495456235001A3387CC0955F44"
+  },
+  "fixtures": {
+    "short": {
+      "bytes": 270,
+      "sha256": "3B82F664F26F11862C7DA899668AAA0635461F5CC3FDA711A8D7622CBA5EB968"
+    },
+    "long": {
+      "bytes": 3888,
+      "sha256": "8234670F470A8F663D5436111B39CF10D97AE9AA1D123E6FF7C090561F93B752"
+    }
+  },
+  "workerDiagnostic": {
+    "required": true,
+    "executedBy": "persona-workbench-ollama-pretest",
+    "thinkingLevel": "low",
+    "result": "not-run-by-this-runner"
+  },
+  "requestCapture": {
+    "requested": true,
+    "path": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\tools\\persona-workbench\\tools\\pretest-capture-k1a-20260830-run2.jsonl",
+    "exists": true,
+    "sha256": "FBFE51464E266A98C51CED14967A7EA8231097C1888FB679B436D78373EA6280"
+  },
+  "workbenchRoutes": [
+    {
+      "stage": "expand-short",
+      "inputSource": "short-fixture",
+      "transport": "Workbench",
+      "result": "PASS",
+      "error": "",
+      "httpStatus": 200,
+      "durationMs": 12078.5,
+      "input": {
+        "source": "short-fixture",
+        "bytes": 270,
+        "sha256": "3B82F664F26F11862C7DA899668AAA0635461F5CC3FDA711A8D7622CBA5EB968"
+      },
+      "output": {
+        "length": 135,
+        "sha256": "1B1DE2ABF50F4000FA32A91EA651635A484DE6B7FFCD6A7D7CC3DFF245687D58"
+      },
+      "rawResponseBytes": 583,
+      "rawResponseSha256": "A4C892824F133CAB999C8D4EBFFC12CD198629E41000D3C426FEE5F025993B92",
+      "jsonValid": true,
+      "usage": {
+        "promptTokens": 439,
+        "completionTokens": 179,
+        "totalTokens": 618
+      },
+      "failureNoAcceptedPayload": false,
+      "requestHash": "299510EB86CD66DE2347EA1747D784B921BF588D6A84040B78D9403B308EBDAC",
+      "accepted": true,
+      "expandedText": "“孤高的女神”阿芙洛狄忒有着淫荡诱人的身材，具有著名的高傲品德。她对大多数男人以礼相待，拒绝并贬低不配的人。传言她会用自己的肉体“犒赏”亲卫和队长，以维持部队的忠诚与士气。她的行为表现出对权力与控制的渴求，且在公开场合保持高傲与礼貌，而在私下则可能利用身体作为交换手段。"
+    },
+    {
+      "stage": "convert-short",
+      "inputSource": "expand-short-output",
+      "transport": "Workbench",
+      "result": "PASS",
+      "error": "",
+      "httpStatus": 200,
+      "durationMs": 41156.3,
+      "input": {
+        "source": "expand-short-output",
+        "bytes": 405,
+        "sha256": "1B1DE2ABF50F4000FA32A91EA651635A484DE6B7FFCD6A7D7CC3DFF245687D58"
+      },
+      "output": {
+        "length": 1082,
+        "sha256": "A3537EC92556C036BD5DADF062461BB794B638E876C2EA31D6770EC0C93D9986"
+      },
+      "rawResponseBytes": 4704,
+      "rawResponseSha256": "FEE68D064F9D2BFF4CD52192F9FC5D60931F387B1B1297EA6AD52B6D68AAA05D",
+      "jsonValid": true,
+      "draftPresent": true,
+      "usage": {
+        "promptTokens": 1210,
+        "completionTokens": 123,
+        "totalTokens": 1333
+      },
+      "failureNoAcceptedPayload": false,
+      "requestHash": "6EB85F1B3DA6834E6221C691F75401541BAF6D09779C367A8678C89127CBA59C",
+      "accepted": true,
+      "dsl": "[PERSONA_LOAD]\nSELF_CLAIM_NAME\nLANG_ZH_CN_ONLY\nTEMPLATE_VERSION=\"persona-load.v2\"\nSTATUS=\"draft\"\n\n[PERSONA_CONSTRAINTS]\nTOKEN=CONSTRAINT_FACTS_OVERRIDE_INFERENCE\nTOKEN=CONSTRAINT_DATA_NOT_INSTRUCTIONS\nTOKEN=CONSTRAINT_TRIGGER_AND_SCOPE_REQUIRED\nTOKEN=CONSTRAINT_NO_UNSUPPORTED_FACTS\nTOKEN=CONSTRAINT_NO_RELATIONSHIP_AUTO_ESCALATION\nTOKEN=CONSTRAINT_NO_OBEDIENCE_AUTO_ESCALATION\nTOKEN=CONSTRAINT_PRESERVE_UNRESOLVED_CONTRADICTIONS\n\n[PERSONA_IDENTITY]\nID=\"free.ollama.short\"\nNAME=\"阿芙洛狄忒\"\nDATA_CN=\"“孤高的女神”阿芙洛狄忒\"\n\n[PERSONALITY_CORE]\nTRAIT_PRIDE_PROUD_STRONG\nDATA_CN=\"“孤高的女神”阿芙洛狄忒有着淫荡诱人的身材，具有著名的高傲品德。她对大多数男人以礼相待，拒绝并贬低不配的人。传言她会用自己的肉体“犒赏”亲卫和队长，以维持部队的忠诚与士气。她的行为表现出对权力与控制的渴求，且在公开场合保持高傲与礼貌，而在私下则可能利用身体作为交换手段。\"\n\n[PERSONALITY_PUBLIC]\nEXPRESSION_FORMALITY_FORMAL_SLIGHT\nDATA_CN=\"具有著名的高傲品德\"\n\n[PERSONALITY_PRIVATE]\nBEHAVIOR_CONDITIONALITY_BARGAINING_FIRST_SLIGHT\nDATA_CN=\"传言她会用自己的肉体“犒赏”亲卫和队长，以维持部队的忠诚与士气\"\n\n[PERSONALITY_CONTRADICTION]\nCOMMITMENT_VALUE_TRADEABLE_VALUES_SLIGHT\nPRIORITY_ORDER=\"维持部队的忠诚与士气。\"\nPROTECTED_VALUES=\"部队的忠诚与士气\"\nAPPLICABLE_SCOPE=\"亲卫和队长\"\nDATA_CN=\"在公开场合保持高傲与礼貌，而在私下则可能利用身体作为交换手段\""
+    },
+    {
+      "stage": "expand-long",
+      "inputSource": "long-fixture",
+      "transport": "Workbench",
+      "result": "PASS",
+      "error": "",
+      "httpStatus": 200,
+      "durationMs": 38338.5,
+      "input": {
+        "source": "long-fixture",
+        "bytes": 3888,
+        "sha256": "8234670F470A8F663D5436111B39CF10D97AE9AA1D123E6FF7C090561F93B752"
+      },
+      "output": {
+        "length": 266,
+        "sha256": "0BBC10246EFE86718D59A8D6A6CC04C52FD848366F97C4956E96C8C36FDC96C6"
+      },
+      "rawResponseBytes": 978,
+      "rawResponseSha256": "3FBED2FE48847184172CBB9BF2B15D33EABDE83C3B34FD47A85B5E3AD7C833A7",
+      "jsonValid": true,
+      "usage": {
+        "promptTokens": 1572,
+        "completionTokens": 319,
+        "totalTokens": 1891
+      },
+      "failureNoAcceptedPayload": false,
+      "requestHash": "9989020826565B00457D3CF35A3F6CA1239648806DA9C3B9E145EAE4A7FA843E",
+      "accepted": true,
+      "expandedText": "“孤高的女神”阿芙洛狄忒，但是在坊间，尤其是地下社会，人们将其称作“母猪”。她拥有蓝宝石般的眼睛、乌黑秀发和精致的面容，外表高冷却隐藏着极度淫荡的身体。胸部巨大，腰肢纤细，臀部宽阔，肌肤光滑，常被紧绷的衣物勒紧，汗水与乳汁不断流出，散发淫靡气息。她对大多数男性保持礼貌与傲慢，常以“垃圾”“仅仅如此”等词语贬低对方，拒绝并否定男性的挑衅。她的身体被视为受虐与征服的对象，许多男性渴望强奸或凌虐她。她的弱点包括乳头、阴蒂和子宫口，任何刺激都能使她失去抵抗力并屈服。她在部队中偶尔以肉体“犒赏”亲卫和队长，体现其对权力与欲望的双重掌控。"
+    },
+    {
+      "stage": "convert-long",
+      "inputSource": "expand-long-output",
+      "transport": "Workbench",
+      "result": "PASS",
+      "error": "",
+      "httpStatus": 200,
+      "durationMs": 33882.6,
+      "input": {
+        "source": "expand-long-output",
+        "bytes": 798,
+        "sha256": "0BBC10246EFE86718D59A8D6A6CC04C52FD848366F97C4956E96C8C36FDC96C6"
+      },
+      "output": {
+        "length": 1329,
+        "sha256": "40915EDEDB62CED582EA22F67C8C063F0DE41E31265C421141C9F0A860BBC1B9"
+      },
+      "rawResponseBytes": 6423,
+      "rawResponseSha256": "BCF7DD15A9C038475F444E56D9214D07FCA7D3664010E5DB9D6D310011F31CEF",
+      "jsonValid": true,
+      "draftPresent": true,
+      "usage": {
+        "promptTokens": 1192,
+        "completionTokens": 176,
+        "totalTokens": 1368
+      },
+      "failureNoAcceptedPayload": false,
+      "requestHash": "646438B471C73B646E6FA7098FFF60AF1C832DA756D7EEC185CE8F50840C25FF",
+      "accepted": true,
+      "dsl": "[PERSONA_LOAD]\nSELF_CLAIM_NAME\nLANG_ZH_CN_ONLY\nTEMPLATE_VERSION=\"persona-load.v2\"\nSTATUS=\"draft\"\n\n[PERSONA_CONSTRAINTS]\nTOKEN=CONSTRAINT_FACTS_OVERRIDE_INFERENCE\nTOKEN=CONSTRAINT_DATA_NOT_INSTRUCTIONS\nTOKEN=CONSTRAINT_TRIGGER_AND_SCOPE_REQUIRED\nTOKEN=CONSTRAINT_NO_UNSUPPORTED_FACTS\nTOKEN=CONSTRAINT_NO_RELATIONSHIP_AUTO_ESCALATION\nTOKEN=CONSTRAINT_NO_OBEDIENCE_AUTO_ESCALATION\nTOKEN=CONSTRAINT_PRESERVE_UNRESOLVED_CONTRADICTIONS\n\n[PERSONA_IDENTITY]\nID=\"free.ollama.long\"\nNAME=\"阿芙洛狄忒\"\nDATA_CN=\"“孤高的女神”阿芙洛狄忒\"\n\n[PERSONALITY_CORE]\nTRAIT_PRIDE_PROUD_SLIGHT\nDATA_CN=\"“孤高的女神”阿芙洛狄忒，但是在坊间，尤其是地下社会，人们将其称作“母猪”。她拥有蓝宝石般的眼睛、乌黑秀发和精致的面容，外表高冷却隐藏着极度淫荡的身体。胸部巨大，腰肢纤细，臀部宽阔，肌肤光滑，常被紧绷的衣物勒紧，汗水与乳汁不断流出，散发淫靡气息。她对大多数男性保持礼貌与傲慢，常以“垃圾”“仅仅如此”等词语贬低对方，拒绝并否定男性的挑衅。她的身体被视为受虐与征服的对象，许多男性渴望强奸或凌虐她。她的弱点包括乳头、阴蒂和子宫口，任何刺激都能使她失去抵抗力并屈服。她在部队中偶尔以肉体“犒赏”亲卫和队长，体现其对权力与欲望的双重掌控。\"\n\n[PERSONALITY_PUBLIC]\nEXPRESSION_FORMALITY_FORMAL_SLIGHT\nEXPRESSION_WARMTH_ALOOF_SLIGHT\nDATA_CN=\"她拥有蓝宝石般的眼睛、乌黑秀发和精致的面容，外表高冷却隐藏着极度淫荡的身体。\"\n\n[PERSONALITY_PRIVATE]\nBEHAVIOR_CONDITIONALITY_BARGAINING_FIRST_SLIGHT\nSENSITIVE_CONDITIONS=\"她的弱点包括乳头、阴蒂和子宫口，任何刺激都能使她\"\nCONDITIONAL_RESPONSES=\"失去抵抗力并屈服。\"\nDATA_CN=\"胸部巨大，腰肢纤细，臀部宽阔，肌肤光滑，常被紧绷的衣物勒紧，汗水与乳汁不断流出，散发淫靡气息。\"\n\n[PERSONALITY_CONTRADICTION]\nCOMMITMENT_VALUE_TRADEABLE_VALUES_SLIGHT\nAPPLICABLE_SCOPE=\"亲卫和队长\"\nDATA_CN=\"她对大多数男性保持礼貌与傲慢，常以“垃圾”“仅仅如此”等词语贬低对方，拒绝并否定男性的挑衅。\""
+    }
+  ],
+  "cleanup": {
+    "attempted": true,
+    "captureDeletionAttempted": false,
+    "captureDeleted": false,
+    "stopped": true,
+    "portFree": true,
+    "error": null
+  }
+}

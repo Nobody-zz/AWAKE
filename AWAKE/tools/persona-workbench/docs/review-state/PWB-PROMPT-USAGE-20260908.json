@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "Persona Workbench prompt usability update: expansion behaviorization and contradiction preservation without changing Provider or Persona/DSL contracts",
+  "risk_class": "standard",
+  "max_rounds": 2,
+  "round": 1,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "APPROVED",
+      "change_fingerprint": "b0c4cccc154ec21c595756f709bb4db77352f85fb91d4c07eef4db81d9924b66",
+      "changed_decision": "Keep the update prompt-only; defer new stages, schema fields, and summary paraphrase.",
+      "new_evidence": "Release Web/Core tests, package/ZIP readback, contract tests, source-package binding, and exact backup comparison passed; startup diagnostics failure isolated as pre-existing unrelated issue.",
+      "changed_acceptance": "Acceptance explicitly excludes startup diagnostics and live Provider rerun; no route, DTO, schema, batch, or handoff change allowed."
+    }
+  ],
+  "user_signoff": true
+}

@@ -1,19 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 using Newtonsoft.Json.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Settlements;
+using TaleWorlds.Core;
 
 namespace Awake;
 
 internal sealed class NpcDialogueService : IDisposable
 {
-    private static readonly HashSet<string> PromptRegistrationAttempts = new HashSet<string>(StringComparer.Ordinal);
-    private static readonly object PromptRegistrationGate = new object();
 
     private readonly object _gate = new object();
     private readonly IMarcusAiFrameworkHost _host;
@@ -34,7 +33,6 @@ internal sealed class NpcDialogueService : IDisposable
     private bool _disposed;
     private bool _ready;
     private bool _initStarted;
-    private bool _promptRegistered;
     private bool _openingHintConsumed;
     private bool _sending;
     private int _generation;
@@ -49,6 +47,10 @@ internal sealed class NpcDialogueService : IDisposable
     private string _heroCulture = string.Empty;
     private string _heroRole = "hero";
     private int _heroAge;
+    private string _heroKingdomId = string.Empty;
+    private string _heroSettlementId = string.Empty;
+    private bool _heroIsClanLeader;
+    private readonly Dictionary<string, int> _heroSkills = new Dictionary<string, int>(StringComparer.Ordinal);
     private string _openingHint = string.Empty;
     private string _memoryBlock = string.Empty;
     private string _npcState = string.Empty;
@@ -210,7 +212,16 @@ internal sealed class NpcDialogueService : IDisposable
                 snapshot = new List<NpcDialogueChatEntry>(_history);
             }
 
-            string inputText = await BuildPromptInputAsync(snapshot, trimmedPlayerText, turnContext, linkedCts.Token).ConfigureAwait(false);
+            NpcKnowledgePromptBuildResult promptBuild = await BuildPromptInputAsync(
+                snapshot,
+                trimmedPlayerText,
+                turnContext,
+                linkedCts.Token).ConfigureAwait(false);
+            if (!promptBuild.ShouldCallAi)
+            {
+                return CompleteDirectKnowledgeTurn(trimmedPlayerText, promptBuild);
+            }
+            string inputText = promptBuild.PromptText;
             if (string.IsNullOrWhiteSpace(inputText))
             {
                 ClearActive();
@@ -388,23 +399,36 @@ internal sealed class NpcDialogueService : IDisposable
 
     private async Task InitializeCoreAsync()
     {
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        CancellationToken sessionCancellationToken = AwakeRuntime.SessionCancellationToken;
         try
         {
+            if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
             lock (_gate)
             {
                 if (_disposed) return;
             }
-            await AwakeRuntime.EnsureCurrentHeroBoundAsync(_host, CancellationToken.None, requestPermission: true).ConfigureAwait(false);
-            await AwakeRuntime.EnsureWorldStateReadyAsync(_host, CancellationToken.None).ConfigureAwait(false);
+            await AwakeRuntime.EnsureCurrentHeroBoundAsync(_host, sessionCancellationToken, requestPermission: true).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
+            if (!await AwakeRuntime.EnsureWorldStateReadyAsync(_host, sessionCancellationToken).ConfigureAwait(false)) return;
+            WorldStateStore expectedStore = AwakeRuntime.WorldStateStore;
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
             RequestContext context = AwakeRuntime.CreateContext(_host, Guid.NewGuid().ToString("N"));
             RefreshHeroInfo();
-            await RefreshPlayerKnownAsync(context, CancellationToken.None).ConfigureAwait(false);
+            await RefreshPlayerKnownAsync(context, sessionCancellationToken).ConfigureAwait(false);
             if (!_isSceneShout)
             {
-                await LoadMemoryBlockAsync(CancellationToken.None).ConfigureAwait(false);
-                await LoadNpcStateAsync(CancellationToken.None).ConfigureAwait(false);
+                await LoadMemoryBlockAsync(sessionCancellationToken).ConfigureAwait(false);
+                await LoadNpcStateAsync(sessionCancellationToken).ConfigureAwait(false);
             }
-            await RegisterPromptBestEffortAsync(context, CancellationToken.None).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
+            if (!await RegisterPromptBestEffortAsync(context, sessionCancellationToken).ConfigureAwait(false))
+            {
+                AwakeLog.Write("npc_dialogue_init_blocked prompt_registration");
+                PushStatus("对话提示词未就绪。");
+                return;
+            }
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
             lock (_gate) _ready = true;
             PushStatus("对话已就绪。");
             AwakeLog.Write("npc_dialogue_ready hero=" + _heroId);
@@ -455,7 +479,10 @@ internal sealed class NpcDialogueService : IDisposable
         }
         ConsumeOpeningContext();
         await AwakeRuntime.EnsureWorldStateReadyAsync(_host, cancellationToken).ConfigureAwait(false);
-        await RegisterPromptBestEffortAsync(context, cancellationToken).ConfigureAwait(false);
+        if (!await RegisterPromptBestEffortAsync(context, cancellationToken).ConfigureAwait(false))
+        {
+            return ImmediateFail("对话提示词未就绪。", "npc_dialogue.prompt_unavailable");
+        }
         RefreshHeroInfo();
         await RefreshPlayerKnownAsync(context, cancellationToken).ConfigureAwait(false);
         if (!_isSceneShout)
@@ -468,44 +495,44 @@ internal sealed class NpcDialogueService : IDisposable
         return new NpcDialogueTurnResult(true, string.Empty, string.Empty, string.Empty);
     }
 
-    private async Task RegisterPromptBestEffortAsync(RequestContext sourceContext, CancellationToken cancellationToken)
+    private async Task<bool> RegisterPromptBestEffortAsync(RequestContext sourceContext, CancellationToken cancellationToken)
     {
         string promptId = _isSceneShout ? NpcDialogueConstants.SceneShoutPromptId : NpcDialogueConstants.PromptId;
         string promptVersion = _isSceneShout ? NpcDialogueConstants.SceneShoutPromptVersion : NpcDialogueConstants.PromptVersion;
         string promptRevision = _isSceneShout ? NpcDialogueConstants.SceneShoutPromptRevision : NpcDialogueConstants.PromptRevision;
         string attemptKey = promptId + "|" + promptVersion + "|" + promptRevision;
-        lock (PromptRegistrationGate)
-        {
-            if (!PromptRegistrationAttempts.Add(attemptKey)) return;
-        }
-        lock (_gate)
-        {
-            if (_promptRegistered) return;
-            _promptRegistered = true;
-        }
         try
         {
             RequestContext registerContext = AwakeRuntime.CreateContext(_host, sourceContext.CorrelationId);
-            OperationResult<bool> registered = await _host.Prompts.RegisterAsync(
-                _isSceneShout ? NpcPromptTemplate.CreateSceneShoutDefinition() : NpcPromptTemplate.CreateDefinition(),
-                registerContext,
+            OperationResult<bool> registered = await PromptRegistrationCoordinator.EnsureAsync(
+                attemptKey,
+                token => _host.Prompts.RegisterAsync(
+                    _isSceneShout ? NpcPromptTemplate.CreateSceneShoutDefinition() : NpcPromptTemplate.CreateDefinition(),
+                    registerContext,
+                    token),
                 cancellationToken).ConfigureAwait(false);
-            if (!registered.IsSuccess || !registered.Value)
+            if (!AiTaskConstants.IsPromptRegistrationUsable(registered))
             {
                 AwakeLog.Write("npc_prompt_register_failed code=" + (registered.Error?.Code ?? "unknown")
                     + " category=" + (registered.Error?.Category.ToString() ?? "none")
+                    + " retryable=" + (registered.Error?.Retryable.ToString() ?? "false")
+                    + " correlation=" + (registered.Error?.CorrelationId ?? registerContext.CorrelationId)
                     + " detail=" + (registered.Error?.SafeFallback ?? ""));
+                return false;
             }
+            return true;
         }
         catch (OperationCanceledException)
         {
+            AwakeLog.Write("npc_prompt_register_cancelled");
+            return false;
         }
         catch (Exception ex)
         {
             AwakeLog.Write("npc_prompt_register_error error=" + ex.Message);
+            return false;
         }
     }
-
     private async Task RefreshPlayerKnownAsync(RequestContext context, CancellationToken cancellationToken)
     {
         int day = AwakeRuntime.CurrentGameDay();
@@ -625,8 +652,12 @@ internal sealed class NpcDialogueService : IDisposable
 
     private async Task CloseConversationAfterCommandsAsync(NpcMemoryService memory, string conversationId, int day, string hint)
     {
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        WorldStateStore expectedStore = AwakeRuntime.WorldStateStore;
+        CancellationToken sessionCancellationToken = AwakeRuntime.SessionCancellationToken;
         try
         {
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
             Task[] tasks;
             lock (_commandGate) tasks = _commandTasks.ToArray();
             if (tasks.Length > 0)
@@ -635,6 +666,7 @@ internal sealed class NpcDialogueService : IDisposable
                 Task delay = Task.Delay(TimeSpan.FromSeconds(3));
                 await Task.WhenAny(all, delay).ConfigureAwait(false);
             }
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
             List<NpcMemoryFact> facts;
             lock (_commandGate) facts = new List<NpcMemoryFact>(_settledFacts);
             await memory.CloseConversationAsync(
@@ -644,7 +676,7 @@ internal sealed class NpcDialogueService : IDisposable
                 facts,
                 hint,
                 "npc_dialogue",
-                CancellationToken.None).ConfigureAwait(false);
+                sessionCancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
@@ -663,6 +695,10 @@ internal sealed class NpcDialogueService : IDisposable
                 _heroCulture = _target.CultureId ?? string.Empty;
                 _heroRole = string.IsNullOrWhiteSpace(_target.UnnamedRank) ? "unknown" : _target.UnnamedRank;
                 _heroAge = (int)_target.Age;
+                _heroKingdomId = string.Empty;
+                _heroSettlementId = string.Empty;
+                _heroIsClanLeader = false;
+                _heroSkills.Clear();
                 return;
             }
             if (Campaign.Current?.CampaignObjectManager?.AliveHeroes == null) return;
@@ -673,12 +709,34 @@ internal sealed class NpcDialogueService : IDisposable
                 _heroCulture = hero.Culture?.StringId ?? string.Empty;
                 _heroRole = "hero";
                 _heroAge = (int)hero.Age;
+                _heroKingdomId = hero.Clan?.Kingdom?.StringId ?? string.Empty;
+                _heroSettlementId = (hero.CurrentSettlement ?? hero.StayingInSettlement)?.StringId ?? string.Empty;
+                _heroIsClanLeader = hero.Clan?.Leader == hero;
+                _heroSkills.Clear();
+                AddHeroSkill(hero, "steward", DefaultSkills.Steward);
+                AddHeroSkill(hero, "trade", DefaultSkills.Trade);
+                AddHeroSkill(hero, "leadership", DefaultSkills.Leadership);
+                AddHeroSkill(hero, "tactics", DefaultSkills.Tactics);
+                AddHeroSkill(hero, "scouting", DefaultSkills.Scouting);
                 return;
             }
         }
         catch (Exception ex)
         {
             AwakeLog.Write("npc_dialogue_hero_info_error error=" + ex.Message);
+        }
+    }
+
+    private void AddHeroSkill(Hero hero, string key, SkillObject skill)
+    {
+        try
+        {
+            int value = hero?.GetSkillValue(skill) ?? 0;
+            _heroSkills[key] = value;
+            if (StringComparer.Ordinal.Equals(key, "steward")) _heroSkills["management"] = value;
+        }
+        catch
+        {
         }
     }
 
@@ -864,7 +922,7 @@ internal sealed class NpcDialogueService : IDisposable
         if (!list.Contains(name)) list.Add(name);
     }
 
-    private async Task<string> BuildPromptInputAsync(
+    private async Task<NpcKnowledgePromptBuildResult> BuildPromptInputAsync(
         IReadOnlyList<NpcDialogueChatEntry> history,
         string playerText,
         RequestContext context,
@@ -877,36 +935,54 @@ internal sealed class NpcDialogueService : IDisposable
             _openingHint = string.Empty;
         }
 
-        string retrievedKnowledge = string.Empty;
         long perfStart = AwakePerfProbe.StartMilliseconds();
-        WorldbookService worldbook = WorldbookRuntime.Current;
-        if (worldbook != null)
+        IWorldKnowledgeQuery worldbook = WorldbookRuntime.Knowledge;
+        WorldbookQuery worldbookQuery = new WorldbookQuery
+        {
+            HeroId = _heroId,
+            CharacterId = _target?.Character?.StringId ?? string.Empty,
+            IdentityId = string.Empty,
+            CultureId = _heroCulture,
+            KingdomId = _heroKingdomId,
+            SettlementId = _heroSettlementId,
+            Role = _heroRole,
+            IsFemale = StringComparer.Ordinal.Equals(_heroGender, "female") ? true
+                : StringComparer.Ordinal.Equals(_heroGender, "male") ? false : (bool?)null,
+            IsClanLeader = _heroIsClanLeader,
+            Skills = new Dictionary<string, int>(_heroSkills, StringComparer.Ordinal),
+            ContentTier = "pure",
+            SceneKeywords = SplitSceneKeywords(_sceneKeywords),
+            PlayerText = playerText,
+            MaximumBytes = KnowledgeConstants.MaximumRetrievedBlockBytes
+        };
+        BannerlordWorldbookIdentityAdapter.Apply(worldbookQuery, _target, _heroRole, _heroAge, _heroSkills);
+
+        WorldKnowledgeQueryResult worldbookResult;
+        if (worldbook == null)
+        {
+            worldbookResult = new WorldKnowledgeQueryResult
+            {
+                State = WorldKnowledgeDecisionPolicy.Blocked,
+                BlockedReason = "worldbook_unavailable"
+            };
+            worldbookResult.Errors.Add("WB2-WORLDBOOK-UNAVAILABLE");
+            AwakeLog.Write("npc_dialogue_worldbook_unavailable hero=" + _heroId
+                + " correlation=" + (context?.CorrelationId ?? "none"));
+        }
+        else
         {
             try
             {
-                WorldbookQuery worldbookQuery = new WorldbookQuery
+                worldbookResult = worldbook.Query(worldbookQuery) ?? new WorldKnowledgeQueryResult
                 {
-                    HeroId = _heroId,
-                    CharacterId = _target?.Character?.StringId ?? string.Empty,
-                    IdentityId = _target?.UnnamedKey ?? string.Empty,
-                    CultureId = _heroCulture,
-                    Role = _heroRole,
-                    IsFemale = StringComparer.Ordinal.Equals(_heroGender, "female") ? true
-                        : StringComparer.Ordinal.Equals(_heroGender, "male") ? false : (bool?)null,
-                    Age = _heroAge,
-                    ContentTier = "pure",
-                    SceneKeywords = SplitSceneKeywords(_sceneKeywords),
-                    PlayerText = playerText,
-                    MaximumBytes = KnowledgeConstants.MaximumRetrievedBlockBytes
+                    State = WorldKnowledgeDecisionPolicy.Blocked,
+                    BlockedReason = "query_empty"
                 };
-                WorldbookQueryResult worldbookResult = worldbook.Query(worldbookQuery, BuildMappingContext());
-                retrievedKnowledge = worldbookResult.RetrievedText;
                 if (worldbookResult.Errors.Count > 0)
                 {
                     AwakeLog.Write("npc_dialogue_worldbook_errors hero=" + _heroId
                         + " errors=" + string.Join(",", worldbookResult.Errors));
                 }
-                AwakePerfProbe.Record("worldbook_query", perfStart);
             }
             catch (OperationCanceledException)
             {
@@ -914,40 +990,75 @@ internal sealed class NpcDialogueService : IDisposable
             }
             catch (Exception ex)
             {
+                worldbookResult = new WorldKnowledgeQueryResult
+                {
+                    State = WorldKnowledgeDecisionPolicy.Blocked,
+                    BlockedReason = "query_error"
+                };
+                worldbookResult.Errors.Add("WB2-QUERY-EXCEPTION");
                 AwakeLog.Write("npc_dialogue_knowledge_error hero=" + _heroId
                     + " correlation=" + (context?.CorrelationId ?? "none")
                     + " error=" + ex.Message);
-                retrievedKnowledge = string.Empty;
             }
         }
-        else
-        {
-            KnowledgeService knowledge = KnowledgeRuntime.Current;
-            if (knowledge != null)
-            {
-                try
-                {
-                    retrievedKnowledge = await knowledge.RetrieveLocalAsync(
-                        playerText,
-                        _sceneKeywords,
-                        KnowledgeConstants.MaximumRetrievedBlockBytes,
-                        cancellationToken).ConfigureAwait(false);
-                }
-                catch (OperationCanceledException)
-                {
-                    throw;
-                }
-                catch (Exception ex)
-                {
-                    AwakeLog.Write("npc_dialogue_knowledge_error hero=" + _heroId
-                        + " correlation=" + (context?.CorrelationId ?? "none")
-                        + " error=" + ex.Message);
-                    retrievedKnowledge = string.Empty;
-                }
-                AwakePerfProbe.Record("knowledge_query", perfStart);
-            }
-        }
+        AwakePerfProbe.Record("worldbook_query", perfStart);
 
+        WorldKnowledgeDecision knowledgeDecision = WorldKnowledgeDecisionPolicy.Create(
+            worldbookQuery,
+            worldbookResult,
+            context?.CorrelationId);
+        AwakeLog.Write("npc_dialogue_knowledge_decision hero=" + _heroId
+            + " state=" + knowledgeDecision.State
+            + " ai=" + knowledgeDecision.AllowsAi
+            + " identity=" + knowledgeDecision.Identity
+            + " scope=" + knowledgeDecision.Scope
+            + " detail=" + knowledgeDecision.Detail
+            + " hits=" + string.Join(",", knowledgeDecision.HitIds)
+            + " referrals=" + string.Join(",", knowledgeDecision.ReferralIds)
+            + " blocked_reason=" + knowledgeDecision.BlockedReason
+            + " errors=" + string.Join(",", knowledgeDecision.Errors)
+            + " correlation=" + knowledgeDecision.CorrelationId);
+        if (!knowledgeDecision.AllowsAi)
+        {
+            return new NpcKnowledgePromptBuildResult(knowledgeDecision, string.Empty);
+        }
+        string retrievedKnowledge = WorldKnowledgeDecisionPolicy.BuildPromptBlock(knowledgeDecision);
+        string personaDsl = string.Empty;
+        WorldbookService legacyWorldbook = WorldbookRuntime.Current;
+        if (!_isSceneShout && legacyWorldbook != null)
+        {
+            try
+            {
+                PersonaGenerationResult persona = legacyWorldbook.BuildPersona(
+                    new WorldbookQuery
+                    {
+                        HeroId = _heroId,
+                        CharacterId = _target?.Character?.StringId ?? string.Empty,
+                        IdentityId = _target?.UnnamedKey ?? string.Empty,
+                        CultureId = _heroCulture,
+                        Role = _heroRole,
+                        IsFemale = StringComparer.Ordinal.Equals(_heroGender, "female") ? true
+                            : StringComparer.Ordinal.Equals(_heroGender, "male") ? false : (bool?)null,
+                        SceneKeywords = SplitSceneKeywords(_sceneKeywords),
+                        ContentTier = "pure",
+                        MaximumBytes = 4096
+                    },
+                    BuildMappingContext(),
+                    4096);
+                personaDsl = persona?.Dsl ?? string.Empty;
+                if (persona != null && persona.Warnings.Count > 0)
+                {
+                    AwakeLog.Write("npc_persona_generation hero=" + _heroId
+                        + " fallback=" + persona.UsedLegacyFallback
+                        + " trimmed=" + persona.WasTrimmed
+                        + " warnings=" + string.Join(",", persona.Warnings));
+                }
+            }
+            catch (Exception ex)
+            {
+                AwakeLog.Write("npc_persona_generation_error hero=" + _heroId + " error=" + ex.Message);
+            }
+        }
         string npcState = _npcState ?? string.Empty;
         if (_isSceneShout)
         {
@@ -970,6 +1081,7 @@ internal sealed class NpcDialogueService : IDisposable
             ["retrieved_knowledge"] = retrievedKnowledge,
             ["npc_memory"] = _isSceneShout ? string.Empty : (_memoryBlock ?? string.Empty),
             ["npc_identity"] = BuildNpcIdentity(),
+            ["persona_dsl"] = personaDsl,
             ["npc_state"] = npcState,
             ["player_known"] = SerializePlayerKnown(_playerName, _clanName, _kingdomName),
             ["scene"] = _sceneKeywords,
@@ -988,7 +1100,7 @@ internal sealed class NpcDialogueService : IDisposable
             NpcDialogueConstants.MaxPromptUtf8Bytes);
         if (bounded.IsDirectOnly)
         {
-            return bounded.DirectText;
+            return new NpcKnowledgePromptBuildResult(knowledgeDecision, bounded.DirectText);
         }
 
         PermissionDefinition promptPermission;
@@ -997,12 +1109,12 @@ internal sealed class NpcDialogueService : IDisposable
             : NpcDialogueConstants.PermissionPromptCompile;
         if (!PermissionCatalog.TryGet(promptPermissionId, out promptPermission))
         {
-            return bounded.DirectText;
+            return new NpcKnowledgePromptBuildResult(knowledgeDecision, bounded.DirectText);
         }
         PermissionGateResult gate = new PermissionGate(_host).Evaluate(promptPermission, context);
         if (!gate.Granted)
         {
-            return bounded.DirectText;
+            return new NpcKnowledgePromptBuildResult(knowledgeDecision, bounded.DirectText);
         }
         try
         {
@@ -1016,7 +1128,7 @@ internal sealed class NpcDialogueService : IDisposable
                 cancellationToken).ConfigureAwait(false);
             if (compiled.IsSuccess && compiled.Value != null && !string.IsNullOrWhiteSpace(compiled.Value.CompiledText))
             {
-                return NpcDialoguePromptPipeline.EnsureBudget(compiled.Value.CompiledText, NpcDialogueConstants.MaxPromptUtf8Bytes);
+                return new NpcKnowledgePromptBuildResult(knowledgeDecision, NpcDialoguePromptPipeline.EnsureBudget(compiled.Value.CompiledText, NpcDialogueConstants.MaxPromptUtf8Bytes));
             }
         }
         catch (OperationCanceledException)
@@ -1027,9 +1139,40 @@ internal sealed class NpcDialogueService : IDisposable
         {
             AwakeLog.Write("npc_prompt_compile_error error=" + ex.Message);
         }
-        return bounded.DirectText;
+        return new NpcKnowledgePromptBuildResult(knowledgeDecision, bounded.DirectText);
     }
 
+    private NpcDialogueTurnResult CompleteDirectKnowledgeTurn(
+        string playerText,
+        NpcKnowledgePromptBuildResult promptBuild)
+    {
+        WorldKnowledgeDecision knowledge = promptBuild?.Knowledge;
+        string reply = string.IsNullOrWhiteSpace(promptBuild?.DirectReply)
+            ? "我没有可靠的说法。"
+            : promptBuild.DirectReply;
+        lock (_gate)
+        {
+            if (_disposed)
+            {
+                return ImmediateFail("对话已结束。", "npc_dialogue.disposed");
+            }
+            _pendingPlayerText = string.Empty;
+            _history.Add(new NpcDialogueChatEntry("player", playerText ?? string.Empty));
+            _history.Add(new NpcDialogueChatEntry("npc", reply));
+            while (_history.Count > NpcDialogueConstants.HistoryCapacity) _history.RemoveAt(0);
+        }
+        AppendTranscriptTurn(playerText ?? string.Empty, reply);
+        ClearActive();
+        AwakeLog.Write("npc_dialogue_worldbook_direct hero=" + _heroId
+            + " state=" + (knowledge?.State ?? WorldKnowledgeDecisionPolicy.NotFound)
+            + " blocked_reason=" + (knowledge?.BlockedReason ?? string.Empty)
+            + " referrals=" + string.Join(",", knowledge?.ReferralIds ?? new List<string>())
+            + " hits=" + string.Join(",", knowledge?.HitIds ?? new List<string>())
+            + " errors=" + string.Join(",", knowledge?.Errors ?? new List<string>())
+            + " correlation=" + (knowledge?.CorrelationId ?? string.Empty));
+        PushTurnCompleted(reply, promptBuild?.Mood ?? "茫然");
+        return new NpcDialogueTurnResult(true, reply, string.Empty, promptBuild?.Mood ?? "茫然");
+    }
     private void OnTaskEvent(int generation, string correlationId, AiTaskEvent evt)
     {
         try
@@ -1070,8 +1213,9 @@ internal sealed class NpcDialogueService : IDisposable
         }
         NpcDialogueValidatedOutput output;
         string error;
+        string validationText = string.IsNullOrWhiteSpace(evt.StructuredJson) ? evt.Text : evt.StructuredJson;
         bool valid = NpcDialogueOutputValidator.TryValidate(
-            evt.Text,
+            validationText,
             _isSceneShout
                 ? NpcDialogueConstants.SceneShoutOutputContractId
                 : NpcDialogueConstants.OutputContractId,
@@ -1109,6 +1253,34 @@ internal sealed class NpcDialogueService : IDisposable
         PushTurnCompleted(normalizedReply, output.Mood);
     }
 
+    private string BuildTranscriptSpeaker()
+    {
+        if (_target == null) return _heroName;
+        if (_target.Hero != null)
+        {
+            string clanName = _target.Hero.Clan?.Name?.ToString() ?? string.Empty;
+            string kingdomName = _target.Hero.Clan?.Kingdom?.Name?.ToString() ?? string.Empty;
+            string settlementName = _target.Hero.CurrentSettlement?.Name?.ToString()
+                ?? _target.Hero.StayingInSettlement?.Name?.ToString()
+                ?? string.Empty;
+            return AwakeContactLabelBuilder.Build(
+                _heroName,
+                clanName,
+                kingdomName,
+                settlementName,
+                _target.Hero.IsWanderer,
+                _target.Hero.IsNotable && string.IsNullOrWhiteSpace(clanName));
+        }
+        string npcSettlement = Settlement.CurrentSettlement?.Name?.ToString() ?? string.Empty;
+        return AwakeContactLabelBuilder.Build(
+            _heroName,
+            string.Empty,
+            string.Empty,
+            npcSettlement,
+            false,
+            true);
+    }
+
     private void AppendTranscriptTurn(string playerText, string npcText)
     {
         if (_isSceneShout || string.IsNullOrWhiteSpace(_contactKey))
@@ -1128,13 +1300,19 @@ internal sealed class NpcDialogueService : IDisposable
             }
             string contactKey = _contactKey;
             string source = _entrySource;
-            string npcName = _heroName;
+            string npcName = BuildTranscriptSpeaker();
             int day = AwakeRuntime.CurrentGameDay();
             string location = Settlement.CurrentSettlement?.Name?.ToString() ?? string.Empty;
             int sequence;
             lock (_gate) sequence = ++_transcriptTurnSequence;
+            int sessionGeneration = AwakeRuntime.SessionGeneration;
+            WorldStateStore expectedStore = AwakeRuntime.WorldStateStore;
+            CancellationToken sessionCancellationToken = AwakeRuntime.SessionCancellationToken;
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
             AwakeBackgroundTask.Run(
                 () => AwakeTranscriptService.AppendTurnAsync(
+                    sessionGeneration,
+                    expectedStore,
                     contactKey,
                     conversationId,
                     day,
@@ -1144,7 +1322,7 @@ internal sealed class NpcDialogueService : IDisposable
                     npcName,
                     source,
                     "turn|" + conversationId + "|" + day + "|" + sequence,
-                    System.Threading.CancellationToken.None),
+                    sessionCancellationToken),
                 "transcript_turn");
         }
         catch (Exception ex)
@@ -1155,8 +1333,15 @@ internal sealed class NpcDialogueService : IDisposable
 
     private async Task ExecuteCommandAsync(NpcDialogueCommandProposal proposal, string turnIntentId)
     {
+        int sessionGeneration = AwakeRuntime.SessionGeneration;
+        CancellationToken sessionCancellationToken = AwakeRuntime.SessionCancellationToken;
         try
         {
+            if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration))
+            {
+                AwakeLog.Write("npc_dialogue_command_ignored reason=stale_session_before_start hero=" + _heroId);
+                return;
+            }
             if (_isSceneShout)
             {
                 PushStatus("场景喊话不结算单条关系。");
@@ -1192,14 +1377,32 @@ internal sealed class NpcDialogueService : IDisposable
                 return;
             }
 
-            await AwakeRuntime.EnsureWorldStateReadyAsync(_host, CancellationToken.None).ConfigureAwait(false);
+            if (!await AwakeRuntime.EnsureWorldStateReadyAsync(_host, sessionCancellationToken).ConfigureAwait(false))
+            {
+                if (AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration))
+                {
+                    PushStatus("关系未能结算：运行时状态不可用。");
+                }
+                return;
+            }
+            WorldStateStore expectedStore = AwakeRuntime.WorldStateStore;
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore))
+            {
+                AwakeLog.Write("npc_dialogue_command_ignored reason=stale_session_after_store_ready hero=" + _heroId);
+                return;
+            }
             OperationResult<string> result = await new WorldCommandBridge(_host).ExecuteAsync(
                 new WorldCommandProposal(
                     proposal.CommandId,
                     arguments.ToString(Newtonsoft.Json.Formatting.None),
                     string.IsNullOrWhiteSpace(proposal.Reason) ? "NPC 对话结算" : proposal.Reason),
                 turnIntentId,
-                CancellationToken.None).ConfigureAwait(false);
+                sessionCancellationToken).ConfigureAwait(false);
+            if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore))
+            {
+                AwakeLog.Write("npc_dialogue_command_ignored reason=stale_session_after_execute hero=" + _heroId);
+                return;
+            }
             if (result.IsSuccess)
             {
                 lock (_commandGate)
@@ -1214,10 +1417,17 @@ internal sealed class NpcDialogueService : IDisposable
             PushStatus(result.IsSuccess ? "对方的态度有了变化。" : ("关系未能结算：" + (result.Error?.Code ?? "unknown")));
             AwakeLog.Write("npc_dialogue_command_result hero=" + _heroId + " command=" + proposal.CommandId + " ok=" + result.IsSuccess + " code=" + (result.Error?.Code ?? "none"));
         }
+        catch (OperationCanceledException)
+        {
+            AwakeLog.Write("npc_dialogue_command_cancelled hero=" + _heroId);
+        }
         catch (Exception ex)
         {
             AwakeLog.Write("npc_dialogue_command_error error=" + ex.Message);
-            PushStatus("对方的要求没能落账。");
+            if (AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration))
+            {
+                PushStatus("对方的要求没能落账。");
+            }
         }
     }
 
@@ -1338,3 +1548,9 @@ internal sealed class NpcDialogueService : IDisposable
             new NpcDialogueTurnResult(false, string.Empty, display, string.Empty)));
     }
 }
+
+
+
+
+
+

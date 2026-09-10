@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 using Newtonsoft.Json;
 
 namespace Awake;
@@ -251,15 +251,15 @@ internal sealed class KnowledgeService : IDisposable
         return await RetrieveAsync(query, string.Empty, cancellationToken).ConfigureAwait(false);
     }
 
-    internal async Task<string> RetrieveLocalAsync(string query, string contextKeywords, int maximumBytes, CancellationToken cancellationToken)
+    internal Task<string> RetrieveLocalAsync(string query, string contextKeywords, int maximumBytes, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        if (!CorpusLoaded || _localIndex == null || _localIndex.IsEmpty) return string.Empty;
+        if (!CorpusLoaded || _localIndex == null || _localIndex.IsEmpty) return Task.FromResult(string.Empty);
         string searchQuery = BuildSearchQuery(query, contextKeywords);
-        if (string.IsNullOrWhiteSpace(searchQuery)) return string.Empty;
+        if (string.IsNullOrWhiteSpace(searchQuery)) return Task.FromResult(string.Empty);
         IReadOnlyList<KnowledgeHit> hits = _localIndex.Search(searchQuery, KnowledgeConstants.MaximumSearchResults);
         cancellationToken.ThrowIfCancellationRequested();
-        return KnowledgeCorpusLoader.BuildRetrievedBlock(hits, maximumBytes);
+        return Task.FromResult(KnowledgeCorpusLoader.BuildRetrievedBlock(hits, maximumBytes));
     }
 
     internal async Task<string> RetrieveAsync(string query, string contextKeywords, CancellationToken cancellationToken)

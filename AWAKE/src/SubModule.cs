@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using System.Reflection;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.GameState;
 using TaleWorlds.Core;
@@ -17,15 +17,21 @@ namespace Awake;
 public sealed class SubModule : MBSubModuleBase
 {
     private AwakeExtension _extension;
+    private AwakeHostComposition _hostComposition;
 
     protected override void OnSubModuleLoad()
     {
         base.OnSubModuleLoad();
         DialogueOverlayLifecycle.CloseAll = CloseDialogueOverlays;
         CampaignResetLifecycle.Reset = ResetCampaignState;
-        AwakeLog.Write("module_load id=Awake version=" + AwakeVersion.Version);
+        string assemblyPath = Assembly.GetExecutingAssembly().Location;
+        AwakeLog.Write("module_load id=Awake version=" + AwakeVersion.Version
+            + " informational_version=" + AwakeVersion.InformationalVersion
+            + " build_id=" + AwakeVersion.BuildId
+            + " dll_sha256=" + AwakeBuildIdentity.TryComputeFileSha256(assemblyPath));
         _extension = new AwakeExtension();
-        OperationResult<bool> registration = FrameworkHostLocator.Register(_extension);
+        _hostComposition = new AwakeHostComposition();
+        OperationResult<bool> registration = _hostComposition.Initialize(_extension);
         if (registration.IsSuccess && registration.Value)
         {
             AwakeLog.Write("register_ok");
@@ -41,10 +47,10 @@ public sealed class SubModule : MBSubModuleBase
     protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
     {
         base.OnGameStart(game, gameStarterObject);
-        ResetCampaignState();
         AwakeSettings.NormalizeLegacySceneShoutKey();
-        if (gameStarterObject is CampaignGameStarter campaignStarter)
+        if (game?.GameType is Campaign && gameStarterObject is CampaignGameStarter campaignStarter)
         {
+            _hostComposition?.BeginCampaignSession();
             try
             {
                 campaignStarter.AddBehavior(new AwakeTerminalBehavior());
@@ -64,16 +70,30 @@ public sealed class SubModule : MBSubModuleBase
             NpcProactiveHooks.IsMessengerOpen = () => AwakeMessengerOverlay.IsOpen
                 || WorldEventInboxOverlay.IsOpen
                 || WeeklyReportBrowserOverlay.IsOpen;
-            AwakeDialogueSessionCoordinator.IsOverlayOpen = () => NpcDialogueOverlay.IsOpen
-                || AwakeMessengerOverlay.IsOpen
-                || WorldEventInboxOverlay.IsOpen
-                || WeeklyReportBrowserOverlay.IsOpen
-                || DeveloperCheckOverlay.IsOpen;
+            AwakeDialogueSessionCoordinator.IsOverlayOpen = () => AwakeDialogueHubLifecycle.IsAnyOpen;
             NpcProactiveHooks.RecordDialogueContext = (heroId, hint) => NpcDialogueContext.Record(heroId, hint);
             NpcProactiveHooks.EnqueueDialogue = (heroId, hint) => EventDialogueQueue.Enqueue(heroId, hint);
             AwakeMcmActions.ShowDeveloperReport = AwakeTerminalBehavior.ShowDeveloperReportForMcm;
         }
+        else
+        {
+            ResetCampaignState();
+        }
         AwakeLog.Write("game_start version=" + AwakeVersion.Version);
+    }
+
+    public override void OnGameEnd(Game game)
+    {
+        _hostComposition?.EndCampaignSession();
+        base.OnGameEnd(game);
+    }
+
+    protected override void OnSubModuleUnloaded()
+    {
+        _hostComposition?.Dispose();
+        _hostComposition = null;
+        _extension = null;
+        base.OnSubModuleUnloaded();
     }
 
     protected override void OnApplicationTick(float dt)
@@ -96,7 +116,7 @@ public sealed class SubModule : MBSubModuleBase
     {
         AwakeUiDispatcher.Enqueue(() =>
         {
-            NpcDialogueOverlay.CloseActive();
+            AwakeDialogueHubLifecycle.CloseAll();
         });
     }
 
@@ -110,7 +130,7 @@ public sealed class SubModule : MBSubModuleBase
         {
             AwakeLog.Write("campaign_reset_overlay_close_error error=" + ex.Message);
         }
-        WorldEventLedger.ClearForTesting();
+        AwakeRuntime.ResetSessionStateForCampaign();
         AwakeMessengerHistory.ResetForCampaign();
         NpcDialogueContext.ClearForTesting();
         NpcDialogueLauncher.ClearCache();
@@ -155,7 +175,7 @@ public sealed class SubModule : MBSubModuleBase
             AwakeNpcTarget target = NpcDialogueLauncher.FindTargetById(pending.HeroId);
             if (target == null || !NpcDialogueLauncher.IsEligibleNpcTarget(target))
             {
-                WorldEventLedger.Record(AwakeRuntime.CurrentGameDay(), "npc_dialogue_open_failed", pending.HeroId + ":target_unavailable");
+                WorldEventServices.QueueRecord(AwakeRuntime.CurrentGameDay(), "npc_dialogue_open_failed", pending.HeroId + ":target_unavailable");
                 return;
             }
             NpcDialogueContext.Record(pending.HeroId, pending.OpeningHint);
@@ -163,7 +183,7 @@ public sealed class SubModule : MBSubModuleBase
             if (result == NpcDialogueLaunchResult.None)
             {
                 NpcDialogueContext.TryTake(out _, out _);
-                WorldEventLedger.Record(AwakeRuntime.CurrentGameDay(), "npc_dialogue_open_failed", pending.HeroId + ":open_failed");
+                WorldEventServices.QueueRecord(AwakeRuntime.CurrentGameDay(), "npc_dialogue_open_failed", pending.HeroId + ":open_failed");
             }
             else if (result == NpcDialogueLaunchResult.Native)
             {

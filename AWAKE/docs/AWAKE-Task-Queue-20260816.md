@@ -1,396 +1,281 @@
 # AWAKE 任务队列
 
-> 日期：2026-08-16
-> 规则：每轮开始必须先读 `awake-task-continuity/SKILL.md` 与本文件；延续候选必须列出并等待用户决策，不自动选择下一项。
-> 任务锁：同时只允许一个 `in_progress`；游戏测试反馈先入队，不打断当前任务；只有用户明确重定向或批准暂停当前任务时才切换。
-> 当前状态：A 类与 B 类已完成；大审核通过并已推送；未提版。
+> 最后整理：2026-08-17
+> 当前权威：本文件只保留有效状态和推进方向；旧的逐轮记录已归档到 `docs/archive/AWAKE-Task-Queue-History-20260816-to-20260817.md`。
+> 连续性规则：每轮开始重读 `awake-task-continuity/SKILL.md` 与本文件；同一时间最多一个 `in_progress`；“继续/做”只延续当前锁定任务，不自动选择新功能。
+> 验证纪律：编译、SdkSmoke 和发布检查不等于游戏内通过；真机结论必须来自用户运行当前 DLL 后产生的新日志。
 
-## 当前检查点
+## 1. 当前总览
 
-- 当前任务：稳定性修复批次 B（FB-20260817-10/11/12）代码完成，状态 `pending_game`；`PLAN-ContactHubHistory` 保持 `paused`。
-- 最近完成：Messenger 旧历史写入已弃用，通讯录聊天/历史统一走 transcript；`AwakeMessengerHistory` 仅保留旧档迁移读取；双版本构建、SdkSmoke、本地化、发布校验全部通过，DLL 已同步 dist/游戏目录。
-- 下一步：用户进游戏验收通讯录/历史 Tab/固定/transcript-only 联系人；通过后切 `PLAN-Interactions`。
-- 阻塞：游戏内验收需用户运行游戏。
+- 开发阶段：P1-P2 已批准的离线批次 C-I 已全部实现，当前没有未完成的已批准离线开发项。
+- 当前锁定任务：`VAL-20260817-1` 真机验收与 P0 反馈修复；`ROADMAP-20260817-1` 已完成，路线图进入已确认状态。
+- 当前状态：`in_progress`；版本路线图已完成并经用户确认，当前只处理 0.2.1 真机阻断项，不切换到 0.3.0。
+- 内测门槛：Level 0 尚未放行；必须先完成本轮真机验收并处理其中的阻断反馈。
+- 当前版本：AWAKE `v0.2.0`，未正式提版。
+- 当前 1.3.15 DLL SHA-256：`D2EA36815EC262E4C540D33CC55AD63393DF7B066651C03088D3FDAC95953BD7`。
+- 部署状态：修复 DLL 已同步到 `_build_out/1.3.15`、`dist` 与游戏 `Modules/AWAKE`，三处哈希一致；1.4.8 是独立兼容构建，哈希不同属于预期。
+- Git 状态：`AWAKE-Repo` 已同步批次 I 与路线图文档但尚未提交；未经用户明确要求不提交、不推送。
+- 路线图决策：采用 AWAKE 核心 + 官方内容包双轨；1.0 以“完整稳定可玩的 AI 世界模组”为第一成功标准；按可玩闭环分版、按测试阶段设门槛。
+## 1.1 当前待进行计划（按版本目标）
 
-### A 类当前状态
+| 计划/任务 | 版本目标 | 状态 | 下一动作 |
+|---|---|---|---|
+| `VAL-20260817-1`：批次 I、ContactHubHistory 与既有反馈真机验收 | `0.2.1` | `pending_game` | 用户重新启动游戏后复验记忆摘要、写信与世界书启动警告 |
+| `PLAN-Awake-AF-Batch1`、`Batch2to5` | `0.2.1` | `pending_game` | 与 Level 0 一起验收，不重复离线开发 |
+| `PLAN-DevTestTools`、`PLAN-EventInboxUI`、`PLAN-WeeklyReportBrowser` | `0.2.1` | `pending_game` | UI 和诊断真机验收 |
+| `PLAN-WorldEventPersistence`、`PLAN-MarcusMcmConfig`、`PLAN-MessengerPersistence` | `0.2.1` | `pending_game` | 存读档、MCM、历史持久化验收 |
+| `PLAN-ContactHubHistory`、`PLAN-Interactions`、`PLAN-UnifiedDialogueSession` | `0.2.1 → 0.3.0` | `pending_game` | 先完成当前验收，再作为 0.3 社交基座扩展 |
+| `PLAN-SceneVisualSelection`、`PLAN-ProactiveLogic` | `0.3.0` | `pending_game` | 场景入口、主动对话和解释性触发真机复验 |
+| B1 双模式对话（原版窗口 AI 模式） | `0.3.0` | `decision_needed` | 按路线图范围单独锁定实施 PLAN，不自动开工 |
+| 记忆分级、关系阶段、承诺深化、流言基础 | `0.4.0` | `queued` | 以现有记忆/账本为基线重新写 PLAN |
+| 事件内容批次、世界效果、周报后果链 | `0.5.0` | `queued` | 先选 20–40 条可验收内容，再走 PLAN/审查 |
+| Messenger 来信送达、群体议事、社会传播 | `0.6.0` | `queued` | 新建通信与传播 PLAN；媒体/TTS 非硬门槛 |
+| 国家态度、称号、借贷、阴谋和刺杀 | `0.7.0` | `queued` | 命令与风险结算稳定后分批立项 |
+| 世界书管理、作者工具、公开 API、内容包 manifest | `0.8.0` | `draft` | 合并 API/世界书/内容工具计划后审查 |
+| 性能预算、迁移矩阵、Beta/RC、正式发布 | `0.8 → 1.0` | `queued` | 在玩法闭环稳定后进入发布计划 |
 
-- B0-1 Messenger 缓存重置：完成。
-- B0-2 存储回读重试：完成。
-- B0-3 写任务安全包装：完成。
-- B0-4 周报触发日持久化：完成。
-- B0-5 MCM AI 自检补状态：完成。
-- B0-6 release_check.ps1：完成并通过。
-- B3 规则/提示词 schema 注册表：完成。
-- B4 事件引擎数据驱动化：完成。
-- B5 记忆结构化与衰减：完成。
-- B6 主动聊天动机可注册：完成。
-- B7 内容包公开 API：完成。
-- Bug 扫描：重复 ID 拒绝、晚注册重载、内容注册预校验、条件解析 fail-closed、承诺去重与容量裁剪：完成。
+当前优先顺序不是“立即做最高版本号”，而是：`0.2.1` 真机证据 → 阻断问题修复 → `0.3.0` 双模式对话与社交闭环 → `0.4.0` 记忆关系 → `0.5.0` 事件世界反应。
 
-### B 类当前状态
+## 2. 当前锁定任务
 
-- B2 会话服务统一：完成。
-- B8 Messenger 统一 UI：完成（统一会话入口）。
-- B8 开发者检查面板：完成。
-- B8 首启向导：完成。
-- B9 日志/存储契约/性能探针：完成。
-- 大审核：双版本构建、32 条 SdkSmoke、本地化 136/154/154、release_check OK、prefab XML OK：完成。
+### VAL-20260817-1：当前版本真机验收
 
-## 重新排列后的任务优先级
+- 优先级：P0。
+- 状态：`pending_game`。
+- 前置条件：用户使用当前游戏目录 DLL 启动游戏并生成新日志。
+- 完成定义：入口可用、调用链真实执行、结算或持久化成功、存在玩家可观察结果，并有本次运行日志佐证。
 
-原则：需要游戏内实测才能验收的项目尽量后置；可离线开发、编译、SdkSmoke 验证的代码任务优先。
+#### 验收组 A：启动与基础回归
 
-### A 类：不依赖游戏实测，可先开发
+- 存档能进入大地图，`CampaignSessionReady` 正常出现。
+- 首启向导只在 `MapState` 安全弹出，不再阻塞读档。
+- `worldbook_runtime_initialized` 正常，启动阶段无持续 CPU 空转或日志停滞。
 
-1. B0-1：Messenger 历史缓存随战役重置。
-2. B0-2：持久化回读在存储未就绪时安全重试。
-3. B0-3：WorldEvent / Messenger fire-and-forget 写任务安全包装。
-4. B0-4：周报触发日持久化。
-5. B0-5：MCM AI 自检补充路由/模型/Provider 状态。
-6. B0-6：新增 `tools/release_check.ps1` 发布校验。
-7. B3：规则/提示词 schema 注册表。
-8. B4：事件引擎数据驱动化。
-9. B5：记忆结构化与衰减。
-10. B6：主动聊天动机可注册。
-11. B7：内容包公开 API。
+#### 验收组 B：通讯录与历史
 
-### B 类：代码可做，最终验收需要游戏内实测
+- 地图、场景、遭遇和通讯录对话写入统一 transcript。
+- 通讯录历史 Tab、固定、transcript-only 联系人和关系摘要正常。
+- 远方联系人显示写信按钮；发送后 `source=letter` 内容出现在历史中。
+- 复验 `FB-20260817-10`：地图 AI 对话不再被 transcript source 校验拒绝。
 
-1. B2：会话服务统一。
-2. B8：Messenger 统一 UI。
-3. B8：开发者检查面板。
-4. B8：首启向导。
-5. B9：日志、存储契约、性能探针（部分可离线）。
+#### 验收组 C：引导与覆盖层
 
-### C 类：强依赖游戏实测，尽量后置
+- Welcome → AI Config → Command Deck → First Dialogue → Contact History → Complete 顺序推进并持久化。
+- 本局跳过只影响当前战役会话；永久跳过跨会话保持。
+- NPC 对话、通讯录、事件收件箱、周报、开发者检查能由统一 Hub 正确判断和关闭。
+- Esc、焦点恢复和场景回退不残留输入锁。
 
-1. B1：双模式对话（PLAN 已 APPROVED，待签收；落地后仍需完整游戏内验收）。
-2. 世界书运行/命中/TextMappings/persona 验收。
-3. Overlay 焦点与场景回退验收。
-4. AF Batch 1：主动弹窗 → 深谈、拒绝冷却、60 秒 Esc。
-5. AF Batch 2-5：收件箱/周报、日结日志、回复清洗、性能日志。
-6. 世界事件/周报重启后持久化。
-7. MCM 分组、预设、按钮。
-8. 存储管道真机：Companion 读写、读档持久化。
-9. NPC 记忆真机：读档回读、真实对话记忆。
-10. 热键冲突检测真机。
+#### 验收组 D：AI 路由、存储与记忆
 
-## 游戏反馈隔离
+- 复验 `FB-20260817-11`：记忆日结不再出现 `ai.cloud_export_denied`。
+- 复验 `FB-20260817-12`：提示词示例 `heroId` 不再出现双重引号。
+- 复验 `FB-20260817-7`：实际使用 `AWAKE.route.*`，无 Slaanesh 路由残留或错误 Provider 配置。
+- 复验 `FB-20260817-8`：首次缺 key 不刷错误噪音，真实写入不丢失，退出时 final drain 完成。
+- 记忆摘要成功后可以落盘，重载后仍可读取。
 
-用户进入游戏测试后反馈的崩溃、报错、行为异常统一按以下流程处理：
+#### 验收组 E：交互与恢复
 
-1. 先登记反馈到本队列，编号 `FB-YYYYMMDD-N`。
-2. 记录来源、证据、关联任务、优先级。
-3. 判定是否为 `blocking_current`：只有当前任务无法完成或无法验收时才可能打断。
-4. 非阻塞反馈一律进入 `待修复` 或 `待用户决策`，不立即开工。
-5. 当前任务完成后，再由用户从反馈清单选择下一项。
+- `give_gold` 成功扣除正确金币并写入 interaction ledger。
+- 正常保存/重载后不会重复扣款。
+- pending 状态按 expected balance 正确完成、补扣或 fail-closed 补偿。
+- 账本完成写入失败时金币能退款并记录 compensated。
+- promise_request / promise_update 状态转换和去重结果可观察。
 
-## 已完成（代码/文档）
+#### 验收组 F：既有体验反馈
 
-### 运行时基础
+- 复验 `FB-20260816-1`：场景近/远循环、公开喊话、扇形和高亮足够明显。
+- 复验 `FB-20260817-1`：地图对话入口完整，不再与场景/通讯录入口割裂。
+- 复验 `FB-20260817-2`：旧 C/U 配置归一化为 V，MCM 显示与运行时一致。
+- 复验 `FB-20260817-3`：主动对话由关系、事件、身份、地点或需求驱动，日志能解释触发原因。
+- 复验 `FB-20260817-5/6`：开发者检查与世界书管理入口可操作，不是静态占位。
 
-- 场景 T/Y 三维距离选人
-- 无内容事件引擎骨架
-- `awake.relationship.delta.v1` 关系命令
-- NPC 提示词关系命令接线
-- 事件弹窗“参与话题”第三入口
-- 事件类型清单、枚举与校验
-- 事件选项接入关系命令结算
-- 存储管道离线 SdkSmoke
-- NPC 记忆逻辑 SdkSmoke
-- AI 架构清单
+#### 下一动作
 
-### 世界书
+1. 用户运行当前版本并完成上述最小验收路径。
+2. 收集本次运行的 `Awake.log`、`AwakeProbe.log` 以及 Marcus/Companion 对应日志。
+3. Codex 先登记新反馈，再按 P0 → P1 → P2 修复；无新日志时不根据旧日志重复改代码。
 
-- 世界书接口与格式规范
-- 世界书 30 轮自审查
-- 世界书加载 / 索引 / 查询服务
-- 世界书运行时接入 NPC 对话
-- 世界书附加目录数据加载
-- TextMappings 全量 AF Kind 覆盖（22 种）
-- 一次性迁移脚本 `tools/migrate_af_worldbook.ps1`
-- 迁移规范文档
-- `variantSelection` 显式解析与校验
-- 卡拉迪亚编年史嵌入 `ModuleData/Worldbook`（759 文件，约 3 MB）
+## 3. 推进方向与优先级
 
-### AI / 框架 / 配置
+### P0：稳定当前版本并放行 Level 0
 
-- 路由 ID 命名空间修复（`AWAKE.route.*`）
-- Companion 路由恢复
-- `AwakeFeedback` 统一操作反馈
-- MCM 菜单重排、预设与操作按钮
-- 世界事件持久化与周报自动生成
-- Marcus MCM 便捷配置（状态、一键打开 AI 设置/诊断、自动同步引导）
-- 开发者测试工具（强制深谈、收件箱/周报、重置主动状态）
-- 事件收件箱 Gauntlet UI（列表、滚动、Esc 关闭）
-- 周报浏览器 Gauntlet UI（自建 prefab，不使用 AF 美术资产）
+1. 完成 `VAL-20260817-1` 真机验收。
+2. 修复新日志确认的崩溃、卡死、存档损坏、重复扣款、持久化丢失和输入锁死。
+3. 对修复项重新执行双版本构建、SdkSmoke、本地化、资产边界、XML、release check 和同步哈希检查。
+4. 真机复验全部阻断项后，更新内测门槛状态。
 
-### AF 结构学习
+### P1：核心机制下一阶段
 
-- AF 结构落地方案
-- AF 历史版本演进分析（v0.8.4-v1.3.2.1）：规则/后处理迭代、主动聊天动机化、世界玩法外扩、稳定性投入与单体膨胀教训
-- AWAKE 改进方向文档：双模式对话、会话统一、规则 schema、命令层、事件引擎、记忆、主动聊天、发布纪律
-- AWAKE 落地方案：B0-B9 分批执行，含依赖、验收、退出条件与版本纪律
-- AWAKE 计划与文档总索引：77 个活跃文档按执行链/活跃计划/待验收/参考/AF 学习分类，205 个归档文档不再作当前权威
-- AF Batch 1：主动聊天状态机 + 60 秒 Esc 解锁
-- AF Batch 2-5：命令台/收件箱/周报、记忆日结、UI 审计、回复规范化、性能探针
-- AF 五批次 grillme 复查
-- UI 借鉴映射文档
-- Messenger 会话历史持久化
-- `awake-task-continuity` 任务连续性 skill
+1. **B1 双模式对话**：PLAN 已有审查基础；开始实现前重新核对锁定范围和用户的明确实施指令，状态 `decision_needed`。
+2. **运行时相关性与记忆闭环**：世界书真实命中、TextMappings/persona、记忆摘要落盘和读档回读，优先用真机证据驱动修复。
+3. **事件内容与世界效果**：在现有事件引擎、`awake.world.effect.record.v1` 和命令风险策略上增加真实内容批次；属于新内容/机制时重新走 PLAN 与审查。
+4. **通讯录交互闭环**：在现有写信、承诺和给金币基础上评估回复延迟、未读和通知；不得绕过统一 transcript 和 interaction ledger。
+5. **平台配置诊断**：如新日志仍显示路由或云外发异常，再检查 Marcus `platform.db` / Companion 配置，不凭旧日志推断。
 
-## 待游戏内验收（C 类明细，保留）
+### P2：体验与扩展
 
-- 世界书：`worldbook_runtime_initialized`、NPC 命中、TextMappings、persona
-- UI 排版/本地化：NpcDialogue 输入区不重叠、通讯录左右栏不压聊天区、收件箱/周报滚动条留白、命令台顺序、中英文按钮与状态文案
-- Overlay 焦点与场景回退：四个面板不再因即时 no_focus 失败；场景非英雄不再回退原生对话（等待游戏内验收）
-- AF Batch 1：主动弹窗 → 深谈、拒绝冷却、60 秒 Esc
-- AF Batch 2-5：收件箱/周报、日结日志、回复清洗、性能日志
-- 世界事件/周报：重启后收件箱仍有历史、周报自动生成
-- MCM：分组、预设、按钮
-- 存储管道真机：Companion 读写、读档持久化
-- NPC 记忆真机：读档回读、真实对话记忆
+1. Messenger 群聊、媒体、TTS、群聊整理：必须新建 PLAN 并通过 `grill-me-codex`；Media 能力不可用时先定义降级路径。
+2. 通讯录联系人列表头像、更多关系/身份信息和来信通知。
+3. 开发者检查的测试触发、状态刷新、日志跳转和命令诊断增强。
+4. 世界书检索调试、重载、校验和管理体验增强；编辑能力需明确内容同步与安全边界。
+5. 对话等待动画、状态提示、未读计数和大地图通知。
+6. 社区候选：信使距离/时间、善恶与身份差异、记忆整理、借贷、国家态度、阴谋/刺杀、区域文化提示词。
 
-## 延续候选（B/C 类候选，保留备查）
+### 暂停或不迁移
 
-1. Messenger 统一会话：通讯录与 NPC 覆盖层统一入口调度，不删除任一层。
-2. Messenger 写信/来信：远方联系人、回复延迟、未读、来信通知。
-3. 事件收件箱 UI 升级：代码已完成（Gauntlet 列表），待游戏内验收。
-4. 周报浏览器 UI：代码已完成（独立 Gauntlet 查看器），待游戏内验收。
-5. 开发者检查面板：完整诊断 UI，而不是文本报告。
-6. 对话覆盖层等待动画与状态提示增强。
-7. Messenger 未读计数与大地图通知。
-8. Marcus 一键配置：代码已完成（MCM 状态、AI 设置/诊断入口、自动同步引导），待游戏内验收；写入 Provider profile 不建议 AWAKE 直写。
-9. 场景可视化选人 + 原版对话 AI 模式：AF 式地面扇形范围 + 候选高亮；同时第一版内置“原版对话窗口 AI 模式”切换层，AI 场景对话独立接口，原版对话窗口 AI 模式共存；方案见 `PLAN-SceneVisualSelection-20260816.md`。
+- 女神人格和成人内容机制：独立内容包/插件路线，不并入 AWAKE 核心。
+- 旧 AF / 爱与恨实现代码：只作设计参考，不建立运行时依赖。
+- 未批准的内容注入、背景知识和内容包 RAG 扩展。
+- 不具备框架能力或没有明确降级方案的媒体/TTS 实现。
 
-## 待修复（A 类来源，保留明细）
+## 4. 反馈状态归一
 
-1. P1：Messenger 历史缓存未随战役重置。
-2. P1：持久化回读在存储未就绪时永久跳过。
-3. P2：WorldEvent / Messenger fire-and-forget 写任务统一安全包装。
-4. P2：周报触发日持久化，避免读档重复生成。
-5. P2：MCM AI 自检补充路由/模型/Provider 状态。
-6. P1：场景非英雄 NPC 回退原生对话触发 `GenerateUniqueNoFromParty` 空引用（E.htm 堆栈 + Awake.log 的 `npc:merchant_empire:a27` native 回退）；已加防护：场景模式跳过非英雄原生回退，待游戏内验收。
+| ID | 内容 | 当前状态 | 后续动作 |
+|---|---|---|---|
+| `FB-20260817-9` | 读档无法进入大地图 | `done` | 已有真机日志证明关闭 |
+| `FB-20260817-10` | 地图对话不写历史 | `fixed_pending_game` | 验收组 B |
+| `FB-20260817-11` | 记忆日结云外发拒绝 | `fixed_pending_game` | 验收组 D |
+| `FB-20260817-12` | `heroId` 双重引号 | `fixed_pending_game` | 验收组 D |
+| `FB-20260816-1` | 场景选人和喊话不明显 | `fixed_pending_game` | 验收组 F |
+| `FB-20260816-2` | 通讯录关系中心 | `fixed_pending_game` | 核心阶段已实现，验收组 B/E；高级来信另列 P1/P2 |
+| `FB-20260817-1` | 地图对话入口割裂 | `fixed_pending_game` | 验收组 F |
+| `FB-20260817-2` | C 键冲突 | `fixed_pending_game` | 验收组 F |
+| `FB-20260817-3` | 主动对话纯概率 | `fixed_pending_game` | 验收组 F |
+| `FB-20260817-4` | 通讯录头像与信息不足 | `queued` | 已交付人物卡/关系摘要，剩余列表增强列入 P2 |
+| `FB-20260817-5` | 开发者检查缺少操作 | `fixed_pending_game` | 验收组 F；增强项列入 P2 |
+| `FB-20260817-6` | 世界书管理不足 | `fixed_pending_game` | 验收组 F；编辑/调试增强列入 P2 |
+| `FB-20260817-7` | 路由残留与 Provider 疑点 | `decision_needed` | 先用新日志确认，再决定是否查平台数据库 |
+| `FB-20260817-8` | 缺 key、写丢与 final drain | `fixed_pending_game` | 验收组 D |
 
-## 半成品（有入口但未闭环）
+## 5. 已完成离线基线
 
-- `EventDialogueQueue`：引擎已生产，但无内容规则。
-- 命令层：只有关系命令，世界效果未接。
-- Preprocess / Postprocess 路由：已注册但无调用方。
-- 无名 NPC：有身份回退，无永久记忆与命令边界。
-- 遭遇面谈 / 场景 T/Y / 通讯录：统一会话未完成；通讯录历史已持久化。
-- 开发者检查：仍是文本报告。
+### 运行时和存储
 
-## 排队中（新想法/建议，不打断当前任务）
+- Messenger 缓存重置、存储回读重试、安全写任务、周报触发日持久化。
+- transcript/contact/audit schema、历史迁移、持久对话队列和统一会话 token 生命周期。
+- 结构化记忆、衰减、承诺账本、互动 ledger、give_gold 可恢复结算。
+- 重复 ID 拒绝、晚注册重载、内容注册预校验、条件解析 fail-closed、容量裁剪。
 
-- Messenger 群聊、头像、媒体、TTS。
-- 记忆分级、承诺账本、秘闻传播。
-- `FB-20260816-2`：通讯录升级为“关系中心 / 对话历史管理器 / 人物卡片 / 写信 / 交互动作 / 统一对话入口”，方案见 `docs/AWAKE-ContactPanel-Concept-20260816.md`；状态 `queued`，等用户确定分阶段范围后走 grill-me。
-- 2026-08-17 游戏引导增强：自动弹出 + 多步引导 + 持久化进度，只借鉴 AF 设计不复制代码/资产；方案见 `docs/AWAKE-Onboarding-Concept-20260817.md`，状态 `queued`，待用户批准后走 grill-me。
-- 2026-08-16 群聊整理：信使距离/时间、善恶值/身份差异、避免公屏开麦、通讯录记忆管理器、事件动态、关键词调整、头衔/称号、记忆压缩清理、战俘转奴隶兵、借贷、国家态度/王国卡/宿敌、阴谋/刺杀、区域文化提示词；完整清单见 `docs/AWAKE-Community-Discussion-20260816.md`，状态 `queued`，不打断当前任务。
-- 世界事件 / 政令。
-- 内容包接入后的事件内容批次。
-- 体验与测试改进建议：见 `docs/AWAKE-UX-Dev-Improvements-20260816.md`；含首启向导、收件箱/周报 UI、开发者检查面板、游戏内测试触发器、结构化日志等。
+### AI、世界书和事件
 
-## 已暂停 / 不迁移
+- `AWAKE.route.*` 路由、Prompt/schema 注册、云端对话配置入口。
+- 世界书加载、索引、查询、相关性过滤、TextMappings 回退、占位符审计和运行时注入。
+- 数据驱动事件引擎、关系命令、世界效果记录命令和事件持久化/周报。
+- 主动聊天动机注册与解释性触发基础。
 
-- 内容注入与背景知识接入。
-- 知识检索语料与内容包 RAG 接入。
-- 内容包公开 API 落地。
-- 女神人格、情色机制。
-- 旧 AF / 爱与恨兼容。
+### UI 和体验
 
-## 最新游戏反馈（2026-08-16）
+- NPC 对话、通讯录、事件收件箱、周报、开发者检查和统一 Hub 生命周期。
+- 通讯录人物卡、关系摘要、历史 Tab、写信入口。
+- 多步首启引导、跳过与持久化。
+- 场景选人循环、公开喊话、扇形/候选/目标高亮和状态提示。
 
-- `FB-20260816-1`：场景选人范围框选不明显，难以选中具体对象；希望增加“近→远”和“远→近”两个循环键，并支持不选具体人物直接场景喊话。
-  - 来源：用户实测反馈 + `Awake.log` 显示场景 overlay 多次成功打开（`a23`、`a20`），无崩溃。
-  - 关联：`PLAN-SceneVisualSelection-20260816.md`（已 APPROVED，待用户签收；当前只落了 T/Y 基础循环，未落地面扇形与候选可视化）。
-  - 优先级：P1；状态：`fixed_pending_game`；分类：`non_blocking`，不打断当前任务。
-  - 硬性验收红线：标记必须非常明显。地面范围、候选高亮、当前目标高亮三者要能一眼分辨，不得出现“有标记但看不清、被环境色吞掉、远距离不可见”的情况。
-  - 下一步：已签收并实施，代码完成待游戏内验收。
-  - 本轮实施：双键往返、场景喊话、地面扇形 + 候选/目标高亮、持续状态条、场景模式服务与独立输出契约；双版本构建 0 警告 0 错误，SdkSmoke 34 条 PASS，本地化 156/180/180，release_check OK，DLL 已同步 dist/游戏目录。
+### 最新离线验证
 
-## 评估原则反馈（2026-08-16）
+- Bannerlord API 1.3.15 / 1.4.8：0 警告、0 错误。
+- SdkSmoke：PASS ALL。
+- 本地化：`source=226 en=259 cn=259`。
+- 资产边界：`ASSET_BOUNDARY_OK files=111`。
+- Prefab 和语言 XML：可解析。
+- 发布检查：`RELEASE_CHECK_OK`。
+- 游戏目录无误同步 `src`。
+- Marcus 确定性 extension validator：因本机缺少同时包含 `src/MarcusAIFramework/Api` 与 `sdk/manifest.json` 的框架源码根目录，未运行，不得宣称通过。
 
-- `FB-20260816-3`：设计出发点不能只问效率和可行性，必须同时考虑“玩家观感”与“开发者制作/维护难度”。
-- 已纳入：`AWAKE-ContactPanel-Concept-20260816.md`、`Five-Corrections-Revised-20260816.md`、`docs/grill/Grill-Summary-20260816.md`。
-- 后续 GRILLME / PLAN 审查统一加入两条轴；玩家可理解优先，高维护成本默认先做低维护版本。
+## 6. 开发与切换门禁
 
-- `FB-20260816-4`：重新判断 GRILLME 轮次，不再默认每条 50 轮。
-- 新策略：默认 PLAN `MAX_ROUNDS=5`；统一会话/交互命令高风险项 `MAX_ROUNDS=8`；资产边界/历史命令低风险项 `MAX_ROUNDS=3`；APPROVED 提前终止，5 轮仍 REVISE 就交用户拆解。
-- 已写入 `docs/grill/Grill-Summary-20260816.md`。
+- 新功能、新机制、新内容批次：先 PLAN → `grill-me-codex` → 独立只读审查 → `VERDICT: APPROVED` → 用户明确签收 → 才能实现。
+- 完成定义统一为：入口 → 调用方 → 结算/效果 → 可观察结果；只有类、路由、命令或 JSON 存在不算完成。
+- 当前任务未完成时，新建议只入队，不自动切换；用户明确重定向才允许暂停当前任务。
+- 游戏反馈先登记编号和证据，再判定 `blocking_current` / `non_blocking`。
+- 不根据旧日志重复修复，不把取消事件描述为网络错误，不在客户端断开后自动续跑。
+- 不启动 Bannerlord、不修改启动器、不终止游戏进程；游戏运行时不覆盖模块。
+- 普通修复不提版本；提交、推送和正式发布必须由用户明确要求。
 
-## 常驻原则（2026-08-17）
+## 7. 后续候选
 
-- 每个功能必须评估 MCM 菜单是否需要调整或新增调控项；评估结论写进 PLAN，不需要时写明理由。
-- 已有玩家可调行为时必须提供 MCM 入口，默认值 fail-safe；改动同步检查分组、中英文、预设联动与 `Config.json` 兼容。
-- 已写入 `AWAKE/AGENTS.md` 的 `MCM 菜单规则`。
+1. `VAL-20260817-1`：当前版本真机验收；当前锁定，等待新日志。
+2. 新日志反馈修复：只在验收产生证据后开始。
+3. B1 双模式对话：`decision_needed`，需明确实施指令。
+4. Messenger 群聊/媒体/TTS：需新 PLAN、能力门禁和审查。
+5. 正式 Level 0 内测发布整理：仅在真机验收通过后执行。
 
-## 最新游戏反馈（2026-08-17）
+## 8. 最新检查点
 
-- `FB-20260817-10`：地图 AI 对话不会写入通讯录历史。
-  - 来源：`Awake.log` 18:28:58 `transcript_turn_rejected key=hero:lord_1_177 source=map`。
-  - 证据：`AwakeTranscriptConstants.ValidSources` 只含 `messenger/scene/encounter/event/proactive/letter/system`，没有 `map`；地图对话 `NpcDialogueLauncher.TryOpenDialogue(hero, "map")` 会以 `source=map` 调 transcript，被校验拒绝。
+- 2026-08-17 已重新整理任务队列：旧逐轮记录归档，当前文件成为唯一推进权威。
+- `ROADMAP-20260817-1` 已完成：版本重心、功能包、内容包并行轨、延期规则和升版门槛均已写入并确认。`VAL-20260817-1` 当前为 `in_progress`。
+- 最近可验证事实：2026-08-17 19:47:40 与 19:48:32 两次地图 NPC 对话均由 DeepSeek 成功完成，`effects` 可选修复已通过真机链路；19:48:50 记忆日结返回合法摘要，但因 `awake.npc.memory.summary.output.v1` 未注册而被框架以 `ai.output_schema_not_found` 拒绝。
+- 路线图文档：`docs/AWAKE-Version-Roadmap-0.2.0-to-1.0.0-20260817.md` 已写入并确认，状态 `approved`。
+- 下一动作：继续当前锁定的 `VAL-20260817-1`，四项离线修复已完成并同步；下一动作是用户运行当前游戏目录 DLL 生成新日志，确认记忆摘要持久化、写信成功、世界书 warnings=0，不启动 0.3.0。
+## 新增游戏反馈（2026-08-17）
+
+- `FB-20260817-13`：启动与读档验收通过，但地图 AI 对话在第 2 项开始出问题。
+  - 来源：用户本轮真机测试。
+  - 证据：`Awake.log` 19:03:50 提交成功；`companion.log` 19:03:55 返回 `ai.output_schema_invalid`，响应含合法 `reply`/`mood` 但省略可选 `effects`。
+  - 关联任务：`VAL-20260817-1`，验收组 B / D。
+  - 优先级：P0，当前验收阻断。
+  - 状态：`fixed_pending_game`；分类：`blocking_current`。
+  - 修复：`NpcPromptTemplate` 不再把 `effects` 列为必填；`NpcDialogueOutputValidator` 缺省时归一化为空数组。
+  - 离线验证：1.3.15 构建 0 警告/0 错误；`Awake.SdkSmoke` PASS ALL，新增 optional effects 回归通过。
+  - 下一动作：新 DLL 已同步；与本轮新日志一起复验地图回复、transcript 与记忆日结。
+
+- `FB-20260817-14`：地图 AI 对话修复通过，但记忆日结输出契约未注册。
+  - 来源：`Modules\AWAKE\Logs\Awake.log` 与 `Modules\MarcusAIFramework\log\companion.log` 最新一轮日志。
+  - 证据：2026-08-17 19:47:40、19:48:32 两次 `AWAKE.route.npc.dialogue` 均 `Result: completed`；19:48:48 提交 `AWAKE.route.memory.daily`，19:48:50 返回合法 `{"summary":"..."}`，但框架报 `ai.output_schema_not_found`，契约为 `awake.npc.memory.summary.output.v1`。
+  - 关联任务：`VAL-20260817-1`，验收组 B / D。
+  - 优先级：P0；状态：`fixed_pending_game`；分类：`blocking_current`。
+  - 初步定位：`NpcMemoryService` 提交时引用 `awake.npc.memory.summary.output.v1`，当前代码未发现对应 Prompt/输出 schema 注册路径；对话 schema 由 `NpcPromptTemplate` 注册，记忆 schema 没有等价入口。
+  - 下一动作：新 DLL 已同步；用户重新进入游戏并结束一次对话，确认摘要写入且不再出现 `ai.output_schema_not_found`。
+
+- `FB-20260817-15`：世界书启动持续报告两个警告。
+  - 来源：`Awake.log` 的 `worldbook_runtime_initialized rules=336 personas=415 warnings=2`。
+  - 证据：离线按当前 Loader 规则审计出两个重复 Rule ID：`rule_巴旦尼亚水之女神` 与 `rule_中原`，各出现两次；337 个规则文件只有 335 个唯一 ID。
+  - 关联任务：`VAL-20260817-1`，验收组 A / D。
   - 优先级：P1；状态：`fixed_pending_game`；分类：`non_blocking`。
-- `FB-20260817-11`：记忆日结路由仍被云外发拒绝。
-  - 来源：`companion.log` 02:29:01 / 02:30:49 `AWAKE.route.memory.daily | Code: ai.cloud_export_denied`；`Awake.log` 同步 `ai_task_submit_accepted route=AWAKE.route.memory.daily`。
-  - 证据：`NpcMemoryService.SummarizeAsync` 固定传 `CloudExportPolicy.None`，云 Provider 下该路由仍被框架拒绝；NPC 对话改为 `player_state` 后已能成功，但记忆摘要没有走同一云外发分类。
-  - 优先级：P1；状态：`fixed_pending_game`；分类：`non_blocking`。
-- `FB-20260817-12`：NPC 提示词输出示例里 `heroId` 出现双重引号。
-  - 来源：`companion.log` 中 `"heroId": ""hero:lord_1_177""`；`NpcPromptTemplate` 模板 `""heroId"": ""{{npc_id}}"",` 与 `Build` 里 `JsonConvert.SerializeObject` 二次加引号。
-  - 优先级：P1；状态：`fixed_pending_game`；分类：`non_blocking`。
-- `FB-20260817-9`：载入存档后始终进不了大地图。
-  - 来源：用户实测 + `AwakeProbe.log` / `framework.log`。
-  - 证据：`CampaignSessionStarting` 已记录，但 `CampaignSessionReady` 始终未出现；`Awake.log` 在 `game_start` 后停止；进程 CPU 持续增长，日志不再增长；`save054.sav` 只含 AWAKE + MarcusAIFramework，模块列表与当前一致。
-  - 关联：`195c263` 新增的 `TryShowAutoGuide` 会在 `Campaign.Current != null && Mission.Current == null` 时尝试弹出首启向导，读档阶段正好满足该条件。
-  - 优先级：P0；状态：`done`；分类：`blocking_current`。
-  - 修复：`AwakeTerminalBehavior.TryShowAutoGuide` 现在要求 `GameStateManager.Current?.ActiveState is MapState` 且 `Campaign.Current.CurrentMenuContext == null` 才弹首启向导；`AwakeOnboardingService` 实际弹窗时会记录 `awake_onboarding_show active_state=...`。
-  - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产检查通过；DLL SHA-256 `46C4616689704808126FBE725FAC53BE9ED231A5A74438EFFB8A8A4D0687A51C` 已同步 `_build_out/dist/游戏目录`，`release_check OK`。
-  - 游戏内验收：`CampaignSessionReady` 已到达，`worldbook_runtime_initialized` 正常，`awake_onboarding_show active_state=MapState` 证明首启向导只在进入地图后弹出；`FB-20260817-9` 关闭。
-- `FB-20260817-1`：大地图 NPC 对话入口割裂。
-  - 证据：用户实测；只读核查显示通讯录 `IsNearby` 依赖 `NpcDialogueLauncher.GetNearbyTargets`，遭遇菜单有“面谈（醒世）”，但相遇后缺少可直接调出 AI 对话菜单的入口。
-  - 建议方向：先定范围 -> 定格画面 -> 选择具体人物/公开喊话（参考 AF），并统一场景/地图/通讯录入口。
-  - 优先级：P1；状态：`queued`；分类：`non_blocking`。
-- `FB-20260817-2`：C 键默认冲突。
-  - 证据：`AwakeConfig.SceneShoutKey` 默认 `"C"`，`AwakeTerminalBehavior` 绑定 `InputKey.C`；游戏本身已占用 C。
-  - 建议：更换默认键并保留 MCM 可配置；必要时加按键冲突探测。
-  - 优先级：P1；状态：`queued`；分类：`non_blocking`。
-- `FB-20260817-3`：主动对话无逻辑、纯概率触发。
-  - 证据：`NpcProactiveService.EvaluateAsync` 目前是 `BaseChance + affinity` 随机抽取，motive 按权重随机，OpeningHint 通用，缺少“当前处境/事件/身份/关系事实”驱动。
-  - 日志证据：16:20:27-38 连续出现 `npc_proactive_candidate_created hero=... motive=casual`，且同时大量 `world_state_relationship_load_failed code=storage.key_not_found`，说明没有关系/事件事实参与，纯随机高频触发。
-  - 建议：先做确定性触发条件（关系阶段、近期事件、身份、地点、需求），概率只做最终扰动；并给触发写可解释理由。
-  - 优先级：P1；状态：`queued`；分类：`non_blocking`。
-- `FB-20260817-4`：通讯录 UI 继续补头像等信息。
-  - 已有人物卡头像基础，继续扩展联系人列表/卡片信息。
-  - 优先级：P2；状态：`queued`；分类：`non_blocking`。
-- `FB-20260817-5`：开发者检查目前是摆设。
-  - 证据：DeveloperCheckOverlay/VM 已有，但只有静态行展示，无可操作入口/刷新/跳转/测试触发。
-  - 建议：补状态刷新、测试触发、日志跳转、命令诊断。
-  - 优先级：P2；状态：`queued`；分类：`non_blocking`。
-- `FB-20260817-6`：世界书管理功能几乎没有。
-  - 证据：只有 WorldbookLoader/Service/Runtime 的加载与查询，无游戏内管理、重载、校验、编辑、检索调试面板。
-  - 优先级：P2；状态：`queued`；分类：`non_blocking`。
-- `FB-20260817-7`：Slaanesh 路由残留与对话路由疑点。
-  - 证据：源码/游戏模块文本未找到 `Slaanesh` 路由文件，当前路由为 `AWAKE.route.npc.dialogue`；马库斯侧称仍残留 Slaanesh 文件名相关路由文件，需进一步查 `platform.db`/Companion 配置。
-  - 日志证据：`[2026-08-17 00:18:38] AI task failed ... RouteId: AWAKE.route.npc.dialogue | Code: ai.cloud_export_denied`；AWAKE 日志同步出现 `npc_dialogue_turn_failed code=ai.cloud_export_denied category=ProviderFailure`，对话路由实际被云外发策略拒绝。
-  - 优先级：P1；状态：`queued` / `decision_needed`；分类：`non_blocking`。
-- `FB-20260817-8`：存储 key 缺失导致持久化失败/写丢。
-  - 证据：AWAKE 日志大量 `world_state_memory_load_failed`、`world_state_relationship_load_failed`、`world_state_messenger_load_failed`、`world_state_proactive_load_failed` 均为 `storage.key_not_found`；`world_state_write_failed_dropped ... code=storage.key_not_found attempts=3`；会话结束 `world_state_final_drain_failed pending_writes=20 dropped=2`。
-  - 优先级：P1；状态：`queued`；分类：`non_blocking`。
+  - 下一动作：按用户定案删除两个泛化词条后，335 个规则文件已同步；用户启动新日志确认 `warnings=0`。
+  - 最终处理：删除 `巴旦尼亚水之女神` 与 `中原` 泛化词条，只保留 `比安芙` 与 `洛泰——贾尔马律斯平原`，并保留重复 ID 内容门禁。
 
-## 修复方案（2026-08-17）
+- `FB-20260817-16`：通讯录写信被拒绝，但日志无法说明拒绝原因。
+  - 来源：`Awake.log` 2026-08-17 11:00:24 `letter_rejected key=hero:lord_1_18`。
+  - 证据：有效 contact key 已记录；`AppendLetterAsync` 将 store 未就绪、空文本和空幂等键统一记录为同一事件，现有日志无法判断是用户空提交、存储未就绪还是调用参数缺失。
+  - 关联任务：`VAL-20260817-1`，验收组 B。
+  - 优先级：P1；状态：`fixed_pending_game`；分类：`non_blocking`，仍需用户实际发送一封信确认历史写入。
+  - 下一动作：已增加存储就绪和拒绝原因处理；用户实际发送一封信确认 `source=letter` 历史写入。
 
-- 已整理 `docs/AWAKE-Repair-Plan-20260817.md`，分 Batch 1（云外发、存储缺 key、Prompt 诊断、C 键）、Batch 2（主动对话逻辑化、地图对话入口）、Batch 3（开发者检查、世界书管理、通讯录 UI）。
-- 状态：用户已批准；Batch 1 完成待游戏内验收；Batch 2 主动对话逻辑完成，地图对话已加“范围 -> 定格选择 -> 公开喊话”两步入口；Batch 3 开发者检查与世界书管理完成；喊话键旧配置回退、首启引导自动弹出、云外发错误提示已补；统一会话与通讯录 UI 扩展仍待后续批次。
+- `FB-20260817-17`：Prompt 注册冲突和 Companion 启动重连仍产生噪音。
+  - 来源：`Awake.log` 与 `MarcusAIFramework\log\framework.log`。
+  - 证据：最新会话出现一次 `prompt.revision_conflict`，但随后两次 NPC 对话均完成；框架启动后约三秒内出现 pipe broken / EndOfStream 与 profiles list 请求失败，19:47:09 已重新连接，未阻断 19:47:40 之后的 AI 请求。
+  - 关联任务：`VAL-20260817-1`，诊断质量。
+  - 优先级：P2；状态：`fixed_pending_game`；分类：`non_blocking`。
+  - 下一动作：新 DLL 已同步；用户新日志确认 `prompt.revision_conflict` 不再作为 AWAKE 失败。
+  - 原离线动作：Prompt 冲突按“已存在同 revision”降级为幂等成功或明确日志；Companion 重连仅在影响任务提交时升级，当前不归类为连接故障。
 
-## 内测门槛（2026-08-17）
+## 9. 潜在问题反向审查（2026-08-17）
 
-- 已整理 `docs/AWAKE-Internal-Test-Gate-20260817.md`：Level 0 技术内测 / Level 1 玩法内测 / Level 2 公开 Beta。
-- 当前尚未放行 Level 0，需先完成 Batch 1 与 ContactHubHistory 的游戏内验收。
+- `AUD-20260817-1`：存储就绪与写入结果存在“假成功”链路。
+  - 优先级：P0；状态：`fixed_pending_game`；关联：`VAL-20260817-1` 写信与 transcript 验收。
+  - 证据：`EnsureWorldStateReadyAsync` 在 12 个命名空间中任意一个打开成功即返回 `true`，没有确认写信必需的 `awake.transcripts` 与 `awake.contacts` 均已就绪；`AppendTranscriptLinesAsync`、`EnsureContactAsync` 在 drain 后不检查 `WorldDrainSummary`，即使最终写入失败或重试耗尽仍返回 `true`；`AppendLetterAsync` 也忽略联系人写入结果。
+  - 风险：UI 可提示“发送成功”，但历史或联系人索引实际未持久化；部分命名空间故障时现有日志不足以将成功提示与落盘失败对应起来。
+  - 建议：增加指定命名空间 readiness；所有面向调用方的 bool 写入方法依据 owner drain summary 返回真实结果；补 transcript/contacts 缺失、SetAsync 失败、部分成功三类回归测试。
 
-## 可行性核验（2026-08-16）
+- `AUD-20260817-2`：Prompt 注册失败会污染整个会话的注册状态，并存在注册未完成即放行的竞态。
+  - 优先级：P1；状态：`fixed_pending_game`；关联：`FB-20260817-14`、`FB-20260817-17`。
+  - 证据：`NpcMemoryService` 在 `RegisterAsync` 前写入 `_promptRegistrationAttempted=true`；`NpcDialogueService` 在 await 前写入静态 `PromptRegistrationAttempts` 与实例 `_promptRegistered`。取消、暂时断连、权限失败或框架未就绪后不会重试；并发初始化时后续调用可在首个注册仍未完成时直接继续提交任务。
+  - 风险：一次暂时失败可使本进程后续记忆摘要持续得到 `ai.output_schema_not_found`，或在注册完成前产生偶发 schema 失败。
+  - 建议：改为按 prompt key 的 single-flight 注册任务；只在成功或 `prompt.revision_conflict` 后缓存 usable；失败/取消移除状态并按 `FrameworkError.Retryable` 决定后续重试；注册不可用时不提交依赖该 schema 的 AI 任务。
 
-- API probe：`Hero.Gold` 可读可写；`PartyBase.ItemRoster` 存在；`HeroVM(Hero, bool)` 提供 `ImageIdentifier`。
-- 三份 PLAN 均可行；给金币不因原生 API 阻塞，portrait 可用原生角色头像。
-- 主要风险是范围/回归而非不可实现：建议按 ContactHubHistory → Interactions → UnifiedDialogueSession 分批实施。
+- `AUD-20260817-3`：记忆摘要失败诊断被吞掉。
+  - 优先级：P1；状态：`fixed_pending_game`；关联：记忆日结验收。
+  - 证据：`NpcMemoryService.SummarizeAsync` 对 `Failed` / `Cancelled` 只返回空字符串，不记录 `AiTaskEvent.Error`；30 秒超时也静默返回空；SDK 的 `AiTaskEvent` 明确提供 `Error.Code`、`Category`、`Retryable`、`CorrelationId` 与 `Details`。
+  - 风险：AWAKE 日志无法区分 schema、Provider、权限、取消和超时，必须跨查 Companion 日志，且重试策略无法基于错误类型判断。
+  - 建议：记录结构化错误字段；取消与失败分开；超时记录 route/hero/conversation/correlation；不要记录敏感正文。
 
-## 排队中（新增）
+- `AUD-20260817-4`：存储就绪检查存在重复 I/O 与并发重复打开。
+  - 优先级：P2；状态：`fixed_pending_game`。
+  - 证据：每次 `EnsureWorldStateReadyAsync` 都重新执行权限 Ensure，并遍历打开全部 12 个命名空间；对话初始化、EnsureReady、命令结算、事件引擎和每封信都会调用，且没有 single-flight/readiness 快路径。
+  - 风险：增加 Companion 往返、日志与初始化延迟；并发入口可能重复打开同一组 namespace。
+  - 建议：缓存逐 namespace readiness，并用 single-flight 任务合并并发初始化；调用方只要求自身依赖的 namespace 集合。
 
-- 场景选人体验增强：`FB-20260816-1`，双键往返选人 + 无目标场景喊话。
-
-## 本轮实施（待游戏内验收）
-
-- 场景选人 UX：`[` 近到远、`]` 远到近、`C` 场景喊话；按住 `T` 显示地面扇形、候选金色轮廓、当前目标品红脉冲。
-- 无目标场景喊话：独立 `scene_shout` 会话、场景专用 prompt/output 契约、拒绝关系命令、不写 NPC 记忆/关系。
-- 持续状态条与轮廓能力探测，不可用时走文字兜底。
-
-## 新概念方案（未进入实现）
-
-- `FB-20260816-2`：通讯录关系中心。参考 AIInfluenceHistoryManager 面板与 AliceMM 对话/写信结构，已拆成 Phase A-E：关系中心核心、历史管理、写信、交互动作、统一对话入口。
-- 关键修正：原始对话、压缩记忆、关系状态分成三层；交互动作走代码保底而非自由文本；场景/地图/通讯录共用同一会话模型。
-- 等待用户拍板：保留天数、固定上限、历史管理器可见性、第一批交互动作、信件送达规则、场景对话是否并入面板。
-
-## 进行中（2026-08-16）
-
-- `GRILL-20260816-2`：已完成两轮。五个关键修正每轮各用独立 Codex 只读审查生成 50 个对抗检查点，累计每项 100 点；第二轮五条均为 REVISE。
-- 结论：概念文字无法收敛，必须转成 schema/命令/存储/UI/测试契约后再 APPROVED。修订版见 `docs/Five-Corrections-Revised-20260816.md`，两轮产物见 `docs/grill/`。
-- 下一步：等用户拍板 Phase A 边界（是否 v1 只做给金币+请求承诺、历史是否升级 transcript v1、场景入口是否保留轻量覆盖层），然后分别写成 PLAN 契约再收敛。
-
-- `PLAN-20260816-3`：三份 PLAN 全部 APPROVED。
-  - `PLAN-ContactHubHistory-20260816.md`：Round 7 APPROVED。
-  - `PLAN-Interactions-20260816.md`：Round 9 APPROVED。
-  - `PLAN-UnifiedDialogueSession-20260816.md`：Round 5 APPROVED。
-  - 用户已签收。当前任务：`PLAN-ContactHubHistory-20260816.md` 代码完成，状态 `pending_game`。
-  - 实现顺序：ContactHubHistory → Interactions → UnifiedDialogueSession。
-- `PLAN-ContactHubHistory` 当前进度：
-  - 完成：canonical key、transcript/contacts/audit schema 与 applier、AwakeTranscriptService、chunk 字节上限、右侧人物卡片、Messenger VM 异步历史加载、联系人按 canonical 去重、回合双行单命令写入、NpcDialogueService transcript sink、asset boundary lint、历史 Tab、transcript-only 联系人发现。
-  - 完成：Messenger 旧历史写入已移除，聊天/历史 Tab 均从 transcript 读取；`AwakeMessengerHistory` 保留为旧档迁移读取源。
-  - 自检修复：ChunkIndex 支持跨 chunk 固定、turn 幂等键加序号、历史加载竞态防护、pin 只在实际成功后刷新、迁移分批防超限；首次历史读取等待迁移完成，避免旧档漏读。
-  - 下一步：游戏内验收通讯录/历史 Tab/固定/transcript-only 联系人；通过后切 `PLAN-Interactions`。
-  - 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；localization 165/193/193；asset lint 107 文件 OK；release_check OK；DLL SHA-256 5578473BE803345485C78E514850758B932406F5B21CF0E1DF0DEE594F5E68D1 已同步 _build_out/dist/游戏目录。
-
-## 远程同步
-
-- 远端 `main` 已确认以本地最新为权威。
-- 最近推送成功：`f16d4b0`（A 类 B0-B7 完成）。
-- 最近推送成功：`d256e91`（B 类完成 + 大审核修复）。
-- 最近推送成功：本批 ContactHubHistory + transcript 历史权威 + 场景选人 UX（含队列检查点）。
-- 最近推送成功：一键开启云端对话批次已推送到远端 `main`（含推送状态检查点）。
-
-## 一键开启云端对话（2026-08-17）
-
-- 当前任务：`一键开启云端对话`，代码完成，状态 `pending_game`。
-- 完成内容：AWAKE 云外发与玩家状态外发默认开启；MCM 新增“一键开启云端对话”按钮，置位并调用 `BaseSettingsProvider.Instance.SaveSettings` 后打开 Marcus AI 设置台；预设不再关闭云传输；EN/CN 文案与对话错误指引更新。
-- 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；LOCALIZATION_OK source=205 en=234 cn=234；asset lint 107 文件 OK；release_check OK；DLL SHA-256 `382609372A9AB6DC4E46F351882AC26A1A519829F313F713E4E7F9EEBED2EF32` 已同步 `_build_out/dist/游戏目录`。
-- 下一步：进入游戏确认 MCM 按钮可用、点击后两个开关开启并弹出 AI 设置台；仍需在 Marcus AI 设置台允许 `AWAKE.route.npc.dialogue` 云外发。
-- 待办：`ContactHubHistory` 游戏内验收保持 `paused`；完成后按原顺序继续 `PLAN-Interactions`。
-- 推送：本地已提交 `720293e Add one-click cloud dialogue enable` 及后续队列检查点提交；远端 `main` 已同步。
-
-## 修复与改进优先级（2026-08-17 修订）
-
-- P0 本轮：地图对话历史写入、记忆日结云外发、提示词 heroId 双重引号；代码已完成，待游戏内复验。
-- P1 下一轮：`npc_prompt_register_failed code=unknown` 深挖；首次读取 `storage.key_not_found` 日志收敛；MCM 场景喊话键显示与存档回退统一；世界书占位符审计工具；记忆摘要成功后持久化验收。
-- P1/P2 机制：世界书检索相关性过滤、玩家王国/身份上下文补全、统一会话、ContactHubHistory 游戏内验收、Interactions、事件内容规则、命令层世界效果。
-- P2 体验：开发者检查完整 UI、通讯录头像/关系摘要、写信、Messenger 群聊/媒体/TTS、多步引导、群聊整理候选。
-
-## 离线改进批次 C（2026-08-17）
-
-- 完成：`storage.key_not_found` 读取日志收敛；Prompt 注册改为每个 prompt id 只尝试一次；MCM 场景喊话键 C/U 归一化为 V 并保存；世界书占位符审计脚本；世界书检索相关性过滤；世界书 textMappings 可读回退；玩家家族/王国上下文回退；`awake.world.effect.record.v1` 世界事件命令；开发者检查“打开日志目录”；通讯录人物卡关系摘要。
-- 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化 208/237/237；资产检查 107；release_check OK；DLL SHA-256 `7E706B9BA0F9C01805954803CD76383EFB1554B7B4ED2D783503FBE96E8E7A7B` 已同步 `_build_out/dist/游戏目录`。
-- 仍待离线实现：多步引导数据模型与状态机、Messenger 写信基础、统一会话核心、Interactions 命令/恢复服务；这些或依赖已 APPROVED PLAN，或仍需 grill-me 后再落地。
-- 游戏内验收仍挂起：FB-20260817-10/11/12、ContactHubHistory、世界书真机命中、存储/记忆真机。
-- 推送：本地离线批次 C 已提交，远端 `main` 已成功接收（当前批次顶点 `7756d31`）。
-
-## 离线改进批次 D（2026-08-17）
-
-- 完成：多步引导数据模型与状态机（`awake.onboarding.v1` 存储、完成/跳过/永久跳过/重复提醒日）、MCM 引导开关与重复间隔、`AwakeLetterService` 写信基础（transcript `source=letter` 玩家行）。
-- 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化 212/241/241；资产检查 108；release_check OK；DLL SHA-256 `C0E0C97B3505CFBEDE634516044520208EA4E8AEA6FDC5854189FAA435AD6859` 已同步 `_build_out/dist/游戏目录`。
-- 仍待离线实现：`PLAN-Interactions` 命令/恢复服务、`PLAN-UnifiedDialogueSession` 核心、通讯录写信 UI、多步引导 UI。
-- 推送：本地离线批次 C/D 均已提交并推送到远端 `main`。
-
-## 离线改进批次 E（2026-08-17）
-
-- 完成：`AwakeDialogueStartPayload` / `AwakeDialogueSessionState`；统一会话协调器 token 化 `TryStart`/`CloseByToken`；NPC 对话、场景喊话、地图喊话改为按 token 打开/关闭。
-- 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产/发布检查通过；DLL SHA-256 `CEB4D1FD43EA7F3C68C5C465B8D849A7BB4AB43F05DEF4C3B0132DB6199E634B` 已同步。
-- 仍待离线实现：持久对话队列、统一 hub 生命周期、`PLAN-Interactions` 命令/恢复服务、通讯录写信 UI、多步引导 UI。
-- 推送：本地离线批次 C/D/E 均已推送到远端 `main`（当前顶点 `7756d31`）。
-
-## 离线改进批次 F（2026-08-17）
-
-- 完成：持久对话队列 `awake.dialogue.queue.v1`、`WorldStateKind.PendingDialogue`、Enqueue/Consume 存储命令；`EventDialogueQueue` 在会话就绪时恢复 pending，支持按游戏日过期。
-- 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产/发布检查通过；DLL SHA-256 `F74E3AC959470C8DAFF0529E779C43145041E5CA879FE4BA30A91400FD246B0A` 已同步。
-- 仍待离线实现：统一 hub 生命周期、`PLAN-Interactions` 命令/恢复服务、通讯录写信 UI、多步引导 UI。
-
-## 离线改进批次 G（2026-08-17）
-
-- 完成：承诺账本核心（`awake.interactions.v1`、per-contact key、`awake.action.promise_request.v1` / `awake.action.promise_update.v1`）、`AwakePromiseStateMachine`、状态转换校验、权限/manifest/allowlist 注册。
-- 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产/发布检查通过；DLL SHA-256 `8DD09A7FA43F24B045DDF2B846D8CEC0709DB1B0CFC7EEBA5F79089B6C277AC6` 已同步。
-- 仍待离线实现：give_gold 结算/恢复服务、统一 hub 生命周期、通讯录写信 UI、多步引导 UI。
-- 推送：批次 G 本地已提交 `410ce46`，远端推送被网络重置阻断，网络恢复后补推。
-
-## 离线改进批次 H（2026-08-17）
-
-- 完成：`awake.action.give_gold.v1` 基础命令（参数校验、玩家金币扣减、交互账本记录）；风险策略、权限、manifest、对话 allowlist 已注册。
-- 验证：双版本构建 0 警告 0 错误；SdkSmoke PASS ALL；本地化/资产/发布检查通过；DLL SHA-256 `15A25B999FF2889190125DF010A6E91FCA574CD853102705F8C730652959B4F9` 已同步。
-- 仍待离线实现：give_gold 三阶段恢复/补偿、统一 hub 生命周期、通讯录写信 UI、多步引导 UI。
-- 推送：批次 G/H 本地已提交；远端 `main` 推送仍被网络重置阻断，网络恢复后补推。
+- 已排除：写信调用不传 `displayName` 不会清空已有联系人名称；`ApplyContacts` 仅在非空名称时覆盖 `contactNames`。
+- 内容一致性：root、dist、游戏目录、AWAKE-Repo 四处世界书均为 335 文件 / 335 唯一 ID / 0 重复，两个泛化词条已删除，两个指定词条均保留。
+- 本轮门禁：1.3.15 与 1.4.8 构建均为 0 警告 / 0 错误；SdkSmoke `PASS ALL`；release check `RELEASE_CHECK_OK`；MAF lint 为 316 条既有 warning、0 blocking；世界书占位符审计仍为 18 条既有内容问题。
+- 修复结果：`AUD-20260817-1` 至 `AUD-20260817-4` 已完成离线修复；1.3.15/1.4.8 构建与 SdkSmoke 通过，当前等待用户用新 DLL 复验写信、记忆日结和异常恢复日志。

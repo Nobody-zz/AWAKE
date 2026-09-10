@@ -49,32 +49,66 @@
     <string id="awake.dev_check.status" text="运行时诊断" />
     <string id="awake.dev_check.status_refreshed" text="运行时诊断已刷新" />
     <string id="awake.dev_check.refresh" text="刷新" />
-    <string id="awake.dev_check.ai_setup" text="AI 设置" />
+    <string id="awake.dev_check.ai_setup" text="AI 配置（MCM）" />
     <string id="awake.dev_check.diagnostics" text="诊断台" />
     <string id="awake.dev_check.logs" text="打开日志目录" />
     <string id="awake.onboarding.title" text="醒世 · 首启向导" />
-    <string id="awake.onboarding.text" text="开始前需要先配置 AI 服务商、模型与路由。打开 AI 设置台完成配置后，就能进入 NPC 对话。" />
-    <string id="awake.onboarding.open" text="打开 AI 设置" />
+    <string id="awake.onboarding.text" text="开始前请在 MCM → AWAKE → AI 链路中配置 AI 服务、模型和 API Key。路由由内置 Runtime 自动管理。" />
+    <string id="awake.onboarding.open" text="查看 AI 配置说明" />
     <string id="awake.onboarding.later" text="稍后" />
+    <string id="awake.onboarding.next" text="下一步" />
+    <string id="awake.onboarding.skip" text="跳过" />
+    <string id="awake.onboarding.skip_title" text="跳过向导" />
+    <string id="awake.onboarding.skip_text" text="你可以只在本局跳过，也可以永久关闭首启向导。" />
+    <string id="awake.onboarding.skip_campaign" text="本局跳过" />
+    <string id="awake.onboarding.skip_forever" text="永久关闭" />
+    <string id="awake.onboarding.welcome.text" text="本向导会依次说明 AI 配置、指令台、首次对话和通讯录历史。" />
+    <string id="awake.onboarding.aiconfig.text" text="打开 MCM → AWAKE → AI 链路，填写服务地址、模型和 API Key，然后测试连接。AWAKE 路由会自动应用。" />
+    <string id="awake.onboarding.commanddeck.text" text="MCM 中可以调整云外发、主动对话、快捷键和引导重复间隔。" />
+    <string id="awake.onboarding.firstdialogue.text" text="在场景中选择 NPC 或使用地图入口，都会进入统一对话会话。" />
+    <string id="awake.onboarding.contacthistory.text" text="通讯录可以继续对话、查看原始历史，并给远方联系人写信。" />
+    <string id="awake.onboarding.complete.text" text="基础引导完成。之后可从 MCM 和开发者检查面板查看状态。" />
     <string id="awake.dialogue.npc_title" text="醒世·与 {HERO} 交谈" />
     <string id="awake.mcm.group.ai_link" text="0. AI 链路" />
+    <string id="awake.mcm.provider_kind.name" text="AI 服务类型" />
+    <string id="awake.mcm.provider_kind.hint" text="选择你实际使用的 AI 服务。OpenAI 兼容也适用于部分本地服务。" />
+    <string id="awake.mcm.provider_url.name" text="服务地址" />
+    <string id="awake.mcm.provider_url.hint" text="填写完整的 HTTP/HTTPS 地址，例如 https://api.openai.com/v1 或 http://127.0.0.1:11434。不要把 API Key 写进地址。" />
+    <string id="awake.mcm.provider_model.name" text="模型名称" />
+    <string id="awake.mcm.provider_model.hint" text="填写 Provider 返回的模型 ID；可先点击“拉取可用模型”查看。" />
+    <string id="awake.mcm.provider_cloud.name" text="这是云端服务" />
+    <string id="awake.mcm.provider_cloud.hint" text="云端服务通常需要 API Key；本机 Ollama 一般关闭此项。" />
+    <string id="awake.mcm.provider_model_status.name" text="模型读取状态" />
+    <string id="awake.mcm.provider_model_status.hint" text="只读显示最近一次模型列表读取结果。" />
+    <string id="awake.mcm.provider_api_key.name" text="输入或替换 API Key" />
+    <string id="awake.mcm.provider_api_key.content" text="打开输入框" />
+    <string id="awake.mcm.provider_api_key.hint" text="输入框保持可见，便于核对；密钥只写入本机保护存储，不进入 MCM、存档或日志。" />
+    <string id="awake.mcm.provider_apply.name" text="保存配置并应用" />
+    <string id="awake.mcm.provider_apply.content" text="保存并应用" />
+    <string id="awake.mcm.provider_apply.hint" text="把服务类型、地址和模型应用到 AWAKE 的全部 AI 路由。" />
+    <string id="awake.mcm.provider_models.name" text="拉取可用模型" />
+    <string id="awake.mcm.provider_models.content" text="拉取模型" />
+    <string id="awake.mcm.provider_models.hint" text="先应用当前地址和服务类型，再读取 Provider 返回的模型列表。" />
+    <string id="awake.mcm.provider_test.name" text="测试连接" />
+    <string id="awake.mcm.provider_test.content" text="测试连接" />
+    <string id="awake.mcm.provider_test.hint" text="通过读取模型列表测试 Runtime、地址、凭据和 Provider 是否连通。" />
     <string id="awake.mcm.group.data_debug" text="4. 数据与调试" />
     <string id="awake.mcm.group.behavior" text="2. 主动行为" />
     <string id="awake.mcm.group.scene" text="1. 对话与场景" />
     <string id="awake.mcm.ai_status.name" text="AI 链路状态" />
-    <string id="awake.mcm.ai_status.hint" text="只读显示：Companion 连接、路由能力与候选 Provider 状态。Provider 配置请在 MCM → Marcus AI Framework → 01 Companion 完成，Route ID 使用模组 README 中的四条逻辑路由。" />
+    <string id="awake.mcm.ai_status.hint" text="只读显示内置 Runtime、Provider、路由、战役会话和云外发状态。玩家需要的 AI 配置都在本组完成。" />
     <string id="awake.mcm.cloud_export.name" text="启用云外发" />
     <string id="awake.mcm.cloud_export.hint" text="默认开启。关闭后本机 Ollama 等本地链路不受影响；开启云端对话仍需框架路由权限授权。" />
     <string id="awake.mcm.export_player_state.name" text="允许外发玩家状态" />
     <string id="awake.mcm.export_player_state.hint" text="允许把玩家、英雄、关系等角色状态作为 player_state 分类随 NPC 对话外发。默认开启。" />
     <string id="awake.mcm.enable_cloud_oneclick.name" text="一键开启云端对话" />
     <string id="awake.mcm.enable_cloud_oneclick.content" text="一键开启" />
-    <string id="awake.mcm.enable_cloud_oneclick.hint" text="开启 AWAKE 云外发与玩家状态外发，并打开 Marcus AI 设置台。仍需在设置台允许 AWAKE.route.npc.dialogue 云外发。" />
-    <string id="awake.mcm.actions.cloud_oneclick_ok" text="云外发已开启。请在弹出的 AI 设置台中允许 AWAKE.route.npc.dialogue 云外发。" />
-    <string id="awake.mcm.actions.cloud_oneclick_session_only" text="云外发已在本局开启。配置保存失败，请到 MCM 保存设置，然后在 AI 设置台允许 AWAKE.route.npc.dialogue 云外发。" />
+    <string id="awake.mcm.enable_cloud_oneclick.hint" text="开启 AWAKE 云外发与玩家状态外发。内置 Runtime 会自动应用路由配置。" />
+    <string id="awake.mcm.actions.cloud_oneclick_ok" text="云外发已开启，AWAKE 会自动应用路由配置。" />
+    <string id="awake.mcm.actions.cloud_oneclick_session_only" text="云外发已在本局开启。请保存 MCM 设置以便后续战役继续使用。" />
     <string id="awake.mcm.actions.cloud_oneclick_failed" text="一键开启失败，请手动开启云外发。" />
     <string id="awake.mcm.developer_menu.name" text="启用开发者菜单" />
-    <string id="awake.mcm.developer_menu.hint" text="默认关闭。开启后城镇、城堡、村庄、领主府菜单显示神谕 AI 自检与开发者检查。" />
+    <string id="awake.mcm.developer_menu.hint" text="默认关闭。开启后城镇、城堡、村庄、领主府菜单显示 AWAKE 自检与开发者检查。" />
     <string id="awake.mcm.terminal_key.name" text="命令台快捷键" />
     <string id="awake.mcm.terminal_key.hint" text="输入 InputKey 名称，例如 U、K、H。" />
     <string id="awake.mcm.scene_max_range.name" text="场景选人最大距离（米）" />
@@ -89,35 +123,37 @@
     <string id="awake.mcm.scene_shout_key.hint" text="按住 T 后按此键进入无目标场景喊话，默认 V。" />
     <string id="awake.mcm.group.command" text="3. 命令台" />
     <string id="awake.mcm.world_effects.name" text="启用世界效果" />
-    <string id="awake.mcm.world_effects.hint" text="默认开启。关闭后女神输出的世界命令与神谕效果都会被拒绝；该开关计划在 0.2.x 实际接入。" />
-    <string id="awake.mcm.boon_offers.name" text="启用愿力提案" />
-    <string id="awake.mcm.boon_offers.hint" text="默认开启。关闭后女神不再生成新的赐福/供奉候选，已挂起且未结算的提案会被清理；结算中的提案允许完成。" />
+    <string id="awake.mcm.world_effects.hint" text="默认开启。关闭后可选内容包提供的世界效果都会被拒绝；该开关计划在 0.2.x 实际接入。" />
+    <string id="awake.mcm.boon_offers.name" text="启用可选内容提案" />
+    <string id="awake.mcm.boon_offers.hint" text="默认开启。关闭后可选内容包不再生成新的提案，已挂起且未结算的提案会被清理；结算中的提案允许完成。" />
     <string id="awake.mcm.npc_proactive.name" text="启用 NPC 主动" />
     <string id="awake.mcm.npc_proactive.hint" text="默认开启。附近 NPC 有概率按关系与当前场合主动发起谈话。" />
     <string id="awake.mcm.npc_proactive_chance.name" text="NPC 主动概率" />
     <string id="awake.mcm.npc_proactive_chance.hint" text="NPC 主动发起的最终扰动比例，0-100，默认 35；实际触发优先由关系/事件条件决定。" />
     <string id="awake.mcm.sync_routes.name" text="同步路由" />
     <string id="awake.mcm.sync_routes.content" text="同步路由" />
-    <string id="awake.mcm.sync_routes.hint" text="路由由框架自动声明；如需手动同步，请到 AI 设置台点击“同步路由”。" />
+    <string id="awake.mcm.sync_routes.hint" text="路由由 AWAKE 声明并由内置 Runtime 自动应用，通常不需要编辑路由 ID。" />
     <string id="awake.mcm.refresh_status.name" text="AI 自检" />
     <string id="awake.mcm.refresh_status.content" text="AI 自检" />
-    <string id="awake.mcm.refresh_status.hint" text="刷新 Companion 连接状态并显示结果。" />
+    <string id="awake.mcm.refresh_status.hint" text="刷新内置 Runtime、Provider、路由、战役会话和云外发状态。" />
     <string id="awake.mcm.developer_report.name" text="开发者检查" />
     <string id="awake.mcm.developer_report.content" text="打开" />
     <string id="awake.mcm.developer_report.hint" text="打开运行时诊断报告。" />
     <string id="awake.mcm.actions.sync_routes_result" text="路由由框架自动同步；如需手动同步请到 AI 设置台。" />
     <string id="awake.mcm.actions.status_refreshed" text="AI 状态已刷新。" />
     <string id="awake.mcm.actions.developer_unavailable" text="开发者检查暂不可用。" />
-    <string id="awake.mcm.open_setup.name" text="打开 AI 设置台" />
+    <string id="awake.mcm.open_setup.name" text="AI 配置说明" />
     <string id="awake.mcm.open_setup.content" text="打开" />
-    <string id="awake.mcm.open_setup.hint" text="打开 Marcus AI 设置台配置 Provider、模型与路由。" />
+    <string id="awake.mcm.open_setup.hint" text="显示配置位置：MCM → AWAKE → AI 链路。" />
     <string id="awake.mcm.open_diagnostics.name" text="打开诊断台" />
     <string id="awake.mcm.open_diagnostics.content" text="打开" />
-    <string id="awake.mcm.open_diagnostics.hint" text="打开框架诊断台。" />
-    <string id="awake.feedback.marcus_sync_ok" text="路由已同步。" />
-    <string id="awake.feedback.marcus_sync_failed" text="路由同步失败，请打开 AI 设置台。" />
-    <string id="awake.feedback.marcus_open_setup_failed" text="无法打开 AI 设置台。" />
-    <string id="awake.feedback.marcus_open_diagnostics_failed" text="无法打开诊断台。" />
+    <string id="awake.mcm.open_diagnostics.hint" text="显示仅供开发者使用的诊断边界，详细日志不会直接显示在游戏内。" />
+    <string id="awake.feedback.marcus_sync_ok" text="AWAKE 路由由内置 Runtime 管理。" />
+    <string id="awake.feedback.marcus_sync_failed" text="路由应用失败，请检查 AWAKE MCM 中的 AI 链路配置。" />
+    <string id="awake.feedback.marcus_open_setup_failed" text="无法显示 AI 配置说明，请直接打开 AWAKE MCM。" />
+    <string id="awake.feedback.marcus_open_diagnostics_failed" text="无法显示诊断说明，请查看本地 AWAKE 日志。" />
+    <string id="awake.feedback.open_mcm" text="请打开 MCM → AWAKE → AI 链路，配置 Provider、模型和 API Key。" />
+    <string id="awake.feedback.open_diagnostics" text="开发者诊断保留在 AWAKE Developer Check 与本地日志中，详细日志不会直接显示在游戏内。" />
     <string id="awake.menu.dev_tools" text="开发者测试" />
     <string id="awake.dev_tools.title" text="醒世 · 开发者测试" />
     <string id="awake.dev_tools.prompt" text="选择测试动作：" />
@@ -169,7 +205,13 @@
     <string id="awake.ui.messenger_choose" text="选择联系人开始对话。" />
     <string id="awake.ui.messenger_no_nearby" text="附近暂时没有可对话对象。" />
     <string id="awake.ui.contact_expired" text="联系人已失效。" />
-    <string id="awake.ui.contact_remote_letter" text="远方联系人；写信功能将在后续版本开放。" />
+    <string id="awake.ui.contact_remote_letter" text="远方联系人；可以写信。" />
+    <string id="awake.ui.write_letter" text="写信" />
+    <string id="awake.ui.letter_title" text="写信" />
+    <string id="awake.ui.letter_prompt" text="写下你想寄给对方的信：" />
+    <string id="awake.ui.letter_send" text="寄出" />
+    <string id="awake.ui.letter_sent" text="信件已写入联系人历史。" />
+    <string id="awake.ui.letter_failed" text="信件写入失败。" />
     <string id="awake.ui.contact_not_same_place" text="你还没有和对方处于同一地点。" />
     <string id="awake.ui.host_missing" text="AWAKE 尚未连接到 AI 宿主。" />
     <string id="awake.ui.status_starting" text="对话正在苏醒……" />
@@ -218,8 +260,16 @@
     <string id="awake.preset.standard" text="标准" />
     <string id="awake.preset.slow_burn" text="慢热" />
     <string id="awake.preset.strict" text="严格模拟" />
-    <string id="awake.status.companion" text="伴侣服务：{STATE}" />
-    <string id="awake.status.route" text="路由：{ROUTE}" />
+    <string id="awake.status.runtime" text="Runtime 服务：{STATE}" />
+    <string id="awake.status.provider" text="Provider：{STATE}" />
+    <string id="awake.status.route" text="AI 路由：{ROUTE}" />
+    <string id="awake.status.session_ready" text="战役会话：已就绪" />
+    <string id="awake.status.session_not_ready" text="战役会话：未就绪" />
+    <string id="awake.status.ready" text="已就绪" />
+    <string id="awake.status.starting" text="启动中" />
+    <string id="awake.status.draining" text="关闭中" />
+    <string id="awake.status.recovery_required" text="需要恢复" />
+    <string id="awake.status.stopped" text="未运行" />
     <string id="awake.status.cloud" text="云外发：{STATE}" />
     <string id="awake.status.candidates" text="候选：{CANDIDATES}" />
     <string id="awake.status.separator" text="；" />
@@ -237,7 +287,7 @@
     <string id="awake.proactive.decline" text="改天" />
     <string id="awake.proactive.opening_hint" text="对方主动发起了这次谈话。" />
     <string id="awake.dialogue.long_wait_hint" text="对方仍在回应。等待 60 秒后可关闭并取消生成。" />
-    <string id="awake.dialogue.cloud_export_denied" text="云外发被拒绝：请先点击 AWAKE MCM 的“一键开启云端对话”，然后在 Marcus AI 设置台允许 AWAKE.route.npc.dialogue 云外发。" />
+    <string id="awake.dialogue.cloud_export_denied" text="云外发被拒绝：请在 AWAKE MCM 中开启云外发，并检查 Provider 配置。" />
     <string id="awake.dialogue.cloud_export_disabled" text="AWAKE 云外发未开启：请到 MCM 数据与调试中打开云外发。" />
     <string id="awake.menu.inbox" text="事件收件箱" />
     <string id="awake.menu.weekly_report" text="世界周报" />

@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 
 namespace Awake;
 

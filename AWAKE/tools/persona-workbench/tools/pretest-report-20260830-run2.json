@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "persona-workbench.ollama-workbench-routes.v1",
+  "generatedAtUtc": "2026-08-30T13:29:48.5319012Z",
+  "verdict": "FAIL",
+  "error": "PACKAGE_MISSING: package metadata is missing C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\tools\\persona-workbench\\artifacts\\PersonaWorkbench-FreePreview-r48-20260821\\BUILD-ID.txt",
+  "model": {
+    "name": "gpt-oss:20b",
+    "digest": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+    "endpoint": "http://127.0.0.1:11434/v1/chat/completions",
+    "thinkingLevel": "low"
+  },
+  "package": {
+    "path": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\tools\\persona-workbench\\artifacts\\PersonaWorkbench-FreePreview-r48-20260821"
+  },
+  "fixtures": {
+    "short": {
+      "bytes": 270,
+      "sha256": "3B82F664F26F11862C7DA899668AAA0635461F5CC3FDA711A8D7622CBA5EB968"
+    },
+    "long": {
+      "bytes": 3888,
+      "sha256": "8234670F470A8F663D5436111B39CF10D97AE9AA1D123E6FF7C090561F93B752"
+    }
+  },
+  "workerDiagnostic": {
+    "required": true,
+    "executedBy": "persona-workbench-ollama-pretest",
+    "thinkingLevel": "low",
+    "result": "not-run-by-this-runner"
+  },
+  "requestCapture": {
+    "requested": true,
+    "path": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\tools\\persona-workbench\\tools\\pretest-capture-20260830-run2.jsonl",
+    "exists": false,
+    "sha256": null
+  },
+  "workbenchRoutes": [],
+  "cleanup": {
+    "attempted": true,
+    "captureDeletionAttempted": false,
+    "captureDeleted": false,
+    "stopped": false,
+    "portFree": true,
+    "error": null
+  }
+}

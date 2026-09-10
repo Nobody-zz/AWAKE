@@ -49,6 +49,8 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     private readonly List<AwakeNpcTarget> _sceneCandidateTargets = new List<AwakeNpcTarget>();
     private float _sceneLastRangeMeters = -1f;
     private static string _lastBlockReason = string.Empty;
+    private string _worldbookOverlayJson = string.Empty;
+    private string _worldbookActivationJson = string.Empty;
 
     internal AwakeTerminalBehavior()
     {
@@ -62,6 +64,22 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
 
     public override void SyncData(IDataStore dataStore)
     {
+        string current = WorldbookRuntime.ExportOverlayJson();
+        if (!string.IsNullOrWhiteSpace(current)) _worldbookOverlayJson = current;
+        dataStore.SyncData("awake_worldbook_overlay_v1", ref _worldbookOverlayJson);
+        if (!string.IsNullOrWhiteSpace(_worldbookOverlayJson) && !StringComparer.Ordinal.Equals(_worldbookOverlayJson, current))
+        {
+            string error;
+            if (!WorldbookRuntime.ImportOverlayJson(_worldbookOverlayJson, out error)) AwakeLog.Write("awake_worldbook_overlay_load_error error=" + error);
+        }
+        string currentActivation = WorldbookRuntime.ExportActivationJson();
+        if (!string.IsNullOrWhiteSpace(currentActivation)) _worldbookActivationJson = currentActivation;
+        dataStore.SyncData("awake_worldbook_activation_v1", ref _worldbookActivationJson);
+        if (!string.IsNullOrWhiteSpace(_worldbookActivationJson) && !StringComparer.Ordinal.Equals(_worldbookActivationJson, currentActivation))
+        {
+            string error;
+            if (!WorldbookRuntime.ImportActivationJson(_worldbookActivationJson, out error)) AwakeLog.Write("awake_worldbook_activation_load_error error=" + error);
+        }
     }
 
     internal static void TickCurrent()
@@ -78,6 +96,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
 
     private void OnTick()
     {
+        AwakeGoldSettlementService.Tick();
         TryShowAutoGuide();
         if (TryProcessSceneDialogue())
         {
@@ -1104,7 +1123,19 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 AwakeLocalization.Resolve("awake.dev_tools.worldbook_reload", "重载世界书"),
                 (ImageIdentifier)null,
                 true,
-                AwakeLocalization.Resolve("awake.dev_tools.worldbook_reload_hint", "重新读取 ModuleData/Worldbook"))
+                AwakeLocalization.Resolve("awake.dev_tools.worldbook_reload_hint", "重新读取 ModuleData/Worldbook")),
+            new InquiryElement(
+                "worldbook_edit",
+                "编辑已有世界知识",
+                (ImageIdentifier)null,
+                true,
+                "修改当前战役 Overlay，不改基础世界书"),
+            new InquiryElement(
+                "worldbook_export_overlay",
+                "导出世界书修改",
+                (ImageIdentifier)null,
+                true,
+                "导出当前战役修改，供后续存档复用")
         };
         MultiSelectionInquiryData data = new MultiSelectionInquiryData(
             AwakeLocalization.Resolve("awake.dev_tools.title", "醒世 · 开发者测试"),
@@ -1168,6 +1199,16 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         if (StringComparer.Ordinal.Equals(id, "worldbook_reload"))
         {
             AwakeDeveloperTestActions.ReloadWorldbook();
+            return;
+        }
+        if (StringComparer.Ordinal.Equals(id, "worldbook_edit"))
+        {
+            AwakeDeveloperTestActions.EditWorldbook();
+            return;
+        }
+        if (StringComparer.Ordinal.Equals(id, "worldbook_export_overlay"))
+        {
+            AwakeDeveloperTestActions.ExportWorldbookOverlay();
         }
     }
 
@@ -1192,10 +1233,39 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
     {
         try
         {
-            WorldEventLedger.LoadFromStoreAsync(CancellationToken.None).GetAwaiter().GetResult();
             int day = AwakeRuntime.CurrentGameDay();
-            List<WorldEventRecord> week = WorldEventLedger.SnapshotWeek(day);
-            string text = NarrativeReportBuilder.Build(week, day);
+            int sessionGeneration = AwakeRuntime.SessionGeneration;
+            CancellationToken cancellationToken = AwakeRuntime.SessionCancellationToken;
+            AwakeBackgroundTask.Run(async () =>
+            {
+                try
+                {
+                    await WorldEventServices.Recorder.LoadAsync(cancellationToken).ConfigureAwait(false);
+                    if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
+                    AwakeUiDispatcher.Enqueue(() => OpenWeeklyReportLoaded(sessionGeneration, day));
+                }
+                catch (OperationCanceledException)
+                {
+                    AwakeLog.Write("awake_weekly_report_load_cancelled");
+                }
+                catch (Exception ex)
+                {
+                    AwakeLog.Write("awake_weekly_report_load_error error=" + ex.Message);
+                }
+            }, "weekly_report_load");
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("awake_weekly_report_error error=" + ex.Message);
+        }
+    }
+
+    private static void OpenWeeklyReportLoaded(int sessionGeneration, int day)
+    {
+        if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
+        try
+        {
+            string text = WorldEventServices.Reports.BuildText(WorldEventServices.Recorder.SnapshotWeek(day), day);
             if (!WeeklyReportBrowserOverlay.Open(text))
             {
                 AwakeFeedback.ShowError(AwakeLocalization.Resolve(
@@ -1205,7 +1275,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         }
         catch (Exception ex)
         {
-            AwakeLog.Write("awake_weekly_report_error error=" + ex.Message);
+            AwakeLog.Write("awake_weekly_report_open_error error=" + ex.Message);
         }
     }
 

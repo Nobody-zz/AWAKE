@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using MarcusAIFramework.Api;
+using MarcusAwakeFramework.Api;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Conversation;
 using TaleWorlds.CampaignSystem.Encounters;
