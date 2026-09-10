@@ -7,7 +7,7 @@ AWAKE is a content-free AI world runtime for Mount & Blade II: Bannerlord. It co
 ```text
 AWAKE/                     # runtime module
   src/                     # runtime source
-  ModuleData/              # localization
+  ModuleData/              # localization only (no world book)
   GUI/                     # runtime UI
   tools/                   # validation scripts
   docs/                    # current AWAKE docs
@@ -43,6 +43,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\validate_localization.
 ## Content pack
 
 The Slanesh's Embrace content pack is intentionally excluded from this repository. The runtime must stay clean, content-free, and independently playable.
+
+The world book is not published here either. Earlier commits bundled the Calradic Chronicle backup in the superseded `awake.worldbook.v1` layout, which the current runtime rejects (`WorldbookRuntime` accepts only `awake.worldbook.v2` or `awake.worldbook.registry.v1`). That tree has been removed from HEAD; it still exists in the git history and in the local workspace only.
 
 ## Remote
 
