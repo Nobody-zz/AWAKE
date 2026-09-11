@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-SEMANTIC-R3-REVISION-BATCH-20260912",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 2,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "user_signoff": true,
+  "user_signoff_actor": "user-26811",
+  "user_signoff_at": "2026-09-11T17:09:45.522Z",
+  "review_scope": {
+    "documents": "D:/AWAKE-Archive/worldbook-migration-content/semantic-rewrite-batch-download-20260903/r3-revision/documents/*.r3.json (12)",
+    "claims": 41,
+    "source_units": ["拉科尼斯湖", "沙拉斯湾", "卡恰尔半岛", "黎明山脉", "德里亚特"],
+    "decision_record": "docs/worldbook-migration/SEMANTIC-R3-DECISION-RECORD-20260911.json",
+    "writing_rules": "docs/worldbook-migration/tools-r3/WRITING-RULES.md",
+    "superseded_map": "r3-revision/SUPERSEDED-MAP-20260912.json (9 条)"
+  },
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "date": "2026-09-12",
+      "findings": "2xP1（dawn-stew 源外价值归因'善举'；kach-02 a48e49e8 主宾不成立且缺 V6 origin）+ 5xP2（der-furs 强度拔高；决策执行偏差未登记；worksheet 孤儿 origin；claim 版本权威未声明；der-04 action_map 错位）+ 4xP3"
+    },
+    {
+      "round": 2,
+      "verdict": "APPROVED",
+      "date": "2026-09-12",
+      "findings": "两处 P1 确认实质修复且无新增源文重合；deviation_log 五条完整覆盖首轮偏差；claim_authority 裁定使 P2-3/4/5 挂账正当；复审新增 P3：a48e49e8 predicate 空（已当场修复，生成器变量残留）、kach-tales 首句 0-17 无 span 覆盖——两项列入投影批次清单"
+    }
+  ],
+  "machine_validation": "validate-r3-batch.ps1 12/12 ALL PASS（状态门/闭合/同质性/layer 规则/标记唯一/10-gram 防搬运）",
+  "carried_items_to_projection_batch": [
+    "12 档正式建档（Studio authoring）",
+    "正式实体锚点绑定 + 对象簇嵌套裁定",
+    "grants/profile/scope 权限映射（消费 docs/mappings/persona-entity）",
+    "place_cluster→referralIds 联想接线",
+    "子引文细化（quote_hash 按断言粒度）",
+    "claim 元数据现代措辞统一",
+    "worksheet 孤儿 origin.r3.* 清理与 der-04 action_map 错位修正",
+    "a48e49e8 predicate 正式落位；kach-tales 框架句绑定"
+  ],
+  "boundaries": "全部产物保持 needs_review 后的 approved 基线；不编译、不发布、不同步游戏目录；v1 源文与 r2 候选未改动"
+}

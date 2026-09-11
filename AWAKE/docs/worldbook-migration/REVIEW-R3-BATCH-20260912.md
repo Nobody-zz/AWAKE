@@ -1,5 +1,8 @@
 # R3 修订批质量审阅 — 2026-09-12
 
+> **✅ 已签收（2026-09-12，user-26811）**：正式审查状态见 `docs/review-state/WORLDBOOK-SEMANTIC-R3-REVISION-BATCH-20260912.review.json`
+> （round 1 REVISE → round 2 APPROVED → user_signoff=true）。下一批次：Authoring v1 投影批，工作清单如下节。
+
 > **终态更新（2026-09-12 确认复审）**：独立审查者对修订后 12 档完成确认复审，**最终 VERDICT: APPROVED**。
 > 两处 P1 确认实质修复且无新增源文重合；deviation_log 五条确认完整覆盖首轮全部偏差；
 > P2-3/4/5 以 claim_authority 裁定为前提挂账投影批次，处理方式被认定正当。
