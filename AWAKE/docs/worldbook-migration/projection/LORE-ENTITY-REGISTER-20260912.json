@@ -1,0 +1,71 @@
+{
+  "schema_version": "awake.worldbook.lore-entity-register.v1",
+  "register_id": "lore-entity-register.20260912",
+  "status": "needs_review",
+  "authority": "PLAN-WORLDBOOK-AUTHORING-PROJECTION-20260912 第 6 节修订 2（独立审查 P1：lore 分区降级为独立清单，不动 persona-entity 登记表链条）",
+  "entity_two_kinds_rule": "游戏锚定实体走正式命名空间并可解析运行时对象；语义实体（游戏无对应代码）走 entity.lore.* 独立命名空间，同一性人工判定，绝不冒用正式实体 ID（B9 + ID-MIGRATION-CONTRACT）",
+  "compiler_behavior": "RuntimePackageCompiler.LookupEntityAnchorNames 对登记表外 ID 返回空（容错）；本清单登记的 lore 锚点在登记表 lore 分区合并前不折入 keywords，可检索性由文档 title/aliases 承担",
+  "entities": [
+    {
+      "entity_id": "entity.lore.lakonis_lake",
+      "display_name": "拉科尼斯湖",
+      "kind": "geography",
+      "aliases": ["大镜子（当地俗称）", "北方的海（帝国口）", "蓝路水道（斯特吉亚口）"],
+      "game_cross_refs": [],
+      "source_basis": "编年史 rule_拉科尼斯湖 3 variants；来源考察体无游戏对应",
+      "used_by_documents": ["lac-lake", "lac-tales"]
+    },
+    {
+      "entity_id": "entity.lore.shalas_bay",
+      "display_name": "沙拉斯湾",
+      "kind": "geography",
+      "aliases": ["帝国的摇篮（帝国史称）", "摇篮之岛（南部群岛旧称）"],
+      "game_cross_refs": [
+        { "ref": "entity.settlement.town_V7", "note": "官方描述印证'第一批卡拉德殖民者登陆此海岸'；湾与港同域但湾体本身无游戏对象" }
+      ],
+      "source_basis": "编年史 rule_沙拉斯湾 3 variants",
+      "used_by_documents": ["sara-bay", "sara-tales"]
+    },
+    {
+      "entity_id": "entity.lore.kachar_peninsula",
+      "display_name": "卡恰尔半岛",
+      "kind": "geography",
+      "aliases": ["斯特吉亚东大门（斯特吉亚口）"],
+      "game_cross_refs": [
+        { "ref": "entity.settlement.town_S1", "note": "官方描述明言'昔日巴旦尼亚领土的卡恰尔半岛'并复述易主线；半岛本体无游戏对象" }
+      ],
+      "source_basis": "编年史 rule_卡恰尔半岛 9 variants",
+      "used_by_documents": ["kach-land", "kach-own", "kach-tales"]
+    },
+    {
+      "entity_id": "entity.lore.dawn_mountains",
+      "display_name": "黎明山脉",
+      "kind": "geography",
+      "aliases": ["柯希·罗希尼（全称）"],
+      "game_cross_refs": [],
+      "source_basis": "编年史 rule_黎明山脉（2 variants，含合儿必特部与阿赫哈克传说叙述）",
+      "used_by_documents": ["dawn-mtn", "dawn-taboo", "dawn-stew"]
+    },
+    {
+      "entity_id": "entity.lore.deriat_village",
+      "display_name": "德里亚特",
+      "kind": "geography",
+      "aliases": [],
+      "game_cross_refs": [],
+      "source_basis": "编年史 rule_德里亚特 4 variants；所引卡琉斯堡经 BannerlordSage XML 查证非游戏实体，交叉引用悬空（与 dd fb30ad 注册元数据口径一致）",
+      "used_by_documents": ["der-vill", "der-furs"]
+    },
+    {
+      "entity_id": "entity.lore.khergit_wardens",
+      "display_name": "合儿必特部",
+      "kind": "faction",
+      "aliases": ["山地的看守人（自居称谓）"],
+      "game_cross_refs": [],
+      "source_basis": "编年史 rule_黎明山脉 内叙述；游戏库赛特部族体系无对应代码",
+      "used_by_documents": ["dawn-stew"],
+      "note": "附录实体：dawn-stew 表达层提及；未单独立档，登记备查"
+    }
+  ],
+  "deferred": "登记表（persona-entity）lore 分区合并显式推迟，需与 persona 线协调 schema/生成器/哈希链，记决策记录 deviations_projection_batch",
+  "verification": "实体 ID 均符合 authoring schema entity_ids pattern（^entity.[a-z0-9_]）；与 12 档 place_cluster 一一对应"
+}

@@ -1,6 +1,6 @@
 ﻿# PLAN: Worldbook Authoring v1 投影批 — 20260912
 
-> 状态：`prepared_for_review`（E0 计划，未实施）。
+> 状态：`approved_signed_off`（E0 计划，2026-09-12 用户签收；独立审查 7 条修订已全部落实）。W1 已产出锚点绑定计划与 lore 实体清单。
 > 前置基线：R3 修订批已签收（`docs/review-state/WORLDBOOK-SEMANTIC-R3-REVISION-BATCH-20260912.review.json`，
 > 12 档 / 41 claim，独立审查 round 2 APPROVED + user_signoff）。
 > 本批目标：把 12 个候选文档投影为 **Studio authoring 工作区内的正式档案**，并清偿全部审查挂账；
