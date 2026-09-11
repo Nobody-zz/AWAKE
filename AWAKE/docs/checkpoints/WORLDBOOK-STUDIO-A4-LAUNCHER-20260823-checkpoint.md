@@ -1,0 +1,24 @@
+# Worldbook Studio A4-Launcher Checkpoint
+
+- `task_id`: `WORLDBOOK-STUDIO-A4-LAUNCHER-20260823`
+- `batch_id`: `worldbook-studio-a4-launcher-20260823`
+- `status`: `offline_verified`
+- `execution_lease`: none; no production source, package, game directory, PlayerExports, dist or frozen candidate was changed.
+- `plan`: `docs/PLAN-WorldbookStudio-A4-Launcher-20260823.md`
+- `review_log`: `docs/PLAN-WorldbookStudio-A4-Launcher-20260823-REVIEW-LOG.md`
+- `files_changed`: `src/Awake.WorldbookStudio.Launcher/LauncherForm.cs`, `src/Awake.WorldbookStudio.Launcher/WebProcessHost.cs`, `src/Awake.WorldbookStudio.Launcher/WorkspaceManager.cs`, `src/Awake.WorldbookStudio.Launcher/LauncherInternals.cs`, `tests/Awake.WorldbookStudio.Launcher.Tests/Program.cs`, `tests/Awake.WorldbookStudio.Launcher.Tests/LauncherFakes.cs`, `tests/Awake.WorldbookStudio.Launcher.Tests/Awake.WorldbookStudio.Launcher.Tests.csproj`, `scripts/smoke.ps1`, `scripts/package.ps1`, `scripts/launcher-tests.ps1`, this plan/checkpoint/state update.
+- `verification`:
+  - Release solution build: `dotnet build Awake.WorldbookStudio.slnx --configuration Release --no-restore` passed with `0 warnings / 0 errors`.
+  - Studio harness: `99/99 PASS`.
+  - Launcher seam host: `14 PASS`, evidence `tools/worldbook-studio/artifacts/WorldbookStudio-smoke/launcher-tests.v2.json`.
+  - Final package smoke: `clean-start`, `browser-failure`, `stale-settings-missing`, `stale-settings-marker`, `duplicate-launch`, `graceful-shutdown` all passed with schema `awake.worldbook.launcher-smoke.v2`; real Web child PIDs were independently observed as exited and post-close PID queries were `not_found` where applicable.
+  - Extended A1 CLI/Web smoke: `18/18` cases passed; Web, Worker and temporary workspace cleanup were true; `game_directory_touched=false`, `real_provider=false`, `real_worker=false`.
+  - Package release check: passed for `artifacts/WorldbookStudio`; self-contained `win-x64` manifest contains `589` files.
+  - Debt audit: bounded scope `2225` logical lines, `confirmed_lines=0`, `suspected_lines=0`, `duplicate_lines=0`; report `docs/evidence/worldbook-studio-a4-launcher-debt-20260823.md`.
+  - Final package ZIP SHA-256 before documentation refresh: `1ae4c6cb74094e451501a23d4566b435fedbdfa29563f20945513c0a9ff5f57b`.
+  - Documentation refresh: added `新手指引_世界书内容编辑者.md` with beginner editing flow, permission guidance, AI assistant operation steps and cloud Provider instructions; package rebuilt and release-check passed.
+  - Previous documentation package ZIP SHA-256: `d6c89abcf6c2356ba2e241abb9e1a5ae9ce3dc241b6d7c815a45ed54e269a0d0`.
+  - Current package ZIP SHA-256 after clarifying “知识适用时期” and its non-trigger semantics: `b7d9e7f92cd7649702a39b4ca677514868d3aa86bfbf17635abca6e58433fe78`.
+- `known_limitations`: evidence is `E2` offline verification only. No Bannerlord launch, game-directory synchronization, save/load test, real cloud Provider, real local Worker, or E4/E5 gameplay evidence is claimed. The package is self-contained for `win-x64`; `.NET 10` remains a build target, not a user preinstall requirement.
+- `next_action`: deliver the offline package to the content editor for manual Launcher/UI review, or start a separately approved Studio refinement batch; do not modify this verified package or synchronize game directories without a new candidate decision.
+- `last_error`: none.

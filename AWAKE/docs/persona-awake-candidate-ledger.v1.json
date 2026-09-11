@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "awake.candidate-ledger.v1",
+  "ledgerId": "persona-awake-candidate-ledger-20260823",
+  "status": "needs_reconcile",
+  "activeCandidateId": null,
+  "evidenceCeiling": "E2",
+  "candidates": [
+    {
+      "candidateId": "awake-20260820-syncpack-001",
+      "buildId": "awake-20260820-syncpack-001",
+      "version": "0.2.1",
+      "status": "frozen_unreconciled",
+      "evidenceLevel": "E2",
+      "claimedEvidenceLevel": "E3",
+      "createdAt": null,
+      "supersedes": [],
+      "sourceRoot": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE",
+      "distRoot": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\dist\\Modules\\AWAKE",
+      "gameRoot": "D:\\SteamLibrary\\steamapps\\common\\Mount & Blade II Bannerlord\\Modules\\AWAKE",
+      "sourceSha256": null,
+      "distSha256": null,
+      "gameSha256": null,
+      "dllSha256": {
+        "buildOut": "97F79C9160394CDCE8786BEB860E6D8B00532DA256D6ED33A5AA05A2912FEB05",
+        "source": null,
+        "dist": "F03477F4B3F26B7D800526E3A3260D1593085BCDBDAECC8AD35691DBFDE0A5A7",
+        "game": "F03477F4B3F26B7D800526E3A3260D1593085BCDBDAECC8AD35691DBFDE0A5A7"
+      },
+      "worldbookManifestSha256": "2115664E1BB6BB26E63D8CB2097B891B51C03A00504D76DF6F8520FD9448468A",
+      "worldbookRuntimeSha256": null,
+      "worldbookIndexSha256": null,
+      "personaDefinitionSha256": null,
+      "personaRegistrySha256": null,
+      "mappingReportSha256": null,
+      "observations": [
+        "source, dist and game manifests are present and all parse as awake.worldbook.v1",
+        "build-out 1.3.15 Release Awake.dll observed at 97F79C9160394CDCE8786BEB860E6D8B00532DA256D6ED33A5AA05A2912FEB05",
+        "dist and game bin/Win64_Shipping_Client/Awake.dll observed at F03477F4B3F26B7D800526E3A3260D1593085BCDBDAECC8AD35691DBFDE0A5A7",
+        "release_check fails Build and dist DLL SHA-256 match and reports RELEASE_CHECK_FAILED",
+        "historical AWAKE-CURRENT syncpack claim conflicts with AWAKE-VALIDATION governance record and current build/dist tuple"
+      ],
+      "conflicts": [
+        "build-out DLL differs from dist/game DLL",
+        "worldbook v1 manifest is not accepted by new v2 runtime",
+        "current/validation candidate claims disagree",
+        "Persona hashes are absent"
+      ],
+      "notes": "Historical frozen candidate; do not modify or attribute new evidence."
+    },
+    {
+      "candidateId": "awake-20260820-governance-001",
+      "buildId": "awake-20260820-governance-001",
+      "version": "0.2.1",
+      "status": "historical_blocked_sync",
+      "evidenceLevel": "E2",
+      "claimedEvidenceLevel": "E2",
+      "createdAt": null,
+      "supersedes": [],
+      "sourceRoot": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE",
+      "distRoot": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\dist\\Modules\\AWAKE",
+      "gameRoot": "D:\\SteamLibrary\\steamapps\\common\\Mount & Blade II Bannerlord\\Modules\\AWAKE",
+      "sourceSha256": null,
+      "distSha256": null,
+      "gameSha256": null,
+      "dllSha256": {
+        "buildOut": null,
+        "source": "9A9284ECBF96102BC681E8DBF937C523E7A397B0CE85F1BF52531E361121FA65",
+        "dist": null,
+        "game": "FF98881E58102E992CFFE2B959222B406165762BEA2E2E3819E1647AF8F61021"
+      },
+      "worldbookManifestSha256": "2115664E1BB6BB26E63D8CB2097B891B51C03A00504D76DF6F8520FD9448468A",
+      "worldbookRuntimeSha256": null,
+      "worldbookIndexSha256": null,
+      "personaDefinitionSha256": null,
+      "personaRegistrySha256": null,
+      "mappingReportSha256": null,
+      "observations": [
+        "historical validation record only; not revalidated as current"
+      ],
+      "conflicts": [
+        "not an active candidate",
+        "DLL hashes do not form a synchronized tuple"
+      ],
+      "notes": "Retained for audit; cannot be promoted or used for E4/E5 attribution."
+    }
+  ],
+  "reconciliationRules": [
+    "Effective evidenceLevel is min(claimedEvidenceLevel, root.evidenceCeiling); status needs_reconcile or blocked prevents promotion.",
+    "No active candidate until source/dist/game tree hashes and all Persona/Worldbook digests agree in one row.",
+    "Conflicting current documents force needs_reconcile and block E3/E4/E5.",
+    "New runtime bridge candidates require a new BuildId and cannot mutate frozen rows."
+  ]
+}

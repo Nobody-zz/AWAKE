@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-BOUNDARY-HARDENING-20260902",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 2,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "fb08682dbd0ae517a82383de165749d601dbf5898dea451fdef35a5382fdc9ae",
+      "changed_decision": "将当前批次从 SafeId 与 HTTP 混合修复收窄为 HTTP 错误投影和未知异常兜底；SafeId/历史记录迁移另开独立批次，成功响应 public projection 另开批次。",
+      "new_evidence": "独立审查确认旧记录采用既有 SafeId 文件映射，单凭新输入无法区分 legacy unsafe ID 与新非法 ID；并确认统一 side_effect=none 不适用于部分写入失败，成功响应路径投影与错误安全是不同契约。",
+      "changed_acceptance": "固定 preflight=none、mutation failure=unknown、retired=410/none、known code status matrix、global exception boundary、safe body fields、correlation id、unknown exception loopback fixture；不再声称本批修复 SafeId 或成功响应路径泄露。"
+    },
+    {
+      "round": 2,
+      "verdict": "APPROVED",
+      "change_fingerprint": "fa8d138bbeaf660bbf5292f08d1e033b115267388f1a0ec18d5207c5fc268a56",
+      "changed_decision": "将本批正式收窄并锁定为仅 Web HTTP 错误投影与未知异常兜底；显式 AuthorityFailureContext、完整错误矩阵、统一 correlation 算法、response-started 行为、retired route schema、故障注入 seam 与当前编译真实路由均已补入修订版；SafeId、成功投影、结算、路由 registry 明确延期。",
+      "new_evidence": "已从 Program.cs 与现有测试确认客户编译真实入口为 /api/authoring/compile；现有 AuthorityFailure 直接回传异常文本且仅捕获 InvalidOperationException；retired middleware 返回缩减 body；修订版已逐项定义需要覆盖的具体代码入口和测试夹具。",
+      "changed_acceptance": "验收固定为：完整 authority code/status 映射、未知异常安全 500、preflight=none、mutation failure=unknown、retired=410/none、header/body correlation 一致、response-started 不二次写入、异常路径不泄露、loopback/in-process fixture 可证明；不纳入 SafeId、成功响应、settlement 或 registry。"
+    }
+  ],
+  "user_signoff": true
+}

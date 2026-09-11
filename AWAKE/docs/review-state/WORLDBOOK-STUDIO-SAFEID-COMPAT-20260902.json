@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-SAFEID-COMPAT-20260902",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "0b9524de23e816a44227dbbe024eec8f0a83bb69d86870939b164a4ba1be53be",
+      "changed_decision": "将新存储键收敛为 kind 前缀加逻辑身份元组的 SHA-256 hex，旧 SafeId 仅作为只读候选路径并回验 JSON 身份；兼容索引改为可重建审计缓存，不参与正常读写或冲突裁决；本批不实现自动迁移。",
+      "new_evidence": "独立合同审查确认原计划未锁定规范化/摘要/长度规则、跨进程 key reservation、按 record kind 的身份元组、索引权威性及迁移断点协议；当前 AuthorityGate 仍在所有记录上使用替换式 SafeId。",
+      "changed_acceptance": "新增精确 key 算法、每种记录身份元组和路径集合、legacy 候选回验/歧义错误、跨进程独占创建、审计缓存重建与损坏处理、无自动迁移及 legacy replay 矩阵。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "1f19456606e42d55cdd1b677e9dec5d7ad1ecb0a99786a7fc6f85b356e12ffe8",
+      "changed_decision": "将身份元组改为固定字段名的 canonical JSON array/object 序列化，禁止分隔符注入；为全部 AuthorityGate 持久化记录定义严格 flat storage key 与根目录映射；统一 AuthorityWorkspaceLease 覆盖所有 Authority 写入、journal/head、compile settlement 和恢复；补齐 publish proof、export operation、pointer、journal 的兼容范围。",
+      "new_evidence": "第二次独立复审确认换行拼接存在 tuple 注入风险，严格 key 到目录/扩展名映射未锁定，现有 lease 只覆盖 compile，且 publish/export/pointer/journal 记录未纳入兼容矩阵。",
+      "changed_acceptance": "新增 canonical JSON tuple golden vectors；逐 kind 路径表和旧路径候选表；全 Authority 写入共用跨进程 lease 的边界测试；publish proof/export/pointer/journal 的 legacy 发现、hash 回验、strict 新写和 replay/冲突测试。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "f899400732dc9665d556b6942d854e8b805fe2c22e495273bf67e7c095ddb050",
+      "changed_decision": "将 journal/head/pointer 明确为受同一 lease 保护的 singleton，不纳入 storage-key 记录路径；pointer 固定为当前指针身份，不伪装成 strict key；严格路径优先但与 legacy 必须逐字节/哈希一致，否则冲突；旧记录 kind 由路径族和 schema 推导，显式 kind 非强制。",
+      "new_evidence": "第三次独立复审发现 journal 路径自相矛盾、pointer key 未落地、strict/legacy 共存优先级缺失，以及旧记录没有统一 kind 字段。",
+      "changed_acceptance": "删除 journal entry strict path；定义 singleton pointer/head/journal；新增 strict/legacy 同时存在的 equal-hash 选择与 mismatch 冲突；旧记录按路径族/schema 回验 kind；pointer 只校验固定身份、manifest hash 和 schema。"
+    }
+  ]
+}

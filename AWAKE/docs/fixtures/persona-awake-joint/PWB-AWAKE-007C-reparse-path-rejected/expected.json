@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "awake.persona.fixture-expected.v1",
+  "fixtureId": "PWB-AWAKE-007C-reparse-path-rejected",
+  "gate": "E2",
+  "status": "reject",
+  "exitCode": 10,
+  "errors": [
+    {
+      "schemaVersion": "awake.persona.adapter-error.v1",
+      "code": "persona.reparse_path",
+      "stage": "path-guard",
+      "path": "$.pathAttempts[0].writePath",
+      "retryable": false
+    }
+  ],
+  "assertions": [
+    "reparse_path_rejected",
+    "no_candidate_promotion"
+  ]
+}

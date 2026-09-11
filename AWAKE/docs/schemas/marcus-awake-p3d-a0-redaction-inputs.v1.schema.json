@@ -1,0 +1,615 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "marcus-awake/p3d-a0-redaction-inputs.v1",
+  "title": "Marcus-Awake P3D-A0 redaction input manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "canonicalizer",
+    "artifacts",
+    "encoding_policy",
+    "forbidden_token_policy",
+    "forbidden_tokens",
+    "sentinel_derivation",
+    "forbidden_token_boundary"
+  ],
+  "properties": {
+    "schema": {
+      "const": "marcus-awake.p3d-a0-redaction-inputs.v1"
+    },
+    "canonicalizer": {
+      "const": "json-ordinal-key-sort-array-order-preserving-number-invariant-unicode-nfc-lf-utf8-nobom-v2"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifact_key",
+            "case_id",
+            "subcase_id",
+            "relative_path",
+            "source_id",
+            "input_fields",
+            "input_fields_sha256",
+            "sensitive_input_digests"
+          ],
+          "properties": {
+            "artifact_key": {
+              "const": "service_stderr"
+            },
+            "case_id": {
+              "const": "P3D-A0-S07-redaction_no_payload_echo"
+            },
+            "subcase_id": {
+              "const": "stderr_artifact_bound"
+            },
+            "relative_path": {
+              "const": "artifacts/redaction/service-stderr.txt"
+            },
+            "source_id": {
+              "const": "redaction.service_stderr.fixture.v1"
+            },
+            "input_fields": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "service_error_code",
+                "exception_type",
+                "correlation_id",
+                "service_instance"
+              ],
+              "properties": {
+                "service_error_code": {
+                  "const": "provider_handler_deferred"
+                },
+                "exception_type": {
+                  "const": "none"
+                },
+                "correlation_id": {
+                  "const": "redaction-correlation-001"
+                },
+                "service_instance": {
+                  "const": "test-service"
+                }
+              }
+            },
+            "input_fields_sha256": {
+              "const": "50F469DE4BF54BE48C6B63BE629EC724706D6760684E6A1EC2EB996B4AC4531C"
+            },
+            "sensitive_input_digests": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.authorization"
+                    },
+                    "sha256": {
+                      "const": "64DE08C37AF6AF1157C58524BA0F553FA57869345409BA2022401A260CA2DA53"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.stack_trace"
+                    },
+                    "sha256": {
+                      "const": "B0BB3361A91B0B6DE0F2CA68D6BD5D1D8DD7140F3B53EBCF3EB50B7B7A3116B0"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.credential"
+                    },
+                    "sha256": {
+                      "const": "0F7EAB0618E01892C48713FDE8F446D8222552AD2ECCFDED652AE5F36D8F65C6"
+                    }
+                  }
+                }
+              ],
+              "additionalItems": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifact_key",
+            "case_id",
+            "subcase_id",
+            "relative_path",
+            "source_id",
+            "input_fields",
+            "input_fields_sha256",
+            "sensitive_input_digests"
+          ],
+          "properties": {
+            "artifact_key": {
+              "const": "response_envelope"
+            },
+            "case_id": {
+              "const": "P3D-A0-S07-redaction_no_payload_echo"
+            },
+            "subcase_id": {
+              "const": "response_envelope_artifact_bound"
+            },
+            "relative_path": {
+              "const": "artifacts/redaction/response-envelope.json"
+            },
+            "source_id": {
+              "const": "redaction.response_envelope.fixture.v1"
+            },
+            "input_fields": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "response_schema",
+                "error_code",
+                "category",
+                "safe_message",
+                "provider_id",
+                "profile_id",
+                "route_id"
+              ],
+              "properties": {
+                "response_schema": {
+                  "const": "marcus-awake.provider.error.v1"
+                },
+                "error_code": {
+                  "const": "provider_handler_deferred"
+                },
+                "category": {
+                  "const": "unavailable"
+                },
+                "safe_message": {
+                  "const": "Provider handler is not enabled in this runtime build."
+                },
+                "provider_id": {
+                  "const": "provider.example"
+                },
+                "profile_id": {
+                  "const": "profile.example"
+                },
+                "route_id": {
+                  "const": "route.example"
+                }
+              }
+            },
+            "input_fields_sha256": {
+              "const": "E7B3E4F15C13D7D5E1ECA72BBAD4D71E09FA7A304CD968ACCABF90AC45D04B77"
+            },
+            "sensitive_input_digests": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.api_key"
+                    },
+                    "sha256": {
+                      "const": "534103B6BC32716385F813C6B4DB6C2B38D81C1B562426E5A8143C0A9E55A774"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.endpoint_query"
+                    },
+                    "sha256": {
+                      "const": "4070B20D00BFDC0FE826FD55ACA432DDBE25F9AC18370E878B64832B0744713B"
+                    }
+                  }
+                }
+              ],
+              "additionalItems": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifact_key",
+            "case_id",
+            "subcase_id",
+            "relative_path",
+            "source_id",
+            "input_fields",
+            "input_fields_sha256",
+            "sensitive_input_digests"
+          ],
+          "properties": {
+            "artifact_key": {
+              "const": "deferred_payload"
+            },
+            "case_id": {
+              "const": "P3D-A0-S07-redaction_no_payload_echo"
+            },
+            "subcase_id": {
+              "const": "deferred_payload_artifact_bound"
+            },
+            "relative_path": {
+              "const": "artifacts/redaction/deferred-payload.json"
+            },
+            "source_id": {
+              "const": "redaction.deferred_payload.fixture.v1"
+            },
+            "input_fields": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "schema",
+                "error_code",
+                "category",
+                "retryable",
+                "fallback_allowed",
+                "safe_message",
+                "provider_id",
+                "profile_id",
+                "route_id"
+              ],
+              "properties": {
+                "schema": {
+                  "const": "marcus-awake.provider.error.v1"
+                },
+                "error_code": {
+                  "const": "provider_handler_deferred"
+                },
+                "category": {
+                  "const": "unavailable"
+                },
+                "retryable": {
+                  "const": false
+                },
+                "fallback_allowed": {
+                  "const": false
+                },
+                "safe_message": {
+                  "const": "Provider handler is not enabled in this runtime build."
+                },
+                "provider_id": {
+                  "const": "provider.example"
+                },
+                "profile_id": {
+                  "const": "profile.example"
+                },
+                "route_id": {
+                  "const": "route.example"
+                }
+              }
+            },
+            "input_fields_sha256": {
+              "const": "E4CC58AA8E95DF01EF99FCB145B76F3D9DB3BD2743280B2ADF2175110CF22416"
+            },
+            "sensitive_input_digests": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "items": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.api_key"
+                    },
+                    "sha256": {
+                      "const": "534103B6BC32716385F813C6B4DB6C2B38D81C1B562426E5A8143C0A9E55A774"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.authorization"
+                    },
+                    "sha256": {
+                      "const": "64DE08C37AF6AF1157C58524BA0F553FA57869345409BA2022401A260CA2DA53"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.endpoint_query"
+                    },
+                    "sha256": {
+                      "const": "4070B20D00BFDC0FE826FD55ACA432DDBE25F9AC18370E878B64832B0744713B"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.payload_json"
+                    },
+                    "sha256": {
+                      "const": "43826C909543B0C079212F1643607B79AF93C70146DBAB97AD4E1C8A23731837"
+                    }
+                  }
+                }
+              ],
+              "additionalItems": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifact_key",
+            "case_id",
+            "subcase_id",
+            "relative_path",
+            "source_id",
+            "input_fields",
+            "input_fields_sha256",
+            "sensitive_input_digests"
+          ],
+          "properties": {
+            "artifact_key": {
+              "const": "evidence_json"
+            },
+            "case_id": {
+              "const": "P3D-A0-S07-redaction_no_payload_echo"
+            },
+            "subcase_id": {
+              "const": "evidence_json_artifact_bound"
+            },
+            "relative_path": {
+              "const": "artifacts/redaction/evidence-canonical.json"
+            },
+            "source_id": {
+              "const": "redaction.evidence_json.fixture.v1"
+            },
+            "input_fields": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "runner_case_ids",
+                "runner_subcase_ids",
+                "redaction_subcase_ids",
+                "all_cases_passed",
+                "payloads_redacted",
+                "credentials_redacted",
+                "diagnostics_redacted",
+                "stack_traces_redacted"
+              ],
+              "properties": {
+                "runner_case_ids": {
+                  "const": [
+                    "P3D-A0-S07-redaction_no_payload_echo"
+                  ]
+                },
+                "runner_subcase_ids": {
+                  "const": [
+                    "stderr_artifact_bound",
+                    "response_envelope_artifact_bound",
+                    "deferred_payload_artifact_bound",
+                    "evidence_json_artifact_bound"
+                  ]
+                },
+                "redaction_subcase_ids": {
+                  "const": [
+                    "stderr_artifact_bound",
+                    "response_envelope_artifact_bound",
+                    "deferred_payload_artifact_bound",
+                    "evidence_json_artifact_bound"
+                  ]
+                },
+                "all_cases_passed": {
+                  "const": true
+                },
+                "payloads_redacted": {
+                  "const": true
+                },
+                "credentials_redacted": {
+                  "const": true
+                },
+                "diagnostics_redacted": {
+                  "const": true
+                },
+                "stack_traces_redacted": {
+                  "const": true
+                }
+              }
+            },
+            "input_fields_sha256": {
+              "const": "8C08FF72D7F5F06D9314BD851FECD9536AFEE82F85E95902F90E588333B9320E"
+            },
+            "sensitive_input_digests": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "items": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.stack_trace"
+                    },
+                    "sha256": {
+                      "const": "B0BB3361A91B0B6DE0F2CA68D6BD5D1D8DD7140F3B53EBCF3EB50B7B7A3116B0"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.api_key"
+                    },
+                    "sha256": {
+                      "const": "534103B6BC32716385F813C6B4DB6C2B38D81C1B562426E5A8143C0A9E55A774"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.endpoint_query"
+                    },
+                    "sha256": {
+                      "const": "4070B20D00BFDC0FE826FD55ACA432DDBE25F9AC18370E878B64832B0744713B"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "fixture.sensitive.credential"
+                    },
+                    "sha256": {
+                      "const": "0F7EAB0618E01892C48713FDE8F446D8222552AD2ECCFDED652AE5F36D8F65C6"
+                    }
+                  }
+                }
+              ],
+              "additionalItems": false
+            }
+          }
+        }
+      ],
+      "additionalItems": false
+    },
+    "encoding_policy": {
+      "const": "unicode-nfc-crlf-to-lf-utf8-no-bom-v1"
+    },
+    "forbidden_token_policy": {
+      "const": "ascii-casefold-boundary-token-set-v1"
+    },
+    "forbidden_tokens": {
+      "const": [
+        "api_key",
+        "authorization",
+        "password",
+        "secret",
+        "stack_trace",
+        "inner_exception",
+        "endpoint_query",
+        "credential",
+        "payloadjson"
+      ]
+    },
+    "sentinel_derivation": {
+      "const": "literal-redaction-sentinel-colon-id-utf8-sha256-uppercase-hex-v1"
+    },
+    "forbidden_token_boundary": {
+      "const": "ascii-alnum-underscore-token-boundary-v1"
+    }
+  },
+  "definitions": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "sensitive_digest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9._:-]+$"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      }
+    }
+  }
+}

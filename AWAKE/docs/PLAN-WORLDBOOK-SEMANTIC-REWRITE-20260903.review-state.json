@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "PLAN-WORLDBOOK-SEMANTIC-REWRITE-20260903.md",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "7851ab2242ce89c6ec870c3b64b6adb08c086228b08fa47cc0ade243c03c5c20",
+      "changed_decision": "将目标从直接 Authoring v1 投影调整为先生成 authoring-neutral claim 级语义工作表和重写候选；未确认 source registry/content tier/universe/era/ID 边界前不投影为 Authoring v1。",
+      "new_evidence": "独立只读审查指出旧计划只能排除全文复制，不能证明断言级语义重写；旧 When、TextMappings、视角、时间和来源 locator 的边界未封闭。",
+      "changed_acceptance": "新增 claim_id、epistemic_kind、subject/predicate/object、perspective、time_scope、conflict_group_id、legacy_origins、rewrite_rationale、loss、unresolved；新增句段/n-gram 反机械转换检查、locator/quote_hash/registry 校验、blocked-only fixture 和跨报告 source unit 集合校验。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "fe65378530898fe718aac20d7af1804f7c21c62729f11f93d15c5b402141af4d",
+      "changed_decision": "将 claim-level provenance、provisional namespace、tier/default-base negative gates、legacy When mapping boundary、snapshot deterministic algorithm 和 positive semantic preservation 作为实现前硬契约。",
+      "new_evidence": "第二轮独立审查确认总体方向已覆盖第一轮，但指出 legacy_origins/claim binding、provisional ID schema、CLI default base 负向验收、Runtime mapping 排除旧 When 自动授权、snapshot hash 算法和正向语义保持仍缺少可执行细节。",
+      "changed_acceptance": "新增 legacy_origin/claim_source_binding 对象结构、一对多/多对一覆盖不变量、authoring_provisional.* 拒绝规则、pending/unknown + omitted --content-tier 负向 fixture、mapping_basis、确定性 snapshot manifest 算法、target_span claim coverage 与 semantic preservation 正反例。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "77f267eb21c47739956f011dc24f127c87b7476217ff94bb7abcedc89dc4ec58",
+      "changed_decision": "",
+      "new_evidence": "第三轮独立审查确认第二轮方向已写入计划，但实际工作区仍没有 semantic worksheet Schema/validator、legacy_origin 与 claim_source_binding 的正式契约、authoring_provisional namespace validator、snapshot hash golden fixture、mapping_basis report schema 或正向语义保持的可重复判定协议。审查还发现 review log 与 review-state 尚未同步，SemanticPrototypes 没有 origin_kind。",
+      "changed_acceptance": "下一阶段若获额外授权，必须先补齐 worksheet/legacy-origin/claim-binding/provisional-ID/snapshot-golden/semantic-preservation 的机器契约和 validator，再生成任何 worksheet；默认 base 的 gate 顺序必须明确为 CLI 解析 → tier resolution → graph closure → 写入前阻断。"
+    }
+  ]
+}

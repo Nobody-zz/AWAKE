@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "awake.persona.fixture-expected.v1",
+  "fixtureId": "PWB-AWAKE-014-missing-approval-rejected",
+  "gate": "E2",
+  "status": "reject",
+  "exitCode": 10,
+  "observedError": {
+    "code": "persona.approval_missing",
+    "stage": "promotion",
+    "path": "$.approval",
+    "retryable": false
+  }
+}

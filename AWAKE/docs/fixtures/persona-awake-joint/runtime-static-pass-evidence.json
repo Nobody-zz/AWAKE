@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "awake.persona.runtime-bridge-static.v1",
+  "sourceRoot": "fixture://runtime-static-pass-evidence",
+  "sourceFileCount": 0,
+  "sourceTreeSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "status": "pass",
+  "exitCode": 0,
+  "interpretation": "Synthetic pass fixture: one contract-level diagnostic is false, while all blocking checks pass.",
+  "checks": [
+    { "id": "workbench_runtime_boundary_absent", "passed": false, "severity": "contract", "detail": "Synthetic non-blocking diagnostic." },
+    { "id": "legacy_persona_entry_absent", "passed": true, "severity": "blocking", "detail": "Synthetic pass." },
+    { "id": "legacy_knowledge_entry_absent", "passed": true, "severity": "blocking", "detail": "Synthetic pass." },
+    { "id": "persona_runtime_provider_present", "passed": true, "severity": "blocking", "detail": "Synthetic pass." },
+    { "id": "context_snapshot_present", "passed": true, "severity": "blocking", "detail": "Synthetic pass." },
+    { "id": "runtime_bundle_present", "passed": true, "severity": "blocking", "detail": "Synthetic pass." },
+    { "id": "fingerprint_includes_context_modes", "passed": true, "severity": "blocking", "detail": "Synthetic pass." },
+    { "id": "reload_preserves_last_known_good", "passed": true, "severity": "blocking", "detail": "Synthetic pass." },
+    { "id": "overlay_invalidates_persona_cache", "passed": true, "severity": "blocking", "detail": "Synthetic pass." },
+    { "id": "persona_persistence_contract_present", "passed": true, "severity": "blocking", "detail": "Synthetic pass." },
+    { "id": "persona_persistence_runtime_wired", "passed": true, "severity": "blocking", "detail": "Synthetic pass." },
+    { "id": "persona_storage_schema_registered", "passed": true, "severity": "blocking", "detail": "Synthetic pass." },
+    { "id": "overlay_persistence_path_observable", "passed": true, "severity": "contract", "detail": "Synthetic pass." }
+  ],
+  "matches": [],
+  "observedErrors": []
+}

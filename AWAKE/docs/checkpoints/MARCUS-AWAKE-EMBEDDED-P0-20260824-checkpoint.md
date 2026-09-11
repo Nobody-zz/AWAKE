@@ -1,0 +1,26 @@
+# Marcus-Awake Embedded Migration Phase 0 Checkpoint
+
+- `task_id`: `MARCUS-AWAKE-EMBEDDED-P0-20260824`
+- `batch_id`: `marcus-awake-source-freeze-20260824`
+- `status`: `offline_verified`
+- `execution_lease`: `completed`
+- `scope`: 公开来源、许可证、上游 commit、AWAKE 旧 API 依赖面和本地 AuthorSource/SDK 初步清单。
+- `files_changed`:
+  - `_houkai_merge/AWAKE/docs/MARCUS-AWAKE-P0-SOURCE-INVENTORY-20260824.md`
+  - `_houkai_merge/AWAKE/docs/checkpoints/MARCUS-AWAKE-EMBEDDED-P0-20260824-checkpoint.md`
+  - `_houkai_merge/AWAKE/docs/AWAKE-CURRENT.md`
+- `verification`:
+  - `E0`: 用户同意自审修正后的迁移方向。
+  - `E0`: 公开 GitHub 仓库 `main` 当前 commit 已通过 `git ls-remote` 核对：`c3992fae4f0876fe3b40a3ee7835c9e25fc1aa2d`。
+  - `E0`: GitHub API 核对仓库公开、Apache-2.0 许可证、LICENSE/NOTICE/SubModule/README blob 信息。
+  - `E0`: 本地 AuthorSource 四个扩展和 SDK_20260815 文件数量/类型完成盘点。
+  - `E0`: AWAKE 旧 Marcus API 直接引用文件清单完成，数量 29。
+  - `E1/E2`: 未构建、未改引用、未修改运行时代码。
+- `known_limitations`:
+  - 上游 main 是移动分支；本 checkpoint 锁定的是发现时 commit，不代表永久上游版本。
+  - 公开仓库完整 src 文件级差异尚未导入本地，不能声称本地参考快照等于公开仓库完整核心源码。
+  - 旧 Save/Storage/Provider 配置和 Service 生命周期仍需独立只读盘点。
+  - 未处理许可证文件复制、源码修改标注或第三方清单写入玩家包。
+  - 未同步 dist/游戏目录，未启动 Bannerlord，未做 E3/E4/E5。
+- `next_action`: 继续完成 P0.5 现有配置/存档/服务入口只读盘点；随后建立 P1.5 API/程序集/IPC contract checkpoint；在这两项完成并通过独立审查前不得修改 AWAKE.csproj 或 SubModule.xml。
+- `last_error`: `none`

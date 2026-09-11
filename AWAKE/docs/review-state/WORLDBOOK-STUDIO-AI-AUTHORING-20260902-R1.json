@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-AI-AUTHORING-20260902-R1",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 1,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "b44c69682e46798ec91cc9df540dd25ec104ae7d020d88a7426281c480b64774",
+      "changed_decision": "补齐 Draft attempt/CAS/unknown；使用真实 provider fingerprint；下游候选失效；显式 no_candidate；缓存证据复用原偏移；Batch 建档持久恢复和 provenance。",
+      "new_evidence": "独立只读审查 2026-09-02：AuthoringDraftEndpoints.cs、AuthoringDraftStore.cs、AuthoringDraftProviders.cs、BatchProviderService.cs、BatchFactReviewRepository.cs、BatchControlService.cs、BatchDocumentService.cs、AuthoringDraftDocumentBuilder.cs。",
+      "changed_acceptance": "focused 回归 + full Worldbook Studio regression + 本地 Worker 实际世界书样本端到端测试。"
+    }
+  ]
+}

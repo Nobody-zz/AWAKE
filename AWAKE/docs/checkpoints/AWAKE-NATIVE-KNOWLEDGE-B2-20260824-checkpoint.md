@@ -1,0 +1,51 @@
+# AWAKE Native Knowledge B2 Checkpoint
+
+- `task_id`: `AWAKE-NATIVE-KNOWLEDGE-B2-20260824`
+- `batch_id`: `awake-native-knowledge-b2-query-authority-20260824`
+- `status`: `offline_verified`
+- `execution_lease`: `completed`
+- `scope`: B2 统一 NPC 世界书查询权威、结构化拒绝/转介结果和 AI 硬门。
+- `files_changed`:
+  - `_houkai_merge/AWAKE/src/NpcDialogueService.cs`
+  - `_houkai_merge/AWAKE/src/WorldKnowledgeModels.cs`
+  - `_houkai_merge/AWAKE/src/WorldKnowledgeQueryService.cs`
+  - `_houkai_merge/AWAKE/src/KnowledgeRuntime.cs`
+  - `_houkai_merge/AWAKE.Tests/Program.cs`
+  - `_houkai_merge/AWAKE/docs/checkpoints/AWAKE-NATIVE-KNOWLEDGE-B2-20260824-checkpoint.md`
+  - `_houkai_merge/AWAKE/docs/AWAKE-CURRENT.md`
+- `allowed_write_set`:
+  - `_houkai_merge/AWAKE/src/NpcDialogueService.cs`
+  - `_houkai_merge/AWAKE/src/WorldKnowledgeQueryService.cs`
+  - `_houkai_merge/AWAKE/src/WorldKnowledgeModels.cs`
+  - `_houkai_merge/AWAKE/src/KnowledgeRuntime.cs`
+  - `_houkai_merge/AWAKE.Tests/Program.cs`
+  - `_houkai_merge/AWAKE.Tests/AwakeTestFakes.cs`
+  - `_houkai_merge/AWAKE/tools/` focused B2 offline fixture only, if required
+- `excluded_scope`:
+  - worldbook file format and Studio editor
+  - Storage, player teaching, NPC learning, event/weekly-report propagation
+  - Persona DSL path through `WorldbookRuntime.Current`
+  - Marcus framework migration or packaging
+  - `dist`, game `Modules\\AWAKE`, `PlayerExports`, frozen candidate and game launch
+- `implementation`:
+  - Added `awake.knowledge.decision.v1` structured decision normalization with fixed states `known`, `partial`, `referral`, `blocked`, `not_found`.
+  - Only `known/partial` with non-empty, already-filtered text can enter AI; all other states return fixed code-generated replies.
+  - NPC dialogue now uses only `WorldbookRuntime.Knowledge.Query` for runtime knowledge and no longer falls back to `KnowledgeRuntime.Current.RetrieveLocalAsync`.
+  - Legacy `KnowledgeRuntime.EnsureCreated` was removed; `KnowledgeRuntime` retains only explicit offline-test injection and shutdown handling.
+  - Prompt context includes state, source, identity, scope, detail and hit IDs; direct branches log state, blocked reason, referrals, hits and errors.
+  - `WorldbookRuntime.Current` remains available only for the separate Persona DSL path.
+- `verification`:
+  - `E0`: locked multi-batch plan and prior plan review remain the governing boundary.
+  - `E0`: user explicitly resumed B2 after the Marcus framework migration was moved to another task.
+  - `E1`: AWAKE Release build passed with `0 warnings / 0 errors`.
+  - `E1`: AWAKE.Tests Release build passed with `0 warnings / 0 errors`.
+  - `E2`: `worldbook B2 smoke` passed for known, partial, referral, blocked, empty-known and missing-worldbook cases.
+  - `E2`: full `Awake.SdkSmoke` reached and passed `worldbook B2 smoke`, then stopped at the pre-existing `SharedPersonaGoldenFixture` mismatch.
+  - `E2`: static negative check found no `KnowledgeRuntime.Current`, `KnowledgeRuntime.EnsureCreated` or `RetrieveLocalAsync` reference in the NPC dialogue path; the Persona DSL reference remains intentionally present.
+  - No E3 synchronization, E4 gameplay validation or E5 save/load validation was performed.
+- `known_limitations`:
+  - The required subagent review service remained unavailable/hung; implementation proceeded in the main thread under the user's explicit B2 continuation instruction, with the failure retained in the prior checkpoint history.
+  - Full legacy Smoke remains blocked by the unrelated `SharedPersonaGoldenFixture` mismatch; that fixture was not modified.
+  - The direct runtime branch has not yet been exercised in a live Bannerlord session.
+- `next_action`: keep B2 closed and unsynchronized; create a separate checkpoint before B3 or any game-directory candidate change.
+- `last_error`: `SharedPersonaGoldenFixture` pre-existing mismatch after B2 smoke passed

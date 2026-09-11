@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "awake.persona.fixture-input.v1",
+  "gate": "E2",
+  "referenceFixture": "../../persona-load-v2-golden.json",
+  "source": {
+    "document": {
+      "schemaVersion": "persona-workbench.character.v1",
+      "id": "fixture.persona.approved",
+      "displayName": "边境守门人",
+      "core": "谨慎而自持，不轻易交出真实意图。",
+      "identityFacts": "来自边境村落，以临时委托维持生计。",
+      "summary": "谨慎而自持的边境战士。",
+      "sourcePackId": "fixture_pack",
+      "templateVersion": "persona-load.v2",
+      "status": "approved",
+      "sourceDescription": "原始确认描述：边境守门人先观察再行动。",
+      "publicDescription": "公开场合保持克制。",
+      "privateDescription": "私下先确认代价再行动。",
+      "contradictionDescription": "受到羞辱时会反击，但不轻易许诺。",
+      "foodPreference": "热粥",
+      "selfClaimRules": [
+        "对外只自称我。"
+      ],
+      "realSelfBehaviors": [
+        "独处时放下戒备。"
+      ],
+      "selfClaimExamples": [
+        "我会如何回应？"
+      ],
+      "tags": [
+        "trait.cautious",
+        "expression.measured",
+        "behavior.bargains",
+        "trigger.public_humiliation",
+        "boundary.no_empty_promises"
+      ]
+    },
+    "sourceRevision": 7,
+    "sourceSha256": "4620D93DBCD1EED664015F8C55D3FEAB7E3CCD053AE4C2E6765152A5D8D86721"
+  },
+  "registry": {
+    "schemaVersion": "awake.persona.tags.v1",
+    "tags": [
+      {
+        "id": "trait.cautious",
+        "category": "trait",
+        "displayName": "谨慎",
+        "meaning": "先观察风险再行动",
+        "promptText": "保持谨慎，先确认风险。"
+      },
+      {
+        "id": "expression.measured",
+        "category": "expression",
+        "displayName": "克制表达",
+        "meaning": "公开表达克制",
+        "promptText": "公开场合保持克制。"
+      },
+      {
+        "id": "behavior.bargains",
+        "category": "behavior",
+        "displayName": "条件交换",
+        "meaning": "先确认代价再行动",
+        "promptText": "行动前先确认代价。"
+      },
+      {
+        "id": "trigger.public_humiliation",
+        "category": "trigger",
+        "displayName": "公开羞辱",
+        "meaning": "遭受公开羞辱时反击",
+        "promptText": "受到公开羞辱时会反击。"
+      },
+      {
+        "id": "boundary.no_empty_promises",
+        "category": "boundary",
+        "displayName": "不空许诺",
+        "meaning": "不轻易作出空泛承诺",
+        "promptText": "不轻易许诺无法履行的事。"
+      }
+    ],
+    "bundles": []
+  },
+  "registrySha256": "1356AD14AAC3DC596895954E21BFEDAC65CDA258BEFC14713A3364DDFA58D455",
+  "fixtureId": "PWB-AWAKE-003-missing-selection-rejected",
+  "operation": "migrate-export",
+  "expectedStatus": "reject"
+}

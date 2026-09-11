@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"awake.worldbook.preview-fixture.v1",
+  "type":"object","additionalProperties":false,
+  "required":["fixture_id","profile_id","profile_registry","referral_registry","npc_preview","author_diagnostics"],
+  "properties":{
+    "fixture_id":{"type":"string","minLength":1},
+    "profile_id":{"type":"string","pattern":"^profile\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},
+    "profile_registry":{"type":"object","additionalProperties":false,"required":["version","hash"],"properties":{"version":{"type":"string","minLength":1},"hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"}}},
+    "referral_registry":{"type":"object","additionalProperties":false,"required":["version","hash"],"properties":{"version":{"type":"string","minLength":1},"hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"}}},
+    "npc_preview":{"$ref":"npc-preview.v1.schema.json"},
+    "author_diagnostics":{"$ref":"author-diagnostics.v1.schema.json"}
+  }
+}

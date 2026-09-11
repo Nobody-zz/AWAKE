@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "awake.persona.fixture-expected.v1",
+  "fixtureId": "PWB-AWAKE-003-missing-selection-rejected",
+  "gate": "E2",
+  "status": "reject",
+  "exitCode": 10,
+  "assertions": [
+    "selection_property_is_absent",
+    "stable_missing_field_error",
+    "no_source_overwrite",
+    "no_candidate_promotion"
+  ],
+  "errors": [
+    {
+      "schemaVersion": "awake.persona.adapter-error.v1",
+      "errorId": "fixture.error.003.selection",
+      "code": "persona.schema_required_field",
+      "stage": "schema",
+      "artifactId": "PWB-AWAKE-003-missing-selection-rejected",
+      "path": "$.selection",
+      "detail": "Required selection sidecar is missing.",
+      "retryable": false
+    }
+  ],
+  "noWrite": {
+    "sourceUnchanged": true,
+    "candidateWritten": false,
+    "activeCandidateChanged": false
+  },
+  "cleanup": {
+    "status": "pass",
+    "paths": [],
+    "errors": []
+  }
+}

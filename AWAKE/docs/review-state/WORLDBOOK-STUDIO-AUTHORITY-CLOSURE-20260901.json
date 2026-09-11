@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-AUTHORITY-CLOSURE-20260901",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "557cfb9570c30979301c43ae33836e3599c95ad02d8c810cec8f9fac17011b44",
+      "changed_decision": "Authority Closure 批次扩展为显式 approval、Core API fail-closed、export_staging 与 publish 强绑定、恢复链完整校验、跨进程 pointer lease/CAS、合同路由一致性和错误状态一致性的联合修复；用户签收前不实施。",
+      "new_evidence": "两路独立只读审查均确认：客户 compile/export 自动 ApproveSelection；PublishStaging 可接受任意工作区 staging；Application.Compile/Export/WriteCompiled 存在 AuthorityGate 绕过面；恢复只检查目录或 manifest；_gate 仅进程内；注册表路由与 Web 实现漂移；部分 Authority 错误未映射为 409。",
+      "changed_acceptance": "新增未批准 compile/export 零副作用、Core 直调用拒绝、伪造 staging/export operation/CompileProof 拒绝、完整恢复链校验、跨进程 pointer race、错误码 409/422/404、合同与真实路由一致性；保留旧路由 410、staging 不改 pointer、重复 operation 幂等。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "d148b8f018c8ea41fe190062df8638f16156e13cdbd817e42f75384ed587b72a",
+      "changed_decision": "固定唯一通路 register → selection → explicit approve → CompileProof → export(operation_id) → publish(export_operation_id)；客户 façade 只能转发；Core 无 proof 的 Compile/Export/WriteCompiled 收为 internal；registry 与真实 façade/control routes 采用显式可调用清单；发布跨进程竞争要求恰一成功一 409。",
+      "new_evidence": "第 2 轮复审确认上一轮新增 6 项 P1 已进入计划，但仍存在接口二选一、publish 仍可能以 staging path 为授权、路由权威来源不明确、并发测试预期不明确、错误码矩阵缺失。",
+      "changed_acceptance": "锁定 approval_id/selection_id、export_operation_id/publish 输入与逐项绑定字段；ApprovalProof 状态 approved/superseded/invalid；Core 无 proof 直调用零副作用 fail-closed；双进程同 expected pointer 恰一成功另一 409；route/CLI/error 矩阵精确集相等；缺失完整性文件和伪造恢复记录只能 failed_recovery。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "85211f0ec9adcc2bbf0bc41ff9eba9ee1279d26d748e28fc4359d6018fec7adb",
+      "changed_decision": "第3轮终审补充：将 CompileExact 纳入 Core fail-closed 收窄；锁定 export_operation_id 由服务端创建并返回、请求幂等与 publish operation-only；补充真实 route/error exact-set、ApprovalProof 状态转移与完整恢复判定表。",
+      "new_evidence": "两路独立终审均确认当前实现仍存在隐式批准、staging path 直发、Core public Compile/Export/WriteCompiled/CompileExact 绕过面、进程内锁、恢复链不完整、registry 与 Web 路由漂移及 Authority 错误默认映射 400；未发现新的 P0。",
+      "changed_acceptance": "Core 绕过测试覆盖 CompileExact；export 成功响应返回服务端 operation_id 且 publish 只接受 operation_id；route/CLI/error exact-set 可逐项断言；ApprovalProof invalid/superseded 原因与触发可断言；恢复链任一记录或绑定 hash 缺失/篡改只得 failed_recovery。"
+    }
+  ]
+}

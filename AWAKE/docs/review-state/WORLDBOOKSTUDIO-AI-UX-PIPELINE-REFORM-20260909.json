@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "Worldbook Studio Quick Authoring 用户流程、AI 生成结果呈现、提示词/请求契约对齐方案（只读方案审查，不改代码、不改 Semantic Migration 候选）",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 2,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "0129c44f5a720621ca345c0ea6bd549a99a0b63d49292091014f1c22ee170d49",
+      "changed_decision": "Quick Authoring 必须采用独立用户视图与独立状态；普通 Quick 单候选建档；空 perspectives 和 Quick 必填项由后端硬门执行。",
+      "new_evidence": "独立红队确认当前 draft dialog 仍是动态混合 UI；reset 仍注入 9 个 perspectives；核心契约只限制 32 个 perspectives；create-document 只接受单 candidate；现有测试缺少 Quick 正向入口到 needs_review 的端到端闭环。",
+      "changed_acceptance": "新增 API bypass、空 perspectives、0/1/3/4 视角、多候选单建档、stale/cancel/recovery、prompt-to-validator matrix、Quick 正向入口和可访问性验收。"
+    },
+    {
+      "round": 2,
+      "verdict": "APPROVED",
+      "change_fingerprint": "f78a474bb92aeb4aebbd4906962361d9ea01eeb9798cf29b6c89fb8f946ae40a",
+      "changed_decision": "第二轮复审确认：Quick 独立 UI 与 legacy staged 分离；Quick prepare 强制 goal/tier；空 perspectives 与 expressions 后端闭环；普通 Quick 单 candidate 建档；uiStep 仅前端显示，pipelineStage/generationPass 由服务端权威。",
+      "new_evidence": "方案已新增 4.2.1 状态权威与合法组合、16.1 冻结选择、17.1-17.5 硬门与 Prompt→validator→UI→test 矩阵、17.6 分批缩减；上一轮 P1 均有明确实现和验收落点。",
+      "changed_acceptance": "二轮终审新增确认：API bypass、unknown tier prepare 阻断、empty perspectives output gate、0/1/3/4 perspectives、candidate 单选/多选隔离、Quick 正向入口 needs_review 闭环、stale/cancel/recovery、可访问性和 deterministic fail-closed。"
+    }
+  ],
+  "user_signoff": true
+}

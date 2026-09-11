@@ -1,0 +1,57 @@
+# AWAKE Native Knowledge B1 Checkpoint
+
+- `task_id`: `AWAKE-NATIVE-KNOWLEDGE-B1-20260824`
+- `batch_id`: `awake-native-knowledge-b1-runtime-readiness-20260824`
+- `status`: `offline_verified`
+- `execution_lease`: `completed`
+- `scope`: AwakeRuntime readiness ownership plus read-only player→current-NPC native/identity scalar snapshots.
+- `files_changed`:
+  - `_houkai_merge/AWAKE/docs/checkpoints/AWAKE-NATIVE-KNOWLEDGE-B1-20260824-checkpoint.md`
+  - `_houkai_merge/AWAKE/docs/checkpoints/AWAKE-NATIVE-KNOWLEDGE-BOUNDARY-20260823-checkpoint.md`
+  - `_houkai_merge/AWAKE/docs/AWAKE-CURRENT.md`
+  - `_houkai_merge/AWAKE/src/AwakeRuntime.cs`
+  - `_houkai_merge/AWAKE/src/ProbeExtension.cs`
+  - `_houkai_merge/AWAKE/src/IdentitySnapshot.cs`
+  - `_houkai_merge/AWAKE/src/NativeSocialSnapshot.cs`
+  - `_houkai_merge/AWAKE/src/BannerlordNativeSocialReader.cs`
+  - `_houkai_merge/AWAKE.Tests/AWAKE.Tests.csproj`
+  - `_houkai_merge/AWAKE.Tests/Program.cs`
+- `allowed_write_set`:
+  - `_houkai_merge/AWAKE/src/AwakeRuntime.cs`
+  - `_houkai_merge/AWAKE/src/SubModule.cs`
+  - `_houkai_merge/AWAKE/src/ProbeExtension.cs`
+  - `_houkai_merge/AWAKE/src/BannerlordNativeSocialReader.cs`
+  - `_houkai_merge/AWAKE/src/NativeSocialSnapshot.cs`
+  - `_houkai_merge/AWAKE/src/IdentitySnapshot.cs`
+  - `_houkai_merge/AWAKE.Tests/AWAKE.Tests.csproj`
+  - `_houkai_merge/AWAKE.Tests/Program.cs`
+  - `_houkai_merge/AWAKE.Tests/AwakeTestFakes.cs`
+  - `_houkai_merge/AWAKE/tools/` focused B1 offline fixture only, if required
+- `excluded_scope`:
+  - `B1-S` Storage queue/backpressure/schema changes
+  - `B2` worldbook query or legacy fallback removal beyond the formal initialization gate
+  - `B3+` semantic projection, player teaching, event propagation, NPC knowledge persistence, proactive NPC, relation writeback
+  - `dist`, game `Modules\\AWAKE`, `PlayerExports`, frozen candidate, `ModuleData`, worldbook content
+- `verification`:
+  - `E0`: approved locked plan and final independent `VERDICT: APPROVED` review exist.
+  - `E0`: user confirmed B1 implementation and allowed subagents.
+  - `E0`: independent read-only Bannerlord v1.3.15 API review completed; the current Marcus GameData contract does not expose arbitrary current-NPC snapshots, so B1 uses the approved synchronous-main-thread extraction → immediate scalar-copy boundary.
+  - `E1`: RED build failed because the newly referenced B1 files did not yet exist; the test then built successfully after implementation.
+  - `E2`: AWAKE Release build passed with `0` warnings and `0` errors.
+  - `E2`: B1 smoke passed: readiness single-flight, ready/failed/cancelled/skipped states, session-generation isolation, immutable scalar snapshot copy, explicit unknown fallback, and Bannerlord-object exclusion.
+  - `E2`: static negative check found no formal `KnowledgeRuntime.EnsureCreated` call under `AWAKE/src`; `CampaignSessionReady` now owns B1 readiness instead.
+  - `E2`: no game-directory sync, PlayerExports change, game launch, save/load or E4/E5 claim.
+- `acceptance`:
+  - One AwakeRuntime-owned readiness future with explicit ready/failed/cancelled/skipped result and no duplicate initialization.
+  - Read-only immutable scalar snapshots use stable IDs and `unknown` fallbacks; no Bannerlord object crosses await/tick/session boundaries.
+  - B1 caller is reachable from safe campaign lifecycle/context entry, without Storage writes or AI calls.
+  - Formal runtime does not initialize legacy `KnowledgeRuntime`; B1 negative call-graph check is recorded.
+  - Focused build/offline smoke passes; no E4/E5 claim.
+- `known_limitations`:
+  - Bannerlord gameplay and save/load are not yet verified.
+  - The full legacy `Awake.SdkSmoke` run still stops at the pre-existing `SharedPersonaGoldenFixture` mismatch after B1 has passed; that unrelated fixture was not changed.
+  - The current-NPC synchronous extraction is a temporary adapter boundary until Marcus exposes a restricted current-target GameData query; no Bannerlord object crosses the snapshot boundary.
+  - B1-S and B2 remain pending separate leases/checkpoints.
+  - Exact v1.3.15 native API usage must be confirmed against local references before coding.
+- `next_action`: keep B1 closed; do not start B1-S or B2 under this lease. A future batch may consume `NativeSocialSnapshot` through the worldbook/query path after a separate approval and checkpoint.
+- `last_error`: `none`

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "awake.persona.fixture-expected.v1",
+  "fixtureId": "PWB-AWAKE-005-loss-report-rejected",
+  "gate": "E2",
+  "status": "reject",
+  "exitCode": 10,
+  "assertions": [
+    "unmapped_axis_is_not_silently_collapsed",
+    "mapping_loss_has_provenance_path",
+    "no_source_overwrite",
+    "no_candidate_promotion"
+  ],
+  "errors": [
+    {
+      "schemaVersion": "awake.persona.adapter-error.v1",
+      "errorId": "fixture.error.005.mapping",
+      "code": "persona.mapping_loss",
+      "stage": "mapping",
+      "artifactId": "fixture.persona.approved",
+      "path": "$.mappingIssues[0]",
+      "detail": "Axis value has no definition-v1 encoding in the pinned registry.",
+      "retryable": false
+    }
+  ],
+  "noWrite": {
+    "sourceUnchanged": true,
+    "candidateWritten": false,
+    "activeCandidateChanged": false
+  },
+  "cleanup": {
+    "status": "pass",
+    "paths": [],
+    "errors": []
+  }
+}

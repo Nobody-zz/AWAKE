@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "awake.persona.fixture-input.v1",
+  "fixtureId": "PWB-AWAKE-011-dynamic-invalidation",
+  "gate": "E2",
+  "operation": "dynamic-invalidation",
+  "nativePrerequisite": {
+    "planStatus": "approved_for_b1_only",
+    "executionLease": "none",
+    "owner": "NativeKnowledgeBoundary",
+    "exactScopeApproved": false,
+    "writeSetDisjoint": false
+  },
+  "mutation": {
+    "field": "relation.currentState",
+    "before": "quiet",
+    "after": "alert",
+    "expectedFingerprintChange": true
+  }
+}

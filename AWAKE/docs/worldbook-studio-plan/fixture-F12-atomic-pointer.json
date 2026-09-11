@@ -1,0 +1,17 @@
+{
+  "fixture_id":"F12",
+  "fault_points":["write_interrupted","disk_full","file_locked","lock_competition","pointer_replace_failed"],
+  "initial_state":{
+    "current_pointer":"current.json",
+    "previous_candidate":"candidate-previous",
+    "previous_manifest_hash":"<sha256>"
+  },
+  "expected":{
+    "stable_error_codes":true,
+    "pointer_unchanged":true,
+    "previous_candidate_readable":true,
+    "incomplete_candidate_ignored":true,
+    "temporary_directory_cleanable":true
+  },
+  "report_required_fields":["fault_point","error_code","pointer_before_hash","pointer_after_hash","previous_candidate_readable","cleanup_result"]
+}

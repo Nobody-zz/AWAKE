@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-THREE-WORKSTATIONS-20260904",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "d6e09f26c386daa3049d1fb7f94fd2dcd45037297dcf6f4b71848352534532e2",
+      "changed_decision": "先定义跨工作站 envelope 与生命周期，再补 Worldbook Studio Persona handoff 消费端；UI Workstation 身份/入口单独锁定；不改变各域正典 authority。",
+      "new_evidence": "独立审查确认 UI Workstation 工程边界缺失、Persona handoff 无 Worldbook Studio 消费端、三方缺少 workspace/session/revision/hash 共同契约；当前仅有各工具局部测试。",
+      "changed_acceptance": "必须有 shared envelope schema、WBS import/ack/readback、stale/expiry/recovery 语义、跨工具 loopback smoke；未完成前不进入第8批。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "0189e42e9763afa31f49ff0228ddac2c67eaf9cd7387f7a57a1f4573fd7385d0",
+      "changed_decision": "第7批锁定 shared envelope、WBS import/accept/consume/readback、append-only handoff ledger、stale/expiry/in_doubt 恢复矩阵、三方 authority/health contract 与 loopback integration smoke。",
+      "new_evidence": "独立计划复审指出原计划缺少字段、路由、状态机、持久化、错误码、UI Workstation identity/health 和跨工具证据；已补入 PLAN-AWAKE-THREE-WORKSTATIONS-20260904.md 的 Locked Integration Contract。",
+      "changed_acceptance": "必须先由独立复审确认上述契约可实现，再开始代码；实现后必须有 fresh temp workspace 的跨工具 smoke 与失败恢复证据。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "389a07079d57fb060c6879d1e21c01d90bf57e410bf85775e1a3c77de7a9fc9e",
+      "changed_decision": "第7批最终计划修订：明确 producer/consumer 字段所有权、review_only 与 review_status 分离、unknown/in_doubt 转换、四路由成功响应与错误码、UI adapter 路径/health/navigate、mutex/lock 规则及18项证据 case。",
+      "new_evidence": "独立审查指出原计划仍存在生命周期/HTTP/入口/证据矩阵阻断；已在 PLAN-AWAKE-THREE-WORKSTATIONS-20260904.md Locked Integration Contract 中逐项补齐。",
+      "changed_acceptance": "实现前必须由独立复审确认计划可执行；实现后按18项 fresh loopback smoke、原始响应/锁/进程/外部资源审计验收，失败链路不得伪造 consumed。"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "awake.persona.fixture-input.v1",
+  "fixtureId": "PWB-AWAKE-013-frozen-candidate-isolation",
+  "gate": "E2",
+  "operation": "frozen-candidate-isolation",
+  "protectedRoots": [
+    {
+      "id": "frozen.source",
+      "path": "_houkai_merge/AWAKE/src",
+      "beforeSha256": "1E08A7A86916BD3C499123CD846A2C62537C4D618E4FF63302E103415C827F52",
+      "afterSha256": "1E08A7A86916BD3C499123CD846A2C62537C4D618E4FF63302E103415C827F52"
+    },
+    {
+      "id": "frozen.moduledata",
+      "path": "_houkai_merge/AWAKE/ModuleData",
+      "beforeSha256": "75FF7F56A365A4FC58006DDBC79B6F4BDC580318325396D5A489CAA288BC3DFB",
+      "afterSha256": "75FF7F56A365A4FC58006DDBC79B6F4BDC580318325396D5A489CAA288BC3DFB"
+    },
+    {
+      "id": "frozen.dist",
+      "path": "_houkai_merge/AWAKE/dist",
+      "beforeSha256": "85FADD02A685953958185DF0B99CDF4949CBCC544800584893858F3BB925F596",
+      "afterSha256": "85FADD02A685953958185DF0B99CDF4949CBCC544800584893858F3BB925F596"
+    },
+    {
+      "id": "frozen.ledger",
+      "path": "_houkai_merge/AWAKE/docs/persona-awake-candidate-ledger.v1.json",
+      "beforeSha256": "FF0B7AA30CB81E4902F1CF2CEE345EA946B57897BF6307084BCA9D70E66CC357",
+      "afterSha256": "FF0B7AA30CB81E4902F1CF2CEE345EA946B57897BF6307084BCA9D70E66CC357"
+    }
+  ],
+  "isolatedSibling": "temp/persona-awake-joint/PWB-AWAKE-013",
+  "attempts": [
+    {
+      "operation": "overwrite",
+      "requestedPath": "_houkai_merge/AWAKE/src/PersonaRuntimeProvider.cs",
+      "execution": "isolated-sibling-copy-only",
+      "result": "rejected",
+      "pathResolution": "protected-root-guard"
+    },
+    {
+      "operation": "delete",
+      "requestedPath": "_houkai_merge/AWAKE/docs/persona-awake-candidate-ledger.v1.json",
+      "execution": "isolated-sibling-copy-only",
+      "result": "rejected",
+      "pathResolution": "protected-root-guard"
+    },
+    {
+      "operation": "mutate-pointer",
+      "requestedPath": "_houkai_merge/AWAKE/dist/Modules/AWAKE",
+      "execution": "isolated-sibling-copy-only",
+      "result": "rejected",
+      "pathResolution": "protected-root-guard"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "awake.persona.g3-s0-lease.v1",
+  "recordStatus": "released",
+  "taskId": "PERSONA-AWAKE-JOINT-G3-S0-20260824",
+  "batchId": "persona-awake-joint-g3-s0-storage-readiness-20260824",
+  "gate": "G3-S0",
+  "scopeRevision": 2,
+  "scopePath": "docs/persona-awake-joint-g3-s0-scope.v1.json",
+  "scopeSha256": "EC26379986210CCF2EC8AE03A3B49B3B3152807AD3C287B30059FC1B9C476438",
+  "status": "released",
+  "owner": "codex-g3-s0",
+  "leaseId": "g3-s0-20260824-114116",
+  "writeSet": [
+    "_houkai_merge/AWAKE/src/AwakeStorageContract.cs",
+    "_houkai_merge/AWAKE/src/AiTaskConstants.cs",
+    "_houkai_merge/AWAKE/src/WorldStateStore.cs",
+    "_houkai_merge/AWAKE/src/AwakeRuntime.cs",
+    "_houkai_merge/AWAKE.Tests/Program.cs",
+    "_houkai_merge/AWAKE.Tests/AwakeTestFakes.cs"
+  ],
+  "acquiredAt": "2026-08-24T11:41:16.881Z",
+  "releasedAt": "2026-08-24T12:08:31.298Z",
+  "sideEffects": {
+    "launchGame": false,
+    "syncGameDirectory": false,
+    "mutateFrozenCandidate": false,
+    "publish": false
+  }
+}

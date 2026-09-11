@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona.selection.v1",
+  "title": "AWAKE Persona selection sidecar",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "characterId",
+    "identityId",
+    "role",
+    "scope",
+    "priority",
+    "sourceRevision",
+    "selectionRevision",
+    "suppliedBy",
+    "suppliedAt"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "awake.persona.selection.v1" },
+    "characterId": { "$ref": "#/$defs/entityId" },
+    "identityId": { "$ref": "#/$defs/entityId" },
+    "role": { "$ref": "#/$defs/role" },
+    "scope": { "enum": ["character", "identity", "role", "culture", "global"] },
+    "priority": { "type": "integer", "minimum": 0, "maximum": 100000 },
+    "sourceRevision": { "$ref": "#/$defs/positiveRevision" },
+    "selectionRevision": { "$ref": "#/$defs/positiveRevision" },
+    "suppliedBy": { "$ref": "#/$defs/stableId" },
+    "suppliedAt": { "$ref": "#/$defs/utcDateTime" }
+  },
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)*$"
+    },
+    "entityId": {
+      "type": "string",
+      "pattern": "^awake:[a-z][a-z0-9_]*:[a-z0-9_.]+$"
+    },
+    "role": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "positiveRevision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "utcDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    }
+  }
+}

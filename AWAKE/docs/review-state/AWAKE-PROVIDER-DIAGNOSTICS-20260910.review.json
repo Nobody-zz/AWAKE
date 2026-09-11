@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-PROVIDER-DIAGNOSTICS-20260910",
+  "risk_class": "standard",
+  "max_rounds": 2,
+  "round": 2,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "04c90d59abb3c443ee04c5a32ecd0e8ffa74e9f000a76b660c520c2a55d4b9c8",
+      "changed_decision": "",
+      "new_evidence": "Revision applied: RuntimeServiceLog.Enable() now writes a runtime_service_log_enabled banner straight to the file (FileShare.ReadWrite|Delete, shared TryOpen) before installing the stderr tee, so awake-runtime-service.log exists from Runtime start while stderr bytes stay unchanged; RuntimeServiceLogTests gained a 4th case covering Enable() + ResolvePath() + MARCUS_AWAKE_RUNTIME_DATA_ROOT override => RUNTIME_SERVICE_LOG 4/4 PASS; entry-point probe ran the built MarcusAwakeRuntimeService.exe with stdin at EOF and a temp data root: exit 4 but the log file existed with banner + mirrored descriptor_read_failed, captured stderr identical; runtime dll sha256 now A4E3894A98BA0C2AB694D866CC29BC295752460E6064FD19A21A12CEB259C899; acceptance criterion 3 and the in-game checklist reworded to state the file always appears while an expected provider failure returns a structured error frame and never reaches stderr.",
+      "changed_acceptance": "Acceptance criterion 3 rewritten: awake-runtime-service.log must exist as soon as the runtime starts (banner line) and contain stderr diagnostics only when the runtime emits them; provider-failure attribution is owned by the Awake.log line built from FrameworkError.Details, not by the runtime stderr mirror."
+    },
+    {
+      "round": 2,
+      "verdict": "APPROVED",
+      "change_fingerprint": "8478a303455b506889ddc7257dce842075833595d704e86be49dbea270d8fd6f",
+      "changed_decision": "",
+      "new_evidence": "Independent round-2 verification: entry-point probe (empty MARCUS_AWAKE_RUNTIME_DATA_ROOT + stdin EOF) exits 4 but awake-runtime-service.log already holds the banner plus the mirrored descriptor_read_failed while captured stderr is exactly descriptor_read_failed (banner never reaches stderr); RuntimeServiceLogTests 4/4 PASS with no temp leftovers; provider-outcome-ledger 6/6 PASS; all recorded sha256 matched (RuntimeServiceLog.cs 2BD31437..., RuntimeServiceLogTests.cs 31B48483..., RuntimeServiceLogService dll A4E3894A..., Awake.dll B61063D6... unchanged, MarcusAwakeFramework.dll byte-identical to persona-anchor-005 so D-4 stays frozen); no out-of-scope edit. Reviewer advisory P3 (open file handle: read after exiting the game, do not delete mid-session) is now recorded in the evidence residualRisks.",
+      "changed_acceptance": ""
+    }
+  ],
+  "user_signoff": true
+}

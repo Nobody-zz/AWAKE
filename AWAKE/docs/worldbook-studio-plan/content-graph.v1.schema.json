@@ -1,0 +1,27 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"awake.worldbook.content-graph.v1",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["graph_version","nodes","edges"],
+  "properties":{
+    "graph_version":{"const":"awake.worldbook.content-graph.v1"},
+    "nodes":{"type":"array","uniqueItems":true,"items":{
+      "type":"object","additionalProperties":false,"required":["node_id","node_kind","content_tier","origin_pointer"],
+      "properties":{
+        "node_id":{"type":"string","pattern":"^[a-z]+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},
+        "node_kind":{"enum":["document","assertion","expression","source","referral","alias","redirect","profile_registry","referral_registry","id_ledger","index","cache","report"]},
+        "content_tier":{"enum":["base","adult_optional","unknown"]},
+        "origin_pointer":{"type":"string","minLength":1}
+      }
+    }},
+    "edges":{"type":"array","uniqueItems":true,"items":{
+      "type":"object","additionalProperties":false,"required":["edge_type","from","to"],
+      "properties":{
+        "edge_type":{"enum":["contains","references_source","fallback","alias","redirect","index_entry","cache_entry","report_reference"]},
+        "from":{"type":"string","pattern":"^[a-z]+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},
+        "to":{"type":"string","pattern":"^[a-z]+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"}
+      }
+    }}
+  }
+}

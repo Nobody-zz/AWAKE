@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "awake.persona.fixture-expected.v1",
+  "fixtureId": "PWB-AWAKE-015-stale-selection-rejected",
+  "gate": "E2",
+  "status": "reject",
+  "exitCode": 10,
+  "observedError": {
+    "code": "persona.stale_revision",
+    "stage": "selection",
+    "path": "$.selection.sourceRevision",
+    "retryable": false
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona.g3-s0-focused-report.v1",
+  "title": "AWAKE Persona G3-S0 focused readiness evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "taskId", "batchId", "gate", "scopeRevision", "scopeSha256", "status", "exitCode", "execution", "tracePath", "traceSha256", "sourceBindings", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "awake.persona.g3-s0-focused-report.v1" },
+    "taskId": { "const": "PERSONA-AWAKE-JOINT-G3-S0-20260824" },
+    "batchId": { "const": "persona-awake-joint-g3-s0-storage-readiness-20260824" },
+    "gate": { "const": "G3-S0" },
+    "scopeRevision": { "const": 2 },
+    "scopeSha256": { "type": "string", "pattern": "^[A-F0-9]{64}$" },
+    "status": { "enum": ["pass", "reject", "blocked", "not_attempted", "error"] },
+    "exitCode": { "type": "integer", "minimum": 0 },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commandLine", "processExitCode", "traceGeneratedAt"],
+      "properties": {
+        "commandLine": { "type": "string", "minLength": 1 },
+        "processExitCode": { "const": 0 },
+        "traceGeneratedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "tracePath": { "const": "tools/persona-awake-joint/artifacts/g3-s0-readiness-trace.json" },
+    "traceSha256": { "type": "string", "pattern": "^[A-F0-9]{64}$" },
+    "sourceBindings": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[A-F0-9]{64}$" }
+        }
+      }
+    },
+    "sideEffects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["launchGame", "syncGameDirectory", "mutateFrozenCandidate", "publish"],
+      "properties": {
+        "launchGame": { "const": false },
+        "syncGameDirectory": { "const": false },
+        "mutateFrozenCandidate": { "const": false },
+        "publish": { "const": false }
+      }
+    }
+  }
+}

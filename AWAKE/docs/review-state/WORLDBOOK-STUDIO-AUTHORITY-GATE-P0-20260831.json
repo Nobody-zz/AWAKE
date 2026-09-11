@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-AUTHORITY-GATE-P0-20260831",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "89a2e99a50d1769cd4aff1345039732cc91cb190f0a776985d46562aabf56d15",
+      "changed_decision": "Do not implement until authoring-v1 is a real durable authority path; legacy routes must return 410 before side effects and compile/export must consume immutable proofs.",
+      "new_evidence": "Independent review found authoring-v1 is only draft text, R14/compile/export routes still execute, authoring is recursively scanned, and staging can update the release pointer.",
+      "changed_acceptance": "Add executable fake tests for legacy 410 zero-side-effect, proof/hash/revision closure, restart recovery, staging without pointer mutation, and publish conflict."
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "f2f3dae91a147f91dd819b85d95ee65fcd75959a330ee2a12a3ca5c1b19e3a3d",
+      "changed_decision": "Make restart durability part of P0, freeze an exhaustive legacy route/CLI matrix, and name executable authority fixtures before implementation.",
+      "new_evidence": "Round 2 review found the plan still contradicted itself on restart recovery, left legacy route coverage open-ended, and did not identify concrete test files, fake executor seams, commands, or release-check wiring.",
+      "changed_acceptance": "P0 must prove crash/restart recovery for workspace head/commit/journal/proofs, enumerate every retired and retained mutation route, and run named zero-side-effect and proof-closure fixtures from the package/release gate."
+    },
+    {
+      "round": 3,
+      "verdict": "APPROVED",
+      "change_fingerprint": "017dc179f18c18d3c9cff5fe9f8858ccf3b849e7ccf874374260786fe4f35ba0",
+      "changed_decision": "Plan freezes a complete legacy route matrix, binds CompileProof to real Web/CLI entry points, and includes restart recovery in P0.",
+      "new_evidence": "Independent plan-only review confirmed BatchEndpoints coverage, executable test-project hosting, explicit Suite/release wiring, and zero-side-effect/recovery acceptance.",
+      "changed_acceptance": "Require the matrix-driven HTTP/CLI fixtures, recovery fixtures, proof-closure fixtures, contract state/hash gates, and machine-readable authority_gate_passed before implementation."
+    }
+  ],
+  "user_signoff": true
+}

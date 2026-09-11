@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "persona-workbench-to-awake.crosswalk.v1",
+  "title": "Persona Workbench v1 to AWAKE crosswalk v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "$id",
+    "schemaVersion",
+    "sourceSchema",
+    "targetAuthoringSchema",
+    "targetRuntimeSchema",
+    "targetRegistry",
+    "sourceVocabulary",
+    "valueEncodings",
+    "rows"
+  ],
+  "properties": {
+    "$schema": { "type": "string", "format": "uri-reference" },
+    "$id": { "const": "persona-workbench-to-awake.crosswalk.v1" },
+    "schemaVersion": { "const": "persona-workbench-to-awake.crosswalk.v1" },
+    "sourceSchema": { "const": "persona-workbench.character.v1" },
+    "targetAuthoringSchema": { "const": "awake.persona.authoring.v2" },
+    "targetRuntimeSchema": { "const": "awake.persona.definition.v1" },
+    "targetRegistry": { "$ref": "#/$defs/targetRegistry" },
+    "sourceVocabulary": { "$ref": "#/$defs/sourceVocabulary" },
+    "valueEncodings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/valueEncoding" },
+      "minItems": 1
+    },
+    "rows": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/row" },
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[A-F0-9]{64}$"
+    },
+    "nonEmpty": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^\\u0000-\\u001F\\u007F]*$"
+    },
+    "targetRegistry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "path", "sha256", "digestMode"],
+      "properties": {
+        "schemaVersion": { "const": "awake.persona.tags.v1" },
+        "path": { "$ref": "#/$defs/nonEmpty" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "digestMode": { "const": "raw_utf8_bytes" }
+      }
+    },
+    "sourceVocabulary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rootFields", "tagIds", "axisIds", "flagIds", "facetStrengthIds", "legacyFields", "provenanceFields"],
+      "properties": {
+        "rootFields": { "$ref": "#/$defs/stringSet" },
+        "tagIds": { "$ref": "#/$defs/stringSet" },
+        "axisIds": { "$ref": "#/$defs/stringSet" },
+        "flagIds": { "$ref": "#/$defs/stringSet" },
+        "facetStrengthIds": { "$ref": "#/$defs/stringSet" },
+        "legacyFields": { "$ref": "#/$defs/stringSet" },
+        "provenanceFields": { "$ref": "#/$defs/stringSet" }
+      }
+    },
+    "stringSet": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/nonEmpty" },
+      "uniqueItems": true
+    },
+    "valueEncoding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9_.-]*$" },
+        "kind": { "enum": ["copy_text", "derived", "presence", "facet_strength", "signed_axis", "flag", "preserve", "constant", "evidence_quote"] },
+        "normalization": { "enum": ["NFC", "trim", "lowercase", "none"] },
+        "domain": { "type": "array", "items": { "type": ["integer", "string", "boolean"] }, "uniqueItems": true },
+        "actions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["action"],
+            "properties": {
+              "action": { "enum": ["emit", "omit", "preserve_only", "reject"] },
+              "targetId": { "type": ["string", "null"] },
+              "strength": { "enum": ["slight", "moderate", "strong"] },
+              "reviewState": { "enum": ["accepted", "needs_review", "rejected"] },
+              "warning": { "$ref": "#/$defs/nonEmpty" }
+            }
+          }
+        },
+        "constantValue": { "type": ["string", "integer", "boolean", "null"] },
+        "requiredEvidence": { "type": "array", "items": { "$ref": "#/$defs/nonEmpty" }, "uniqueItems": true },
+        "index": { "type": "integer", "minimum": 0 },
+        "notes": { "$ref": "#/$defs/nonEmpty" }
+      }
+    },
+    "row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "sourceKind", "targetField", "targetId", "mappingKind", "valueEncoding", "lossPolicy", "provenancePath", "registrySha256", "status"],
+      "properties": {
+        "sourceId": { "$ref": "#/$defs/nonEmpty" },
+        "sourceKind": { "enum": ["root_field", "tag", "facet_strength", "axis", "flag", "legacy_field", "derived", "provenance"] },
+        "targetField": { "$ref": "#/$defs/nonEmpty" },
+        "targetId": { "type": ["string", "null"] },
+        "mappingKind": { "enum": ["identity", "axis_to_observation", "flag_to_observation", "facet_to_observation", "legacy_token", "preserve_only", "unmapped"] },
+        "valueEncoding": { "type": "string", "pattern": "^[a-z][a-z0-9_.-]*$" },
+        "lossPolicy": { "enum": ["reject", "preserve_only", "drop_non_runtime_metadata"] },
+        "provenancePath": { "$ref": "#/$defs/nonEmpty" },
+        "registrySha256": { "$ref": "#/$defs/sha256" },
+        "status": { "enum": ["mapped", "unmapped"] }
+      }
+    }
+  }
+}

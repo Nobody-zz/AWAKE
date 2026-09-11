@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "awake.persona.fixture-input.v1",
+  "fixtureId": "PWB-AWAKE-007A-duplicate-id-rejected",
+  "gate": "E2",
+  "operation": "validate-export-plan",
+  "exportCandidates": [
+    {
+      "id": "fixture.export.duplicate",
+      "path": "isolated/candidate-a/definition.json"
+    },
+    {
+      "id": "fixture.export.duplicate",
+      "path": "isolated/candidate-b/definition.json"
+    }
+  ],
+  "pathAttempts": [],
+  "exportState": "complete",
+  "partialExport": false,
+  "expectedStatus": "reject"
+}

@@ -1,0 +1,10 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"awake.worldbook.knowledge-patch.v1",
+  "type":"object","additionalProperties":false,
+  "required":["schema_version","operations"],
+  "properties":{
+    "schema_version":{"const":"knowledge-patch.v1"},
+    "operations":{"type":"array","maxItems":64,"items":{"type":"object","additionalProperties":false,"required":["op","path"],"properties":{"op":{"enum":["add","replace","remove"]},"path":{"type":"string","minLength":1,"maxLength":512,"pattern":"^/"},"value":{}}}}
+  }
+}

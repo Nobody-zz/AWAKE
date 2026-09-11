@@ -1,0 +1,30 @@
+# AWAKE runtime persistence repair checkpoint — 2026-09-03
+
+- task_id: `AWAKE-RUNTIME-PERSISTENCE-REPAIR-20260903`
+- scope: fail-closed storage settlement and memory reservation payload recovery in the AWAKE本体
+- candidate: `awake-20260903-awake-runtime-repair-004`; engineering version remains `v0.2.0`
+- files_changed:
+  - `src/WorldStateStore.cs`
+  - `src/AwakeConstants.cs`
+  - `..\AWAKE.Tests\Program.cs`
+- root_causes:
+  - several storage write callers returned `true` after `DrainAsync` without checking owner settlement state
+  - memory reservations were not retaining the actual facts/summary payload for final-drain replay
+- repairs:
+  - centralized `IsPersisted` fail-closed settlement check for storage write callers
+  - reservations retain `Reserved/Enqueued` state and their payload; final drain replays the retained payload
+  - added settlement-failure and reservation-recovery regression coverage
+- verification:
+  - `tools\build.ps1 -BannerlordApi 1.3.15 -Configuration Release` -> `BUILD_OK`
+  - `dotnet build ..\AWAKE.Tests\AWAKE.Tests.csproj -c Release --nologo -v:minimal` -> `0 errors`, 4 pre-existing CS4014 warnings
+  - `..\AWAKE.Tests\bin\Release\net472\Awake.SdkSmoke.exe` -> `PASS ALL Awake.SdkSmoke`
+  - `tools\worldbook-runtime-smoke` Release-r16 -> `PASS`
+  - `tools\worldbook-runtime-production-smoke` Release -> `18/18 PASS`
+  - `tools\verify_marcus_awake_p3d_a0.ps1` -> `P3D-A0 VERIFIER PASS`
+  - `tools\verify_marcus_awake_p3d_a1.ps1` -> `P3D-A1 VERIFIER PASS`, `23/23`
+  - MCM contract -> `47/47`, localization -> `LOCALIZATION_OK`, asset boundary -> `ASSET_BOUNDARY_OK`
+- boundaries:
+  - no Bannerlord launch, no game-directory synchronization, no real Provider/API key, no E4/E5 claim
+  - dist and game trees remain historical/unsynchronized; current `004` source hash is not represented there
+  - P3A helper schema validation is locally blocked by missing `JsonSchema.Net`/`Json.More`/`JsonPointer.Net`/`Humanizer` references; build and forbidden scan passed
+- status: `source_verified_pending_authorized_sync`

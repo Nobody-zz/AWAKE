@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "awake.persona.fixture-input.v1",
+  "fixtureId": "PWB-AWAKE-007B-path-protected-rejected",
+  "gate": "E2",
+  "operation": "validate-export-plan",
+  "exportCandidates": [
+    {
+      "id": "fixture.export.path_guard",
+    "path": "isolated/candidate/definition.json"
+    }
+  ],
+  "pathAttempts": [
+    {
+      "writePath": "_houkai_merge/AWAKE/src/PersonaRuntimeProvider.cs",
+      "result": "rejected"
+    }
+  ],
+  "exportState": "complete",
+  "partialExport": false,
+  "expectedStatus": "reject"
+}

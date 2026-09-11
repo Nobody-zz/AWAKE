@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-CUSTOMER-DELIVERY-20260904",
+  "risk_class": "security-release",
+  "max_rounds": 5,
+  "round": 4,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "07c6c4689b68ee9f0740e8f736d5796881af5e06258eb85d4f8af03f09ce9188",
+      "changed_decision": "第8批先建立统一 delivery root：三工具独立 package、根级 manifest/BuildId/SHA256、单一 ZIP、rollback 指针；再以最终 ZIP 跑离线与 configured local Worker 矩阵。",
+      "new_evidence": "独立审查确认当前只有 WBS 独立 ZIP、PWB 目录包、UI 脚本；无统一三工具包、source→package→zip 哈希链、客户包 Worker/clean-machine 验收。",
+      "changed_acceptance": "实现前锁定根包文件集合、manifest 字段/哈希算法、ZIP/rollback 命名、文档状态分层和 Worker 外部依赖声明；不把源码 smoke 当客户交付证据。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "f4b8ac76b22a1b9da2bf8564e80cce479d01a5dce9deaae06d40070b32b0789b",
+      "changed_decision": "第8批计划仍需在实现前统一根包精确文件树、外置 rollback pointer、单一 BuildId 传播、入口职责及每工具/根级哈希对象。",
+      "new_evidence": "计划正文内部存在五个根元数据文件却仅列四个、build 内 rollback-pointer 与外置唯一指针冲突、UI 入口三种表述冲突、根级 package_sha256/zip_sha256 无对象与算法、硬编码 20260904 evidence 路径与执行 UTC 日期规则冲突。",
+      "changed_acceptance": "修订后必须能由计划唯一推导精确文件名/层级、每个 manifest schema 与字段类型、每个 hash 的输入排除集、一个 BuildId 的生成与全处绑定、rollback 校验来源、offline/Worker 未运行与失败状态、UTC 日期及 rerun 命名。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "ed6867df749cc8c38909c00aa5550381601ac3578ff4b563ba1e029ece3e1d99",
+      "changed_decision": "第8批第二轮冻结统一客户包布局：根目录/子包/文档确切文件；兄弟 root ZIP 与四个根元数据；manifest 字段类型/状态；source tuple/tree/extracted hash；毫秒+随机 BuildId；外部 rollback pointer；evidence 状态派生与 UTC 文件名规则。",
+      "new_evidence": "独立审查发现根包集合、manifest/hash、BuildId、入口、rollback、evidence 状态和日期规则存在歧义；计划已逐项明确。",
+      "changed_acceptance": "下一轮独立复审通过后实现 customer-delivery/package-customer.ps1、rollback-customer.ps1、manifest schemas 和文档；用户交付仍保留 ready_for_user_verification。"
+    },
+    {
+      "round": 4,
+      "verdict": "REVISE",
+      "change_fingerprint": "64100f25e6ef31fc00ee0cb32be3e7cdb1ff3ae8ed107cb06e43422a2b3d9a57",
+      "changed_decision": "第8批第三轮修订：UI 唯一客户入口为 start wrapper；BuildId 冲突硬拒绝；补 metadata_sha256；根 ZIP/rollback 外置关系统一；evidence 不再使用 verified section 状态。",
+      "new_evidence": "独立审查指出入口冲突、BuildId 仅概率唯一、manifest 排除元数据未计 hash、evidence 状态术语不一致；计划已逐项修正。",
+      "changed_acceptance": "下一轮若通过，开始实现 customer-delivery 打包器和回滚脚本；所有未运行的客户/Worker/游戏验证保持明确状态。"
+    }
+  ]
+}

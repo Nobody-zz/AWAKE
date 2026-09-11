@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona.adapter-error.v1",
+  "title": "AWAKE Persona adapter error v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "errorId", "code", "stage", "artifactId", "path", "detail", "retryable"],
+  "properties": {
+    "schemaVersion": { "const": "awake.persona.adapter-error.v1" },
+    "errorId": { "$ref": "#/$defs/stableId" },
+    "code": {
+      "enum": [
+        "persona.selection_invalid",
+        "persona.source_revision_required",
+        "persona.authoring_observation_unreviewed",
+        "persona.rule_unsupported_for_definition_v1",
+        "persona.registry_digest_mismatch",
+        "persona.mapping_loss",
+        "persona.schema_unknown_field",
+        "persona.stale_revision",
+        "persona.path_protected",
+        "persona.runtime_bridge_check_failed",
+        "persona.runtime_static_evidence_invalid",
+        "persona.runtime_static_case_not_supported"
+      ]
+    },
+    "stage": { "enum": ["read", "schema", "migration", "mapping", "selection", "export", "definition", "promotion", "digest", "path", "runtime_static", "runtime_static_evidence"] },
+    "artifactId": { "$ref": "#/$defs/stableId" },
+    "path": { "type": "string", "minLength": 1 },
+    "detail": { "type": "string", "minLength": 1 },
+    "retryable": { "type": "boolean" }
+  },
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)*$"
+    }
+  }
+}

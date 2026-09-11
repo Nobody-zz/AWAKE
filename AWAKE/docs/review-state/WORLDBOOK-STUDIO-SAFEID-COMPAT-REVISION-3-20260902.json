@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-SAFEID-COMPAT-REVISION-3-20260902",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "a7b32b6ad15b8a55896d94035e7878a017768522d27130bd78adda3a3822fd9b",
+      "changed_decision": "将 SafeId 批次拆为 SafeId-A：只迁移/兼容 compile settlement 的 compile proof、operation、result、marker、reservation 五类记录；document/selection/approval/publish/pointer/journal/head 保持旧路径并排入独立后续批次。删除对未纳入类型的兼容承诺，避免构建第二套通用索引数据库。",
+      "new_evidence": "最终审查显示全量记录兼容合同仍需大量未存在的 schema/discriminator、singleton 和候选枚举规则；继续补充会扩大范围并形成不可验证的伪精确设计。",
+      "changed_acceptance": "SafeId-A 仅验收五类 compile settlement 记录的新 key、旧路径精确回验、strict/legacy 冲突、全 Authority compile lease 与 replay；其余记录明确不在本批，不能被新 resolver 处理或改写。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "d331fdc082c0618a49a9f941a56450418261339475f9ad6208d1aca35b88ef6d",
+      "changed_decision": "完全重写为 SafeId-A 最小合同，仅覆盖五类 compile settlement 记录；每类 strict/legacy 路径均单一固定；删除 deferred 类型与多候选、singleton、发布规则；补齐五类跨记录绑定与无部分 replay。",
+      "new_evidence": "独立审查确认先前合同正文仍混入 deferred 类型、operation discriminator 和多候选规则，导致范围与验收不可执行。",
+      "changed_acceptance": "仅验收五类 key golden、legacy 精确读取、strict/legacy raw hash 冲突、compile lease/CreateNew 竞争、跨记录篡改与 legacy replay；明确其它记录族无新 resolver 入口。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "c979233b9e61d4a47a3c76444ffff8018d0bcebf7306959b609e82bb67dd863d",
+      "changed_decision": "新增 SafeId-A 专用 StorageIdentityCanonicalizerV1，不修改全局 CanonicalJson；冻结 oldSafeIdV0 精确算法；key 的 kind 仅表示存储记录族，operation 等身份仅用 operation_id；immutable 记录 CreateNew，同步状态记录 initial CreateNew 后受 lease/owner/fence 原子替换；删除审计报告出本批；跨记录绑定逐字段写死。",
+      "new_evidence": "独立终审确认全局 serializer 不做 NFC、oldSafeId 未版本化、kind 双义、CreateNew 与 mutable operation 冲突、跨记录绑定不自包含、审计报告 schema 未定义。",
+      "changed_acceptance": "新增 canonicalizer v1 golden、oldSafeIdV0 golden、record-family key vectors、immutable/mutable 冲突矩阵、五类逐字段 binding；删除审计报告验收并排入 SafeId-B。"
+    }
+  ]
+}

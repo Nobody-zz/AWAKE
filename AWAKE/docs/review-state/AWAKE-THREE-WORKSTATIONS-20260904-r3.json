@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-THREE-WORKSTATIONS-20260904-r3",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "166586b3fc4ebf7acbfe9c5e90121255797001bd908b1d2310d065e3061cdfa2",
+      "changed_decision": "第7批r3先实现语义 validator、receipt 状态校验、统一 health contract 与 UI adapter 协议；第一切片只接入验证和观测，不自动发布或改正典。",
+      "new_evidence": "上一修订版独立审查仍发现 schema 关系约束、receipt 状态字段一致性、health 状态冲突与 navigation revision 来源未落成机器规则；当前计划已补齐状态表、validator 双实现路径、端点兼容与 WBS readback。",
+      "changed_acceptance": "实现前必须让实际 schema 与 validator test vectors 通过；然后再实现 WBS/PWB/UI 三方入口和 integration smoke。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "2158c3e1259d0289594571395636d5d9b28b1738d62a18731d0a583e337581ea",
+      "changed_decision": "第7批r3第二轮修订：加入实际 shared schema 文件、recovery_reason 字段；明确 schema 关系由双实现语义 validator 校验，区分 malformed 400 与 semantic 422；统一 receipt 状态与 health/shutdown 语义。",
+      "new_evidence": "独立审查发现 unknown receipt 与 schema 冲突、validator 错误码冲突；已补 schema 字段并修订计划。",
+      "changed_acceptance": "最终复审只需确认实际 schema/计划无内部冲突；通过后签收并实现第一切片。"
+    },
+    {
+      "round": 3,
+      "verdict": "APPROVED",
+      "change_fingerprint": "c027eb497c59eaa086ce22f1c6c7a707301a77d1216fca36fdb66714d50ed6f2",
+      "changed_decision": "第7批r3契约锁定：实际 envelope/receipt schema、跨字段语义校验、receipt 状态表与恢复、统一 health/shutdown、UI adapter 参数/lock/navigation、固定 smoke 证据矩阵。",
+      "new_evidence": "实际两个 schema 已创建并解析；recovery_reason 与 unknown 语义一致；malformed 400 与 semantic 422 已区分；计划与 schema 文案无已知冲突。",
+      "changed_acceptance": "先实现并验证语义 validator 与三工作站第一切片；不自动启动游戏、不同步游戏目录、不触碰外部 Provider。"
+    }
+  ],
+  "user_signoff": true
+}

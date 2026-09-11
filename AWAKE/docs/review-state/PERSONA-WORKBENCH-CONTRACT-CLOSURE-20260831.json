@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "PERSONA-WORKBENCH-CONTRACT-CLOSURE-20260831",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "9e889ea3eccde0cdd65a5e4544d40ce4005cc1c110d5bee4a99cd575ef1983b2",
+      "changed_decision": "Do not enter user signoff or implementation until receipt/handoff schemas, final evidence pointer, and fail-closed vocabulary/registry checks are executable.",
+      "new_evidence": "Independent review found the proposed receipt/handoff and superseded pointer are not modeled, vocabulary mismatch only warns, manifest omits contract inputs, and preview lacks explicit session authorization.",
+      "changed_acceptance": "Add executable tests for receipt/handoff hash binding and expiry, unknown vocabulary/tag rejection, manifest closure, session authorization, lease/late-response classification, and final pointer supersession."
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "33d5fbbe02269dafb14c1bc3347ffbb3dbe982080ecedda13cbcbb028a4f3256",
+      "changed_decision": "Make receipt/handoff and final evidence pointer executable contracts, then verify vocabulary/registry closure and authorization before implementation.",
+      "new_evidence": "Round 2 review found the plan still lacked concrete schema paths, verifier entry points, pointer state model, and exact test/package wiring for the proposed gates.",
+      "changed_acceptance": "Name schemas, source/package manifest inputs, session authorization rules, crosswalk closure fixtures, evidence pointer supersession rules, and reproducible offline commands before user signoff."
+    },
+    {
+      "round": 3,
+      "verdict": "APPROVED",
+      "change_fingerprint": "30b8b353ebd3557e4edc38f396767b79d1bc3693ac2df023556fd9e8161761be",
+      "changed_decision": "Plan fixes manifest input roots, locks issuer/session/fence/replay/idempotency semantics, makes the C# validator authoritative, and separates immutable K1A evidence from a CAS-protected current pointer.",
+      "new_evidence": "Independent final plan review confirmed the corrected AWAKE-root contract paths and that receipt/handoff, crosswalk closure, manifest binding, pointer conflict, and in-process HTTP fixtures are implementable without touching Runtime or game outputs.",
+      "changed_acceptance": "Require fail-closed receipt/handoff validation, hash-closed package inputs, immutable supersession sidecar, pointer CAS, and isolated HTTP fixtures before implementation."
+    }
+  ],
+  "user_signoff": true
+}

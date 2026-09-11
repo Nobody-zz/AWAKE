@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "awake.persona.fixture-expected.v1",
+  "fixtureId": "PWB-AWAKE-001-valid-approved",
+  "gate": "E2",
+  "status": "pass",
+  "exitCode": 0,
+  "handoff": {
+    "sourceRevision": 7,
+    "authoringRevision": 2,
+    "selectionRevision": 3,
+    "exportSelectionRevision": 3,
+    "workbenchApprovalEvidenceId": "evidence.workbench.001",
+    "awakeApprovalEvidenceId": "evidence.awake.001"
+  },
+  "assertions": [
+    "source_document_is_authoritative",
+    "selection_is_explicit_and_stable",
+    "isolated_registry_digest_pair_matches",
+    "crosswalk_digest_is_recorded_separately",
+    "definition_schema_contract_is_type_consistent",
+    "no_runtime_or_production_moduledata_claim"
+  ],
+  "selection": {
+    "characterId": "character:hero_fixture_001",
+    "identityId": "identity:fixture_persona_001",
+    "normalizedCharacterId": "awake:character:hero_fixture_001",
+    "normalizedIdentityId": "awake:identity:fixture_persona_001",
+    "role": "guard",
+    "scope": "character",
+    "priority": 100,
+    "sourceRevision": 7,
+    "selectionRevision": 3
+  },
+  "sourceContract": {
+    "file": "source.json",
+    "sourceSha256": "F9EF9D06915D6F676ABCCB823F1F07D33B7934E6C521F3F5BF18A84839878F87",
+    "canonicalSha256": "C01A913508A6692888F984DA0D18A78E9D0C5705A993F9B71BE967BB3A11C20C",
+    "documentMatchesSource": true
+  },
+  "digests": {
+    "sourceSha256": "F9EF9D06915D6F676ABCCB823F1F07D33B7934E6C521F3F5BF18A84839878F87",
+    "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
+    "authoringSha256": "2BD4A144181ADAEFDD9D043528E74DBB7363D4DBB82F983D5BE2CD03500B225B",
+    "mappingReportSha256": "5DD0EE6DE5746E9631C698A4E179337C1BF08719E556E4F230C3A7F7C8BC07F7",
+    "definitionSha256": "51CA25E7B7E1E7440E976CA42ADA70FC3F52CC0812DAC24A7ADE9A1C45924A23",
+    "exportSha256": "3D788448DE3CEFD0B0D5536E75ABEF855FC287D4DBFC71F371E55E5678C76E76"
+  },
+  "definitionContract": {
+    "schemaVersion": "awake.persona.definition.v1",
+    "characterId": "awake:character:hero_fixture_001",
+    "identityId": "awake:identity:fixture_persona_001",
+    "role": "guard",
+    "sourcePackId": "fixture_pack",
+    "templateVersion": "persona-compiler.v1",
+    "status": "approved",
+    "priority": 100,
+    "scope": "character",
+    "relationStyle": "",
+    "currentStateHints": "",
+    "tags": [
+      { "id": "expression.measured", "priority": 200, "sceneKeywords": [], "contextModes": [] },
+      { "id": "behavior.conditional_cooperation", "priority": 200, "sceneKeywords": [], "contextModes": [] },
+      { "id": "trait.pragmatic", "priority": 0, "sceneKeywords": [], "contextModes": [] }
+    ],
+    "bundles": [],
+    "experiences": []
+  },
+  "reportContract": {
+    "cleanup": {
+      "status": "pass",
+      "paths": [],
+      "errors": []
+    }
+  },
+  "noWrite": {
+    "sourceUnchanged": true,
+    "runtimeChanged": false,
+    "productionModuleDataChanged": false
+  }
+}

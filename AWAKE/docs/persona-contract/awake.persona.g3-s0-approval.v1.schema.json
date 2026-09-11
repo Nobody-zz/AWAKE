@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona.g3-s0-approval.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "recordStatus", "taskId", "batchId", "gate", "scopeRevision", "scopePath", "scopeSha256", "review", "userSignoff"],
+  "properties": {
+    "schemaVersion": { "const": "awake.persona.g3-s0-approval.v1" },
+    "recordStatus": { "enum": ["pending_review", "approved", "rejected"] },
+    "taskId": { "const": "PERSONA-AWAKE-JOINT-G3-S0-20260824" },
+    "batchId": { "const": "persona-awake-joint-g3-s0-storage-readiness-20260824" },
+    "gate": { "const": "G3-S0" },
+    "scopeRevision": { "const": 2 },
+    "scopePath": { "const": "docs/persona-awake-joint-g3-s0-scope.v1.json" },
+    "scopeSha256": { "type": "string", "pattern": "^[A-F0-9]{64}$" },
+    "review": { "type": "object" },
+    "userSignoff": { "type": "object" }
+  }
+}

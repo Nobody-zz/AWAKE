@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"awake.worldbook.current-pointer.v1",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["candidate_dir","manifest_hash","published_at"],
+  "properties": {
+    "candidate_dir":{"type":"string","pattern":"^[A-Za-z0-9._-]+$"},
+    "manifest_hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"},
+    "published_at":{"type":"string","format":"date-time"},
+    "previous_manifest_hash":{"type":["string","null"],"pattern":"^[A-Fa-f0-9]{64}$"}
+  }
+}

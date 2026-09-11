@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "Worldbook Studio Quick Authoring Facade and Progressive Migration Architecture",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "19c5dc3ded31c12d6c399fd7da90fab57549529376e7a54136bbb746425cbbde",
+      "changed_decision": "Quick Facade 只能是单一编排入口，不得复制 CandidateSet/Review/DocumentBuilder 权威；source origin catalog 只提供可定位证据，句子切分是建议而非语义原子；Pass B 必须携带冻结的 origin context、semantic_packet_hash、source_content_hash 和 prompt/model fingerprints。",
+      "new_evidence": "当前 AuthoringDraftEndpoints/AuthoringDraftStore/CandidateSet/DocumentBuilder 已存在多条生命周期边界；AuthoringSourceOriginCatalog 目前按标点构造 origin；现有 Prompt v4 仍是单次 complete；WORLDBOOK-SEMANTIC-MIGRATION-METHODOLOGY-v1.2.md 要求 source atom、snapshot/hash 和人工语义审核。",
+      "changed_acceptance": "新增单一 QuickAuthoringOrchestrator 权威、origin context/hash、Pass B packet freeze、source-change invalidation、句子切分非语义原子、legacy adapter 不可旁路新状态机等验收项。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "6728ee3b8daf6377fc53844df29060309bd42336e82bfeaa5114b3c2aa05699f",
+      "changed_decision": "Quick Facade 隐藏内部结构但必须提供一键来源追溯和完整问题列表；所有硬阻断不可隐藏；adult_optional 先经过 18+ 硬校验和内容策略门；legacy staged 只能走兼容读取/明确旧路径，不能绕过新 Quick Gate。",
+      "new_evidence": "计划第 3 节默认只显示简单输入、第 5/7 节保留复杂审计和状态边界，但未明确来源可见性、成人门控、旧路径旁路阻断及用户编辑后的重新验证交互。项目 AGENTS.md 要求成人内容 18+ 硬校验先于一切。",
+      "changed_acceptance": "新增用户来源追溯、全部问题入口、硬阻断不可隐藏、18+ content policy gate、legacy 不得旁路 Quick Gate、用户编辑状态与重新校验、敏感资料发送范围确认、Quick 失败后的手工编辑回退验收。"
+    },
+    {
+      "round": 3,
+      "verdict": "APPROVED",
+      "change_fingerprint": "cc924c98d45f146950975686c3f0ad9b2ebedcdcfeda7c4d4bbffbc0a15882b1",
+      "changed_decision": "终审保留渐进门面方案：Quick Facade/Orchestrator 只负责编排与用户语言投影；手工回退只打开空白或已明确人工采纳的编辑器，不得接纳被 Gate 拒绝的 AI 内容；所有模式统一经过现有安全边界，Semantic Migration 继续独立。",
+      "new_evidence": "方案已补充来源/硬阻断可见性、18+ ContentPolicy gate、legacy staged 不得旁路、用户编辑重新验证、packet/source hash 冻结、origin 切分非语义原子、局部 reanalysis 和手工回退边界。三轮红队未发现新的 P0/P1 级设计缺口。",
+      "changed_acceptance": "最终验收增加：回退路径不带入未通过候选；Orchestrator 无第二份状态权威；所有用户可见正文可追溯；硬阻断不可隐藏；旧路径不得绕过 source/consent/review/create Gate；新旧路径分别可离线回归。"
+    }
+  ],
+  "user_signoff": true
+}

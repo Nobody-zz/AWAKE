@@ -1,0 +1,28 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"awake.worldbook.audit-event.v1",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["event_id","stream_id","sequence","event_type","object_kind","object_id","object_revision","object_hash","author_id","created_at","decision","previous_event_hash","event_hash"],
+  "properties": {
+    "event_id":{"type":"string","pattern":"^event\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},
+    "stream_id":{"type":"string","pattern":"^stream\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},
+    "sequence":{"type":"integer","minimum":1},
+    "event_type":{"enum":["registration","review","approval","migration"]},
+    "object_kind":{"enum":["document","assertion","expression","redirect","identity_ledger","entity","profile","referral","source","event","author"]},
+    "object_id":{"type":"string","pattern":"^[a-z]+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},
+    "object_revision":{"type":"integer","minimum":1},
+    "object_hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"},
+    "author_id":{"type":"string","pattern":"^author\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},
+    "created_at":{"type":"string","format":"date-time"},
+    "decision":{"enum":["approved","reviewed","rejected"]},
+    "previous_event_hash":{"type":["string","null"],"pattern":"^[A-Fa-f0-9]{64}$"},
+    "event_hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"}
+  },
+  "allOf":[
+    {"if":{"properties":{"event_type":{"const":"registration"}}},"then":{"properties":{"decision":{"const":"approved"}}}},
+    {"if":{"properties":{"event_type":{"const":"review"}}},"then":{"properties":{"decision":{"enum":["reviewed","rejected"]}}}},
+    {"if":{"properties":{"event_type":{"const":"approval"}}},"then":{"properties":{"decision":{"const":"approved"}}}},
+    {"if":{"properties":{"event_type":{"const":"migration"}}},"then":{"properties":{"decision":{"const":"approved"}}}}
+  ]
+}

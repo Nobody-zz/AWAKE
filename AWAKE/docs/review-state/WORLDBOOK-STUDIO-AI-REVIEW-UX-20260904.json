@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-AI-REVIEW-UX-20260904",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "e7947feb5b2f584226863e2c65ab9eb928df72ab3aad15c50747b7fcef5c6fad",
+      "changed_decision": "reason_codes 使用受控枚举；source_spans 必须绑定当前 source snapshot 的 UTF-16 范围；风险投影按 evidence 与推断状态分组；先完成解释数据正确性，再实现 merge/split 决策操作。",
+      "new_evidence": "第6批第一切片自审：AuthoringDraftResponseNormalizer 当前只检查 span 对象结构，未检查其相对当前 source_text 的边界；CandidateSetProjection 与前端显示已接线。",
+      "changed_acceptance": "新增 source span 越界、缺失定位、reason code 未登记和 fingerprint 变化测试；随后再推进 review decision service。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "507cca4f49602fc0bd3fa72a96b9124e69e9c75aab6f18ecea9d8d14a34521f5",
+      "changed_decision": "source_spans 只能由服务端计算 verified；未定位 evidence 进入红色风险；review projection 增加 fingerprint、duplicate/conflict 与证据绑定；review decision ledger 持久化且候选重生成后 stale；继续修复旧 Candidates 迁移和双候选身份投影。",
+      "new_evidence": "第6批第二次独立审查：发现 verification_status/未定位 evidence/候选间重复冲突/证据绑定丢失/旧 Candidates 迁移/双身份投影缺口；当前已完成前四项中的服务端验证、风险标记和绑定输出，Draft focused 29/29、HTTP review decision smoke 通过。",
+      "changed_acceptance": "补旧状态迁移、统一 public candidate identity、duplicate/conflict 回归和 evidence binding 回读；完成后再做第6批最终独立复审。"
+    },
+    {
+      "round": 3,
+      "verdict": "APPROVED",
+      "change_fingerprint": "7e74adf09a58f2100e4fbdb7719f7f7c1b9cedfe3e0fb5d424384a6056d425ec",
+      "changed_decision": "第6批修复已完成：投影保留 reason/source span，决策更新并持久化 CandidateSet，旧候选迁移写回，evidence 由服务端按源文本重算。",
+      "new_evidence": "当前工作树全量 test.ps1 通过；Draft 33/33；主 harness 113/113；EditorContent 7/7；Batch 21/21；draft-workflow-smoke、package.ps1 -RunSmoke、release-check 全部通过；独立复审 APPROVED。",
+      "changed_acceptance": "第6批最终验收覆盖 HTTP review projection 回读、merge 派生候选解释字段、重建发布包及启动故障 smoke。"
+    }
+  ],
+  "user_signoff": true
+}

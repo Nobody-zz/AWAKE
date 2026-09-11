@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "awake.persona.fixture-expected.v1",
+  "fixtureId": "PWB-AWAKE-008-last-known-good",
+  "gate": "E2",
+  "status": "pass",
+  "exitCode": 0,
+  "intendedStatus": "pass",
+  "assertions": [
+    "bad_reload_rejected",
+    "old_runtime_bundle_unchanged",
+    "old_activation_metadata_unchanged",
+    "single_reference_remains_published"
+  ],
+  "warnings": [
+    "persona.registry_digest_mismatch"
+  ],
+  "reportContract": {
+    "cleanup": {
+      "status": "pass",
+      "paths": [],
+      "errors": []
+    }
+  }
+}

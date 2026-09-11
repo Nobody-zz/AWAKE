@@ -1,0 +1,119 @@
+**Review Summary**
+The plan is directionally sound, but it is not implementation-ready. Several core contracts are still undefined, and the existing runtime cannot provide the promised save, branch, or atomic commit semantics without first adding foundational infrastructure.
+
+**Findings**
+
+1. **Persona schema is not connected to the existing storage model — P0**
+   - The plan introduces `awake.persona.definition.v1`, `BiographyLedger`, `IdentityTransitionLedger`, `PlayerOverride`, and `GeneratedSnapshot`, but `src/AwakeStorageContract.cs:8-38` has no persona schemas, and `WorldStateKind`/`WorldStateStore` have no persona namespace or persistence path.
+   - The plan does not define required fields, key layout, size limits, unknown-field behavior, schema migration rules, or whether each object is authoritative or cache-only.
+   - **Fix:** Add a concrete schema appendix before implementation: namespace IDs, key format, JSON examples, required fields, field limits, versioning rules, source/provenance fields, and explicit authority rules. Register every persisted schema in `AwakeStorageContract` and `WorldStateStore`.
+
+2. **The proposed save-anchor model has no verified lifecycle hook — P0**
+   - The plan explicitly leaves Bannerlord save callbacks as an open question at `_houkai_merge/AWAKE/docs/PLAN-PersonaTemplateSystem-20260818.md:37`.
+   - Existing lifecycle handling only shows campaign-ready and session-ending behavior in `src/ProbeExtension.cs:195-297`; there is no demonstrated save-completed callback.
+   - `SessionEnding` starts an asynchronous final drain through `ContinueWith` at `src/ProbeExtension.cs:280-290`, so the game can finish or unload before persistence completes.
+   - **Fix:** Verify the v1.3.15 save lifecycle against the SDK before implementation. If no reliable post-save callback exists, define a strict pre-save anchor protocol, document its crash window, and make `unsaved_recovery` durable. Do not describe “save committed” as an implemented state until the callback or fallback protocol is proven.
+
+3. **Timeline branching is underspecified and currently impossible with existing keys — P0**
+   - The plan uses `timeline branch`, `AcceptedSequence`, and read-load branching at lines 14 and 31, but never defines branch identity, parent branch, fork sequence, active branch selection, or save identity.
+   - Existing memory keys are hero-scoped, such as `hero.<heroId>.v1` in `src/WorldStateStore.cs:2758-2770`, and memory sequence state is only held in `_memorySequence` at `src/WorldStateStore.cs:164-167`.
+   - A new branch would therefore read and overwrite the same hero state unless every query and write becomes branch-scoped.
+   - **Fix:** Define and persist `campaignId`, `saveId`, `timelineId`, `branchId`, `parentBranchId`, `forkSequence`, and `acceptedSequence`. Include `branchId` in every persona, transcript, memory, ledger, and commit-group key. Specify how active-branch selection is reconstructed after load.
+
+4. **`AcceptedSequence` is not defined per entity or per data type — P1**
+   - The plan says `sequence <= AcceptedSequence` enters formal context, but it does not say whether acceptance is per campaign, branch, hero, conversation, namespace, or commit group.
+   - Existing transcript lines use only day and local IDs in `src/AwakeTranscriptModels.cs:31-42`; memory uses a separate per-hero sequence in `src/WorldStateStore.cs:292-305`.
+   - Comparing unrelated sequence domains will either expose rejected data or hide valid data.
+   - **Fix:** Use one monotonic commit-group sequence per branch and store per-projection watermarks. Define whether transcript, effects, persona overrides, and memory each have independent acceptance or share a group watermark.
+
+5. **Async commit groups are not atomic with the current runtime — P0**
+   - Transcript persistence is fire-and-forget from `src/NpcDialogueService.cs:1145-1181`.
+   - Relationship commands are launched independently at `src/NpcDialogueService.cs:1106-1111` and settled separately through `WorldCommandBridge` at `src/NpcDialogueService.cs:1189-1248`.
+   - Conversation close waits at most three seconds, then snapshots facts at `src/NpcDialogueService.cs:631-652`. A late command can settle after the memory snapshot and never be included.
+   - `WorldStateStore` writes one state value and only then queues an in-memory event at `src/WorldStateStore.cs:1718-1746`; a process failure between those operations loses the event.
+   - **Fix:** Introduce a durable commit-group journal with `prepared`, `committed`, and `aborted` states. Each required participant must be idempotent and recoverable. Persist transcript evidence, deterministic effects, and memory projection under one group ID; publish the group as visible only after all required writes succeed. Replace the three-second timeout with explicit pending/recovery behavior.
+
+6. **The plan does not define required versus optional commit participants — P1**
+   - The open question at line 42 acknowledges uncertainty around relationships, promises, world effects, transcript, and summaries.
+   - Without this classification, a failed summary could either incorrectly block a relationship effect or allow an effect without its evidence.
+   - **Fix:** Add a table defining each participant as required, optional, or rebuildable. For example: transcript evidence required, deterministic command ledger required, AI summary rebuildable, generated Persona DSL cache optional. Define recovery behavior for every partial-failure combination.
+
+7. **Prompt injection is not addressed by approval status — P0**
+   - Worldbook content and player overrides are inserted into prompt variables in `src/NpcDialogueService.cs:973-985`.
+   - `NpcDialoguePromptPipeline.BuildDirect` JSON-serializes values but still places them directly into the instruction template at `src/NpcDialoguePromptPipeline.cs:97-106`.
+   - A worldbook entry, imported legacy text, or player narrative override can contain instruction-like text such as “ignore previous rules,” and approval provenance does not make the text safe.
+   - **Fix:** Treat all persona, worldbook, memory, and player override content as untrusted data. Use explicit data delimiters and an instruction hierarchy that tells the provider never to follow instructions inside data blocks. Strip control characters, reject oversized or malformed content, and validate output commands independently of prompt text. Apply the same protection to the direct fallback path.
+
+8. **Token budgeting does not guarantee preservation of required persona fields — P1**
+   - The current pipeline truncates variables by a fixed order and, if still over budget, hard-truncates the final assembled prompt at `src/NpcDialoguePromptPipeline.cs:62-87`.
+   - That final truncation can cut through identity, boundary, or instruction text despite the plan’s promise to preserve core personality and boundaries at line 30.
+   - The plan also postpones provider tokenizer measurements at line 40, while the current implementation budgets UTF-8 bytes only.
+   - **Fix:** Define provider-specific input and output budgets before implementation. Allocate reserved budgets per field, serialize the Persona DSL separately, validate that required fields survive truncation, and fail closed or use a minimal deterministic fallback if the required section cannot fit. Never truncate the complete instruction document blindly.
+
+9. **Persona source precedence and conflict resolution are not deterministic enough — P1**
+   - The plan lists source types at line 12 and says same-layer conflicts are recorded at line 29, but does not assign numeric precedence, tie-break rules, or field-level merge semantics.
+   - “Keep player overrides” is also ambiguous: it could override boundaries, identity facts, or only expression preferences.
+   - **Fix:** Specify a precedence table and a field-level merge policy. Include `contentPackId`, `sourceId`, `sourceVersion`, `priority`, `approvedAt`, and source hash in every candidate. Make duplicate IDs, same-priority conflicts, and illegal overrides hard validation errors or explicit deterministic fallbacks.
+
+10. **Legacy personality IDs do not clearly match runtime IDs — P1**
+    - Existing persona files use IDs such as `lord_1_1_1__苏萨达` in `ModuleData/Worldbook/personality_background/lord_1_1_1__苏萨达.json:1`.
+    - The current prompt query passes `_target.Character.StringId` in `src/NpcDialogueService.cs:892-896`, which is normally the stable game ID without the display-name suffix.
+    - The plan does not specify canonicalization or alias indexing, so migrated templates may silently fail to match their intended characters.
+    - **Fix:** Define canonical stable IDs at ingestion, preserve the original source ID separately, generate explicit aliases only when validated against the runtime character table, and reject ambiguous aliases. Add a migration test proving the sample file resolves to the intended hero.
+
+11. **Legacy migration is not restart-safe or auditable — P1**
+    - `AwakeTranscriptMigration` uses a process-local `MigratedContacts` set at `src/AwakeTranscriptMigration.cs:11-15`, which is lost on restart.
+    - It has no persisted source hash, migration version, target record count, or completion marker at `src/AwakeTranscriptMigration.cs:58-83`.
+    - A partial migration can be retried without a durable record of which batches succeeded.
+    - **Fix:** Store a migration ledger in Storage keyed by source schema/version/hash and canonical target ID. Use deterministic record IDs, durable per-batch checkpoints, and a final completion marker. Preserve the raw legacy object and keep migrated records in `draft` until approval; never infer approval from successful parsing.
+
+12. **The old `personality/background` files are not safely separated into facts versus behavioral instructions — P1**
+    - The sample files are free-form prose with only `personality`, `background`, `voiceId`, and `characterId`.
+    - The plan says these remain a fallback, but does not say whether `personality` is injected into the new Persona DSL, retrieved knowledge, or identity facts.
+    - Treating free-form personality prose as authoritative behavioral instructions risks turning unverified or stale text into runtime policy.
+    - **Fix:** Map legacy `background` to factual biography candidates and `personality` to draft trait candidates with separate provenance and approval states. Only approved structured fields may enter the formal Persona DSL; raw legacy text may remain retrieval-only and clearly labeled.
+
+13. **Content-pack conflict handling is absent from the actual content model — P0**
+    - The current manifest is a single worldbook manifest at `ModuleData/Worldbook/manifest.json:1`, with one persona directory and no pack registry, ownership, dependency, or precedence metadata.
+    - `WorldbookPersona` and `WorldbookRule` do not expose content-pack identity in the inspected model.
+    - The plan’s fixed priorities cannot resolve two content packs defining the same hero or tag without load-order dependence.
+    - **Fix:** Add a content-pack manifest contract containing `packId`, version, dependencies, compatible runtime version, declared IDs, priority, and content policy. Load all packs into a deterministic registry, reject duplicate ownership, and permit overrides only through explicit declarations. Record conflict decisions in diagnostics.
+
+14. **Runtime wiring is missing from the plan — P0**
+    - The current prompt path directly builds variables and calls `NpcDialoguePromptPipeline.BuildBounded` in `src/NpcDialogueService.cs:872-1035`.
+    - There is no `PersonaGenerator`, generated snapshot lookup, dirty-state invalidation, or timeline-aware read in this path.
+    - The plan says “接入现有 NPC Prompt 管线” at line 15 but does not identify the call site, initialization lifecycle, failure fallback, or cache invalidation points.
+    - **Fix:** Name the exact runtime components and call sequence: load branch context, load approved persona candidates, generate using a deterministic input fingerprint, validate budget, inject DSL, and record the snapshot version. Wire invalidation after identity changes, player overrides, relationship commits, content reloads, and branch switches. Add a test proving the generated Persona actually changes the prompt.
+
+15. **Stale detection is underspecified and can leave stale data in active prompts — P1**
+    - The plan mentions Prompt/Persona/Generator versions and lazy rebuild at lines 15 and 26, but does not define the fingerprint inputs or where stale state is stored.
+    - Existing `_memoryBlock` is loaded into session memory at `src/NpcDialogueService.cs:560-577` and reused during prompt construction; no persona-specific freshness check exists.
+    - **Fix:** Define a canonical fingerprint over source hashes, active override versions, branch watermark, generator version, prompt version, and relevant runtime state. Persist snapshot metadata and verify it before every prompt. If stale, rebuild synchronously before submission or use a documented minimal fallback.
+
+16. **Observability is insufficient for forensic debugging — P1**
+    - Existing diagnostics are mostly free-form log strings, for example `world_state_write_failed_dropped` and `npc_prompt_compile_error`.
+    - The plan does not specify durable events or counters for branch creation, accepted/rejected sequences, commit-group participants, migration state, conflict resolution, stale reasons, budget trimming, or prompt fallback.
+    - **Fix:** Define structured diagnostic events keyed by correlation ID, campaign/session/branch ID, hero ID, commit-group ID, source hash, generator version, and outcome. Redact prompt contents and player text by default. Add developer-report counters for dropped groups, recovery scans, stale rebuilds, conflicts, and budget failures.
+
+17. **MCM/config evaluation is missing**
+    - AWAKE instructions require every feature to assess whether MCM settings are needed and document the decision.
+    - The plan does not state whether persona generation, content-pack selection, migration approval, budget thresholds, or debug diagnostics are configurable.
+    - **Fix:** Add an explicit MCM decision to the plan. If all behavior is intentionally fixed in v1, state that no player-facing controls exist and keep developer diagnostics separate from player settings. If budgets or pack enablement are configurable, define fail-safe defaults and `Config.json` compatibility.
+
+18. **The scope is too broad for the stated verification gate — P1**
+    - The plan combines a new schema family, deterministic generator, multiple ledgers, save branching, commit groups, migration, content-pack conflict resolution, prompt integration, tokenizer budgeting, and extensive regression coverage.
+    - The current code has no branch abstraction, no durable transaction primitive, and no persona runtime path, so the work is several foundational batches rather than one contained feature.
+    - **Fix:** Split the work. First implement a pure, deterministic Persona Generator over existing worldbook/runtime inputs with no new persistence. Then add approved legacy migration. Only after storage capabilities are verified should timeline branching and commit groups be introduced.
+
+**Simpler Alternative**
+For the first batch, make the generator stateless and deterministic:
+
+- Use existing `WorldbookPersona`, runtime identity/state, and approved player overrides.
+- Persist only approved overrides and migration metadata through the existing Storage abstraction.
+- Keep `GeneratedSnapshot` as an in-memory cache keyed by an input fingerprint.
+- Reuse existing transcript and memory services without claiming atomic commit-group semantics.
+- Defer branch-aware persistence until the Marcus Storage SDK proves durable markers, recovery scans, and save lifecycle integration.
+
+This would deliver the prompt-visible Persona behavior while avoiding premature changes to save compatibility and transactional semantics.
+
+VERDICT: REVISE

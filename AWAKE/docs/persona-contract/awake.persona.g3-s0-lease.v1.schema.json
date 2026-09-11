@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona.g3-s0-lease.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "recordStatus", "taskId", "batchId", "gate", "scopeRevision", "scopePath", "scopeSha256", "status", "owner", "leaseId", "writeSet", "acquiredAt", "releasedAt", "sideEffects"],
+  "properties": {
+    "schemaVersion": { "const": "awake.persona.g3-s0-lease.v1" },
+    "recordStatus": { "enum": ["unleased", "active", "released"] },
+    "taskId": { "const": "PERSONA-AWAKE-JOINT-G3-S0-20260824" },
+    "batchId": { "const": "persona-awake-joint-g3-s0-storage-readiness-20260824" },
+    "gate": { "const": "G3-S0" },
+    "scopeRevision": { "const": 2 },
+    "scopePath": { "const": "docs/persona-awake-joint-g3-s0-scope.v1.json" },
+    "scopeSha256": { "type": "string", "pattern": "^[A-F0-9]{64}$" },
+    "status": { "enum": ["none", "active", "released"] },
+    "owner": { "type": "string" },
+    "leaseId": { "type": "string" },
+    "writeSet": { "type": "array", "minItems": 6 },
+    "acquiredAt": { "type": "string" },
+    "releasedAt": { "type": "string" },
+    "sideEffects": { "type": "object" }
+  }
+}

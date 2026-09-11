@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona.mapping-report.v1",
+  "title": "AWAKE Persona mapping report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "reportId", "sourceSha256", "authoringSha256", "targetRegistrySha256", "rows", "warnings", "errors", "status"],
+  "properties": {
+    "schemaVersion": { "const": "awake.persona.mapping-report.v1" },
+    "reportId": { "$ref": "#/$defs/stableId" },
+    "sourceSha256": { "$ref": "#/$defs/sha256" },
+    "authoringSha256": { "$ref": "#/$defs/sha256" },
+    "targetRegistrySha256": { "$ref": "#/$defs/sha256" },
+    "rows": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/reportRow" }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "errors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/adapterError" }
+    },
+    "status": { "enum": ["pass", "reject"] }
+  },
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[A-F0-9]{64}$"
+    },
+    "nonEmpty": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reportRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "sourceKind", "targetField", "targetId", "mappingKind", "valueEncoding", "lossPolicy", "provenancePath", "registrySha256", "status", "sourcePath", "targetPath", "emittedValue", "result"],
+      "properties": {
+        "sourceId": { "$ref": "#/$defs/nonEmpty" },
+        "sourceKind": { "enum": ["root_field", "tag", "facet_strength", "axis", "flag", "legacy_field", "derived", "provenance"] },
+        "targetField": { "$ref": "#/$defs/nonEmpty" },
+        "targetId": { "type": ["string", "null"] },
+        "mappingKind": { "enum": ["identity", "axis_to_observation", "flag_to_observation", "facet_to_observation", "legacy_token", "preserve_only", "unmapped"] },
+        "valueEncoding": { "type": "string", "pattern": "^[a-z][a-z0-9_.-]*$" },
+        "lossPolicy": { "enum": ["reject", "preserve_only", "drop_non_runtime_metadata"] },
+        "provenancePath": { "$ref": "#/$defs/nonEmpty" },
+        "registrySha256": { "$ref": "#/$defs/sha256" },
+        "status": { "enum": ["mapped", "unmapped"] },
+        "sourcePath": { "$ref": "#/$defs/nonEmpty" },
+        "targetPath": { "$ref": "#/$defs/nonEmpty" },
+        "emittedValue": {},
+        "result": { "enum": ["emitted", "preserved", "rejected"] }
+      }
+    },
+    "adapterError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "errorId", "code", "stage", "artifactId", "path", "detail", "retryable"],
+      "properties": {
+        "schemaVersion": { "const": "awake.persona.adapter-error.v1" },
+        "errorId": { "$ref": "#/$defs/stableId" },
+        "code": {
+          "enum": [
+            "persona.selection_invalid",
+            "persona.source_revision_required",
+            "persona.authoring_observation_unreviewed",
+            "persona.rule_unsupported_for_definition_v1",
+            "persona.registry_digest_mismatch",
+            "persona.mapping_loss",
+            "persona.schema_unknown_field",
+            "persona.stale_revision",
+            "persona.path_protected"
+          ]
+        },
+        "stage": { "enum": ["read", "schema", "migration", "mapping", "selection", "export", "definition", "promotion", "digest", "path"] },
+        "artifactId": { "$ref": "#/$defs/stableId" },
+        "path": { "$ref": "#/$defs/nonEmpty" },
+        "detail": { "$ref": "#/$defs/nonEmpty" },
+        "retryable": { "type": "boolean" }
+      }
+    }
+  }
+}

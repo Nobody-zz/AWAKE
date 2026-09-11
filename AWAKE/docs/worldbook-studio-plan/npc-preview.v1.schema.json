@@ -1,0 +1,20 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"awake.worldbook.npc-preview.v1",
+  "type":"object","additionalProperties":false,
+  "required":["fixture_id","profile_id","results"],
+  "properties":{
+    "fixture_id":{"type":"string","minLength":1},
+    "profile_id":{"type":"string","pattern":"^profile\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},
+    "results":{"type":"array","items":{
+      "type":"object","additionalProperties":false,"required":["knowledge_id","status"],
+      "properties":{
+        "knowledge_id":{"type":"string","pattern":"^[a-z]+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},
+        "status":{"enum":["visible","rumor","unknown","redacted"]},
+        "text":{"type":"object","additionalProperties":{"type":"string"}},
+        "layer":{"enum":["rumor","summary","detail","secret"]},
+        "fallback_referral_ids":{"type":"array","items":{"type":"string","pattern":"^referral\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},"uniqueItems":true}
+      }
+    }}
+  }
+}

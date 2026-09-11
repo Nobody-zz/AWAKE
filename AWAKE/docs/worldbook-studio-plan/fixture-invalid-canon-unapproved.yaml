@@ -1,0 +1,38 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.politics.invalid
+title: {zh-CN: 未批准正典样本}
+status: canon
+domain: politics
+universe: awake_current
+era: {key: current, certainty: exact}
+content_tier: base
+summary: {zh-CN: 未批准原创内容}
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+  - {source_id: source.demo, source_version: v1, source_content_hash: 0D53F08678D8101B0C7E5053B30224FC671C55051770BA18207435EAD7AD37BD, locator: demo:1, quote_hash: 0D53F08678D8101B0C7E5053B30224FC671C55051770BA18207435EAD7AD37BD, quote: 示例}
+authority: {owner: awake_canon, conflict_policy: canon_wins}
+assertions:
+  - id: assertion.invalid
+    revision: 1
+    kind: fact
+    text: {zh-CN: 未批准事实}
+    author_created:
+      author_id: author.demo
+      reason: {zh-CN: 未完成审阅}
+      review_status: draft
+    expressions:
+      - id: expr.invalid
+        revision: 1
+        layer: summary
+        text: {zh-CN: 未批准表达}
+        author_created:
+          author_id: author.demo
+          reason: {zh-CN: 未完成审阅}
+          review_status: draft
+        grants: [{profile_id: profile.commoner, scope: local, min_detail: summary}]
+        denies: []

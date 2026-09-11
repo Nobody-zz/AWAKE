@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-PUBLIC-CONTRACT-20260902",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 1,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "user_signoff": true,
+  "history": [
+    {
+      "round": 0,
+      "verdict": "REVISE",
+      "reviewer": "independent-read-only",
+      "findings": [
+        "WBPC-20260902-F01",
+        "WBPC-20260902-F02",
+        "WBPC-20260902-F03",
+        "WBPC-20260902-F04"
+      ],
+      "user_authorization": "approved repair on 2026-09-02"
+    },
+    {
+      "round": 1,
+      "status": "revision_in_progress",
+      "scope": "public projections, mutation-unknown mapping, runtime surface declaration, retired route HTTP smoke"
+    },
+    {
+      "round": 1,
+      "verdict": "APPROVED",
+      "reviewer": "independent-final-read-only",
+      "user_signoff": "approved by user on 2026-09-02",
+      "evidence": [
+        "web-cli-release-build",
+        "main-harness-113-113",
+        "authority-gate-5-5",
+        "contract-check-1132-1132",
+        "public-contract-smoke-pass",
+        "full-regression-pass"
+      ]
+    }
+  ]
+}

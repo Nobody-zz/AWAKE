@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.source-registry.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["source_id", "source_version", "source_nature", "universe", "era", "locator_root", "source_content_hash", "content_tier", "license_status", "use_status", "valid_until", "imported_at", "normalization_version"],
+  "properties": {
+    "source_id": {"type":"string","pattern":"^source\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},
+    "source_version": {"type":"string","minLength":1},
+    "source_nature": {"enum":["game_snapshot","chronicle","king_of_calradia_extract","mod_extract","adult_extension","fan_mod","future_era","under_review","developer_original"]},
+    "universe": {"enum":["awake_current","bannerlord_1084","warband_future","ck3_mod","unknown"]},
+    "era": {"type":"string","minLength":1},
+    "locator_root": {"type":"string","minLength":1},
+    "source_content_hash": {"type":"string","pattern":"^[A-Fa-f0-9]{64}$"},
+    "content_tier": {"enum":["base","adult_optional","unknown"]},
+    "license_status": {"enum":["permitted","restricted","blocked","unknown"]},
+    "use_status": {"enum":["active","expired","blocked","unknown"]},
+    "valid_until": {"type":["string","null"],"format":"date-time"},
+    "imported_at": {"type":"string","format":"date-time"},
+    "normalization_version": {"const":"utf8-lf-no-bom-v1"}
+  }
+}

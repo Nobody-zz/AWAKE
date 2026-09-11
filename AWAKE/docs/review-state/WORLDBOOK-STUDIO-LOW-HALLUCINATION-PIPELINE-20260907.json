@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "Worldbook Studio Low-Hallucination Authoring Pipeline v1 — continuous red-team",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "340f645a70630dde39a93d5a51bc10995fc915c448ed47aaf6ba577bad2e1beb",
+      "changed_decision": "将方案收敛为“来源目录只提供可定位证据，不提供语义真值；Pass A 为暂定直接命题；Pass B 的最终文本必须与 Gate 和 DocumentBuilder 使用同一份 authoring projection；多来源推导默认 unresolved；用户编辑必须重新验证”。",
+      "new_evidence": "AuthoringDraftResponseNormalizer.cs:388、409、914；AuthoringDraftDocumentBuilder.cs:31、157；AuthoringDraftSubmissionValidator.cs:27；AuthoringDraftEndpoints.cs:347；AuthoringDraftContracts.cs:847",
+      "changed_acceptance": "新增最终文本同一性、origin 闭环、编辑后复核、操作类型验证、candidate 级诊断隔离和缺失字段 fail-closed 验收项；明确 source unit 切分仅提供范围证据，不能替代语义审核。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "596d746f2bb2bf22801d6cb42de7c5d6234e5cfc018fced085a9dc8842b95976",
+      "changed_decision": "把“最终写入文档的 authoring projection”定为唯一 Gate 对象；target spans 仅作该文本的来源映射；Pass A 必须保留否定、归属、量词、条件、情态和时间限定；缺失限定信息时降级 unknown/unresolved；Pass B 只能消费不可变 semantic_packet_hash。",
+      "new_evidence": "AuthoringDraftDocumentBuilder.cs:31-42、AuthoringDraftDocumentBuilder.cs:157-161；AuthoringProjection.cs:16-27；AuthoringDraftResponseNormalizer.cs:270-289；AuthoringDraftStore/attempt identity and retry paths；WORLDBOOK-SEMANTIC-MIGRATION-METHODOLOGY-v1.2.md 的 proposition/claim 规则",
+      "changed_acceptance": "新增 modifier preservation、authoring projection exact-materialization、packet hash equality、scope/out-of-scope、reanalysis versioning 和 source-unit context 验收；第一版禁止自动 multi_source_synthesis 与复杂隐含因果。"
+    },
+    {
+      "round": 3,
+      "verdict": "APPROVED",
+      "change_fingerprint": "cd266fd02f4f212221c296f53cf055568f648ba8bb8c6dfd708f3e7604db0012",
+      "changed_decision": "终审采用保守 MVP：服务端锁定原始来源索引；Pass A 仅提取 direct_source 的暂定语义；Gate A 只做结构与 provenance 闭环；Pass B 只能投影不可变 semantic packet；多来源推导、复杂隐含因果和未编译约束默认 unresolved；最终 Gate 与 DocumentBuilder 使用同一份 authoring projection。",
+      "new_evidence": "连续三轮设计红队已覆盖：来源 ID/quote 错绑、modifier 丢失、Pass A 错误传播、Pass B 漏命题、Prompt injection、中间包漂移、rephrase/merge 误判、candidate 诊断串台、用户编辑旧证明、最终文本与落盘文本不一致、缓存/重试/分块与兼容性风险。",
+      "changed_acceptance": "终审验收：direct-source MVP 可追溯；最终写入文本与 Gate 文本 hash 一致；所有 origin/claim/target 绑定可回源；未知与未编译内容不自动通过；编辑、修复、重试均产生新 hash 或复用冻结 packet；未产生 approved/canon/compiled/published/runtime-ready。"
+    }
+  ],
+  "user_signoff": true
+}

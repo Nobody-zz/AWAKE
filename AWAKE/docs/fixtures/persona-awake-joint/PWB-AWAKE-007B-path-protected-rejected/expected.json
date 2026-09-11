@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "awake.persona.fixture-expected.v1",
+  "fixtureId": "PWB-AWAKE-007B-path-protected-rejected",
+  "gate": "E2",
+  "status": "reject",
+  "exitCode": 10,
+  "errors": [
+    {
+      "schemaVersion": "awake.persona.adapter-error.v1",
+      "code": "persona.path_protected",
+      "stage": "path",
+      "path": "pathAttempts[0]",
+      "retryable": false
+    }
+  ],
+  "assertions": [
+    "protected_path_rejected",
+    "no_candidate_promotion"
+  ]
+}

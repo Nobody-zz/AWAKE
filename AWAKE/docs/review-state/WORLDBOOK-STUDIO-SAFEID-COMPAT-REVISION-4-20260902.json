@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-SAFEID-COMPAT-REVISION-4-20260902",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 2,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "0b856dd50daeccac405fe0b40a464fd5c61469cbf0e85851d929e42085b81afa",
+      "changed_decision": "SafeId-A 不进入现有五类记录的生产路径替换；先拆成独立 StorageIdentityCanonicalizerV1 只读 golden/utility 批次，legacy resolver、record schema、跨记录 replay 与迁移另立批次。当前不修改 AuthorityGate 路径，避免在未闭合契约下破坏编译结算。",
+      "new_evidence": "终审指出 operation→proof 字段关系、五类完整 schema、跨记录 binding、五条 legacy 路径、canonicalizer 字节规则和碰撞测试构造仍不可唯一验收。",
+      "changed_acceptance": "本批仅验收 canonicalizer 字节/golden 与 oldSafeIdV0 golden，不接入生产读写；后续兼容批次在具备现有 schema 字段清单和 legacy fixtures 后另行审查。"
+    },
+    {
+      "round": 2,
+      "verdict": "APPROVED",
+      "change_fingerprint": "1ce7d9f11692234b969e80098dd84641ef2b3ab29a5da0c4566c529c040f2b8c",
+      "changed_decision": "SafeId-A now covers the five declared compile-settlement record families in production paths without changing deferred record families or public wire contracts.",
+      "new_evidence": "AuthorityGate 5/5; Worldbook Studio harness 113/113; Draft 20/20; Batch 18/18; Editor 7/7; Release build 0 warnings 0 errors; strict/legacy compile proof replay and conflict tests pass; compile marker tamper quarantines.",
+      "changed_acceptance": "Strict paths are preferred, exact legacy paths remain readable, strict corruption/conflict fails closed, compile proof/result/marker immutable writes use CreateNew semantics, mutable operation/reservation retain lease/fence/state checks, and recovery remains idempotent."
+    }
+  ],
+  "user_signoff": true
+}

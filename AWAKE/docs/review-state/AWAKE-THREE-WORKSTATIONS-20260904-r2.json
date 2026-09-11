@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-THREE-WORKSTATIONS-20260904-r2",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "e2f4aaa0f9c514f5ad39660ef3d83446967b2c57fb7cc530534257dc77b1ae90",
+      "changed_decision": "修订版先落地三件可验证基础：创建 UI Workstation adapter 项目与入口；冻结 shared envelope/consumer receipt schema 与四路由；为 Persona health 和 WBS health 建立兼容端点，再做跨工具 smoke。",
+      "new_evidence": "上一版审查在当前工作区确认 UI adapter 目录不存在、Persona 无约定 health、lifecycle 和 review 字段虽有语义但缺少 consumer receipt 结构；因此新修订版把实现文件、路由、响应结构和 owner 明确为第一切片。",
+      "changed_acceptance": "第一切片必须产出 ui-workstation adapter、shared schema、WBS import/accept/consume/readback、PWB/WBS health、focused contract tests；通过后再扩展恢复矩阵和18项 smoke。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "0d98a43ed1546285eabe4329ab28f0bf89328d203fce49d983b25bd7c8b924cc",
+      "changed_decision": "修订版第二轮冻结 envelope/receipt 的字段类型、ID/时间/hash/canonical 规则；四路由请求体、receipt 生命周期、重复请求和逐状态错误码；WBS/PWB 双健康端点兼容映射；UI adapter Port 0、ready.json、shutdown 和锁语义。",
+      "new_evidence": "独立审查指出仍缺 schema 可冻结细节、路由请求契约、健康兼容行为；已补入 PLAN-AWAKE-THREE-WORKSTATIONS-20260904.md 的 Frozen envelope/receipt、request bodies、compatibility rules 与 adapter protocol。",
+      "changed_acceptance": "下一轮只读审查若通过即可签收并实现；实现必须按冻结规则提供 schema、receipt ledger、四路由、health/adapter 和 focused tests，不再由实现者自行决定协议。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "dfbabdf611018fa99a5fbf074cb81ef564651e30072e80ccd02347aff7feb66d",
+      "changed_decision": "修订版最终冻结：实际 schema 文件路径与 additionalProperties=false；lifecycle_status 仅 receipt；严格 canonical JSON/fingerprint/expiry/prefix；recover 路由及 in_doubt/unknown 规则；统一 health JSON、双端点兼容、UI adapter 参数/lock/shutdown/navigation；integration-smoke 脚本参数、故障注入和18个固定 case。",
+      "new_evidence": "独立审查指出上一轮仍缺 schema 文件绑定、恢复请求、健康兼容映射、UI shutdown/navigation 细节和逐 case 注入方法；已补入计划对应条款。",
+      "changed_acceptance": "若最终复审通过并完成用户签收，按本计划原样实现；任何未定义字段、路由、状态或证据不得由实现者临时创造。"
+    }
+  ]
+}

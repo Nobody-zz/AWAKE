@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "awake.persona.fixture-expected.v1",
+  "fixtureId": "PWB-AWAKE-002-workbench-draft-rejected",
+  "gate": "E2",
+  "status": "reject",
+  "exitCode": 10,
+  "assertions": [
+    "source_document_status_is_draft",
+    "draft_cannot_promote",
+    "no_source_overwrite",
+    "no_candidate_promotion"
+  ],
+  "errors": [
+    {
+      "schemaVersion": "awake.persona.adapter-error.v1",
+      "errorId": "fixture.error.002.draft",
+      "code": "persona.workbench_not_approved",
+      "stage": "promotion",
+      "artifactId": "fixture.persona.draft",
+      "path": "$.source.document.status",
+      "detail": "Only an explicitly approved Workbench document may enter export.",
+      "retryable": false
+    }
+  ],
+  "noWrite": {
+    "sourceUnchanged": true,
+    "candidateWritten": false,
+    "activeCandidateChanged": false
+  },
+  "cleanup": {
+    "status": "pass",
+    "paths": [],
+    "errors": []
+  }
+}

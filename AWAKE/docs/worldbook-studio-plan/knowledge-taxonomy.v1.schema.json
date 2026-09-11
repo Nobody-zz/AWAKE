@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.knowledge-taxonomy.v1.schema",
+  "title": "AWAKE Worldbook Studio Knowledge Taxonomy v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "taxonomy_version",
+    "domains"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.knowledge-taxonomy.v1"
+    },
+    "taxonomy_version": {
+      "const": "1.0.0"
+    },
+    "domains": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "$ref": "#/$defs/domain"
+      },
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "localized": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "zh-CN"
+      ],
+      "properties": {
+        "zh-CN": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "localizedTextList": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "zh-CN"
+      ],
+      "properties": {
+        "zh-CN": {
+          "$ref": "#/$defs/textList"
+        }
+      }
+    },
+    "textList": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "subdomain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "help",
+        "examples"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "label": {
+          "$ref": "#/$defs/localized"
+        },
+        "help": {
+          "$ref": "#/$defs/localized"
+        },
+        "examples": {
+          "$ref": "#/$defs/localizedTextList"
+        }
+      }
+    },
+    "domain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "help",
+        "examples",
+        "conflict_hints",
+        "subdomains"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "politics",
+            "economy",
+            "culture",
+            "war",
+            "geography"
+          ]
+        },
+        "label": {
+          "$ref": "#/$defs/localized"
+        },
+        "help": {
+          "$ref": "#/$defs/localized"
+        },
+        "examples": {
+          "$ref": "#/$defs/localizedTextList"
+        },
+        "conflict_hints": {
+          "$ref": "#/$defs/localizedTextList"
+        },
+        "subdomains": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/subdomain"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

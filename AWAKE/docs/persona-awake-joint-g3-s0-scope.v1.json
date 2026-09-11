@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "awake.persona.g3-s0-scope.v1",
+  "taskId": "PERSONA-AWAKE-JOINT-G3-S0-20260824",
+  "batchId": "persona-awake-joint-g3-s0-storage-readiness-20260824",
+  "gate": "G3-S0",
+  "scopeRevision": 2,
+  "status": "pending_approval",
+  "purpose": "建立 awake.persona.state 的 typed Storage readiness 边界，不实现 Persona save/load、runtime caller 或游戏同步。批准与租约不存放在本 manifest；由 detached approval/lease records 交叉校验。",
+  "authority": {
+    "approvalRecord": "docs/persona-awake-joint-g3-s0-approval.v1.json",
+    "leaseRecord": "docs/persona-awake-joint-g3-s0-lease.v1.json",
+    "scopeDigest": "raw_utf8_sha256_of_this_manifest"
+  },
+  "typedSchemas": [
+    {
+      "schemaId": "awake.persona.continuity.v1",
+      "typeName": "PersonaPersistenceEnvelope",
+      "worldStateKind": "PersonaContinuity",
+      "namespaceId": "awake.persona.state",
+      "owner": "PersonaStorageOwner",
+      "writeBoundary": "G3-B-only"
+    },
+    {
+      "schemaId": "awake.persona.override.v1",
+      "typeName": "PersonaPersistenceEnvelope",
+      "worldStateKind": "PersonaOverride",
+      "namespaceId": "awake.persona.state",
+      "owner": "PersonaStorageOwner",
+      "writeBoundary": "G3-B-only"
+    },
+    {
+      "schemaId": "awake.persona.recovery.v1",
+      "typeName": "PersonaRecoveryRecord",
+      "worldStateKind": "PersonaRecovery",
+      "namespaceId": "awake.persona.state",
+      "owner": "PersonaStorageOwner",
+      "writeBoundary": "G3-B-only"
+    }
+  ],
+  "compatibilityBoundaries": {
+    "personaStorage": {
+      "namespaceId": "awake.persona.state",
+      "owner": "PersonaStorageOwner",
+      "stateSchemaIds": [
+        "awake.persona.continuity.v1",
+        "awake.persona.override.v1",
+        "awake.persona.recovery.v1"
+      ]
+    },
+    "worldbookSyncData": [
+      {
+        "syncKey": "awake_worldbook_overlay_v1",
+        "schemaId": "awake.worldbook.overlay.v1",
+        "owner": "AwakeTerminalBehavior",
+        "path": "WorldbookRuntime.ImportOverlayJson/ExportOverlayJson",
+        "compatibility": "preserve-existing-key-and-path"
+      },
+      {
+        "syncKey": "awake_worldbook_activation_v1",
+        "schemaId": "awake.worldbook.campaign-activation.v1",
+        "owner": "AwakeTerminalBehavior",
+        "path": "WorldbookRuntime.ImportActivationJson/ExportActivationJson",
+        "compatibility": "preserve-existing-key-and-path"
+      }
+    ]
+  },
+  "writeSet": [
+    "_houkai_merge/AWAKE/src/AwakeStorageContract.cs",
+    "_houkai_merge/AWAKE/src/AiTaskConstants.cs",
+    "_houkai_merge/AWAKE/src/WorldStateStore.cs",
+    "_houkai_merge/AWAKE/src/AwakeRuntime.cs",
+    "_houkai_merge/AWAKE.Tests/Program.cs",
+    "_houkai_merge/AWAKE.Tests/AwakeTestFakes.cs"
+  ],
+  "excludedWriteSet": [
+    "_houkai_merge/AWAKE/src/NpcDialogueService.cs",
+    "_houkai_merge/AWAKE/src/WorldbookRuntime.cs",
+    "_houkai_merge/AWAKE/src/PersonaPersistenceModels.cs",
+    "_houkai_merge/AWAKE/src/ProbeExtension.cs",
+    "_houkai_merge/AWAKE/ModuleData/*",
+    "_houkai_merge/AWAKE/dist/*",
+    "D:/SteamLibrary/steamapps/common/Mount & Blade II Bannerlord/Modules/AWAKE/*",
+    "_houkai_merge/AWAKE/docs/persona-awake-candidate-ledger.v1.json",
+    "frozen-candidate-roots/*"
+  ],
+  "sideEffects": {
+    "launchGame": false,
+    "syncGameDirectory": false,
+    "mutateFrozenCandidate": false,
+    "publish": false
+  },
+  "acceptanceIds": [
+    "G3-S0-001-persona-namespace-ready",
+    "G3-S0-002-schema-registry-complete",
+    "G3-S0-003-readiness-failure-atomic-no-owner",
+    "G3-S0-004-readiness-retry-after-failure",
+    "G3-S0-005-worldbook-syncdata-characterization",
+    "G3-S0-006-worldbook-compatibility-preserved"
+  ],
+  "requiredEvidence": {
+    "maximumLevel": "E2",
+    "focusedReadinessReport": "tools/persona-awake-joint/artifacts/g3-s0-readiness-focused.json",
+    "focusedReadinessReportSchema": "awake.persona.g3-s0-focused-report.v1",
+    "focusedReadinessTrace": "tools/persona-awake-joint/artifacts/g3-s0-readiness-trace.json",
+    "focusedReadinessTraceSchema": "awake.persona.g3-s0-focused-trace.v1",
+    "focusedReadinessStatus": "pass",
+    "focusedReadinessExitCode": 0,
+    "commands": [
+      "verify-g3-s0-scope.ps1",
+      "verify-g3-s0-focused-evidence.ps1",
+      "AWAKE.Tests G3-S0-001..006 focused readiness smoke",
+      "verify-runtime-bridge-static.ps1",
+      "verify-e2-matrix.ps1"
+    ]
+  }
+}

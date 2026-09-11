@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-THREE-WORKSTATIONS-IMPLEMENTATION-20260904",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 1,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "APPROVED",
+      "change_fingerprint": "b80fd37726b5fa1d2519d4979a8f682990da830305e2563063e0404ff88b237b",
+      "changed_decision": "第7批三工作站集成实现完成：PWB shared handoff、WBS消费/恢复、UI adapter health/锁/导航、统一跨工具 smoke。",
+      "new_evidence": "WBS/PWB 全量回归通过；integration-smoke result=passed，18/18，partial=0，not_implemented=0，failed=0；PWB/WBS/UI/duplicate 进程退出，UI lock/ready 释放，临时工作区清理；独立终审 APPROVED。",
+      "changed_acceptance": "第7批实现可封存；real browser E2E 仍单独标记为未验证，不阻断当前 loopback/domain acceptance。"
+    }
+  ],
+  "user_signoff": true
+}

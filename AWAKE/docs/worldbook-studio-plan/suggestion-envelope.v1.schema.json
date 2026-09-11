@@ -1,0 +1,9 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"awake.worldbook.suggestion-envelope.v1",
+  "type":"object","additionalProperties":false,
+  "required":["schema_version","suggestion_id","document_id","provider_id","request_hash","request_nonce_hash","source_document_hash","saved_revision","session_binding_hash","buffer_id","suggestion_hash","created_at","suggestion","applied"],
+  "properties":{
+    "schema_version":{"const":"suggestion-envelope.v1"},"suggestion_id":{"type":"string","minLength":1,"maxLength":128},"document_id":{"type":"string","minLength":1,"maxLength":256},"provider_id":{"enum":["local","cloud"]},"request_hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"},"request_nonce_hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"},"source_document_hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"},"saved_revision":{"type":"integer","minimum":1},"session_binding_hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"},"buffer_id":{"type":"string","pattern":"^[A-Za-z0-9._-]{1,128}$"},"suggestion_hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"},"apply_nonce":{"type":"string","minLength":1,"maxLength":128},"created_at":{"type":"string","format":"date-time"},"applied":{"type":"boolean"},"suggestion":{"$ref":"assistance.result.v1.schema.json#/properties/suggestions/items"}
+  }
+}

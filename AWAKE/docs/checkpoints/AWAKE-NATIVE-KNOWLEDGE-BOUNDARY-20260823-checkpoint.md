@@ -1,0 +1,31 @@
+# AWAKE Native Knowledge Boundary Checkpoint
+
+- `task_id`: `AWAKE-NATIVE-KNOWLEDGE-BOUNDARY-20260823`
+- `batch_id`: `awake-native-knowledge-boundary-plan-20260823`
+- `status`: `offline_verified_b1`
+- `active_lease`: `none`; completed B1 evidence is recorded in `_houkai_merge/AWAKE/docs/checkpoints/AWAKE-NATIVE-KNOWLEDGE-B1-20260824-checkpoint.md`
+- `files_changed`:
+  - `_houkai_merge/AWAKE/docs/PLAN-AWAKE-NativeState-Knowledge-MultiBatch-20260823-DRAFT.md`
+  - `_houkai_merge/AWAKE/docs/PLAN-AWAKE-NativeState-Knowledge-MultiBatch-20260823.md`
+  - `_houkai_merge/AWAKE/docs/PLAN-AWAKE-NativeState-Knowledge-MultiBatch-20260823-REVIEW-LOG.md`
+  - `_houkai_merge/AWAKE/docs/PLAN-AWAKE-NativeState-Knowledge-MultiBatch-20260823-DISCOVERY-LOG.md`
+  - `_houkai_merge/AWAKE/docs/checkpoints/AWAKE-NATIVE-KNOWLEDGE-BOUNDARY-20260823-checkpoint.md`
+- `verification`:
+  - `E0`: current AWAKE state, project rules, native mapping, adapter/numeric specs and worldbook/event contracts read.
+  - `E0`: runtime-boundary-audit completed by read-only agent `01a0301e-602f-7f62-a9c6-afa7837ef82e` with status `needs_review`.
+  - `E0`: knowledge-boundary-audit completed by read-only agent `01a0301e-60d1-77b3-acaf-2be139853015` with status `needs_review`.
+  - `E0`: master DRAFT contains B0–B11 boundaries, dependency graph, storage plan, decisions, non-goals and acceptance levels.
+  - `E0`: locked plan records D1–D6 as a whole-user-approved boundary and adds B1-S, shared claim/event/memory contracts, v2-only AI hard gates, B11-R/B11-F split and revised dependencies.
+  - `E0`: two independent read-only subagent reviews completed three review rounds; final Round 3 reviewers both returned `VERDICT: APPROVED`, and all stated findings were integrated into the locked plan and review log.
+  - `E0`: prescribed external `codex exec` review was attempted once and blocked by desktop sandbox policy; it produced no review output and was not retried.
+  - `E0`: no `dist`, `ModuleData`, game directory or PlayerExports changes.
+  - `E2`: B1 readiness/native scalar snapshot implementation and focused smoke completed without entering B1-S, B2, B10 or frozen-candidate scope.
+- `known_limitations`:
+  - The locked plan reached independent `VERDICT: APPROVED` in Round 3, limited to a future B1-only implementation lease.
+  - The user approval is recorded as whole-plan acceptance of recommended D1–D6 boundaries, not as code implementation approval.
+  - B1 has offline runtime/build evidence only; no game launch or save/load evidence exists.
+  - Current frozen candidate remains pending game validation and must not be changed.
+  - Existing B1-S storage, B2 worldbook query, hourly concurrency, NPC memory propagation, relation writeback and overlay persistence risks remain separate pending batches.
+  - Full legacy `Awake.SdkSmoke` remains blocked by the unrelated `SharedPersonaGoldenFixture` mismatch after B1 passes.
+- `next_action`: keep the completed B1 lease closed; propose or execute a separately approved next batch only after its own checkpoint. Do not sync the game directory or modify the frozen candidate.
+- `last_error`: `none_for_b1; preexisting_shared_persona_fixture_failure_recorded`

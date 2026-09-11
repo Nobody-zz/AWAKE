@@ -1,0 +1,1123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.authoring.v1",
+  "title": "AWAKE Worldbook Authoring Document v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "revision",
+    "id",
+    "title",
+    "status",
+    "domain",
+    "universe",
+    "era",
+    "content_tier",
+    "summary",
+    "registry_bindings",
+    "assertions",
+    "authority"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.authoring.v1"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^doc\\.(politics|economy|culture|war|geography)\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+    },
+    "title": {
+      "$ref": "#/$defs/localized_text"
+    },
+    "status": {
+      "enum": [
+        "canon",
+        "accepted_variant",
+        "rumor",
+        "reference_only",
+        "future",
+        "needs_review",
+        "rejected"
+      ]
+    },
+    "domain": {
+      "enum": [
+        "politics",
+        "economy",
+        "culture",
+        "war",
+        "geography"
+      ]
+    },
+    "subdomain": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "related_domains": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "enum": [
+          "politics",
+          "economy",
+          "culture",
+          "war",
+          "geography"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "universe": {
+      "enum": [
+        "awake_current",
+        "bannerlord_1084",
+        "warband_future",
+        "ck3_mod",
+        "unknown"
+      ]
+    },
+    "era": {
+      "$ref": "#/$defs/era"
+    },
+    "content_tier": {
+      "enum": [
+        "base",
+        "adult_optional"
+      ]
+    },
+    "registry_bindings": {
+      "$ref": "#/$defs/registry_bindings"
+    },
+    "entity_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^entity\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+      },
+      "uniqueItems": true
+    },
+    "aliases": {
+      "$ref": "#/$defs/localized_aliases"
+    },
+    "redirects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/redirect"
+      },
+      "uniqueItems": true
+    },
+    "lifecycle": {
+      "$ref": "#/$defs/lifecycle"
+    },
+    "authority": {
+      "$ref": "#/$defs/authority"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source_ref"
+      },
+      "minItems": 1
+    },
+    "author_created": {
+      "$ref": "#/$defs/author_created"
+    },
+    "summary": {
+      "$ref": "#/$defs/localized_text"
+    },
+    "assertions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/assertion"
+      },
+      "minItems": 1
+    }
+  },
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "required": [
+            "sources"
+          ],
+          "not": {
+            "required": [
+              "author_created"
+            ]
+          }
+        },
+        {
+          "required": [
+            "author_created"
+          ],
+          "not": {
+            "required": [
+              "sources"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "canon"
+          }
+        }
+      },
+      "then": {
+        "if": {
+          "required": [
+            "author_created"
+          ]
+        },
+        "then": {
+          "properties": {
+            "author_created": {
+              "$ref": "#/$defs/approved_author_created"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "canon"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "assertions": {
+            "items": {
+              "allOf": [
+                {
+                  "if": {
+                    "required": [
+                      "author_created"
+                    ]
+                  },
+                  "then": {
+                    "properties": {
+                      "author_created": {
+                        "$ref": "#/$defs/approved_author_created"
+                      }
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "expressions": {
+                      "items": {
+                        "if": {
+                          "required": [
+                            "author_created"
+                          ]
+                        },
+                        "then": {
+                          "properties": {
+                            "author_created": {
+                              "$ref": "#/$defs/approved_author_created"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "localized_text": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      },
+      "propertyNames": {
+        "pattern": "^[a-z]{2}(?:-[A-Z]{2})?$"
+      }
+    },
+    "localized_aliases": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uniqueItems": true
+      },
+      "propertyNames": {
+        "pattern": "^[a-z]{2}(?:-[A-Z]{2})?$"
+      }
+    },
+    "era": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": [
+        "key",
+        "certainty"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start_year": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "end_year": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "certainty": {
+          "enum": [
+            "exact",
+            "bounded",
+            "approximate",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "source_ref": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": [
+        "source_id",
+        "source_version",
+        "source_content_hash",
+        "locator",
+        "quote_hash"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "pattern": "^source\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "source_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_content_hash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quote_hash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "quote": {
+          "type": "string"
+        }
+      }
+    },
+    "author_created": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": [
+        "author_id",
+        "reason",
+        "review_status"
+      ],
+      "properties": {
+        "author_id": {
+          "type": "string",
+          "pattern": "^author\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "reason": {
+          "$ref": "#/$defs/localized_text"
+        },
+        "review_status": {
+          "enum": [
+            "draft",
+            "reviewed",
+            "approved"
+          ]
+        },
+        "review_event_id": {
+          "type": "string",
+          "pattern": "^event\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_content_hash",
+            "packet_hash",
+            "provider_fingerprint",
+            "candidate_fingerprint",
+            "evidence"
+          ],
+          "properties": {
+            "source_content_hash": {
+              "type": "string",
+              "pattern": "^[A-Fa-f0-9]{64}$"
+            },
+            "packet_hash": {
+              "type": "string",
+              "pattern": "^[A-Fa-f0-9]{64}$"
+            },
+            "provider_fingerprint": {
+              "type": "string",
+              "pattern": "^[A-Fa-f0-9]{64}$"
+            },
+            "candidate_fingerprint": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[A-Fa-f0-9]{64}$"
+            },
+            "fact_annotations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "kind", "certainty", "inferred", "review_status"],
+                "properties": {
+                  "id": { "type": "string", "minLength": 1 },
+                  "kind": { "type": "string", "minLength": 1 },
+                  "certainty": { "type": "string", "minLength": 1 },
+                  "inferred": { "type": "boolean" },
+                  "review_status": { "enum": ["pending", "accepted", "author_modified"] }
+                }
+              }
+            },
+            "expression_annotations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "perspective", "layer", "fact_ids", "inferred", "review_status"],
+                "properties": {
+                  "id": { "type": "string", "minLength": 1 },
+                  "perspective": { "type": "string", "minLength": 1 },
+                  "layer": { "type": "string", "minLength": 1 },
+                  "fact_ids": { "type": "array", "items": { "type": "string" } },
+                  "inferred": { "type": "boolean" },
+                  "review_status": { "enum": ["pending", "accepted", "author_modified"] }
+                }
+              }
+            },
+            "metadata_review": {
+              "type": ["object", "null"],
+              "additionalProperties": false,
+              "required": ["status", "revalidation_status", "modified_fields"],
+              "properties": {
+                "status": { "enum": ["unchanged", "author_modified"] },
+                "revalidation_status": { "enum": ["source_checked", "manual_required"] },
+                "modified_fields": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1 },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "propositions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/proposition"
+              }
+            },
+            "claims": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/claim"
+              }
+            },
+            "target_spans": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/target_span"
+              }
+            },
+            "unresolved": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "kind", "scope", "candidate_id", "severity", "blocking", "message", "related_ids"],
+                "properties": {
+                  "id": { "type": "string", "minLength": 1 },
+                  "kind": { "type": "string", "minLength": 1 },
+                  "scope": { "type": "string", "minLength": 1 },
+                  "candidate_id": { "type": ["string", "null"] },
+                  "severity": { "enum": ["info", "warning", "error"] },
+                  "blocking": { "type": "boolean" },
+                  "message": { "type": "string", "minLength": 1 },
+                  "related_ids": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+            "coverage": {
+              "type": ["object", "null"],
+              "additionalProperties": false,
+              "properties": {
+                "mode": { "type": "string", "minLength": 1 },
+                "status": { "type": "string", "minLength": 1 },
+                "heuristic": { "type": "boolean" },
+                "not_semantic_migration_proof": { "type": "boolean" },
+                "source_proposition_count": { "type": "integer", "minimum": 0 },
+                "supported_proposition_count": { "type": "integer", "minimum": 0 },
+                "unresolved_proposition_count": { "type": "integer", "minimum": 0 },
+                "unsupported_proposition_count": { "type": "integer", "minimum": 0 }
+              }
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "reference_id",
+                  "locator",
+                  "quote",
+                  "quote_hash"
+                ],
+                "properties": {
+                  "reference_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "locator": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "quote": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "quote_hash": {
+                    "type": "string",
+                    "pattern": "^[A-Fa-f0-9]{64}$"
+                  },
+                  "locator_object": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            }
+          }
+        }
+    },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "review_status": {
+                "const": "approved"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "review_event_id"
+            ]
+          }
+        }
+      ]
+    },
+    "proposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "subject",
+        "predicate",
+        "object",
+        "epistemic_kind",
+        "perspective",
+        "time_scope",
+        "polarity",
+        "source_origin_ids",
+        "confidence",
+        "unresolved"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "subject": { "type": "string", "minLength": 1 },
+        "predicate": { "type": "string", "minLength": 1 },
+        "object": { "type": "string", "minLength": 1 },
+        "epistemic_kind": { "type": "string", "minLength": 1 },
+        "perspective": { "type": "string", "minLength": 1 },
+        "time_scope": { "type": "string", "minLength": 1 },
+        "polarity": { "type": "string", "minLength": 1 },
+        "source_origin_ids": { "type": "array", "items": { "type": "string" } },
+        "confidence": { "type": "string", "minLength": 1 },
+        "unresolved": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "proposition_id",
+        "text",
+        "source_origin_ids",
+        "review_status"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "proposition_id": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "source_origin_ids": { "type": "array", "items": { "type": "string" } },
+        "review_status": { "const": "pending" }
+      }
+    },
+    "target_span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "text",
+        "claim_ids",
+        "source_origin_ids",
+        "operation",
+        "review_state"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "claim_ids": { "type": "array", "items": { "type": "string" } },
+        "source_origin_ids": { "type": "array", "items": { "type": "string" } },
+        "operation": { "enum": ["preserve", "merge", "split", "rephrase", "drop", "unresolved"] },
+        "review_state": { "const": "pending" }
+      }
+    },
+    "registry_bindings": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": [
+        "profile_registry_version",
+        "profile_registry_hash",
+        "referral_registry_version",
+        "referral_registry_hash"
+      ],
+      "properties": {
+        "profile_registry_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile_registry_hash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "referral_registry_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "referral_registry_hash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        }
+      }
+    },
+    "approved_author_created": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/author_created"
+        },
+        {
+          "properties": {
+            "review_status": {
+              "const": "approved"
+            },
+            "review_event_id": {
+              "type": "string",
+              "pattern": "^event\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "review_status",
+            "review_event_id"
+          ]
+        }
+      ]
+    },
+    "lifecycle": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "supersedes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z]+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
+        "split_from": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z]+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
+        "merged_into": {
+          "type": "string",
+          "pattern": "^[a-z]+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^event\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "valid_from": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "valid_to": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "required": [
+                  "supersedes"
+                ]
+              },
+              {
+                "required": [
+                  "split_from"
+                ]
+              },
+              {
+                "required": [
+                  "merged_into"
+                ]
+              },
+              {
+                "required": [
+                  "valid_from"
+                ]
+              },
+              {
+                "required": [
+                  "valid_to"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "event_id",
+              "revision"
+            ]
+          }
+        }
+      ]
+    },
+    "authority": {
+      "oneOf": [
+        {
+          "required": [
+            "owner",
+            "conflict_policy"
+          ],
+          "properties": {
+            "owner": {
+              "const": "game_state"
+            },
+            "conflict_policy": {
+              "enum": [
+                "runtime_wins",
+                "report_only"
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "owner",
+            "conflict_policy"
+          ],
+          "properties": {
+            "owner": {
+              "const": "awake_canon"
+            },
+            "conflict_policy": {
+              "enum": [
+                "canon_wins",
+                "report_only"
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "owner",
+            "conflict_policy"
+          ],
+          "properties": {
+            "owner": {
+              "const": "source_only"
+            },
+            "conflict_policy": {
+              "enum": [
+                "report_only",
+                "not_applicable"
+              ]
+            }
+          }
+        }
+      ],
+      "type": "object",
+      "unevaluatedProperties": false
+    },
+    "redirect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "redirect_id",
+        "from",
+        "to",
+        "reason",
+        "event_id",
+        "revision"
+      ],
+      "properties": {
+        "redirect_id": {
+          "type": "string",
+          "pattern": "^redirect\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "from": {
+          "type": "string",
+          "pattern": "^[a-z]+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "to": {
+          "type": "string",
+          "pattern": "^[a-z]+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "reason": {
+          "$ref": "#/$defs/localized_text"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^event\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        }
+      }
+    },
+    "assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "revision",
+        "kind",
+        "text",
+        "expressions"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^assertion\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "kind": {
+          "enum": [
+            "fact",
+            "interpretation",
+            "rumor",
+            "relation",
+            "state"
+          ]
+        },
+        "text": {
+          "$ref": "#/$defs/localized_text"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          },
+          "minItems": 1
+        },
+        "author_created": {
+          "$ref": "#/$defs/author_created"
+        },
+        "expressions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "sources"
+              ],
+              "not": {
+                "required": [
+                  "author_created"
+                ]
+              }
+            },
+            {
+              "required": [
+                "author_created"
+              ],
+              "not": {
+                "required": [
+                  "sources"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "expression": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "revision",
+        "layer",
+        "text",
+        "grants",
+        "denies"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^expr\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "layer": {
+          "enum": [
+            "unknown",
+            "rumor",
+            "summary",
+            "detail",
+            "secret"
+          ]
+        },
+        "text": {
+          "$ref": "#/$defs/localized_text"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source_ref"
+          },
+          "minItems": 1
+        },
+        "author_created": {
+          "$ref": "#/$defs/author_created"
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/knowledge_rule"
+          }
+        },
+        "denies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/knowledge_rule"
+          }
+        },
+        "fallback_referral_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^referral\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "sources"
+              ],
+              "not": {
+                "required": [
+                  "author_created"
+                ]
+              }
+            },
+            {
+              "required": [
+                "author_created"
+              ],
+              "not": {
+                "required": [
+                  "sources"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "knowledge_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_id",
+        "scope",
+        "min_detail"
+      ],
+      "properties": {
+        "profile_id": {
+          "type": "string",
+          "pattern": "^profile\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "scope": {
+          "enum": [
+            "local",
+            "regional",
+            "national",
+            "faction",
+            "elite",
+            "private"
+          ]
+        },
+        "min_detail": {
+          "enum": [
+            "rumor",
+            "summary",
+            "detail",
+            "secret"
+          ]
+        },
+        "culture_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^entity\\.culture\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
+        "kingdom_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^entity\\.kingdom\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
+        "settlement_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^entity\\.settlement\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
+        "role_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^entity\\.role\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
+        "is_female": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "is_clan_leader": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "min_age": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "max_age": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "min_management": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "min_steward": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "min_skill": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  }
+}

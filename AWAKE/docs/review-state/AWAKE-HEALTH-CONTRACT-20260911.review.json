@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-HEALTH-CONTRACT-20260911",
+  "risk_class": "standard",
+  "max_rounds": 2,
+  "round": 2,
+  "consecutive_no_change": 0,
+  "status": "awaiting_signoff",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "ae71d79595f371100a37df39fb9b66d8e76ba63de74cff642504d721daeefdd1",
+      "changed_decision": "",
+      "new_evidence": "round1: health 探测不再拆连接后，008 侧的注释与立项描述已过期 —— AwakeRuntimeRecovery.cs 类注释仍写「框架在第一次健康异常就拆掉 runtime」，会把读者引回旧结论；008 立项 D-1 写的「不动框架 FailConnectionAsync」与 009 的实际边界冲突。修订：更新该类注释为「业务交换失败才拆（009 之后 health 探测不再拆）」，并在 008 立项 D-1 加 009 边界说明。",
+      "changed_acceptance": ""
+    },
+    {
+      "round": 2,
+      "verdict": "APPROVED",
+      "change_fingerprint": "39f414e53be97c94c38333187fdd75f6ed2763c603dcc17ba16baeb0f9cd559c",
+      "changed_decision": "",
+      "new_evidence": "round2: round1 的注释/立项过期项已修订（AwakeRuntimeRecovery.cs 类注释改为「业务交换失败才拆连接，009 之后 health 探测不再拆」，008 立项 D-1 补 009 边界说明）。修订后重建与回归：build.ps1 BUILD_OK；MarcusAwakeFramework.Tests PASS ALL（11 core + 6 P3D-A2 + 20 FCORE）；MarcusAwakeRuntimeService.Tests PASS_COUNT=19 FAIL_COUNT=0（含新增契约断言 P3B-02，改前红改后绿）；AWAKE.Tests 主 smoke PASS ALL（含 runtime.recovery.* 四项）；--persona-anchor PASS ALL；--redtest-r1-behavioral REDTEST R1 BEHAVIORAL COMPLETE (no FAIL)。无新增 P0/P1。",
+      "changed_acceptance": ""
+    }
+  ]
+}

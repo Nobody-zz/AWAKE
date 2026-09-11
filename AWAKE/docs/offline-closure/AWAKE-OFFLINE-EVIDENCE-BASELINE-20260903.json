@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "awake.offline-closure.evidence.v1",
+  "batchId": "AWAKE-OFFLINE-EVIDENCE-BASELINE-20260903",
+  "sourceCandidate": "awake-20260903-awake-runtime-repair-004",
+  "evidenceLevel": "E2",
+  "generatedAtUtc": "2026-09-03T13:41:39.5727555Z",
+  "persona": {
+    "positive": 1,
+    "fallback": 1,
+    "rejection": 3,
+    "unsupportedPersistence": "not_attempted",
+    "reports": [
+      "tools/persona-awake-joint/artifacts/g3a-rev2-PWB-AWAKE-001-valid-approved.json",
+      "tools/persona-awake-joint/artifacts/g3a-rev2-PWB-AWAKE-003-missing-selection-rejected.json",
+      "tools/persona-awake-joint/artifacts/g3a-rev2-PWB-AWAKE-004-unknown-tag-rejected.json",
+      "tools/persona-awake-joint/artifacts/g3a-rev2-PWB-AWAKE-008-last-known-good.json",
+      "tools/persona-awake-joint/artifacts/g3a-rev2-PWB-AWAKE-015-stale-selection-rejected.json"
+    ]
+  },
+  "worldbook": {
+    "pilotFiles": 5,
+    "parseOk": 5,
+    "reportOnly": true,
+    "reports": [
+      "docs/worldbook-migration/SOURCE-SNAPSHOT-20260903.json",
+      "docs/worldbook-migration/SOURCE-INVENTORY-20260903.json",
+      "docs/worldbook-migration/DUPLICATE-REPORT-20260903.json",
+      "docs/worldbook-migration/CONFLICT-REPORT-20260903.json",
+      "docs/worldbook-migration/ENTITY-CANDIDATE-REPORT-20260903.json",
+      "docs/worldbook-migration/MIGRATION-LOSS-REPORT-20260903.json",
+      "docs/worldbook-migration/NEEDS-REVIEW-20260903.json"
+    ]
+  },
+  "settlementSmoke": {
+    "case": "failed-drain-fail-closed",
+    "result": "covered by full production smoke",
+    "productionSmoke": "18/18 PASS",
+    "executableSha256": "BEEA37679F436A2FB4963F5E260EF0DA79F24D8ED6768E9602266D49AD797C46",
+    "stdoutSha256": "F76E752C74E4755F8E17CBEBC2D9BBC1963B2D4F9F5A7EA37CAC1E62E1963B91",
+    "stdoutPath": "docs/offline-closure/G3C-SETTLEMENT-SMOKE-20260903.txt"
+  },
+  "boundaries": [
+    "No Persona runtime projection claim",
+    "No Persona persistence/recovery claim",
+    "No ContextSnapshot/RuntimeBundle prompt claim",
+    "No Studio v2 to current Runtime claim",
+    "No E3/E4/E5 claim",
+    "No Bannerlord/real Provider/API key/sync"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-SETTLEMENT-BOUNDARY-20260902",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "ded4fdee07a5023567771d788745429871c340516b547ff4f2004fa0945aed8d",
+      "changed_decision": "将派生 compile operation 改为固定长度 customer.compile.v1.<sha256(proof)>；持久化完整可重放结果；增加跨进程原子 reservation；恢复必须校验 operation/kind/digest/proof/output/target/marker/manifest 全绑定；孤儿 compiled 输出隔离；补齐 CLI/Web 查询和错误矩阵。",
+      "new_evidence": "独立挑战指出现有 CompileApproved 无 replay 结果持久化，Recover 对非 publish 操作缺少 marker 完整性校验，_gate 仅进程内锁，NormalizeOutputRoot 未定义 canonical 顺序，SafeId 历史兼容未定义，AuthorityFailure 泄露异常文本，CLI 与真实 HTTP 测试未覆盖新闭环。",
+      "changed_acceptance": "新增完整 result replay、伪造/缺字段 marker、manifest mismatch、跨进程竞争、历史 ID 读取、非法 output 零副作用、operation query、Web/CLI parity 与安全错误响应验收。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "6fd4f3dda1385223fd4d2fbfd8c4a8456a57b2e65cf702e6e1e526ef6da0851d",
+      "changed_decision": "补齐 compile operation、marker、result envelope、reservation、recovery、兼容与 Web/CLI 的精确 JSON 合同和固定状态语义；新增孤儿输出 quarantine 及双进程 winner/loser 规则。",
+      "new_evidence": "第二轮独立挑战确认上一轮仍是目标承诺而非可判定合同，要求固定 schema、状态转换、原子 reservation 机制、owner/fence/过期语义、孤儿输出处理、CLI 文件范围及 fault injection fixture。",
+      "changed_acceptance": "新增精确字段 schema、marker self-hash 与全绑定校验、result envelope 不重新编译 replay、CreateNew reservation 竞争、prepared/failed_recovery 状态、quarantine 路径、历史 ID 精确读取、Web/CLI status/exit parity 和真实 HTTP/双进程/损坏记录 fixtures。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "951bfd15b809b29e8b4ba7d12745fe1710693d7212e1d923df0c381116a10214",
+      "changed_decision": "不再把编译幂等、跨进程 reservation、结果恢复、历史 ID 与 Web/CLI 安全错误揉成一批；拆为先边界硬化、后 compile settlement RFC/实现两个独立批次。",
+      "new_evidence": "第三轮审查确认 operation 公式、marker 可信根、reservation 崩溃窗口、compiled 事务窗口、历史 SafeId 定位、CLI/HTTP projection 和可执行 fault fixtures 仍未闭合；继续扩展同一批次将超过审查预算并增加设计漂移风险。",
+      "changed_acceptance": "当前批次不进入代码；下一批只实现可独立验收的 safe ID 与 authority HTTP error boundary，compile settlement 重新建立精确 schema 与恢复模型后再实现。"
+    }
+  ]
+}

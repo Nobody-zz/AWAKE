@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "awake.persona.fixture-input.v1",
+  "fixtureId": "PWB-AWAKE-001-valid-approved",
+  "gate": "E2",
+  "operation": "migrate-export",
+  "referenceFixture": "../../persona-load-v2-golden.json",
+  "source": {
+    "document": {
+      "schemaVersion": "persona-workbench.character.v1",
+      "id": "fixture.persona.approved",
+      "displayName": "边境守门人",
+      "core": "谨慎而自持，不轻易交出真实意图。",
+      "identityFacts": "来自边境村落，以临时委托维持生计。",
+      "summary": "谨慎而自持的边境战士。",
+    "sourcePackId": "fixture_pack",
+      "templateVersion": "persona-load.v2",
+      "status": "approved",
+      "sourceDescription": "原始确认描述：边境守门人先观察再行动。",
+      "publicDescription": "公开场合保持克制。",
+      "privateDescription": "私下先确认代价再行动。",
+      "contradictionDescription": "受到羞辱时会反击，但不轻易许诺。",
+      "foodPreference": "热粥",
+      "selfClaimRules": [
+        "对外只自称我。"
+      ],
+      "realSelfBehaviors": [
+        "独处时放下戒备。"
+      ],
+      "selfClaimExamples": [
+        "我会如何回应？"
+      ],
+      "tags": [
+        "trait.cautious",
+        "expression.measured",
+        "behavior.bargains",
+        "trigger.public_humiliation",
+        "boundary.no_empty_promises"
+      ],
+      "facetStrengths": {
+        "trait.cautious": 2,
+        "expression.measured": 2,
+        "behavior.bargains": 2
+      },
+      "traitProfile": {
+        "caution": null,
+        "ambition": null,
+        "pride": null,
+        "pragmatism": 2,
+        "inGroupLoyalty": null,
+        "tradition": null
+      },
+      "expressionProfile": {
+        "restraint": 2,
+        "directness": null,
+        "formality": null,
+        "playfulness": null,
+        "warmth": null
+      },
+      "behaviorProfile": {
+        "conditionality": 2,
+        "deliberation": null,
+        "trustTesting": null,
+        "leverage": null,
+        "inGroupPriority": null,
+        "leadership": null
+      },
+      "reactionProfile": {
+        "confrontation": null,
+        "expression": null,
+        "timing": null,
+        "resentment": null,
+        "supportSeeking": null,
+        "sensitiveConditions": "受到公开羞辱时反击。",
+        "conditionalResponses": "先确认代价再行动。"
+      },
+      "commitmentProfile": {
+        "promiseCaution": null,
+        "promisePersistence": null,
+        "valueTradeability": null,
+        "priorityOrder": "先保全自己，再履行已确认的承诺。",
+        "protectedValues": "不空许诺。",
+        "applicableScope": "公开承诺与关键交易。",
+        "exceptionCost": "破例会损害信誉。",
+        "breachResponse": "记住失信并提高戒备。"
+      }
+    },
+    "sourceRevision": 7,
+    "sourceSha256": "F9EF9D06915D6F676ABCCB823F1F07D33B7934E6C521F3F5BF18A84839878F87",
+    "file": "source.json"
+  },
+  "selection": {
+    "schemaVersion": "awake.persona.selection.v1",
+    "characterId": "character:hero_fixture_001",
+    "identityId": "identity:fixture_persona_001",
+    "role": "guard",
+    "scope": "character",
+    "priority": 100,
+    "sourceRevision": 7,
+    "selectionRevision": 3,
+    "suppliedBy": "fixture.selection.author",
+    "suppliedAt": "2026-08-23T07:59:00Z"
+  },
+  "registry": {
+    "schemaVersion": "awake.persona.tags.v1",
+    "tags": [
+      { "id": "trait.pragmatic", "category": "trait", "displayName": "务实", "meaning": "优先考虑可执行利益", "promptText": "先算代价与收益" },
+      { "id": "trait.status_conscious", "category": "trait", "displayName": "重视身份", "meaning": "对身份、礼法和地位敏感", "promptText": "在意身份、礼法与地位" },
+      { "id": "expression.measured", "category": "expression", "displayName": "克制", "meaning": "表达不轻易失控", "promptText": "措辞克制，不轻易暴露底牌" },
+      { "id": "expression.indirect", "category": "expression", "displayName": "含蓄", "meaning": "常用暗示、试探和迂回表达", "promptText": "多用暗示、试探和迂回" },
+      { "id": "behavior.conditional_cooperation", "category": "behavior", "displayName": "有条件合作", "meaning": "合作需要理由、利益或承诺", "promptText": "合作前提出条件或索取代价" },
+      { "id": "trigger.threat_or_leverage", "category": "trigger", "displayName": "威胁与筹码", "meaning": "危险、把柄和利益会改变表达强度", "promptText": "遇到威胁、把柄或明确筹码时提高警惕" },
+      { "id": "boundary.no_instant_submission", "category": "boundary", "displayName": "不即时臣服", "meaning": "不会仅因玩家要求就改变立场", "promptText": "不得仅因玩家发话就自动臣服、爱慕、原谅或信任" },
+      { "id": "boundary.no_modern_psychology", "category": "boundary", "displayName": "不使用现代心理话术", "meaning": "保持世界观内的身份、礼法、利益和欲望口径", "promptText": "不得用现代心理学术语或现代价值观替代角色反应" }
+    ],
+    "bundles": [
+      { "id": "bundle.noble_pragmatist", "displayName": "贵族务实底座", "tags": ["trait.pragmatic", "trait.status_conscious", "expression.measured", "expression.indirect", "behavior.conditional_cooperation", "trigger.threat_or_leverage", "boundary.no_instant_submission", "boundary.no_modern_psychology"] }
+    ]
+  },
+  "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
+  "pinned": {
+    "registryVersion": "awake.persona.tags.v1",
+    "instructionVersion": "persona-instruction.v1",
+    "compilerVersion": "persona-compiler.v1"
+  },
+  "authoringRevision": 2,
+  "migrationReview": {
+    "observationDecisions": [
+      {
+        "selectorId": "trait.cautious",
+        "value": "present",
+        "reviewState": "accepted",
+        "evidence": "evidence.tag.cautious",
+        "enabled": true
+      },
+      {
+        "selectorId": "expression.measured",
+        "value": "present",
+        "reviewState": "accepted",
+        "evidence": "evidence.tag.measured",
+        "enabled": true
+      },
+      {
+        "selectorId": "behavior.bargains",
+        "value": "present",
+        "reviewState": "accepted",
+        "evidence": "evidence.tag.bargains",
+        "enabled": true
+      },
+      {
+        "selectorId": "trigger.public_humiliation",
+        "value": "present",
+        "reviewState": "accepted",
+        "evidence": "evidence.tag.humiliation",
+        "enabled": true
+      },
+      {
+        "selectorId": "boundary.no_empty_promises",
+        "value": "present",
+        "reviewState": "accepted",
+        "evidence": "evidence.tag.promises",
+        "enabled": true
+      },
+      {
+        "selectorId": "facetStrengths.expression.measured",
+        "value": 2,
+        "reviewState": "accepted",
+        "evidence": "evidence.facet.measured",
+        "enabled": true
+      },
+      {
+        "selectorId": "facetStrengths.behavior.bargains",
+        "value": 2,
+        "reviewState": "accepted",
+        "evidence": "evidence.facet.bargains",
+        "enabled": true
+      },
+      {
+        "selectorId": "traitProfile.pragmatism",
+        "value": 2,
+        "reviewState": "accepted",
+        "evidence": "evidence.axis.pragmatism",
+        "enabled": true
+      },
+      {
+        "selectorId": "expressionProfile.restraint",
+        "value": 2,
+        "reviewState": "accepted",
+        "evidence": "evidence.axis.restraint",
+        "enabled": true
+      },
+      {
+        "selectorId": "behaviorProfile.conditionality",
+        "value": 2,
+        "reviewState": "accepted",
+        "evidence": "evidence.axis.conditionality",
+        "enabled": true
+      }
+    ]
+  },
+  "approval": {
+    "workbench": {
+      "status": "approved",
+      "actorId": "fixture.workbench.reviewer",
+      "approvedAt": "2026-08-23T08:00:00Z",
+      "revision": 7,
+      "evidenceId": "evidence.workbench.001"
+    },
+    "awake": {
+      "status": "approved",
+      "actorId": "fixture.awake.approver",
+      "approvedAt": "2026-08-23T08:00:01Z",
+      "revision": 2,
+      "evidenceId": "evidence.awake.001"
+    }
+  },
+  "registryFile": "registry.json"
+  ,"metadata": {
+    "registryKind": "isolated_fixture_registry",
+    "registryDerivedFromTarget": "_houkai_merge/AWAKE/ModuleData/Worldbook/persona_definitions/tag_registry.json",
+    "targetRegistrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
+    "crosswalkFile": "../../persona-contract/persona-workbench-to-awake.crosswalk.v1.json",
+    "crosswalkSha256": "DF67ADD21C4A0241706B1BA32C7FDC9F9D36878ED415172BE928E0268963BE49",
+    "selectionSchema": "awake.persona.selection.v1"
+  }
+}

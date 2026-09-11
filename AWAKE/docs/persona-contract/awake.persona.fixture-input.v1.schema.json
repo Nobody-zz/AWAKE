@@ -1,0 +1,639 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona.fixture-input.v1",
+  "title": "AWAKE Persona joint fixture input v1",
+  "description": "Closed E2 fixture envelope for the isolated PersonaWorkbench to AWAKE bridge. Negative fixtures may intentionally fail one nested contract assertion so the adapter's fail-closed behavior can be tested.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "fixtureId", "gate", "operation"],
+  "properties": {
+    "schemaVersion": { "const": "awake.persona.fixture-input.v1" },
+    "fixtureId": { "$ref": "#/$defs/fixtureId" },
+    "gate": { "enum": ["E0", "E1", "E2", "E3", "E4", "E5"] },
+    "operation": { "$ref": "#/$defs/operation" },
+    "referenceFixture": { "$ref": "#/$defs/nonEmptyText" },
+    "source": { "$ref": "#/$defs/sourceEnvelope" },
+    "selection": {
+      "anyOf": [
+        { "$ref": "#/$defs/selectionInput" },
+        { "type": "null" }
+      ]
+    },
+    "registry": { "$ref": "#/$defs/registry" },
+    "registrySha256": { "$ref": "#/$defs/sha256" },
+    "migrationReview": { "$ref": "#/$defs/migrationReview" },
+    "approval": { "$ref": "#/$defs/approval" },
+    "registryFile": { "$ref": "#/$defs/nonEmptyText" },
+    "sourceVariants": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/sourceEnvelope" }
+    },
+    "mappingIssues": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/mappingIssue" }
+    },
+    "exportCandidates": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/exportCandidate" }
+    },
+    "pathAttempts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/pathAttempt" }
+    },
+    "exportState": { "enum": ["partial", "complete"] },
+    "currentBundle": { "$ref": "#/$defs/runtimeBundle" },
+    "candidateReload": { "$ref": "#/$defs/runtimeBundleCandidate" },
+    "runtimeManifest": { "$ref": "#/$defs/runtimeManifest" },
+    "runtimePayload": { "$ref": "#/$defs/runtimePayload" },
+    "nativePrerequisite": { "$ref": "#/$defs/nativePrerequisite" },
+    "mutation": { "$ref": "#/$defs/mutation" },
+    "storagePrerequisite": { "$ref": "#/$defs/storagePrerequisite" },
+    "sequence": {
+      "type": "array",
+      "items": { "enum": ["save", "load", "branch", "restart"] }
+    },
+    "protectedRoots": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/protectedRoot" }
+    },
+    "isolatedSibling": { "$ref": "#/$defs/nonEmptyText" },
+    "attempts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/isolationAttempt" }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "operation": { "const": "migrate-export" } } },
+      "then": {
+        "required": ["referenceFixture", "source", "selection", "registry", "registrySha256"]
+      }
+    },
+    {
+      "if": { "properties": { "operation": { "const": "validate-approval" } } },
+      "then": {
+        "required": ["referenceFixture", "source", "selection", "registry", "registrySha256", "sourceVariants", "approval"]
+      }
+    },
+    {
+      "if": { "properties": { "operation": { "const": "validate-mapping" } } },
+      "then": {
+        "required": ["referenceFixture", "source", "selection", "registry", "registrySha256", "mappingIssues"]
+      }
+    },
+    {
+      "if": { "properties": { "operation": { "const": "validate-schema" } } },
+      "then": {
+        "required": ["referenceFixture", "source", "selection", "registry", "registrySha256"]
+      }
+    },
+    {
+      "if": { "properties": { "operation": { "const": "validate-export-plan" } } },
+      "then": {
+        "required": ["referenceFixture", "source", "selection", "registry", "registrySha256", "exportCandidates", "pathAttempts", "exportState"]
+      }
+    },
+    {
+      "if": { "properties": { "operation": { "const": "reload-runtime-bundle" } } },
+      "then": {
+        "required": ["currentBundle", "candidateReload"]
+      }
+    },
+    {
+      "if": { "properties": { "operation": { "const": "load-runtime-entry" } } },
+      "then": {
+        "required": ["runtimeManifest", "runtimePayload"]
+      }
+    },
+    {
+      "if": { "properties": { "operation": { "const": "native-runtime-caller" } } },
+      "then": {
+        "required": ["nativePrerequisite"]
+      }
+    },
+    {
+      "if": { "properties": { "operation": { "const": "dynamic-invalidation" } } },
+      "then": {
+        "required": ["nativePrerequisite", "mutation"]
+      }
+    },
+    {
+      "if": { "properties": { "operation": { "const": "persistence" } } },
+      "then": {
+        "required": ["nativePrerequisite", "storagePrerequisite", "sequence"]
+      }
+    },
+    {
+      "if": { "properties": { "operation": { "const": "frozen-candidate-isolation" } } },
+      "then": {
+        "required": ["protectedRoots", "isolatedSibling", "attempts"]
+      }
+    }
+  ],
+  "$defs": {
+    "fixtureId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "operation": {
+      "enum": [
+        "migrate-export",
+        "validate-approval",
+        "validate-mapping",
+        "validate-schema",
+        "validate-export-plan",
+        "reload-runtime-bundle",
+        "load-runtime-entry",
+        "native-runtime-caller",
+        "dynamic-invalidation",
+        "persistence",
+        "frozen-candidate-isolation"
+      ]
+    },
+    "nonEmptyText": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^\\u0000-\\u001F\\u007F]*$"
+    },
+    "text": {
+      "type": "string",
+      "pattern": "^[^\\u0000-\\u001F\\u007F]*$"
+    },
+    "stableId": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[A-F0-9]{64}$"
+    },
+    "positiveRevision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "utcDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "sourcePackId": {
+      "type": "string",
+      "pattern": "^(?:$|[a-z0-9][a-z0-9_.-]*)$"
+    },
+    "workbenchDocument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "id",
+        "displayName",
+        "core",
+        "identityFacts",
+        "summary",
+        "sourcePackId",
+        "templateVersion",
+        "status",
+        "sourceDescription",
+        "publicDescription",
+        "privateDescription",
+        "contradictionDescription",
+        "foodPreference",
+        "selfClaimRules",
+        "realSelfBehaviors",
+        "selfClaimExamples",
+        "tags"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "persona-workbench.character.v1" },
+        "id": { "$ref": "#/$defs/stableId" },
+        "displayName": { "$ref": "#/$defs/text" },
+        "core": { "$ref": "#/$defs/text" },
+        "identityFacts": { "$ref": "#/$defs/text" },
+        "summary": { "$ref": "#/$defs/text" },
+        "sourcePackId": { "$ref": "#/$defs/sourcePackId" },
+        "templateVersion": { "$ref": "#/$defs/nonEmptyText" },
+        "status": { "enum": ["draft", "approved", "disabled"] },
+        "sourceDescription": { "$ref": "#/$defs/text" },
+        "publicDescription": { "$ref": "#/$defs/text" },
+        "privateDescription": { "$ref": "#/$defs/text" },
+        "contradictionDescription": { "$ref": "#/$defs/text" },
+        "foodPreference": { "$ref": "#/$defs/text" },
+        "selfClaimRules": { "$ref": "#/$defs/textList" },
+        "realSelfBehaviors": { "$ref": "#/$defs/textList" },
+        "selfClaimExamples": { "$ref": "#/$defs/textList" },
+        "tags": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/tagId" },
+          "uniqueItems": true
+        },
+        "facetStrengths": { "$ref": "#/$defs/facetStrengths" },
+        "traitProfile": { "$ref": "#/$defs/traitProfile" },
+        "expressionProfile": { "$ref": "#/$defs/expressionProfile" },
+        "behaviorProfile": { "$ref": "#/$defs/behaviorProfile" },
+        "reactionProfile": { "$ref": "#/$defs/reactionProfile" },
+        "commitmentProfile": { "$ref": "#/$defs/commitmentProfile" }
+      }
+    },
+    "sourceEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["document", "sourceRevision", "sourceSha256"],
+      "properties": {
+        "document": { "$ref": "#/$defs/workbenchDocument" },
+        "sourceRevision": { "$ref": "#/$defs/positiveRevision" },
+        "sourceSha256": { "$ref": "#/$defs/sha256" },
+        "file": { "$ref": "#/$defs/nonEmptyText" }
+      }
+    },
+    "selectionEntityReference": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "selectionInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["characterId", "identityId", "role", "scope", "priority", "sourceRevision", "selectionRevision", "suppliedBy", "suppliedAt"],
+      "properties": {
+        "characterId": { "$ref": "#/$defs/selectionEntityReference" },
+        "identityId": { "$ref": "#/$defs/selectionEntityReference" },
+        "role": { "$ref": "#/$defs/role" },
+        "scope": { "$ref": "#/$defs/scope" },
+        "priority": { "$ref": "#/$defs/priority" },
+        "sourceRevision": { "$ref": "#/$defs/positiveRevision" },
+        "selectionRevision": { "$ref": "#/$defs/positiveRevision" },
+        "suppliedBy": { "$ref": "#/$defs/stableId" },
+        "suppliedAt": { "$ref": "#/$defs/utcDateTime" }
+      }
+    },
+    "role": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "scope": {
+      "enum": ["character", "identity", "role", "culture", "global"]
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100000
+    },
+    "tagId": {
+      "type": "string",
+      "pattern": "^(trait|expression|behavior|trigger|boundary)\\.[a-z0-9_]+$"
+    },
+    "textList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/text" }
+    },
+    "axisValue": {
+      "type": ["integer", "null"],
+      "minimum": -2,
+      "maximum": 2
+    },
+    "traitProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "caution": { "$ref": "#/$defs/axisValue" },
+        "ambition": { "$ref": "#/$defs/axisValue" },
+        "pride": { "$ref": "#/$defs/axisValue" },
+        "pragmatism": { "$ref": "#/$defs/axisValue" },
+        "inGroupLoyalty": { "$ref": "#/$defs/axisValue" },
+        "tradition": { "$ref": "#/$defs/axisValue" }
+      }
+    },
+    "expressionProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "restraint": { "$ref": "#/$defs/axisValue" },
+        "directness": { "$ref": "#/$defs/axisValue" },
+        "formality": { "$ref": "#/$defs/axisValue" },
+        "playfulness": { "$ref": "#/$defs/axisValue" },
+        "warmth": { "$ref": "#/$defs/axisValue" }
+      }
+    },
+    "behaviorProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "conditionality": { "$ref": "#/$defs/axisValue" },
+        "deliberation": { "$ref": "#/$defs/axisValue" },
+        "trustTesting": { "$ref": "#/$defs/axisValue" },
+        "leverage": { "$ref": "#/$defs/axisValue" },
+        "inGroupPriority": { "$ref": "#/$defs/axisValue" },
+        "leadership": { "$ref": "#/$defs/axisValue" }
+      }
+    },
+    "reactionProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "confrontation": { "$ref": "#/$defs/axisValue" },
+        "expression": { "$ref": "#/$defs/axisValue" },
+        "timing": { "$ref": "#/$defs/axisValue" },
+        "resentment": { "$ref": "#/$defs/axisValue" },
+        "supportSeeking": { "$ref": "#/$defs/axisValue" },
+        "sensitiveConditions": { "$ref": "#/$defs/text" },
+        "conditionalResponses": { "$ref": "#/$defs/text" }
+      }
+    },
+    "commitmentProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "promiseCaution": { "$ref": "#/$defs/axisValue" },
+        "promisePersistence": { "$ref": "#/$defs/axisValue" },
+        "valueTradeability": { "$ref": "#/$defs/axisValue" },
+        "priorityOrder": { "$ref": "#/$defs/text" },
+        "protectedValues": { "$ref": "#/$defs/text" },
+        "applicableScope": { "$ref": "#/$defs/text" },
+        "exceptionCost": { "$ref": "#/$defs/text" },
+        "breachResponse": { "$ref": "#/$defs/text" }
+      }
+    },
+    "facetStrengths": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "trait.cautious": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "trait.ambitious": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "trait.proud": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "trait.pragmatic": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "trait.guardian": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "trait.traditional": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "expression.measured": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "expression.direct": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "expression.formal": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "expression.teasing": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "expression.warm": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "behavior.bargains": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "behavior.observes_before_acting": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "behavior.tests_loyalty": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "behavior.keeps_leverage": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "behavior.protects_inner_circle": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+        "behavior.takes_command": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 }
+      }
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "tags", "bundles"],
+      "properties": {
+        "schemaVersion": { "const": "awake.persona.tags.v1" },
+        "tags": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/registryTag" },
+          "uniqueItems": true
+        },
+        "bundles": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/registryBundle" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "registryTag": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "category", "displayName", "meaning", "promptText"],
+      "properties": {
+        "id": { "$ref": "#/$defs/tagId" },
+        "category": { "enum": ["trait", "expression", "behavior", "trigger", "boundary"] },
+        "displayName": { "$ref": "#/$defs/nonEmptyText" },
+        "meaning": { "$ref": "#/$defs/nonEmptyText" },
+        "promptText": { "$ref": "#/$defs/nonEmptyText" }
+      }
+    },
+    "registryBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "displayName", "tags"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^bundle\\.[a-z0-9_]+$"
+        },
+        "displayName": { "$ref": "#/$defs/nonEmptyText" },
+        "tags": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/tagId" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "migrationReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observationDecisions"],
+      "properties": {
+        "observationDecisions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/observationDecision" }
+        }
+      }
+    },
+    "observationDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selectorId", "value", "reviewState", "evidence", "enabled"],
+      "properties": {
+        "selectorId": { "$ref": "#/$defs/stableId" },
+        "value": {
+          "anyOf": [
+            { "$ref": "#/$defs/nonEmptyText" },
+            { "type": "integer" },
+            { "type": "boolean" },
+            { "type": "null" }
+          ]
+        },
+        "reviewState": { "enum": ["accepted", "needs_review", "rejected"] },
+        "evidence": { "$ref": "#/$defs/nonEmptyText" },
+        "enabled": { "type": "boolean" }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workbench", "awake"],
+      "properties": {
+        "workbench": { "$ref": "#/$defs/approvalEntry" },
+        "awake": { "$ref": "#/$defs/approvalEntry" }
+      }
+    },
+    "approvalEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "actorId", "approvedAt", "revision", "evidenceId"],
+      "properties": {
+        "status": { "enum": ["approved", "not_approved"] },
+        "actorId": { "$ref": "#/$defs/stableId" },
+        "approvedAt": { "$ref": "#/$defs/utcDateTime" },
+        "revision": { "$ref": "#/$defs/positiveRevision" },
+        "evidenceId": { "$ref": "#/$defs/stableId" }
+      }
+    },
+    "mappingIssue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "lossPolicy", "result", "provenancePath", "targetId"],
+      "properties": {
+        "sourceId": { "$ref": "#/$defs/nonEmptyText" },
+        "lossPolicy": { "enum": ["reject", "preserve_only", "drop_non_runtime_metadata"] },
+        "result": { "enum": ["emitted", "preserved", "rejected"] },
+        "provenancePath": { "$ref": "#/$defs/text" },
+        "targetId": {
+          "anyOf": [
+            { "$ref": "#/$defs/nonEmptyText" },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "exportCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path"],
+      "properties": {
+        "id": { "$ref": "#/$defs/stableId" },
+        "path": { "$ref": "#/$defs/nonEmptyText" }
+      }
+    },
+    "pathAttempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["writePath", "result"],
+      "properties": {
+        "writePath": { "$ref": "#/$defs/nonEmptyText" },
+        "reparse": { "type": "boolean" },
+        "result": { "enum": ["accepted", "rejected"] }
+      }
+    },
+    "runtimeActivation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packageId", "manifestSha256"],
+      "properties": {
+        "packageId": { "$ref": "#/$defs/nonEmptyText" },
+        "manifestSha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "runtimeBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bundleId", "buildId", "personaRevision", "worldbookRevision", "activation"],
+      "properties": {
+        "bundleId": { "$ref": "#/$defs/nonEmptyText" },
+        "buildId": { "$ref": "#/$defs/nonEmptyText" },
+        "personaRevision": { "$ref": "#/$defs/positiveRevision" },
+        "worldbookRevision": { "$ref": "#/$defs/positiveRevision" },
+        "activation": { "$ref": "#/$defs/runtimeActivation" }
+      }
+    },
+    "runtimeBundleCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bundleId", "buildId", "personaRevision", "validationError", "activation"],
+      "properties": {
+        "bundleId": { "$ref": "#/$defs/nonEmptyText" },
+        "buildId": { "$ref": "#/$defs/nonEmptyText" },
+        "personaRevision": { "$ref": "#/$defs/positiveRevision" },
+        "validationError": { "$ref": "#/$defs/nonEmptyText" },
+        "activation": { "$ref": "#/$defs/runtimeActivation" }
+      }
+    },
+    "runtimeManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "packageId", "entrypoints"],
+      "properties": {
+        "schemaVersion": { "enum": ["awake.worldbook.package.v1", "awake.worldbook.package.v2"] },
+        "packageId": { "$ref": "#/$defs/nonEmptyText" },
+        "entrypoints": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["runtime", "index"],
+          "properties": {
+            "runtime": { "$ref": "#/$defs/nonEmptyText" },
+            "index": { "$ref": "#/$defs/nonEmptyText" }
+          }
+        }
+      }
+    },
+    "runtimePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "entries"],
+      "properties": {
+        "schemaVersion": { "enum": ["awake.worldbook.runtime.v1", "awake.worldbook.runtime.v2"] },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "nativePrerequisite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["planStatus", "executionLease"],
+      "properties": {
+        "planStatus": { "$ref": "#/$defs/nonEmptyText" },
+        "executionLease": { "$ref": "#/$defs/nonEmptyText" },
+        "owner": { "$ref": "#/$defs/nonEmptyText" },
+        "exactScopeApproved": { "type": "boolean" },
+        "writeSetDisjoint": { "type": "boolean" }
+      }
+    },
+    "mutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "before", "after", "expectedFingerprintChange"],
+      "properties": {
+        "field": { "$ref": "#/$defs/nonEmptyText" },
+        "before": { "$ref": "#/$defs/nonEmptyText" },
+        "after": { "$ref": "#/$defs/nonEmptyText" },
+        "expectedFingerprintChange": { "type": "boolean" }
+      }
+    },
+    "storagePrerequisite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner", "lease", "ready"],
+      "properties": {
+        "owner": { "$ref": "#/$defs/nonEmptyText" },
+        "lease": { "$ref": "#/$defs/nonEmptyText" },
+        "ready": { "type": "boolean" }
+      }
+    },
+    "protectedRoot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path", "beforeSha256", "afterSha256"],
+      "properties": {
+        "id": { "$ref": "#/$defs/stableId" },
+        "path": { "$ref": "#/$defs/nonEmptyText" },
+        "beforeSha256": { "$ref": "#/$defs/sha256" },
+        "afterSha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "isolationAttempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "requestedPath", "execution", "result", "pathResolution"],
+      "properties": {
+        "operation": { "$ref": "#/$defs/nonEmptyText" },
+        "requestedPath": { "$ref": "#/$defs/nonEmptyText" },
+        "execution": { "const": "isolated-sibling-copy-only" },
+        "result": { "const": "rejected" },
+        "pathResolution": { "const": "protected-root-guard" }
+      }
+    }
+  }
+}

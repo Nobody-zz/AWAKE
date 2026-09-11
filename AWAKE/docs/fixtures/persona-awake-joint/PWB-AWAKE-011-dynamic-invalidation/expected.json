@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "awake.persona.fixture-expected.v1",
+  "fixtureId": "PWB-AWAKE-011-dynamic-invalidation",
+  "gate": "E2",
+  "status": "blocked",
+  "exitCode": 20,
+  "assertions": [
+    "prerequisite_missing",
+    "not_a_pass",
+    "no_runtime_write",
+    "no_lease_granted"
+  ],
+  "errors": [
+    {
+      "schemaVersion": "awake.persona.adapter-error.v1",
+      "errorId": "fixture.error.011",
+      "code": "persona.native_lease_required",
+      "stage": "prerequisite",
+      "artifactId": "dynamic-invalidation",
+      "path": "$.nativePrerequisite.executionLease",
+      "detail": "Dynamic ContextSnapshot/fingerprint validation is not implemented before Native lease.",
+      "retryable": false
+    }
+  ],
+  "noWrite": {
+    "candidateWritten": false,
+    "runtimeChanged": false,
+    "leaseGranted": false
+  }
+}

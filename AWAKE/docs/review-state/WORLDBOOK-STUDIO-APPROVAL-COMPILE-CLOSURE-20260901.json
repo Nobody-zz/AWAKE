@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-APPROVAL-COMPILE-CLOSURE-20260901",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "awaiting_signoff",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "f0ece8a37497147b8b4203c72f4224e8c6ad4b5fa02d9fcc66ad7793ec4cf99b",
+      "changed_decision": "首轮审查后将 Application.Export 纳入 proof-backed/Core 收窄范围；客户 export-staging 也禁止隐式批准，但 staging→publish 授权仍明确后置；锁定 proof-only 入口及 400/404/409/422 错误矩阵。",
+      "new_evidence": "两路独立审查确认 Application.Export 可无 proof 直接 CompileCore 并调用 AtomicCandidatePublisher；IssueCustomerCompileProof 仍在客户 compile/export 路由自动 ApproveSelection；现有 proof operationId 可无请求等价验证重放；计划未覆盖 registry/reference closure 失效。",
+      "changed_acceptance": "Core bypass 覆盖 Compile/CompileExact/Export/WriteCompiled；客户 compile/export-staging 缺 proof=400、proof不存在=404、失效或绑定hash变化=409、字段/层级非法=422；验收覆盖 registry/reference closure 变化和同 operationId 不同 approval/selection/tier=409。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "83e8707ab93d2759ffa33d548f7f8854e919e51cba6a698441fa8c6c1ff8cf15",
+      "changed_decision": "第2轮审查后锁定 AuthorityGate.CompileApproved 作为验证proof→编译→写入的唯一组合入口；明确 Web 禁止直调 WriteCompiled；定义 CompileProof 的 selection/registry/reference closure 快照字段及哈希来源；定义 compile-proof operation canonical request digest 与重放冲突409；旧客户字段422且无副作用。",
+      "new_evidence": "第2轮独立审查确认：若仅收窄 WriteCompiled，现有 Web 仍无法完成结算；当前 IssueCompileProof 未比较 operation request；ValidateCompileProof 未校验 registry/reference closure；客户 compile/export 仍使用旧字段和隐式批准；AuthorityFailure 未完整映射。",
+      "changed_acceptance": "新增 CompileApproved 闭环及 Web 不直调 Core 断言；新增 registry/reference hash409、operation digest冲突409、旧字段422、Core四入口及无效proof组合入口零副作用、export-staging不变更current pointer和PublishStaging合同的回归。"
+    },
+    {
+      "round": 3,
+      "verdict": "APPROVED",
+      "change_fingerprint": "09104db7266991d5504ba2b279e9748ab3f1537af6983947e3e1f899a3521bbe",
+      "changed_decision": "第3轮终审确认计划可实施：CompileApproved 成为 proof 验证、编译和写入的唯一结算入口；Core 四个无 proof 绕过面及 Web/CLI 直接写入均列为必须收窄或 fail-closed 的实现项。",
+      "new_evidence": "源码复核确认现状的隐式批准位于 Web IssueCustomerCompileProof，Web 与 CLI 直调 WriteCompiled，Application.Export 可直入发布器；现有 SnapshotInputStore、RegistrySnapshot 与 SourceRegistryHash 可承载计划要求的 closure 比对。独立主审无新的 P0/P1/P2 阻断。",
+      "changed_acceptance": "实施时要求 CompileApproved 返回明确的 CompileResult/compiled path DTO；Web/CLI exact-set fixture 固定 400/404/409/422 与 legacy 410 映射。发布、恢复、跨进程 CAS 继续后置。"
+    }
+  ]
+}

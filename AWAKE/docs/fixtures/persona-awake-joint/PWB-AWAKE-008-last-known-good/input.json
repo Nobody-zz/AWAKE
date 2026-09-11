@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "awake.persona.fixture-input.v1",
+  "fixtureId": "PWB-AWAKE-008-last-known-good",
+  "gate": "E2",
+  "operation": "reload-runtime-bundle",
+  "currentBundle": {
+    "bundleId": "bundle.fixture.good",
+    "buildId": "awake-fixture-build-good",
+    "personaRevision": 4,
+    "worldbookRevision": 8,
+    "activation": {
+      "packageId": "awake.worldbook.v2.fixture",
+      "manifestSha256": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    }
+  },
+  "candidateReload": {
+    "bundleId": "bundle.fixture.bad",
+    "buildId": "awake-fixture-build-bad",
+    "personaRevision": 5,
+    "validationError": "persona.registry_digest_mismatch",
+    "activation": {
+      "packageId": "awake.worldbook.v2.fixture-bad",
+      "manifestSha256": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+    }
+  },
+  "expectedStatus": "pass"
+}

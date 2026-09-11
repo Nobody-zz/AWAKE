@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona.export.v1",
+  "title": "AWAKE Persona export envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "exportId",
+    "sourceSchema",
+    "sourceDocumentId",
+    "sourceRevision",
+    "sourceSha256",
+    "authoringSchema",
+    "authoringRevision",
+    "authoringSha256",
+    "selectionRevision",
+    "registrySchema",
+    "registrySha256",
+    "mappingReportId",
+    "mappingReportSha256",
+    "approval",
+    "selection",
+    "definition",
+    "revoke",
+    "supersedes"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "awake.persona.export.v1" },
+    "exportId": { "$ref": "#/$defs/stableId" },
+    "sourceSchema": { "const": "persona-workbench.character.v1" },
+    "sourceDocumentId": { "$ref": "#/$defs/stableId" },
+    "sourceRevision": { "$ref": "#/$defs/positiveRevision" },
+    "sourceSha256": { "$ref": "#/$defs/sha256" },
+    "authoringSchema": { "const": "awake.persona.authoring.v2" },
+    "authoringRevision": { "$ref": "#/$defs/positiveRevision" },
+    "authoringSha256": { "$ref": "#/$defs/sha256" },
+    "selectionRevision": { "$ref": "#/$defs/positiveRevision" },
+    "registrySchema": { "const": "awake.persona.tags.v1" },
+    "registrySha256": { "$ref": "#/$defs/sha256" },
+    "mappingReportId": { "$ref": "#/$defs/stableId" },
+    "mappingReportSha256": { "$ref": "#/$defs/sha256" },
+    "approval": { "$ref": "#/$defs/approval" },
+    "selection": { "$ref": "#/$defs/selection" },
+    "definition": { "$ref": "#/$defs/definition" },
+    "revoke": {
+      "anyOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/revoke" }
+      ]
+    },
+    "supersedes": {
+      "anyOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/stableId" }
+      ]
+    }
+  },
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)*$"
+    },
+    "entityId": {
+      "type": "string",
+      "pattern": "^awake:[a-z][a-z0-9_]*:[a-z0-9_.]+$"
+    },
+    "role": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[A-F0-9]{64}$"
+    },
+    "positiveRevision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "utcDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "approvalEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "actorId", "approvedAt", "revision", "evidenceId"],
+      "properties": {
+        "status": { "enum": ["approved", "not_approved"] },
+        "actorId": { "$ref": "#/$defs/stableId" },
+        "approvedAt": { "$ref": "#/$defs/utcDateTime" },
+        "revision": { "$ref": "#/$defs/positiveRevision" },
+        "evidenceId": { "$ref": "#/$defs/stableId" }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workbench", "awake"],
+      "properties": {
+        "workbench": { "$ref": "#/$defs/approvalEntry" },
+        "awake": { "$ref": "#/$defs/approvalEntry" }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["characterId", "identityId", "role", "scope", "priority"],
+      "properties": {
+        "characterId": { "$ref": "#/$defs/entityId" },
+        "identityId": { "$ref": "#/$defs/entityId" },
+        "role": { "$ref": "#/$defs/role" },
+        "scope": { "enum": ["character", "identity", "role", "culture", "global"] },
+        "priority": { "type": "integer", "minimum": 0, "maximum": 100000 }
+      }
+    },
+    "definition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "id",
+        "characterId",
+        "identityId",
+        "role",
+        "sourcePackId",
+        "templateVersion",
+        "status",
+        "priority",
+        "scope",
+        "core",
+        "identityFacts",
+        "relationStyle",
+        "currentStateHints",
+        "summary",
+        "publicDescription",
+        "privateDescription",
+        "contradictionDescription",
+        "foodPreference",
+        "selfClaimRules",
+        "realSelfBehaviors",
+        "selfClaimExamples",
+        "tags",
+        "bundles",
+        "experiences"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "awake.persona.definition.v1" },
+        "id": { "$ref": "#/$defs/stableId" },
+        "characterId": { "$ref": "#/$defs/entityId" },
+        "identityId": { "$ref": "#/$defs/entityId" },
+        "role": { "$ref": "#/$defs/role" },
+        "sourcePackId": {
+          "type": "string",
+          "pattern": "^(?:$|[a-z0-9_]+(?:\\.[a-z0-9_]+)*)$"
+        },
+        "templateVersion": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["approved", "draft", "disabled"] },
+        "priority": { "type": "integer", "minimum": 0, "maximum": 100000 },
+        "scope": { "enum": ["character", "identity", "role", "culture", "global"] },
+        "core": { "type": "string", "minLength": 1 },
+        "identityFacts": { "$ref": "#/$defs/text" },
+        "relationStyle": { "$ref": "#/$defs/text" },
+        "currentStateHints": { "$ref": "#/$defs/text" },
+        "summary": { "$ref": "#/$defs/text" },
+        "publicDescription": { "$ref": "#/$defs/text" },
+        "privateDescription": { "$ref": "#/$defs/text" },
+        "contradictionDescription": { "$ref": "#/$defs/text" },
+        "foodPreference": { "$ref": "#/$defs/text" },
+        "selfClaimRules": { "$ref": "#/$defs/textList" },
+        "realSelfBehaviors": { "$ref": "#/$defs/textList" },
+        "selfClaimExamples": { "$ref": "#/$defs/textList" },
+        "tags": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/tagUse" }
+        },
+        "bundles": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/tagId" },
+          "uniqueItems": true
+        },
+        "experiences": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/experience" }
+        }
+      }
+    },
+    "tagId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_.-]*$"
+    },
+    "text": {
+      "type": "string",
+      "pattern": "^[^\\u0000-\\u001F\\u007F]*$"
+    },
+    "textList": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "tagUse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "priority", "sceneKeywords", "contextModes"],
+      "properties": {
+        "id": { "$ref": "#/$defs/tagId" },
+        "priority": { "type": "integer", "minimum": 0, "maximum": 100000 },
+        "sceneKeywords": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "contextModes": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "experience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "text", "status", "source", "priority"],
+      "properties": {
+        "id": { "$ref": "#/$defs/stableId" },
+        "text": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["active", "disabled"] },
+        "source": { "type": "string", "minLength": 1 },
+        "priority": { "type": "integer", "minimum": 0, "maximum": 100000 }
+      }
+    },
+    "revoke": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason", "actorId", "occurredAt", "replacementRequired"],
+      "properties": {
+        "reason": { "type": "string", "minLength": 1 },
+        "actorId": { "$ref": "#/$defs/stableId" },
+        "occurredAt": { "$ref": "#/$defs/utcDateTime" },
+        "replacementRequired": { "type": "boolean" }
+      }
+    }
+  }
+}

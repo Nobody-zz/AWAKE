@@ -1,0 +1,85 @@
+{
+  "$id": "persona-canonical-json.v1",
+  "contractVersion": "persona-canonical-json.v1",
+  "kind": "canonicalization-contract",
+  "encoding": {
+    "charset": "UTF-8",
+    "bom": false,
+    "lineEnding": "LF",
+    "finalLineFeed": true
+  },
+  "strings": {
+    "normalization": "NFC",
+    "rejectControlCharacters": true,
+    "rejectUnpairedSurrogates": true
+  },
+  "numbers": {
+    "format": "invariant-json",
+    "rejectNaN": true,
+    "rejectInfinity": true,
+    "negativeZero": "serialize-as-zero"
+  },
+  "objects": {
+    "duplicateKeys": "reject",
+    "propertyOrder": "ordinal-ascending",
+    "insignificantWhitespace": "omit"
+  },
+  "arrays": {
+    "default": "preserve-declared-order",
+    "setArrays": [
+      { "path": "facts", "stableKey": "factId" },
+      { "path": "observations", "stableKey": "selectorId" },
+      { "path": "rules", "stableKey": "ruleId" },
+      { "path": "definition.tags", "stableKey": "id" },
+      { "path": "definition.bundles", "stableKey": "id" },
+      { "path": "definition.experiences", "stableKey": "id" },
+      { "path": "sourceVocabulary.tagIds", "stableKey": "value" },
+      { "path": "sourceVocabulary.axisIds", "stableKey": "value" },
+      { "path": "sourceVocabulary.flagIds", "stableKey": "value" },
+      { "path": "rows", "stableKey": "sourceId" },
+      { "path": "inputHashes", "stableKey": "path" },
+      { "path": "outputHashes", "stableKey": "path" },
+      { "path": "assertions", "stableKey": "id" }
+    ],
+    "setOrdering": "ordinal-ascending-by-stable-key",
+    "duplicateStableKeys": "reject"
+  },
+  "digest": {
+    "algorithm": "SHA-256",
+    "output": "uppercase-hex-64",
+    "input": "canonical-utf8-bytes",
+    "detachedFieldsExcluded": [
+      "digest",
+      "sha256",
+      "sourceSha256",
+      "authoringSha256",
+      "mappingReportSha256",
+      "registrySha256"
+    ]
+  },
+  "sourceHash": {
+    "confirmedText": "SHA-256(UTF-8(NFC(confirmedText)))",
+    "workbenchSource": "original UTF-8 bytes as read",
+    "registryBinding": "raw UTF-8 bytes as read"
+  },
+  "semanticDistinctions": {
+    "missingVsNull": "distinct",
+    "emptyStringVsUnknown": "distinct",
+    "disabledVsRejected": "distinct",
+    "draftVsApproved": "distinct"
+  },
+  "validation": {
+    "unknownRootFields": "reject",
+    "unknownNestedFields": "reject",
+    "opaquePreservedLegacyData": "only migration.preservedLegacyData may retain unknown legacy keys",
+    "schemaValidation": "before-canonicalization",
+    "canonicalizationFailure": "error"
+  },
+  "statusExitCodes": {
+    "pass": 0,
+    "reject": 10,
+    "blocked": 20,
+    "not_attempted": 30,
+    "error": 40
+  }
+}

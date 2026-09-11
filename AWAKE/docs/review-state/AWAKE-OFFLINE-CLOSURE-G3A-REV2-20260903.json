@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE offline closure G3-A Revision 2: schema-bound Persona selection/recovery, Studio v2 candidate fixtures, and governed offline settlement",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "supersedes": "docs/review-state/AWAKE-OFFLINE-CLOSURE-G3A-20260903.json",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "e3d72f62aca8ae8dd6d8b01e18c8cfbd6385aab52872bbfc50efcf69aef8f7f2",
+      "changed_decision": "Separate the plan into schema-bound selection/recovery only, Studio v2 candidate-only fixtures, and existing settlement fixtures; remove all contradictory prompt/context implementation claims and bind every artifact to an actual schema/runner/path.",
+      "new_evidence": "Independent review found residual prompt-scope contradictions, nonexistent fixture contracts, scope precedence not represented in DTOs, runner path mismatches, permission fixture under-specification, and artifact-directory ambiguity.",
+      "changed_acceptance": "Require existing-schema fixtures or explicitly deferred contracts, real runner commands and outputs, exact 5/5 negative count, candidate-only ledger/event envelopes, and separate fixture/report directories."
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "1ff54cfd814330210a6d8adf0e72810b36bc3159e5a30535c20fad6f10f28cd2",
+      "changed_decision": "Restrict the batch to existing Persona runner-supported fixtures, report-only Worldbook analysis, and one named existing settlement Smoke; remove required Persona recovery and new receipt claims.",
+      "new_evidence": "Independent review confirmed current Persona persistence is not_attempted, Persona fixture IDs were not bound, several commands/outputs were placeholders, and deferred joint context remained in E2 wording.",
+      "changed_acceptance": "Added explicit non-pass semantics for not_attempted/not_available, named existing Persona fixture IDs, actual Smoke build/executable paths, named failed-drain case, exact report path, and report-only migration outputs."
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "c0f1c56ff3def4c75e346d800efab034f3da23133d00c71ad89e67a060e5ff6f",
+      "changed_decision": "Do not pursue a combined G3-A closure plan after the three-round budget; split Persona fixture baseline, Worldbook report-only pilot, and settlement Smoke evidence into independent batches.",
+      "new_evidence": "Final review found Acceptance A still overstated projection, Persona fixtures required reclassification, G3B lacked a concrete analysis command/schema, G3C coverage was narrower than its labels, and E2 evidence needed current-run hash binding.",
+      "changed_acceptance": "Combined plan is superseded by three smaller plans; each plan will bind exact commands, outputs, pass thresholds, and unverified boundaries without claiming unsupported closure."
+    }
+  ]
+}

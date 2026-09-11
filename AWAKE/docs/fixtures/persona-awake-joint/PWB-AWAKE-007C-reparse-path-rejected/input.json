@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "awake.persona.fixture-input.v1",
+  "fixtureId": "PWB-AWAKE-007C-reparse-path-rejected",
+  "gate": "E2",
+  "operation": "validate-export-plan",
+  "exportCandidates": [
+    {
+      "id": "fixture.export.reparse_guard",
+      "path": "isolated/candidate/definition.json"
+    }
+  ],
+  "pathAttempts": [
+    {
+      "writePath": "isolated/reparse-link/definition.json",
+      "reparse": true,
+      "result": "rejected"
+    }
+  ],
+  "exportState": "complete",
+  "partialExport": false,
+  "expectedStatus": "reject"
+}

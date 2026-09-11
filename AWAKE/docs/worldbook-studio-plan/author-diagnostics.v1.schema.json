@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"awake.worldbook.author-diagnostics.v1",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["fixture_id","profile_id","compile_version","identity_snapshot","results"],
+  "properties":{
+    "fixture_id":{"type":"string","minLength":1},
+    "profile_id":{"type":"string","pattern":"^profile\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},
+    "compile_version":{"type":"string","minLength":1},
+    "identity_snapshot":{"type":"object","additionalProperties":false,"required":["snapshot_id","profile_id"],"properties":{"snapshot_id":{"type":"string","minLength":1},"profile_id":{"type":"string","pattern":"^profile\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},"culture_id":{"type":["string","null"]},"kingdom_id":{"type":["string","null"]},"settlement_id":{"type":["string","null"]},"age":{"type":["integer","null"],"minimum":0},"steward":{"type":["integer","null"],"minimum":0}}},
+    "results":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["document_id","knowledge_id","status","rule_ids","source_ids","final_layer"],"properties":{"document_id":{"type":"string","pattern":"^doc\\.(politics|economy|culture|war)\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},"knowledge_id":{"type":"string","pattern":"^[a-z]+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},"status":{"enum":["visible","rumor","unknown","redacted"]},"final_layer":{"enum":["unknown","rumor","summary","detail","secret"]},"rule_ids":{"type":"array","items":{"type":"string","minLength":1},"uniqueItems":true},"source_ids":{"type":"array","items":{"type":"string","pattern":"^source\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"},"uniqueItems":true},"explanation_chain":{"type":"array","items":{"type":"string","minLength":1}},"rejection_code":{"type":["string","null"]}}}}
+  }
+}

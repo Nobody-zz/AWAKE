@@ -1,0 +1,18 @@
+{
+  "registry_id": "awake.profile.registry",
+  "registry_version": "1.0.0",
+  "profiles": [
+    {"id":"profile.villager","display":{"zh-CN":"普通村民"},"inherits":"profile.commoner"},
+    {"id":"profile.townsfolk","display":{"zh-CN":"城镇居民"},"inherits":"profile.commoner"},
+    {"id":"profile.commoner","display":{"zh-CN":"普通平民"}},
+    {"id":"profile.headman","display":{"zh-CN":"头人"},"inherits":"profile.notable"},
+    {"id":"profile.notable","display":{"zh-CN":"地方重要人物"},"inherits":"profile.commoner"},
+    {"id":"profile.merchant","display":{"zh-CN":"商人"},"inherits":"profile.townsfolk"},
+    {"id":"profile.tavernkeeper","display":{"zh-CN":"酒馆老板"},"inherits":"profile.townsfolk"},
+    {"id":"profile.ransom_broker","display":{"zh-CN":"赎金经纪人"},"inherits":"profile.merchant"},
+    {"id":"profile.soldier","display":{"zh-CN":"士兵"},"inherits":"profile.commoner"},
+    {"id":"profile.noble","display":{"zh-CN":"贵族"},"inherits":"profile.notable"},
+    {"id":"profile.noble_high_steward","display":{"zh-CN":"高管理贵族"},"inherits":"profile.noble"},
+    {"id":"profile.anonymous","display":{"zh-CN":"身份未知"}}
+  ]
+}

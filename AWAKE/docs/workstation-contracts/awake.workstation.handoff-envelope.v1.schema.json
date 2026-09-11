@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.workstation.handoff-envelope.v1",
+  "title": "AWAKE workstation handoff envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "handoff_id",
+    "workspace_id",
+    "document_id",
+    "revision",
+    "content_sha256",
+    "producer",
+    "provenance",
+    "review_only",
+    "review_status",
+    "issued_at_utc",
+    "expires_at_utc",
+    "payload",
+    "request_fingerprint"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.workstation.handoff-envelope.v1"
+    },
+    "handoff_id": {
+      "type": "string",
+      "pattern": "^(pwb|wbs|ui)-handoff-[a-f0-9]{32}$"
+    },
+    "workspace_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$"
+    },
+    "document_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "content_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "producer": {
+      "enum": [
+        "persona_workbench",
+        "worldbook_studio",
+        "ui_workstation"
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_schema",
+        "source_id",
+        "source_revision",
+        "source_sha256",
+        "issuer_id"
+      ],
+      "properties": {
+        "source_schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "issuer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      }
+    },
+    "review_only": {
+      "const": true
+    },
+    "review_status": {
+      "enum": [
+        "approved_local",
+        "needs_review",
+        "rejected"
+      ]
+    },
+    "issued_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "expires_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "payload": {
+      "type": "string",
+      "minLength": 2
+    },
+    "request_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

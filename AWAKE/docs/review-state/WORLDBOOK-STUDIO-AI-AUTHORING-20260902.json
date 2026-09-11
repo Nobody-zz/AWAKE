@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-AI-AUTHORING-20260902",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 2,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "56bbb8ad197c03069d3688bef79134d1ad1cfacf36fd6b61d061589bf3c86031",
+      "changed_decision": "统一 source snapshot -> generation packet -> candidate set -> review -> author document；Draft 旧 API 仅保留适配层；Batch 不再把 source unit 当 knowledge item；retry/regeneration/unknown 使旧 evidence 失效。",
+      "new_evidence": "AuthoringDraftEndpoints.cs:16-121; AuthoringDraftStore.cs:75-95; AuthoringDraftContracts.cs:8-93; BatchPromotionRepository.cs:321-365; BatchProviderService.cs:43-94; BatchMetadataRepository.cs:48-126; BatchDocumentService.cs:146-163",
+      "changed_acceptance": "第5批只落结构统一和 focused tests；merge/split/risk review UX 延后第6批。"
+    },
+    {
+      "round": 2,
+      "verdict": "APPROVED",
+      "change_fingerprint": "29db92a982162efd8ab123e0185e5ba4e17496f3a3fa329636081a31a95f6264",
+      "changed_decision": "结构修复范围已收敛：统一 authoring lifecycle；旧 Draft API 适配；Batch 复用 canonical packet/candidate；保留旧运行包格式兼容；第6批处理 merge/split/review UX。",
+      "new_evidence": "只读审查复核：Draft 阶段枚举和逐阶段 provider 调用；Store.SaveResult 的阶段覆盖合并；Batch item 由 source unit 一比一创建；Batch facts/metadata 分离提交；Batch 建档丢失 expressions/evidence。",
+      "changed_acceptance": "本批实现 canonical authoring contracts、零/一/多 candidate、fingerprint/evidence 绑定、retry/unknown invalidation、统一 document adapter；随后运行 focused + full regression + local Worker pretest。"
+    }
+  ],
+  "user_signoff": true
+}

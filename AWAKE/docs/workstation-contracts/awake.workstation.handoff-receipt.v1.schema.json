@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.workstation.handoff-receipt.v1",
+  "title": "AWAKE workstation handoff receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "handoff_id",
+    "consumer",
+    "lifecycle_status",
+    "consumer_review_status",
+    "recovery_required",
+    "request_fingerprint"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.workstation.handoff-receipt.v1"
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^wbs-receipt-[a-f0-9]{32}$"
+    },
+    "handoff_id": {
+      "type": "string",
+      "pattern": "^(pwb|wbs|ui)-handoff-[a-f0-9]{32}$"
+    },
+    "consumer": {
+      "const": "worldbook_studio"
+    },
+    "lifecycle_status": {
+      "enum": [
+        "issued",
+        "accepted",
+        "consumed",
+        "expired",
+        "rejected",
+        "in_doubt",
+        "unknown"
+      ]
+    },
+    "consumer_review_status": {
+      "enum": [
+        "needs_review",
+        "approved_local",
+        "rejected"
+      ]
+    },
+    "recovery_required": {
+      "type": "boolean"
+    },
+    "accepted_at_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "consumed_at_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "draft_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "recovery_reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "request_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

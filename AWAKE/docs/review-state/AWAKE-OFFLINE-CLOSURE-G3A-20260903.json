@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE offline closure G3-A: Persona runtime projection, joint Worldbook context, governed dialogue settlement, and bounded legacy migration pilot",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "awaiting_signoff",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "c4e0cc610227f560bb15d1703462bf6c13df470eb1ba470c7420207041a3d931",
+      "changed_decision": "Split G3-A into G3A-1 Persona projection, G3A-2 Worldbook migration pilot, and G3A-3 settlement/recovery; keep all migration artifacts under AWAKE docs/worldbook-migration.",
+      "new_evidence": "Independent review found the combined batch was too broad and acceptance cases were not mapped to executable fixtures and commands.",
+      "changed_acceptance": "Added sub-batch boundaries, explicit review state/log path, hard migration artifact boundary, and acceptance-to-evidence minimums."
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "950c235d04956a4d76d1e89a013ffe0b9e0d47f6d559184d6b08996ae76d5fcc",
+      "changed_decision": "Split Persona projection, Studio v2 compile/query fixture, and governed settlement into separately gated slices; define test-only ContextSnapshot/RuntimeBundle and forbid direct v2 consumption by current AWAKE Runtime.",
+      "new_evidence": "Independent review found ContextSnapshot/RuntimeBundle lacked an executable contract and Studio v2 candidate consumption conflicted with the current Runtime Mapping Contract.",
+      "changed_acceptance": "Added concrete DTO fields, effective definition tie-break rules, Persona-to-Worldbook ID authority matrix, provenance/ledger requirements, golden permission cases, and one golden settlement receipt."
+    },
+    {
+      "round": 3,
+      "verdict": "APPROVED",
+      "change_fingerprint": "3889243a2fdbb72dc63c8af1f42dcf755d9514edf0eed69573a281746cad5483",
+      "changed_decision": "Constrain G3A-1 to existing Persona selection/recovery schema and explicitly defer full ContextSnapshot/RuntimeBundle prompt projection; keep Studio v2 compile/query separate from current AWAKE Runtime.",
+      "new_evidence": "Final review confirmed the revised plan no longer invents an unapproved DTO or claims unsupported v2 Runtime consumption.",
+      "changed_acceptance": "Acceptance now requires only existing schema-bound selection/recovery for G3A-1; full joint context is deferred and all v2 migration output remains AWAKE docs-only."
+    }
+  ]
+}

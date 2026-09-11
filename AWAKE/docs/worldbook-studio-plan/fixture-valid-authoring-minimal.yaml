@@ -1,0 +1,40 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.politics.authoring
+title: {zh-CN: 示例作者草稿}
+status: needs_review
+domain: politics
+universe: awake_current
+era: {key: current, certainty: unknown}
+content_tier: base
+summary: {zh-CN: 一个可由作者模式编辑并接受 AI 候选的最小草稿样本。}
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+author_created:
+  author_id: author.developer
+  reason: {zh-CN: A4 Smoke 使用的作者创建草稿。}
+  review_status: draft
+authority: {owner: awake_canon, conflict_policy: canon_wins}
+assertions:
+  - id: assertion.authoring
+    revision: 1
+    kind: fact
+    text: {zh-CN: 示例作者事实}
+    author_created:
+      author_id: author.developer
+      reason: {zh-CN: 作者草拟的事实。}
+      review_status: draft
+    expressions:
+      - id: expr.authoring
+        revision: 1
+        layer: summary
+        text: {zh-CN: 示例作者表达}
+        author_created:
+          author_id: author.developer
+          reason: {zh-CN: 作者草拟的 NPC 表达。}
+          review_status: draft
+        grants: [{profile_id: profile.commoner, scope: local, min_detail: summary}]
+        denies: []

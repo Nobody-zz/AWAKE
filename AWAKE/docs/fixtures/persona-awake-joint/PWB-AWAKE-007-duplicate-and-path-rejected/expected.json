@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "awake.persona.fixture-expected.v1",
+  "fixtureId": "PWB-AWAKE-007-duplicate-and-path-rejected",
+  "gate": "E2",
+  "status": "reject",
+  "exitCode": 10,
+  "assertions": [
+    "partial_export_is_explicit",
+    "partial_export_is_rejected_before_promotion",
+    "duplicate_and_path_attempts_are_not_claimed_as_executed",
+    "no_source_overwrite",
+    "no_candidate_promotion"
+  ],
+  "errors": [
+    {
+      "schemaVersion": "awake.persona.adapter-error.v1",
+      "errorId": "fixture.error.007.partial",
+      "code": "persona.partial_export",
+      "stage": "export-plan",
+      "artifactId": "PWB-AWAKE-007-duplicate-and-path-rejected",
+      "path": "$.exportState",
+      "detail": "Partial export is not promotable.",
+      "retryable": false
+    }
+  ],
+  "deferredChecks": [
+    "duplicate_id",
+    "path_protected",
+    "reparse_path"
+  ],
+  "noWrite": {
+    "sourceUnchanged": true,
+    "candidateWritten": false,
+    "activeCandidateChanged": false
+  },
+  "cleanup": {
+    "status": "pass",
+    "paths": [],
+    "errors": []
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona-entity.registry.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "catalog_build_id", "counts", "entities"],
+  "properties": {
+    "schema_version": { "const": "awake.persona-entity.registry.v1" },
+    "catalog_build_id": { "type": "string", "pattern": "^b1-[a-f0-9]{64}$" },
+    "generated_at_utc": { "type": "string" },
+    "counts": { "$ref": "#/$defs/counts" },
+    "entities": { "type": "array", "items": { "$ref": "#/$defs/entity" }, "uniqueItems": true }
+  },
+  "$defs": {
+    "counts": { "type": "object", "additionalProperties": false, "required": ["hero", "clan", "hero_base_game", "hero_official_dlc_not_installed", "clan_base_game", "clan_official_dlc_not_installed"], "properties": { "hero": { "type": "integer", "minimum": 0 }, "clan": { "type": "integer", "minimum": 0 }, "hero_base_game": { "type": "integer", "minimum": 0 }, "hero_official_dlc_not_installed": { "type": "integer", "minimum": 0 }, "clan_base_game": { "type": "integer", "minimum": 0 }, "clan_official_dlc_not_installed": { "type": "integer", "minimum": 0 }, "settlement": { "type": "integer", "minimum": 0 }, "settlement_town": { "type": "integer", "minimum": 0 }, "settlement_castle": { "type": "integer", "minimum": 0 }, "settlement_village": { "type": "integer", "minimum": 0 }, "settlement_base_game": { "type": "integer", "minimum": 0 } } },
+    "entity": { "type": "object", "additionalProperties": false, "required": ["entity_id", "kind", "display_name_zh", "world_source", "runtime_availability", "mapping_status", "name_source", "related_codes", "source"], "properties": { "entity_id": { "type": "string", "pattern": "^entity\\.(hero|clan|settlement)\\.[a-z0-9_\\.-]+$" }, "kind": { "enum": ["hero", "clan", "settlement"] }, "display_name_zh": { "type": ["string", "null"] }, "world_source": { "enum": ["base_game", "official_dlc", "unknown"] }, "runtime_availability": { "enum": ["installed", "not_installed", "unknown"] }, "mapping_status": { "enum": ["exact_base", "exact_official_dlc_not_installed", "needs_review"] }, "name_source": { "enum": ["mapping_report", "af_filename", "game_localization", "game_english", "unknown"] }, "hero_code": { "type": "string" }, "clan_code": { "type": "string" }, "settlement_code": { "type": "string" }, "settlement_type": { "enum": ["town", "castle", "village"] }, "english_name": { "type": ["string", "null"] }, "name_key": { "type": ["string", "null"] }, "text_key": { "type": ["string", "null"] }, "culture_code": { "type": ["string", "null"] }, "owner_clan_code": { "type": ["string", "null"] }, "kingdom_code": { "type": ["string", "null"] }, "bound_settlement_code": { "type": ["string", "null"] }, "aliases": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }, "village_type": { "type": ["string", "null"] }, "hearth": { "type": ["integer", "null"] }, "pos_x": { "type": ["number", "null"] }, "pos_y": { "type": ["number", "null"] }, "family_entity_id": { "type": ["string", "null"] }, "family_name_zh": { "type": ["string", "null"] }, "member_entity_ids": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }, "related_codes": { "type": "object", "additionalProperties": { "type": ["string", "null"] } }, "source": { "type": "object", "additionalProperties": true } } }
+  }
+}

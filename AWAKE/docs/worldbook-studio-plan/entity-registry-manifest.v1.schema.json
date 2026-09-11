@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona-entity.manifest.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "catalog_build_id", "generator_version", "generator_source_sha256", "normalization_version", "input_files", "schema_files", "registry_sha256", "diagnostics_sha256", "counts"],
+  "properties": {
+    "schema_version": { "const": "awake.persona-entity.manifest.v1" },
+    "catalog_build_id": { "type": "string", "pattern": "^b1-[a-f0-9]{64}$" },
+    "generator_version": { "type": "string", "minLength": 1 },
+    "generator_source_sha256": { "$ref": "#/$defs/hash" },
+    "normalization_version": { "type": "string", "minLength": 1 },
+    "input_files": { "type": "array", "items": { "$ref": "#/$defs/input" }, "minItems": 2 },
+    "schema_files": { "type": "array", "items": { "$ref": "#/$defs/input" } },
+    "registry_sha256": { "$ref": "#/$defs/hash" },
+    "diagnostics_sha256": { "$ref": "#/$defs/hash" },
+    "counts": { "type": "object" }
+  },
+  "$defs": { "hash": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" }, "input": { "type": "object", "additionalProperties": false, "required": ["path", "sha256", "length"], "properties": { "path": { "type": "string", "minLength": 1 }, "sha256": { "$ref": "#/$defs/hash" }, "length": { "type": "integer", "minimum": 0 }, "generated_at_utc": { "type": "string" } } } }
+}

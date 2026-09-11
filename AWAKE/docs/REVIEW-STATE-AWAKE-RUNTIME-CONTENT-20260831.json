@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE 0.2.1 repair batch: runtime session lifecycle isolation, non-blocking world inbox loading, drain truthfulness, and removal of content-pack-only goddess/erotic defaults from core",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "61eabeb2a13c7b91a2d8cec12800a62c88c35f271f95ad483bdd94199b564eb1",
+      "changed_decision": "Keep current repair batch bounded to direct runtime/content risks while explicitly covering all confirmed P1 paths.",
+      "new_evidence": "Independent review identified nine omitted P1 acceptance boundaries.",
+      "changed_acceptance": "Added persistence outcome states, readiness-gated restore, live-object async boundary, contact generation, event settlement order, Runtime Service drain, save compatibility fixtures, and capability-preserving content isolation."
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "8bbd1e6ab007fb6278679202002e48bafc365452d64411115857fa3cebd85c45",
+      "changed_decision": "Keep the repair batch broad enough to close all confirmed Runtime P1 boundaries before implementation; defer only unrelated Marcus P2 and separate tool branches.",
+      "new_evidence": "Second independent review identified uncovered F-12/F-13 ledger and cross-process drain persistence boundaries.",
+      "changed_acceptance": "Added bounded request/provider ledgers, restart duplicate classification, durable reservation mapping using existing save-compatible records or Unknown, and explicit cross-process drain late-completion outcomes."
+    },
+    {
+      "round": 3,
+      "verdict": "APPROVED",
+      "change_fingerprint": "51d533c3c5e861739367bf0453d8080c781931d1a4e6f966ea43f29fbe6e5078",
+      "changed_decision": "Proceed with the signed runtime/content repair plan while keeping UI Lab, Worldbook Studio, and Persona Workbench in separate batches.",
+      "new_evidence": "Third independent review confirmed no remaining implementation-blocking P1 omission.",
+      "changed_acceptance": "Final review confirms all previously identified P1 boundaries are represented: bounded ledgers, restart semantics, compatible reservation recovery, cross-process drain isolation, session and contact generations, object re-resolution, event settlement ordering, and capability-preserving content isolation."
+    }
+  ],
+  "user_signoff": true
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-SAFEID-COMPAT-REVISION-2-20260902",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 2,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "9bae32f1bca555d4e1e84f716e91dd1a784845aa262e1fcc601cc67ff58e9e31",
+      "changed_decision": "将 singleton 文件纳入同一兼容审计边界但不纳入 storage-key；pointer 固定 current 身份并增加受控发布根/真实目录/manifest 重算校验；strict 候选损坏或身份错误时禁止回退；legacy 候选集合按固定路径族枚举；旧 kind 按路径族加 schema discriminator 与必需字段判别；kind_code 使用版本化固定表。",
+      "new_evidence": "Revision 2 独立审查发现 singleton 兼容规则、pointer 安全校验、strict 损坏回退、legacy 候选集合、旧 kind 判别和 kind_code 映射仍未闭合。",
+      "changed_acceptance": "新增 singleton 审计/损坏/冲突处理；pointer 受控根、目录、哈希、符号链接约束；strict 存在即终止不回退；固定候选枚举与原始字节 hash 规则；逐路径族旧 schema 判别表；k1 kind_code 版本化 golden 表。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "a70a6fefb4da5a0b492e4026fe24b6326a337d8bda54f3639a2ccd733f483318",
+      "changed_decision": "pointer 不增加 pointer_id 字段，使用 conceptual current 身份并锁定受控 export root、真实目录、reparse point 拒绝、manifest 与完整 hash-set 重算；旧 operation 使用版本化 metadata signature 唯一判别；journal 使用逐行 JSONL 校验和末行截断规则。",
+      "new_evidence": "复审指出 pointer schema 不含 pointer_id、旧 operation kind 推导不唯一、journal JSONL 缺少逐行与断行裁决。",
+      "changed_acceptance": "新增 pointer 逃逸/链接/缺失/hash mismatch 夹具；旧 operation 单一 metadata signature 矩阵；journal 非末行损坏/重复 committed/末行截断/顺序 replay 矩阵."
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-CUSTOMER-DELIVERY-20260904-r2",
+  "risk_class": "security-release",
+  "max_rounds": 5,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "fe2334fa94077faad091b3e487b805e574d684c4f3490b082edb70ebca07dda4",
+      "changed_decision": "交付契约修订版冻结：UI 唯一客户入口为 start wrapper；delivery-manifest 自哈希采用 metadata_sha256.delivery-manifest 置 null；BuildId 冲突硬拒绝；外置 rollback；section 状态映射 E0-E5。",
+      "new_evidence": "上一版独立审查指出入口双重定义、metadata 自引用、BuildId/rollback 实现边界和 E0-E5 映射缺口；当前计划已明确解决规则。",
+      "changed_acceptance": "最终复审通过后实现 package-customer.ps1/rollback-customer.ps1、manifest/evidence schemas 和最终客户 ZIP；不启动 Bannerlord、不写游戏目录。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "6ef746878f19a71ae5ec7d1b8294a0aeab4b9d2e38f4ebbeaa4c17c6badccf39",
+      "changed_decision": "第8批r2第二轮修订：按组件区分唯一 startup entrypoint 与 paired stop/README；rollback_pointer_sha256 作为不可变构建 provenance，回滚后不重验旧值；定义 E4/E5 的用户日志、存读档与30分钟长时条件。",
+      "new_evidence": "独立审查发现入口分类、外置 rollback hash 时序和 E5 判定存在矛盾；计划已修正。",
+      "changed_acceptance": "最终复审通过后开始实现统一 customer-delivery 构建器、回滚脚本、manifest/evidence schema；不得把 E1-E3 证据升级为 E4/E5。"
+    },
+    {
+      "round": 3,
+      "verdict": "APPROVED",
+      "change_fingerprint": "a08e8b121bda25e9b85153fa158e7e0254106b5c6845ee31e3627ca150c672d6",
+      "changed_decision": "第8批交付契约通过：统一三工具客户包、精确 manifest/hash、外置 rollback、E0-E5 边界和离线/Worker 证据分层。",
+      "new_evidence": "独立终审 APPROVED；计划已明确组件入口、UI ZIP、metadata/rollback hash、自哈希排除、BuildId 冲突和 E4/E5 条件。",
+      "changed_acceptance": "开始实现 customer-delivery/package-customer.ps1、rollback-customer.ps1、manifest/evidence schema、客户文档和最终 ZIP；未启动游戏。"
+    }
+  ],
+  "user_signoff": true
+}

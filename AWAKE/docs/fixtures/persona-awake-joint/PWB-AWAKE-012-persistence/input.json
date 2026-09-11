@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "awake.persona.fixture-input.v1",
+  "fixtureId": "PWB-AWAKE-012-persistence",
+  "gate": "E2",
+  "operation": "persistence",
+  "nativePrerequisite": {
+    "planStatus": "approved_for_b1_only",
+    "executionLease": "none"
+  },
+  "storagePrerequisite": {
+    "owner": "none",
+    "lease": "none",
+    "ready": false
+  },
+  "sequence": [
+    "save",
+    "load",
+    "branch",
+    "restart"
+  ]
+}

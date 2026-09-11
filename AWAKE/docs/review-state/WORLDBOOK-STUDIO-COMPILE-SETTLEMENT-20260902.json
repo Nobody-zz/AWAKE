@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-COMPILE-SETTLEMENT-20260902",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "0732c203275c3bf22b6294c143b93737415bb1e6f83b914727772cf9de7b7ed9",
+      "changed_decision": "维持独立 Compile Settlement 批次，但将“待定义事项”改为确定性 operation/digest、状态机、原子 reservation、marker/result 完整性、逐窗口崩溃恢复、孤儿输出唯一处置和 Web/CLI replay 合同；SafeId、route registry、Draft/Batch 与 AI 切片继续排除。",
+      "new_evidence": "独立只读审查确认当前计划无法直接实现或验收：缺少 operation ID/digest 精确公式、状态迁移、owner/fence 与 reservation 崩溃语义、可信完整性根、全部 crash window、orphan 唯一结果、replay/conflict 矩阵、持久化顺序及可执行 fault-injection fixtures。",
+      "changed_acceptance": "新增逐项可执行合同：同请求唯一 operation 且不二次编译；不同 digest 冲突零变更；双进程单 winner；所有 crash window 重启后唯一状态；marker/result/manifest 篡改不被认领；孤儿输出按固定规则隔离；Web/CLI 返回同一 public result；每项均有测试名、断言和故障注入点。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "6ba2189721eb2b89ad6eaa177d2a0a8af1fe47e03957116c55b60b7a3b5a79e5",
+      "changed_decision": "新增 Revision 1 作为唯一实现合同：operation_id 使用 proof 派生稳定哈希，request_digest 使用固定 canonical JSON；状态机、CreateNew reservation、owner/fence、无 takeover 的恢复策略、DPAPI 外部 HMAC 根、result/marker/manifest 绑定、逐 crash window 唯一处置和 Web/CLI replay 均已锁定。",
+      "new_evidence": "Revision 1 已列出精确字段集合、UTF-8 无 BOM 与 SHA-256 规则、合法状态迁移、持久化顺序、10 个崩溃窗口、孤儿/临时/previous 输出处理、冲突矩阵和 8 个固定测试名称；父计划已声明 Revision 1 权威并排除 SafeId/registry/AI 等相邻范围。",
+      "changed_acceptance": "新增可执行验收：同请求 replay 不增加 compile/write/journal；同 proof 改 digest 固定 409 零变更；双进程仅一个 CreateNew winner；重启每个 fault point 到唯一终态；marker/result/manifest HMAC 与全绑定校验；Web/CLI 读取同一结果 envelope；预检无 reservation，reservation 后异常报告 unknown。"
+    },
+    {
+      "round": 3,
+      "verdict": "APPROVED",
+      "change_fingerprint": "aa11c5518eb96d167f85638a41b50e7ef73ba19d99e7bd6e65b82452bfd819fd",
+      "changed_decision": "Revision 1 已通过最终独立审查，作为本批唯一实现合同；operation/digest、状态机、reservation、可信完整性、崩溃窗口、孤儿处置、replay/conflict、测试夹具与非目标均已锁定。",
+      "new_evidence": "最终限时独立只读审查返回 VERDICT: APPROVED；此前两轮审查的所有阻塞项均已在 Revision 1 中逐项补足。",
+      "changed_acceptance": "按 Revision 1 的固定测试名与断言实施：同请求不二次编译/写入/journal；改 digest 409 零变更；双进程单 winner；每个 crash point 唯一恢复；HMAC 与 result/manifest 全绑定；Web/CLI replay 一致；非法预检无 reservation。"
+    }
+  ],
+  "user_signoff": true
+}

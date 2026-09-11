@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona-entity.diagnostics.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "catalog_build_id", "valid", "diagnostics", "counts"],
+  "properties": {
+    "schema_version": { "const": "awake.persona-entity.diagnostics.v1" },
+    "catalog_build_id": { "type": "string", "pattern": "^b1-[a-f0-9]{64}$" },
+    "valid": { "type": "boolean" },
+    "diagnostics": { "type": "array", "items": { "$ref": "#/$defs/diagnostic" } },
+    "counts": { "type": "object", "additionalProperties": false, "required": ["total", "errors", "warnings"], "properties": { "total": { "type": "integer", "minimum": 0 }, "errors": { "type": "integer", "minimum": 0 }, "warnings": { "type": "integer", "minimum": 0 } } }
+  },
+  "$defs": { "diagnostic": { "type": "object", "additionalProperties": false, "required": ["code", "severity", "message", "path", "detail"], "properties": { "code": { "type": "string" }, "severity": { "enum": ["error", "warning", "info"] }, "message": { "type": "string" }, "path": { "type": "string" }, "detail": { "type": "string" } } } }
+}

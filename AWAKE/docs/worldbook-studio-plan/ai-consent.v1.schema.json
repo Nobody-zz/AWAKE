@@ -1,0 +1,9 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"awake.worldbook.ai-consent.v1",
+  "type":"object","additionalProperties":false,
+  "required":["schema_version","token_hash","expires_at","document_path_hash","provider_id","analysis","document_id","source_document_hash","saved_revision","request_hash","buffer_id"],
+  "properties":{
+    "schema_version":{"const":"ai-consent.v1"},"token_hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"},"expires_at":{"type":"string","format":"date-time"},"document_path_hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"},"provider_id":{"enum":["local","cloud"]},"analysis":{"enum":["permissions","consistency","metadata","prose"]},"document_id":{"type":"string","minLength":1,"maxLength":256},"source_document_hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"},"saved_revision":{"type":"integer","minimum":1},"request_hash":{"type":"string","pattern":"^[A-Fa-f0-9]{64}$"},"buffer_id":{"type":"string","pattern":"^[A-Za-z0-9._-]{1,128}$"}
+  }
+}

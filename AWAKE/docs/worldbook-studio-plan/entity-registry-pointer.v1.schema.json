@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona-entity.pointer.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "catalog_build_id", "generation_relative_path", "registry_sha256", "manifest_sha256", "diagnostics_sha256"],
+  "properties": {
+    "schema_version": { "const": "awake.persona-entity.pointer.v1" },
+    "catalog_build_id": { "type": "string", "pattern": "^b1-[a-f0-9]{64}$" },
+    "generation_relative_path": { "type": "string", "pattern": "^generations/[a-z0-9-]+$" },
+    "registry_sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+    "manifest_sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+    "diagnostics_sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" }
+  }
+}

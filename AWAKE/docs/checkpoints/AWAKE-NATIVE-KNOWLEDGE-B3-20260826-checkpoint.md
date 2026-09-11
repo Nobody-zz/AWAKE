@@ -1,0 +1,37 @@
+# AWAKE Native Knowledge B3 Checkpoint
+
+- `task_id`: `AWAKE-NATIVE-KNOWLEDGE-B3-20260826`
+- `batch_id`: `awake-native-knowledge-b3-inquiry-only-20260826`
+- `status`: `contract_ready_for_user_signoff`
+- `evidence_level`: `E0`（方案审查阶段；没有代码或游戏内证据）
+- `execution_lease`: `none`
+- `review_status`: `APPROVED`（B3 方案第三轮；实施合同第二轮）
+- `plan`: `docs/PLAN-AWAKE-NativeKnowledge-B3-InquiryOnly-20260826.md`
+- `review_log`: `docs/PLAN-AWAKE-NativeKnowledge-B3-InquiryOnly-20260826-REVIEW-LOG.md`
+- `implementation_contract`: `docs/PLAN-AWAKE-NativeKnowledge-B3-IMPLEMENTATION-CONTRACT-20260826.md`
+- `implementation_contract_review_log`: `docs/PLAN-AWAKE-NativeKnowledge-B3-IMPLEMENTATION-CONTRACT-20260826-REVIEW-LOG.md`
+- `implementation_contract_status`: `APPROVED_FOR_USER_SIGNOFF`
+- `user_signoff`: `false`
+- `implementation_authorized`: `false`
+- `files_changed`:
+  - `_houkai_merge/AWAKE/docs/PLAN-AWAKE-NativeKnowledge-B3-InquiryOnly-20260826.md`
+  - `_houkai_merge/AWAKE/docs/PLAN-AWAKE-NativeKnowledge-B3-InquiryOnly-20260826-REVIEW-LOG.md`
+  - `_houkai_merge/AWAKE/docs/PLAN-AWAKE-NativeKnowledge-B3-IMPLEMENTATION-CONTRACT-20260826.md`
+  - `_houkai_merge/AWAKE/docs/PLAN-AWAKE-NativeKnowledge-B3-IMPLEMENTATION-CONTRACT-20260826-REVIEW-LOG.md`
+  - `_houkai_merge/AWAKE/docs/checkpoints/AWAKE-NATIVE-KNOWLEDGE-B3-20260826-checkpoint.md`
+  - `_houkai_merge/AWAKE/docs/AWAKE-CURRENT.md`
+- `scope`: 询问-only 首个纵向闭环：真实入口、B2 知识查询、一次无命令 AI 回答、代码生成短期询问记忆、Storage round-trip。
+- `excluded_scope`: 玩家传授、错误知识相信/纠错、NPC 学习、跨 NPC 传播、关系或家族关系修改、周报、世界事件生成、NPC 自主行动、完整记忆系统、Worldbook Studio、Marcus 框架迁移。
+- `current_facts`:
+  - B2 查询路径已离线验证，但不证明 B3 入口或存档闭环存在。
+  - `WorldStateStore`/`NpcMemoryService` 已有存储基础，但询问模式写入、`expiresDay` 和关闭路径隔离尚未接线或验证。
+  - 当前已有通讯录联系人选择链路，但没有已实现并验证的“询问知识”卡片命令；普通通讯仍是通用对话。
+  - 计划已锁定联系人卡片新增动作、强类型 `KnowledgeInquiry`、独立无命令 Prompt/Output、五处代码硬门和代码生成的短期询问记忆。
+- `verification`: 本 checkpoint 仅有静态源码核对和独立只读计划审查；没有 E1 构建、E2 测试、E3 同步、E4 游戏入口或 E5 存档证据。
+- `known_limitations`:
+  - 计划第三轮独立审查结论为 `APPROVED`，仍待用户签收后才能创建实现租约。
+  - `NpcMemorySelector` 实际位于 `src/NpcMemoryService.cs`，不能按不存在的独立文件执行写集。
+  - 当前 30 游戏日整理规则为 `age >= 30`；实施合同已决定不新增持久化 `expiresDay`，只从现有 `day` 推导，具体代码过滤仍未实现。
+  - 实施合同第一轮发现两个 P1，已修订并在第二轮独立复核中 `APPROVED`；入口、模式硬门、存储和调用计数仍没有实现证据。
+- `next_action`: 用户签收实施合同后，创建实现租约，进行一次实现前 Bannerlord/AI/存档边界复核，再按最小写集接通真实入口；签收前不改代码、不构建、不同步游戏目录。
+- `last_error`: 无；实施合同已通过独立复核，尚未获得用户签收和代码实现证据。

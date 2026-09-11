@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona.definition.v1",
+  "title": "AWAKE runtime Persona definition v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "characterId",
+    "identityId",
+    "role",
+    "sourcePackId",
+    "templateVersion",
+    "status",
+    "priority",
+    "scope",
+    "core",
+    "identityFacts",
+    "relationStyle",
+    "currentStateHints",
+    "summary",
+    "publicDescription",
+    "privateDescription",
+    "contradictionDescription",
+    "foodPreference",
+    "selfClaimRules",
+    "realSelfBehaviors",
+    "selfClaimExamples",
+    "tags",
+    "bundles",
+    "experiences"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "awake.persona.definition.v1" },
+    "id": { "$ref": "#/$defs/stableId" },
+    "characterId": { "$ref": "#/$defs/entityId" },
+    "identityId": { "$ref": "#/$defs/entityId" },
+    "role": { "$ref": "#/$defs/role" },
+    "sourcePackId": { "$ref": "#/$defs/optionalStableId" },
+    "templateVersion": { "$ref": "#/$defs/nonEmptyText" },
+    "status": { "enum": ["approved", "draft", "disabled"] },
+    "priority": { "type": "integer", "minimum": 0, "maximum": 100000 },
+    "scope": { "enum": ["character", "identity", "role", "culture", "global"] },
+    "core": { "$ref": "#/$defs/nonEmptyText" },
+    "identityFacts": { "$ref": "#/$defs/text" },
+    "relationStyle": { "$ref": "#/$defs/text" },
+    "currentStateHints": { "$ref": "#/$defs/currentStateHints" },
+    "summary": { "$ref": "#/$defs/text" },
+    "publicDescription": { "$ref": "#/$defs/text" },
+    "privateDescription": { "$ref": "#/$defs/text" },
+    "contradictionDescription": { "$ref": "#/$defs/text" },
+    "foodPreference": { "$ref": "#/$defs/text" },
+    "selfClaimRules": { "$ref": "#/$defs/textList" },
+    "realSelfBehaviors": { "$ref": "#/$defs/textList" },
+    "selfClaimExamples": { "$ref": "#/$defs/textList" },
+    "tags": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/tagUse" }
+    },
+    "bundles": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/tagId" },
+      "uniqueItems": true
+    },
+    "experiences": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/experience" }
+    }
+  },
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)*$"
+    },
+    "optionalStableId": {
+      "type": "string",
+      "pattern": "^(?:$|[a-z0-9_]+(?:\\.[a-z0-9_]+)*)$"
+    },
+    "entityId": {
+      "type": "string",
+      "pattern": "^awake:[a-z][a-z0-9_]*:[a-z0-9_.]+$"
+    },
+    "role": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "tagId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_.-]*$"
+    },
+    "nonEmptyText": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^\\u0000-\\u001F\\u007F]*$"
+    },
+    "text": {
+      "type": "string",
+      "pattern": "^[^\\u0000-\\u001F\\u007F]*$"
+    },
+    "currentStateHints": {
+      "type": "string",
+      "description": "A single compact runtime hint string; empty string means no current-state hint. This is not an array or an open object.",
+      "pattern": "^[^\\u0000-\\u001F\\u007F]*$"
+    },
+    "textList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/nonEmptyText" },
+      "uniqueItems": true
+    },
+    "tagUse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "priority", "sceneKeywords", "contextModes"],
+      "properties": {
+        "id": { "$ref": "#/$defs/tagId" },
+        "priority": { "type": "integer", "minimum": 0, "maximum": 100000 },
+        "sceneKeywords": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/nonEmptyText" },
+          "uniqueItems": true
+        },
+        "contextModes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/nonEmptyText" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "experience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "text", "status", "source", "priority"],
+      "properties": {
+        "id": { "$ref": "#/$defs/stableId" },
+        "text": { "$ref": "#/$defs/nonEmptyText" },
+        "status": { "enum": ["active", "disabled"] },
+        "source": { "$ref": "#/$defs/nonEmptyText" },
+        "priority": { "type": "integer", "minimum": 0, "maximum": 100000 }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "awake.persona.fixture-input.v1",
+  "fixtureId": "PWB-AWAKE-009-v1-runtime-rejection",
+  "gate": "E2",
+  "operation": "load-runtime-entry",
+  "runtimeEntry": {
+    "schemaVersion": "awake.worldbook.v1",
+    "packageId": "legacy-v1-fixture",
+    "entrypoints": {
+      "runtime": "runtime.json",
+      "index": "index.json"
+    }
+  },
+  "runtimePayload": {
+    "schemaVersion": "awake.worldbook.runtime.v1",
+    "entries": []
+  },
+  "expectedStatus": "reject"
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE legacy Worldbook pilot P1 source diagnosis and report-only repair decisions for user-selected Downloads source",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "9f0beebb2fa79a21c84084f9f2cdcea2abd3fbff12fa1fbb3404246b14f6a96f",
+      "changed_decision": "Treat attack-tower truncation and Lukalong placeholder signals as unconfirmed/P2; retain Lukalong TextMappings and restructuring as P1; classify Lagaia parse error as a full-source gate outside the geo-rules-30 pilot; exclude prior authoring candidates from current repair outputs.",
+      "new_evidence": "Read-only review confirmed attack-tower variants parse and differ, Lukalong has no reproducible placeholder locator, Lagaia has an actual invalid CRLF inside a JSON string, and prior 30 authoring candidates are superseded review-only outputs.",
+      "changed_acceptance": "Add full-source parse gate, superseded-candidate exclusion, exact severity labels, and four explicit report-only decision artifacts."
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "5f8a335404dc2e3c36414124442eb4b1304a0abd9031f9ba8ccb7d5b4542ad1e",
+      "changed_decision": "Reclassify the five review decisions as two confirmed P1 items and three P2 semantic/heuristic items; keep attack-tower as P2 and the Lagaia parse error as a package-wide gate.",
+      "new_evidence": "Independent review found all five files are covered but the previous plan wording overstated them as five P1 blockers; source and report hashes remain consistent and no files were modified.",
+      "changed_acceptance": "Acceptance now distinguishes 2 P1 source gates from 3 P2 semantic/heuristic decisions and requires human review before any rewrite."
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "6946272f46d18569fe756e6b4b09bc924e575387bb82227f40dee8bbcc9bfc29",
+      "changed_decision": "Unify the review population as 2 confirmed P1 plus 4 P2 subjects, including attack-tower; keep full-source Lagaia parse gate separate from the 30-file geography pilot.",
+      "new_evidence": "Final read-only review confirmed the source classifications but found residual plan count ambiguity and missing per-item source hash/locator fields in four decision reports.",
+      "changed_acceptance": "Require six total review subjects, exact severity counts, and each report item to carry source snapshot ID, source file SHA-256, locator, evidence kind, and reason."
+    }
+  ]
+}

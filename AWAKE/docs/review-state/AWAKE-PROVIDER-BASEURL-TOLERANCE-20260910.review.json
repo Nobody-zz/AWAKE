@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-PROVIDER-BASEURL-TOLERANCE-20260910",
+  "risk_class": "standard",
+  "max_rounds": 2,
+  "round": 1,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "APPROVED",
+      "change_fingerprint": "24744f48e02fd72a5af54e63d126886edaabc56f18255fc898e3e73fa255f4b5",
+      "changed_decision": "",
+      "new_evidence": "Independent round-1 review of AWAKE-PROVIDER-BASEURL-TOLERANCE-20260910: hashes of the 6 changed files plus Awake.dll matched; reflection on the built Awake.dll confirmed TryNormalizeProviderBaseUrl behaviour for root / /v1 / /chat/completions / /models / mixed case / ports and confirmed the new BuildId and hint literal are in the binary; the error text is unchanged and validate_localization.ps1 returns LOCALIZATION_OK source=241 en=291 cn=291; grep proved a single AWAKE-side entry point for the user address; Runtime assemblies are untouched. Reviewer P2-1 (silent /models strip) and P2-2 (test mirrors the runtime path rule) were acted on in the revision.",
+      "changed_acceptance": ""
+    }
+  ],
+  "user_signoff": true
+}

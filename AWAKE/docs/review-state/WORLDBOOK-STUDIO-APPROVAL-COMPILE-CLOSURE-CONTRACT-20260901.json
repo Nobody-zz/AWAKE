@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "WORLDBOOK-STUDIO-APPROVAL-COMPILE-CLOSURE-CONTRACT-20260901",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 2,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "cd2a4d157c5910ca85c7afbcb6f3a990addc042c3764acc2b3fa5eb5265f699b",
+      "changed_decision": "补充计划明确：客户 export 同 proof+同 output+同 token 语义只返回原 staging；任一 output/token 语义变化固定 409，不生成第二 operation；authority digest 同时包含 selection_id/selection_hash；前端采用显式 proof 状态机；本批只修订合同文档，代码范围列为签收后的下游实现范围。",
+      "new_evidence": "独立挑战审查指出当前 CLI 缺 proof 仍返回 410，export 规则存在“409 或新 operation”歧义，selection 派生字段未明确进入 digest，前端仍发送旧字段且无可验收状态转移；同时发现计划边界文字容易把合同补齐误读为立即改实现。",
+      "changed_acceptance": "新增逐项 Web/CLI exact-set fixture、固定 CLI 退出码与 side_effect；新增同/异 output-token 的 staging replay/conflict 断言；新增 selection ID/hash digest 断言、前端状态转移断言和文档 UTF-8/控制字符扫描。"
+    },
+    {
+      "round": 2,
+      "verdict": "APPROVED",
+      "change_fingerprint": "33d1163c50b76c615504ff5adcd1c6aaf10042918dc4b678148f894cf0db650b",
+      "changed_decision": "合同补齐批次确认唯一 Web/CLI wire schema、固定 CLI 错误语义、customer export 同 digest 幂等且异 digest 固定409、selection_id/hash 纳入 proof 与 operation digest、前端 proof 状态机，以及签收前仅审合同的边界。",
+      "new_evidence": "独立定向复审未发现残留 P0/P1/P2；合同文件 UTF-8、控制字符和关键 token 扫描通过。",
+      "changed_acceptance": "验收固定 exact-set、zero-side-effect、Web/CLI 一致、staging pointer 不变、前端状态迁移和同/异 digest 行为；实现后另做用户视角 AI 知识条目全流程头脑风暴与专项 UX 回归。"
+    }
+  ],
+  "user_signoff": true
+}

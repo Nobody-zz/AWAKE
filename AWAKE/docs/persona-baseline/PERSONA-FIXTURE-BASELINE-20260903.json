@@ -1,0 +1,209 @@
+{
+  "schemaVersion": "awake.persona.baseline.v1",
+  "batchId": "AWAKE-OFFLINE-CLOSURE-G3A-REV2-20260903",
+  "sourceCandidate": "awake-20260903-awake-runtime-repair-004",
+  "evidenceLevel": "E2",
+  "generatedAtUtc": "2026-09-03T13:37:42.0865026Z",
+  "counts": {
+    "positive": 1,
+    "fallback": 1,
+    "rejection": 3,
+    "unsupportedPersistence": "not_attempted"
+  },
+  "fixtures": [
+    {
+      "fixtureId": "PWB-AWAKE-001-valid-approved",
+      "status": "pass",
+      "exitCode": 0,
+      "inputHashes": [
+        {
+          "path": "fixtureCanonicalSha256",
+          "sha256": "F399D7B91515FAB53EC804364CAA0C7E253890DCDA8B53BDE2DA0007AACBDA57"
+        },
+        {
+          "path": "inputJsonSha256",
+          "sha256": "49956AA3F1D213CC3B5E1703A13CB8373C8C90FB12CD17C3312E32BCCD8E2EBE"
+        },
+        {
+          "path": "registrySha256",
+          "sha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6"
+        },
+        {
+          "path": "selectionSha256",
+          "sha256": "954223383963350CB7BE9E7AC196E5C9F2072BD5ACDC6B88C9EA61479F5A9E98"
+        },
+        {
+          "path": "sourceSha256",
+          "sha256": "F9EF9D06915D6F676ABCCB823F1F07D33B7934E6C521F3F5BF18A84839878F87"
+        }
+      ],
+      "outputHashes": [
+        {
+          "path": "adapterResultSha256",
+          "sha256": "3FAEC2F89CDC7D27B6B5D8E89FBFF0106F521A6FA70E74B462D3B7F4B072A65B"
+        },
+        {
+          "path": "authoringSha256",
+          "sha256": "2BD4A144181ADAEFDD9D043528E74DBB7363D4DBB82F983D5BE2CD03500B225B"
+        },
+        {
+          "path": "definitionSha256",
+          "sha256": "51CA25E7B7E1E7440E976CA42ADA70FC3F52CC0812DAC24A7ADE9A1C45924A23"
+        },
+        {
+          "path": "exportSha256",
+          "sha256": "3D788448DE3CEFD0B0D5536E75ABEF855FC287D4DBFC71F371E55E5678C76E76"
+        },
+        {
+          "path": "mappingReportSha256",
+          "sha256": "5DD0EE6DE5746E9631C698A4E179337C1BF08719E556E4F230C3A7F7C8BC07F7"
+        }
+      ],
+      "observedErrors": [],
+      "reportSha256": "660923C0910DCDB386015168BB6BDD645548F2F2BAB23B4C1F859EAD0F970A1E",
+      "reportPath": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\tools\\persona-awake-joint\\artifacts\\g3a-rev2-PWB-AWAKE-001-valid-approved.json"
+    },
+    {
+      "fixtureId": "PWB-AWAKE-003-missing-selection-rejected",
+      "status": "reject",
+      "exitCode": 10,
+      "inputHashes": [
+        {
+          "path": "fixtureCanonicalSha256",
+          "sha256": "65DFB1768A4D58E267D6BC8375C83E676DF34D976D8108C0DA5EEA7F090A4E56"
+        },
+        {
+          "path": "inputJsonSha256",
+          "sha256": "B775F3ECDB729ECF038E3D1D174EBB629335F33A8B4FE127769978BCB5A99664"
+        }
+      ],
+      "outputHashes": [
+        {
+          "path": "lastKnownGoodAfterSha256",
+          "sha256": null
+        },
+        {
+          "path": "lastKnownGoodBeforeSha256",
+          "sha256": null
+        }
+      ],
+      "observedErrors": [
+        {
+          "artifactId": "fixture_artifact.7be1343f3ad51368fb9fb485",
+          "code": "persona.schema_required_field",
+          "detail": "Required selection sidecar is missing.",
+          "errorId": "error.1fd585aea6ada5bdd5970fe3",
+          "path": "$.selection",
+          "retryable": false,
+          "schemaVersion": "awake.persona.adapter-error.v1",
+          "stage": "schema"
+        }
+      ],
+      "reportSha256": "9A85D706BEB1FBF29ED2F05B0F25D96AB5B11168C076C417E1829286A55613CE",
+      "reportPath": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\tools\\persona-awake-joint\\artifacts\\g3a-rev2-PWB-AWAKE-003-missing-selection-rejected.json"
+    },
+    {
+      "fixtureId": "PWB-AWAKE-004-unknown-tag-rejected",
+      "status": "reject",
+      "exitCode": 10,
+      "inputHashes": [
+        {
+          "path": "fixtureCanonicalSha256",
+          "sha256": "44D10415B5C7F34C6A5445EDFB6F1E0EF71531DCA92794AB6F988737DB9BD893"
+        },
+        {
+          "path": "inputJsonSha256",
+          "sha256": "BF20FAEB420F411BAD61BDB6B291DD0CDC44DF5E31C07DED25BB9C5668EA7238"
+        }
+      ],
+      "outputHashes": [
+        {
+          "path": "lastKnownGoodAfterSha256",
+          "sha256": null
+        },
+        {
+          "path": "lastKnownGoodBeforeSha256",
+          "sha256": null
+        }
+      ],
+      "observedErrors": [
+        {
+          "artifactId": "fixture_artifact.c22d4f8b2c5dfe958350434e",
+          "code": "persona.unknown_tag",
+          "detail": "Source tag is absent from the pinned crosswalk: trait.unknown_fixture",
+          "errorId": "error.d89cf09edc32063104bd4ce6",
+          "path": "$.source.document.tags[5]",
+          "retryable": false,
+          "schemaVersion": "awake.persona.adapter-error.v1",
+          "stage": "mapping"
+        }
+      ],
+      "reportSha256": "B9216661FE3E6251485811D848423EC78BA40241030A9C87EF6865801C9082AA",
+      "reportPath": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\tools\\persona-awake-joint\\artifacts\\g3a-rev2-PWB-AWAKE-004-unknown-tag-rejected.json"
+    },
+    {
+      "fixtureId": "PWB-AWAKE-008-last-known-good",
+      "status": "pass",
+      "exitCode": 0,
+      "inputHashes": [
+        {
+          "path": "fixtureCanonicalSha256",
+          "sha256": "5BA700F088EA3210BAA4791354F66AC0C07DDBFFFF0FCC35F397CF36A23E4293"
+        },
+        {
+          "path": "inputJsonSha256",
+          "sha256": "33FF116CDD8C42A1F99FE61C72C2E3286B4421FE690BE2EB865D51C3261775E9"
+        }
+      ],
+      "outputHashes": [],
+      "observedErrors": [],
+      "reportSha256": "475A08D5798EED6C31A5054FABB19C5E9AE33D42FB24F3DD4B46FC846C3501F7",
+      "reportPath": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\tools\\persona-awake-joint\\artifacts\\g3a-rev2-PWB-AWAKE-008-last-known-good.json"
+    },
+    {
+      "fixtureId": "PWB-AWAKE-015-stale-selection-rejected",
+      "status": "reject",
+      "exitCode": 10,
+      "inputHashes": [
+        {
+          "path": "fixtureCanonicalSha256",
+          "sha256": "3E7D8FABE8253CD44427EC74AEBE8C016E0D6BDF3B7DF86ABCF07F640A0AF837"
+        },
+        {
+          "path": "inputJsonSha256",
+          "sha256": "5FBEF0CFA129EFD662FFC5126E37138C7FF45708A62416A40E845469A30180B6"
+        }
+      ],
+      "outputHashes": [
+        {
+          "path": "lastKnownGoodAfterSha256",
+          "sha256": null
+        },
+        {
+          "path": "lastKnownGoodBeforeSha256",
+          "sha256": null
+        }
+      ],
+      "observedErrors": [
+        {
+          "artifactId": "fixture_artifact.957e9c53d5cf410d1c26b060",
+          "code": "persona.stale_revision",
+          "detail": "Selection sourceRevision does not match source.sourceRevision.",
+          "errorId": "error.23538df9f307c47895bcd211",
+          "path": "$.selection.sourceRevision",
+          "retryable": false,
+          "schemaVersion": "awake.persona.adapter-error.v1",
+          "stage": "selection"
+        }
+      ],
+      "reportSha256": "CDED13FD60164FEE3FFFBE95488AB163225B13F8028C5553B6C0249A9DAB9AB3",
+      "reportPath": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\tools\\persona-awake-joint\\artifacts\\g3a-rev2-PWB-AWAKE-015-stale-selection-rejected.json"
+    }
+  ],
+  "boundaries": [
+    "No Persona runtime projection claim",
+    "No ContextSnapshot/RuntimeBundle prompt payload claim",
+    "No Persona persistence/recovery claim",
+    "No Bannerlord/real Provider/sync"
+  ]
+}

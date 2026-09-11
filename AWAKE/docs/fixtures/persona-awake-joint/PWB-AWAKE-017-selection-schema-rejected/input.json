@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "awake.persona.fixture-input.v1",
+  "fixtureId": "PWB-AWAKE-017-selection-schema-rejected",
+  "gate": "E2",
+  "operation": "migrate-export",
+  "source": {
+    "document": {
+      "schemaVersion": "persona-workbench.character.v1",
+      "id": "fixture.persona.selection_schema",
+      "displayName": "选择 schema 缺失样本",
+      "core": "只用于验证 selection schema 边界。",
+      "identityFacts": "隔离夹具角色。",
+      "summary": "selection 没有 schemaVersion。",
+      "sourcePackId": "fixture_pack",
+      "templateVersion": "persona-load.v2",
+      "status": "approved",
+      "sourceDescription": "已确认文本。",
+      "publicDescription": "公开描述。",
+      "privateDescription": "私下描述。",
+      "contradictionDescription": "存在条件性反应。",
+      "foodPreference": "热粥",
+      "selfClaimRules": [],
+      "realSelfBehaviors": [],
+      "selfClaimExamples": [],
+      "tags": ["expression.measured"],
+      "facetStrengths": {}
+    },
+    "sourceRevision": 1,
+    "sourceSha256": "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+  },
+  "selection": {
+    "characterId": "character:hero_fixture_017",
+    "identityId": "identity:fixture_persona_017",
+    "role": "guard",
+    "scope": "character",
+    "priority": 100,
+    "sourceRevision": 1,
+    "selectionRevision": 1,
+    "suppliedBy": "fixture.selection.author",
+    "suppliedAt": "2026-08-24T05:00:00Z"
+  },
+  "registry": {
+    "schemaVersion": "awake.persona.tags.v1",
+    "tags": [
+      { "id": "expression.measured", "category": "expression", "displayName": "克制", "meaning": "表达克制", "promptText": "措辞克制" }
+    ],
+    "bundles": []
+  },
+  "pinned": {
+    "registryVersion": "fixture.registry.v1",
+    "instructionVersion": "fixture.instructions.v1",
+    "compilerVersion": "fixture.compiler.v1"
+  },
+  "authoringRevision": 1,
+  "expectedStatus": "reject"
+}

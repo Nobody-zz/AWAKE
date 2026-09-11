@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "awake.persona.fixture-expected.v1",
+  "fixtureId": "PWB-AWAKE-009-v1-runtime-rejection",
+  "gate": "E2",
+  "status": "reject",
+  "exitCode": 10,
+  "assertions": [
+    "runtime_entry_is_v1",
+    "v1_runtime_entry_rejected",
+    "no_automatic_migration",
+    "no_candidate_promotion",
+    "no_runtime_overwrite"
+  ],
+  "errors": [
+    {
+      "schemaVersion": "awake.persona.adapter-error.v1",
+      "errorId": "fixture.error.009",
+      "code": "persona.runtime_legacy_schema_rejected",
+      "stage": "runtime",
+      "artifactId": "PWB-AWAKE-009-v1-runtime-rejection",
+      "path": "$.runtimeEntry.schemaVersion",
+      "detail": "Legacy worldbook v1 is rejected; no automatic v1-to-v2 runtime migration exists.",
+      "retryable": false
+    }
+  ],
+  "noWrite": {
+    "candidateWritten": false,
+    "runtimeActivationChanged": false,
+    "legacyInputChanged": false
+  },
+  "cleanup": {
+    "status": "pass",
+    "paths": [],
+    "errors": []
+  }
+}

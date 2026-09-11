@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona.authoring.v2",
+  "title": "AWAKE Persona authoring v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "documentId",
+    "displayName",
+    "reviewStatus",
+    "registryVersion",
+    "registryDigest",
+    "instructionVersion",
+    "compilerVersion",
+    "source",
+    "authored",
+    "facts",
+    "observations",
+    "rules",
+    "migration"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "awake.persona.authoring.v2" },
+    "documentId": { "$ref": "#/$defs/stableId" },
+    "displayName": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "reviewStatus": { "enum": ["draft", "approved", "disabled"] },
+    "registryVersion": { "$ref": "#/$defs/pinnedString" },
+    "registryDigest": { "$ref": "#/$defs/sha256" },
+    "instructionVersion": { "$ref": "#/$defs/pinnedString" },
+    "compilerVersion": { "$ref": "#/$defs/pinnedString" },
+    "sourcePackId": { "$ref": "#/$defs/optionalStableId" },
+    "source": { "$ref": "#/$defs/source" },
+    "authored": { "$ref": "#/$defs/authored" },
+    "facts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/fact" }
+    },
+    "observations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/observation" }
+    },
+    "rules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/rule" }
+    },
+    "migration": { "$ref": "#/$defs/migration" }
+  },
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)*$"
+    },
+    "optionalStableId": {
+      "type": "string",
+      "pattern": "^(?:$|[a-z0-9_]+(?:\\.[a-z0-9_]+)*)$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[A-F0-9]{64}$"
+    },
+    "pinnedString": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^\\u0000-\\u001F\\u007F]+$"
+    },
+    "nonEmptyText": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^\\u0000-\\u001F\\u007F]*$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["confirmedText", "expandedText", "confirmedTextSha256"],
+      "properties": {
+        "confirmedText": { "type": "string", "pattern": "^[^\\u0000-\\u001F\\u007F]*$" },
+        "expandedText": { "type": "string", "pattern": "^[^\\u0000-\\u001F\\u007F]*$" },
+        "confirmedTextSha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "authored": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "core",
+        "identityFacts",
+        "summary",
+        "publicDescription",
+        "privateDescription",
+        "contradictionDescription",
+        "foodPreference",
+        "selfClaimRules",
+        "realSelfBehaviors",
+        "selfClaimExamples"
+      ],
+      "properties": {
+        "core": { "$ref": "#/$defs/text" },
+        "identityFacts": { "$ref": "#/$defs/text" },
+        "summary": { "$ref": "#/$defs/text" },
+        "publicDescription": { "$ref": "#/$defs/text" },
+        "privateDescription": { "$ref": "#/$defs/text" },
+        "contradictionDescription": { "$ref": "#/$defs/text" },
+        "foodPreference": { "$ref": "#/$defs/text" },
+        "selfClaimRules": { "$ref": "#/$defs/textList" },
+        "realSelfBehaviors": { "$ref": "#/$defs/textList" },
+        "selfClaimExamples": { "$ref": "#/$defs/textList" }
+      }
+    },
+    "text": {
+      "type": "string",
+      "pattern": "^[^\\u0000-\\u001F\\u007F]*$"
+    },
+    "textList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/nonEmptyText" },
+      "uniqueItems": true
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["factId", "kind", "value", "trust", "provenance", "enabled"],
+      "properties": {
+        "factId": { "$ref": "#/$defs/stableId" },
+        "kind": { "enum": ["ageYears", "role", "appearance", "identityNote"] },
+        "value": {
+          "anyOf": [
+            { "$ref": "#/$defs/nonEmptyText" },
+            { "type": "integer", "minimum": 0, "maximum": 120 }
+          ]
+        },
+        "trust": { "enum": ["user_confirmed", "legacy_unverified"] },
+        "provenance": { "enum": ["manual_user_confirmation", "legacy_v1", "migration", "imported"] },
+        "enabled": { "type": "boolean" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "ageYears" } } },
+          "then": { "properties": { "value": { "type": "integer", "minimum": 0, "maximum": 120 } } }
+        },
+        {
+          "if": { "properties": { "kind": { "enum": ["role", "appearance", "identityNote"] } } },
+          "then": { "properties": { "value": { "$ref": "#/$defs/nonEmptyText" } } }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceHash", "startUtf16", "lengthUtf16", "quote"],
+      "properties": {
+        "sourceHash": { "$ref": "#/$defs/sha256" },
+        "startUtf16": { "type": "integer", "minimum": 0 },
+        "lengthUtf16": { "type": "integer", "minimum": 1 },
+        "quote": { "$ref": "#/$defs/nonEmptyText" }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selectorId", "value", "provenance", "reviewState", "evidence", "enabled"],
+      "properties": {
+        "selectorId": { "$ref": "#/$defs/stableId" },
+        "value": {
+          "anyOf": [
+            { "$ref": "#/$defs/nonEmptyText" },
+            { "type": "integer" },
+            { "type": "boolean" }
+          ]
+        },
+        "provenance": { "enum": ["manual", "legacy_v1", "provider_evidence", "workbench_ai", "migration", "imported"] },
+        "reviewState": { "enum": ["accepted", "needs_review", "rejected"] },
+        "evidence": {
+          "anyOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/evidence" }
+          ]
+        },
+        "enabled": { "type": "boolean" }
+      }
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ruleId",
+        "triggerSelectorId",
+        "responseSelectorId",
+        "scope",
+        "strength",
+        "priority",
+        "counterweightSelectorId",
+        "provenance",
+        "evidence",
+        "enabled"
+      ],
+      "properties": {
+        "ruleId": { "$ref": "#/$defs/stableId" },
+        "triggerSelectorId": { "$ref": "#/$defs/stableId" },
+        "responseSelectorId": { "$ref": "#/$defs/stableId" },
+        "scope": { "enum": ["global", "public", "private", "conflict", "negotiation", "romance"] },
+        "strength": { "enum": ["slight", "moderate", "strong"] },
+        "priority": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "counterweightSelectorId": {
+          "anyOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/stableId" }
+          ]
+        },
+        "provenance": { "enum": ["manual", "legacy_v1", "provider_evidence", "workbench_ai", "migration", "imported"] },
+        "evidence": {
+          "anyOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/evidence" }
+          ]
+        },
+        "enabled": { "type": "boolean" }
+      }
+    },
+    "migration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["originSchema", "originTemplateVersion", "authoringRevision", "warnings", "preservedLegacyData"],
+      "properties": {
+        "originSchema": { "const": "persona-workbench.character.v1" },
+        "originTemplateVersion": { "$ref": "#/$defs/pinnedString" },
+        "authoringRevision": { "type": "integer", "minimum": 1 },
+        "warnings": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/nonEmptyText" },
+          "uniqueItems": true
+        },
+        "preservedLegacyData": {
+          "type": "object",
+          "description": "Opaque loss-preserving legacy bag; this is the only intentionally open object.",
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}

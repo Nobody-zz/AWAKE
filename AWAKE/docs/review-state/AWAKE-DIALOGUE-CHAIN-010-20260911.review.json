@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-DIALOGUE-CHAIN-010-20260911",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "revising",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "7880bbe30e5a403a4d7e13f4a6258a81f92ba44e7b0af0f50a55ac75a5194c73",
+      "changed_decision": "D-5 作废重写：玩家数据出口必须由框架侧公开（public provider/delegate 由框架内部适配 internal ICompatibilityGameDataService），AWAKE 侧无法实现该 internal 接口；D-2 删除「上游优先」改为「服务包 null 即未提供」；D-3 删除 CanDegrade 放行结论（全仓无消费者）；D-4 同意默认值由「默认开启」收紧为「默认拒绝 + 显式开启 + 配置不可读即拒绝 + 外发审计日志」；D-1 增加硬约束「默认组合路径保留 Unavailable 服务」与「公共 API 基线必须同步重生成」。",
+      "new_evidence": "独立只读审查（subagent）判定 REVISE。复核成立的证据：(1) framework/MarcusAwakeFramework/src/ApiCompatibilityExtensions.cs:15 ICompatibilityGameDataService 为 internal，:49-59 靠类型转换取用，AWAKE 无法实现 → 玩家绑定永远失败；该阻塞已于 2026-09-08 记录（AWAKE.Tests/RedtestR1Behavioral.cs:85）。(2) npc_dialogue_ready 唯一产出点 NpcDialogueService.cs:434 在存储门 :413 之后，而存储被推到 011 → 原验收 3/4 不可达。(3) 游戏目录 ModuleData/Worldbook/manifest.json 的 schemaVersion 实测为 awake.worldbook.v1，而 WorldbookRuntime.cs:110 只接受 registry.v1/v2 → 属「现有包被整包拒绝」，非「内容未产出」。(4) 自行补充：tools/verify_marcus_awake_api_layers.ps1:397 要求公共 API 面与基线逐字一致（含方法/属性/字段），新增任何公共重载都会使其必红，需重新生成 docs/evidence/MARCUS-AWAKE-P3-API-SURFACE-BASELINE-CURRENT-20260829.json 并在 :283 相位映射登记。",
+      "changed_acceptance": "验收 3/4 重写：删除「四条日志同时出现」，改为本批真正可达的可观察集，并把存储依赖与 npc_dialogue_ready/转录/关系结算的去留写成显式边界；世界书夹具改为「测试专用部署 + 回滚步骤」并写死 keyword/identity/role 匹配条件。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "a71021252abfacb7d4bbc4d7f1ff33b64e4ae910c7bb1e1a3619d3d2e735a79b",
+      "changed_decision": "D-9 前提更正（Runtime 存储后端已接线，F-13）并改为显式声明权威归属 + Runtime 数据面标记未启用；D-2 更正保护面（tests/Program.cs:401 只覆盖 AI gateway，需补 permissions/prompts/storage/rag 默认存根断言）；新增 D-11（世界书解封 A/B，待用户选定）并列入「做」清单第 6 项。",
+      "new_evidence": "round 2 独立只读审查判定 REVISE，六项必修全部复核成立：F-9 夸大（turn_completed 实测 0 次）；D-9 前提错误（RuntimeServiceHost.cs:108 实例化、:1501/:1538 HandleStorageBusinessAsync 已派发 storage.kv_*/rag.*）；F-14 新增（NpcDialogueService.cs:939 -> :961-970 Blocked -> :1021-1024 空 prompt -> :220-223 CompleteDirectKnowledgeTurn，永不 submit）；F-15 新增（AwakeTranscriptService.cs:92-104 成功无日志）；F-16 新增（同一份内容 08-23 可加载、09-10 起 WB2-SCHEMA-UNSUPPORTED:entry，属加载器重构回退）；验收 2 漏列 verify_marcus_awake_mcm_contract.ps1。",
+      "changed_acceptance": "验收 1 补世界书解封与默认存根两项断言；验收 2 增列 verify_marcus_awake_mcm_contract.ps1；验收 3 增加三项前置条件（D-11 生效 / 新授权开关已开 / Runtime 有健康 Provider）并把转录改为本批新增的正向日志；验收 4 改为按 D-11 A/B 二选一的解封证据 + 回滚步骤；验收 5 增列哈希白名单说明。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "65b70161bf87d6f66989709f4741e17f4cb31e322b43ca7a645ee0b6a5858ed6",
+      "changed_decision": "D-9 据实降级：删除「写 storage_backend_disabled 日志即标记数据面未启用」的过度包装（该日志不构成门禁、且经 Console.Error 输出后被 RuntimeServiceClient.cs:1331-1341 丢弃不可观测），改为「文档声明 + 代码注释」，并点明真实隔离机制是客户端能力集 RuntimeServiceClient.cs:23-34 默认不含 storage.*/rag.*；D-12 三条门禁改为可判定（门禁1 改措辞为「不得新增接受 v1 的分支」并排除既有死代码字面量；门禁2 判据由运行日志改为「部署 manifest 顶层 schemaVersion 实测为 awake.worldbook.v2」，因 WorldbookRuntime.cs:115 对 registry.v1/v2 两分支共用同一日志；门禁3 给出唯一构造点判据）；新增 D-14 试点包投放与同步口径。",
+      "new_evidence": "round 3 独立只读审查判定 REVISE（六项）。复核成立的关键证据：tools/sync_module.ps1:39-52 把 ModuleData\\Worldbook\\manifest.json 与 9 个 worldbook 子目录列为受管文件、:222-223 从工程源复制、:574-581 Assert-TargetVerified 做哈希核对 → 部署试点包后再跑 -ConfirmGameSync 会覆盖回工程 v1 或直接报哈希不符，撤销验收 4；RuntimeServiceClient.cs:23-34 默认能力仅 health/echo/cancel/diagnostic + provider.*，不含 storage.*/rag.*，故 D-9 的「标记未启用」不是机制；WorldbookRuntime.cs:115 的 worldbook_runtime_initialized schema=awake.worldbook.v2 对 :92 registry.v1 与 :99 v2 两分支共用，不能作为「确实走 v2 包」的判据。另：验收 1⑥ 只覆盖 CreateDefaultHost/Register(extension)，漏 Register(extension,runtime)。",
+      "changed_acceptance": "契约「可观察结果」与验收 3 都把「面板出现 NPC 回复」限定为「D-11 试点包覆盖的目标 NPC」，并写明非试点 NPC 回兜底文案属预期；验收 1⑤ 判据改为实测部署 manifest 的 schemaVersion；验收 1⑥ 补齐 Register(extension, runtime) 默认态断言；验收 4 去掉日志判据、只保留包校验与离线命中断言；验收 5 白名单措辞修正并引用 D-14。"
+    }
+  ]
+}

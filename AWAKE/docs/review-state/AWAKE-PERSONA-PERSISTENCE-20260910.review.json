@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-PERSONA-PERSISTENCE-20260910",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "2a93ce36bf563391163745577f7d8d04f5ecddc6e888440b9e394cddaebb8cf8",
+      "changed_decision": "D-2 identity binding changed: persona identity is no longer read at BeginCampaignSession; it is bound lazily at OnGameLoadedEvent (loaded campaign) or OnNewGameCreatedEvent (new campaign), with explicit empty/oldSave branches. D-3 payload/commit model changed: single fixed SyncData key holding one JSON snapshot that is self-contained (snapshot + anchor self-justifies usability); the session_pending/unsaved_recovery/save_committed state machine and OnSaveOverEvent dependency are dropped from this batch. D-4 storage-key model changed: save-file isolation replaces composed CampaignId|TimelineId|BranchId|CharacterId keys for persistence; PersonaStorageKey is out of scope. D-5 out-of-scope declared: SaveId, ParentBranchId, ForkSequence, PersonaOverride, PayloadHash/Source. D-6 acceptance changed: SaveId isolation case removed, cross-campaign isolation plus repeated-load stability added, wiring assertions added.",
+      "new_evidence": "Round1 independent read-only reviewer (separate Codex subagent, not the author) audited revision A (sha256 0E0EDA12AA3189A243FEF63D6B5F03B19A46608BCF7BADC616E4093EBE08B859). Evidence verified locally: CS:10407 LoadBehaviorData runs after CS:10369 GameManager.OnGameStart; CS:11151-11163 BehaviorSaveData.SyncData uses _records.Add on save and silent-false on missing key load; CS:46308/46313/46367 OnSaveStarted -> OnBeforeSave -> OnSaveOver after file write; CS:10569 UniqueGameId generated in OnNewGameCreatedInternal at CS:10672 (PostInitializeFourthState); SB:5178-5191 SetLoadingParameters before Game.Current.DoLoading. 3xP0 (entry point ordering, new-campaign UniqueGameId empty, commit-state machine writes one save late) plus 10xP1 and P2/P3 list delivered to the author.",
+      "changed_acceptance": ""
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "e2314bff574d9014f04d425ad8bbaf402243976dbc1fa3bacc5e2012cdc0618f",
+      "changed_decision": "Revision C: (1) single read path fixed - AwakeEventBehavior.SyncData only transports the JSON string and uses dataStore.IsSaving for direction, while parsing/validation happens in CampaignEvents.OnGameLoadedEvent; (2) the serialization, key constant and load classification move into a new dependency-free seam file that is added to AWAKE.Tests.csproj so the wiring assertion becomes offline-executable, with an additional save-side log line for E4; (3) payload becomes the PersonaPersistenceEnvelope serialization itself (explicit field mapping table added, saveId/parentBranchId/forkSequence pinned to empty/0) so the existing validator consumes it directly; (4) the loader pre-checks schema equals continuity and rejects anything else; (5) the slice is retitled as an anchor slice - sequence/watermarks stay 0 and persona content projection is explicitly deferred to the next slice; (6) savedAtUtc is dropped from the payload and kept only in logs; (7) character_mismatch fail-closed branch added; (8) PersonaStateNamespace cleanup restated as default-open-list-only with G3-S0 evidence and test expectations updated in the same batch; (9) campaign_mismatch documented as defence-in-depth while isolation is attributed to save-file isolation; (10) null/oldSave consequences written explicitly.",
+      "new_evidence": "Round2 independent read-only reviewer (second, separate Codex subagent) audited revision B and confirmed all three round-1 P0s CLOSED: entry ordering (CS:10406-10408 before CS:10648; new-campaign RegisterEvents at CS:10602 before the CS:10563 dispatch; OnGameLoadedEvent not fired on new campaign), new-campaign identity (CS:10569 vs CS:10369, oldSave branch CS:9591-9593), and commit-state removal (CS:46313/46323-46329/46367; BehaviorSaveData Add/false semantics CS:11153-11163). No new P0. New blocking findings: read-path ownership contradicts itself across three sections; the E1 wiring assertion is not offline-executable because AWAKE.Tests.csproj compiles 93 files that exclude AwakeEventBehavior.cs and has no IDataStore fake; the flat payload has no defined mapping to the nested PersonaPersistenceEnvelope that PersonaPersistenceValidator consumes; the validator also accepts the override schema while D-8 excludes it; sequence/watermarks have no producer so the payload would be constant; savedAtUtc makes the 'same hash after re-save' acceptance impossible; direction detection should use IDataStore.IsSaving/IsLoading (CS:11127-11129) instead of the value-change heuristic; loading does not fail closed on characterId mismatch. Also P2: the PersonaStateNamespace cleanup note understates the default-path impact and requires updating the G3-S0 evidence and test expectations; campaign_mismatch is nearly unreachable so cross-save isolation must be attributed to save-file isolation; null-vs-empty and the permanent oldSave opt-out must be written down.",
+      "changed_acceptance": ""
+    },
+    {
+      "round": 3,
+      "verdict": "APPROVED",
+      "change_fingerprint": "d117ce4f6e0fdc1391f1f8c4801ff1456eeb09fde1b0959f2447dbea3ef71578",
+      "changed_decision": "",
+      "new_evidence": "Round3 independent read-only reviewer (third, separate Codex subagent) verified the frozen revision C hash (sha256 2CA39534CC83727C363AC9C82001D098547A692EF2CED5710CD8E0D050B3460E) and returned VERDICT APPROVED: all seven round-2 blocking P1s CLOSED (single read path via D-8/D-9; offline-executable seam now possible because AWAKE.Tests.csproj:19 already references TaleWorlds.CampaignSystem and :105 already compiles PersonaPersistenceModels.cs while IDataStore is public at TaleWorlds.CampaignSystem.decompiled.cs:11125-11131; payload mapping verified field-by-field against PersonaPersistenceModels.cs:18-45; schema pre-check plus anchor-slice retitle consistent with AWAKE-CURRENT.md blocked_not_wired bookkeeping; no timestamp in payload; IsSaving direction matches CS:11127-11129 and the SyncData<T> generic signature; character_mismatch branch present). Four non-blocking P2 carry-overs to fix inside the implementation batch: (1) the seam wording must say 'no campaign logic dependency' because IDataStore still comes from TaleWorlds.CampaignSystem; (2) payload property casing must be pinned (model serializes PascalCase by default, the plan example is camelCase); (3) 'SyncData shrinks to one line' must be restated as 'existing awake_last_weekly_report_day sync is preserved, persona becomes one seam call' to avoid silently dropping the weekly-report key; (4) Adopt must treat empty/whitespace json as no_persona without warning so old saves do not spam persona.persistence.rejected.",
+      "changed_acceptance": "None. The approved revision C is frozen and must not be edited after approval; the four round-3 P2s are carried into the implementation batch instead of being patched into the approved document."
+    }
+  ],
+  "user_signoff": true
+}

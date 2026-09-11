@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-RUNTIME-RECOVERY-20260911",
+  "risk_class": "standard",
+  "max_rounds": 2,
+  "round": 2,
+  "consecutive_no_change": 0,
+  "status": "awaiting_signoff",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "fdf01bed087d4d743432bface6a8d7af9edbf8e8bec544daea2a76214af99298",
+      "changed_decision": "",
+      "new_evidence": "round1: TryRelaunchStoppedRuntime 在 lock 外读 activeRuntime.Status 并做 ShouldRelaunch 判定，计数在第二个 lock 内自增；两次并发 MCM 动作（runtime_health 为异步 StartOperation，provider gate 为同步）可能同时通过判定，造成重复重启。修订：把 Status 读取 + ShouldRelaunch + 计数自增合并进同一 lock，StartRuntimeService 仍在锁外调用。",
+      "changed_acceptance": ""
+    },
+    {
+      "round": 2,
+      "verdict": "APPROVED",
+      "change_fingerprint": "08d55fb4c37d3d075cfabdac4c27a117d3cbcfb4a429c62752deeeb279d383f5",
+      "changed_decision": "",
+      "new_evidence": "round2: 并发双触发已修订 —— TryRelaunchStoppedRuntime 的 Status 读取 + ShouldRelaunch + 计数自增已合并进同一个 lock（StartRuntimeService 仍在锁外调用）。修订后重建通过：build.ps1 BUILD_OK；AWAKE.Tests 0 错误；主 smoke PASS ALL（含 runtime.recovery.cooldown / attempt_limit / states / hook_safety）；--persona-anchor PASS ALL；--redtest-r1-behavioral REDTEST R1 BEHAVIORAL COMPLETE (no FAIL)。无新增 P0/P1。",
+      "changed_acceptance": ""
+    }
+  ]
+}

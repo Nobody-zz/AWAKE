@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona.tags.v1",
+  "title": "AWAKE Persona tag registry v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "tags", "bundles"],
+  "properties": {
+    "schemaVersion": { "const": "awake.persona.tags.v1" },
+    "tags": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/tag" },
+      "uniqueItems": true
+    },
+    "bundles": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/bundle" },
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "tag": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "category", "displayName", "meaning", "promptText"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^(trait|expression|behavior|trigger|boundary)\\.[a-z0-9_]+$" },
+        "category": { "enum": ["trait", "expression", "behavior", "trigger", "boundary"] },
+        "displayName": { "type": "string", "minLength": 1 },
+        "meaning": { "type": "string", "minLength": 1 },
+        "promptText": { "type": "string", "minLength": 1 }
+      }
+    },
+    "bundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "displayName", "tags"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^bundle\\.[a-z0-9_]+$" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "tags": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "pattern": "^(trait|expression|behavior|trigger|boundary)\\.[a-z0-9_]+$" },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}
