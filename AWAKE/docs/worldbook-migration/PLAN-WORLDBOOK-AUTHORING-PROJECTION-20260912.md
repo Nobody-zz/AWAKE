@@ -73,3 +73,14 @@
 ## 4. 流程
 
 本计划 → grill-me 拷问 → 独立只读审查 → 你签收 → 实施（W1→W6）→ 证据汇报。
+
+## 5. 拷问修订（2026-09-12，GRILLME-PROJECTION-PLAN-20260912.md 全 12 问）
+
+1. **unresolved claim 投影裁定**：B5 无 unresolved kind → 知识限制类 claim（96448244、fd78）不落断言，落档案"确定程度=存疑"+摘要句；纯注册元数据（ddfb30ad）不投影，留迁移文档层。
+2. **表达身份映射预裁定**：不扩登记表——表达身份一律映射手册九类通用身份（学士→贵族学识口径、跑船人/渔民/山民→普通平民、行商→公证商人），来源身份保留在表达文本内。
+3. **建档走 `POST /api/authoring/save-authoring`（CAS: sourceHash+revision）与 create-document 端点**，逐档 读→建→存；建档前对 editor-catalog 查重；正式编号由 Studio 生成，候选临时 ID 不带入。
+4. **subdomain 稳定 ID** 从 `knowledge-taxonomy.v1.json` 取，禁止手填。
+5. **place_cluster/split_from 归属**：authoring schema 白名单能放则放，放不下记入批次 `PROJECTION-MANIFEST.json`（候选 ID → 新档案编号 + 簇 + 血缘），不硬塞。
+6. **r3-revision 冻结**：已批准基线不回写；W3 引文细化产物落 authoring 档案 + `QUOTE-REFINEMENT-20260912` 记录。
+7. **实施顺序**：逐档串行 W2→W3→W4，W5/W6 收尾；W1 增"读登记表 schema 定 lore 分区扩展方式"；W6 增"闭合复验工具（assertion↔claim、expression↔span、layer/grants 一致性）"。
+8. **审批与回滚**：用户 Studio UI 人工审批；建档失败逐档重试，已建不删、manifest 记状态。
