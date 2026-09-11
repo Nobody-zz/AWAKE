@@ -15,6 +15,7 @@ internal sealed class AwakeHostComposition : IDisposable
     private readonly object sync = new object();
     private RuntimeServiceClientOptions runtimeOptions;
     private RuntimeServiceClient runtimeClient;
+    private FrameworkServiceOverrides serviceOverrides;
     private FrameworkHost host;
     private AwakeExtension extension;
     private SessionRef currentSession;
@@ -23,6 +24,9 @@ internal sealed class AwakeHostComposition : IDisposable
     private bool pendingCampaignStart;
     private bool campaignStartScheduled;
     private bool campaignStartInProgress;
+    private Func<string, bool> relaunchHook;
+    private int runtimeRelaunchAttempts;
+    private long lastRelaunchUtcTicks;
     private bool disposed;
 
     internal RuntimeServiceClient RuntimeClient => runtimeClient;
@@ -56,13 +60,21 @@ internal sealed class AwakeHostComposition : IDisposable
             if (host != null) return OperationResult<bool>.Succeeded(true);
 
             extension = awakeExtension;
+            serviceOverrides = new FrameworkServiceOverrides
+            {
+                Permissions = new AwakePermissionService(),
+                Prompts = new AwakePromptRegistry(),
+                Storage = new AwakeFileStorageService(),
+                GameData = new AwakePlayerSnapshotProvider()
+                // Rag 保持框架默认的 UnavailableRagService：本批不接 Runtime RAG 数据面（011 再决策）。
+            };
             runtimeOptions = new RuntimeServiceClientOptions(
                 ResolveRuntimeServicePath(),
                 "1.3.15");
             runtimeClient = new RuntimeServiceClient(runtimeOptions);
         }
 
-        OperationResult<bool> registration = FrameworkHostLocator.Register(extension, runtimeClient);
+        OperationResult<bool> registration = FrameworkHostLocator.Register(extension, runtimeClient, serviceOverrides);
         if (!registration.IsSuccess || !registration.Value)
         {
             runtimeClient.Dispose();
@@ -70,6 +82,7 @@ internal sealed class AwakeHostComposition : IDisposable
             {
                 runtimeClient = null;
                 runtimeOptions = null;
+                serviceOverrides = null;
                 extension = null;
             }
             return registration;
@@ -85,6 +98,7 @@ internal sealed class AwakeHostComposition : IDisposable
             {
                 runtimeClient = null;
                 runtimeOptions = null;
+                serviceOverrides = null;
                 extension = null;
             }
             return OperationResult<bool>.Failed(FrameworkErrors.Create(
@@ -96,6 +110,8 @@ internal sealed class AwakeHostComposition : IDisposable
         }
 
         lock (sync) host = locatedHost;
+        relaunchHook = TryRelaunchStoppedRuntime;
+        AwakeRuntimeRecovery.RelaunchHook = relaunchHook;
         AwakeLog.Write("host_composed runtime_service_path=" + runtimeOptions.ServicePath);
         return OperationResult<bool>.Succeeded(true);
     }
@@ -164,6 +180,8 @@ internal sealed class AwakeHostComposition : IDisposable
             currentSession = session;
             currentLease = started.Value;
             campaignStartInProgress = false;
+            runtimeRelaunchAttempts = 0;
+            lastRelaunchUtcTicks = 0;
         }
 
         activeExtension.OnLifecycle(ExtensionLifecycleStage.CampaignSessionStarting, session);
@@ -383,6 +401,11 @@ internal sealed class AwakeHostComposition : IDisposable
         activeRuntime?.Dispose();
         lock (sync)
         {
+            if (ReferenceEquals(AwakeRuntimeRecovery.RelaunchHook, relaunchHook))
+            {
+                AwakeRuntimeRecovery.RelaunchHook = null;
+            }
+            relaunchHook = null;
             host = null;
             extension = null;
             runtimeClient = null;
@@ -396,6 +419,62 @@ internal sealed class AwakeHostComposition : IDisposable
         }
     }
 
+    /// <summary>
+    /// Relaunches a Runtime Service the framework tore down (state = Stopped) while the campaign
+    /// session is still live. Reached only through <see cref="AwakeRuntimeRecovery"/> from the MCM
+    /// gates, so it runs on the user's next AI action rather than in a tick loop.
+    /// </summary>
+    private bool TryRelaunchStoppedRuntime(string reason)
+    {
+        RuntimeServiceClient activeRuntime;
+        SessionLease lease;
+        SessionRef session;
+        int attempt = 0;
+        string skipReason = null;
+        string previousState = "missing";
+
+        lock (sync)
+        {
+            if (disposed || runtimeClient == null || currentLease == null || currentSession == null) return false;
+            if (currentLease.State != SessionState.Ready) return false;
+
+            activeRuntime = runtimeClient;
+            lease = currentLease;
+            session = currentSession;
+
+            RuntimeServiceStatus status = activeRuntime.Status;
+            previousState = status?.State.ToString() ?? "missing";
+            long nowTicks = DateTime.UtcNow.Ticks;
+            if (!AwakeRuntimeRecovery.ShouldRelaunch(
+                    status?.State,
+                    runtimeRelaunchAttempts,
+                    lastRelaunchUtcTicks,
+                    nowTicks,
+                    out string policyReason))
+            {
+                skipReason = policyReason;
+            }
+            else
+            {
+                runtimeRelaunchAttempts++;
+                lastRelaunchUtcTicks = nowTicks;
+                attempt = runtimeRelaunchAttempts;
+            }
+        }
+
+        if (skipReason != null)
+        {
+            AwakeLog.Write("runtime_service_relaunch_skipped reason=" + reason + " policy=" + skipReason);
+            return false;
+        }
+
+        AwakeLog.Write("runtime_service_relaunch reason=" + reason
+            + " attempt=" + attempt
+            + " max=" + AwakeRuntimeRecovery.MaxAttemptsPerSession
+            + " previous_state=" + previousState);
+        StartRuntimeService(lease, session);
+        return true;
+    }
     private void StartRuntimeService(SessionLease lease, SessionRef session)
     {
         RuntimeServiceClient activeRuntime;
@@ -461,6 +540,10 @@ internal sealed class AwakeHostComposition : IDisposable
                         operationCancellation.Token).ConfigureAwait(false);
                     AwakeLog.Write("runtime_service_profile_apply success=" + profiles.IsSuccess
                         + " code=" + (profiles.Error?.Code ?? string.Empty));
+                    if (!profiles.IsSuccess)
+                    {
+                        AwakeProviderConfiguration.RecordProviderFailure("provider_apply_auto", profiles.Error);
+                    }
 
                     if (IsCurrentCampaignSession(lease, session))
                     {

@@ -10,6 +10,9 @@ internal readonly record struct SourceEvidenceMatch(
 
 internal static class SourceEvidenceMatcher
 {
+    /// <summary>规范化后仍可能出现在候选串末尾的标点；只用于尾部容错匹配。</summary>
+    private static readonly char[] TrailingPunctuation = ['.', ',', ';', ':', '!', '?', '-', '\'', '"'];
+
     public static bool AreEquivalent(string sourceText, string candidateText)
     {
         var source = NormalizeLineEndings(sourceText ?? string.Empty).Normalize(NormalizationForm.FormC);
@@ -45,14 +48,28 @@ internal static class SourceEvidenceMatcher
             return false;
         }
 
-        var canonicalStart = sourceIndex.Text.IndexOf(candidateIndex.Text, StringComparison.Ordinal);
+        // 模型有时会把引用截断在句子中途，并用句号收尾（"…更有价值。"），于是规范化后的候选串带了一个
+        // 原文里并不存在的尾标点，整串连续匹配就会失败——但这段引用的主体其实仍在原文中。这里允许在
+        // 丢掉候选自身的尾部标点后再匹配一次；命中仍然走非精确路径（不视为逐字验证），
+        // 并且后续的包含性检查会以真正匹配到的原文片段为准。
+        var needle = candidateIndex.Text;
+        var canonicalStart = sourceIndex.Text.IndexOf(needle, StringComparison.Ordinal);
+        if (canonicalStart < 0)
+        {
+            var trimmed = needle.TrimEnd(TrailingPunctuation);
+            if (trimmed.Length > 0)
+            {
+                needle = trimmed;
+                canonicalStart = sourceIndex.Text.IndexOf(needle, StringComparison.Ordinal);
+            }
+        }
         if (canonicalStart < 0)
         {
             match = default;
             return false;
         }
 
-        var canonicalEnd = canonicalStart + candidateIndex.Text.Length - 1;
+        var canonicalEnd = canonicalStart + needle.Length - 1;
         var start = sourceIndex.Starts[canonicalStart];
         var end = sourceIndex.Ends[canonicalEnd];
         match = new SourceEvidenceMatch(start, end, source[start..end], false);

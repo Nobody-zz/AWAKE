@@ -3,7 +3,8 @@ param(
     [string]$ProjectRoot = '',
     [string]$OutputPath = '',
     [string]$LegacyBaselinePath = '',
-    [string]$CurrentBaselinePath = ''
+    [string]$CurrentBaselinePath = '',
+    [switch]$WriteCurrentBaseline
 )
 
 $ErrorActionPreference = 'Stop'
@@ -286,7 +287,7 @@ function Get-ApiPhase([string]$TypeName, [string]$SourceFile, [System.Collection
     if ($shortName -in @('RuntimeServiceClient', 'RuntimeServiceClientOptions')) { return 'P3B-approved' }
     if ($SourceFile -eq 'ProviderRuntimeApi.cs' -or $shortName -in @('AiTaskHandle', 'ProviderErrorMapping')) { return 'P3D-approved' }
     if ($SourceFile -match '^Compat/(Embedding|Rerank|Sql|Timeline)' -or $shortName -eq 'ProviderTaskRequest') { return 'P3C-approved' }
-    if ($SourceFile -match '^(Compat/|FullApiTypes\.cs$|ApiCompatibilityTypes\.cs$|ApiCompatibilityExtensions\.cs$)') { return 'P5-approved' }
+    if ($SourceFile -match '^(Compat/|FullApiTypes\.cs$|ApiCompatibilityTypes\.cs$|ApiCompatibilityExtensions\.cs$|ServiceOverrides\.cs$)') { return 'P5-approved' }
     return 'unclassified'
 }
 
@@ -321,6 +322,10 @@ foreach ($record in $phaseRecords) {
 }
 
 $currentBaselineMatch = $false
+if ($WriteCurrentBaseline -and $assemblyExists) {
+    # D-10：公共 API 面变更后，用当前程序集重建基线，避免手写漂移。
+    Write-Utf8Json $CurrentBaselinePath ([ordered]@{ types = @($currentSurface) })
+}
 if ((Test-Path -LiteralPath $CurrentBaselinePath -PathType Leaf) -and $assemblyExists) {
     $currentBaseline = Read-Json $CurrentBaselinePath
     $actualJson = (@{ types = $currentSurface } | ConvertTo-Json -Depth 30 -Compress)

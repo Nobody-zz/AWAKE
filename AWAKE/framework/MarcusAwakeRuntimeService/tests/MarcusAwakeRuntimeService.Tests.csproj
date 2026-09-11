@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MarcusAwakeRuntimeService.Tests</RootNamespace>
+    <AssemblyName>MarcusAwakeRuntimeService.Tests</AssemblyName>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <UseAppHost>true</UseAppHost>
+    <OutputPath>$(MSBuildThisFileDirectory)_build_out\$(Configuration)\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="FirstByteGateStream.cs" />
+    <Compile Include="P3DA0Harness.cs" />
+    <Compile Include="P3DA1Harness.cs" />
+    <Compile Include="P3DA2Harness.cs" />
+    <Compile Include="ProviderStreamModelsTests.cs" />
+    <Compile Include="RuntimeProviderOutcomeLedgerTests.cs" />
+    <Compile Include="RuntimeServiceLogTests.cs" />
+    <Reference Include="MarcusAwakeTransport">
+      <HintPath>..\..\MarcusAwakeTransport\_build_out\Release\MarcusAwakeTransport.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="MarcusAwakeFramework">
+      <HintPath>..\..\MarcusAwakeFramework\_build_out\Release\MarcusAwakeFramework.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="MarcusAwakeRuntimeService">
+      <HintPath>..\_build_out\Release\MarcusAwakeRuntimeService.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

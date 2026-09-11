@@ -56,7 +56,8 @@ internal sealed class QuickAuthoringOrchestrator
             request.MustPreserve,
             request.MustNotInvent,
             request.RequestedContentTier,
-            request.RequestedEntryKind);
+            request.RequestedEntryKind,
+            request.CandidateMode);
 
         var stage = AuthoringDraftStageNames.Parse(
             string.IsNullOrWhiteSpace(request.Stage) ? "facts" : request.Stage);
@@ -173,13 +174,17 @@ internal sealed class QuickAuthoringOrchestrator
         if (request.Intent?.Mode != AuthoringDraftMode.QuickAuthoring
             || request.Stage != AuthoringDraftStage.Complete
             || request.GenerationPass == "single")
+        {
+            _drafts.SetAttemptPhase(sessionId, authorization.AttemptId, "single");
             return await provider.GenerateAsync(request, cancellationToken).ConfigureAwait(false);
+        }
 
         var packet = _drafts.GetSemanticPacket(sessionId, authorization.AttemptId);
         if (packet is null)
         {
             if (request.GenerationPass != "pass_a")
                 throw new InvalidOperationException("WB-AI-DRAFT-PASS-A-409: 缺少 Pass A semantic packet。");
+            _drafts.SetAttemptPhase(sessionId, authorization.AttemptId, "pass_a");
             var passAResult = await provider.GenerateAsync(request, cancellationToken).ConfigureAwait(false);
             packet = QuickAuthoringSemanticPacketFactory.Create(request, passAResult, providerFingerprint);
             _drafts.SaveSemanticPacket(sessionId, authorization.AttemptId, packet);
@@ -207,6 +212,7 @@ internal sealed class QuickAuthoringOrchestrator
             "pass_b",
             providerFingerprint,
             packet);
+        _drafts.SetAttemptPhase(sessionId, authorization.AttemptId, "pass_b");
         var passBResult = await provider.GenerateAsync(passBRequest, cancellationToken).ConfigureAwait(false);
         var projected = QuickAuthoringSemanticPacketFactory.ValidateProjection(passBRequest, packet, passBResult);
         projected = projected with

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Awake.WorldbookPilotPackage</RootNamespace>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json" HintPath="D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\Newtonsoft.Json.dll" />
+    <Compile Include="..\..\src\WorldKnowledgeModels.cs" Link="WorldKnowledgeModels.cs" />
+    <Compile Include="..\..\src\WorldbookIdentityEvaluator.cs" Link="WorldbookIdentityEvaluator.cs" />
+    <Compile Include="..\..\src\WorldbookIdentityCapabilityRules.cs" Link="WorldbookIdentityCapabilityRules.cs" />
+    <Compile Include="..\..\src\WorldbookEntityId.cs" Link="WorldbookEntityId.cs" />
+    <Compile Include="..\..\src\WorldbookPackageIntegrity.cs" Link="WorldbookPackageIntegrity.cs" />
+    <Compile Include="..\..\src\WorldKnowledgeLoader.cs" Link="WorldKnowledgeLoader.cs" />
+    <Compile Include="..\..\src\WorldKnowledgeQueryService.cs" Link="WorldKnowledgeQueryService.cs" />
+    <Compile Include="..\..\src\WorldKnowledgeProjectionService.cs" Link="WorldKnowledgeProjectionService.cs" />
+    <Compile Include="..\..\src\WorldbookPackageRegistry.cs" Link="WorldbookPackageRegistry.cs" />
+    <Compile Include="..\..\src\WorldEventLedger.cs" Link="WorldEventLedger.cs" />
+    <Compile Include="..\..\src\WorldEventContracts.cs" Link="WorldEventContracts.cs" />
+    <Compile Include="..\..\src\WeeklyReportService.cs" Link="WeeklyReportService.cs" />
+    <Compile Include="..\worldbook-runtime-smoke\SmokeStubs.cs" Link="SmokeStubs.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+</Project>

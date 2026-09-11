@@ -8,7 +8,7 @@ internal static class AwakeVersion
 {
     internal const string Version = "0.2.0";
     internal const string InformationalVersion = "0.2.0+bannerlord.1.3.15";
-    internal const string BuildId = "awake-20260903-awake-runtime-repair-004";
+    internal const string BuildId = "awake-20260911-dialogue-chain-010";
 }
 
 internal static class AwakeBuildIdentity

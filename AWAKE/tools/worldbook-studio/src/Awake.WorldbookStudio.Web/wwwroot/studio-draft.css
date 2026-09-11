@@ -29,7 +29,10 @@
 .draft-facade-summary>div{display:grid;gap:3px}
 .draft-facade-summary strong{font-size:12px;color:#d9f3ff}
 .draft-facade-summary span{color:#b7cad8;font-size:12px;line-height:1.5}
-.draft-flow-status{grid-column:1/-1;margin:2px 0 0;padding-top:9px;border-top:1px solid rgb(120 200 255 / 18%);color:#e5f6ff;font-size:12px}
+.draft-flow-status{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:2px 0 0;padding-top:9px;border-top:1px solid rgb(120 200 255 / 18%);color:#e5f6ff;font-size:12px}
+.draft-flow-phase{flex:1 1 auto;min-width:0}
+.draft-flow-meta{flex:0 0 auto;color:#9db4c7;font-variant-numeric:tabular-nums}
+.draft-flow-cancel{flex:0 0 auto;padding:4px 10px;font-size:12px}
 .draft-facade-primary{display:grid;gap:10px;margin:12px 0}
 .draft-facade-primary>.field{margin:0}
 .draft-start-button{width:100%;min-height:42px;font-weight:750}

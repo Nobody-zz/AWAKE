@@ -95,13 +95,23 @@ internal static class AwakeTranscriptService
             new[] { playerLine, npcLine },
             idempotencyKey + ":turn",
             cancellationToken).ConfigureAwait(false);
-        if (!appended || !AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return false;
+        if (!appended || !AwakeRuntime.IsCurrentSession(sessionGeneration, store))
+        {
+            AwakeLog.Write("transcript_turn_append_failed key=" + contactKey + " idempotency=" + idempotencyKey);
+            return false;
+        }
         bool contactPersisted = await store.EnsureContactAsync(
             contactKey,
             npcName,
             idempotencyKey + ":contact",
             cancellationToken).ConfigureAwait(false);
-        return contactPersisted && AwakeRuntime.IsCurrentSession(sessionGeneration, store);
+        if (!contactPersisted || !AwakeRuntime.IsCurrentSession(sessionGeneration, store))
+        {
+            AwakeLog.Write("transcript_contact_append_failed key=" + contactKey + " idempotency=" + idempotencyKey);
+            return false;
+        }
+        AwakeLog.Write("transcript_turn_appended key=" + contactKey + " day=" + day + " source=" + source + " idempotency=" + idempotencyKey);
+        return true;
     }
 
     internal static async Task<bool> AppendLetterAsync(

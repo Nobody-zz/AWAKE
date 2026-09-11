@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MarcusAwakeRuntimeService</RootNamespace>
+    <AssemblyName>MarcusAwakeRuntimeService</AssemblyName>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <UseAppHost>true</UseAppHost>
+    <OutputPath>$(MSBuildThisFileDirectory)_build_out\$(Configuration)\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarcusAwakeStorage\MarcusAwakeStorage.csproj" />
+    <Reference Include="MarcusAwakeFramework">
+      <HintPath>..\MarcusAwakeFramework\_build_out\Release\MarcusAwakeFramework.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Compile Include="src\**\*.cs" />
+    <Reference Include="MarcusAwakeTransport">
+      <HintPath>..\MarcusAwakeTransport\_build_out\Release\MarcusAwakeTransport.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

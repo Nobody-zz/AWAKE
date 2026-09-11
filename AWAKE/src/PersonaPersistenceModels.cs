@@ -2,14 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Awake;
 
 internal static class PersonaPersistenceConstants
 {
-    internal const string ContinuitySchema = "awake.persona.continuity.v1";
-    internal const string OverrideSchema = "awake.persona.override.v1";
-    internal const string RecoverySchema = "awake.persona.recovery.v1";
+    // schema 字面量单点化：权威定义在 AwakeStorageContract（schema registry）内，这里只做别名。
+    internal const string ContinuitySchema = AwakeStorageContract.PersonaContinuitySchema;
+    internal const string OverrideSchema = AwakeStorageContract.PersonaOverrideSchema;
+    internal const string RecoverySchema = AwakeStorageContract.PersonaRecoverySchema;
     internal const string SessionPending = "session_pending";
     internal const string UnsavedRecovery = "unsaved_recovery";
     internal const string SaveCommitted = "save_committed";
@@ -17,33 +19,51 @@ internal static class PersonaPersistenceConstants
 
 internal sealed class PersonaTimelineIdentity
 {
+    [JsonProperty("campaignId")]
     internal string CampaignId { get; set; } = string.Empty;
+    [JsonProperty("saveId")]
     internal string SaveId { get; set; } = string.Empty;
+    [JsonProperty("timelineId")]
     internal string TimelineId { get; set; } = string.Empty;
+    [JsonProperty("branchId")]
     internal string BranchId { get; set; } = string.Empty;
+    [JsonProperty("parentBranchId")]
     internal string ParentBranchId { get; set; } = string.Empty;
+    [JsonProperty("forkSequence")]
     internal long ForkSequence { get; set; }
 }
 
 internal sealed class PersonaProjectionWatermarks
 {
+    [JsonProperty("transcriptAcceptedSequence")]
     internal long TranscriptAcceptedSequence { get; set; }
+    [JsonProperty("effectsAcceptedSequence")]
     internal long EffectsAcceptedSequence { get; set; }
+    [JsonProperty("memoryAcceptedSequence")]
     internal long MemoryAcceptedSequence { get; set; }
+    [JsonProperty("personaAcceptedSequence")]
     internal long PersonaAcceptedSequence { get; set; }
 }
 
 internal sealed class PersonaPersistenceEnvelope
 {
+    [JsonProperty("schema")]
     internal string Schema { get; set; } = PersonaPersistenceConstants.ContinuitySchema;
+    [JsonProperty("characterId")]
     internal string CharacterId { get; set; } = string.Empty;
+    [JsonProperty("timeline")]
     internal PersonaTimelineIdentity Timeline { get; set; } = new PersonaTimelineIdentity();
+    [JsonProperty("sequence")]
     internal long Sequence { get; set; }
+    [JsonProperty("watermarks")]
     internal PersonaProjectionWatermarks Watermarks { get; set; } = new PersonaProjectionWatermarks();
+    [JsonProperty("source")]
     internal string Source { get; set; } = string.Empty;
+    [JsonProperty("payloadHash")]
     internal string PayloadHash { get; set; } = string.Empty;
 }
 
+// 未启用：recovery 状态机属下一批次，本批次保留模型但不给消费者。
 internal sealed class PersonaRecoveryRecord
 {
     internal string Schema { get; set; } = PersonaPersistenceConstants.RecoverySchema;
@@ -57,6 +77,7 @@ internal sealed class PersonaRecoveryRecord
     internal string EffectsKey { get; set; } = string.Empty;
 }
 
+// 未启用：存档文件已提供隔离，persona 不再用组合存储键定位（权威载体是 SyncData）。
 internal static class PersonaStorageKey
 {
     internal const string NamespaceId = "awake.persona.state";
@@ -137,6 +158,7 @@ internal static class PersonaPersistenceValidator
         return true;
     }
 
+    // 未启用：投影裁剪属下一批次（本批次 watermark 恒 0，无裁剪可做）。
     internal static bool IsAcceptedForProjection(PersonaPersistenceEnvelope envelope, long projectionSequence, long sequence)
     {
         if (envelope == null || projectionSequence < 0 || sequence < 0) return false;

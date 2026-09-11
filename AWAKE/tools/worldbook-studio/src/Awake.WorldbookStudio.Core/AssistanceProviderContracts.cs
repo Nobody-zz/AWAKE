@@ -47,7 +47,8 @@ public sealed record ProviderConfiguration(
             Get("WORLD_BOOK_LOCAL_WORKER_URL"),
             localWorkerSecretEnvironmentVariable)
         {
-            WorkerTimeoutSeconds = ParseBoundedInt(Get("WORLD_BOOK_WORKER_TIMEOUT_SECONDS"), cloudTimeoutSeconds, 5, 600),
+            // 本机 Worker 跑的是本机模型，单次生成 4-6 分钟是常态；沿用云端的 60 秒默认值会让本机生成必然超时。
+            WorkerTimeoutSeconds = ParseBoundedInt(Get("WORLD_BOOK_WORKER_TIMEOUT_SECONDS"), 600, 5, 3600),
             CloudReasoningEffort = ParseReasoningEffort(Get("WORLD_BOOK_CLOUD_REASONING_EFFORT")),
             CloudApiKeyEnvironmentValue = environment is null ? null : GetNamed(cloudApiKeyEnvironmentVariable),
             LocalWorkerSecretEnvironmentValue = environment is null ? null : GetNamed(localWorkerSecretEnvironmentVariable),

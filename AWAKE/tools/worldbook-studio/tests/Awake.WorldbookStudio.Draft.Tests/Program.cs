@@ -960,6 +960,705 @@ Run("draft response normalizer keeps unlocatable evidence for manual review", ()
     Assert(normalized["warnings"]!.AsArray().Any(value => value!.GetValue<string>().Contains("无法在当前资料中定位", StringComparison.Ordinal)), "unlocatable evidence should produce a review warning");
 });
 
+Run("single object where a list is expected is normalized to a one-item array", () =>
+{
+    var sourceText = "西帝国位于帝国西部。";
+    var request = AuthoringDraftRequestFactory.Create("cloud", "single-object-lists", AuthoringDraftStage.Facts, "资料", "reference_material", sourceText, [], null, []);
+    var response = new JsonObject
+    {
+        ["schema_version"] = "worldbook.authoring-draft.result.v1",
+        ["stage"] = "facts",
+        ["request_hash"] = request.RequestHash,
+        ["source_content_hash"] = request.SourceContentHash,
+        ["review_only"] = true,
+        ["facts"] = new JsonArray(new JsonObject
+        {
+            ["id"] = "fact-single-object",
+            ["kind"] = "fact",
+            ["text"] = sourceText,
+            ["certainty"] = "confirmed",
+            ["inferred"] = false,
+            ["evidence"] = new JsonObject
+            {
+                ["reference_id"] = "provider-reference",
+                ["locator"] = "段落 1",
+                ["quote"] = sourceText,
+                ["quote_hash"] = Hashing.Sha256Text(sourceText)
+            },
+            ["review_status"] = "pending"
+        }),
+        ["metadata"] = null,
+        ["expressions"] = new JsonArray(),
+        ["warnings"] = new JsonArray(),
+        ["unresolved"] = new JsonObject
+        {
+            ["id"] = "single-unresolved",
+            ["kind"] = "semantic_coverage",
+            ["scope"] = "complete",
+            ["candidate_id"] = null,
+            ["severity"] = "warning",
+            ["blocking"] = false,
+            ["message"] = "只产出一项时模型会把数组写成对象。",
+            ["related_ids"] = new JsonArray()
+        }
+    };
+
+    var normalized = AuthoringDraftResponseNormalizer.Normalize(response, request);
+    Assert(normalized["unresolved"]!.AsArray().Count == 1, "a single unresolved object should normalize to a one-item array");
+    Assert(normalized["unresolved"]![0]!["id"]!.GetValue<string>() == "single-unresolved", "normalized item should keep its content");
+});
+
+Run("quick authoring derives claim and target span bindings from propositions", () =>
+{
+    var intent = AuthoringDraftIntentFactory.Create(
+        "quick_authoring",
+        "整理一条档案",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "base");
+    var request = AuthoringDraftRequestFactory.Create(
+        "local",
+        "graph-closure",
+        AuthoringDraftStage.Complete,
+        "资料",
+        "reference_material",
+        "甲建立城镇。乙统治此地。",
+        [],
+        null,
+        [],
+        new JsonObject(),
+        null,
+        intent,
+        null,
+        "pass_a");
+    JsonObject Fact(string id, string referenceId, string quote) => new()
+    {
+        ["id"] = id,
+        ["kind"] = "fact",
+        ["text"] = quote,
+        ["certainty"] = "confirmed",
+        ["inferred"] = false,
+        ["evidence"] = new JsonObject
+        {
+            ["reference_id"] = referenceId,
+            ["locator"] = "资料",
+            ["quote"] = quote,
+            ["quote_hash"] = Hashing.Sha256Text(quote)
+        },
+        ["review_status"] = "pending"
+    };
+    JsonObject Proposition(string id, string originId) => new()
+    {
+        ["id"] = id,
+        ["subject"] = "主体",
+        ["predicate"] = "谓词",
+        ["object"] = "客体",
+        ["epistemic_kind"] = "fact",
+        ["perspective"] = "unknown",
+        ["time_scope"] = "current",
+        ["polarity"] = "affirmed",
+        ["source_origin_ids"] = new JsonArray(JsonValue.Create(originId))
+    };
+    var response = new JsonObject
+    {
+        ["schema_version"] = "worldbook.authoring-draft.result.v1",
+        ["stage"] = "complete",
+        ["request_hash"] = request.RequestHash,
+        ["source_content_hash"] = request.SourceContentHash,
+        ["review_only"] = true,
+        ["facts"] = new JsonArray(Fact("fact-1", "origin-0001", "甲建立城镇。"), Fact("fact-2", "origin-0002", "乙统治此地。")),
+        ["metadata"] = null,
+        ["expressions"] = new JsonArray(),
+        ["candidates"] = new JsonArray(),
+        ["warnings"] = new JsonArray(),
+        ["unresolved"] = new JsonArray(),
+        ["coverage"] = null,
+        ["target_spans"] = new JsonArray(new JsonObject
+        {
+            ["id"] = "span.1",
+            ["text"] = "甲建立城镇。",
+            ["claim_ids"] = new JsonArray(JsonValue.Create("claim.1")),
+            ["source_origin_ids"] = new JsonArray(),
+            ["operation"] = "preserve",
+            ["review_state"] = "pending"
+        }),
+        ["propositions"] = new JsonArray(Proposition("prop.1", "origin-0001"), Proposition("prop.2", "origin-0002")),
+        ["claims"] = new JsonArray(new JsonObject
+        {
+            ["id"] = "claim.1",
+            ["proposition_id"] = "prop.1",
+            ["text"] = "甲建立城镇。",
+            ["source_origin_ids"] = new JsonArray(JsonValue.Create("origin-0002")),
+            ["review_status"] = "pending"
+        })
+    };
+
+    var normalized = AuthoringDraftResponseNormalizer.Normalize(response, request);
+    var claims = normalized["claims"]!.AsArray();
+    var spans = normalized["target_spans"]!.AsArray();
+    Assert(claims.Count == 2, "every proposition without a claim should get a derived claim");
+    Assert(
+        claims.OfType<JsonObject>().Single(item => item["id"]!.GetValue<string>() == "claim.1")["source_origin_ids"]!
+            .AsArray().Select(item => item!.GetValue<string>()).SequenceEqual(["origin-0001"]),
+        "claim sources outside its proposition range should be narrowed back to the proposition sources");
+    Assert(spans.Count == 2, "every claim without a target span should get a derived span");
+    Assert(
+        spans.OfType<JsonObject>().Single(item => item["id"]!.GetValue<string>() == "span.1")["source_origin_ids"]!
+            .AsArray().Select(item => item!.GetValue<string>()).SequenceEqual(["origin-0001"]),
+        "target span sources should cover the sources of the claims it carries");
+});
+
+Run("candidate mode is part of the hashed authoring request", () =>
+{
+    var autoIntent = AuthoringDraftIntentFactory.Create(
+        "quick_authoring", "整理一条档案", null, null, null, null, null, null, null, null, "base", null, "auto");
+    var singleIntent = AuthoringDraftIntentFactory.Create(
+        "quick_authoring", "整理一条档案", null, null, null, null, null, null, null, null, "base", null, "single");
+    Assert(autoIntent.CandidateMode == "auto" && singleIntent.CandidateMode == "single", "candidate mode must normalize to the supported values");
+    Assert(
+        AuthoringDraftIntentFactory.Serialize(singleIntent)["candidate_mode"]!.GetValue<string>() == "single",
+        "candidate mode must be serialized into the hashed request body");
+    Assert(
+        AuthoringDraftIntentFactory.Create("quick_authoring", "整理一条档案", null, null, null, null, null, null, null, null, "base").CandidateMode == "auto",
+        "candidate mode must default to auto for older clients");
+
+    AuthoringDraftRequest Build(AuthoringDraftIntent intent) => AuthoringDraftRequestFactory.Create(
+        "local", "candidate-mode", AuthoringDraftStage.Complete, "资料", "reference_material",
+        "甲建立城镇。", [], null, [], new JsonObject(), null, intent, null, "pass_a");
+    Assert(Build(autoIntent).RequestHash != Build(singleIntent).RequestHash, "candidate mode must change the request hash");
+    AssertCode(
+        () => AuthoringDraftIntentFactory.Create("quick_authoring", "整理一条档案", null, null, null, null, null, null, null, null, "base", null, "split-three"),
+        "WB-AI-DRAFT-422");
+});
+
+Run("single candidate mode adds an explicit prompt contract", () =>
+{
+    var single = AuthoringDraftPromptCatalog.Build(AuthoringDraftStage.Complete, "pass_a", "single");
+    var auto = AuthoringDraftPromptCatalog.Build(AuthoringDraftStage.Complete, "pass_a", "auto");
+    Assert(single.Contains("只要一个词条", StringComparison.Ordinal), "single mode must tell Pass A to emit one cluster");
+    Assert(!auto.Contains("只要一个词条", StringComparison.Ordinal), "auto mode must keep the existing split guidance");
+    Assert(
+        !AuthoringDraftPromptCatalog.Build(AuthoringDraftStage.Complete, "pass_b", "single").Contains("只要一个词条", StringComparison.Ordinal),
+        "the single-candidate contract belongs to Pass A, not Pass B");
+});
+
+Run("single candidate mode merges model-proposed clusters into one entry", () =>
+{
+    JsonObject Proposition(string id, string originId) => new()
+    {
+        ["id"] = id,
+        ["subject"] = "主体",
+        ["predicate"] = "谓词",
+        ["object"] = "客体",
+        ["epistemic_kind"] = "fact",
+        ["perspective"] = "unknown",
+        ["time_scope"] = "current",
+        ["polarity"] = "affirmed",
+        ["source_origin_ids"] = new JsonArray(JsonValue.Create(originId))
+    };
+    JsonObject Fact(string id, string referenceId, string quote) => new()
+    {
+        ["id"] = id,
+        ["kind"] = "fact",
+        ["text"] = quote,
+        ["certainty"] = "confirmed",
+        ["inferred"] = false,
+        ["evidence"] = new JsonObject
+        {
+            ["reference_id"] = referenceId,
+            ["locator"] = "资料",
+            ["quote"] = quote,
+            ["quote_hash"] = Hashing.Sha256Text(quote)
+        },
+        ["review_status"] = "pending"
+    };
+    AuthoringDraftRequest Build(string candidateMode) => AuthoringDraftRequestFactory.Create(
+        "local",
+        "candidate-merge",
+        AuthoringDraftStage.Complete,
+        "资料",
+        "reference_material",
+        "甲建立城镇。乙统治此地。",
+        [],
+        null,
+        [],
+        new JsonObject(),
+        null,
+        AuthoringDraftIntentFactory.Create(
+            "quick_authoring", "整理一条档案", null, null, null, null, null, null, null, null, "base", null, candidateMode),
+        null,
+        "pass_a");
+    JsonObject Response(AuthoringDraftRequest request) => new()
+    {
+        ["schema_version"] = "worldbook.authoring-draft.result.v1",
+        ["stage"] = "complete",
+        ["request_hash"] = request.RequestHash,
+        ["source_content_hash"] = request.SourceContentHash,
+        ["review_only"] = true,
+        ["facts"] = new JsonArray(Fact("fact-1", "origin-0001", "甲建立城镇。"), Fact("fact-2", "origin-0002", "乙统治此地。")),
+        ["metadata"] = null,
+        ["expressions"] = new JsonArray(),
+        ["candidates"] = new JsonArray(),
+        ["warnings"] = new JsonArray(),
+        ["unresolved"] = new JsonArray(),
+        ["coverage"] = null,
+        ["target_spans"] = new JsonArray(),
+        ["propositions"] = new JsonArray(Proposition("prop.1", "origin-0001"), Proposition("prop.2", "origin-0002")),
+        ["claims"] = new JsonArray(),
+        ["clusters"] = new JsonArray(
+            new JsonObject
+            {
+                ["id"] = "cluster.1",
+                ["title"] = "城镇的建立",
+                ["proposition_ids"] = new JsonArray(JsonValue.Create("prop.1")),
+                ["claim_ids"] = new JsonArray(),
+                ["target_span_ids"] = new JsonArray()
+            },
+            new JsonObject
+            {
+                ["id"] = "cluster.2",
+                ["title"] = "此地的统治者",
+                ["proposition_ids"] = new JsonArray(JsonValue.Create("prop.2")),
+                ["claim_ids"] = new JsonArray(),
+                ["target_span_ids"] = new JsonArray()
+            })
+    };
+
+    var autoRequest = Build("auto");
+    var autoClusters = AuthoringDraftResponseNormalizer.Normalize(Response(autoRequest), autoRequest)["clusters"]!.AsArray();
+    Assert(autoClusters.Count == 2, "auto mode must keep the model's candidate boundaries");
+
+    var singleRequest = Build("single");
+    var single = AuthoringDraftResponseNormalizer.Normalize(Response(singleRequest), singleRequest);
+    var clusters = single["clusters"]!.AsArray();
+    Assert(clusters.Count == 1, "single mode must merge the model's candidate boundaries into one entry");
+    Assert(
+        clusters[0]!["proposition_ids"]!.AsArray().Select(item => item!.GetValue<string>()).SequenceEqual(["prop.1", "prop.2"]),
+        "the merged entry must keep every proposition in order");
+    Assert(
+        single["warnings"]!.AsArray().Any(item => item!.GetValue<string>().Contains("合并", StringComparison.Ordinal)),
+        "merging must leave a visible warning instead of silently changing the shape");
+});
+
+Run("a quote truncated mid-sentence with a closing period still locates its real source span", () =>
+{
+    const string source = "巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地。当瓦兰迪亚人“铁壁”奥斯里克入侵时，他意识到巴拉维诺斯作为权力的宝座，比作为掠夺的财源更有价值，于是同当地的元老协商让该城投降。";
+    const string truncated = "当瓦兰迪亚人“铁壁”奥斯里克入侵时，他意识到巴拉维诺斯作为权力的宝座，比作为掠夺的财源更有价值。";
+    Assert(SourceEvidenceMatcher.TryFind(source, truncated, out var match), "a truncated quote must still locate its source span");
+    Assert(!match.Exact, "a truncated quote must never count as verbatim verification");
+    Assert(
+        match.Quote == "当瓦兰迪亚人“铁壁”奥斯里克入侵时，他意识到巴拉维诺斯作为权力的宝座，比作为掠夺的财源更有价值",
+        $"the match must return real source text without the invented closing punctuation, saw {match.Quote}");
+    Assert(
+        !SourceEvidenceMatcher.TryFind(source, "铁壁奥斯里克在帕拉汶德加冕为王。", out _),
+        "a genuinely unsupported quote must still fail to locate");
+});
+
+Run("fact body may be restated while evidence stays verbatim", () =>
+{
+    // 这里的重点是正文（facts[].text）可以是被改写的复述，但 evidence.quote 仍然是逐字原文；
+    // 复述一旦引入证据里没有的硬信息，就必须留下阻断项，而不是安静地写进档案正文。
+    const string quote = "甲建立城镇。";
+    var request = AuthoringDraftRequestFactory.Create(
+        "local",
+        "fact-rewrite",
+        AuthoringDraftStage.Complete,
+        "资料",
+        "reference_material",
+        quote,
+        [],
+        null,
+        [],
+        new JsonObject(),
+        null,
+        AuthoringDraftIntentFactory.Create(
+            "quick_authoring", "整理一条档案", null, null, null, null, null, null, null, null, "base"),
+        null,
+        "pass_a");
+    JsonObject Response(string factText) => new()
+    {
+        ["schema_version"] = "worldbook.authoring-draft.result.v1",
+        ["stage"] = "complete",
+        ["request_hash"] = request.RequestHash,
+        ["source_content_hash"] = request.SourceContentHash,
+        ["review_only"] = true,
+        ["facts"] = new JsonArray(new JsonObject
+        {
+            ["id"] = "fact-1",
+            ["kind"] = "fact",
+            ["text"] = factText,
+            ["certainty"] = "confirmed",
+            ["inferred"] = false,
+            ["evidence"] = new JsonObject
+            {
+                ["reference_id"] = "origin-0001",
+                ["locator"] = "资料",
+                ["quote"] = quote,
+                ["quote_hash"] = Hashing.Sha256Text(quote)
+            },
+            ["review_status"] = "pending"
+        }),
+        ["metadata"] = null,
+        ["expressions"] = new JsonArray(),
+        ["candidates"] = new JsonArray(),
+        ["warnings"] = new JsonArray(),
+        ["unresolved"] = new JsonArray(),
+        ["coverage"] = null,
+        ["target_spans"] = new JsonArray(),
+        ["propositions"] = new JsonArray(new JsonObject
+        {
+            ["id"] = "prop.1",
+            ["subject"] = "甲",
+            ["predicate"] = "建立",
+            ["object"] = "城镇",
+            ["epistemic_kind"] = "fact",
+            ["perspective"] = "unknown",
+            ["time_scope"] = "current",
+            ["polarity"] = "affirmed",
+            ["source_origin_ids"] = new JsonArray(JsonValue.Create("origin-0001"))
+        }),
+        ["claims"] = new JsonArray(),
+        ["clusters"] = new JsonArray(new JsonObject
+        {
+            ["id"] = "cluster.1",
+            ["title"] = "城镇的建立",
+            ["proposition_ids"] = new JsonArray(JsonValue.Create("prop.1")),
+            ["claim_ids"] = new JsonArray(),
+            ["target_span_ids"] = new JsonArray()
+        })
+    };
+
+    const string restatement = "甲建起了这座城镇。";
+    var normalized = AuthoringDraftResponseNormalizer.Normalize(Response(restatement), request);
+    Assert(
+        normalized["facts"]![0]!["text"]!.GetValue<string>() == restatement,
+        "a restated body must survive normalization instead of being forced back to the quote");
+    var parsed = AuthoringDraftResultParser.Parse(normalized);
+    Assert(parsed.Facts.Count == 1 && parsed.Facts[0].Text == restatement, "the restated body must reach the draft result");
+    var registries = new RegistrySnapshot
+    {
+        ProfileRegistry = new JsonObject(),
+        ReferralRegistry = new JsonObject(),
+        ProfileVersion = "1.0.0",
+        ReferralVersion = "1.0.0",
+        ProfileHash = new string('a', 64),
+        ReferralHash = new string('b', 64)
+    };
+    var template = new JsonObject
+    {
+        ["id"] = "doc.fact-rewrite",
+        ["status"] = "needs_review",
+        ["domain"] = "geography",
+        ["revision"] = 1,
+        ["title"] = new JsonObject { ["zh-CN"] = "旧标题" },
+        ["summary"] = new JsonObject { ["zh-CN"] = "旧摘要" }
+    };
+    var document = AuthoringDraftDocumentBuilder.Build(template, "draft-fact-rewrite", "标题", "摘要", "geography", parsed.Facts, [], registries);
+    Assert(
+        document["assertions"]![0]!["text"]!["zh-CN"]!.GetValue<string>() == restatement,
+        "the archive body must be the restatement, not the raw source sentence");
+    Assert(
+        normalized["facts"]![0]!["evidence"]!["quote"]!.GetValue<string>() == quote,
+        "evidence must stay verbatim even when the body is restated");
+
+    var invented = AuthoringDraftResponseNormalizer.Normalize(Response("1097 年，甲建起了这座城镇。"), request);
+    Assert(
+        invented["unresolved"]!.AsArray().OfType<JsonObject>().Any(item =>
+            item["id"]!.GetValue<string>().StartsWith("fact-rewrite-year", StringComparison.Ordinal)
+            && item["blocking"]!.GetValue<bool>()),
+        "a restated body must not introduce a year its own evidence cannot support");
+
+    var copied = AuthoringDraftResponseNormalizer.Normalize(Response(quote), request);
+    Assert(
+        copied["warnings"]!.AsArray().OfType<JsonValue>().Any(value =>
+            value.GetValue<string>().Contains("没有做归纳改写", StringComparison.Ordinal)),
+        "copying the source verbatim must be reported to the author");
+});
+
+// 红用例：模型把 quote 逐字抄对、但把服务端下发的 64 位 quote_hash 抄错时，
+// 整轮生成是否会被判死。当前实现预期会抛 WB-AI-DRAFT-FORMAT-JSON（此断言应当失败）。
+Run("probe: a mistyped quote_hash must not kill an otherwise exact quote", () =>
+{
+    const string quote = "甲建立城镇。";
+    var request = AuthoringDraftRequestFactory.Create(
+        "local",
+        "fact-hash-probe",
+        AuthoringDraftStage.Complete,
+        "资料",
+        "reference_material",
+        quote,
+        [],
+        null,
+        [],
+        new JsonObject(),
+        null,
+        AuthoringDraftIntentFactory.Create(
+            "quick_authoring", "整理一条档案", null, null, null, null, null, null, null, null, "base"),
+        null,
+        "pass_a");
+    var response = new JsonObject
+    {
+        ["schema_version"] = "worldbook.authoring-draft.result.v1",
+        ["stage"] = "complete",
+        ["request_hash"] = request.RequestHash,
+        ["source_content_hash"] = request.SourceContentHash,
+        ["review_only"] = true,
+        ["facts"] = new JsonArray(new JsonObject
+        {
+            ["id"] = "fact-1",
+            ["kind"] = "fact",
+            ["text"] = quote,
+            ["certainty"] = "confirmed",
+            ["inferred"] = false,
+            ["evidence"] = new JsonObject
+            {
+                ["reference_id"] = "origin-0001",
+                ["locator"] = "资料",
+                ["quote"] = quote,
+                ["quote_hash"] = new string('0', 64)
+            },
+            ["review_status"] = "pending"
+        }),
+        ["metadata"] = null,
+        ["expressions"] = new JsonArray(),
+        ["candidates"] = new JsonArray(),
+        ["warnings"] = new JsonArray(),
+        ["unresolved"] = new JsonArray(),
+        ["coverage"] = null,
+        ["target_spans"] = new JsonArray(),
+        ["propositions"] = new JsonArray(new JsonObject
+        {
+            ["id"] = "prop.1",
+            ["subject"] = "甲",
+            ["predicate"] = "建立",
+            ["object"] = "城镇",
+            ["epistemic_kind"] = "fact",
+            ["perspective"] = "unknown",
+            ["time_scope"] = "current",
+            ["polarity"] = "affirmed",
+            ["source_origin_ids"] = new JsonArray(JsonValue.Create("origin-0001"))
+        }),
+        ["claims"] = new JsonArray(),
+        ["clusters"] = new JsonArray(new JsonObject
+        {
+            ["id"] = "cluster.1",
+            ["title"] = "城镇的建立",
+            ["proposition_ids"] = new JsonArray(JsonValue.Create("prop.1")),
+            ["claim_ids"] = new JsonArray(),
+            ["target_span_ids"] = new JsonArray()
+        })
+    };
+
+    var normalized = AuthoringDraftResponseNormalizer.Normalize(response, request);
+    Assert(
+        normalized["facts"]![0]!["evidence"]!["evidence_verified"]!.GetValue<bool>(),
+        "an exact quote with a mistyped hash must still count as verified evidence");
+});
+
+Run("quick authoring pass A repairs placeholder claims instead of failing the draft", () =>
+{
+    var intent = AuthoringDraftIntentFactory.Create(
+        "quick_authoring",
+        "整理一条档案",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "base");
+    var request = AuthoringDraftRequestFactory.Create(
+        "local",
+        "pass-a-placeholder-repair",
+        AuthoringDraftStage.Complete,
+        "资料",
+        "reference_material",
+        "甲建立城镇。乙统治此地。",
+        [],
+        null,
+        [],
+        new JsonObject(),
+        null,
+        intent,
+        null,
+        "pass_a");
+    JsonObject Fact(string id, string referenceId, string quote) => new()
+    {
+        ["id"] = id,
+        ["kind"] = "fact",
+        ["text"] = quote,
+        ["certainty"] = "confirmed",
+        ["inferred"] = false,
+        ["evidence"] = new JsonObject
+        {
+            ["reference_id"] = referenceId,
+            ["locator"] = "资料",
+            ["quote"] = quote,
+            ["quote_hash"] = Hashing.Sha256Text(quote)
+        },
+        ["review_status"] = "pending"
+    };
+    JsonObject Proposition(string id, string originId) => new()
+    {
+        ["id"] = id,
+        ["subject"] = "主体",
+        ["predicate"] = "谓词",
+        ["object"] = "客体",
+        ["epistemic_kind"] = "fact",
+        ["perspective"] = "unknown",
+        ["time_scope"] = "current",
+        ["polarity"] = "affirmed",
+        ["source_origin_ids"] = new JsonArray(JsonValue.Create(originId))
+    };
+    var response = new JsonObject
+    {
+        ["schema_version"] = "worldbook.authoring-draft.result.v1",
+        ["stage"] = "complete",
+        ["request_hash"] = request.RequestHash,
+        ["source_content_hash"] = request.SourceContentHash,
+        ["review_only"] = true,
+        ["facts"] = new JsonArray(Fact("fact-1", "origin-0001", "甲建立城镇。"), Fact("fact-2", "origin-0002", "乙统治此地。")),
+        ["metadata"] = null,
+        ["expressions"] = new JsonArray(),
+        ["candidates"] = new JsonArray(),
+        ["warnings"] = new JsonArray(),
+        ["unresolved"] = new JsonArray(),
+        ["coverage"] = null,
+        ["target_spans"] = new JsonArray(new JsonObject
+        {
+            ["id"] = "span.1",
+            ["text"] = "   ",
+            ["claim_ids"] = new JsonArray(JsonValue.Create("claim.1")),
+            ["source_origin_ids"] = new JsonArray(),
+            ["operation"] = "preserve",
+            ["review_state"] = "pending"
+        }),
+        ["propositions"] = new JsonArray(Proposition("prop.1", "origin-0001"), Proposition("prop.2", "origin-0002")),
+        ["claims"] = new JsonArray(
+            new JsonObject
+            {
+                ["id"] = "claim.1",
+                ["proposition_id"] = "prop.1",
+                ["text"] = null,
+                ["source_origin_ids"] = new JsonArray(JsonValue.Create("origin-0001")),
+                ["review_status"] = "pending"
+            },
+            new JsonObject
+            {
+                ["id"] = "claim.2",
+                ["proposition_id"] = null,
+                ["text"] = "孤儿 claim",
+                ["source_origin_ids"] = new JsonArray(JsonValue.Create("origin-0001")),
+                ["review_status"] = "pending"
+            })
+    };
+
+    var normalized = AuthoringDraftResponseNormalizer.Normalize(response, request);
+    var claims = normalized["claims"]!.AsArray();
+    var spans = normalized["target_spans"]!.AsArray();
+    Assert(
+        !claims.OfType<JsonObject>().Any(item => item["id"]!.GetValue<string>() == "claim.2"),
+        "an orphan claim without a proposition binding should be dropped instead of failing the draft");
+    Assert(
+        claims.OfType<JsonObject>().Single(item => item["id"]!.GetValue<string>() == "claim.1")["text"]!.GetValue<string>() == "甲建立城镇。",
+        "a placeholder claim text should be backfilled from the source quote of its proposition");
+    Assert(
+        claims.OfType<JsonObject>().Single(item => item["id"]!.GetValue<string>() == "claim.prop.2")["text"]!.GetValue<string>() == "乙统治此地。",
+        "a derived claim should carry the source quote rather than a bare triple join");
+    Assert(
+        spans.OfType<JsonObject>().Single(item => item["id"]!.GetValue<string>() == "span.claim.1")["text"]!.GetValue<string>() == "甲建立城镇。",
+        "a span derived from a repaired claim should keep locatable source text");
+    Assert(
+        normalized["warnings"]!.AsArray().OfType<JsonValue>().Any(item => item.GetValue<string>().Contains("闭合语义图引用", StringComparison.Ordinal)),
+        "server side graph closure should be reported as a warning");
+});
+
+Run("quick authoring reads id lists written as bare numbers instead of throwing", () =>
+{
+    var intent = AuthoringDraftIntentFactory.Create(
+        "quick_authoring",
+        "整理一条档案",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "base");
+    var request = AuthoringDraftRequestFactory.Create(
+        "local",
+        "numeric-id-list",
+        AuthoringDraftStage.Complete,
+        "资料",
+        "reference_material",
+        "甲建立城镇。",
+        [],
+        null,
+        [],
+        new JsonObject(),
+        null,
+        intent,
+        null,
+        "single");
+    var response = new JsonObject
+    {
+        ["schema_version"] = "worldbook.authoring-draft.result.v1",
+        ["stage"] = "complete",
+        ["request_hash"] = request.RequestHash,
+        ["source_content_hash"] = request.SourceContentHash,
+        ["review_only"] = true,
+        ["facts"] = new JsonArray(new JsonObject
+        {
+            ["id"] = "fact.1",
+            ["kind"] = "fact",
+            ["text"] = "甲建立城镇。",
+            ["certainty"] = "confirmed",
+            ["inferred"] = false,
+            ["evidence"] = new JsonObject
+            {
+                ["reference_id"] = "origin-0001",
+                ["locator"] = "资料",
+                ["quote"] = "甲建立城镇。",
+                ["quote_hash"] = Hashing.Sha256Text("甲建立城镇。")
+            },
+            ["review_status"] = "pending"
+        }),
+        ["metadata"] = null,
+        ["expressions"] = new JsonArray(),
+        ["candidates"] = new JsonArray(),
+        ["warnings"] = new JsonArray(),
+        ["unresolved"] = new JsonArray(),
+        ["coverage"] = null,
+        ["propositions"] = new JsonArray(),
+        ["claims"] = new JsonArray(),
+        ["target_spans"] = new JsonArray(),
+        ["clusters"] = new JsonArray(new JsonObject
+        {
+            ["id"] = "cluster.1",
+            ["title"] = "甲城",
+            ["proposition_ids"] = new JsonArray(JsonValue.Create("prop.1")),
+            ["claim_ids"] = new JsonArray(),
+            ["target_span_ids"] = new JsonArray(JsonValue.Create(1))
+        })
+    };
+
+    var normalized = AuthoringDraftResponseNormalizer.Normalize(response, request);
+    var cluster = normalized["clusters"]!.AsArray().OfType<JsonObject>().Single();
+    Assert(
+        cluster["target_span_ids"]!.AsArray().Select(item => item!.GetValue<string>()).SequenceEqual(["1"]),
+        "a numeric id should be read as its JSON text instead of raising a type conversion error");
+});
+
 Run("quick complete output fails closed when the strict envelope is incomplete", () =>
 {
     var intent = AuthoringDraftIntentFactory.Create(
@@ -3666,7 +4365,8 @@ InvalidOperationException CaptureError(Action action)
     IReadOnlyList<AuthoringDraftClaim> claims,
     IReadOnlyList<AuthoringDraftTargetSpan> targetSpans,
     IReadOnlyList<AuthoringDraftCandidateCluster>? clusters = null,
-    string sourceName = "帕拉汶德摘录.txt")
+    string sourceName = "帕拉汶德摘录.txt",
+    IReadOnlyList<AuthoringDraftFact>? facts = null)
 {
     var fingerprint = new string('e', 64);
     var intent = AuthoringDraftIntentFactory.Create(
@@ -3700,7 +4400,7 @@ InvalidOperationException CaptureError(Action action)
         passA.RequestHash,
         passA.SourceContentHash,
         true,
-        [],
+        facts ?? [],
         null,
         [],
         [],
@@ -4229,6 +4929,161 @@ Run("quick authoring cloud wire drops the duplicated source text", () =>
     Assert(legacyWire["source_text"] is not null, "legacy single-pass requests must keep sending the source text");
 });
 
+Run("quick authoring replays a recorded local model pass B payload end to end", () =>
+{
+    var root = RepoRoot();
+    var sourceText = File.ReadAllText(Path.Combine(
+        root, "tests", "fixtures", "official-reference", "pravend-cluster", "sources",
+        "pravend-official-cns-extract.txt"));
+    var recorded = JsonNode.Parse(File.ReadAllText(Path.Combine(
+        root, "tests", "fixtures", "real-worker",
+        "quick-authoring-pass-b-qwen2.5-pravend.json")))!.AsObject();
+    var origin = AuthoringSourceOriginCatalog.Build(sourceText)[0];
+    var node = SemanticNode("recorded", origin.Id, origin.Quote);
+    var cluster = new AuthoringDraftCandidateCluster(
+        "candidate-0001",
+        "帕拉汶德",
+        [node.Proposition.Id],
+        [node.Claim.Id],
+        [node.Span.Id]);
+    var fact = new AuthoringDraftFact(
+        "fact-0001",
+        "fact",
+        origin.Quote,
+        "confirmed",
+        false,
+        new AuthoringDraftEvidence(origin.Id, origin.Locator, origin.Quote, origin.QuoteHash));
+    var fixture = QuickProjectionFixture(
+        sourceText,
+        [node.Proposition],
+        [node.Claim],
+        [node.Span],
+        [cluster],
+        "帕拉汶德官方中文摘录",
+        [fact]);
+    // 真实 Worker 回执里的哈希属于它自己那一轮请求；这里只重绑身份，不改动任何模型内容。
+    recorded["request_hash"] = fixture.PassB.RequestHash;
+    recorded["source_content_hash"] = fixture.PassB.SourceContentHash;
+    var normalized = AuthoringDraftResponseNormalizer.Normalize(recorded, fixture.PassB);
+    var candidate = normalized["candidates"]!.AsArray()[0]!.AsObject();
+    Assert(
+        candidate["propositions"]!.AsArray().Count > 0,
+        "the frozen pass A graph must be injected into the candidate, not dropped");
+    Assert(
+        !candidate["unresolved"]!.AsArray().OfType<JsonObject>()
+            .Any(item => item["id"]?.GetValue<string>() == "quick-semantic-graph-missing"),
+        "a candidate whose graph was injected must not be flagged as an incomplete semantic chain");
+    Assert(
+        normalized["propositions"]!.AsArray().Count == fixture.Packet.Propositions.Count
+        && normalized["claims"]!.AsArray().Count == fixture.Packet.Claims.Count
+        && normalized["target_spans"]!.AsArray().Count == fixture.Packet.TargetSpans.Count,
+        "the top level graph must equal the frozen pass A packet");
+    Assert(
+        candidate["facts"]!.AsArray().Count == fixture.Packet.Facts.Count,
+        "the frozen facts must be injected into the candidate, otherwise the created entry has no body");
+
+    var parsed = AuthoringDraftResultParser.Parse(normalized);
+    var projected = QuickAuthoringSemanticPacketFactory.ValidateProjection(fixture.PassB, fixture.Packet, parsed);
+    var coverage = projected.Coverage!;
+    Assert(coverage["pass_b_status"]!.GetValue<string>() == "constrained_projection", "pass B must keep the gated pipeline");
+    Assert(coverage["source_proposition_count"]!.GetValue<int>() == fixture.Packet.Propositions.Count, "coverage must report the frozen proposition count");
+    Assert(coverage["unsupported_proposition_count"]!.GetValue<int>() == 0, "a replayed pass B payload must leave nothing uncovered");
+    Assert(projected.Metadata?.Title == "巴拉维诺斯的建立与历史变迁", "the model's own candidate metadata must survive normalization");
+    Assert(
+        (projected.Candidates ?? []).Count == 1
+        && (projected.Candidates![0].TargetSpans ?? []).Count > 0,
+        "the candidate must keep the injected target spans");
+});
+
+Run("attempt phase reporting tracks the running pass without changing settlement", () =>
+{
+    var settings = ProviderConfiguration.FromEnvironment(new Dictionary<string, string?>
+    {
+        ["WORLD_BOOK_LOCAL_WORKER_URL"] = "http://127.0.0.1:18081",
+        ["WORLD_BOOK_LOCAL_WORKER_SECRET_ENV"] = "WORLD_BOOK_TEST_SECRET",
+        ["WORLD_BOOK_TEST_SECRET"] = "offline-test-secret"
+    });
+    var drafts = new AuthoringDraftStore();
+    string? attemptId = null;
+    string? draftId = null;
+    var observed = new List<string?>();
+    var orchestrator = new QuickAuthoringOrchestrator(
+        drafts,
+        () => new JsonObject(),
+        () => settings,
+        _ => new PhaseProbeAuthoringDraftProvider(_ =>
+        {
+            if (attemptId is null || draftId is null) return;
+            observed.Add(drafts.GetAttemptStatus("session-phase", draftId, attemptId)["phase"]?.GetValue<string>());
+        }));
+    var prepared = orchestrator.Prepare(
+        "session-phase",
+        new DraftPrepareRequest(
+            null, "local", "complete", "资料", "reference_material", "王权由财富建立。",
+            null, null, null, null, null, "quick_authoring", "整理王权来源",
+            "只保留原文。", "politics", null, ["作者"], ["普通平民"], ["简洁"],
+            ["王权来源"], ["新人物"], "base", "general", false));
+    draftId = prepared.Draft.DraftId;
+    attemptId = prepared.Consent.AttemptId;
+
+    var generation = orchestrator.GenerateAsync("session-phase", prepared.Consent.Token, prepared.Consent.AttemptId)
+        .GetAwaiter().GetResult();
+
+    Assert(observed.Count == 2, "quick authoring must run Pass A and Pass B in sequence");
+    Assert(observed[0] == "pass_a", $"Pass A must report its own phase, saw {observed[0]}");
+    Assert(observed[1] == "pass_b", $"Pass B must report its own phase, saw {observed[1]}");
+    var settled = drafts.GetAttemptStatus("session-phase", draftId, attemptId);
+    Assert(settled["status"]?.GetValue<string>() == "succeeded", "phase reporting must not disturb attempt settlement");
+    Assert(settled["phase"]?.GetValue<string>() == "pass_b", "the last reported phase must stay readable after settlement");
+});
+
+Run("attempt phase reporting is best effort and never leaks across attempts", () =>
+{
+    var drafts = new AuthoringDraftStore();
+    drafts.SetAttemptPhase("session-missing", "attempt-missing", "pass_a");
+
+    var fingerprint = new string('a', 64);
+    var request = AuthoringDraftRequestFactory.Create(
+        "local",
+        "draft-phase",
+        AuthoringDraftStage.Complete,
+        "资料",
+        "reference_material",
+        "王权由财富建立。",
+        [],
+        null,
+        [],
+        new JsonObject(),
+        null,
+        null,
+        null,
+        "single",
+        fingerprint);
+    var session = drafts.Create("session-phase-guard", "资料", "reference_material", "王权由财富建立。");
+    var consent = drafts.IssueConsent("session-phase-guard", request with { DraftId = session.DraftId }, null, fingerprint);
+
+    drafts.SetAttemptPhase("session-other", consent.AttemptId, "pass_b");
+    Assert(
+        drafts.GetAttemptStatus("session-phase-guard", session.DraftId, consent.AttemptId)["phase"] is null,
+        "another session must not be able to set an attempt phase");
+
+    drafts.SetAttemptPhase("session-phase-guard", consent.AttemptId, "starting");
+    Assert(
+        drafts.GetAttemptStatus("session-phase-guard", session.DraftId, consent.AttemptId)["phase"]?.GetValue<string>() == "starting",
+        "a prepared attempt must accept the starting phase");
+});
+
+string RepoRoot()
+{
+    var current = Path.GetFullPath(AppContext.BaseDirectory);
+    while (!string.IsNullOrWhiteSpace(current))
+    {
+        if (File.Exists(Path.Combine(current, "Awake.WorldbookStudio.slnx"))) return current;
+        current = Directory.GetParent(current)?.FullName ?? string.Empty;
+    }
+    throw new DirectoryNotFoundException("worldbook studio repo root not found");
+}
+
 Console.WriteLine($"DRAFT TESTS: {passed}/{total} PASS");
 if (passed != total) Environment.ExitCode = 1;
 
@@ -4477,6 +5332,24 @@ sealed class RetryAuthoringDraftProvider : IAuthoringDraftProvider
             [target],
             [proposition],
             [claim]));
+    }
+}
+
+sealed class PhaseProbeAuthoringDraftProvider : IAuthoringDraftProvider
+{
+    private readonly Action<AuthoringDraftRequest> _probe;
+    private readonly FixedAuthoringDraftProvider _inner = new();
+
+    public PhaseProbeAuthoringDraftProvider(Action<AuthoringDraftRequest> probe) => _probe = probe;
+
+    public string ProviderId => "local";
+
+    public Task<AuthoringDraftResult> GenerateAsync(
+        AuthoringDraftRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        _probe(request);
+        return _inner.GenerateAsync(request, cancellationToken);
     }
 }
 

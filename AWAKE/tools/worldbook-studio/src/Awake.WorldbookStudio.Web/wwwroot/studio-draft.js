@@ -123,13 +123,15 @@ function draftEnsureUserFacade(){
   entryField.className="field";
   entryField.innerHTML='<label for="draftEntryKind">我要整理的内容</label><select id="draftEntryKind"><option value="general">一般世界知识</option><option value="person">人物</option><option value="place">地点</option><option value="event">事件</option><option value="faction">势力或家族</option><option value="institution">制度、文化或习俗</option></select>';
   primary.append(entryField);
+  const candidateModeField=document.createElement("div");
+  candidateModeField.className="field";
+  candidateModeField.innerHTML='<label for="draftCandidateMode">词条数量<span>决定这次生成几条候选词条；不确定时保持“由 AI 决定”。</span></label><select id="draftCandidateMode"><option value="auto">由 AI 决定（可能拆成多条）</option><option value="single">只要一个词条（合并为一条）</option></select>';
   const startButton=document.createElement("button");
   startButton.id="draftStartQuickButton";
   startButton.type="button";
   startButton.className="primary draft-start-button";
   startButton.textContent="开始生成草稿";
   startButton.addEventListener("click",draftGenerateQuickCandidate);
-  primary.append(startButton);
   const moveField=(id,target)=>{
     const field=$(id)?.closest(".field");
     if(field)target.append(field);
@@ -138,6 +140,8 @@ function draftEnsureUserFacade(){
   moveField("draftUserInstruction",primary);
   moveField("draftContentTier",primary);
   if(sourceTextField)primary.append(sourceTextField);
+  primary.append(candidateModeField);
+  primary.append(startButton);
   const advanced=document.createElement("details");
   advanced.id="draftAdvancedOptions";
   advanced.className="draft-advanced-options";
@@ -197,7 +201,7 @@ function draftApplyFacadeMode(){
   const provider=$("draftProvider")?.closest?.(".field");
   if(provider)provider.hidden=false;
   const status=$("draftFlowStatus");
-  if(status)status.textContent=quick?"准备好后点击“开始生成草稿”。":"分阶段整理已开启：先确认资料中的明确内容，再生成简介和身份表达。";
+  if(status)draftSetFlowStatus(quick?"准备好后点击“开始生成草稿”。":"分阶段整理已开启：先确认资料中的明确内容，再生成简介和身份表达。");
   const generate=$("draftGenerateFacts");
   if(generate){
     generate.textContent=quick?"开始生成草稿":"提取资料中的明确内容";
@@ -251,6 +255,7 @@ function draftQuickFields(){
     mustPreserve:draftLines("draftMustPreserve"),
     mustNotInvent:draftLines("draftMustNotInvent"),
     requestedContentTier:$("draftContentTier")?.value||draftState.requestedContentTier||"",
+    candidateMode:$("draftCandidateMode")?.value||draftState.candidateMode||"auto",
     adultConfirmed:$("draftAdultConfirmed")?.checked===true||draftState.adultConfirmed===true
   };
 }
@@ -273,6 +278,7 @@ function draftMigratePayload(payload){
     mustPreserve:Array.isArray(quick.mustPreserve)?quick.mustPreserve:[],
     mustNotInvent:Array.isArray(quick.mustNotInvent)?quick.mustNotInvent:[],
      requestedContentTier:quick.requestedContentTier||"",
+     candidateMode:quick.candidateMode==="single"?"single":"auto",
      adultConfirmed:quick.adultConfirmed===true
   },draftId:typeof payload.draftId==="string"?payload.draftId:"",serverSourceContentHash:typeof payload.serverSourceContentHash==="string"?payload.serverSourceContentHash:"",warnings:Array.isArray(payload.warnings)?payload.warnings:[],unresolved:Array.isArray(payload.unresolved)?payload.unresolved:[],targetSpans:Array.isArray(payload.targetSpans)?payload.targetSpans:[],propositions:Array.isArray(payload.propositions)?payload.propositions:[],claims:Array.isArray(payload.claims)?payload.claims:[]};
 }
@@ -300,6 +306,7 @@ function draftInvalidate(){
   draftMarkChanged();
   try{draftState.activeRequest?.controller?.abort()}catch{}
   draftState.activeRequest=null;
+  draftFlowEnd();
   draftState.token="";
 }
 
@@ -472,8 +479,9 @@ function draftSourcePayload(){
   draftState.sourceText=text;
   const quick=draftQuickFields();
   draftState.mode=quick.mode;draftState.authoringGoal=quick.authoringGoal;draftState.userInstruction=quick.userInstruction;draftState.requestedEntryKind=quick.requestedEntryKind;draftState.requestedDomain=quick.requestedDomain;draftState.requestedSubdomain=quick.requestedSubdomain;draftState.requestedAudience=quick.requestedAudience;draftState.styleConstraints=quick.styleConstraints;draftState.mustPreserve=quick.mustPreserve;draftState.mustNotInvent=quick.mustNotInvent;draftState.requestedContentTier=quick.requestedContentTier;
+  draftState.candidateMode=quick.candidateMode;
   draftState.requestedPerspectives=quick.requestedPerspectives;
-  return {sourceName:draftState.sourceName,sourceText:text,providerId:$("draftProvider")?.value||"local",mode:quick.mode,authoringGoal:quick.authoringGoal,userInstruction:quick.userInstruction,requestedEntryKind:quick.requestedEntryKind,requestedDomain:quick.requestedDomain,requestedSubdomain:quick.requestedSubdomain,requestedAudience:quick.requestedAudience,requestedPerspectives:quick.requestedPerspectives,styleConstraints:quick.styleConstraints,mustPreserve:quick.mustPreserve,mustNotInvent:quick.mustNotInvent,requestedContentTier:quick.requestedContentTier,adultConfirmed:quick.adultConfirmed===true};
+  return {sourceName:draftState.sourceName,sourceText:text,providerId:$("draftProvider")?.value||"local",mode:quick.mode,authoringGoal:quick.authoringGoal,userInstruction:quick.userInstruction,requestedEntryKind:quick.requestedEntryKind,requestedDomain:quick.requestedDomain,requestedSubdomain:quick.requestedSubdomain,requestedAudience:quick.requestedAudience,requestedPerspectives:quick.requestedPerspectives,styleConstraints:quick.styleConstraints,mustPreserve:quick.mustPreserve,mustNotInvent:quick.mustNotInvent,requestedContentTier:quick.requestedContentTier,candidateMode:quick.candidateMode,adultConfirmed:quick.adultConfirmed===true};
 }
 
 function draftGenerateQuickCandidate(){
@@ -490,9 +498,75 @@ function draftGenerateFacts(){
   else draftGenerateQuickCandidate();
 }
 
-function draftSetFlowStatus(message){
+const draftFlowLabels={starting:"正在准备本次生成……",single:"AI 正在生成草稿……",pass_a:"第 1/2 步：整理资料与证据……",pass_b:"第 2/2 步：生成完整档案……"};
+const draftFlowState={message:"准备好后点击“开始生成草稿”。",phaseLabel:"",startedAt:0,cancellable:false,timerId:null,pollId:null,pollToken:0};
+function draftSetInterval(fn,milliseconds){return typeof setInterval==="function"?setInterval(fn,milliseconds):null}
+function draftClearInterval(id){if(id!==null&&id!==undefined&&typeof clearInterval==="function")clearInterval(id)}
+function draftFlowElapsed(){
+  if(!draftFlowState.startedAt)return "";
+  const total=Math.max(0,Math.round((Date.now()-draftFlowState.startedAt)/1000));
+  return `已用 ${String(Math.floor(total/60)).padStart(2,"0")}:${String(total%60).padStart(2,"0")}`;
+}
+function draftRenderFlowStatus(){
   const node=$("draftFlowStatus");
-  if(node)node.textContent=message;
+  if(!node)return;
+  if(!draftFlowState.cancellable){node.textContent=draftFlowState.message;return}
+  node.innerHTML=`<span class="draft-flow-phase">${h(draftFlowState.phaseLabel||draftFlowState.message)}</span><span class="draft-flow-meta">${h(draftFlowElapsed())}</span><button type="button" class="ghost draft-flow-cancel" data-draft-cancel="1">取消生成</button>`;
+}
+function draftSetFlowStatus(message){
+  draftFlowState.message=message;
+  draftRenderFlowStatus();
+}
+function draftSetFlowPhase(phase){
+  draftFlowState.phaseLabel=draftFlowLabels[phase]||draftFlowLabels.starting;
+  draftRenderFlowStatus();
+}
+function draftFlowBegin(){
+  draftFlowState.startedAt=Date.now();
+  draftFlowState.pollToken+=1;
+  draftFlowState.cancellable=true;
+  draftFlowState.phaseLabel=draftFlowLabels.starting;
+  draftRenderFlowStatus();
+  draftClearInterval(draftFlowState.timerId);
+  draftFlowState.timerId=draftSetInterval(draftRenderFlowStatus,1000);
+}
+function draftFlowEnd(){
+  draftFlowState.cancellable=false;
+  draftFlowState.phaseLabel="";
+  draftFlowState.startedAt=0;
+  draftFlowState.pollToken+=1;
+  draftClearInterval(draftFlowState.timerId);
+  draftClearInterval(draftFlowState.pollId);
+  draftFlowState.timerId=null;
+  draftFlowState.pollId=null;
+  draftRenderFlowStatus();
+}
+function draftStartFlowPolling(draftId,attemptId){
+  if(!draftId||!attemptId)return;
+  const token=draftFlowState.pollToken;
+  const poll=async()=>{
+    if(token!==draftFlowState.pollToken||!draftFlowState.cancellable){draftClearInterval(draftFlowState.pollId);draftFlowState.pollId=null;return}
+    try{
+      const data=await requestJson(`/api/ai/authoring/draft/attempts/${encodeURIComponent(draftId)}/${encodeURIComponent(attemptId)}`);
+      if(token!==draftFlowState.pollToken){draftClearInterval(draftFlowState.pollId);draftFlowState.pollId=null;return}
+      if(data?.attempt?.phase)draftSetFlowPhase(data.attempt.phase);
+      if((data?.attempt?.status||"running")!=="running"){draftClearInterval(draftFlowState.pollId);draftFlowState.pollId=null}
+    }catch{}
+  };
+  draftClearInterval(draftFlowState.pollId);
+  draftFlowState.pollId=draftSetInterval(poll,1500);
+}
+function draftCancelGeneration(){
+  const request=draftState.activeRequest;
+  if(!request||!draftFlowState.cancellable)return;
+  request.cancelled=true;
+  try{request.controller?.abort()}catch{}
+  draftState.token="";draftState.attemptId="";
+  draftState.busy=false;
+  draftFlowEnd();
+  draftSetFlowStatus("已取消本次生成。资料仍保留，你可以调整后重新生成。");
+  renderDraftBusy(false);
+  toast("已取消本次生成。","warn");
 }
 
 async function draftGenerate(stage){
@@ -502,6 +576,7 @@ async function draftGenerate(stage){
   const snapshot=draftSnapshot(stage);
   const request=draftBeginRequest(snapshot);
   draftState.busy=true;renderDraftBusy(true);
+  draftFlowBegin();
   draftSetFlowStatus(stage==="complete"?"正在读取资料、整理内容并检查来源……":stage==="facts"?"正在整理资料中明确写出的内容……":"正在根据已采纳内容生成建议……");
   try{
     const acceptedFacts=draftState.facts.filter(item=>item.reviewStatus==="accepted");
@@ -510,6 +585,7 @@ async function draftGenerate(stage){
      const prepared=await requestJson("/api/ai/authoring/draft/prepare",{method:"POST",body:JSON.stringify({...payload,draftId:draftState.draftId||null,stage,acceptedFacts,metadata,perspectives,candidateId:draftState.selectedCandidateId||null,adultConfirmed:payload.adultConfirmed===true}),signal:request.controller?.signal});
     if(!draftRequestIsCurrent(snapshot))return;
      draftState.token=prepared.draftToken;draftState.draftId=prepared.draftId;draftState.serverSourceContentHash=prepared.sourceContentHash||draftState.serverSourceContentHash;draftState.attemptId=prepared.attemptId||"";
+     draftStartFlowPolling(draftState.draftId,draftState.attemptId);
      const data=await requestJson("/api/ai/authoring/draft/generate",{method:"POST",body:JSON.stringify({draftToken:draftState.token,attemptId:draftState.attemptId}),signal:request.controller?.signal});
     if(!draftRequestIsCurrent(snapshot))return;
      draftState.token="";draftState.attemptId="";
@@ -540,7 +616,7 @@ async function draftGenerate(stage){
      draftState.uiStep=stage==="complete"?"review":"input";
      draftSetFlowStatus(stage==="complete"?"已生成待确认草稿，请先查看需要你确认的问题。":stage==="facts"?"已整理资料内容，请逐条确认。":"已生成建议，请继续人工确认。");
      toast(stage==="facts"?"资料内容已整理。":stage==="metadata"?"标题、摘要和分类建议已生成。":"身份表达建议已生成。","good");
-  }catch(error){if(error?.name!=="AbortError"&&draftRequestIsCurrent(snapshot)){draftSetFlowStatus("这次没有生成可用草稿，请根据提示处理后重试。");handleError(error)}}finally{if(draftState.activeRequest===request){draftState.busy=false;draftFinishRequest(request);renderDraftBusy(false)}}
+  }catch(error){if(error?.name!=="AbortError"&&draftRequestIsCurrent(snapshot)){draftSetFlowStatus("这次没有生成可用草稿，请根据提示处理后重试。");handleError(error)}}finally{if(draftState.activeRequest===request){draftState.busy=false;draftFinishRequest(request);draftFlowEnd();renderDraftBusy(false)}}
 }
 
 function renderDraftBusy(busy){
@@ -897,6 +973,7 @@ function draftResetVisibleFields(){
   if($("draftProvider"))$("draftProvider").value="local";
   if($("draftEntryKind"))$("draftEntryKind").value="general";
   if($("draftContentTier"))$("draftContentTier").value="";
+  if($("draftCandidateMode"))$("draftCandidateMode").value="auto";
   if($("draftAdultConfirmed"))$("draftAdultConfirmed").checked=false;
   if($("draftPerspectives"))$("draftPerspectives").value=draftDefaultPerspectives();
   draftState.uiStep="input";
@@ -952,9 +1029,11 @@ function closeDraftDialog(){
 
 function wireDraftDialog(){
   $("draftCloseButton")?.addEventListener("click",closeDraftDialog);
+  $("draftDialog")?.addEventListener("click",event=>{if(event.target?.closest?.("[data-draft-cancel]"))draftCancelGeneration()});
   $("draftSourceText")?.addEventListener("input",()=>{draftSourceEdited();draftUpdateStats();draftPersist()});
   $("draftSourceName")?.addEventListener("input",()=>{draftMarkChanged();draftPersist()});
   $("draftProvider")?.addEventListener("change",()=>{draftMarkChanged();draftApplyProviderHint();draftPersist()});
+  $("draftCandidateMode")?.addEventListener("change",()=>{draftMarkChanged();draftPersist()});
   $("draftPerspectives")?.addEventListener("input",()=>{draftMarkChanged();draftPersist()});
   $("draftSourceFile")?.addEventListener("change",async event=>{const file=event.target.files?.[0];if(!file)return;try{$("draftSourceText").value=await file.text();if(!$("draftSourceName").value)$("draftSourceName").value=file.name;draftSourceEdited();draftUpdateStats();draftPersist()}catch{toast("无法读取这个文件，请改用 UTF-8 文本文件或直接粘贴内容。","warn")}});
   document.querySelectorAll("[data-draft-stage]").forEach(button=>button.addEventListener("click",()=>draftSetStage(button.dataset.draftStage)));

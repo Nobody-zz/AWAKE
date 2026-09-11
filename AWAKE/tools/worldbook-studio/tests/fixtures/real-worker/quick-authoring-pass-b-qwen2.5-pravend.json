@@ -1,0 +1,429 @@
+{
+  "schema_version": "worldbook.authoring-draft.result.v1",
+  "stage": "complete",
+  "request_hash": "0F90E4B18BFF1135F63DF61C91E2F20B7188DA319BE95609CE725A0A7659A141",
+  "source_content_hash": "F4B24C13E32285BC6BFC179F1B5D78DE13032118C2E270AFF7E9E9B253425B84",
+  "review_only": true,
+  "facts": [],
+  "metadata": {
+    "title": "巴拉维诺斯的建立与历史变迁",
+    "summary": "本文档概述了巴拉维诺斯从建立到成为首都，再到后来的历史变化。",
+    "domain": "geography",
+    "subdomain": "settlements",
+    "related_domains": [],
+    "note": "",
+    "era": "historical",
+    "entity_ids": []
+  },
+  "expressions": [],
+  "warnings": [],
+  "unresolved": [
+    {
+      "id": "u1",
+      "kind": "unknown",
+      "scope": "text",
+      "candidate_id": null,
+      "severity": "warning",
+      "blocking": false,
+      "message": "资料未覆盖人物身份来历、年代等信息。",
+      "related_ids": []
+    }
+  ],
+  "coverage": {
+    "mode": "quick_authoring",
+    "status": "reported",
+    "heuristic": true,
+    "not_semantic_migration_proof": true,
+    "truncations": [],
+    "warnings": []
+  },
+  "target_spans": [
+    {
+      "id": "span.claim.prop.1",
+      "text": "巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地，并在随后迅速取代沙拉斯，成为了卡拉德人的首都。",
+      "claim_ids": ["claim.prop.1"],
+      "source_origin_ids": ["origin-0001"],
+      "operation": "preserve",
+      "review_state": "pending"
+    },
+    {
+      "id": "span.claim.prop.2",
+      "text": "最终，帝国的统治重心东移，但巴拉维诺斯依旧是西部的经济重镇。",
+      "claim_ids": ["claim.prop.3"],
+      "source_origin_ids": ["origin-0002"],
+      "operation": "preserve",
+      "review_state": "pending"
+    },
+    {
+      "id": "span.claim.prop.5",
+      "text": "当瓦兰迪亚人“铁壁”奥斯里克入侵时，他意识到巴拉维诺斯作为权力的宝座，比作为掠夺的财源更有价值，于是同当地的元老协商让该城投降。",
+      "claim_ids": ["claim.prop.5"],
+      "source_origin_ids": ["origin-0003"],
+      "operation": "preserve",
+      "review_state": "pending"
+    },
+    {
+      "id": "span.claim.prop.7",
+      "text": "此地传承到了奥斯里克的旁支，戴·提尔家族手中，如今人们称其为帕拉汶德。",
+      "claim_ids": ["claim.prop.7"],
+      "source_origin_ids": ["origin-0004"],
+      "operation": "preserve",
+      "review_state": "pending"
+    }
+  ],
+  "propositions": [
+    {
+      "id": "prop.1",
+      "subject": "巴拉维诺斯",
+      "predicate": "由卡拉狄乌斯大帝建立",
+      "object": "第二座重要的殖民地",
+      "epistemic_kind": "fact",
+      "perspective": "客观",
+      "time_scope": "historical",
+      "polarity": "affirmed",
+      "source_origin_ids": ["origin-0001"],
+      "confidence": "unknown",
+      "unresolved": []
+    },
+    {
+      "id": "prop.2",
+      "subject": "巴拉维诺斯",
+      "predicate": "取代沙拉斯",
+      "object": "成为卡拉德人的首都",
+      "epistemic_kind": "fact",
+      "perspective": "客观",
+      "time_scope": "historical",
+      "polarity": "affirmed",
+      "source_origin_ids": ["origin-0001"],
+      "confidence": "unknown",
+      "unresolved": []
+    },
+    {
+      "id": "prop.3",
+      "subject": "帝国的统治重心",
+      "predicate": "东移",
+      "object": "unknown",
+      "epistemic_kind": "fact",
+      "perspective": "客观",
+      "time_scope": "historical",
+      "polarity": "affirmed",
+      "source_origin_ids": ["origin-0002"],
+      "confidence": "unknown",
+      "unresolved": []
+    },
+    {
+      "id": "prop.4",
+      "subject": "巴拉维诺斯",
+      "predicate": "依旧是西部的经济重镇",
+      "object": "unknown",
+      "epistemic_kind": "fact",
+      "perspective": "客观",
+      "time_scope": "historical",
+      "polarity": "affirmed",
+      "source_origin_ids": ["origin-0002"],
+      "confidence": "unknown",
+      "unresolved": []
+    },
+    {
+      "id": "prop.5",
+      "subject": "瓦兰迪亚人“铁壁”奥斯里克",
+      "predicate": "意识到巴拉维诺斯作为权力的宝座比掠夺的财源更有价值",
+      "object": "unknown",
+      "epistemic_kind": "fact",
+      "perspective": "客观",
+      "time_scope": "historical",
+      "polarity": "affirmed",
+      "source_origin_ids": ["origin-0003"],
+      "confidence": "unknown",
+      "unresolved": []
+    },
+    {
+      "id": "prop.6",
+      "subject": "瓦兰迪亚人“铁壁”奥斯里克",
+      "predicate": "同当地的元老协商让巴拉维诺斯投降",
+      "object": "unknown",
+      "epistemic_kind": "fact",
+      "perspective": "客观",
+      "time_scope": "historical",
+      "polarity": "affirmed",
+      "source_origin_ids": ["origin-0003"],
+      "confidence": "unknown",
+      "unresolved": []
+    },
+    {
+      "id": "prop.7",
+      "subject": "此地",
+      "predicate": "传承到了奥斯里克的旁支戴·提尔家族手中",
+      "object": "unknown",
+      "epistemic_kind": "fact",
+      "perspective": "客观",
+      "time_scope": "historical",
+      "polarity": "affirmed",
+      "source_origin_ids": ["origin-0004"],
+      "confidence": "unknown",
+      "unresolved": []
+    },
+    {
+      "id": "prop.8",
+      "subject": "此地",
+      "predicate": "如今人们称其为帕拉汶德",
+      "object": "unknown",
+      "epistemic_kind": "fact",
+      "perspective": "客观",
+      "time_scope": "historical",
+      "polarity": "affirmed",
+      "source_origin_ids": ["origin-0004"],
+      "confidence": "unknown",
+      "unresolved": []
+    }
+  ],
+  "claims": [
+    {
+      "id": "claim.prop.1",
+      "proposition_id": "prop.1",
+      "text": "巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地，并在随后迅速取代沙拉斯，成为了卡拉德人的首都。",
+      "source_origin_ids": ["origin-0001"],
+      "review_status": "pending"
+    },
+    {
+      "id": "claim.prop.3",
+      "proposition_id": "prop.3",
+      "text": "最终，帝国的统治重心东移，但巴拉维诺斯依旧是西部的经济重镇。",
+      "source_origin_ids": ["origin-0002"],
+      "review_status": "pending"
+    },
+    {
+      "id": "claim.prop.5",
+      "proposition_id": "prop.5",
+      "text": "当瓦兰迪亚人“铁壁”奥斯里克入侵时，他意识到巴拉维诺斯作为权力的宝座，比作为掠夺的财源更有价值，于是同当地的元老协商让该城投降。",
+      "source_origin_ids": ["origin-0003"],
+      "review_status": "pending"
+    },
+    {
+      "id": "claim.prop.7",
+      "proposition_id": "prop.7",
+      "text": "此地传承到了奥斯里克的旁支，戴·提尔家族手中，如今人们称其为帕拉汶德。",
+      "source_origin_ids": ["origin-0004"],
+      "review_status": "pending"
+    }
+  ],
+  "clusters": [
+    {
+      "id": "cluster.1",
+      "title": "巴拉维诺斯的建立与历史变迁",
+      "proposition_ids": ["prop.1", "prop.2", "prop.3", "prop.4", "prop.5", "prop.6", "prop.7", "prop.8"],
+      "claim_ids": ["claim.prop.1", "claim.prop.3", "claim.prop.5", "claim.prop.7"],
+      "target_span_ids": ["span.claim.prop.1", "span.claim.prop.2", "span.claim.prop.5", "span.claim.prop.7"]
+    }
+  ],
+  "candidates": [
+    {
+      "id": "candidate.cluster.1",
+      "facts": [],
+      "metadata": {
+        "title": "巴拉维诺斯的建立与历史变迁",
+        "summary": "本文档概述了巴拉维诺斯从建立到成为首都，再到后来的历史变化。",
+        "domain": "geography",
+        "subdomain": "settlements",
+        "related_domains": [],
+        "note": "",
+        "era": "historical",
+        "entity_ids": []
+      },
+      "expressions": [],
+      "review_status": "pending",
+      "segmentation_reason_codes": [],
+      "source_spans": [],
+      "target_spans": [
+        {
+          "id": "span.claim.prop.1",
+          "text": "巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地，并在随后迅速取代沙拉斯，成为了卡拉德人的首都。",
+          "claim_ids": ["claim.prop.1"],
+          "source_origin_ids": ["origin-0001"],
+          "operation": "preserve",
+          "review_state": "pending"
+        },
+        {
+          "id": "span.claim.prop.2",
+          "text": "最终，帝国的统治重心东移，但巴拉维诺斯依旧是西部的经济重镇。",
+          "claim_ids": ["claim.prop.3"],
+          "source_origin_ids": ["origin-0002"],
+          "operation": "preserve",
+          "review_state": "pending"
+        },
+        {
+          "id": "span.claim.prop.5",
+          "text": "当瓦兰迪亚人“铁壁”奥斯里克入侵时，他意识到巴拉维诺斯作为权力的宝座，比作为掠夺的财源更有价值，于是同当地的元老协商让该城投降。",
+          "claim_ids": ["claim.prop.5"],
+          "source_origin_ids": ["origin-0003"],
+          "operation": "preserve",
+          "review_state": "pending"
+        },
+        {
+          "id": "span.claim.prop.7",
+          "text": "此地传承到了奥斯里克的旁支，戴·提尔家族手中，如今人们称其为帕拉汶德。",
+          "claim_ids": ["claim.prop.7"],
+          "source_origin_ids": ["origin-0004"],
+          "operation": "preserve",
+          "review_state": "pending"
+        }
+      ],
+      "propositions": [
+        {
+          "id": "prop.1",
+          "subject": "巴拉维诺斯",
+          "predicate": "由卡拉狄乌斯大帝建立",
+          "object": "第二座重要的殖民地",
+          "epistemic_kind": "fact",
+          "perspective": "客观",
+          "time_scope": "historical",
+          "polarity": "affirmed",
+          "source_origin_ids": ["origin-0001"],
+          "confidence": "unknown",
+          "unresolved": []
+        },
+        {
+          "id": "prop.2",
+          "subject": "巴拉维诺斯",
+          "predicate": "取代沙拉斯",
+          "object": "成为卡拉德人的首都",
+          "epistemic_kind": "fact",
+          "perspective": "客观",
+          "time_scope": "historical",
+          "polarity": "affirmed",
+          "source_origin_ids": ["origin-0001"],
+          "confidence": "unknown",
+          "unresolved": []
+        },
+        {
+          "id": "prop.3",
+          "subject": "帝国的统治重心",
+          "predicate": "东移",
+          "object": "unknown",
+          "epistemic_kind": "fact",
+          "perspective": "客观",
+          "time_scope": "historical",
+          "polarity": "affirmed",
+          "source_origin_ids": ["origin-0002"],
+          "confidence": "unknown",
+          "unresolved": []
+        },
+        {
+          "id": "prop.4",
+          "subject": "巴拉维诺斯",
+          "predicate": "依旧是西部的经济重镇",
+          "object": "unknown",
+          "epistemic_kind": "fact",
+          "perspective": "客观",
+          "time_scope": "historical",
+          "polarity": "affirmed",
+          "source_origin_ids": ["origin-0002"],
+          "confidence": "unknown",
+          "unresolved": []
+        },
+        {
+          "id": "prop.5",
+          "subject": "瓦兰迪亚人“铁壁”奥斯里克",
+          "predicate": "意识到巴拉维诺斯作为权力的宝座比掠夺的财源更有价值",
+          "object": "unknown",
+          "epistemic_kind": "fact",
+          "perspective": "客观",
+          "time_scope": "historical",
+          "polarity": "affirmed",
+          "source_origin_ids": ["origin-0003"],
+          "confidence": "unknown",
+          "unresolved": []
+        },
+        {
+          "id": "prop.6",
+          "subject": "瓦兰迪亚人“铁壁”奥斯里克",
+          "predicate": "同当地的元老协商让巴拉维诺斯投降",
+          "object": "unknown",
+          "epistemic_kind": "fact",
+          "perspective": "客观",
+          "time_scope": "historical",
+          "polarity": "affirmed",
+          "source_origin_ids": ["origin-0003"],
+          "confidence": "unknown",
+          "unresolved": []
+        },
+        {
+          "id": "prop.7",
+          "subject": "此地",
+          "predicate": "传承到了奥斯里克的旁支戴·提尔家族手中",
+          "object": "unknown",
+          "epistemic_kind": "fact",
+          "perspective": "客观",
+          "time_scope": "historical",
+          "polarity": "affirmed",
+          "source_origin_ids": ["origin-0004"],
+          "confidence": "unknown",
+          "unresolved": []
+        },
+        {
+          "id": "prop.8",
+          "subject": "此地",
+          "predicate": "如今人们称其为帕拉汶德",
+          "object": "unknown",
+          "epistemic_kind": "fact",
+          "perspective": "客观",
+          "time_scope": "historical",
+          "polarity": "affirmed",
+          "source_origin_ids": ["origin-0004"],
+          "confidence": "unknown",
+          "unresolved": []
+        }
+      ],
+      "claims": [
+        {
+          "id": "claim.prop.1",
+          "proposition_id": "prop.1",
+          "text": "巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地，并在随后迅速取代沙拉斯，成为了卡拉德人的首都。",
+          "source_origin_ids": ["origin-0001"],
+          "review_status": "pending"
+        },
+        {
+          "id": "claim.prop.3",
+          "proposition_id": "prop.3",
+          "text": "最终，帝国的统治重心东移，但巴拉维诺斯依旧是西部的经济重镇。",
+          "source_origin_ids": ["origin-0002"],
+          "review_status": "pending"
+        },
+        {
+          "id": "claim.prop.5",
+          "proposition_id": "prop.5",
+          "text": "当瓦兰迪亚人“铁壁”奥斯里克入侵时，他意识到巴拉维诺斯作为权力的宝座，比作为掠夺的财源更有价值，于是同当地的元老协商让该城投降。",
+          "source_origin_ids": ["origin-0003"],
+          "review_status": "pending"
+        },
+        {
+          "id": "claim.prop.7",
+          "proposition_id": "prop.7",
+          "text": "此地传承到了奥斯里克的旁支，戴·提尔家族手中，如今人们称其为帕拉汶德。",
+          "source_origin_ids": ["origin-0004"],
+          "review_status": "pending"
+        }
+      ],
+      "unresolved": [
+        {
+          "id": "u1",
+          "kind": "unknown",
+          "scope": "text",
+          "candidate_id": null,
+          "severity": "warning",
+          "blocking": false,
+          "message": "资料未覆盖人物身份来历、年代等信息。",
+          "related_ids": []
+        }
+      ],
+      "coverage": {
+        "mode": "quick_authoring",
+        "status": "reported",
+        "heuristic": true,
+        "not_semantic_migration_proof": true,
+        "truncations": [],
+        "warnings": []
+      }
+    }
+  ]
+}

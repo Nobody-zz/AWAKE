@@ -96,12 +96,21 @@ internal static class NpcDialoguePromptPipeline
 
     private static string BuildDirect(string template, Dictionary<string, string> variables)
     {
+        return RenderTemplate(template, variables);
+    }
+
+    /// <summary>
+    /// 模板渲染的唯一实现：{{key}} 替换为 JSON 字符串字面量，未提供的占位符原样保留。
+    /// 本地提示词注册表的 CompileAsync 也必须走这里，避免两条渲染路径漂移。
+    /// </summary>
+    internal static string RenderTemplate(string template, IReadOnlyDictionary<string, string> variables)
+    {
         string result = template ?? string.Empty;
         return PlaceholderPattern.Replace(result, match =>
         {
             string key = match.Groups[1].Value;
             string value;
-            if (!variables.TryGetValue(key, out value)) return match.Value;
+            if (variables == null || !variables.TryGetValue(key, out value)) return match.Value;
             return JsonConvert.SerializeObject(value ?? string.Empty);
         });
     }

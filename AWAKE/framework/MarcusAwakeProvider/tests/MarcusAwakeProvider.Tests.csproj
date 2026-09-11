@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MarcusAwakeProvider.Tests</RootNamespace>
+    <AssemblyName>MarcusAwakeProvider.Tests</AssemblyName>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoWarn>$(NoWarn);NU1702</NoWarn>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <UseAppHost>true</UseAppHost>
+    <OutputPath>$(MSBuildThisFileDirectory)_build_out\$(Configuration)\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="*.cs" />
+    <ProjectReference Include="..\MarcusAwakeProvider.csproj" />
+    <ProjectReference Include="..\..\MarcusAwakeTransport\MarcusAwakeTransport.csproj" />
+    <ProjectReference Include="..\..\MarcusAwakeFramework\MarcusAwakeFramework.csproj" />
+  </ItemGroup>
+</Project>

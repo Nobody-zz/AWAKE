@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>MarcusAwakeFramework.Tests</AssemblyName>
+    <RootNamespace>MarcusAwakeFramework.Tests</RootNamespace>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>10.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <Deterministic>true</Deterministic>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <OutputPath>$(MSBuildThisFileDirectory)..\_build_out\tests\$(Configuration)\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(MSBuildThisFileDirectory)obj\**;$(MSBuildThisFileDirectory)..\_build_out\**</DefaultItemExcludes>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="MarcusAwakeTransport">
+      <HintPath>..\..\MarcusAwakeTransport\_build_out\Release\MarcusAwakeTransport.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarcusAwakeFramework.csproj" />
+    <Compile Include="Program.cs" />
+    <Compile Include="AiGatewayContractTests.cs" />
+    <Compile Include="P3DA2FrameworkTests.cs" />
+    <Compile Include="FrameworkCoreVerticalSmoke.cs" />
+    <Compile Include="RuntimeServiceComposition.cs" />
+    <Compile Include="RuntimeVerticalSmoke.cs" />
+    <Compile Include="TaskRequestCanonicalizerVectors.cs" />
+    <Compile Include="EvidenceWriter.cs" />
+    <Compile Include="EvidenceSchemaValidator.cs" />
+    <Compile Include="TestDoubles\FrameworkCoreDoubles.cs" />
+    <Compile Include="TestDoubles\FixtureTaskHandle.cs" />
+    <Compile Include="TestDoubles\FixtureAiGateway.cs" />
+    <Compile Include="TestDoubles\FixturePromptAndProviders.cs" />
+    <Compile Include="TestDoubles\FixtureStorageAndRag.cs" />
+  </ItemGroup>
+</Project>

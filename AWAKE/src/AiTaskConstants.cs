@@ -121,8 +121,9 @@ internal static class AiTaskConstants
         AuditNamespace,
         OnboardingNamespace,
         DialogueQueueNamespace,
-        InteractionsNamespace,
-        PersonaStateNamespace
+        InteractionsNamespace
+        // PersonaStateNamespace 不进入默认打开列表：persona 权威载体是存档 SyncData，
+        // SQLite 命名空间若仍需打开必须由调用方显式传入。
     };
 
     internal static string RoutePermission(string routeId) => "ai.route.invoke:" + routeId;

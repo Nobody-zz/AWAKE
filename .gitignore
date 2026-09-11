@@ -27,3 +27,40 @@ AnimusForgeHoukai/
 # Legacy world book: superseded v1 format (runtime only accepts awake.worldbook.v2 / registry.v1).
 # The backup stays in the local workspace only.
 AWAKE/ModuleData/Worldbook/
+
+# Embedded framework: download caches and generated storage fixtures
+**/.nuget/
+**/.dotnet-home/
+**/fixtures/*.db
+
+# Local runtime state and published preview builds of the tooling apps
+AWAKE/tools/persona-workbench/.runtime/
+AWAKE/tools/worldbook-studio/workspace/
+
+# Empty scratch file
+AWAKE/docs/_apply_patch_probe6.txt
+
+# Third-party reference material. This repo pins exactly one SDK snapshot
+# (MarcusAIFramework_Reference/SDK_20260815); the rest stays local.
+MarcusAIFramework_Reference/AuthorSource/
+MarcusAIFramework_Reference/OptimizationPlan_20260813/
+MarcusAIFramework_Reference/SDK/
+MarcusAIFramework_Reference/SDK_20260814/
+MarcusAIFramework_Reference/SDK_preview1_20260813/
+MarcusAIFramework_Reference/框架文档/
+MarcusAIFramework_Reference/设计大纲/
+
+# Local-only planning docs whose subject is the separate content pack.
+# This repo is the content-free runtime repo; these stay on disk but out of
+# version control. Delete a line here and re-run `git add` to take one back.
+AWAKE/docs/AF-Houkai-Content-Inventory-20260814.md
+AWAKE/docs/AF-Houkai-Migration-Selection-20260814.md
+AWAKE/docs/AF-REPLACEMENT-STRATEGY-20260814.md
+AWAKE/docs/AF-STANDALONE-MERGE-PLAN-20260814.md
+AWAKE/docs/AI-Retrieval-Memory-Principles-20260815.md
+AWAKE/docs/Awake-Borrow-From-AFStandalone-20260814.md
+AWAKE/docs/Awake-Roadmap-0.1-0.9-20260815.md
+AWAKE/docs/AwakeSplit-ContentClassification-20260815.md
+AWAKE/docs/FEATURE-BRAINSTORM-20260813.md
+AWAKE/docs/FEATURE-FEASIBILITY-RANKING-20260813.md
+AWAKE/docs/WORLDBOOK-CALRADIA-ENTRY-CATALOG-20260823.md

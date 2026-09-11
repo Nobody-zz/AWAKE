@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MarcusAwakeFramework.Api;
+using TaleWorlds.CampaignSystem;
 
 namespace Awake.SdkSmoke;
 
@@ -253,4 +254,54 @@ internal sealed class G3S0FakeHost : IMarcusAiFrameworkHost
     public IPermissionService Permissions { get; }
     public IDiagnosticsService Diagnostics => null;
     public ILoggingService Log => null;
+}
+
+/// <summary>
+/// 行为存档 fake：镜像 TaleWorlds.CampaignSystem 的 BehaviorSaveData 语义。
+/// 保存分支同键第二次写入即抛异常；载入分支缺键时保持 ref 原值并返回 false。
+/// </summary>
+internal sealed class FakeDataStore : IDataStore
+{
+    private readonly Dictionary<string, object> _records = new Dictionary<string, object>(StringComparer.Ordinal);
+
+    internal FakeDataStore(bool isSaving)
+    {
+        IsSaving = isSaving;
+    }
+
+    public bool IsSaving { get; }
+
+    public bool IsLoading => !IsSaving;
+
+    internal int SyncCallCount { get; private set; }
+
+    internal readonly List<string> SyncKeys = new List<string>();
+
+    internal void Seed(string key, string valueJson)
+    {
+        _records[key ?? string.Empty] = valueJson;
+    }
+
+    public bool SyncData<T>(string key, ref T data)
+    {
+        SyncCallCount++;
+        string normalized = key ?? string.Empty;
+        SyncKeys.Add(normalized);
+        if (IsSaving)
+        {
+            if (_records.ContainsKey(normalized))
+            {
+                throw new InvalidOperationException("duplicate SyncData key on save: " + normalized);
+            }
+            _records[normalized] = data;
+            return true;
+        }
+        object value;
+        if (_records.TryGetValue(normalized, out value))
+        {
+            data = (T)value;
+            return true;
+        }
+        return false;
+    }
 }

@@ -870,7 +870,8 @@ internal sealed record DraftPrepareRequest(
     List<string>? MustNotInvent = null,
     string? RequestedContentTier = null,
     string? RequestedEntryKind = null,
-    bool? AdultConfirmed = null);
+    bool? AdultConfirmed = null,
+    string? CandidateMode = null);
 internal sealed record DraftGenerateRequest(string? DraftToken, string? AttemptId);
 internal sealed record DraftCreateDocumentRequest(
     string? DraftId,

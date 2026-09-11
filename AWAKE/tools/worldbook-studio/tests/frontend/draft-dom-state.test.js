@@ -74,7 +74,7 @@ function makeHarness(){
   context.window=context;
   vm.runInNewContext(localDraftsSource,context,{filename:"studio-local-drafts.js"});
   context.draftStorage=storage;
-  vm.runInNewContext(draftSource+"\n globalThis.__draftTest={draftState,draftPayload,draftPersist,draftRestoreLocal,draftFilteredCandidates,renderDraftResults,draftSelectCandidate,draftMigratePayload,draftResetVisibleFields,draftApplyAdultGate,draftQuickFields,draftSourceEdited};",context,{filename:"studio-draft.js"});
+  vm.runInNewContext(draftSource+"\n globalThis.__draftTest={draftState,draftPayload,draftPersist,draftRestoreLocal,draftFilteredCandidates,renderDraftResults,draftSelectCandidate,draftMigratePayload,draftResetVisibleFields,draftApplyAdultGate,draftQuickFields,draftSourceEdited,draftFlowBegin,draftFlowEnd,draftSetFlowPhase,draftCancelGeneration};",context,{filename:"studio-draft.js"});
   return {context,elements,getElement,storage,toasts,api:context.__draftTest};
 }
 
@@ -204,6 +204,48 @@ run("adult gate state follows selected content tier",()=>{
   assert.equal(harness.getElement("draftAdultConfirmed").checked,false);
 });
 
+run("candidate mode is carried into quick authoring fields and reset with a new draft",()=>{
+  const harness=makeHarness();
+  harness.getElement("draftCandidateMode").value="single";
+  assert.equal(harness.api.draftQuickFields().candidateMode,"single");
+  harness.api.draftResetVisibleFields();
+  assert.equal(harness.getElement("draftCandidateMode").value,"auto");
+  assert.equal(harness.api.draftQuickFields().candidateMode,"auto");
+});
+
+run("generation progress shows the live phase with a cancel affordance",()=>{
+  const harness=makeHarness();
+  harness.api.draftFlowBegin();
+  harness.api.draftSetFlowPhase("pass_b");
+  const running=harness.getElement("draftFlowStatus").innerHTML;
+  assert.match(running,/第 2\/2 步/);
+  assert.match(running,/data-draft-cancel="1"/);
+  assert.match(running,/已用 \d\d:\d\d/);
+  harness.api.draftFlowEnd();
+  const finished=harness.getElement("draftFlowStatus").textContent;
+  assert.ok(!finished.includes("data-draft-cancel"),"the cancel affordance must disappear once generation stops");
+});
+
+run("cancelling a generation aborts the request and clears the used token",()=>{
+  const harness=makeHarness();
+  let aborted=false;
+  harness.api.draftState.busy=true;
+  harness.api.draftState.token="draft-token";
+  harness.api.draftState.attemptId="attempt-1";
+  harness.api.draftState.activeRequest={cancelled:false,controller:{abort(){aborted=true}}};
+  harness.api.draftFlowBegin();
+  harness.api.draftCancelGeneration();
+  assert.equal(aborted,true);
+  assert.equal(harness.api.draftState.activeRequest.cancelled,true);
+  assert.equal(harness.api.draftState.token,"");
+  assert.equal(harness.api.draftState.attemptId,"");
+  assert.equal(harness.api.draftState.busy,false);
+  assert.ok(harness.toasts.some(message=>message.includes("已取消本次生成")));
+  const status=harness.getElement("draftFlowStatus").textContent;
+  assert.match(status,/已取消本次生成/);
+  assert.match(status,/资料仍保留/);
+});
+
 run("editing the source clears the previous adult confirmation",()=>{
   const harness=makeHarness();
   harness.api.draftState.adultConfirmed=true;
@@ -221,4 +263,4 @@ assert(source.includes("draftState.candidateFilter"),"candidate filter must be p
 assert(source.includes("draftCandidatesResults").valueOf()&&source.includes("draftResetVisibleFields"),"opening a draft must clear stale candidate results");
 assert(source.includes("adultConfirmed"),"draft state must persist adult confirmation");
 assert(source.includes("provider.hidden=false"),"Quick Authoring must keep provider choice available in advanced settings");
-process.stdout.write("PASS: draft DOM/state harness (5/5)\n");
+process.stdout.write("PASS: draft DOM/state harness (8/8)\n");

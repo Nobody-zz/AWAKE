@@ -21,7 +21,8 @@ namespace Awake.SdkSmoke;
 internal static class RedtestR1Behavioral
 {
     private const string Target = "AWAKE-REDTEST-PREP-20260908";
-    private const string BuildId = "awake-20260903-awake-runtime-repair-004";
+    // 单一来源：红测记录的 BuildId 必须跟随源码版本，避免与 AwakeVersion.BuildId 脱节。
+    private static readonly string BuildId = AwakeVersion.BuildId;
     private const string CandidateState = "source_only_pending_sync";
     private const string EvidenceRelativePath = @"docs\evidence\AWAKE-REDTEST-R1-BEHAVIORAL-20260908.json";
 

@@ -403,7 +403,9 @@ public sealed class WorldbookApplicationService
             throw new InvalidOperationException("WB-DOC-002: 请选择一个有效的知识分类。");
         var document = new JsonObject { ["domain"] = domain };
         if (subdomain is not null) document["subdomain"] = subdomain;
-        if (relatedDomains is not null) document["related_domains"] = new JsonArray(relatedDomains.Select(value => JsonValue.Create(value) as JsonNode).ToArray()!);
+        // 与 AuthoringTemplateFactory 落盘口径一致：空列表等于「没有相关分类」，不是「写了一个空列表」。
+        // 否则 UI 每次都用 relatedDomains: [] 建档都会被分类校验拒绝，而用户并没有填任何错值。
+        if (relatedDomains is { Count: > 0 }) document["related_domains"] = new JsonArray(relatedDomains.Select(value => JsonValue.Create(value) as JsonNode).ToArray()!);
         var taxonomyReport = new ValidationReport();
         taxonomy.ValidateDocument(document, taxonomyReport, requireSubdomain);
         if (!taxonomyReport.Valid) throw new InvalidOperationException($"WB-TAXONOMY-422: {taxonomyReport.Diagnostics.First(x => x.Severity == "error").Message}");

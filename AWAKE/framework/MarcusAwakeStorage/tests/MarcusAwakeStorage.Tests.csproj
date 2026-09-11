@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MarcusAwakeStorage.Tests</RootNamespace>
+    <AssemblyName>MarcusAwakeStorage.Tests</AssemblyName>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <OutputPath>$(MSBuildThisFileDirectory)..\_build_out\tests\$(Configuration)\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(MSBuildThisFileDirectory)obj\**;$(MSBuildThisFileDirectory)..\_build_out\**</DefaultItemExcludes>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <None Include="Fixtures\sample-corpus.json" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\MarcusAwakeStorage.csproj" />
+    <Reference Include="MarcusAwakeFramework">
+      <HintPath>..\..\MarcusAwakeFramework\_build_out\Release\MarcusAwakeFramework.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.21" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.10" />
+  </ItemGroup>
+</Project>

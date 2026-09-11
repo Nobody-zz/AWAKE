@@ -102,7 +102,7 @@ internal static class AwakeProviderConfiguration
     {
         if (!TryPrepareConfiguration(out ProviderConfigSnapshot snapshot, out string preparationError))
         {
-            ShowImmediateFailure(preparationError);
+            ShowImmediateFailure("provider_apply", preparationError);
             return;
         }
 
@@ -112,13 +112,13 @@ internal static class AwakeProviderConfiguration
             {
                 if (!TryResolveRuntime(out IProviderRuntimePort provider, out RequestContext context, out string resolutionError))
                 {
-                    return ProviderActionResult.Failed(resolutionError);
+                    return RejectedProviderOperation("provider_apply", "provider_runtime_unavailable", resolutionError);
                 }
 
                 OperationResult<bool> result = await ApplyProfilesAsync(provider, context, snapshot, cancellationToken).ConfigureAwait(false);
                 if (!result.IsSuccess)
                 {
-                    return ProviderActionResult.Failed(DescribeFailure(result.Error, "AI 配置应用失败"));
+                    return ProviderActionResult.Failed(DescribeFailure(result.Error, "provider_apply", "AI 配置应用失败"));
                 }
 
                 return ProviderActionResult.Succeeded("AI 配置已应用到 AWAKE 的对话、预处理、后处理和记忆路由。", null);
@@ -154,7 +154,7 @@ internal static class AwakeProviderConfiguration
     {
         if (!TryPrepareConfiguration(out ProviderConfigSnapshot snapshot, out string preparationError))
         {
-            ShowImmediateFailure(preparationError);
+            ShowImmediateFailure("provider_models", preparationError);
             return;
         }
 
@@ -164,13 +164,13 @@ internal static class AwakeProviderConfiguration
             {
                 if (!TryResolveRuntime(out IProviderRuntimePort provider, out RequestContext context, out string resolutionError))
                 {
-                    return ProviderActionResult.Failed(resolutionError);
+                    return RejectedProviderOperation("provider_models", "provider_runtime_unavailable", resolutionError);
                 }
 
                 OperationResult<ProviderModelsResult> result = await ListModelsAsync(provider, context, snapshot, cancellationToken).ConfigureAwait(false);
                 if (!result.IsSuccess || result.Value == null)
                 {
-                    return ProviderActionResult.Failed(DescribeFailure(result.Error, "模型列表获取失败"));
+                    return ProviderActionResult.Failed(DescribeFailure(result.Error, "provider_models", "模型列表获取失败"));
                 }
 
                 return ProviderActionResult.Succeeded(
@@ -196,7 +196,7 @@ internal static class AwakeProviderConfiguration
     {
         if (!TryPrepareConfiguration(out ProviderConfigSnapshot snapshot, out string preparationError))
         {
-            ShowImmediateFailure(preparationError);
+            ShowImmediateFailure("provider_test", preparationError);
             return;
         }
 
@@ -206,13 +206,13 @@ internal static class AwakeProviderConfiguration
             {
                 if (!TryResolveRuntime(out IProviderRuntimePort provider, out RequestContext context, out string resolutionError))
                 {
-                    return ProviderActionResult.Failed(resolutionError);
+                    return RejectedProviderOperation("provider_test", "provider_runtime_unavailable", resolutionError);
                 }
 
                 OperationResult<ProviderModelsResult> result = await ListModelsAsync(provider, context, snapshot, cancellationToken).ConfigureAwait(false);
                 if (!result.IsSuccess || result.Value == null)
                 {
-                    return ProviderActionResult.Failed(DescribeFailure(result.Error, "连接测试失败"));
+                    return ProviderActionResult.Failed(DescribeFailure(result.Error, "provider_test", "连接测试失败"));
                 }
 
                 return ProviderActionResult.Succeeded(
@@ -377,19 +377,37 @@ internal static class AwakeProviderConfiguration
                 RuntimeServiceClient runtime = fullHost?.Runtime as RuntimeServiceClient;
                 if (fullHost == null || publicHost == null || runtime == null)
                 {
-                    return ProviderActionResult.Failed("AWAKE Runtime 尚未初始化，请进入战役后再进行 AI 自检。");
+                    return RejectedProviderOperation(
+                        "runtime_health",
+                        "provider_runtime_uninitialized",
+                        "AWAKE Runtime 尚未初始化，请进入战役后再进行 AI 自检。");
                 }
 
                 if (runtime.Status == null || runtime.Status.State != RuntimeServiceState.Ready)
                 {
-                    return ProviderActionResult.Failed("AWAKE Runtime Service 尚未就绪，请稍候再试。");
+                    if (runtime.Status != null
+                        && runtime.Status.State == RuntimeServiceState.Stopped
+                        && AwakeRuntimeRecovery.TryRequestRelaunch("mcm_runtime_health"))
+                    {
+                        return RejectedProviderOperation(
+                            "runtime_health",
+                            "provider_runtime_restarting",
+                            "AWAKE Runtime 已停止，正在重新启动，请稍候再试一次。",
+                            "runtime_state=Stopped");
+                    }
+
+                    return RejectedProviderOperation(
+                        "runtime_health",
+                        "provider_runtime_not_ready",
+                        "AWAKE Runtime Service 尚未就绪，请稍候再试。",
+                        "runtime_state=" + (runtime.Status == null ? "missing" : runtime.Status.State.ToString()));
                 }
 
                 RequestContext context = AwakeRuntime.CreateContext(publicHost, "awake.mcm.runtime.health." + Guid.NewGuid().ToString("N"));
                 OperationResult<RuntimeServiceStatus> result = await runtime.CheckHealthAsync(context, cancellationToken).ConfigureAwait(false);
                 if (!result.IsSuccess || result.Value == null)
                 {
-                    return ProviderActionResult.Failed(DescribeFailure(result.Error, "AI 自检失败"));
+                    return ProviderActionResult.Failed(DescribeFailure(result.Error, "runtime_health", "AI 自检失败"));
                 }
 
                 return ProviderActionResult.Succeeded("AI 自检成功：AWAKE Runtime Service 已响应。", null);
@@ -429,13 +447,13 @@ internal static class AwakeProviderConfiguration
             {
                 if (!TryResolveRuntime(out IProviderRuntimePort provider, out RequestContext context, out string resolutionError))
                 {
-                    return ProviderActionResult.Failed(resolutionError);
+                    return RejectedProviderOperation("provider_credential", "provider_runtime_unavailable", resolutionError);
                 }
 
                 OperationResult<bool> result = await SaveCredentialAsync(provider, context, secret, cancellationToken).ConfigureAwait(false);
                 if (!result.IsSuccess)
                 {
-                    return ProviderActionResult.Failed(DescribeFailure(result.Error, "API Key 保存失败"));
+                    return ProviderActionResult.Failed(DescribeFailure(result.Error, "provider_credential", "API Key 保存失败"));
                 }
 
                 return ProviderActionResult.Succeeded("API Key 已写入本机保护存储。现在可以点击“保存配置并应用”或“拉取可用模型”。", null);
@@ -454,8 +472,12 @@ internal static class AwakeProviderConfiguration
         return true;
     }
 
-    private static void ShowImmediateFailure(string message)
+    private static void ShowImmediateFailure(string operation, string message)
     {
+        AwakeLog.Write("provider_operation_rejected operation=" + NormalizeOperation(operation)
+            + " code=configuration_incomplete"
+            + " details=none"
+            + " message=" + (message ?? string.Empty));
         ProviderActionResult result = ProviderActionResult.Failed(message);
         UpdateStatusOnUi(result.Message);
         ShowActionResult(result);
@@ -529,6 +551,15 @@ internal static class AwakeProviderConfiguration
 
         if (fullHost.Runtime == null || fullHost.Runtime.Status == null || fullHost.Runtime.Status.State != RuntimeServiceState.Ready)
         {
+            if (fullHost.Runtime != null
+                && fullHost.Runtime.Status != null
+                && fullHost.Runtime.Status.State == RuntimeServiceState.Stopped
+                && AwakeRuntimeRecovery.TryRequestRelaunch("mcm_provider_gate"))
+            {
+                error = "AWAKE Runtime 已停止，正在重新启动，请稍候再试一次。";
+                return false;
+            }
+
             error = "AWAKE Runtime Service 尚未就绪，请稍候再试。";
             return false;
         }
@@ -553,14 +584,8 @@ internal static class AwakeProviderConfiguration
             return false;
         }
 
-        string baseUrl = (config.ProviderBaseUrl ?? string.Empty).Trim();
-        if (!Uri.TryCreate(baseUrl, UriKind.Absolute, out Uri uri)
-            || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps)
-            || !string.IsNullOrEmpty(uri.UserInfo)
-            || !string.IsNullOrEmpty(uri.Query)
-            || !string.IsNullOrEmpty(uri.Fragment))
+        if (!TryNormalizeProviderBaseUrl(config.ProviderBaseUrl, out string baseUrl, out error))
         {
-            error = "服务地址必须是完整的 HTTP 或 HTTPS 地址，且不能包含账号、密码、查询参数或片段。";
             return false;
         }
 
@@ -573,9 +598,62 @@ internal static class AwakeProviderConfiguration
 
         snapshot = new ProviderConfigSnapshot(
             ResolveProviderKind(config),
-            uri.AbsoluteUri,
+            baseUrl,
             model,
             config.ProviderIsCloud);
+        return true;
+    }
+
+    private static readonly string[] ProviderEndpointSuffixes =
+    {
+        "/chat/completions",
+        "/completions",
+        "/models"
+    };
+
+    /// <summary>
+    /// Accepts the shapes users actually paste - an API root, a versioned root, or a complete
+    /// endpoint such as https://api.deepseek.com/chat/completions - and returns the API root that
+    /// the runtime appends its fixed sub paths (models / chat/completions) to.
+    /// </summary>
+    internal static bool TryNormalizeProviderBaseUrl(string candidate, out string normalized, out string error)
+    {
+        normalized = string.Empty;
+        error = string.Empty;
+
+        string baseUrl = (candidate ?? string.Empty).Trim();
+        if (!Uri.TryCreate(baseUrl, UriKind.Absolute, out Uri uri)
+            || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps)
+            || !string.IsNullOrEmpty(uri.UserInfo)
+            || !string.IsNullOrEmpty(uri.Query)
+            || !string.IsNullOrEmpty(uri.Fragment))
+        {
+            error = "服务地址必须是完整的 HTTP 或 HTTPS 地址，且不能包含账号、密码、查询参数或片段。";
+            return false;
+        }
+
+        string path = uri.AbsolutePath.TrimEnd('/');
+        foreach (string suffix in ProviderEndpointSuffixes)
+        {
+            if (path.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
+            {
+                path = path.Substring(0, path.Length - suffix.Length).TrimEnd('/');
+                break;
+            }
+        }
+
+        var builder = new UriBuilder(uri)
+        {
+            Path = path,
+            Query = string.Empty,
+            Fragment = string.Empty
+        };
+        normalized = builder.Uri.AbsoluteUri;
+        if (!StringComparer.Ordinal.Equals(baseUrl, normalized))
+        {
+            AwakeLog.Write("provider_base_url_normalized from=" + baseUrl + " to=" + normalized);
+        }
+
         return true;
     }
 
@@ -612,8 +690,9 @@ internal static class AwakeProviderConfiguration
             details: details));
     }
 
-    private static string DescribeFailure(FrameworkError error, string prefix)
+    private static string DescribeFailure(FrameworkError error, string operation, string prefix)
     {
+        RecordProviderFailure(operation, error);
         if (error == null) return prefix + "，请检查地址、模型和 API Key。";
         if (StringComparer.Ordinal.Equals(error.Code, "provider_profiles_partial")) return error.SafeFallback;
         switch (error.Category)
@@ -632,6 +711,46 @@ internal static class AwakeProviderConfiguration
             default:
                 return prefix + "，请检查地址、模型和 API Key。";
         }
+    }
+
+    // Structured diagnostics for MCM Provider operations. Records only identifiers, categories and
+    // the framework's safe fallback text - never credentials, request bodies or model output.
+    internal static void RecordProviderFailure(string operation, FrameworkError error)
+    {
+        AwakeLog.Write("provider_operation_failed operation=" + NormalizeOperation(operation)
+            + " code=" + (error == null ? "unknown" : error.Code)
+            + " category=" + (error == null ? "unknown" : error.Category.ToString())
+            + " retryable=" + (error == null ? "unknown" : error.Retryable ? "true" : "false")
+            + " correlation=" + (error == null ? string.Empty : error.CorrelationId)
+            + " details=" + DescribeErrorDetails(error)
+            + " message=" + (error == null ? string.Empty : error.SafeFallback));
+    }
+
+    private static ProviderActionResult RejectedProviderOperation(string operation, string code, string message, string details = "none")
+    {
+        AwakeLog.Write("provider_operation_rejected operation=" + NormalizeOperation(operation)
+            + " code=" + code
+            + " details=" + (string.IsNullOrWhiteSpace(details) ? "none" : details)
+            + " message=" + (message ?? string.Empty));
+        return ProviderActionResult.Failed(message);
+    }
+
+    private static string NormalizeOperation(string operation)
+    {
+        return string.IsNullOrWhiteSpace(operation) ? "unknown" : operation;
+    }
+
+    private static string DescribeErrorDetails(FrameworkError error)
+    {
+        if (error == null || error.Details == null || error.Details.Count == 0) return "none";
+        StringBuilder builder = new StringBuilder();
+        foreach (KeyValuePair<string, string> pair in error.Details)
+        {
+            if (string.IsNullOrWhiteSpace(pair.Value)) continue;
+            if (builder.Length > 0) builder.Append(',');
+            builder.Append(pair.Key).Append('=').Append(pair.Value);
+        }
+        return builder.Length == 0 ? "none" : builder.ToString();
     }
 
     private static void ShowActionResult(ProviderActionResult result)

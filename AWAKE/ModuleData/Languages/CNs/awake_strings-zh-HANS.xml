@@ -73,7 +73,7 @@
     <string id="awake.mcm.provider_kind.name" text="AI 服务类型" />
     <string id="awake.mcm.provider_kind.hint" text="选择你实际使用的 AI 服务。OpenAI 兼容也适用于部分本地服务。" />
     <string id="awake.mcm.provider_url.name" text="服务地址" />
-    <string id="awake.mcm.provider_url.hint" text="填写完整的 HTTP/HTTPS 地址，例如 https://api.openai.com/v1 或 http://127.0.0.1:11434。不要把 API Key 写进地址。" />
+    <string id="awake.mcm.provider_url.hint" text="填写服务地址：可填 API 根地址（如 https://api.deepseek.com 或 https://api.openai.com/v1），也可直接粘贴完整接口地址（如 https://api.deepseek.com/chat/completions），两种都接受。不要把 API Key 写进地址。" />
     <string id="awake.mcm.provider_model.name" text="模型名称" />
     <string id="awake.mcm.provider_model.hint" text="填写 Provider 返回的模型 ID；可先点击“拉取可用模型”查看。" />
     <string id="awake.mcm.provider_cloud.name" text="这是云端服务" />
@@ -101,6 +101,8 @@
     <string id="awake.mcm.cloud_export.hint" text="默认开启。关闭后本机 Ollama 等本地链路不受影响；开启云端对话仍需框架路由权限授权。" />
     <string id="awake.mcm.export_player_state.name" text="允许外发玩家状态" />
     <string id="awake.mcm.export_player_state.hint" text="允许把玩家、英雄、关系等角色状态作为 player_state 分类随 NPC 对话外发。默认开启。" />
+    <string id="awake.mcm.allow_ai_routing.name" text="允许 AI 对话与结算" />
+    <string id="awake.mcm.allow_ai_routing.hint" text="默认关闭。这是显式授权开关：开启后 AWAKE 才会把对话提交给 AI 路由、按分类外发数据，并结算 AI 产出的关系与世界状态变更；关闭时 NPC 对话只走本地兜底文案。" />
     <string id="awake.mcm.enable_cloud_oneclick.name" text="一键开启云端对话" />
     <string id="awake.mcm.enable_cloud_oneclick.content" text="一键开启" />
     <string id="awake.mcm.enable_cloud_oneclick.hint" text="开启 AWAKE 云外发与玩家状态外发。内置 Runtime 会自动应用路由配置。" />

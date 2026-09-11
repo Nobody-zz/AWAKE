@@ -410,7 +410,12 @@ internal sealed class NpcDialogueService : IDisposable
             }
             await AwakeRuntime.EnsureCurrentHeroBoundAsync(_host, sessionCancellationToken, requestPermission: true).ConfigureAwait(false);
             if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
-            if (!await AwakeRuntime.EnsureWorldStateReadyAsync(_host, sessionCancellationToken).ConfigureAwait(false)) return;
+            if (!await AwakeRuntime.EnsureWorldStateReadyAsync(_host, sessionCancellationToken).ConfigureAwait(false))
+            {
+                AwakeLog.Write("npc_dialogue_init_blocked world_state_not_ready hero=" + _heroId);
+                PushStatus("对话存储未就绪。");
+                return;
+            }
             WorldStateStore expectedStore = AwakeRuntime.WorldStateStore;
             if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
             RequestContext context = AwakeRuntime.CreateContext(_host, Guid.NewGuid().ToString("N"));
@@ -469,7 +474,8 @@ internal sealed class NpcDialogueService : IDisposable
         bool bound = await AwakeRuntime.EnsureCurrentHeroBoundAsync(_host, cancellationToken, requestPermission: true).ConfigureAwait(false);
         if (!bound || string.IsNullOrWhiteSpace(AwakeRuntime.CurrentHeroId))
         {
-            return ImmediateFail("对话已结束。", "npc_dialogue.player_unbound", FrameworkErrors.Create(
+            AwakeLog.Write("npc_dialogue_turn_blocked player_unbound hero=" + _heroId);
+            return ImmediateFail("玩家未绑定，暂时无法交谈。", "npc_dialogue.player_unbound", FrameworkErrors.Create(
                 "awake.player_unbound",
                 FrameworkErrorCategory.Denied,
                 "The current player could not be bound.",
@@ -478,7 +484,11 @@ internal sealed class NpcDialogueService : IDisposable
                 owner: AwakeConstants.OwnerValue));
         }
         ConsumeOpeningContext();
-        await AwakeRuntime.EnsureWorldStateReadyAsync(_host, cancellationToken).ConfigureAwait(false);
+        if (!await AwakeRuntime.EnsureWorldStateReadyAsync(_host, cancellationToken).ConfigureAwait(false))
+        {
+            AwakeLog.Write("npc_dialogue_turn_blocked world_state_not_ready hero=" + _heroId);
+            return ImmediateFail("对话存储未就绪。", "npc_dialogue.world_state_unavailable");
+        }
         if (!await RegisterPromptBestEffortAsync(context, cancellationToken).ConfigureAwait(false))
         {
             return ImmediateFail("对话提示词未就绪。", "npc_dialogue.prompt_unavailable");

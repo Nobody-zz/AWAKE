@@ -26,6 +26,14 @@ internal static class Program
 			{
 				return await RedtestR1Behavioral.RunAsync();
 			}
+			if (args != null
+				&& args.Length > 0
+				&& string.Equals(args[0], "--persona-anchor", StringComparison.Ordinal))
+			{
+				RunPersonaAnchorSmoke();
+				Console.WriteLine("PASS ALL persona anchor smoke");
+				return 0;
+			}
 			return await RunAsync();
 		}
 		catch (Exception ex)
@@ -68,6 +76,10 @@ internal static class Program
 		RunPersonaTemplateSmoke();
 		RunSharedPersonaGoldenFixtureSmoke();
 		RunPersonaPersistenceSmoke();
+		RunPersonaAnchorSmoke();
+		RunProviderFailureLogSmoke();
+		RunProviderBaseUrlToleranceSmoke();
+		RunRuntimeRecoverySmoke();
 		RunRouteContractSmoke();
 		RunTerminalHotkeySmoke();
 		RunNpcProactiveSmoke();
@@ -92,6 +104,10 @@ RunContactLabelSmoke();
 		RunOnboardingSmoke();
 		RunB9InfraSmoke();
 		RunMarcusLinkSmoke();
+		// 本用例会重置 UI 调度线程绑定；放在最后，避免影响前面的用例。
+		AwakeUiDispatcher.ResetGameThreadForTesting();
+		AwakeUiDispatcher.Drain();
+		DialogueChainRedtest.Run();
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
 	}
@@ -1224,6 +1240,234 @@ private static void RunMessengerHistorySmoke()
 			|| !StringComparer.Ordinal.Equals(error, "persona.recovery.save_commit_without_anchor"))
 			throw new InvalidOperationException("save committed must require an anchor");
 		Console.WriteLine("PASS persona persistence smoke");
+	}
+
+	/// <summary>
+	/// Persona 锚点切片离线证据（E1 接线断言 + E2 装载分支）。
+	///
+	/// 只驱动接缝 PersonaContinuitySync；behavior 是否真的调用接缝由代码审查 + E4 日志证明，
+	/// 因为 AwakeEventBehavior.cs 不在本测试工程的编译列表内。
+	/// </summary>
+	private static void RunPersonaAnchorSmoke()
+	{
+		const string campaignId = "campaign_anchor_test";
+		const string characterId = "hero_anchor_test";
+
+		string snapshot;
+		string reason;
+		if (!PersonaContinuitySync.TryBuildAnchorSnapshot(campaignId, characterId, out snapshot, out reason))
+		{
+			throw new InvalidOperationException("persona anchor snapshot must build: " + reason);
+		}
+		AssertPersonaAnchorPayload(snapshot, campaignId, characterId);
+		Console.WriteLine("PASS persona.anchor.payload_shape");
+		Console.WriteLine("PERSONA_ANCHOR_PAYLOAD " + snapshot);
+		Console.WriteLine("PERSONA_ANCHOR_PAYLOAD_SHA256 " + AwakeBuildIdentity.ComputeSha256(Encoding.UTF8.GetBytes(snapshot)));
+
+		string snapshotAgain;
+		string againReason;
+		if (!PersonaContinuitySync.TryBuildAnchorSnapshot(campaignId, characterId, out snapshotAgain, out againReason)
+			|| !StringComparer.Ordinal.Equals(snapshot, snapshotAgain))
+		{
+			throw new InvalidOperationException("persona anchor payload must be byte-stable across repeated builds (no timestamp): " + againReason);
+		}
+		Console.WriteLine("PASS persona.anchor.payload_stable");
+
+		FakeDataStore saveStore = new FakeDataStore(isSaving: true);
+		string saveJson = "stale-value-must-be-replaced";
+		PersonaContinuitySync.Sync(saveStore, ref saveJson, () => snapshot);
+		if (saveStore.SyncCallCount != 1
+			|| !StringComparer.Ordinal.Equals(saveStore.SyncKeys[0], PersonaContinuitySync.SaveKey)
+			|| !StringComparer.Ordinal.Equals(saveJson, snapshot))
+		{
+			throw new InvalidOperationException("save direction must write the anchor once under the fixed SyncData key.");
+		}
+		Console.WriteLine("PASS persona.anchor.sync_save_once");
+
+		FakeDataStore emptySaveStore = new FakeDataStore(isSaving: true);
+		string emptyJson = string.Empty;
+		PersonaContinuitySync.Sync(emptySaveStore, ref emptyJson, () => string.Empty);
+		if (emptySaveStore.SyncCallCount != 0 || emptyJson.Length != 0)
+		{
+			throw new InvalidOperationException("save direction must not write a persona record when the identity is unavailable.");
+		}
+		Console.WriteLine("PASS persona.anchor.sync_save_skips_without_identity");
+
+		FakeDataStore loadStore = new FakeDataStore(isSaving: false);
+		loadStore.Seed(PersonaContinuitySync.SaveKey, snapshot);
+		string loadedJson = string.Empty;
+		PersonaContinuitySync.Sync(loadStore, ref loadedJson, MissingSnapshotProvider);
+		if (!StringComparer.Ordinal.Equals(loadedJson, snapshot))
+		{
+			throw new InvalidOperationException("load direction must return the stored anchor string.");
+		}
+		Console.WriteLine("PASS persona.anchor.sync_load_with_key");
+
+		string missingJson = "keep-me";
+		PersonaContinuitySync.Sync(new FakeDataStore(isSaving: false), ref missingJson, MissingSnapshotProvider);
+		if (!StringComparer.Ordinal.Equals(missingJson, "keep-me"))
+		{
+			throw new InvalidOperationException("load direction without the key must keep the previous value and not throw.");
+		}
+		Console.WriteLine("PASS persona.anchor.sync_load_missing_key");
+
+		AssertPersonaAdopt(snapshot, campaignId, characterId, PersonaLoadOutcome.Loaded, string.Empty);
+		Console.WriteLine("PASS persona.anchor.adopt_loaded");
+
+		AssertPersonaAdopt(string.Empty, campaignId, characterId, PersonaLoadOutcome.NoPersona, PersonaContinuitySync.NoPersonaReason);
+		AssertPersonaAdopt("   ", campaignId, characterId, PersonaLoadOutcome.NoPersona, PersonaContinuitySync.NoPersonaReason);
+		Console.WriteLine("PASS persona.anchor.adopt_legacy_save_silent");
+
+		AssertPersonaAdopt(snapshot, string.Empty, characterId, PersonaLoadOutcome.Rejected, PersonaContinuitySync.ReasonCampaignIdEmpty);
+		AssertPersonaAdopt(snapshot, PersonaContinuitySync.OldSaveCampaignId, characterId, PersonaLoadOutcome.Rejected, PersonaContinuitySync.ReasonCampaignIdNotUnique);
+		Console.WriteLine("PASS persona.anchor.adopt_campaign_guard");
+
+		AssertPersonaAdopt(snapshot, "campaign_other", characterId, PersonaLoadOutcome.Rejected, PersonaContinuitySync.ReasonCampaignMismatch);
+		AssertPersonaAdopt(snapshot, campaignId, "hero_other", PersonaLoadOutcome.Rejected, PersonaContinuitySync.ReasonCharacterMismatch);
+		Console.WriteLine("PASS persona.anchor.adopt_identity_mismatch");
+
+		AssertPersonaAdopt(
+			snapshot.Replace("awake.persona.continuity.v1", "awake.persona.override.v1"),
+			campaignId,
+			characterId,
+			PersonaLoadOutcome.Rejected,
+			PersonaContinuitySync.ReasonSchemaUnsupported);
+		Console.WriteLine("PASS persona.anchor.adopt_schema_unsupported");
+
+		AssertPersonaAdopt("{\"schema\":\"awake.persona.continuity.v1\"", campaignId, characterId, PersonaLoadOutcome.Rejected, PersonaContinuitySync.ReasonMalformed);
+		AssertPersonaAdopt("[]", campaignId, characterId, PersonaLoadOutcome.Rejected, PersonaContinuitySync.ReasonMalformed);
+		Console.WriteLine("PASS persona.anchor.adopt_malformed_json");
+
+		AssertPersonaAdopt(
+			snapshot.Replace("\"transcriptAcceptedSequence\":0", "\"transcriptAcceptedSequence\":5"),
+			campaignId,
+			characterId,
+			PersonaLoadOutcome.Rejected,
+			"persona.persistence.watermark_ahead_of_sequence");
+		AssertPersonaAdopt(
+			snapshot.Replace("\"sequence\":0", "\"sequence\":-1"),
+			campaignId,
+			characterId,
+			PersonaLoadOutcome.Rejected,
+			"persona.persistence.sequence_invalid");
+		Console.WriteLine("PASS persona.anchor.adopt_validator_rejects");
+
+		string rejectedJson;
+		string rejectedReason;
+		if (PersonaContinuitySync.TryBuildAnchorSnapshot(string.Empty, characterId, out rejectedJson, out rejectedReason)
+			|| !StringComparer.Ordinal.Equals(rejectedReason, PersonaContinuitySync.ReasonCampaignIdEmpty))
+		{
+			throw new InvalidOperationException("empty campaign id must not produce an anchor snapshot.");
+		}
+		if (PersonaContinuitySync.TryBuildAnchorSnapshot(PersonaContinuitySync.OldSaveCampaignId, characterId, out rejectedJson, out rejectedReason)
+			|| !StringComparer.Ordinal.Equals(rejectedReason, PersonaContinuitySync.ReasonCampaignIdNotUnique))
+		{
+			throw new InvalidOperationException("shared oldSave campaign id must not produce an anchor snapshot.");
+		}
+		if (PersonaContinuitySync.TryBuildAnchorSnapshot(campaignId, string.Empty, out rejectedJson, out rejectedReason)
+			|| !StringComparer.Ordinal.Equals(rejectedReason, PersonaContinuitySync.ReasonCharacterUnavailable))
+		{
+			throw new InvalidOperationException("missing main hero must not produce an anchor snapshot.");
+		}
+		Console.WriteLine("PASS persona.anchor.snapshot_fail_closed");
+
+		if (Array.IndexOf(AiTaskConstants.StorageNamespaceIds, AiTaskConstants.PersonaStateNamespace) >= 0)
+		{
+			throw new InvalidOperationException("persona state namespace must not be in the default storage open list.");
+		}
+		Console.WriteLine("PASS persona.anchor.namespace_not_default");
+
+		Console.WriteLine("PASS persona anchor smoke");
+	}
+
+	private static string MissingSnapshotProvider()
+	{
+		throw new InvalidOperationException("snapshot provider must not run while loading.");
+	}
+
+	private static void AssertPersonaAdopt(
+		string json,
+		string campaignId,
+		string characterId,
+		PersonaLoadOutcome expected,
+		string expectedReason)
+	{
+		PersonaPersistenceEnvelope envelope;
+		string reason;
+		PersonaLoadOutcome outcome = PersonaContinuitySync.Adopt(json, campaignId, characterId, out envelope, out reason);
+		if (outcome != expected || !StringComparer.Ordinal.Equals(reason, expectedReason))
+		{
+			throw new InvalidOperationException("persona adopt mismatch expected=" + expected + "/" + expectedReason + " actual=" + outcome + "/" + reason);
+		}
+		if (expected == PersonaLoadOutcome.Loaded)
+		{
+			if (envelope == null) throw new InvalidOperationException("loaded anchor must carry the envelope.");
+			return;
+		}
+		if (envelope != null) throw new InvalidOperationException("rejected/absent anchor must not expose an envelope.");
+	}
+
+	private static void AssertPersonaAnchorPayload(string json, string campaignId, string characterId)
+	{
+		JObject anchor = JObject.Parse(json);
+		AssertJsonFieldOrder(anchor, "schema", "characterId", "timeline", "sequence", "watermarks", "source", "payloadHash");
+		if (!StringComparer.Ordinal.Equals((string)anchor["schema"], "awake.persona.continuity.v1"))
+		{
+			throw new InvalidOperationException("anchor schema must be the continuity schema.");
+		}
+		if (!StringComparer.Ordinal.Equals((string)anchor["characterId"], characterId))
+		{
+			throw new InvalidOperationException("anchor payload must carry the current character id.");
+		}
+		if ((long)anchor["sequence"] != 0 || (string)anchor["source"] != string.Empty || (string)anchor["payloadHash"] != string.Empty)
+		{
+			throw new InvalidOperationException("anchor slice must keep sequence/source/payloadHash at their anchor defaults.");
+		}
+		JObject timeline = (JObject)anchor["timeline"];
+		AssertJsonFieldOrder(timeline, "campaignId", "saveId", "timelineId", "branchId", "parentBranchId", "forkSequence");
+		if (!StringComparer.Ordinal.Equals((string)timeline["campaignId"], campaignId)
+			|| !StringComparer.Ordinal.Equals((string)timeline["saveId"], string.Empty)
+			|| !StringComparer.Ordinal.Equals((string)timeline["timelineId"], PersonaContinuitySync.TimelineId)
+			|| !StringComparer.Ordinal.Equals((string)timeline["branchId"], PersonaContinuitySync.RootBranchId)
+			|| !StringComparer.Ordinal.Equals((string)timeline["parentBranchId"], string.Empty)
+			|| (long)timeline["forkSequence"] != 0)
+		{
+			throw new InvalidOperationException("anchor timeline identity must stay the root branch of the current campaign.");
+		}
+		JObject watermarks = (JObject)anchor["watermarks"];
+		AssertJsonFieldOrder(watermarks, "transcriptAcceptedSequence", "effectsAcceptedSequence", "memoryAcceptedSequence", "personaAcceptedSequence");
+		foreach (JProperty watermark in watermarks.Properties())
+		{
+			if ((long)watermark.Value != 0)
+			{
+				throw new InvalidOperationException("anchor slice must not carry persona content watermarks yet: " + watermark.Name);
+			}
+		}
+		if (json.IndexOf("savedAt", StringComparison.OrdinalIgnoreCase) >= 0
+			|| json.IndexOf("utc", StringComparison.OrdinalIgnoreCase) >= 0
+			|| json.IndexOf("timestamp", StringComparison.OrdinalIgnoreCase) >= 0)
+		{
+			throw new InvalidOperationException("anchor payload must not contain a timestamp: " + json);
+		}
+	}
+
+	private static void AssertJsonFieldOrder(JObject value, params string[] expected)
+	{
+		List<JProperty> properties = new List<JProperty>();
+		foreach (JProperty property in value.Properties()) properties.Add(property);
+		if (properties.Count != expected.Length)
+		{
+			List<string> names = new List<string>();
+			foreach (JProperty property in properties) names.Add(property.Name);
+			throw new InvalidOperationException("unexpected anchor payload field count: " + string.Join(",", names));
+		}
+		for (int i = 0; i < expected.Length; i++)
+		{
+			if (!StringComparer.Ordinal.Equals(properties[i].Name, expected[i]))
+			{
+				throw new InvalidOperationException("anchor payload field order must be pinned; index " + i + " expected " + expected[i] + " actual " + properties[i].Name);
+			}
+		}
 	}
 	private static void RunWorldKnowledgeB2Smoke()
 	{
@@ -3367,6 +3611,274 @@ private static void RunMessengerHistorySmoke()
 		return bindings;
 	}
 
+	/// <summary>
+	/// Provider 诊断落盘离线断言：MCM Provider 操作失败必须写一行结构化日志，
+	/// 且该行只含标识 / 类别 / 安全回退文案，不含凭据或请求正文。
+	/// </summary>
+	private static void RunProviderFailureLogSmoke()
+	{
+		List<string> recorded = new List<string>();
+		Action<string> previous = AwakeLog.Recorder;
+		try
+		{
+			AwakeLog.Recorder = recorded.Add;
+
+			FrameworkError error = FrameworkErrors.Create(
+				"provider.provider_error",
+				FrameworkErrorCategory.Unavailable,
+				"Provider request failed.",
+				"correlation-provider-1",
+				true,
+				"MarcusAwakeRuntimeService",
+				new Dictionary<string, string>
+				{
+					["provider_id"] = "awake.provider.default",
+					["profile_id"] = "awake.provider.default",
+					["route_id"] = "awake.npc.dialogue",
+					["status_code"] = "401"
+				});
+
+			AwakeProviderConfiguration.RecordProviderFailure("provider_models", error);
+			AwakeProviderConfiguration.RecordProviderFailure("runtime_health", null);
+		}
+		finally
+		{
+			AwakeLog.Recorder = previous;
+		}
+
+		if (recorded.Count != 2)
+		{
+			throw new InvalidOperationException("provider failure must record exactly one line per failure, saw " + recorded.Count);
+		}
+
+		string withError = recorded[0];
+		RequireProviderLogToken(withError, "provider_operation_failed");
+		RequireProviderLogToken(withError, "operation=provider_models");
+		RequireProviderLogToken(withError, "code=provider.provider_error");
+		RequireProviderLogToken(withError, "category=Unavailable");
+		RequireProviderLogToken(withError, "retryable=true");
+		RequireProviderLogToken(withError, "correlation=correlation-provider-1");
+		RequireProviderLogToken(withError, "provider_id=awake.provider.default");
+		RequireProviderLogToken(withError, "route_id=awake.npc.dialogue");
+		RequireProviderLogToken(withError, "status_code=401");
+		if (withError.IndexOf('\n') >= 0) throw new InvalidOperationException("provider failure line must be a single log line");
+		Console.WriteLine("PASS provider.failure.log_fields");
+
+		string withoutError = recorded[1];
+		RequireProviderLogToken(withoutError, "provider_operation_failed");
+		RequireProviderLogToken(withoutError, "operation=runtime_health");
+		RequireProviderLogToken(withoutError, "code=unknown");
+		RequireProviderLogToken(withoutError, "category=unknown");
+		RequireProviderLogToken(withoutError, "retryable=unknown");
+		RequireProviderLogToken(withoutError, "details=none");
+		Console.WriteLine("PASS provider.failure.log_null_error");
+	}
+
+	private static void RequireProviderLogToken(string line, string token)
+	{
+		if (line == null || line.IndexOf(token, StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("provider failure log line is missing '" + token + "': " + line);
+		}
+	}
+
+	/// <summary>
+	/// 服务地址容错离线断言：用户直接粘贴完整接口地址（…/chat/completions）时必须规整成 API 根，
+	/// 否则 Runtime 会在其后继续拼 models / chat/completions，请求落到不存在的路径上。
+	/// </summary>
+	private static void RunProviderBaseUrlToleranceSmoke()
+	{
+		AssertProviderBaseUrl("https://api.deepseek.com", "https://api.deepseek.com/");
+		AssertProviderBaseUrl("https://api.deepseek.com/", "https://api.deepseek.com/");
+		AssertProviderBaseUrl("  https://api.deepseek.com/chat/completions  ", "https://api.deepseek.com/");
+		AssertProviderBaseUrl("https://api.deepseek.com/chat/completions/", "https://api.deepseek.com/");
+		AssertProviderBaseUrl("https://api.deepseek.com/Chat/Completions", "https://api.deepseek.com/");
+		AssertProviderBaseUrl("https://api.deepseek.com/models", "https://api.deepseek.com/");
+		AssertProviderBaseUrl("https://api.deepseek.com/v1", "https://api.deepseek.com/v1");
+		AssertProviderBaseUrl("https://api.deepseek.com/v1/chat/completions", "https://api.deepseek.com/v1");
+		AssertProviderBaseUrl("https://api.openai.com/v1", "https://api.openai.com/v1");
+		AssertProviderBaseUrl("http://127.0.0.1:11434/chat/completions", "http://127.0.0.1:11434/");
+		AssertProviderBaseUrl("https://api.deepseek.com:8443/chat/completions", "https://api.deepseek.com:8443/");
+		Console.WriteLine("PASS provider.base_url.forms");
+
+		// 规整结果 + Runtime 的固定子路径（ProviderContracts.cs:325 BuildEndpointUri 的解析规则）必须落在真端点上
+		AssertProviderBaseUrlEndpoint("https://api.deepseek.com/chat/completions", "models", "https://api.deepseek.com/models");
+		AssertProviderBaseUrlEndpoint("https://api.deepseek.com/chat/completions", "chat/completions", "https://api.deepseek.com/chat/completions");
+		AssertProviderBaseUrlEndpoint("https://api.deepseek.com/v1/chat/completions", "models", "https://api.deepseek.com/v1/models");
+		AssertProviderBaseUrlEndpoint("https://api.openai.com/v1", "chat/completions", "https://api.openai.com/v1/chat/completions");
+		Console.WriteLine("PASS provider.base_url.endpoints");
+
+		List<string> normalizedLog = new List<string>();
+		Action<string> previousRecorder = AwakeLog.Recorder;
+		try
+		{
+			AwakeLog.Recorder = normalizedLog.Add;
+			AssertProviderBaseUrl("https://api.deepseek.com/chat/completions", "https://api.deepseek.com/");
+		}
+		finally
+		{
+			AwakeLog.Recorder = previousRecorder;
+		}
+
+		if (normalizedLog.Count != 1
+			|| normalizedLog[0].IndexOf("provider_base_url_normalized", StringComparison.Ordinal) < 0
+			|| normalizedLog[0].IndexOf("from=https://api.deepseek.com/chat/completions", StringComparison.Ordinal) < 0
+			|| normalizedLog[0].IndexOf("to=https://api.deepseek.com/", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("rewriting a pasted endpoint must record one provider_base_url_normalized line, saw: " + string.Join(" | ", normalizedLog));
+		}
+
+		Console.WriteLine("PASS provider.base_url.normalized_log");
+
+		AssertProviderBaseUrlRejected(string.Empty);
+		AssertProviderBaseUrlRejected("   ");
+		AssertProviderBaseUrlRejected("api.deepseek.com");
+		AssertProviderBaseUrlRejected("ftp://api.deepseek.com");
+		AssertProviderBaseUrlRejected("https://user:secret@api.deepseek.com/v1");
+		AssertProviderBaseUrlRejected("https://api.deepseek.com/chat/completions?key=1");
+		AssertProviderBaseUrlRejected("https://api.deepseek.com/chat/completions#frag");
+		Console.WriteLine("PASS provider.base_url.rejections");
+	}
+
+	private static void AssertProviderBaseUrl(string input, string expected)
+	{
+		if (!AwakeProviderConfiguration.TryNormalizeProviderBaseUrl(input, out string normalized, out string error))
+		{
+			throw new InvalidOperationException("base url '" + input + "' must be accepted, got error: " + error);
+		}
+
+		if (!StringComparer.Ordinal.Equals(normalized, expected))
+		{
+			throw new InvalidOperationException("base url '" + input + "' normalized to '" + normalized + "', expected '" + expected + "'");
+		}
+	}
+
+	private static void AssertProviderBaseUrlEndpoint(string input, string relativePath, string expected)
+	{
+		if (!AwakeProviderConfiguration.TryNormalizeProviderBaseUrl(input, out string normalized, out string error))
+		{
+			throw new InvalidOperationException("base url '" + input + "' must be accepted, got error: " + error);
+		}
+
+		string baseText = normalized.EndsWith("/", StringComparison.Ordinal) ? normalized : normalized + "/";
+		string endpoint = new Uri(new Uri(baseText, UriKind.Absolute), relativePath).AbsoluteUri;
+		if (!StringComparer.Ordinal.Equals(endpoint, expected))
+		{
+			throw new InvalidOperationException("base url '" + input + "' resolved '" + relativePath + "' to '" + endpoint + "', expected '" + expected + "'");
+		}
+	}
+
+	private static void AssertProviderBaseUrlRejected(string input)
+	{
+		if (AwakeProviderConfiguration.TryNormalizeProviderBaseUrl(input, out string normalized, out string error))
+		{
+			throw new InvalidOperationException("base url '" + input + "' must be rejected, got '" + normalized + "'");
+		}
+
+		const string expectedError = "服务地址必须是完整的 HTTP 或 HTTPS 地址，且不能包含账号、密码、查询参数或片段。";
+		if (!StringComparer.Ordinal.Equals(error, expectedError))
+		{
+			throw new InvalidOperationException("base url '" + input + "' rejected with changed text: " + error);
+		}
+	}
+
+	/// <summary>
+	/// Runtime 掉线自救离线断言：框架把 Runtime 打成 Stopped 后，AWAKE 只在
+	/// “活 session + 未超重启次数 + 冷却已过” 时才允许重启；TryRequestRelaunch 在缺少 hook
+	/// 或 hook 抛异常时必须安静返回 false，绝不把失败抛回 MCM 调用点。
+	/// </summary>
+	private static void RunRuntimeRecoverySmoke()
+	{
+		const long cooldownTicks = AwakeRuntimeRecovery.CooldownMilliseconds * TimeSpan.TicksPerMillisecond;
+		long now = new DateTime(2026, 9, 11, 0, 0, 0, DateTimeKind.Utc).Ticks;
+
+		if (!AwakeRuntimeRecovery.ShouldRelaunch(RuntimeServiceState.Stopped, 0, 0, now, out string fresh)
+			|| !StringComparer.Ordinal.Equals(fresh, "allowed"))
+		{
+			throw new InvalidOperationException("a stopped runtime with no attempts must be relaunchable, got " + fresh);
+		}
+
+		if (AwakeRuntimeRecovery.ShouldRelaunch(RuntimeServiceState.Stopped, 1, now - (cooldownTicks - 1), now, out string cooling)
+			|| !StringComparer.Ordinal.Equals(cooling, "cooldown"))
+		{
+			throw new InvalidOperationException("a relaunch inside the cooldown window must be denied, got " + cooling);
+		}
+
+		if (!AwakeRuntimeRecovery.ShouldRelaunch(RuntimeServiceState.Stopped, 1, now - cooldownTicks, now, out string cooled)
+			|| !StringComparer.Ordinal.Equals(cooled, "allowed"))
+		{
+			throw new InvalidOperationException("a relaunch at the cooldown boundary must be allowed, got " + cooled);
+		}
+		Console.WriteLine("PASS runtime.recovery.cooldown");
+
+		if (AwakeRuntimeRecovery.MaxAttemptsPerSession != 3)
+		{
+			throw new InvalidOperationException("the per-session relaunch budget changed: " + AwakeRuntimeRecovery.MaxAttemptsPerSession);
+		}
+
+		if (AwakeRuntimeRecovery.ShouldRelaunch(RuntimeServiceState.Stopped, AwakeRuntimeRecovery.MaxAttemptsPerSession, 0, now, out string limited)
+			|| !StringComparer.Ordinal.Equals(limited, "attempt_limit"))
+		{
+			throw new InvalidOperationException("a relaunch past the per-session budget must be denied, got " + limited);
+		}
+		Console.WriteLine("PASS runtime.recovery.attempt_limit");
+
+		RuntimeServiceState?[] notStopped =
+		{
+			null,
+			RuntimeServiceState.Created,
+			RuntimeServiceState.Starting,
+			RuntimeServiceState.Ready,
+			RuntimeServiceState.Draining,
+			RuntimeServiceState.RecoveryRequired
+		};
+		foreach (RuntimeServiceState? state in notStopped)
+		{
+			if (AwakeRuntimeRecovery.ShouldRelaunch(state, 0, 0, now, out string other)
+				|| !StringComparer.Ordinal.Equals(other, "state_not_stopped"))
+			{
+				throw new InvalidOperationException("state " + (state?.ToString() ?? "null") + " must not be relaunchable, got " + other);
+			}
+		}
+		Console.WriteLine("PASS runtime.recovery.states");
+
+		Func<string, bool> previousHook = AwakeRuntimeRecovery.RelaunchHook;
+		try
+		{
+			AwakeRuntimeRecovery.RelaunchHook = null;
+			if (AwakeRuntimeRecovery.TryRequestRelaunch("smoke"))
+			{
+				throw new InvalidOperationException("a missing relaunch hook must not report success");
+			}
+
+			AwakeRuntimeRecovery.RelaunchHook = _ => throw new InvalidOperationException("hook failure");
+			if (AwakeRuntimeRecovery.TryRequestRelaunch("smoke"))
+			{
+				throw new InvalidOperationException("a throwing relaunch hook must be swallowed");
+			}
+
+			List<string> asked = new List<string>();
+			AwakeRuntimeRecovery.RelaunchHook = reason =>
+			{
+				asked.Add(reason);
+				return true;
+			};
+			if (!AwakeRuntimeRecovery.TryRequestRelaunch("mcm_provider_gate"))
+			{
+				throw new InvalidOperationException("a working relaunch hook must report success");
+			}
+
+			if (asked.Count != 1 || !StringComparer.Ordinal.Equals(asked[0], "mcm_provider_gate"))
+			{
+				throw new InvalidOperationException("the relaunch hook must receive the caller reason, saw: " + string.Join(" | ", asked));
+			}
+		}
+		finally
+		{
+			AwakeRuntimeRecovery.RelaunchHook = previousHook;
+		}
+		Console.WriteLine("PASS runtime.recovery.hook_safety");
+	}
 	private static string GetG3S0WorkspaceRoot()
 	{
 		DirectoryInfo current = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);

@@ -73,7 +73,7 @@
     <string id="awake.mcm.provider_kind.name" text="AI service type" />
     <string id="awake.mcm.provider_kind.hint" text="Choose the AI service you use. OpenAI-compatible also works with some local services." />
     <string id="awake.mcm.provider_url.name" text="Service address" />
-    <string id="awake.mcm.provider_url.hint" text="Enter the complete HTTP/HTTPS address, such as https://api.openai.com/v1 or http://127.0.0.1:11434. Do not put the API Key in the address." />
+    <string id="awake.mcm.provider_url.hint" text="Enter the service address: an API root such as https://api.deepseek.com or https://api.openai.com/v1, or a complete endpoint pasted from the provider such as https://api.deepseek.com/chat/completions. Both are accepted. Do not put the API Key in the address." />
     <string id="awake.mcm.provider_model.name" text="Model name" />
     <string id="awake.mcm.provider_model.hint" text="Enter the model ID returned by the Provider; you can click “Fetch available models” first." />
     <string id="awake.mcm.provider_cloud.name" text="Cloud service" />
@@ -101,6 +101,8 @@
     <string id="awake.mcm.cloud_export.hint" text="Enabled by default. Local Ollama and other local links still work when this is off; cloud dialogue still requires framework route permission." />
     <string id="awake.mcm.export_player_state.name" text="Allow Player State Export" />
     <string id="awake.mcm.export_player_state.hint" text="Allows player, hero and relationship state to be exported as player_state in NPC dialogue. Enabled by default." />
+    <string id="awake.mcm.allow_ai_routing.name" text="Allow AI Dialogue and Settlement" />
+    <string id="awake.mcm.allow_ai_routing.hint" text="Off by default. This is the explicit authorization switch: AWAKE only submits dialogue to the AI route, exports data by classification, and settles AI-produced relationship and world-state changes while this is on. When off, NPC dialogue stays on local fallback text." />
     <string id="awake.mcm.enable_cloud_oneclick.name" text="Enable Cloud Dialogue" />
     <string id="awake.mcm.enable_cloud_oneclick.content" text="Enable" />
     <string id="awake.mcm.enable_cloud_oneclick.hint" text="Enables AWAKE cloud export and player-state export. The embedded Runtime applies the route configuration automatically." />

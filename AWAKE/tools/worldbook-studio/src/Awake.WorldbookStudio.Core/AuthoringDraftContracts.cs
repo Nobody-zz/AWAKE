@@ -73,11 +73,14 @@ internal sealed record AuthoringDraftIntent(
     IReadOnlyList<string> MustPreserve,
     IReadOnlyList<string> MustNotInvent,
     string RequestedContentTier,
-    string RequestedEntryKind = "general");
+    string RequestedEntryKind = "general",
+    string CandidateMode = "auto");
 
 internal static class AuthoringDraftIntentFactory
 {
     public const string UnknownContentTier = "unknown";
+    public const string AutoCandidateMode = "auto";
+    public const string SingleCandidateMode = "single";
     public const int QuickAuthoringMaxPerspectives = 3;
     private const int MaxIntentText = 4000;
     private const int MaxShortText = 512;
@@ -97,7 +100,8 @@ internal static class AuthoringDraftIntentFactory
         IReadOnlyList<string>? mustPreserve,
         IReadOnlyList<string>? mustNotInvent,
         string? requestedContentTier,
-        string? requestedEntryKind = null)
+        string? requestedEntryKind = null,
+        string? candidateMode = null)
     {
         return new AuthoringDraftIntent(
             AuthoringDraftModeNames.Parse(mode),
@@ -111,7 +115,8 @@ internal static class AuthoringDraftIntentFactory
             NormalizeList(mustPreserve, "must_preserve"),
             NormalizeList(mustNotInvent, "must_not_invent"),
             NormalizeTier(requestedContentTier),
-            NormalizeEntryKind(requestedEntryKind));
+            NormalizeEntryKind(requestedEntryKind),
+            NormalizeCandidateMode(candidateMode));
     }
 
     public static JsonObject Serialize(AuthoringDraftIntent intent)
@@ -128,7 +133,8 @@ internal static class AuthoringDraftIntentFactory
             ["must_preserve"] = ToArray(intent.MustPreserve),
             ["must_not_invent"] = ToArray(intent.MustNotInvent),
             ["requested_content_tier"] = intent.RequestedContentTier,
-            ["requested_entry_kind"] = intent.RequestedEntryKind
+            ["requested_entry_kind"] = intent.RequestedEntryKind,
+            ["candidate_mode"] = intent.CandidateMode
         };
 
     public static void ValidateQuickAuthoring(AuthoringDraftIntent intent, AuthoringDraftStage stage)
@@ -174,6 +180,16 @@ internal static class AuthoringDraftIntentFactory
         {
             "unknown" or "base" or "adult_optional" => normalized,
             _ => throw new InvalidOperationException("WB-AI-DRAFT-422: content tier 无效。")
+        };
+    }
+
+    private static string NormalizeCandidateMode(string? value)
+    {
+        var normalized = string.IsNullOrWhiteSpace(value) ? AutoCandidateMode : value.Trim().ToLowerInvariant();
+        return normalized switch
+        {
+            AutoCandidateMode or SingleCandidateMode => normalized,
+            _ => throw new InvalidOperationException("WB-AI-DRAFT-422: candidate mode 无效。")
         };
     }
 
@@ -877,7 +893,7 @@ internal static class AuthoringDraftRequestSerializer
         if (string.IsNullOrWhiteSpace(model)) throw new InvalidOperationException("WB-AI-REQUEST-400: 云端模型不能为空。" );
         var messages = new JsonArray
         {
-            new JsonObject { ["role"] = "system", ["content"] = AuthoringDraftPromptCatalog.Build(request.Stage, request.GenerationPass) },
+            new JsonObject { ["role"] = "system", ["content"] = AuthoringDraftPromptCatalog.Build(request.Stage, request.GenerationPass, request.Intent?.CandidateMode) },
             new JsonObject { ["role"] = "user", ["content"] = ToWire(request, includeSourceText: !SourceOriginsCoverWholeSource(request)).ToJsonString(new JsonSerializerOptions { WriteIndented = false }) }
         };
         var payload = new JsonObject { ["model"] = model, ["messages"] = messages, ["temperature"] = Math.Clamp(temperature, 0, 2) };
@@ -916,7 +932,7 @@ internal static class AuthoringDraftRequestSerializer
             ["client_nonce"] = handshake.ClientNonce,
             ["prompt_revision"] = request.PromptRevision,
             ["normalization_revision"] = request.NormalizationRevision,
-            ["instructions"] = AuthoringDraftPromptCatalog.Build(request.Stage, request.GenerationPass),
+            ["instructions"] = AuthoringDraftPromptCatalog.Build(request.Stage, request.GenerationPass, request.Intent?.CandidateMode),
             ["result_contract"] = "worldbook.authoring-draft.result.v1",
             ["trust"] = new JsonObject
             {

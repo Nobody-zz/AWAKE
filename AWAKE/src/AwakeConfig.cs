@@ -46,7 +46,7 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
     public Dropdown<string> ProviderKind { get; set; } = AwakeProviderConfiguration.CreateProviderKindDropdown();
 
-    [SettingPropertyText("{=awake.mcm.provider_url.name}服务地址", Order = 2, RequireRestart = false, HintText = "{=awake.mcm.provider_url.hint}填写完整的 HTTP/HTTPS 地址，例如 https://api.openai.com/v1 或 http://127.0.0.1:11434。不要把 API Key 写进地址。")]
+    [SettingPropertyText("{=awake.mcm.provider_url.name}服务地址", Order = 2, RequireRestart = false, HintText = "{=awake.mcm.provider_url.hint}填写服务地址：可填 API 根地址（如 https://api.deepseek.com 或 https://api.openai.com/v1），也可直接粘贴完整接口地址（如 https://api.deepseek.com/chat/completions），两种都接受。不要把 API Key 写进地址。")]
     [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
     public string ProviderBaseUrl { get; set; } = "https://api.openai.com/v1";
 
@@ -86,6 +86,10 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyButton("{=awake.mcm.refresh_status.name}AI 自检", -1, true, "", Content = "{=awake.mcm.refresh_status.content}AI 自检", Order = 10, RequireRestart = false, HintText = "{=awake.mcm.refresh_status.hint}刷新 AWAKE Runtime 和 Provider 状态。")]
     [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
     public Action RefreshAiStatus { get; set; }
+
+    [SettingPropertyBool("{=awake.mcm.allow_ai_routing.name}允许 AI 对话与结算", Order = 11, RequireRestart = false, HintText = "{=awake.mcm.allow_ai_routing.hint}默认关闭。这是显式授权开关：开启后 AWAKE 才会把对话提交给 AI 路由、按分类外发数据，并结算 AI 产出的关系与世界状态变更；关闭时只走本地兜底文案。")]
+    [SettingPropertyGroup("{=awake.mcm.group.ai_link}0. AI 链路", GroupOrder = -1)]
+    public bool AllowAiRouting { get; set; }
 
     [SettingPropertyBool("{=awake.mcm.cloud_export.name}启用云外发", Order = 0, RequireRestart = false, HintText = "{=awake.mcm.cloud_export.hint}默认开启。关闭后本机 Ollama 等本地链路不受影响；开启云端对话仍需框架权限授权。")]
     [SettingPropertyGroup("{=awake.mcm.group.data_debug}4. 数据与调试", GroupOrder = 3)]

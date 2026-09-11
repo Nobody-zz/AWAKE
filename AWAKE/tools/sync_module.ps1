@@ -9,6 +9,7 @@ param(
     [switch]$SkipGame,
     [switch]$ConfirmGameSync,
     [switch]$WhatIf,
+    [switch]$SkipWorldbook,
     [ValidateRange(0, 100000)]
     [int]$TestFailAfterCopies = 0
 )
@@ -55,6 +56,11 @@ $obsoletePersonaFiles = @(
     'ModuleData\Worldbook\persona_definitions\persona_definitions\tag_registry.json',
     'ModuleData\Worldbook\persona_definitions\persona_definitions\definitions\hero_default.json'
 )
+if ($SkipWorldbook) {
+    # 试点包投放期间：不把工程的 ModuleData\Worldbook\** 当受管文件，避免用后备版 v1 覆盖游戏内的 v2 试点包。
+    $managedWorldbookFiles = @()
+    $managedWorldbookDirectories = @()
+}
 $preservedRoots = @('Config.json', 'Logs', 'PlayerExports', 'Runtime', 'Saves', 'Cache')
 $embeddedRuntimeRelativeRoot = 'bin\Win64_Shipping_Client\Runtime'
 

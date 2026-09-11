@@ -53,7 +53,8 @@ internal sealed record AuthoringDraftAttempt(
     string? ErrorCode = null,
     string? ErrorMessage = null,
     bool ResultUnknown = false,
-    QuickAuthoringSemanticPacket? SemanticPacket = null);
+    QuickAuthoringSemanticPacket? SemanticPacket = null,
+    string? Phase = null);
 
 internal sealed class AuthoringDraftStore
 {
@@ -395,7 +396,7 @@ internal sealed class AuthoringDraftStore
                 throw new InvalidOperationException("WB-AI-DRAFT-CAS-409: 生成 attempt 与授权不匹配。" );
             if (!_attempts.TryGetValue(consent.AttemptId, out var attempt) || attempt.Status != "prepared")
                 throw new InvalidOperationException("WB-AI-DRAFT-CAS-409: 生成授权已被消费或已失效。" );
-            _attempts[consent.AttemptId] = attempt with { Status = "running", UpdatedAt = DateTimeOffset.UtcNow };
+            _attempts[consent.AttemptId] = attempt with { Status = "running", Phase = "starting", UpdatedAt = DateTimeOffset.UtcNow };
             PersistStateUnsafe();
             return new AuthoringDraftAuthorization(consent.AttemptId, consent.Request, attempt.ProviderFingerprint);
         }
@@ -422,6 +423,18 @@ internal sealed class AuthoringDraftStore
         }
     }
 
+    /// <summary>记录生成中 attempt 的当前阶段，仅用于前端展示真实进度；不参与任何结算或校验。</summary>
+    public void SetAttemptPhase(string sessionId, string attemptId, string phase)
+    {
+        lock (_gate)
+        {
+            if (!_attempts.TryGetValue(attemptId, out var attempt)) return;
+            if (!string.Equals(attempt.SessionId, sessionId, StringComparison.Ordinal)) return;
+            if (attempt.Status is not ("prepared" or "running")) return;
+            _attempts[attemptId] = attempt with { Phase = phase, UpdatedAt = DateTimeOffset.UtcNow };
+        }
+    }
+
     public JsonObject GetAttemptStatus(string sessionId, string draftId, string attemptId, bool reconcile = false)
     {
         lock (_gate)
@@ -438,6 +451,7 @@ internal sealed class AuthoringDraftStore
                 ["request_hash"] = attempt.Request.RequestHash,
                 ["source_content_hash"] = attempt.Request.SourceContentHash,
                 ["status"] = attempt.Status,
+                ["phase"] = attempt.Phase,
                 ["result_unknown"] = attempt.ResultUnknown,
                 ["error_code"] = attempt.ErrorCode,
                 ["error_message"] = attempt.ErrorMessage,

@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "awake.worldbook.v2",
+  "packageId": "awake:pilot.worldbook",
+  "version": "1.0.0",
+  "worldId": "awake:world:calradia",
+  "revision": 1,
+  "extensions": {
+    "contentTier": "base",
+    "source": "awake.dialogue-chain-010.pilot"
+  },
+  "entries": [
+    {
+      "id": "awake:entry:pilot_village_life",
+      "domain": "economy",
+      "title": { "zh-CN": "村庄的日子" },
+      "summary": { "zh-CN": "收成、粮税与领主的份额。" },
+      "keywords": ["收成", "粮税", "谷物", "税款", "村里", "庄户"],
+      "expressions": [
+        {
+          "id": "awake:expression:pilot_village_life",
+          "detail": "summary",
+          "text": {
+            "zh-CN": "今年的收成要看天时。粮税按领主定下的份额收，交不够的庄户会被记上一笔，来年补上。村里的活计无非种地、修渠、赶集——谁家的牲口病了，全村当天就知道。"
+          },
+          "grants": [
+            { "identity_id": "awake:identity:commoner", "scope": "local", "min_detail": "rumor" },
+            { "identity_id": "awake:identity:headman", "scope": "local", "min_detail": "rumor" },
+            { "identity_id": "awake:identity:notable", "scope": "local", "min_detail": "rumor" },
+            { "identity_id": "awake:identity:merchant", "scope": "local", "min_detail": "rumor" }
+          ],
+          "denies": []
+        }
+      ]
+    },
+    {
+      "id": "awake:entry:pilot_road_danger",
+      "domain": "war",
+      "title": { "zh-CN": "路上的险情" },
+      "summary": { "zh-CN": "道路、劫匪与巡逻。" },
+      "keywords": ["劫匪", "巡逻", "商队", "护送", "土匪", "路上"],
+      "expressions": [
+        {
+          "id": "awake:expression:pilot_road_danger",
+          "detail": "rumor",
+          "text": {
+            "zh-CN": "出了村口往北，路不好走。前些日子有商队被抢，护卫死了两个。巡逻队一个月才来一趟，指望不上；要赶远路，最好搭伴走。"
+          },
+          "grants": [
+            { "identity_id": "awake:identity:soldier", "scope": "local", "min_detail": "rumor" },
+            { "identity_id": "awake:identity:commoner", "scope": "local", "min_detail": "rumor" },
+            { "identity_id": "awake:identity:merchant", "scope": "local", "min_detail": "rumor" }
+          ],
+          "denies": []
+        }
+      ]
+    },
+    {
+      "id": "awake:entry:pilot_lord_duty",
+      "domain": "politics",
+      "title": { "zh-CN": "领主的本分" },
+      "summary": { "zh-CN": "封地、效忠与征召。" },
+      "keywords": ["领主", "封地", "效忠", "征召", "宣誓"],
+      "expressions": [
+        {
+          "id": "awake:expression:pilot_lord_duty",
+          "detail": "rumor",
+          "text": {
+            "zh-CN": "领主的本分是守住封地、按时纳贡、战时带人出征。对上要恭顺，对下要压得住——压不住，封地迟早保不住。"
+          },
+          "grants": [
+            { "identity_id": "awake:identity:noble", "scope": "local", "min_detail": "rumor" },
+            { "identity_id": "awake:identity:soldier", "scope": "local", "min_detail": "rumor" }
+          ],
+          "denies": []
+        }
+      ]
+    }
+  ],
+  "identities": [
+    { "id": "awake:identity:commoner", "displayName": { "zh-CN": "平民" }, "basePriority": 0 },
+    { "id": "awake:identity:soldier", "displayName": { "zh-CN": "士兵" }, "basePriority": 0 },
+    { "id": "awake:identity:noble", "displayName": { "zh-CN": "贵族" }, "basePriority": 0 },
+    { "id": "awake:identity:merchant", "displayName": { "zh-CN": "商人" }, "basePriority": 0 },
+    { "id": "awake:identity:headman", "displayName": { "zh-CN": "村长" }, "basePriority": 0 },
+    { "id": "awake:identity:notable", "displayName": { "zh-CN": "乡绅" }, "basePriority": 0 }
+  ],
+  "referrals": []
+}

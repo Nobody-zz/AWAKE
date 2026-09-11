@@ -143,7 +143,8 @@ async function run(name,action){
 }
 
 async function waitForReportRequest(harness){
-  for(let attempt=0;attempt<40;attempt++){
+  const deadline=Date.now()+5000;
+  while(Date.now()<deadline){
     if(harness.requests.some(request=>request.url.endsWith("/report")))return;
     await new Promise(resolve=>setImmediate(resolve));
   }
