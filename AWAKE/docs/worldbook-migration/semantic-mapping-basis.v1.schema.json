@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.semantic-mapping-basis.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "basis_kind",
+    "registry_ids",
+    "legacy_origin_ids",
+    "review_state",
+    "rationale"
+  ],
+  "properties": {
+    "basis_kind": {
+      "enum": [
+        "profile_registry",
+        "entity_registry",
+        "condition_registry",
+        "manual_author_decision"
+      ]
+    },
+    "registry_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "legacy_origin_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^authoring_provisional\\.origin\\.[a-f0-9]{24}$"
+      }
+    },
+    "review_state": {
+      "enum": [
+        "needs_review",
+        "accepted",
+        "rejected"
+      ]
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

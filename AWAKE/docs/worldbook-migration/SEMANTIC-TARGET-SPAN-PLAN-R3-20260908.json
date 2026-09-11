@@ -1,0 +1,988 @@
+{
+  "schema_version": "awake.worldbook.migration.semantic-target-span-plan.v1",
+  "plan_id": "semantic-target-span-plan-r3.20260908",
+  "generated_at": "2026-09-08T00:00:00+08:00",
+  "status": "needs_review",
+  "purpose": "为五个 r2 候选的 r3 修订设计命题级 target span；不包含新版 candidate 正文。",
+  "authority": {
+    "source_root": "C:\\Users\\26811\\Downloads\\卡拉迪亚编年史\\卡拉迪亚编年史",
+    "parent_snapshot_id": "source.awake.worldbook.download-20260903",
+    "parent_snapshot_sha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+    "child_snapshot_id": "semantic-pilot30.download-20260903",
+    "child_snapshot_hash": "e91ffbeb709e967bff5373a191d5587c179afa09fa4ca8d8b271d8e1ed1a22be",
+    "child_manifest_hash": "43f7ad78c0c4bdd3af1f19c4f30347aa36cd0d08ffce2ddff62e98fe32d73e49"
+  },
+  "candidate_count": 5,
+  "action_count": 23,
+  "entries": [
+    {
+      "target_span_id": "authoring_provisional.target_span.727a50baef328a5a81047c9d",
+      "action_id": "lac-01",
+      "title": "拉科尼斯湖",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.c4672cffe65c5125bb1d00e7"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.d5bd6d3382672ae542a1cc22"
+      ],
+      "operation": "split_claim",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "relationship"
+        ],
+        "perspective": [
+          "local_lakeside_livelihood"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.d2bc1cc2abd8af4c07ae7cf6",
+      "action_id": "lac-02",
+      "title": "拉科尼斯湖",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.d2c7e2dc921eafdf047a31c8"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.7ba74330155cd80ad446d57a"
+      ],
+      "operation": "split_claim",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "relationship"
+        ],
+        "perspective": [
+          "merchant_or_lakeside"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.646020981ebefac124cd0ae2",
+      "action_id": "lac-03",
+      "title": "拉科尼斯湖",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.c829e454ee3264a31fe6c451"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.a5239cb238349326884324ff"
+      ],
+      "operation": "add_claim",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "interpretation"
+        ],
+        "perspective": [
+          "scholar_or_chronicler"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.1f408604da504678e2967b53",
+      "action_id": "lac-04",
+      "title": "拉科尼斯湖",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.e1158ae544d37d2f31aeed53"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.ce4011516c2d730bfe559bea"
+      ],
+      "operation": "verify_subject",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "interpretation"
+        ],
+        "perspective": [
+          "imperial_chronicle"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.d37aee039b41c9ebd3901dbe",
+      "action_id": "lac-05",
+      "title": "拉科尼斯湖",
+      "candidate_id": null,
+      "claim_ids": [],
+      "existing_claim_ids_to_preserve_or_split": [
+        "authoring_provisional.claim.c9ff734b8dd6d7968fb1a954",
+        "authoring_provisional.claim.7026113c2fa3669e275a5e83",
+        "authoring_provisional.claim.7707292541174752ca88df88"
+      ],
+      "source_origin_ids": [],
+      "operation": "split_target_span",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "must_split_by_claim",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "source_fact",
+          "interpretation",
+          "rumor"
+        ],
+        "perspective": [
+          "neutral",
+          "imperial_lord",
+          "local_oral_tradition"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown",
+          "source_bound_view",
+          "historical_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.796a5d8fbb1e3434fa7093e8",
+      "action_id": "sara-01",
+      "title": "沙拉斯湾",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.b3f620e228052b0073d624b5"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.ff1f9f7cefc1b400e083a2c1"
+      ],
+      "operation": "add_claim",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "relationship"
+        ],
+        "perspective": [
+          "geographic_or_maritime"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.3106fdf738ecff2ce5ee3028",
+      "action_id": "sara-02",
+      "title": "沙拉斯湾",
+      "candidate_id": null,
+      "claim_ids": [],
+      "existing_claim_ids_to_preserve_or_split": [
+        "authoring_provisional.claim.2bd862c0fc76a6b093c72d40"
+      ],
+      "source_origin_ids": [],
+      "operation": "preserve_perspective",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "interpretation"
+        ],
+        "perspective": [
+          "imperial_chronicle"
+        ],
+        "time_scope": [
+          "historical_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.e660c760b6e39a967376e13d",
+      "action_id": "sara-03",
+      "title": "沙拉斯湾",
+      "candidate_id": null,
+      "claim_ids": [],
+      "existing_claim_ids_to_preserve_or_split": [
+        "authoring_provisional.claim.cf3972ba2c60a3234be103d3"
+      ],
+      "source_origin_ids": [],
+      "operation": "preserve_epistemic_boundary",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "rumor"
+        ],
+        "perspective": [
+          "scholar_or_chronicler"
+        ],
+        "time_scope": [
+          "historical_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.7aa8b1cb8eab2fe942041d3d",
+      "action_id": "sara-04",
+      "title": "沙拉斯湾",
+      "candidate_id": null,
+      "claim_ids": [],
+      "existing_claim_ids_to_preserve_or_split": [
+        "authoring_provisional.claim.7889b88429c064b45cd4a68b"
+      ],
+      "source_origin_ids": [],
+      "operation": "preserve_epistemic_boundary",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "rumor"
+        ],
+        "perspective": [
+          "sailor"
+        ],
+        "time_scope": [
+          "current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.86bd04fd7977d984471ffca5",
+      "action_id": "kach-01",
+      "title": "卡恰尔半岛",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.9644824420c36a47d41eae1e"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.4ec5f5b6085abd35411cf7f1",
+        "authoring_provisional.origin.fafa6ebea323dd7c93b6e5fe"
+      ],
+      "operation": "add_unresolved",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "unresolved"
+        ],
+        "perspective": [
+          "runtime_state_required"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "undetermined"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.cd88820c1d9f61ba5d7b0be7",
+      "action_id": "kach-02",
+      "title": "卡恰尔半岛",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.a48e49e8bc9c8d3cc77b3bc2"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.30c093b48c33986cf2773924"
+      ],
+      "operation": "split_claim",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "source_fact"
+        ],
+        "perspective": [
+          "neutral"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.36d6a6cd4b5f5f5609c1880a",
+      "action_id": "kach-03",
+      "title": "卡恰尔半岛",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.42d80bdb7b7cc690dd16e45a"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.9fe36f20baf04e7c868405cc",
+        "authoring_provisional.origin.1853f6f685ba1c4723babc88"
+      ],
+      "operation": "split_claim",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "interpretation"
+        ],
+        "perspective": [
+          "mixed_cultural"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.d8edc4b09964aeb5d1bac359",
+      "action_id": "kach-04",
+      "title": "卡恰尔半岛",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.9dddd4ae617f78441f817f84"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.30bb5679b259bf56550aca2c"
+      ],
+      "operation": "preserve_perspective",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "interpretation"
+        ],
+        "perspective": [
+          "khuzaite"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.c3afb418e60a66fca734f6a9",
+      "action_id": "kach-05",
+      "title": "卡恰尔半岛",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.2a766fe18cf768014da363d2",
+        "authoring_provisional.claim.29471fc14b7ee2c3e7b7be74",
+        "authoring_provisional.claim.19d09a9134841be233413cb2"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.f750bd2c82e7c1a70246c4a7",
+        "authoring_provisional.origin.b937bd2489cee0f594784d82",
+        "authoring_provisional.origin.da3a671da0f48db2201b6335",
+        "authoring_provisional.origin.bfbcf87ac995494464b77daa",
+        "authoring_provisional.origin.72e83c5fd1d9128300317556",
+        "authoring_provisional.origin.8bcf98613d010ed2fca40daa",
+        "authoring_provisional.origin.735bce810b08055af5a4efa6",
+        "authoring_provisional.origin.32af781c62b1f0133bb6ff9b",
+        "authoring_provisional.origin.4dec3d4dc19af168b71bd687"
+      ],
+      "operation": "bind_per_culture",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "must_split_by_claim",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "interpretation"
+        ],
+        "perspective": [
+          "battania",
+          "nord",
+          "sturgia"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.61c8ce79b11173438509a62d",
+      "action_id": "dawn-01",
+      "title": "黎明山脉",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.dc592556b2e4c247d50cd40a"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.67ffaea0e27373a734c8c043"
+      ],
+      "operation": "preserve_source_granularity",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "source_fact"
+        ],
+        "perspective": [
+          "neutral"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.62ad5f5570944ef5d3248fa0",
+      "action_id": "dawn-02",
+      "title": "黎明山脉",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.1c70c804f9d583f4e8d33c96",
+        "authoring_provisional.claim.8e71486bbda76901237134dd"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.dc50ead6102fd6c77daaca97",
+        "authoring_provisional.origin.dcede3c67bc117cb4a3bf032",
+        "authoring_provisional.origin.65c009ad533c80a1c5309a10",
+        "authoring_provisional.origin.a3a408f910436a380a600617"
+      ],
+      "operation": "split_claim",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "must_split_by_claim",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "source_fact",
+          "relationship"
+        ],
+        "perspective": [
+          "neutral",
+          "mountain_community"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.889e07a133608d1f98aa2fa7",
+      "action_id": "dawn-03",
+      "title": "黎明山脉",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.17ddf9219131f13632e45320"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.83961e21b835b4d258576a57"
+      ],
+      "operation": "preserve_epistemic_boundary",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "rumor"
+        ],
+        "perspective": [
+          "local_tradition"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.125ae1d6e1f34200ffe295e4",
+      "action_id": "dawn-04",
+      "title": "黎明山脉",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.8b0d5629862f3c72dad1c7f1"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.0c9c5aeed1beb4316607df0d",
+        "authoring_provisional.origin.ca7ee9265d94e60a4b17b7ac"
+      ],
+      "operation": "bind_source_span",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "interpretation"
+        ],
+        "perspective": [
+          "chronicle_interpretation"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.74cd80baac3d9c3088e8faa1",
+      "action_id": "dawn-05",
+      "title": "黎明山脉",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.fd78df11d0b49237fa8d34dd"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.87d93dfafccf8f4996c5919f",
+        "authoring_provisional.origin.3b556703bcb05325e3e3c509"
+      ],
+      "operation": "block_current_inference",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "unresolved"
+        ],
+        "perspective": [
+          "runtime_state_required"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "undetermined"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.19762f44a34e9c481d1d6b69",
+      "action_id": "der-01",
+      "title": "德里亚特",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.8578161db710e16e0c4ec922"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.cfc037e4579446c6b278d70d",
+        "authoring_provisional.origin.ff93757629b3a361d0b5fcbc"
+      ],
+      "operation": "narrow_proposition",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "relationship"
+        ],
+        "perspective": [
+          "merchant_or_garrison"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.50bac0d5c6cb178f0f59a73b",
+      "action_id": "der-02",
+      "title": "德里亚特",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.a2958bbb9490ce195a755e68"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.dca60350f8c418ad9167f6d5"
+      ],
+      "operation": "narrow_interpretation",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "interpretation"
+        ],
+        "perspective": [
+          "merchant"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.ac80566ae434ecbe0ab59a7b",
+      "action_id": "der-03",
+      "title": "德里亚特",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.d4853fc7e987012ee50ace18"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.de017ecd107cc7777b6aefb8"
+      ],
+      "operation": "preserve_independent_fact",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "source_fact"
+        ],
+        "perspective": [
+          "neutral"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    },
+    {
+      "target_span_id": "authoring_provisional.target_span.6d9ff34588b46dfe4555452a",
+      "action_id": "der-04",
+      "title": "德里亚特",
+      "candidate_id": null,
+      "claim_ids": [
+        "authoring_provisional.claim.57e81a172cc6d39dbebffae4"
+      ],
+      "existing_claim_ids_to_preserve_or_split": [],
+      "source_origin_ids": [
+        "authoring_provisional.origin.72aae9c7742aa2b714cde743"
+      ],
+      "operation": "keep_metadata_only",
+      "target_text": null,
+      "target_locator": "candidate_r3.pending",
+      "span_status": "planned_not_written",
+      "semantic_atomicity": "single_claim_span",
+      "semantic_fields": {
+        "epistemic_kind": [
+          "relationship"
+        ],
+        "perspective": [
+          "merchant_or_wanderer"
+        ],
+        "time_scope": [
+          "historical_or_current_unknown"
+        ],
+        "polarity": [
+          "affirmed"
+        ]
+      },
+      "decision": "unresolved",
+      "review_status": "needs_review",
+      "constraints": [
+        "不得在此表写入新版正文",
+        "每个 claim 至少一个独立 span",
+        "不同 epistemic_kind/perspective/time_scope 不得共用一个 span",
+        "没有 claim 的 span-only action 只能保留或拆分已有 claim，不得创造无来源命题"
+      ]
+    }
+  ],
+  "checks": {
+    "all_actions_mapped": true,
+    "all_spans_have_ids": true,
+    "all_claim_refs_exist": true,
+    "all_span_text_empty": true,
+    "all_decisions_unresolved": true,
+    "all_review_needs_review": true,
+    "semantic_atomicity_declared": true,
+    "target_spans_closed": false,
+    "candidate_generation_allowed": false
+  },
+  "errors": [],
+  "files_read": [
+    "SEMANTIC-WORKSHEET-R3-REVISION-DRAFT-20260908.json",
+    "SEMANTIC-REVISION-EVIDENCE-PACK-R3-20260908.json",
+    "SEMANTIC-WORKSHEETS-DOWNLOAD-20260903.json"
+  ],
+  "files_changed": [
+    "SEMANTIC-TARGET-SPAN-PLAN-R3-20260908.json"
+  ],
+  "next_action": [
+    "由人工/后续修订步骤确认每个 span 的最终正文表达。",
+    "确认正文表达只引用对应 claim，不跨越不同认识论和视角。",
+    "完成 span 绑定后，才可在独立目录生成 r3 candidate。"
+  ],
+  "boundary_statement": "未修改真实源目录、r2 候选、Worldbook Studio 或 AWAKE 运行时代码；未启动游戏、未同步游戏目录、未访问 Provider/API Key/Token/Worker/网络服务。"
+}

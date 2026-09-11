@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "awake.worldbook.pilot-repair-decision.v1",
+  "reportType": "duplicate_decisions",
+  "status": "needs_review",
+  "sourceSnapshotId": "source.awake.worldbook.download-20260903",
+  "sourceSnapshotSha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+  "decisions": [
+    {
+      "file": "knowledge/rules/rule_塞堤斯河__塞堤斯河.json",
+      "sourceFileSha256": "C32983C07C67C54E0BBAE64ECB362BA9845C5FC87D7FB2345BEBBD31648896DC",
+      "locators": ["#/Variants/0/Content", "#/Variants/1/Content"],
+      "evidenceKind": "normalized_text_hash_equal",
+      "variantIndexes": [0, 1],
+      "finding": "normalized text identical; When differs by empire culture condition",
+      "decision": "unresolved",
+      "allowedActions": ["merge_shared_expression", "rewrite_distinct_expression", "retain_with_reason"],
+      "automaticDeletion": false
+    },
+    {
+      "file": "knowledge/rules/rule_贝恩兰岛__贝恩兰岛.json",
+      "sourceFileSha256": "9DD6EF8F69D0D34713D3D1C6C6F4426C9EA00C4144F81457E229DF4A8D2B1C0A",
+      "locators": ["#/Variants/0/Content", "#/Variants/3/Content"],
+      "evidenceKind": "normalized_text_hash_equal",
+      "variantIndexes": [0, 3],
+      "finding": "normalized text identical; When differs by scouting versus lord/culture condition",
+      "decision": "unresolved",
+      "allowedActions": ["merge_shared_expression", "rewrite_distinct_expression", "retain_with_reason"],
+      "automaticDeletion": false
+    },
+    {
+      "file": "knowledge/rules/rule_车尔特格山__车尔特格山.json",
+      "sourceFileSha256": "6F4200FCB79FD41330C988D943EA774E3495CBD6F64A02E5BB3F9EDF8244DF0D",
+      "locators": ["#/Variants/0/Content", "#/Variants/1/Content"],
+      "evidenceKind": "normalized_text_hash_equal",
+      "variantIndexes": [0, 1],
+      "finding": "normalized text identical; When differs by settlement versus scouting condition",
+      "decision": "unresolved",
+      "allowedActions": ["merge_shared_expression", "rewrite_distinct_expression", "retain_with_reason"],
+      "automaticDeletion": false
+    }
+  ],
+  "notes": [
+    "Text duplication is confirmed; semantic redundancy is not automatically proven.",
+    "No source file was modified."
+  ]
+}

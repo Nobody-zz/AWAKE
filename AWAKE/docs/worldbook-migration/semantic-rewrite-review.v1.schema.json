@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.semantic-rewrite-review.v1",
+  "title": "AWAKE Semantic Rewrite Review v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "batch_id",
+    "source_snapshot_id",
+    "candidate_id",
+    "review_state",
+    "understood_rewrite",
+    "reviewer",
+    "target_spans",
+    "semantic_checks",
+    "rejection_reason"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.migration.semantic-rewrite-review.v1"
+    },
+    "batch_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "candidate_id": {
+      "type": "string",
+      "pattern": "^authoring_provisional\\.(document|assertion|expression)\\.[a-f0-9]{24}$"
+    },
+    "review_state": {
+      "enum": [
+        "needs_review",
+        "accepted",
+        "rejected"
+      ]
+    },
+    "understood_rewrite": {
+      "enum": [
+        "pending",
+        "yes",
+        "no"
+      ]
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_spans": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/target_span"
+      }
+    },
+    "semantic_checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "epistemic_kind_preserved",
+        "perspective_preserved",
+        "time_scope_preserved",
+        "subject_predicate_object_preserved",
+        "polarity_preserved",
+        "source_coverage_complete"
+      ],
+      "properties": {
+        "epistemic_kind_preserved": {
+          "type": "boolean"
+        },
+        "perspective_preserved": {
+          "type": "boolean"
+        },
+        "time_scope_preserved": {
+          "type": "boolean"
+        },
+        "subject_predicate_object_preserved": {
+          "type": "boolean"
+        },
+        "polarity_preserved": {
+          "type": "boolean"
+        },
+        "source_coverage_complete": {
+          "type": "boolean"
+        }
+      }
+    },
+    "rejection_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "review_state": {
+            "const": "rejected"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "rejection_reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "understood_rewrite": {
+            "const": "yes"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "semantic_checks": {
+            "properties": {
+              "epistemic_kind_preserved": {
+                "const": true
+              },
+              "perspective_preserved": {
+                "const": true
+              },
+              "time_scope_preserved": {
+                "const": true
+              },
+              "subject_predicate_object_preserved": {
+                "const": true
+              },
+              "polarity_preserved": {
+                "const": true
+              },
+              "source_coverage_complete": {
+                "const": true
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "review_state": {
+            "const": "accepted"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "understood_rewrite": {
+            "const": "yes"
+          },
+          "semantic_checks": {
+            "properties": {
+              "epistemic_kind_preserved": { "const": true },
+              "perspective_preserved": { "const": true },
+              "time_scope_preserved": { "const": true },
+              "subject_predicate_object_preserved": { "const": true },
+              "polarity_preserved": { "const": true },
+              "source_coverage_complete": { "const": true }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "target_span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_locator",
+        "claim_ids",
+        "source_origin_ids",
+        "operation"
+      ],
+      "properties": {
+        "target_locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^authoring_provisional\\.claim\\.[a-f0-9]{24}$"
+          }
+        },
+        "source_origin_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^authoring_provisional\\.origin\\.[a-f0-9]{24}$"
+          }
+        },
+        "operation": {
+          "enum": [
+            "preserve",
+            "merge",
+            "split",
+            "rephrase",
+            "drop",
+            "unresolved"
+          ]
+        }
+      }
+    }
+  }
+}

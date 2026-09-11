@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.snapshot-manifest.v1.1",
+  "title": "AWAKE Source Snapshot Manifest v1.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source_snapshot_id",
+    "parent_snapshot_id",
+    "parent_snapshot_hash",
+    "source_root_id",
+    "source_version",
+    "normalization_version",
+    "canonicalization",
+    "files",
+    "manifest_hash",
+    "snapshot_hash",
+    "generated_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.migration.snapshot-manifest.v1.1"
+    },
+    "source_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parent_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parent_snapshot_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source_root_id": {
+      "type": "string",
+      "pattern": "^source\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+    },
+    "source_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "normalization_version": {
+      "const": "utf8-lf-no-bom-nfkc-v1"
+    },
+    "canonicalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "encoding",
+        "newline",
+        "bom",
+        "unicode",
+        "path_separator",
+        "path_compare",
+        "byte_length_basis",
+        "json_serialization",
+        "generated_at_in_identity"
+      ],
+      "properties": {
+        "encoding": {
+          "const": "UTF-8"
+        },
+        "newline": {
+          "const": "LF"
+        },
+        "bom": {
+          "const": "forbidden"
+        },
+        "unicode": {
+          "const": "NFKC"
+        },
+        "path_separator": {
+          "const": "/"
+        },
+        "path_compare": {
+          "const": "ordinal_case_fold"
+        },
+        "byte_length_basis": {
+          "const": "normalized_utf8_bytes"
+        },
+        "json_serialization": {
+          "const": "canonical_utf8_no_ascii_escape_no_whitespace"
+        },
+        "generated_at_in_identity": {
+          "const": false
+        }
+      }
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/file_entry"
+      }
+    },
+    "manifest_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "snapshot_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "file_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "byte_length",
+        "content_sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*\\.\\.)[^\\r\\n]+$"
+        },
+        "byte_length": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    }
+  }
+}

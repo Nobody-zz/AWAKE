@@ -1,0 +1,150 @@
+{
+  "report_kind": "red_team_fix_report",
+  "report_id": "red-team-fix.worldbook-semantic-migration.v1.1.20260904",
+  "generated_at": "2026-09-04",
+  "source_red_team_report": "RED-TEAM-REVIEW-METHODOLOGY-v1-20260904.json",
+  "methodology": "WORLDBOOK-SEMANTIC-MIGRATION-METHODOLOGY-v1.1.md",
+  "status": "contract_repaired_semantic_review_required",
+  "changes_made": [
+    {
+      "finding": "RT-P1-01",
+      "status": "contract_and_validator_added",
+      "artifacts": [
+        "semantic-origin.v1.schema.json",
+        "semantic-worksheet.v1.schema.json",
+        "semantic-rewrite-candidate.v1.schema.json",
+        "validate_migration_contract_v1_1.py"
+      ],
+      "remaining_boundary": "validator proves structural and join coverage; it does not replace human semantic judgment."
+    },
+    {
+      "finding": "RT-P1-02",
+      "status": "polarity_added_to_intermediate_candidate_and_worksheet",
+      "artifacts": [
+        "semantic-worksheet.v1.schema.json",
+        "semantic-rewrite-candidate.v1.schema.json"
+      ],
+      "remaining_boundary": "formal Authoring v1 has no claim-level polarity field; unsupported polarity must block final v1 projection."
+    },
+    {
+      "finding": "RT-P1-03",
+      "status": "origin_kind_allowlist_expanded",
+      "artifacts": [
+        "semantic-origin.v1.schema.json",
+        "semantic-worksheet.v1.schema.json"
+      ],
+      "remaining_boundary": "future input formats still require explicit parser adapters; unknown fields remain blocked."
+    },
+    {
+      "finding": "RT-P1-04",
+      "status": "gate_order_and_negative_default_base_rule_recorded",
+      "artifacts": [
+        "WORLDBOOK-SEMANTIC-MIGRATION-METHODOLOGY-v1.1.md",
+        "semantic-gate-matrix.v1.json"
+      ],
+      "remaining_boundary": "Studio runtime/export behavior remains unmodified; this batch only records and validates migration-side evidence."
+    },
+    {
+      "finding": "RT-P1-05",
+      "status": "when_decision_schema_and_batch_decisions_added",
+      "artifacts": [
+        "semantic-when-decision.v1.schema.json",
+        "SEMANTIC-WHEN-DECISIONS-V1.1-DOWNLOAD-20260904.json"
+      ],
+      "remaining_boundary": "all current decisions are unresolved; no permission mapping is approved."
+    },
+    {
+      "finding": "RT-P1-06",
+      "status": "provisional_namespace_and_formal_output_check_added",
+      "artifacts": [
+        "semantic-provisional-id.v1.schema.json",
+        "validate_migration_contract_v1_1.py"
+      ],
+      "remaining_boundary": "a future formal ID ledger implementation must still enforce namespace/id_kind consistency."
+    },
+    {
+      "finding": "RT-P1-07",
+      "status": "v1.1_snapshot_manifest_and_golden_fixture_added",
+      "artifacts": [
+        "snapshot-manifest.v1.1.schema.json",
+        "SNAPSHOT-MANIFEST-V1.1-DOWNLOAD-20260904.json",
+        "snapshot-manifest-golden.v1.json",
+        "SEMANTIC-SNAPSHOT-HASH-RECONCILIATION-20260904.json"
+      ],
+      "remaining_boundary": "legacy child manifest hash remains historical evidence and is not interchangeable with the v1.1 canonical manifest hash."
+    },
+    {
+      "finding": "RT-P1-08",
+      "status": "review_decision_schema_and_rejection_rules_added",
+      "artifacts": [
+        "semantic-review-decision.v1.schema.json",
+        "SEMANTIC-REVIEW-DECISIONS-V1.1-DOWNLOAD-20260904.json"
+      ],
+      "remaining_boundary": "current decisions remain needs_review; no human approval has been issued."
+    },
+    {
+      "finding": "RT-P1-09",
+      "status": "batch_state_and_artifact_hash_binding_added",
+      "artifacts": [
+        "semantic-batch-state.v1.schema.json",
+        "semantic-batch-artifact.v1.schema.json",
+        "SEMANTIC-BATCH-STATE-V1.1-DOWNLOAD-20260904.json",
+        "SEMANTIC-BATCH-ARTIFACTS-V1.1-DOWNLOAD-20260904.json"
+      ],
+      "remaining_boundary": "no compile, publish, runtime or game evidence is claimed."
+    },
+    {
+      "finding": "RT-P2-01_to_RT-P2-06",
+      "status": "partially_repaired",
+      "artifacts": [
+        "semantic-conflict-group.v1.schema.json",
+        "semantic-parent-child-join.v1.schema.json",
+        "semantic-gate-matrix.v1.json",
+        "WORLDBOOK-SEMANTIC-MIGRATION-METHODOLOGY-v1.1.md"
+      ],
+      "remaining_boundary": "four-tier join policy, complete localization adapters, and formal rollback implementation remain future work."
+    }
+  ],
+  "validation": {
+    "validator": "tools/worldbook-migration/validate_migration_contract_v1_1.py",
+    "status": "passed",
+    "failures": 0,
+    "checks_passed": [
+      "schemas_parse",
+      "snapshot_golden",
+      "snapshot_manifest_v11",
+      "gate_matrix_complete",
+      "source_hashes_unchanged",
+      "worksheet_unit_count",
+      "worksheet_origin_presence",
+      "worksheet_polarity",
+      "claim_source_snapshot_join",
+      "origin_identity_fields",
+      "origin_exact_coverage",
+      "claim_reference_integrity",
+      "formal_documents_needs_review",
+      "formal_documents_no_provisional_ids",
+      "semantic_candidate_integrity",
+      "when_decisions",
+      "review_decisions",
+      "conflict_groups",
+      "batch_state",
+      "artifact_hash_bindings",
+      "parent_child_join",
+      "review_schema_has_rejection_rule"
+    ],
+    "evidence_level": "E2"
+  },
+  "not_claimed": [
+    "semantic approval",
+    "canon",
+    "compiled",
+    "published",
+    "runtime-ready",
+    "gameplay verification",
+    "source registry permission closure",
+    "legacy When permission closure",
+    "formal entity/profile ID closure"
+  ],
+  "next_action": "继续独立语义审阅和候选修订时，沿用 v1.1 contract；不要扩大到全库，也不要把 validator 通过解释成内容批准。"
+}

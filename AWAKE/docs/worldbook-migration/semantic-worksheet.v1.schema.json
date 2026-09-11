@@ -1,0 +1,405 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.semantic-worksheet.v1",
+  "title": "AWAKE Semantic Worksheet v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "batch_id",
+    "source_snapshot_id",
+    "source_snapshot_sha256",
+    "source_units"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.migration.semantic-worksheet.v1"
+    },
+    "batch_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_snapshot_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source_units": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/source_unit"
+      }
+    }
+  },
+  "$defs": {
+    "source_unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_unit_id",
+        "relative_path",
+        "input_sha256",
+        "review_state",
+        "claims",
+        "legacy_origins",
+        "unresolved"
+      ],
+      "properties": {
+        "source_unit_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relative_path": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*\\.\\.)[^\\\\\\r\\n]+$"
+        },
+        "input_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "review_state": {
+          "enum": [
+            "needs_review",
+            "blocked"
+          ]
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/claim"
+          }
+        },
+        "legacy_origins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/legacy_origin"
+          }
+        },
+        "unresolved": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "epistemic_kind",
+        "subject",
+        "predicate",
+        "object",
+        "polarity",
+        "perspective",
+        "time_scope",
+        "confidence",
+        "conflict_group_id",
+        "canonicalization_state",
+        "review_state",
+        "source_bindings",
+        "legacy_origin_ids",
+        "rewrite_rationale",
+        "loss",
+        "unresolved"
+      ],
+      "properties": {
+        "claim_id": {
+          "type": "string",
+          "pattern": "^authoring_provisional\\.claim\\.[a-f0-9]{24}$"
+        },
+        "epistemic_kind": {
+          "enum": [
+            "source_fact",
+            "interpretation",
+            "rumor",
+            "relationship",
+            "state",
+            "unresolved"
+          ]
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "predicate": {
+          "type": "string",
+          "minLength": 1
+        },
+        "object": {
+          "type": "string",
+          "minLength": 1
+        },
+        "polarity": {
+          "enum": [
+            "affirmed",
+            "negated",
+            "undetermined"
+          ]
+        },
+        "perspective": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time_scope": {
+          "$ref": "#/$defs/time_scope"
+        },
+        "confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "unknown"
+          ]
+        },
+        "conflict_group_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^authoring_provisional\\.conflict\\.[a-f0-9]{24}$"
+        },
+        "canonicalization_state": {
+          "enum": [
+            "source_only",
+            "candidate",
+            "rejected"
+          ]
+        },
+        "review_state": {
+          "enum": [
+            "needs_review",
+            "blocked"
+          ]
+        },
+        "source_bindings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/source_binding"
+          }
+        },
+        "legacy_origin_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "rewrite_rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "loss": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "unresolved": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "time_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "valid_from",
+        "valid_to"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "current",
+            "historical",
+            "bounded",
+            "unknown"
+          ]
+        },
+        "valid_from": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "valid_to": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    },
+    "source_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_snapshot_id",
+        "source_root_id",
+        "source_id",
+        "source_version",
+        "source_content_hash",
+        "locator_root",
+        "relative_locator",
+        "normalized_quote",
+        "quote_hash"
+      ],
+      "properties": {
+        "source_snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_root_id": {
+          "type": "string",
+          "pattern": "^source\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "source_id": {
+          "type": "string",
+          "pattern": "^source\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "source_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_content_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "locator_root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relative_locator": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*\\.\\.)[^\\r\\n]+$"
+        },
+        "normalized_quote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quote_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "legacy_origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin_id",
+        "source_unit_id",
+        "origin_kind",
+        "origin_locator",
+        "raw_value_hash",
+        "destination",
+        "disposition",
+        "rationale",
+        "loss"
+      ],
+      "properties": {
+        "origin_id": {
+          "type": "string",
+          "pattern": "^authoring_provisional\\.origin\\.[a-f0-9]{24}$"
+        },
+        "source_unit_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "origin_kind": {
+          "enum": [
+            "file_metadata",
+            "field",
+            "array_item",
+            "keyword",
+            "rag",
+            "semantic_prototype",
+            "variant",
+            "when",
+            "text_mapping",
+            "runtime_signal",
+            "config_signal",
+            "adult_signal",
+            "parse_anomaly",
+            "entity_candidate",
+            "theme_candidate",
+            "external_reference",
+            "unknown_field"
+          ]
+        },
+        "origin_locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "raw_value_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "destination": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "ids"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "claim",
+                "assertion",
+                "expression",
+                "permission_evidence",
+                "reference_only",
+                "unresolved"
+              ]
+            },
+            "ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "disposition": {
+          "enum": [
+            "preserve",
+            "merge",
+            "split",
+            "rephrase",
+            "drop",
+            "unresolved"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "loss": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

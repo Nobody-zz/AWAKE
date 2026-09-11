@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "awake.worldbook.pilot-repair-review.v1",
+  "reportType": "repair_needs_review",
+  "status": "needs_review",
+  "sourceSnapshotId": "source.awake.worldbook.download-20260903",
+  "sourceSnapshotSha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+  "items": [
+    {"file": "personality_background/lord_1_14__拉盖娅.json", "sourceFileSha256": "4564A44E2B72C960368E81BAC5F8A89EA9652DC4042F3773CA455D627D7F6339", "locator": "$.Background", "evidenceKind": "invalid_unescaped_crlf", "severity": "P1", "scope": "full_source_gate", "reason": "invalid CRLF inside JSON string at line 3 column 270", "status": "unresolved"},
+    {"file": "knowledge/rules/rule_吕卡隆__吕卡隆.json", "sourceFileSha256": "4819BB172CCB5516B8DDA65F85C403323C9A7103B3833C168B4E4A96BA4F4C92", "locator": "$.TextMappings", "evidenceKind": "mapping_target_requires_entity_validation", "severity": "P1", "scope": "pilot", "reason": "three TextMappings and mixed assertion subjects", "status": "unresolved"},
+    {"file": "knowledge/rules/rule_塞堤斯河__塞堤斯河.json", "sourceFileSha256": "C32983C07C67C54E0BBAE64ECB362BA9845C5FC87D7FB2345BEBBD31648896DC", "locator": "$.Variants[0].Content / $.Variants[1].Content", "evidenceKind": "normalized_text_hash_equal", "severity": "P2", "scope": "pilot", "reason": "duplicate normalized expression with differing When", "status": "unresolved"},
+    {"file": "knowledge/rules/rule_贝恩兰岛__贝恩兰岛.json", "sourceFileSha256": "9DD6EF8F69D0D34713D3D1C6C6F4426C9EA00C4144F81457E229DF4A8D2B1C0A", "locator": "$.Variants[0].Content / $.Variants[3].Content", "evidenceKind": "normalized_text_hash_equal", "severity": "P2", "scope": "pilot", "reason": "duplicate normalized expression with differing When", "status": "unresolved"},
+    {"file": "knowledge/rules/rule_车尔特格山__车尔特格山.json", "sourceFileSha256": "6F4200FCB79FD41330C988D943EA774E3495CBD6F64A02E5BB3F9EDF8244DF0D", "locator": "$.Variants[0].Content / $.Variants[1].Content", "evidenceKind": "normalized_text_hash_equal", "severity": "P2", "scope": "pilot", "reason": "duplicate normalized expression with differing When", "status": "unresolved"},
+    {"file": "knowledge/rules/rule_攻城塔__攻城塔.json", "sourceFileSha256": "724DBA53A2B60AE50637B475DBC3CE0690656D62B5278AEA79C7CFF489B67C41", "locator": "$.Variants", "evidenceKind": "heuristic_signal_not_reproduced", "severity": "P2", "scope": "pilot", "reason": "heuristic truncation signal not confirmed by read-only check", "status": "resolved_as_unconfirmed"}
+  ],
+  "gate": {
+    "sourceParseErrorCount": 1,
+    "fullPackagePromotion": "blocked",
+    "pilotMayProceedOnlyIf": "lord_1_14__拉盖娅.json is excluded from the explicit pilot input set"
+  }
+}

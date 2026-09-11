@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "awake.worldbook.migration.parent-binding-report.v1",
+  "reportType": "derived_snapshot_parent_binding",
+  "status": "needs_review",
+  "parent": {
+    "sourceSnapshotId": "source.awake.worldbook.download-20260903",
+    "sourceSnapshotSha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+    "sourceRootId": "source.calradia.chronicle.download",
+    "fileCount": 757,
+    "parseErrorCount": 1
+  },
+  "child": {
+    "sourceSnapshotId": "semantic-pilot30.download-20260903",
+    "sourceRootId": "source.calradia.chronicle.download",
+    "sourceVersion": "download-20260903",
+    "fileCount": 30,
+    "snapshotHash": "0f23affffd56b65ff07863d1949d42f0389adad7d576e6a396eca8adca399043",
+    "manifestHash": "da97706ffc593c3fc81b80c00aa7bba7f70873244a97959263dfbd4bbfdf4e10"
+  },
+  "bindingEvidence": {
+    "worksheetParentSnapshotId": "source.awake.worldbook.download-20260903",
+    "worksheetParentSnapshotSha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+    "worksheetInputHashMatchesActualSource": "30/30",
+    "childManifestPathsMatchWorksheetPaths": "30/30",
+    "manifestContentHashComparedToRawSource": "not_comparable_without_normalization_reproduction",
+    "parentBindingMode": "derived_child_report_only"
+  },
+  "decision": {
+    "currentUse": "review_only",
+    "compiled": false,
+    "published": false,
+    "runtimeInjected": false,
+    "requiredNextAction": "reproduce utf8-lf-no-bom-v1 content hashes or record an explicit raw-versus-normalized hash pair"
+  },
+  "notes": [
+    "The child manifest is not treated as a standalone parent source snapshot.",
+    "The parent source parse error remains a full-package gate and is outside the 30-file child input set.",
+    "This report does not modify either source, manifest, worksheet, Studio registry, AWAKE ModuleData, or runtime package."
+  ]
+}

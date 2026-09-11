@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "awake.worldbook.pilot-repair-review.v1",
+  "reportType": "read_only_source_diagnosis",
+  "status": "needs_review",
+  "authoritySource": "C:\\Users\\26811\\Downloads\\卡拉迪亚编年史\\卡拉迪亚编年史",
+  "sourceSnapshotId": "source.awake.worldbook.download-20260903",
+  "sourceSnapshotSha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+  "sourceModified": false,
+  "findings": [
+    {
+      "file": "knowledge/rules/rule_攻城塔__攻城塔.json",
+      "sha256": "724DBA53A2B60AE50637B475DBC3CE0690656D62B5278AEA79C7CFF489B67C41",
+      "parseStatus": "ok",
+      "variantCount": 3,
+      "mappingCount": 0,
+      "finding": "The three variants are non-empty and have distinct normalized text hashes. The previously reported truncation signal is not confirmed by this read-only check.",
+      "classification": "heuristic_false_positive_candidate",
+      "recommendedAction": "retain_for_manual_content_review; do not repair source automatically"
+    },
+    {
+      "file": "knowledge/rules/rule_吕卡隆__吕卡隆.json",
+      "sha256": "4819BB172CCB5516B8DDA65F85C403323C9A7103B3833C168B4E4A96BA4F4C92",
+      "parseStatus": "ok",
+      "variantCount": 12,
+      "mappingCount": 3,
+      "finding": "The document combines settlement geography, imperial history, factional perspectives, culture perspectives, soldier perspective, and steward-gated detail. Three dynamic mappings use settlement_owner_leader_name, status|clan|has_any_town, and kingdom_leader_name.",
+      "classification": "confirmed_reorganization_and_mapping_review",
+      "recommendedAction": "split assertions by subject; verify town_ES4 casing/identity, clan_empire_south_1, empire_s; preserve mappings only after explicit entity validation"
+    },
+    {
+      "file": "knowledge/rules/rule_塞堤斯河__塞堤斯河.json",
+      "sha256": "C32983C07C67C54E0BBAE64ECB362BA9845C5FC87D7FB2345BEBBD31648896DC",
+      "parseStatus": "ok",
+      "variantCount": 8,
+      "duplicateVariantGroups": [
+        {
+          "indexes": [0, 1],
+          "sameNormalizedText": true,
+          "differentWhen": true
+        }
+      ],
+      "classification": "confirmed_duplicate_expression",
+      "recommendedAction": "merge or rewrite the duplicate; do not preserve identical text solely because the When condition differs"
+    },
+    {
+      "file": "knowledge/rules/rule_贝恩兰岛__贝恩兰岛.json",
+      "sha256": "9DD6EF8F69D0D34713D3D1C6C6F4426C9EA00C4144F81457E229DF4A8D2B1C0A",
+      "parseStatus": "ok",
+      "variantCount": 4,
+      "duplicateVariantGroups": [
+        {
+          "indexes": [0, 3],
+          "sameNormalizedText": true,
+          "differentWhen": true
+        }
+      ],
+      "classification": "confirmed_duplicate_expression",
+      "recommendedAction": "retain one expression only if the access condition is intentionally shared; otherwise rewrite the lord/culture expression"
+    },
+    {
+      "file": "knowledge/rules/rule_车尔特格山__车尔特格山.json",
+      "sha256": "6F4200FCB79FD41330C988D943EA774E3495CBD6F64A02E5BB3F9EDF8244DF0D",
+      "parseStatus": "ok",
+      "variantCount": 2,
+      "duplicateVariantGroups": [
+        {
+          "indexes": [0, 1],
+          "sameNormalizedText": true,
+          "differentWhen": true
+        }
+      ],
+      "classification": "confirmed_duplicate_expression",
+      "recommendedAction": "merge or rewrite the scouting-gated expression; verify whether scouting changes detail or only duplicates the base text"
+    }
+  ],
+  "globalNotes": [
+    "This report is diagnosis only; it does not edit the authority source or AWAKE ModuleData.",
+    "No Studio authoring document, compiled package, registry mutation, canon decision, or published content is produced.",
+    "The single source JSON parse error remains personality_background/lord_1_14__拉盖娅.json and is outside these five rule files."
+  ]
+}

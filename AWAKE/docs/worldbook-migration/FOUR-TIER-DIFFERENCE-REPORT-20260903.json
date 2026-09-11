@@ -1,0 +1,22 @@
+{
+  "report_kind": "four_tier_difference_report",
+  "report_id": "four-tier.awake.worldbook.20260903",
+  "source_snapshot_id": "source.awake.worldbook.20260903",
+  "source_snapshot_sha256": "270013d89deb6aca9268d24b37fc9ae7ebc0dc9ac634ae71fdb836c5f45664d0",
+  "generated_at": "2026-09-03",
+  "status": "insufficient_input",
+  "expected_tiers": {
+    "clean": "卡拉迪亚（炫压抑）",
+    "dark": "卡拉迪亚（黑暗且压抑）",
+    "extreme": "卡拉迪亚（超绝炫压抑）",
+    "bloody": "卡拉迪亚（血腥且压抑）"
+  },
+  "observed_source_partition": null,
+  "observed_tiers": [],
+  "comparison": [],
+  "reason": "当前候选目录是单一 awake.calradia.chronicle 旧格式目录，不含四档目录或每条记录的 tier 字段；本轮不跨目录读取旧运行时导出，不伪造四档差异。",
+  "next_evidence_needed": [
+    "确认四档权威输入根目录及版本/哈希",
+    "为每档建立独立快照后比较同名、同 ID、正文和关键词差异"
+  ]
+}

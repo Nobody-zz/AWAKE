@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.semantic-provisional-id.v1",
+  "title": "AWAKE Semantic Provisional ID v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "provisional_id",
+    "object_kind",
+    "source_snapshot_id",
+    "source_unit_id",
+    "input_sha256",
+    "final_id",
+    "review_state"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.migration.semantic-provisional-id.v1"
+    },
+    "provisional_id": {
+      "type": "string",
+      "pattern": "^authoring_provisional\\.(claim|origin|assertion|expression|document)\\.[a-f0-9]{24}$"
+    },
+    "object_kind": {
+      "enum": [
+        "claim",
+        "origin",
+        "assertion",
+        "expression",
+        "document"
+      ]
+    },
+    "source_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_unit_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "input_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "final_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-z]+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+    },
+    "review_state": {
+      "enum": [
+        "needs_review",
+        "accepted",
+        "rejected"
+      ]
+    }
+  }
+}

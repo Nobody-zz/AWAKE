@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.semantic-batch-artifact.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "artifact_id",
+    "batch_id",
+    "source_snapshot_id",
+    "artifact_kind",
+    "artifact_path",
+    "artifact_hash",
+    "evidence_level",
+    "state",
+    "created_at",
+    "stale_when"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.migration.semantic-batch-artifact.v1"
+    },
+    "artifact_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "batch_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_kind": {
+      "enum": [
+        "snapshot",
+        "inventory",
+        "worksheet",
+        "cluster_plan",
+        "candidate",
+        "review",
+        "validation",
+        "decision",
+        "fixture"
+      ]
+    },
+    "artifact_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "evidence_level": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5"
+      ]
+    },
+    "state": {
+      "enum": [
+        "planned",
+        "current",
+        "stale",
+        "invalidated",
+        "superseded",
+        "blocked"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "stale_when": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "source_hash_change",
+          "snapshot_change",
+          "candidate_revision_change",
+          "registry_hash_change",
+          "review_revision_change"
+        ]
+      },
+      "uniqueItems": true
+    }
+  }
+}

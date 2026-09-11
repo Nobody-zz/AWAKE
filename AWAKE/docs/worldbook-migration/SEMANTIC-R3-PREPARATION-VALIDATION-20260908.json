@@ -1,0 +1,352 @@
+{
+  "schema_version": "awake.worldbook.migration.semantic-r3-preparation-validation.v1",
+  "report_id": "semantic-r3-preparation-validation.20260908",
+  "generated_at": "2026-09-08T00:00:00+08:00",
+  "status": "needs_review",
+  "scope": "只验证五个候选的 r3 claim/origin 修订准备，不验证 target span，不生成 candidate。",
+  "checks": {
+    "action_count_23": true,
+    "new_claim_count_22": true,
+    "claim_ids_unique": true,
+    "claim_ids_format": true,
+    "all_new_claims_needs_review": true,
+    "all_new_claims_have_origins": true,
+    "all_new_claims_have_bindings": true,
+    "action_claim_refs_exist": true,
+    "action_claim_refs_unique_per_action": true,
+    "target_spans_closed": false,
+    "candidate_generation_allowed": false,
+    "all_decisions_unresolved": true
+  },
+  "counts": {
+    "actions": 23,
+    "new_claims": 22,
+    "claim_references": 22,
+    "actions_without_new_claim": 4
+  },
+  "action_map": [
+    {
+      "action_id": "lac-01",
+      "title": "拉科尼斯湖",
+      "claim_ids": [
+        "authoring_provisional.claim.c4672cffe65c5125bb1d00e7"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.d5bd6d3382672ae542a1cc22"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "split_claim"
+    },
+    {
+      "action_id": "lac-02",
+      "title": "拉科尼斯湖",
+      "claim_ids": [
+        "authoring_provisional.claim.d2c7e2dc921eafdf047a31c8"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.7ba74330155cd80ad446d57a"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "split_claim"
+    },
+    {
+      "action_id": "lac-03",
+      "title": "拉科尼斯湖",
+      "claim_ids": [
+        "authoring_provisional.claim.c829e454ee3264a31fe6c451"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.a5239cb238349326884324ff"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "add_claim"
+    },
+    {
+      "action_id": "lac-04",
+      "title": "拉科尼斯湖",
+      "claim_ids": [
+        "authoring_provisional.claim.e1158ae544d37d2f31aeed53"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.ce4011516c2d730bfe559bea"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "verify_subject"
+    },
+    {
+      "action_id": "lac-05",
+      "title": "拉科尼斯湖",
+      "claim_ids": [],
+      "source_origin_ids": [],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "split_target_span",
+      "note": "只拆分已有命题的 target span，不新增世界事实 claim。"
+    },
+    {
+      "action_id": "sara-01",
+      "title": "沙拉斯湾",
+      "claim_ids": [
+        "authoring_provisional.claim.b3f620e228052b0073d624b5"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.ff1f9f7cefc1b400e083a2c1"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "add_claim"
+    },
+    {
+      "action_id": "sara-02",
+      "title": "沙拉斯湾",
+      "claim_ids": [],
+      "source_origin_ids": [],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "preserve_perspective",
+      "note": "“摇篮”保持为帝国史书/贵族传统视角。"
+    },
+    {
+      "action_id": "sara-03",
+      "title": "沙拉斯湾",
+      "claim_ids": [],
+      "source_origin_ids": [],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "preserve_epistemic_boundary",
+      "note": "先祖登陆保持为未获确证的传说。"
+    },
+    {
+      "action_id": "sara-04",
+      "title": "沙拉斯湾",
+      "claim_ids": [],
+      "source_origin_ids": [],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "preserve_epistemic_boundary",
+      "note": "雾、罗盘和石刻保持为船员传闻。"
+    },
+    {
+      "action_id": "kach-01",
+      "title": "卡恰尔半岛",
+      "claim_ids": [
+        "authoring_provisional.claim.9644824420c36a47d41eae1e"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.4ec5f5b6085abd35411cf7f1",
+        "authoring_provisional.origin.fafa6ebea323dd7c93b6e5fe"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "add_unresolved"
+    },
+    {
+      "action_id": "kach-02",
+      "title": "卡恰尔半岛",
+      "claim_ids": [
+        "authoring_provisional.claim.a48e49e8bc9c8d3cc77b3bc2"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.30c093b48c33986cf2773924"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "split_claim"
+    },
+    {
+      "action_id": "kach-03",
+      "title": "卡恰尔半岛",
+      "claim_ids": [
+        "authoring_provisional.claim.42d80bdb7b7cc690dd16e45a"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.9fe36f20baf04e7c868405cc",
+        "authoring_provisional.origin.1853f6f685ba1c4723babc88"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "split_claim"
+    },
+    {
+      "action_id": "kach-04",
+      "title": "卡恰尔半岛",
+      "claim_ids": [
+        "authoring_provisional.claim.9dddd4ae617f78441f817f84"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.30bb5679b259bf56550aca2c"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "preserve_perspective"
+    },
+    {
+      "action_id": "kach-05",
+      "title": "卡恰尔半岛",
+      "claim_ids": [
+        "authoring_provisional.claim.2a766fe18cf768014da363d2",
+        "authoring_provisional.claim.29471fc14b7ee2c3e7b7be74",
+        "authoring_provisional.claim.19d09a9134841be233413cb2"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.f750bd2c82e7c1a70246c4a7",
+        "authoring_provisional.origin.b937bd2489cee0f594784d82",
+        "authoring_provisional.origin.da3a671da0f48db2201b6335",
+        "authoring_provisional.origin.bfbcf87ac995494464b77daa",
+        "authoring_provisional.origin.72e83c5fd1d9128300317556",
+        "authoring_provisional.origin.8bcf98613d010ed2fca40daa",
+        "authoring_provisional.origin.735bce810b08055af5a4efa6",
+        "authoring_provisional.origin.32af781c62b1f0133bb6ff9b",
+        "authoring_provisional.origin.4dec3d4dc19af168b71bd687"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "bind_per_culture",
+      "note": "三个 claim 分别按 battania/nord/sturgia perspective 审阅。"
+    },
+    {
+      "action_id": "dawn-01",
+      "title": "黎明山脉",
+      "claim_ids": [
+        "authoring_provisional.claim.dc592556b2e4c247d50cd40a"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.67ffaea0e27373a734c8c043"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "preserve_source_granularity"
+    },
+    {
+      "action_id": "dawn-02",
+      "title": "黎明山脉",
+      "claim_ids": [
+        "authoring_provisional.claim.1c70c804f9d583f4e8d33c96",
+        "authoring_provisional.claim.8e71486bbda76901237134dd"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.dc50ead6102fd6c77daaca97",
+        "authoring_provisional.origin.dcede3c67bc117cb4a3bf032",
+        "authoring_provisional.origin.65c009ad533c80a1c5309a10",
+        "authoring_provisional.origin.a3a408f910436a380a600617"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "split_claim",
+      "note": "分别承载地理边界与社会边界；不自动追加 physical barrier。"
+    },
+    {
+      "action_id": "dawn-03",
+      "title": "黎明山脉",
+      "claim_ids": [
+        "authoring_provisional.claim.17ddf9219131f13632e45320"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.83961e21b835b4d258576a57"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "preserve_epistemic_boundary"
+    },
+    {
+      "action_id": "dawn-04",
+      "title": "黎明山脉",
+      "claim_ids": [
+        "authoring_provisional.claim.8b0d5629862f3c72dad1c7f1"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.0c9c5aeed1beb4316607df0d",
+        "authoring_provisional.origin.ca7ee9265d94e60a4b17b7ac"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "bind_source_span"
+    },
+    {
+      "action_id": "dawn-05",
+      "title": "黎明山脉",
+      "claim_ids": [
+        "authoring_provisional.claim.fd78df11d0b49237fa8d34dd"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.87d93dfafccf8f4996c5919f",
+        "authoring_provisional.origin.3b556703bcb05325e3e3c509"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "block_current_inference"
+    },
+    {
+      "action_id": "der-01",
+      "title": "德里亚特",
+      "claim_ids": [
+        "authoring_provisional.claim.8578161db710e16e0c4ec922"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.cfc037e4579446c6b278d70d",
+        "authoring_provisional.origin.ff93757629b3a361d0b5fcbc"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "narrow_proposition"
+    },
+    {
+      "action_id": "der-02",
+      "title": "德里亚特",
+      "claim_ids": [
+        "authoring_provisional.claim.a2958bbb9490ce195a755e68"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.dca60350f8c418ad9167f6d5"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "narrow_interpretation"
+    },
+    {
+      "action_id": "der-03",
+      "title": "德里亚特",
+      "claim_ids": [
+        "authoring_provisional.claim.d4853fc7e987012ee50ace18"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.de017ecd107cc7777b6aefb8"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "preserve_independent_fact"
+    },
+    {
+      "action_id": "der-04",
+      "title": "德里亚特",
+      "claim_ids": [
+        "authoring_provisional.claim.57e81a172cc6d39dbebffae4"
+      ],
+      "source_origin_ids": [
+        "authoring_provisional.origin.72aae9c7742aa2b714cde743"
+      ],
+      "target_span_status": "missing_until_candidate_r3",
+      "decision": "unresolved",
+      "operation": "keep_metadata_only"
+    }
+  ],
+  "files_read": [
+    "SEMANTIC-WORKSHEET-R3-REVISION-DRAFT-20260908.json",
+    "SEMANTIC-REVISION-EVIDENCE-PACK-R3-20260908.json",
+    "SEMANTIC-WORKSHEETS-DOWNLOAD-20260903.json"
+  ],
+  "files_changed": [
+    "SEMANTIC-WORKSHEET-R3-REVISION-DRAFT-20260908.json",
+    "SEMANTIC-R3-PREPARATION-VALIDATION-20260908.json"
+  ],
+  "next_action": [
+    "继续人工确认新增 claim 的语义和来源范围。",
+    "为 22 个新增 claim 设计独立 target span。",
+    "完成 target span 闭合后，才生成独立 r3 candidate。"
+  ],
+  "boundary_statement": "未修改真实源目录、r2 候选、Worldbook Studio 或 AWAKE 运行时代码；未启动游戏、未同步游戏目录、未访问 Provider/API Key/Token/Worker/网络服务。"
+}

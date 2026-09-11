@@ -1,0 +1,29 @@
+{
+  "report_kind": "migration_analysis_plan",
+  "plan_id": "plan.awake.worldbook-migration.download-20260903",
+  "generated_at": "2026-09-03",
+  "phase": "authority_rebased_read_only_phase",
+  "status": "plan_and_audit_artifacts_generated",
+  "source_snapshot_id": "source.awake.worldbook.download-20260903",
+  "scope": {
+    "requested_source_root": "C:\\Users\\26811\\Downloads\\卡拉迪亚编年史",
+    "effective_source_root": "C:\\Users\\26811\\Downloads\\卡拉迪亚编年史\\卡拉迪亚编年史",
+    "output_root": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\docs\\worldbook-migration",
+    "source_files_scanned": 757
+  },
+  "completed_now": [
+    "将用户指定的下载包确认为单一权威输入",
+    "建立新的文件清单、SHA-256 快照和 JSON 解析报告",
+    "建立重复、冲突、实体、内容层分流和迁移损失报告",
+    "明确四档比较按用户指令不适用",
+    "提出最多 30 文件的地理主题规则试点候选"
+  ],
+  "not_done": [
+    "没有生成 authoring v1 正文",
+    "没有修改原始下载世界书、旧工作区世界书、Studio、AWAKE、dist、游戏目录或发布包",
+    "没有启动 Bannerlord",
+    "没有调用真实 Provider/API/Token",
+    "没有将任何单位标记为 canon、approved、compiled 或 published"
+  ],
+  "next_action": "先人工确认新的权威快照和报告，尤其是缺少 manifest/source registry、内容层、实体映射与试点边界；未经确认不生成迁移正文。"
+}

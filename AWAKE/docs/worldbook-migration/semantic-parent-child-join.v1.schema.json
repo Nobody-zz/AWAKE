@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.semantic-parent-child-join.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "parent_snapshot_id",
+    "parent_snapshot_hash",
+    "child_snapshot_id",
+    "child_manifest_hash",
+    "source_root_id",
+    "source_version",
+    "registry_record_hash",
+    "review_state"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.migration.semantic-parent-child-join.v1"
+    },
+    "parent_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parent_snapshot_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "child_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "child_manifest_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source_root_id": {
+      "type": "string",
+      "pattern": "^source\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+    },
+    "source_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "registry_record_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "review_state": {
+      "enum": [
+        "needs_review",
+        "accepted",
+        "rejected",
+        "blocked"
+      ]
+    }
+  }
+}

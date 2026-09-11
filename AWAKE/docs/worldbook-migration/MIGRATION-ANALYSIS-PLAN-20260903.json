@@ -1,0 +1,27 @@
+{
+  "report_kind": "migration_analysis_plan",
+  "plan_id": "plan.awake.worldbook-migration.20260903",
+  "generated_at": "2026-09-03",
+  "phase": "first_read_only_phase",
+  "status": "plan_and_audit_artifacts_generated",
+  "source_snapshot_id": "source.awake.worldbook.20260903",
+  "scope": {
+    "source_root": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\ModuleData\\Worldbook",
+    "output_root": "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\docs\\worldbook-migration",
+    "source_files_scanned": 759
+  },
+  "completed_now": [
+    "读取当前状态、Studio schema、内容层/运行时/来源/ID/权限契约与 Legacy 规范",
+    "建立文件清单、SHA-256 快照和解析报告",
+    "建立重复、冲突、实体、四档输入可用性、内容层分流和迁移损失报告",
+    "提出最多 30 文件的地理主题规则试点候选"
+  ],
+  "not_done": [
+    "没有生成 authoring v1 正文",
+    "没有修改原始世界书、Studio、AWAKE、dist、游戏目录或发布包",
+    "没有启动 Bannerlord",
+    "没有调用真实 Provider/API/Token",
+    "没有将任何单位标记为 canon、approved、compiled 或 published"
+  ],
+  "next_action": "先人工确认本轮报告，尤其是四档权威输入位置、试点边界、来源登记策略和 entity/profile registry 责任；未经确认不生成迁移正文。"
+}

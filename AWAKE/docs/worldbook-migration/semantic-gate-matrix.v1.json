@@ -1,0 +1,102 @@
+{
+  "schema_version": "awake.worldbook.migration.semantic-gate-matrix.v1",
+  "states": {
+    "planned": {
+      "report": true,
+      "candidate": false,
+      "authoring": false,
+      "compile": false,
+      "publish": false
+    },
+    "snapshot_locked": {
+      "report": true,
+      "candidate": false,
+      "authoring": false,
+      "compile": false,
+      "publish": false
+    },
+    "inventory_complete": {
+      "report": true,
+      "candidate": false,
+      "authoring": false,
+      "compile": false,
+      "publish": false
+    },
+    "semantic_in_progress": {
+      "report": true,
+      "candidate": true,
+      "authoring": false,
+      "compile": false,
+      "publish": false
+    },
+    "candidate_ready": {
+      "report": true,
+      "candidate": true,
+      "authoring": false,
+      "compile": false,
+      "publish": false
+    },
+    "review_required": {
+      "report": true,
+      "candidate": true,
+      "authoring": false,
+      "compile": false,
+      "publish": false
+    },
+    "accepted": {
+      "report": true,
+      "candidate": true,
+      "authoring": true,
+      "compile": false,
+      "publish": false
+    },
+    "blocked": {
+      "report": true,
+      "candidate": true,
+      "authoring": false,
+      "compile": false,
+      "publish": false
+    },
+    "rejected": {
+      "report": true,
+      "candidate": false,
+      "authoring": false,
+      "compile": false,
+      "publish": false
+    },
+    "compiled": {
+      "report": true,
+      "candidate": true,
+      "authoring": true,
+      "compile": true,
+      "publish": false
+    },
+    "published": {
+      "report": true,
+      "candidate": true,
+      "authoring": true,
+      "compile": true,
+      "publish": true
+    },
+    "superseded": {
+      "report": true,
+      "candidate": false,
+      "authoring": false,
+      "compile": false,
+      "publish": false
+    },
+    "abandoned": {
+      "report": true,
+      "candidate": false,
+      "authoring": false,
+      "compile": false,
+      "publish": false
+    }
+  },
+  "rules": [
+    "状态不是证据等级；每个状态必须绑定 batch_id、snapshot_id、artifact_hashes、evidence_level、recorded_at 和 next_action。",
+    "parent/child snapshot、candidate 或 review revision 变化时，下游证据标记 stale/invalidated。",
+    "rejected candidate 不得直接复用为 accepted/canon 内容；必须通过新 revision 和 supersedes 关系重新审阅。",
+    "needs_review 可以生成隔离候选和报告，但不得进入正式 Authoring、compile 或 publish。"
+  ]
+}

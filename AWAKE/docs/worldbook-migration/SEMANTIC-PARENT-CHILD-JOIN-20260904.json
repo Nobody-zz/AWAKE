@@ -1,0 +1,27 @@
+{
+  "schema_version": "awake.worldbook.migration.semantic-parent-child-join.v1",
+  "parent_snapshot_id": "source.awake.worldbook.download-20260903",
+  "parent_snapshot_hash": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+  "child_snapshot_id": "semantic-pilot30.download-20260903",
+  "child_manifest_hash": "43f7ad78c0c4bdd3af1f19c4f30347aa36cd0d08ffce2ddff62e98fe32d73e49",
+  "source_root_id": "source.calradia.chronicle.download",
+  "source_version": "download-20260903",
+  "registry_record_hash": "a09c5d3df11616a41eb8e7f055d65ef1fb8673ce484f5b480b84fb132107fc0b",
+  "review_state": "needs_review",
+  "join_policy": {
+    "candidate_snapshot_must_equal_child": true,
+    "claim_file_hash_must_equal_child_manifest": true,
+    "source_registry_hash_must_equal_claim_binding": true,
+    "parent_child_relationship_is_historical_evidence_only": true,
+    "does_not_approve_or_publish": true
+  },
+  "unresolved": [
+    "source registry license_status",
+    "source registry use_status",
+    "source registry content_tier",
+    "universe",
+    "era",
+    "formal entity/profile IDs",
+    "legacy When permission mapping"
+  ]
+}

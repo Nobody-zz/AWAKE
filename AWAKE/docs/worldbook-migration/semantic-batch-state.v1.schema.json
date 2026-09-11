@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.semantic-batch-state.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "batch_id",
+    "source_snapshot_id",
+    "state",
+    "artifact_hashes",
+    "evidence_level",
+    "recorded_at",
+    "next_action"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.migration.semantic-batch-state.v1"
+    },
+    "batch_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "enum": [
+        "planned",
+        "snapshot_locked",
+        "inventory_complete",
+        "semantic_in_progress",
+        "candidate_ready",
+        "review_required",
+        "accepted",
+        "blocked",
+        "rejected",
+        "compiled",
+        "published",
+        "runtime_verified",
+        "superseded",
+        "abandoned"
+      ]
+    },
+    "artifact_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      }
+    },
+    "evidence_level": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5"
+      ]
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "next_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "supersedes_batch_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

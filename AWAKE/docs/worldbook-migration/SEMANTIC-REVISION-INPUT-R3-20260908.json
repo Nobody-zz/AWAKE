@@ -1,0 +1,442 @@
+{
+  "schema_version": "awake.worldbook.migration.semantic-revision-input.v1",
+  "input_pack_id": "semantic-revision-input-r3.20260908",
+  "generated_at": "2026-09-08T00:00:00+08:00",
+  "status": "needs_review",
+  "purpose": "为五个 r2 候选准备独立 r3 修订输入；不包含新的 rewrite candidate 或最终正文。",
+  "authority": {
+    "source_root": "C:\\Users\\26811\\Downloads\\卡拉迪亚编年史\\卡拉迪亚编年史",
+    "parent_snapshot_id": "source.awake.worldbook.download-20260903",
+    "parent_snapshot_sha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+    "child_snapshot_id": "semantic-pilot30.download-20260903",
+    "child_snapshot_hash": "e91ffbeb709e967bff5373a191d5587c179afa09fa4ca8d8b271d8e1ed1a22be",
+    "child_manifest_hash": "43f7ad78c0c4bdd3af1f19c4f30347aa36cd0d08ffce2ddff62e98fe32d73e49"
+  },
+  "parent_action_queue": "SEMANTIC-MIGRATION-ACTION-QUEUE-R2-20260906.json",
+  "source_contract": {
+    "source_root": "C:\\Users\\26811\\Downloads\\卡拉迪亚编年史\\卡拉迪亚编年史",
+    "parent_snapshot_id": "source.awake.worldbook.download-20260903",
+    "parent_snapshot_sha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+    "child_snapshot_id": "semantic-pilot30.download-20260903",
+    "child_snapshot_hash": "e91ffbeb709e967bff5373a191d5587c179afa09fa4ca8d8b271d8e1ed1a22be",
+    "child_manifest_hash": "43f7ad78c0c4bdd3af1f19c4f30347aa36cd0d08ffce2ddff62e98fe32d73e49"
+  },
+  "revision_policy": {
+    "base_revision": 2,
+    "target_revision": 3,
+    "new_directory_required": true,
+    "overwrite_existing": false,
+    "candidate_generation_allowed_in_this_artifact": false,
+    "all_outputs_status": "needs_review"
+  },
+  "candidates": [
+    {
+      "title": "拉科尼斯湖",
+      "candidate_id": "doc.geography.6a76947095d5063f64d9d279",
+      "current_revision": 2,
+      "current_status": "needs_review",
+      "current_candidate_sha256": "c9bb0bf53d669c0b8ca8cd4c7adc73b8ea3892bbfaf608abb836e631c5e92138",
+      "current_assertion_count": 7,
+      "source_unit_id": "rule_拉科尼斯湖",
+      "next_revision": 3,
+      "required_status": "needs_review",
+      "required_operations": [
+        {
+          "action_id": "lac-01",
+          "operation": "split_claim",
+          "proposition": "沿岸渔民、船工和码头搬运者依靠湖区生活。",
+          "claim_kind": "relationship",
+          "source_basis": "Variants/0/Content",
+          "required": true
+        },
+        {
+          "action_id": "lac-02",
+          "operation": "split_claim",
+          "proposition": "帝国麦子和斯特吉亚毛皮沿湖区水路转运。",
+          "claim_kind": "relationship",
+          "source_basis": "Variants/0/Content",
+          "required": true
+        },
+        {
+          "action_id": "lac-03",
+          "operation": "add_claim",
+          "proposition": "浅滩铁质氧化层为来源考察叙述提供的自然解释，不能与血染湖水传说合并。",
+          "claim_kind": "interpretation",
+          "source_basis": "Variants/2/Content",
+          "required": true
+        },
+        {
+          "action_id": "lac-04",
+          "operation": "verify_subject",
+          "proposition": "帝国叙述将冬季航运解释为北境防务和运兵优势。",
+          "claim_kind": "interpretation",
+          "source_basis": "Variants/1/Content",
+          "required": true,
+          "constraint": "确认主体是帝国叙述/帝国防务叙述还是具体领主；不能无证据收窄主体。"
+        },
+        {
+          "action_id": "lac-05",
+          "operation": "split_target_span",
+          "proposition": "冬季通航、帝国战略解释、血染湖水传说和自然沉积解释必须分别绑定。",
+          "claim_kind": "target_span",
+          "source_basis": "Variants/0/Content; Variants/1/Content; Variants/2/Content",
+          "required": true
+        }
+      ],
+      "output_requirements": {
+        "must_add_claim_ids": "new claim IDs for every added/split proposition",
+        "must_add_origin_ids": "new origin IDs for every added/split proposition",
+        "must_add_target_spans": "one target span per proposition",
+        "must_preserve": [
+          "epistemic_kind",
+          "perspective",
+          "time_scope",
+          "polarity"
+        ],
+        "must_not_do": [
+          "copy r2 in place",
+          "turn interpretation into source_fact",
+          "turn rumor into fact",
+          "turn historical state into current state",
+          "create grants or denies",
+          "create formal entity/profile IDs",
+          "set unknown tier to base",
+          "mark approved/canon/compiled/published/runtime-ready"
+        ]
+      }
+    },
+    {
+      "title": "卡恰尔半岛",
+      "candidate_id": "doc.geography.6c4465b0681df1a72798ba0e",
+      "current_revision": 2,
+      "current_status": "needs_review",
+      "current_candidate_sha256": "12a4fe195e7d5b3b09b1f283cfa87b65a23e03245d8ba2dbcfdf8d04d138d200",
+      "current_assertion_count": 6,
+      "source_unit_id": "rule_卡恰尔半岛",
+      "next_revision": 3,
+      "required_status": "needs_review",
+      "required_operations": [
+        {
+          "action_id": "kach-01",
+          "operation": "add_unresolved",
+          "proposition": "当前归属和具体战争顺序不能仅凭旧世界书确认。",
+          "claim_kind": "unresolved",
+          "source_basis": "source conflict and time limitation",
+          "required": true
+        },
+        {
+          "action_id": "kach-02",
+          "operation": "split_claim",
+          "proposition": "适合建港口的地点不多。",
+          "claim_kind": "source_fact",
+          "source_basis": "Variants/0/Content",
+          "required": true
+        },
+        {
+          "action_id": "kach-03",
+          "operation": "split_claim",
+          "proposition": "将半岛作为哨站或海路控制点，是来源叙述中的战略用途解释。",
+          "claim_kind": "interpretation",
+          "source_basis": "Variants/2/Content; Variants/3/Content",
+          "required": true
+        },
+        {
+          "action_id": "kach-04",
+          "operation": "preserve_perspective",
+          "proposition": "库赛特关于石地和海崖不利于骑兵展开的说法必须保留为库赛特人的地形判断。",
+          "claim_kind": "interpretation",
+          "source_basis": "Khuzaite-perspective variant",
+          "required": true
+        },
+        {
+          "action_id": "kach-05",
+          "operation": "bind_per_culture",
+          "proposition": "巴旦尼亚、诺德和斯特吉亚对易主原因的解释分别绑定，不合并成无视角事实。",
+          "claim_kind": "perspective_conflict",
+          "source_basis": "cultural variants",
+          "required": true
+        }
+      ],
+      "output_requirements": {
+        "must_add_claim_ids": "new claim IDs for every added/split proposition",
+        "must_add_origin_ids": "new origin IDs for every added/split proposition",
+        "must_add_target_spans": "one target span per proposition",
+        "must_preserve": [
+          "epistemic_kind",
+          "perspective",
+          "time_scope",
+          "polarity"
+        ],
+        "must_not_do": [
+          "copy r2 in place",
+          "turn interpretation into source_fact",
+          "turn rumor into fact",
+          "turn historical state into current state",
+          "create grants or denies",
+          "create formal entity/profile IDs",
+          "set unknown tier to base",
+          "mark approved/canon/compiled/published/runtime-ready"
+        ]
+      }
+    },
+    {
+      "title": "沙拉斯湾",
+      "candidate_id": "doc.geography.8f5d6f80912741f7ad216058",
+      "current_revision": 2,
+      "current_status": "needs_review",
+      "current_candidate_sha256": "cb22e203d7cc57fc808c3b9cde4473eddcef2196278c0cb0c4f3322e29e4a224",
+      "current_assertion_count": 7,
+      "source_unit_id": "rule_沙拉斯湾",
+      "next_revision": 3,
+      "required_status": "needs_review",
+      "required_operations": [
+        {
+          "action_id": "sara-01",
+          "operation": "add_claim",
+          "proposition": "加隆托海峡是湾内外水体交换和航运联系中的关键节点。",
+          "claim_kind": "relationship",
+          "source_basis": "Variants/2/Content",
+          "required": true
+        },
+        {
+          "action_id": "sara-02",
+          "operation": "preserve_perspective",
+          "proposition": "“摇篮”是帝国史书、贵族传统和帝国叙述中的称呼与解释。",
+          "claim_kind": "interpretation",
+          "source_basis": "Variants/1/Content",
+          "required": true
+        },
+        {
+          "action_id": "sara-03",
+          "operation": "preserve_epistemic_boundary",
+          "proposition": "卡拉德先祖从群岛登陆的说法未经考古和移民史确证，仍是传说。",
+          "claim_kind": "rumor",
+          "source_basis": "Variants/0/Content; Variants/2/Content",
+          "required": true
+        },
+        {
+          "action_id": "sara-04",
+          "operation": "preserve_epistemic_boundary",
+          "proposition": "雾中群岛变形、罗盘失灵和石刻来历不明属于船员传闻。",
+          "claim_kind": "rumor",
+          "source_basis": "Variants/0/Content",
+          "required": true
+        }
+      ],
+      "output_requirements": {
+        "must_add_claim_ids": "new claim IDs for every added/split proposition",
+        "must_add_origin_ids": "new origin IDs for every added/split proposition",
+        "must_add_target_spans": "one target span per proposition",
+        "must_preserve": [
+          "epistemic_kind",
+          "perspective",
+          "time_scope",
+          "polarity"
+        ],
+        "must_not_do": [
+          "copy r2 in place",
+          "turn interpretation into source_fact",
+          "turn rumor into fact",
+          "turn historical state into current state",
+          "create grants or denies",
+          "create formal entity/profile IDs",
+          "set unknown tier to base",
+          "mark approved/canon/compiled/published/runtime-ready"
+        ]
+      }
+    },
+    {
+      "title": "黎明山脉",
+      "candidate_id": "doc.geography.97ad26502282dc34eb467464",
+      "current_revision": 2,
+      "current_status": "needs_review",
+      "current_candidate_sha256": "de31d08ea60f8489d88ac267a46e543f1200104e6788e320ed2d25b18c070820",
+      "current_assertion_count": 6,
+      "source_unit_id": "rule_黎明山脉",
+      "next_revision": 3,
+      "required_status": "needs_review",
+      "required_operations": [
+        {
+          "action_id": "dawn-01",
+          "operation": "preserve_source_granularity",
+          "proposition": "山麓覆盖针叶林与高山草甸；不写未经来源支持的山腰/山麓精确分层。",
+          "claim_kind": "source_fact",
+          "source_basis": "Variants/0/Content",
+          "required": true
+        },
+        {
+          "action_id": "dawn-02",
+          "operation": "split_claim",
+          "proposition": "地理边界、地形屏障、社会禁忌和信仰边界必须分开。",
+          "claim_kind": "fact_and_interpretation_split",
+          "source_basis": "Variants/0/Content; Variants/1/Content",
+          "required": true
+        },
+        {
+          "action_id": "dawn-03",
+          "operation": "preserve_epistemic_boundary",
+          "proposition": "阿赫哈克、黑魔法和古老仪式属于当地传说与信仰叙述。",
+          "claim_kind": "rumor",
+          "source_basis": "Variants/1/Content",
+          "required": true
+        },
+        {
+          "action_id": "dawn-04",
+          "operation": "bind_source_span",
+          "proposition": "合儿必特部通过通婚、共俗和守护者身份融入山地的说法单独绑定。",
+          "claim_kind": "interpretation",
+          "source_basis": "Variants/0/Content; Variants/1/Content",
+          "required": true
+        },
+        {
+          "action_id": "dawn-05",
+          "operation": "block_current_inference",
+          "proposition": "“接管山地事务”或“守护者身份”不得推出当前实际控制。",
+          "claim_kind": "unresolved_boundary",
+          "source_basis": "time scope limitation",
+          "required": true
+        }
+      ],
+      "output_requirements": {
+        "must_add_claim_ids": "new claim IDs for every added/split proposition",
+        "must_add_origin_ids": "new origin IDs for every added/split proposition",
+        "must_add_target_spans": "one target span per proposition",
+        "must_preserve": [
+          "epistemic_kind",
+          "perspective",
+          "time_scope",
+          "polarity"
+        ],
+        "must_not_do": [
+          "copy r2 in place",
+          "turn interpretation into source_fact",
+          "turn rumor into fact",
+          "turn historical state into current state",
+          "create grants or denies",
+          "create formal entity/profile IDs",
+          "set unknown tier to base",
+          "mark approved/canon/compiled/published/runtime-ready"
+        ]
+      }
+    },
+    {
+      "title": "德里亚特",
+      "candidate_id": "doc.geography.a73c475d578e6ef945df9b9b",
+      "current_revision": 2,
+      "current_status": "needs_review",
+      "current_candidate_sha256": "c0c072f1c814e1db7e4da917c48123024df6394d395145432b4527633e6f2026",
+      "current_assertion_count": 5,
+      "source_unit_id": "rule_德里亚特",
+      "next_revision": 3,
+      "required_status": "needs_review",
+      "required_operations": [
+        {
+          "action_id": "der-01",
+          "operation": "narrow_proposition",
+          "proposition": "只保留防水斗篷和卡琉斯堡守军冬季皮袄，不扩展为“其他御寒衣物”。",
+          "claim_kind": "relationship",
+          "source_basis": "Variants/1/Content",
+          "required": true
+        },
+        {
+          "action_id": "der-02",
+          "operation": "narrow_interpretation",
+          "proposition": "道路表述应写为进入村庄需要费功夫；“运出货物成本较高”需另有证据或保持推导标记。",
+          "claim_kind": "interpretation",
+          "source_basis": "Variants/2/Content",
+          "required": true
+        },
+        {
+          "action_id": "der-03",
+          "operation": "preserve_independent_fact",
+          "proposition": "海豹油可用于点灯。",
+          "claim_kind": "source_fact",
+          "source_basis": "Variants/3/Content",
+          "required": true
+        },
+        {
+          "action_id": "der-04",
+          "operation": "keep_metadata_only",
+          "proposition": "旧 settlement marker 和正式 entity/profile ID 未确认，只保留 unresolved metadata。",
+          "claim_kind": "unresolved",
+          "source_basis": "registry evidence",
+          "required": true
+        }
+      ],
+      "output_requirements": {
+        "must_add_claim_ids": "new claim IDs for every added/split proposition",
+        "must_add_origin_ids": "new origin IDs for every added/split proposition",
+        "must_add_target_spans": "one target span per proposition",
+        "must_preserve": [
+          "epistemic_kind",
+          "perspective",
+          "time_scope",
+          "polarity"
+        ],
+        "must_not_do": [
+          "copy r2 in place",
+          "turn interpretation into source_fact",
+          "turn rumor into fact",
+          "turn historical state into current state",
+          "create grants or denies",
+          "create formal entity/profile IDs",
+          "set unknown tier to base",
+          "mark approved/canon/compiled/published/runtime-ready"
+        ]
+      }
+    }
+  ],
+  "global_gates": {
+    "candidate_status_must_remain": "needs_review",
+    "approve": 0,
+    "canon": 0,
+    "compiled": 0,
+    "published": 0,
+    "runtime_injected": 0,
+    "grants": 0,
+    "denies": 0,
+    "source_registry": "unresolved",
+    "legacy_when_permission_mapping": "unresolved",
+    "formal_entity_profile_ids": "unresolved",
+    "lagaia_full_source_parse_gate": "unresolved"
+  },
+  "generation_contract": {
+    "phase_1": "update worksheet claims and origins",
+    "phase_2": "define target spans and proposition coverage",
+    "phase_3": "generate new candidate revision",
+    "phase_4": "run candidate closure validation",
+    "phase_5": "run migration contract validator",
+    "phase_6": "run offline Studio structural validation",
+    "phase_7": "keep needs_review and record unresolved gates",
+    "required_failure_behavior": "any missing source support, perspective/time/polarity drift, missing target span, unknown tier default, or provisional ID leakage blocks the revision",
+    "semantic_checks": [
+      "proposition coverage",
+      "source origin coverage",
+      "claim target span closure",
+      "epistemic preservation",
+      "perspective preservation",
+      "time scope preservation",
+      "polarity preservation",
+      "historical/current separation",
+      "rumor/fact separation",
+      "editorial inference labeling"
+    ]
+  },
+  "files_read": [
+    "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\docs\\worldbook-migration\\SEMANTIC-MIGRATION-ACTION-QUEUE-R2-20260906.json",
+    "five r2 authoring JSON files",
+    "SEMANTIC-WORKSHEETS-DOWNLOAD-20260903.json",
+    "SEMANTIC-PARENT-CHILD-JOIN-20260904.json",
+    "SEMANTIC-SNAPSHOT-HASH-RECONCILIATION-20260904.json"
+  ],
+  "files_changed": [
+    "C:\\Users\\26811\\OneDrive\\文档\\New project\\_houkai_merge\\AWAKE\\docs\\worldbook-migration\\SEMANTIC-REVISION-INPUT-R3-20260908.json"
+  ],
+  "next_action": [
+    "先按本输入包生成 worksheet/claim/origin 修订草稿，不直接写最终 candidate。",
+    "确认五个候选每条新增命题的 source locator 和 target span。",
+    "在独立 r3 目录生成新 candidate 后运行三类验证。",
+    "若任一 gate 未闭合，保持 needs_review 并记录 unresolved。"
+  ],
+  "boundary_statement": "本输入包生成期间未启动 Bannerlord，未同步游戏目录，未访问 Provider/API Key/Token/Worker/网络服务，未修改真实 Downloads 源目录、Studio、AWAKE 运行时代码或 r2 候选正文。"
+}

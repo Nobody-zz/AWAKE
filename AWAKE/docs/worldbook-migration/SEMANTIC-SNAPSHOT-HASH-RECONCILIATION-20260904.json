@@ -1,0 +1,22 @@
+{
+  "report_kind": "semantic_snapshot_hash_reconciliation",
+  "generated_at": "2026-09-04",
+  "status": "needs_review",
+  "parent_snapshot": {
+    "snapshot_id": "source.awake.worldbook.download-20260903",
+    "snapshot_sha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129"
+  },
+  "child_snapshot": {
+    "snapshot_id": "semantic-pilot30.download-20260903",
+    "legacy_reported_manifest_hash": "da97706ffc593c3fc81b80c00aa7bba7f70873244a97959263dfbd4bbfdf4e10",
+    "v1_1_canonical_manifest_hash": "43f7ad78c0c4bdd3af1f19c4f30347aa36cd0d08ffce2ddff62e98fe32d73e49",
+    "v1_1_snapshot_hash": "e91ffbeb709e967bff5373a191d5587c179afa09fa4ca8d8b271d8e1ed1a22be",
+    "difference_reason": "旧清单使用 v1 规范化与组合算法；v1.1 清单使用 NFKC、规范化 UTF-8 字节长度、canonical JSON 和固定 snapshot 组合算法。两者均为审计清单，不代表源内容发生变化。"
+  },
+  "join_rule": "后续 v1.1 validator 使用 v1_1_canonical_manifest_hash；旧 hash 仅作为历史证据保存，不能作为新的 claim/source join。",
+  "source_content_change": false,
+  "source_files_rechecked": 757,
+  "source_hash_mismatches": 0,
+  "compile": "not_run",
+  "export": "not_run"
+}

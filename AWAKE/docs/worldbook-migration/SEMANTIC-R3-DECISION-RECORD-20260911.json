@@ -1,0 +1,75 @@
+{
+  "schema_version": "awake.worldbook.migration.semantic-decision-record.v1",
+  "record_id": "semantic-r3-decision-record.20260911",
+  "generated_at": "2026-09-11T00:00:00+08:00",
+  "status": "decisions_resolved_pending_revision",
+  "decision_authority": "用户 2026-09-11 对 SEMANTIC-R3-ACTION-PRE-REVIEW-20260911.md 建议清单回复\"继续\"，确认按预审建议执行全部 23 条动作",
+  "based_on": [
+    "SEMANTIC-MIGRATION-ACTION-QUEUE-R2-20260906.json",
+    "SEMANTIC-CLAIM-ORIGIN-REVISION-DRAFT-R3-20260908.json",
+    "SEMANTIC-R3-ACTION-PRE-REVIEW-20260911.md"
+  ],
+  "global_policy": {
+    "authoring_mode": "rewrite_not_translate",
+    "policy_note": "v2 运行包不得由 v1 直接翻译产生；v1 仅作素材，按新规范（claim/origin/target-span/epistemic 分级）重写。全部 23 条动作的方向与此一致。",
+    "all_outputs": "needs_review",
+    "candidate_generation_allowed": "after_target_spans_placed",
+    "overwrite_r2": false
+  },
+  "decisions": [
+    { "action_id": "lac-01", "decision": "execute", "note": "拆分为渔民/船工/码头搬运者三类生计 relationship claim；依据 Variants/0。" },
+    { "action_id": "lac-02", "decision": "execute", "note": "拆出帝国麦子—斯特吉亚毛皮转运 relationship claim；仅写'存在此路线'层面，不写贸易规模。" },
+    { "action_id": "lac-03", "decision": "execute_with_refinement", "refinement": "重写时必须保留 V2 原文自带的不确定性（'可能是…自然沉积'），不得写成确定地质结论。" },
+    { "action_id": "lac-04", "decision": "execute_with_refinement", "refinement": "解释主体直接定为'帝国（防务）叙述'（V1 为第一人称帝国叙述，无具体领主）。" },
+    { "action_id": "lac-05", "decision": "execute", "note": "冬季通航/帝国战略解释/血染湖水传说/自然沉积解释四主题分别绑定独立 target span。" },
+    { "action_id": "sara-01", "decision": "execute_with_refinement", "refinement": "'关键节点'表述按 V2 海洋学体原文强度落笔，不升级为枢纽级描述。" },
+    { "action_id": "sara-02", "decision": "execute", "note": "'摇篮'保留为帝国史书/贵族传统的称呼（interpretation, imperial perspective）。" },
+    { "action_id": "sara-03", "decision": "execute", "note": "先祖登陆说保持 rumor 口径。游戏侧锚点：官方 settlement 描述（town_V7 沙拉斯）将'第一批卡拉德殖民者登陆'作为背景史写入，可作为'该传说在游戏官方资料中有记载'的交叉引用，但不改变编年史侧未经确证的 epistemic 分级。" },
+    { "action_id": "sara-04", "decision": "execute", "note": "雾中岛变形/罗盘失灵/石刻来历不明保持船员传闻，不加超自然解释。" },
+    { "action_id": "kach-01", "decision": "execute_with_refinement", "refinement": "升级：游戏官方数据（settlements.xml town_S1 瓦尔切格，derived_kingdom=sturgia；描述明言'昔日巴旦尼亚领土的卡恰尔半岛'）可确认开档时半岛核心城镇归属斯特吉亚；'具体战争顺序'仍保持 unresolved（多视角互相矛盾）。重写时据此拆分：当前归属=游戏锚点可述，战争顺序=unresolved。" },
+    { "action_id": "kach-02", "decision": "execute", "note": "'适合建港口的地方不多'独立 source_fact claim；V0 + V6（海商转述）双 origin。" },
+    { "action_id": "kach-03", "decision": "execute", "note": "哨站/海路控制 = strategic interpretation。" },
+    { "action_id": "kach-04", "decision": "execute", "note": "骑兵不利 = 库赛特视角地形判断；依据 V7。" },
+    { "action_id": "kach-05", "decision": "execute_with_refinement", "refinement": "扩大绑定：V1 斯特吉亚、V4 诺德、V5 巴旦尼亚、V7 库赛特、V6 海商转述、V3 帝国共六路视角分别独立 claim；游戏锚点（town_S1 描述印证诺德→巴旦尼亚→斯特吉亚主线）作交叉引用不替代视角绑定。" },
+    { "action_id": "dawn-01", "decision": "execute", "note": "只写山麓针叶林与高山草甸，不补分层。" },
+    { "action_id": "dawn-02", "decision": "execute", "note": "地理边界/地形屏障/社会禁忌/信仰边界四分。" },
+    { "action_id": "dawn-03", "decision": "execute", "note": "阿赫哈克/黑魔法/古老仪式 = 当地传说与信仰叙述。" },
+    { "action_id": "dawn-04", "decision": "execute", "note": "合儿必特部通婚/共俗/守卫者身份单独绑定；保留'以守卫者自居'的宣称口径。" },
+    { "action_id": "dawn-05", "decision": "execute", "note": "不得从守护者身份推出当前实际控制。" },
+    { "action_id": "dawn-locator-fix", "decision": "execute", "note": "非原 23 条之一，为预审新增技术修正：黎明山脉 v1 仅 1 个 variant，R3 生成时 Variants/1 引用统一修正为该文件对应段落定位。" },
+    { "action_id": "der-01", "decision": "execute", "note": "御寒衣物收窄为防水斗篷 + 卡琉斯堡守军冬季皮袄。" },
+    { "action_id": "der-02", "decision": "execute", "note": "道路写'进入村庄需要费功夫'（V2 原文口径）；'运出货物成本较高'标 interpretation 或删。" },
+    { "action_id": "der-03", "decision": "execute", "note": "海豹油点灯独立 source_fact claim；依据 V3 旅人见闻（'烟少、火亮'），perspective 按旅人叙述标。" },
+    { "action_id": "der-04", "decision": "execute", "note": "旧 settlement marker / entity ID 只保留 unresolved metadata。" }
+  ],
+  "game_anchor_cross_references": [
+    {
+      "settlement_id": "town_V7",
+      "display_name": "沙拉斯 (Sargot)",
+      "culture": "vlandia",
+      "supports": ["sara-02", "sara-03"],
+      "note": "官方描述含'第一批卡拉德殖民者登陆此海岸'背景，与编年史'摇篮/先祖登陆'互证。"
+    },
+    {
+      "settlement_id": "town_S1",
+      "display_name": "瓦尔切格 (Varcheg)",
+      "culture": "sturgia",
+      "supports": ["kach-01", "kach-05"],
+      "note": "官方描述明言'昔日巴旦尼亚领土的卡恰尔半岛'并完整复述诺德→巴旦尼亚→斯特吉亚易主线，含至高王戴恩玛查；开档归属 sturgia。"
+    }
+  ],
+  "deviation_log": "独立审查（2026-09-12）要求的执行偏差登记；本表为决策→执行的权威对账",
+  "deviations": [
+    { "action_id": "kach-01", "deviation": "未按 refinement 拆分'当前归属/战争顺序'两条", "justification": "按 WRITING-RULES 第 11/16 条（B9：动态游戏所有权与运行时态不进正典），游戏锚点仅作交叉引用，正文合并保持 unresolved", "status": "approved_deviation" },
+    { "action_id": "kach-05", "deviation": "六路视角收窄为三路（battania/nord/sturgia）", "justification": "claim 基数以 R3 修订草稿的 22 条为准，扩展视角需新 claim 与新授权；帝国/海商/库赛特三路记入下一批候选", "status": "deferred_with_record" },
+    { "action_id": "dawn-02", "deviation": "四分折叠为两条（地理边界 + 社会边界；信仰并入 dawn-03 rumor，地形屏障未独立）", "justification": "地形屏障在源文与 claim 基数内支撑不足；社会禁忌/信仰边界的知识由 8e71486b 与 17ddf921 承载", "status": "approved_deviation" },
+    { "action_id": "der-03", "deviation": "perspective 保持 neutral 而非'旅人叙述'", "justification": "旅人见闻经词条化后按中性知识收录，来源归属由 origin（V3）承载", "status": "approved_deviation" },
+    { "action_id": "lac-04", "deviation": "主体定为'帝国兵志叙述'而非决策记录原文'帝国（防务）叙述'", "justification": "V1 为第一人称帝国防务叙述，词条化后文体归位为兵志；正文保留'一家之言'降权尾句", "status": "approved_deviation" }
+  ],
+  "claim_authority": "doc 内 claim 字段为 post-rewrite 权威版；worksheet 同 ID 条目视为草稿，冲突时以 doc 为准（独立审查 P2-4 的裁定）",
+  "next_actions": [
+    "生成 R3 修订稿：先更新 worksheet claims/origins 的 decision 字段，再重写候选正文并落位 target span（存独立 r3 目录，不覆盖 r2）",
+    "写 PowerShell 版三向闭合校验脚本并运行（正文命题/claim/origin/target span）",
+    "结果保持 needs_review；独立审查 + 用户签收后才允许投影 Authoring v1"
+  ]
+}

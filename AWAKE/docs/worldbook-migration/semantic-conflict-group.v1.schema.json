@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.semantic-conflict-group.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "conflict_group_id",
+    "conflict_kind",
+    "claim_ids",
+    "policy",
+    "authority_basis",
+    "review_state"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.migration.semantic-conflict-group.v1"
+    },
+    "conflict_group_id": {
+      "type": "string",
+      "pattern": "^authoring_provisional\\.conflict\\.[a-f0-9]{24}$"
+    },
+    "conflict_kind": {
+      "enum": [
+        "perspective_conflict",
+        "epistemic_conflict",
+        "temporal_conflict",
+        "entity_conflict",
+        "tier_conflict",
+        "duplicate",
+        "near_duplicate",
+        "unresolved"
+      ]
+    },
+    "claim_ids": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "string",
+        "pattern": "^authoring_provisional\\.claim\\.[a-f0-9]{24}$"
+      },
+      "uniqueItems": true
+    },
+    "policy": {
+      "enum": [
+        "parallel_perspectives",
+        "report_only",
+        "canon_wins_after_review",
+        "block_until_review",
+        "reject_duplicate"
+      ]
+    },
+    "authority_basis": {
+      "type": "string",
+      "minLength": 1
+    },
+    "review_state": {
+      "enum": [
+        "needs_review",
+        "accepted",
+        "rejected"
+      ]
+    }
+  }
+}

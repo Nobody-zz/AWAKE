@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.semantic-review-decision.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "decision_id",
+    "candidate_id",
+    "candidate_hash",
+    "source_snapshot_id",
+    "source_snapshot_hash",
+    "reviewer_id",
+    "reviewer_role",
+    "decision",
+    "decision_at",
+    "checks",
+    "rejection_reason",
+    "supersedes_decision_id"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.migration.semantic-review-decision.v1"
+    },
+    "decision_id": {
+      "type": "string",
+      "pattern": "^authoring_provisional\\.decision\\.[a-f0-9]{24}$"
+    },
+    "candidate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "candidate_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_snapshot_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "reviewer_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewer_role": {
+      "enum": [
+        "independent_reviewer",
+        "author",
+        "owner"
+      ]
+    },
+    "decision": {
+      "enum": [
+        "accepted",
+        "rejected",
+        "needs_review"
+      ]
+    },
+    "decision_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "understood_rewrite",
+        "source_coverage_complete",
+        "semantic_preservation",
+        "perspective_preserved",
+        "time_scope_preserved",
+        "polarity_preserved",
+        "permission_safe",
+        "tier_safe"
+      ],
+      "properties": {
+        "understood_rewrite": {
+          "type": "boolean"
+        },
+        "source_coverage_complete": {
+          "type": "boolean"
+        },
+        "semantic_preservation": {
+          "type": "boolean"
+        },
+        "perspective_preserved": {
+          "type": "boolean"
+        },
+        "time_scope_preserved": {
+          "type": "boolean"
+        },
+        "polarity_preserved": {
+          "type": "boolean"
+        },
+        "permission_safe": {
+          "type": "boolean"
+        },
+        "tier_safe": {
+          "type": "boolean"
+        }
+      }
+    },
+    "rejection_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "supersedes_decision_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "report_kind": "blocked_only_fixtures",
+  "schema_version": "awake.worldbook.migration.blocked-only-fixtures.v1",
+  "batch_id": "semantic-rewrite.download-20260903",
+  "status": "fixture_only",
+  "cases": [
+    {
+      "fixture_id": "blocked.duplicate_variant",
+      "input": "duplicate variant body",
+      "expected": "blocked",
+      "reason": "重复变体必须先裁决。"
+    },
+    {
+      "fixture_id": "blocked.truncation_placeholder",
+      "input": "truncated or placeholder source",
+      "expected": "blocked",
+      "reason": "源正文异常不得重写。"
+    },
+    {
+      "fixture_id": "blocked.source_registry_unknown",
+      "input": "unknown license/use/tier",
+      "expected": "blocked",
+      "reason": "来源资格未知不得进入正典。"
+    },
+    {
+      "fixture_id": "blocked.merge_split_unknown",
+      "input": "duplicate legacy ID",
+      "expected": "blocked",
+      "reason": "合并/拆分必须人工指定。"
+    },
+    {
+      "fixture_id": "blocked.pending_default_base",
+      "input": "pending tier with omitted base option",
+      "expected": "blocked",
+      "reason": "默认 base 不得覆盖 pending。"
+    },
+    {
+      "fixture_id": "blocked.history_to_current",
+      "input": "historical claim projected as current state",
+      "expected": "blocked",
+      "reason": "历史状态不得自动升级为当前状态。"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "awake.worldbook.migration.snapshot-manifest.v1",
+  "source_snapshot_id": "snapshot.example",
+  "source_root_id": "source.example",
+  "source_version": "v1",
+  "normalization_version": "utf8-lf-no-bom-v1",
+  "canonicalization": {
+    "encoding": "UTF-8",
+    "newline": "LF",
+    "bom": "forbidden",
+    "unicode": "NFKC",
+    "path_separator": "/",
+    "path_compare": "ordinal_case_fold",
+    "byte_length_basis": "normalized_utf8_bytes",
+    "json_serialization": "canonical_utf8_no_ascii_escape_no_whitespace",
+    "generated_at_in_identity": false
+  },
+  "files": [
+    {
+      "path": "a.json",
+      "byte_length": 3,
+      "content_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    }
+  ],
+  "manifest_hash": "491d6d33d013d9357fe1431e8192d8422c030f540f921eb9ed3a2fb41df48c07",
+  "snapshot_hash": "87ab0b9e9ef9cea8ae34954833abc29291c93758ecafe4c9e37551f7b380f8f1",
+  "generated_at": "2026-09-04T00:00:00Z"
+}

@@ -1,0 +1,199 @@
+{
+  "report_kind": "red_team_methodology_review",
+  "report_id": "red-team.worldbook-semantic-migration.v1.20260904",
+  "reviewed_at": "2026-09-04",
+  "review_target": "WORLDBOOK-SEMANTIC-MIGRATION-METHODOLOGY-v1.md",
+  "review_scope": "独立审查迁移方法论的可执行性、闭环性、抗误用能力和与 AWAKE Worldbook Studio 契约的一致性。",
+  "files_read": [
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/worldbook-migration/WORLDBOOK-SEMANTIC-MIGRATION-METHODOLOGY-v1.md",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/AGENTS.md",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/AWAKE-Worldbook-Contract-v1.md",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/CONTENT-TIER-CONTRACT.md",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/RUNTIME-MAPPING-CONTRACT.md",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/SOURCE-REGISTRY-CONTRACT.md",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/ID-MIGRATION-CONTRACT.md",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/worldbook-studio-plan/PERMISSION-CONTRACT.md",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/worldbook-migration/semantic-worksheet.v1.schema.json",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/worldbook-migration/semantic-rewrite-candidate.v1.schema.json",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/worldbook-migration/semantic-rewrite-review.v1.schema.json",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/worldbook-migration/snapshot-manifest.v1.schema.json",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/worldbook-migration/SEMANTIC-WORKSHEETS-DOWNLOAD-20260903.json",
+    "C:/Users/26811/OneDrive/文档/New project/_houkai_merge/AWAKE/docs/worldbook-migration/SEMANTIC-CANDIDATE-REPAIR-REVIEW-20260904.json"
+  ],
+  "files_changed": [],
+  "confirmed_coverage": [
+    "来源证据层、语义中间层、目标投影层已经明确分离。",
+    "方法论明确禁止旧 Variant 直接映射为 Expression。",
+    "方法论包含事实、解释、传闻、关系、状态和未决内容的初步分类。",
+    "方法论包含视角、时间、冲突、When、TextMapping、content tier、ID 和 E0-E5 证据等级原则。",
+    "方法论明确禁止自动 canon、发布、权限授予、正式实体创建和游戏内完成声明。"
+  ],
+  "findings": [
+    {
+      "id": "RT-P1-01",
+      "severity": "P1",
+      "status": "blocking",
+      "title": "source atom → claim → target 三向闭环仍不是强制验证",
+      "evidence": "方法论描述了 legacy origin、claim 和 target coverage，但实际 candidate/worksheet schema 没有强制 source origin 存在性、claim 与 target 双向一致性、drop/unresolved 不得进入正文、正文每句都有覆盖等不变量。",
+      "consequence": "可以生成结构合法但来源原子未进入目标、claim 未进入正文、正文出现无 claim 命题或 drop 内容重新出现的候选。",
+      "minimum_fix": "把 source-origin schema、claim_source_binding、target_span coverage、exactly-once 或显式 multi-target 规则提升为 v1 强制门；验证失败统一 blocked。"
+    },
+    {
+      "id": "RT-P1-02",
+      "severity": "P1",
+      "status": "blocking",
+      "title": "polarity 在中间层到目标层的投影可能丢失",
+      "evidence": "方法论要求 polarity，但 semantic-rewrite-candidate schema 和 Authoring v1 assertion schema 没有 claim-level polarity 字段，也没有明确的替代表达或 unsupported_for_v1 阻断。",
+      "consequence": "否定或未定命题可能被投影成肯定事实，传闻证据限制可能被丢失。",
+      "minimum_fix": "在中间候选中强制 polarity；如果 v1 无法承载，则标为 unsupported_for_v1 并阻断兼容导出，不得静默丢弃。"
+    },
+    {
+      "id": "RT-P1-03",
+      "severity": "P1",
+      "status": "blocking",
+      "title": "旧字段与来源原子全集不完整",
+      "evidence": "方法论 inventory 记录 runtime/config signal、adult/sensitive signal、parse anomaly、theme/entity candidate、unknown field 等信息，但来源原子集合没有统一覆盖这些类别。",
+      "consequence": "某些字段可能被统计但没有 origin、disposition、loss 或 unresolved 记录，从而产生假覆盖。",
+      "minimum_fix": "增加 field、array_item、runtime_signal、config_signal、adult_signal、parse_anomaly、entity_candidate、theme_candidate、external_reference、unknown_field 等 origin_kind，并执行未知字段拒绝。"
+    },
+    {
+      "id": "RT-P1-04",
+      "severity": "P1",
+      "status": "blocking",
+      "title": "content_tier 默认 base 仍存在流程绕过风险",
+      "evidence": "Studio 契约规定省略 --content-tier 等价 base；方法论要求未确认 tier 阻断，但没有把 CLI 默认解析、tier resolution、graph closure、写入前 gate 固定为可测试顺序。",
+      "consequence": "unknown/pending 输入可能因 CLI 默认值被误投影到 base。",
+      "minimum_fix": "明确顺序：CLI parse → tier resolution → graph closure → pre-write gate；省略参数不得改变 pending/unknown；加入默认 base 的负向 fixture。"
+    },
+    {
+      "id": "RT-P1-05",
+      "severity": "P1",
+      "status": "blocking",
+      "title": "When 的 unresolved 结算和 active 阻断不完整",
+      "evidence": "方法论禁止旧 When 自动生成 grants/denies，但没有统一规定 audience_only、perspective_only、mapped_grant、mapped_deny、unresolved、rejected 的结算状态，也没有规定 unresolved When 对 active expression 的传播。",
+      "consequence": "旧 When 可能被记录为 unresolved，但表达仍被误认为可消费；后续人工投影也可能重新自动授权。",
+      "minimum_fix": "为每个 When 分支建立结算结果；unresolved 不得进入 active expression；grant/deny 必须有 registry-backed mapping_basis 和人工决策。"
+    },
+    {
+      "id": "RT-P1-06",
+      "severity": "P1",
+      "status": "blocking",
+      "title": "provisional ID 的正式输出拒绝边界不完整",
+      "evidence": "方法论和中间 schema 允许 authoring_provisional.*，但没有完整规定允许产物、禁止产物、映射表生命周期和正式输出硬拒绝；现有 id-ledger 形式上可接受该前缀。",
+      "consequence": "临时 ID 可能泄漏到 Authoring、Runtime、registry、ledger、redirect 或存档相关产物。",
+      "minimum_fix": "定义 provisional namespace contract；明确 worksheet/candidate/report 可用，正式 Authoring、Runtime、registry、ledger、redirect 禁用；增加反向 fixture。"
+    },
+    {
+      "id": "RT-P1-07",
+      "severity": "P1",
+      "status": "blocking",
+      "title": "snapshot/hash 仍不能保证跨实现复现",
+      "evidence": "方法论列出 hash、排序和规范化要求，但没有完全锁定 byte_length 取值、canonical JSON 序列化、Unicode 转义、数字表示、source_root_id 生成和 golden fixture。",
+      "consequence": "不同语言或 JSON 库可能对同一输入生成不同 manifest/snapshot hash，削弱 parent/child 绑定和候选重放。",
+      "minimum_fix": "提供完整 canonicalization contract、固定序列化规则和至少一个 golden fixture，规定 normalized bytes、排序、路径碰撞、时间字段和 hash hex 形式。"
+    },
+    {
+      "id": "RT-P1-08",
+      "severity": "P1",
+      "status": "blocking",
+      "title": "人工审核、拒绝和复议没有形成强制状态机",
+      "evidence": "方法论要求 understood_rewrite 和 reviewer，但没有强制 accepted 的全部 semantic checks、rejected 的非空理由、reviewer 独立性、candidate hash/snapshot 绑定和 supersession。",
+      "consequence": "形式上填写 accepted 或 understood_rewrite=yes 可能被误读为语义批准；被拒内容可能被复用。",
+      "minimum_fix": "增加 decision_id、candidate_hash、snapshot_id、reviewer、decision_at、checks、rejection_reason、supersedes_decision_id；accepted 只能在全部语义检查通过后成立。"
+    },
+    {
+      "id": "RT-P1-09",
+      "severity": "P1",
+      "status": "blocking",
+      "title": "批次状态、revision 失效和证据绑定不足",
+      "evidence": "方法论列出批次顺序并分开 E0-E5，但没有完整状态机、合法迁移、下游证据失效、parent snapshot 变化传播或 artifact hash 绑定。",
+      "consequence": "旧候选或旧 E3/E4 证据可能被错误复用于新 snapshot 或新 revision。",
+      "minimum_fix": "定义 planned→snapshot_locked→inventory_complete→semantic_in_progress→candidate_ready→review_required→accepted/blocked/rejected→compiled/published/runtime_verified 等状态及失效传播。"
+    },
+    {
+      "id": "RT-P2-01",
+      "severity": "P2",
+      "status": "important",
+      "title": "重复、冲突和四档边界缺少确定性判定",
+      "evidence": "方法论列出了冲突类型，但没有定义 duplicate、near_duplicate、variant_expression、perspective_conflict、epistemic_conflict、temporal_conflict、tier_conflict 的判定和四档 join/split/inheritance 规则。",
+      "consequence": "不同审核者可能错误合并视角差异、消除冲突或造成四档内容泄漏。",
+      "minimum_fix": "补充确定性分类表和四档边界规则；明确本单一权威包与四档输入的关系。"
+    },
+    {
+      "id": "RT-P2-02",
+      "severity": "P2",
+      "status": "important",
+      "title": "relationship 与 relation、事实类别之间仍有歧义",
+      "evidence": "中间层使用 relationship，Authoring v1 使用 relation；方法论示例把河流汇入湖、村庄出口毛皮、半岛处在海域之间都归入 relationship，但未定义结构类型与认识论类型的关系。",
+      "consequence": "关系可能缺少稳定 subject/object、方向、有效时间或 registry reference。",
+      "minimum_fix": "明确 relationship 是结构形态；要求 subject/object ref、predicate registry、方向和时间；写出 relationship→relation 映射。"
+    },
+    {
+      "id": "RT-P2-03",
+      "severity": "P2",
+      "status": "important",
+      "title": "source registry 与 parent/child snapshot join 仍未落地",
+      "evidence": "方法论将 source root、source version、file hash、manifest hash 和 snapshot hash 分开描述，但没有定义 source_ref 与当前 snapshot file entry 的强一致关系。",
+      "consequence": "各自合法但指向不同输入的 registry、snapshot 和 candidate 可能被拼接使用。",
+      "minimum_fix": "定义 source_ref.snapshot_id/source_root_id/registry_record_hash 或等价 join 字段与校验。"
+    },
+    {
+      "id": "RT-P2-04",
+      "severity": "P2",
+      "status": "important",
+      "title": "authority 与 conflict policy 没有接线",
+      "evidence": "方法论要求冲突并存，但没有定义 conflict_group 如何映射到 authority、canon_wins、report_only、parallel perspective 或 blocked claim。",
+      "consequence": "同一冲突可能被不同编译器或后续作者以不同策略处理。",
+      "minimum_fix": "为 conflict group 增加 policy、authority basis、parallel/winning claims、blocked claims 和 review decision。"
+    },
+    {
+      "id": "RT-P2-05",
+      "severity": "P2",
+      "status": "important",
+      "title": "缺少 rollback、幂等和复现流程",
+      "evidence": "方法论强调可重做和可追踪，但没有固定 batch rerun、candidate supersession、失败恢复、输出隔离、幂等键或回滚动作。",
+      "consequence": "批次中断或重新运行时可能覆盖候选、产生重复 artifact 或混用不同 revision。",
+      "minimum_fix": "增加 batch_id、input snapshot、output namespace、attempt_id、supersedes、rerun 和 rollback 规则。"
+    },
+    {
+      "id": "RT-P2-06",
+      "severity": "P2",
+      "status": "important",
+      "title": "方法论遗漏多语言、编码和本地化一致性门",
+      "evidence": "方法论提到 UTF-8/LF，但没有规定 title/summary/expression 的语言覆盖、翻译关系、占位符、中文标点或非中文源文本处理。",
+      "consequence": "迁移后不同语言字段可能语义不一致，或出现乱码、缺译、伪本地化。",
+      "minimum_fix": "增加语言覆盖矩阵、源文本语言识别、翻译/改写 provenance、占位符和 Unicode 规范化检查。"
+    }
+  ],
+  "unverified_claims": [
+    "现有 30 个 source unit 已全部完成语义理解。",
+    "现有五个候选的正文与 claim/target span 已完全闭合。",
+    "现有方法能够阻止所有表层改写伪装。",
+    "现有 schema 和 validator 能独立证明语义保真。",
+    "现有方法能够安全投影到 Runtime。"
+  ],
+  "recommended_fix_order": [
+    "RT-P1-01",
+    "RT-P1-02",
+    "RT-P1-03",
+    "RT-P1-04",
+    "RT-P1-05",
+    "RT-P1-06",
+    "RT-P1-07",
+    "RT-P1-08",
+    "RT-P1-09",
+    "RT-P2-01",
+    "RT-P2-03",
+    "RT-P2-04",
+    "RT-P2-05",
+    "RT-P2-06"
+  ],
+  "limitations": [
+    "本报告审查的是方法论和其契约边界，不是对全库正文进行重新语义判定。",
+    "未修改方法论文档、候选、worksheet、源文件或 AWAKE 模组本体。",
+    "未启动 Bannerlord、未同步游戏目录、未访问 Provider、Worker、API Key、Token 或网络服务。",
+    "现有试点产物仅用于发现方法漏洞，不被当作方法正确性的证明。"
+  ],
+  "terminal_verdict": "RED_TEAM_REVISE",
+  "next_action": "先建立语义迁移契约修订批次，补齐 P1-01 至 P1-09 的正式 schema、validator、状态机和 golden fixtures；在这些门通过前，不应把方法论 v1 作为全库迁移执行标准。"
+}

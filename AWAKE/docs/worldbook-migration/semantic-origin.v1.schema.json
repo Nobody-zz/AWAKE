@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.semantic-origin.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "origin_id",
+    "source_unit_id",
+    "origin_kind",
+    "origin_locator",
+    "raw_value_hash",
+    "destination",
+    "disposition",
+    "rationale",
+    "loss"
+  ],
+  "properties": {
+    "origin_id": {
+      "type": "string",
+      "pattern": "^authoring_provisional\\.origin\\.[a-f0-9]{24}$"
+    },
+    "source_unit_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "origin_kind": {
+      "enum": [
+        "file_metadata",
+        "field",
+        "array_item",
+        "keyword",
+        "rag",
+        "semantic_prototype",
+        "variant",
+        "when",
+        "text_mapping",
+        "runtime_signal",
+        "config_signal",
+        "adult_signal",
+        "parse_anomaly",
+        "entity_candidate",
+        "theme_candidate",
+        "external_reference",
+        "unknown_field"
+      ]
+    },
+    "origin_locator": {
+      "type": "string",
+      "minLength": 1
+    },
+    "raw_value_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "destination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "ids"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "claim",
+            "assertion",
+            "expression",
+            "permission_evidence",
+            "reference_only",
+            "unresolved"
+          ]
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "disposition": {
+      "enum": [
+        "preserve",
+        "merge",
+        "split",
+        "rephrase",
+        "drop",
+        "unresolved"
+      ]
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "loss": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

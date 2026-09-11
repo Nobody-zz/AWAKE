@@ -1,0 +1,106 @@
+{
+  "report_kind": "semantic_candidate_repair_review",
+  "generated_at": "2026-09-04",
+  "status": "needs_review",
+  "files_read": [
+    "C:/Users/26811/Downloads/卡拉迪亚编年史/卡拉迪亚编年史/knowledge/rules/rule_拉科尼斯湖__拉科尼斯湖.json",
+    "C:/Users/26811/Downloads/卡拉迪亚编年史/卡拉迪亚编年史/knowledge/rules/rule_沙拉斯湾__沙拉斯湾.json",
+    "C:/Users/26811/Downloads/卡拉迪亚编年史/卡拉迪亚编年史/knowledge/rules/rule_黎明山脉__黎明山脉.json",
+    "C:/Users/26811/Downloads/卡拉迪亚编年史/卡拉迪亚编年史/knowledge/rules/rule_卡恰尔半岛__卡恰尔半岛.json",
+    "C:/Users/26811/Downloads/卡拉迪亚编年史/卡拉迪亚编年史/knowledge/rules/rule_德里亚特__德里亚特.json",
+    "AWAKE/docs/worldbook-migration/SOURCE-SNAPSHOT-DOWNLOAD-20260903.json",
+    "AWAKE/docs/worldbook-migration/SEMANTIC-WORKSHEETS-DOWNLOAD-20260903.json",
+    "AWAKE/docs/worldbook-migration/KNOWLEDGE-CLUSTER-PLAN-DOWNLOAD-20260903.json",
+    "AWAKE/docs/worldbook-migration/REWRITE-CANDIDATE-5-DOWNLOAD-20260903.json",
+    "AWAKE/docs/worldbook-migration/INDEPENDENT-SEMANTIC-CANDIDATE-REVIEW-20260904.json",
+    "AWAKE/docs/worldbook-migration/semantic-rewrite-batch-download-20260903/reports/SEMANTIC-REWRITE-VALIDATION-DOWNLOAD-20260904.json",
+    "AWAKE/docs/worldbook-migration/semantic-rewrite-batch-download-20260903/reports/STUDIO-AUTHORING-V1-VALIDATION.json",
+    "AWAKE/docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json",
+    "AWAKE/docs/worldbook-studio-plan/source.registry.v1.schema.json",
+    "AWAKE/docs/worldbook-studio-plan/id-ledger.v1.schema.json"
+  ],
+  "files_changed": [
+    "AWAKE/docs/worldbook-migration/semantic-rewrite-batch-download-20260903/authoring-v1-needs-review/authoring/doc.geography.400e2882f452b241ed174115.json",
+    "AWAKE/docs/worldbook-migration/semantic-rewrite-batch-download-20260903/authoring-v1-needs-review/authoring/doc.geography.799e8d48578c37cbef9a22ed.json",
+    "AWAKE/docs/worldbook-migration/semantic-rewrite-batch-download-20260903/authoring-v1-needs-review/authoring/doc.geography.9a4a1e34ad8bf9a190501598.json",
+    "AWAKE/docs/worldbook-migration/semantic-rewrite-batch-download-20260903/authoring-v1-needs-review/authoring/doc.geography.d52dff652d1da2881b267f61.json",
+    "AWAKE/docs/worldbook-migration/semantic-rewrite-batch-download-20260903/authoring-v1-needs-review/authoring/doc.geography.fd4b287514461d54e582ef29.json"
+  ],
+  "evidence": {
+    "authority_source": "C:/Users/26811/Downloads/卡拉迪亚编年史/卡拉迪亚编年史",
+    "parent_snapshot_id": "source.awake.worldbook.download-20260903",
+    "parent_snapshot_sha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+    "child_snapshot_id": "semantic-pilot30.download-20260903",
+    "child_snapshot_hash": "0f23affffd56b65ff07863d1949d42f0389adad7d576e6a396eca8adca399043",
+    "child_manifest_hash": "da97706ffc593c3fc81b80c00aa7bba7f70873244a97959263dfbd4bbfdf4e10",
+    "source_files_rechecked": 757,
+    "source_hash_mismatches": 0,
+    "candidate_documents": 5,
+    "candidate_assertions": 32,
+    "candidate_expressions": 32,
+    "exact_legacy_variant_copies": 0,
+    "grant_count": 0,
+    "deny_count": 0,
+    "clean_candidate_studio_validation": {
+      "schema_errors": 0,
+      "source_gate_errors": 109,
+      "time_warnings": 5,
+      "interpretation": "结构/schema 通过；source registry 的 universe、era、content_tier、license_status、use_status 仍未知，故按契约阻断。"
+    }
+  },
+  "findings": [
+    {
+      "severity": "P1",
+      "finding": "五个候选仍需人工逐句确认 target span 是否覆盖正文全部命题；不能仅凭文档 schema 通过视为语义闭合。",
+      "minimum_fix": "建立正文句/段到 assertion、claim、source origin 的逐项覆盖表，并核对主体、谓词、客体、极性、视角和时间范围。"
+    },
+    {
+      "severity": "P1",
+      "finding": "content_tier 在 Authoring v1 文档中只能写 base，但当前仍是临时候选状态，不能解释为已确认 base。",
+      "minimum_fix": "保持外层状态 needs_review，并在 source registry 与发布门中继续阻断；不得执行 compile/export。"
+    },
+    {
+      "severity": "P1",
+      "finding": "source registry 的资格和时代信息未闭合。",
+      "minimum_fix": "在人工确认前保持 unknown；不得补写 universe、era、许可、使用状态或正式 entity/profile ID。"
+    }
+  ],
+  "candidate_by_candidate": {
+    "沙拉斯湾": {
+      "candidate_id": "authoring_provisional.document.19254d0e00505c440749b338",
+      "status": "needs_review",
+      "assessment": "已补入加隆托海峡关系并把帝国传统/船员传闻分开；仍需人工确认传闻解释与 target span。"
+    },
+    "拉科尼斯湖": {
+      "candidate_id": "authoring_provisional.document.57455a7ba76bcab6ce45bca1",
+      "status": "needs_review",
+      "assessment": "已补入粮食/毛皮转运和铁锈色沉积解释；仍需人工确认历史传说与编辑判断没有混入正文。"
+    },
+    "卡恰尔半岛": {
+      "candidate_id": "authoring_provisional.document.6f56c867548c16af9182acbd",
+      "status": "needs_review",
+      "assessment": "已将骑兵判断保留为库赛特视角，并分开地理、战略解释和历史状态；正式实体和当前归属仍未确认。"
+    },
+    "德里亚特": {
+      "candidate_id": "authoring_provisional.document.7b7de79b571f0addb4d37eaf",
+      "status": "needs_review",
+      "assessment": "已补入道路成本和多种用途关系；settlement marker 与 registry 说明仍属于待审核元数据，不构成正式实体关系。"
+    },
+    "黎明山脉": {
+      "candidate_id": "authoring_provisional.document.d766c02ab0c98cb7236341d8",
+      "status": "needs_review",
+      "assessment": "已恢复源文件支持的山麓地貌表述，并分开屏障解释、传说、社会禁忌和历史融入；当前控制仍未推导。"
+    }
+  },
+  "limitations": [
+    "本报告是独立静态迁移审阅，不是人工批准。",
+    "结构验证 7/7 通过不等于语义批准。",
+    "Studio schema 错误为 0，但 source gate 仍阻断。",
+    "legacy When 尚未完成 runtime permission 映射。",
+    "正式 entity/profile ID 未确认。",
+    "拉盖娅全源 parse gate 仍未闭合。",
+    "未启动 Bannerlord，未同步游戏目录，未访问 Cloud Provider、Worker、API Key、Token 或网络服务。",
+    "未修改真实源目录，也未处理 AWAKE 模组本体闭环。"
+  ],
+  "next_action": "保持五个候选 needs_review；下一次只做人工语义复核和 target-span/claim coverage 校对，不增加候选范围，不执行 compile/export。"
+}

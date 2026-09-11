@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.semantic-rewrite-candidate.v1",
+  "title": "AWAKE Semantic Rewrite Candidate v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "batch_id",
+    "source_snapshot_id",
+    "source_snapshot_sha256",
+    "candidate_id",
+    "status",
+    "title",
+    "domain",
+    "content_tier",
+    "claims",
+    "target_text",
+    "target_spans",
+    "review"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.migration.semantic-rewrite-candidate.v1"
+    },
+    "batch_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_snapshot_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "candidate_id": {
+      "type": "string",
+      "pattern": "^authoring_provisional\\.document\\.[a-f0-9]{24}$"
+    },
+    "status": {
+      "const": "needs_review"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "domain": {
+      "enum": [
+        "politics",
+        "economy",
+        "culture",
+        "war",
+        "geography"
+      ]
+    },
+    "content_tier": {
+      "const": "pending"
+    },
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/claim"
+      }
+    },
+    "target_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_spans": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/target_span"
+      }
+    },
+    "review": {
+      "$ref": "#/$defs/review"
+    }
+  },
+  "$defs": {
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "epistemic_kind",
+        "subject",
+        "predicate",
+        "object",
+        "polarity",
+        "perspective",
+        "time_scope",
+        "confidence",
+        "source_origin_ids"
+      ],
+      "properties": {
+        "claim_id": {
+          "type": "string",
+          "pattern": "^authoring_provisional\\.claim\\.[a-f0-9]{24}$"
+        },
+        "epistemic_kind": {
+          "enum": [
+            "source_fact",
+            "interpretation",
+            "rumor",
+            "relationship",
+            "state",
+            "unresolved"
+          ]
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "predicate": {
+          "type": "string",
+          "minLength": 1
+        },
+        "object": {
+          "type": "string",
+          "minLength": 1
+        },
+        "polarity": {
+          "enum": [
+            "affirmed",
+            "negated",
+            "undetermined"
+          ]
+        },
+        "perspective": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time_scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "unknown"
+          ]
+        },
+        "source_origin_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^authoring_provisional\\.origin\\.[a-f0-9]{24}$"
+          }
+        }
+      }
+    },
+    "target_span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_locator",
+        "text_start",
+        "text_end",
+        "sentence_id",
+        "claim_ids",
+        "source_origin_ids",
+        "operation",
+        "unsupported_additions",
+        "inference_type"
+      ],
+      "properties": {
+        "target_locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text_start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "text_end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sentence_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^authoring_provisional\\.claim\\.[a-f0-9]{24}$"
+          }
+        },
+        "source_origin_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^authoring_provisional\\.origin\\.[a-f0-9]{24}$"
+          }
+        },
+        "operation": {
+          "enum": [
+            "preserve",
+            "merge",
+            "split",
+            "rephrase",
+            "drop",
+            "unresolved"
+          ]
+        },
+        "unsupported_additions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "inference_type": {
+          "enum": [
+            "none",
+            "editorial",
+            "causal",
+            "strategic",
+            "economic",
+            "historical",
+            "unresolved"
+          ]
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "understood_rewrite",
+        "reviewer",
+        "review_state",
+        "rejection_reason"
+      ],
+      "properties": {
+        "understood_rewrite": {
+          "enum": [
+            "pending",
+            "yes",
+            "no"
+          ]
+        },
+        "reviewer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review_state": {
+          "enum": [
+            "needs_review",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "rejection_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

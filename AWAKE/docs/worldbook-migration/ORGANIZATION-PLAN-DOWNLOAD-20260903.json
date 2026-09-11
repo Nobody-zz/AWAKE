@@ -1,0 +1,23 @@
+{
+  "report_kind": "organization_plan",
+  "plan_id": "organization-plan.awake.worldbook.download-20260903",
+  "generated_at": "2026-09-03",
+  "status": "read_only_organization_started",
+  "authority_source": "C:\\Users\\26811\\Downloads\\卡拉迪亚编年史\\卡拉迪亚编年史",
+  "source_snapshot_id": "source.awake.worldbook.download-20260903",
+  "completed": [
+    "将下载包 757 个 JSON 文件映射为 source units",
+    "为每个 unit 保留原路径、输入 hash、旧 ID、字段、关键词、主题和候选动作",
+    "形成合并/拆分/独立 assertion/profile/entity/运行时参考候选",
+    "将 30 文件地理规则批次细化为 pilot organization report",
+    "保留所有候选为 needs_review"
+  ],
+  "not_started": [
+    "不生成迁移正文",
+    "不生成稳定 doc/assertion/expr ID",
+    "不创建 source registry、entity/profile registry 或 redirect",
+    "不修改任何来源内容",
+    "不执行 Studio schema 编译、Runtime 导出、同步或发布"
+  ],
+  "next_action": "人工审核组织候选；优先处理 1 个 JSON 错误、2 组重复旧 ID 和 30 个试点 unit 的事实簇/来源/权限边界。"
+}

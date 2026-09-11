@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "awake.worldbook.pilot-repair-review.v1",
+  "reportType": "textmapping_review",
+  "status": "needs_review",
+  "sourceSnapshotId": "source.awake.worldbook.download-20260903",
+  "sourceSnapshotSha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+  "files": [
+    {
+      "file": "knowledge/rules/rule_吕卡隆__吕卡隆.json",
+      "sha256": "4819BB172CCB5516B8DDA65F85C403323C9A7103B3833C168B4E4A96BA4F4C92",
+      "sourceFileSha256": "4819BB172CCB5516B8DDA65F85C403323C9A7103B3833C168B4E4A96BA4F4C92",
+      "locators": ["#/TextMappings/0", "#/TextMappings/1", "#/TextMappings/2"],
+      "evidenceKind": "mapping_target_requires_entity_validation",
+      "mappingCount": 3,
+      "mappings": [
+        {"sourceText": "A", "kind": "settlement_owner_leader_name", "targetId": "town_ES4", "review": "verify stable settlement ID/casing"},
+        {"sourceText": "B", "kind": "status|clan|has_any_town", "targetId": "clan_empire_south_1", "review": "verify target clan and true/false output semantics"},
+        {"sourceText": "C", "kind": "kingdom_leader_name", "targetId": "empire_s", "review": "verify kingdom ID and output placement"}
+      ],
+      "recommendedAction": "split assertions before mapping; preserve mapping candidates only after entity validation"
+    }
+  ],
+  "notes": [
+    "No reproducible placeholder token was confirmed for this file.",
+    "No source file was modified."
+  ]
+}

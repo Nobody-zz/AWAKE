@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.migration.semantic-when-decision.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "origin_id",
+    "source_unit_id",
+    "decision",
+    "mapping_basis",
+    "review_state",
+    "rationale"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.worldbook.migration.semantic-when-decision.v1"
+    },
+    "origin_id": {
+      "type": "string",
+      "pattern": "^authoring_provisional\\.origin\\.[a-f0-9]{24}$"
+    },
+    "source_unit_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision": {
+      "enum": [
+        "audience_only",
+        "perspective_only",
+        "mapped_grant",
+        "mapped_deny",
+        "unresolved",
+        "rejected"
+      ]
+    },
+    "mapping_basis": {
+      "anyOf": [
+        {
+          "$ref": "semantic-mapping-basis.v1.schema.json"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "review_state": {
+      "enum": [
+        "needs_review",
+        "accepted",
+        "rejected"
+      ]
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

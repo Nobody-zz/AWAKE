@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "awake.worldbook.migration-reconciliation.v1",
+  "reportType": "artifact_set_reconciliation",
+  "generatedAtUtc": "2026-09-03T00:00:00Z",
+  "status": "blocked",
+  "findings": [
+    {
+      "severity": "P1",
+      "code": "mixed_source_snapshot_ids",
+      "files": [
+        "SOURCE-SNAPSHOT-20260903.json",
+        "SOURCE-INVENTORY-20260903.json",
+        "ARTIFACT-INDEX-20260903.json",
+        "SOURCE-PARSE-REPORT-20260903.json"
+      ],
+      "details": "The snapshot and inventory identify legacy-worldbook-20260903-5files / ModuleData/Worldbook, while the artifact index and parse report identify source.awake.worldbook.20260903 / the user-selected Downloads worldbook.",
+      "action": "Do not combine these files. Regenerate a complete artifact set under a new batch ID and unique filenames."
+    },
+    {
+      "severity": "P1",
+      "code": "authority_observation_history_conflict",
+      "file": "AUTHORITY-SOURCE-DECISION-20260903.json",
+      "details": "The current parse report has parse_error_count=0, while the decision file preserves an earlier observation of parse_error_count=1 and duplicate_knowledge_id_group_count=2.",
+      "action": "Treat the current snapshot plus current parse report as load-bearing only after their source_snapshot_id and source_snapshot_sha256 match; retain the earlier values as historical observations."
+    },
+    {
+      "severity": "resolved",
+      "code": "semantic_pilot_parent_snapshot_binding_missing",
+      "files": [
+        "SNAPSHOT-MANIFEST-DOWNLOAD-20260903.json",
+        "SEMANTIC-WORKSHEETS-DOWNLOAD-20260903.json",
+        "REWRITE-CANDIDATE-5-DOWNLOAD-20260903.json"
+      ],
+      "details": "The semantic snapshot manifest identifies the 30-file derived snapshot semantic-pilot30.download-20260903, while the semantic worksheets and rewrite candidate identify the 757-file parent source snapshot source.awake.worldbook.download-20260903. The manifest identifies the same Downloads source_root_id but does not carry a machine-readable parent_snapshot_id or parent_snapshot_sha256.",
+      "action": "Parent-child binding is now explicitly cross-referenced by SEMANTIC-PILOT-PARENT-BINDING-20260903.json. Treat the child as a derived review batch, not a standalone source snapshot; do not promote its candidate package."
+    },
+    {
+      "severity": "resolved",
+      "code": "semantic_child_manifest_hash_mode_reproduced",
+      "files": [
+        "SNAPSHOT-MANIFEST-DOWNLOAD-20260903.json",
+        "SEMANTIC-PILOT-PARENT-BINDING-20260903.json"
+      ],
+      "details": "The child manifest declares normalization_version=utf8-lf-no-bom-v1. Recomputing the declared normalization (remove BOM, normalize CRLF/CR to LF, encode UTF-8) reproduced all 30 content_sha256 values; worksheet input hashes also match raw source files 30/30.",
+      "action": "Hash mode is verified. Keep the child candidate review-only because source registry, content review, and canon/publish gates remain open."
+    }
+  ],
+  "currentLoadBearingPair": {
+    "sourceSnapshotId": "source.awake.worldbook.download-20260903",
+    "sourceSnapshotSha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+    "parseErrorCount": 1,
+    "sourceFileCount": 757
+  },
+  "derivedChildSnapshot": {
+    "sourceSnapshotId": "semantic-pilot30.download-20260903",
+    "sourceRootId": "source.calradia.chronicle.download",
+    "fileCount": 30,
+    "snapshotHash": "0f23affffd56b65ff07863d1949d42f0389adad7d576e6a396eca8adca399043",
+    "manifestHash": "da97706ffc593c3fc81b80c00aa7bba7f70873244a97959263dfbd4bbfdf4e10",
+    "parentSnapshotId": "source.awake.worldbook.download-20260903",
+    "parentSnapshotSha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+    "parentBindingStatus": "explicit_cross_reference_reported; child_manifest_schema_has_no_parent_fields"
+  },
+  "notEvidence": [
+    "No Studio authoring document",
+    "No compiled runtime package",
+    "No authoritative registry mutation",
+    "No canon or published decision"
+  ]
+}

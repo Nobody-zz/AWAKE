@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "awake.worldbook.pilot-repair-review.v1",
+  "reportType": "domain_reclassification",
+  "status": "needs_review",
+  "sourceSnapshotId": "source.awake.worldbook.download-20260903",
+  "sourceSnapshotSha256": "629a24fc633c035aa83d369b54d35cd3a893eb429d5fcf501e2e2ff0c717f129",
+  "items": [
+    {
+      "file": "knowledge/rules/rule_吕卡隆__吕卡隆.json",
+      "sourceFileSha256": "4819BB172CCB5516B8DDA65F85C403323C9A7103B3833C168B4E4A96BA4F4C92",
+      "locators": ["#/Variants/0", "#/Variants/1", "#/Variants/2", "#/Variants/3", "#/Variants/4", "#/Variants/5", "#/Variants/6", "#/Variants/7", "#/Variants/8", "#/Variants/9", "#/Variants/10", "#/Variants/11"],
+      "evidenceKind": "mixed_subjects_require_assertion_split",
+      "currentDomain": "politics",
+      "candidates": ["geography", "politics", "economy", "war"],
+      "decision": "split_before_domain_assignment",
+      "reason": "settlement geography, imperial history, factional perspectives and dynamic ownership/status are mixed"
+    }
+  ],
+  "notes": [
+    "This report contains proposals only; no domain is changed automatically.",
+    "The remaining pilot domain candidates are tracked in the external 30-file evaluation report."
+  ]
+}
