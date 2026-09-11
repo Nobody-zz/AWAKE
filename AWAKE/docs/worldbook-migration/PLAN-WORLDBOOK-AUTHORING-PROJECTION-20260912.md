@@ -1,4 +1,4 @@
-# PLAN: Worldbook Authoring v1 投影批 — 20260912
+﻿# PLAN: Worldbook Authoring v1 投影批 — 20260912
 
 > 状态：`prepared_for_review`（E0 计划，未实施）。
 > 前置基线：R3 修订批已签收（`docs/review-state/WORLDBOOK-SEMANTIC-R3-REVISION-BATCH-20260912.review.json`，
@@ -84,3 +84,14 @@
 6. **r3-revision 冻结**：已批准基线不回写；W3 引文细化产物落 authoring 档案 + `QUOTE-REFINEMENT-20260912` 记录。
 7. **实施顺序**：逐档串行 W2→W3→W4，W5/W6 收尾；W1 增"读登记表 schema 定 lore 分区扩展方式"；W6 增"闭合复验工具（assertion↔claim、expression↔span、layer/grants 一致性）"。
 8. **审批与回滚**：用户 Studio UI 人工审批；建档失败逐档重试，已建不删、manifest 记状态。
+
+## 6. 独立审查修订（2026-09-12，VERDICT REVISE → 7 条全落，修后可签收）
+
+1. **【P0】"存疑"承载重裁定**：authoring.v1 schema 无认知确定性字段（唯一 certainty 是时间语义）且 sources XOR author_created 封死旁路。**裁定取方案 b**：unresolved 知识限制类 claim（96448244、fd78df11）投影为 **assertion kind=interpretation**（对知识状态的推断性陈述，正文口径"仅凭旧书说不清"本已合规），PROJECTION-MANIFEST 逐条记录 unresolved→interpretation 溯源标记，档案 summary 提及。ddfb30ad 仍不投影。
+2. **【P1】lore 分区降级为独立清单**：不动 entity-registry schema/生成器/pointer（那是 persona 线的链条）。新增独立 `LORE-ENTITY-REGISTER-20260912.json`（ID/名称/别名/游戏交叉引用/来源依据），锚点仍写 `entity.lore.*`——编译器容错不折 keywords（已核），可检索性由 title/aliases 承担；**登记表 lore 合并显式推迟**到与 persona 线协调的批次，记 deviation。
+3. **【P1】恢复 place_cluster→referralIds 接线**（撤销静默放弃）：每个表达段落 `fallback_referral_ids`，指向同簇兄弟档；referral ID 命名 `referral.cluster.<place>.<seq>`，登记进 referral-registry（数据文件）。
+4. **【P2】W4 来源更正**：profile_id 取自 `docs/worldbook-studio-plan/profile-registry.v1.json`（12 profile），非 persona-entity 登记表；W4 首步产出九类身份→profile ID 字面映射表（学士建议→notable 而非 noble，回应"宁窄勿宽"）。
+5. **【P2】split_from 伴随义务**：血缘指向 authoring_provisional 允许；必须同时落 `event_id = event.migration.r3-projection.20260912` + `revision = 3`；"临时 ID 不带入"仅指新档案自身编号由 Studio 生成，血缘引用保留 provisional ID。
+6. **【P2】W5 精确路径**：仓库内 `docs/worldbook-migration/SEMANTIC-MIGRATION-ACTION-QUEUE-R2-20260906.json`（der-04 错位）；归档区 `SEMANTIC-WORKSHEET-R3-REVISION-DRAFT-20260908.json`（孤儿 origin）。"明确不做"改为：不动 `r3-revision\documents`（已批准基线）与 v1 快照，账目清理仅触及列名两文件。
+7. **【P2】W6 闭合规格定数**：epistemic 映射表 source_fact→fact、relationship→relation、state→state、interpretation→interpretation、rumor→rumor、unresolved→interpretation（manifest 标记）；**预期 assertion 计数 40**（41 − 1 元数据 dd fb30ad）；**预期 expression 计数 16**（layer 标注 span 数）；排除清单 = {ddfb30ad}；kach-tales 框架句并入首 span。
+8. **【P3 附带】** create-document 模板自带 author_created（author.developer）在填入 sources 时必须移除（oneOf 约束）；scope 落位用 schema 枚举 local/regional/national/faction/elite/private，手册"跨国"→national 映射记入 W4 表。

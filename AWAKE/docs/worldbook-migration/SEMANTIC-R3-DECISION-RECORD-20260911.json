@@ -1,4 +1,4 @@
-{
+﻿{
   "schema_version": "awake.worldbook.migration.semantic-decision-record.v1",
   "record_id": "semantic-r3-decision-record.20260911",
   "generated_at": "2026-09-11T00:00:00+08:00",
@@ -66,7 +66,7 @@
     { "action_id": "der-03", "deviation": "perspective 保持 neutral 而非'旅人叙述'", "justification": "旅人见闻经词条化后按中性知识收录，来源归属由 origin（V3）承载", "status": "approved_deviation" },
     { "action_id": "lac-04", "deviation": "主体定为'帝国兵志叙述'而非决策记录原文'帝国（防务）叙述'", "justification": "V1 为第一人称帝国防务叙述，词条化后文体归位为兵志；正文保留'一家之言'降权尾句", "status": "approved_deviation" }
   ],
-  "claim_authority": "doc 内 claim 字段为 post-rewrite 权威版；worksheet 同 ID 条目视为草稿，冲突时以 doc 为准（独立审查 P2-4 的裁定）",
+  "deviations_projection_batch": [ { "item": "lore 登记表分区合并", "deviation": "R3 基线锚点绑定降级为独立 LORE-ENTITY-REGISTER + 编译器容错路径", "justification": "entity-registry schema 硬封闭 hero|clan|settlement，扩展需动 persona 线生成器与哈希链", "status": "deferred_with_record" }, { "item": "place_cluster referralIds", "deviation": "无（已恢复接线，见计划第 6 节修订 3）", "status": "restored" } ],"claim_authority": "doc 内 claim 字段为 post-rewrite 权威版；worksheet 同 ID 条目视为草稿，冲突时以 doc 为准（独立审查 P2-4 的裁定）",
   "next_actions": [
     "生成 R3 修订稿：先更新 worksheet claims/origins 的 decision 字段，再重写候选正文并落位 target span（存独立 r3 目录，不覆盖 r2）",
     "写 PowerShell 版三向闭合校验脚本并运行（正文命题/claim/origin/target span）",
