@@ -1,0 +1,87 @@
+{
+  "taskId": "WORLDBOOK-AUTHORING-PROJECTION-20260912",
+  "status": "implemented_verified_pending_user_signoff",
+  "planPath": "docs/worldbook-migration/PLAN-WORLDBOOK-AUTHORING-PROJECTION-20260912.md",
+  "planSha256": "1830D415810A5B410E23528339FE2D7FE174000DDD03E5DE3E625A093387F7A8",
+  "baselineCommit": "b7eacaa",
+  "planReview": {
+    "engine": "独立只读审查（计划层）",
+    "round": 1,
+    "verdict": "REVISE",
+    "findings": "2xP0/P1 + 4xP2 + 2xP3；修订 7 条全落，修后可签收",
+    "source": "PLAN 第 6 节"
+  },
+  "grillMe": {
+    "round": 1,
+    "questions": 12,
+    "amendments": 12,
+    "source": "tools-r3/GRILLME-PROJECTION-PLAN-20260912.md"
+  },
+  "userSignoff": false,
+  "userSignoffNote": "计划层已由用户签收（PLAN 第 5/6 节、commit b7eacaa）；本实施批（W1–W6）待用户签收。签发前不得进入 approve/compile/export/publish。",
+  "implementation": {
+    "W1": "实体锚点绑定：6 个语义实体 + 12/12 绑定方案（projection/ANCHOR-BINDING-PLAN-20260912.json）",
+    "W1_5": "编年史来源登记：5 件（projection/sources-out/）",
+    "W2": "12 档正式建档：12/12 经官方保存链落库，Studio 结构校验 0 blocking",
+    "W3": "子引文细化：40 条引文逐字核对（projection/projection-evidence.json）",
+    "W4": "身份权限映射：40 条断言全部带 grants，映射 12 个 profile",
+    "W5": "账目清理：action-queue JSON 修复 + der-04 归属修正 + worksheet 孤儿实测裁定 + 对账基线统一 22",
+    "W6": "闭合复验 + 证据汇总（Studio CLI 0 diagnostics；三向闭合 PASS 12 / FAIL 0 / OPEN 2）",
+    "actualCounts": {
+      "documents": 12,
+      "r3Claims": 41,
+      "assertions": 40,
+      "expressions": 40,
+      "grants": 40,
+      "loreEntities": 6,
+      "profiles": 12,
+      "sources": 5
+    }
+  },
+  "closureVerification": {
+    "tool": "docs/worldbook-migration/tools-r3/validate-authoring-closure.ps1",
+    "toolSha256": "3F4C7459BA2DA8F60AE2A437AFC7F6E3D6E52EC4AF8CD09544598A67AD8C2E9D",
+    "studioCliValidate": "0 diagnostics",
+    "verdict": "STRUCTURALLY_CLOSED_OPEN_ITEMS",
+    "pass": 12,
+    "fail": 0,
+    "open": 2,
+    "openItems": [
+      {
+        "id": "C13",
+        "title": "W4 独立审查 P1-3：place_cluster → fallback_referral_ids 接线未实施",
+        "detail": "referral 登记表仅 4 条通用 referral、无 referral.cluster.*；12 档覆盖 0/40。补做将改 12 档产物 + 登记表，登记表哈希变更触发全部 registry_bindings 重绑。",
+        "pending": "用户裁定补做/挂账及归属批次"
+      },
+      {
+        "id": "C14",
+        "title": "expression 计数口径（计划 16 / 实测 40）",
+        "detail": "40 = R3 带 layer 标注 target_span 16 + 中立内核补挂 summary 档 24。authoring.v1 schema 下 40 与 16 均合法（expressions 必填但无 minItems）。",
+        "pending": "用户裁定 (a) 维持 40 / (b) 收严为 16"
+      }
+    ]
+  },
+  "calibrationCorrections": [
+    "计划 W5 记『14 个孤儿 claim』→ 实测 27 条 origin.r3.* 条目 / 19 个真孤儿 claim ID（零重合，草稿层重复残留）",
+    "计划第 6 节修订 7 与 manifest 记『预期 expression 16』→ 实测 40（16 + 24），属文档未跟上实际"
+  ],
+  "evidence": {
+    "level": "E2",
+    "path": "docs/evidence/AWAKE-WORLDBOOK-AUTHORING-PROJECTION-E2-20260912.md",
+    "machineEvidence": "docs/evidence/authoring-closure-20260912.json",
+    "gameValidated": false
+  },
+  "scope": [
+    "worldbook migration docs ledger (W5)",
+    "authoring projection products (W1–W4)",
+    "closure verification tool + evidence (W6)"
+  ],
+  "excluded": [
+    "runtime / src / framework",
+    "persona / character cards",
+    "r3-revision/documents（已批准冻结基线）",
+    "v1 快照与归档区正文本体",
+    "C#/Studio 工具代码",
+    "game sync / compile / export / publish / approve"
+  ]
+}

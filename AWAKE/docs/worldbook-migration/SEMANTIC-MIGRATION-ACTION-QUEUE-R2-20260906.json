@@ -293,5 +293,72 @@
     "所有新 revision 仍保持 needs_review；不产生 approve/canon/compiled/published/runtime injection。",
     "完成五候选后，才评估其余 25 个 worksheet 的 claim-level 处理，不提前扩大范围。"
   ],
-  "boundary_statement": "本轮未启动 Bannerlord，未同步游戏目录，未访问真实 Cloud Provider、API Key、Token、Worker 或网络服务；未修改真实 Downloads 源目录。"
+  "boundary_statement": "本轮未启动 Bannerlord，未同步游戏目录，未访问真实 Cloud Provider、API Key、Token、Worker 或网络服务；未修改真实 Downloads 源目录。",
+  "corrections_20260912": {
+    "source": "R3 批独立审查 P2-5；修正为追加记录，不改动上方历史内容",
+    "der_04_attribution_fix": "action_map 曾将新 trade claim 57e81a172cc6d39dbebffae4 记在 der-04（keep_metadata_only）名下；按 SUPERSEDED-MAP-20260912 该 claim 实为 der-01/der-03 泛化 claim 75fc4da5 的拆分产物。权威归属：der-01/der-03 拆分。der-04 本体（ddfb30ad，定居点绑定标记元数据）处理不变。",
+    "worksheet_orphan_origin_note": "worksheet 草稿中残留的 origin.r3.* 引用（指向 14 个未进入任何产物的孤儿 claim ID）按 claim_authority 裁定降级为草稿层噪声，不进入候选管线；孤儿清单见独立审查报告 REVIEW-R3-BATCH-20260912.md。",
+    "worksheet_orphan_origin_measured": {
+      "measured_at": "2026-09-12",
+      "measured_by": "worldbook-side (workbuddy/阿砚)",
+      "source_file": "D:\\AWAKE-Archive\\worldbook-migration-content\\SEMANTIC-WORKSHEET-R3-REVISION-DRAFT-20260908.json",
+      "origin_r3_ref_entries": 27,
+      "distinct_orphan_claims": 19,
+      "count_note": "上一条 note 沿用 R3 批审阅阶段的口头计数 14；本次实测为 27 条 origin.r3.* legacy_origin 条目，指向 19 个不同 destination claim ID。上一条文字不改写，数值口径以本实测为准。",
+      "orphan_confirmed": "19 个 destination claim ID 均未出现在任何产物：既不在 worksheet 30 个 source_unit 的 claims 中，也不在 r3-revision/documents 的 41 条 claim 中（hex 零重合）。",
+      "duplicate_check": "每条孤儿条目在同一 source_unit 内都存在同 origin_locator 且 destination 有效的正常条目，故为草稿层重复残留，非独立证据。",
+      "disposition": "按 claim_authority（doc 为权威版）降级为草稿层噪声，不进入候选管线；本裁定仅落账于本文件 corrections_20260912，归档 worksheet 属冻结件、不改写。",
+      "orphan_claim_ids": [
+        "authoring_provisional.claim.r3.2a5fb3c09c7316e0e539f2bf",
+        "authoring_provisional.claim.r3.3feaacdcb1b500583740017a",
+        "authoring_provisional.claim.r3.490356803422632a77d9b782",
+        "authoring_provisional.claim.r3.4f0b1653f801f90e53c7af90",
+        "authoring_provisional.claim.r3.599f5d74e432c326d3a264ae",
+        "authoring_provisional.claim.r3.5f410f5c0ceba6bbe49ab169",
+        "authoring_provisional.claim.r3.654505b55f4c010fa3cc7b51",
+        "authoring_provisional.claim.r3.65e2a89e3d65dfe4cffb18e3",
+        "authoring_provisional.claim.r3.6eebd54e41c9d08cacb970b0",
+        "authoring_provisional.claim.r3.8a7bcb7d32e644fbe00169c2",
+        "authoring_provisional.claim.r3.a41ab468921d69a8571e7823",
+        "authoring_provisional.claim.r3.a67e82bd4597a8ae97936c44",
+        "authoring_provisional.claim.r3.ab3ccb4b8618b0ab3d348bd9",
+        "authoring_provisional.claim.r3.c29c6891a2f4fc74acc6253d",
+        "authoring_provisional.claim.r3.caec03b7dc311237452d5e1c",
+        "authoring_provisional.claim.r3.cc351b436ef8377464ee8a4c",
+        "authoring_provisional.claim.r3.eab6905f6d516c81f2765a34",
+        "authoring_provisional.claim.r3.ed618a147ed68ad6d9921f38",
+        "authoring_provisional.claim.r3.fdfcba3e2bf17515cd4737fa"
+      ]
+    },
+    "reconciliation_baseline_unified": {
+      "baseline": 22,
+      "meaning": "SUPERSEDED-MAP 与 action-queue 的对账基线统一取 22，即 R3 新增 claim 数（不是 r2 被取代数、也不是动作数）。",
+      "three_way_check": {
+        "r3_revision_documents": "41 claim = r2 保留 19 + r3 新增 22（按 revision_note 实测）",
+        "r3_worksheet_draft": "validation_summary.new_claims = 22；action_map 引用的 claim_ids 去重 = 22（23 条动作中 lac-05/sara-02/sara-03/sara-04 不携带 claim，kach-05 携 3 条、dawn-02 携 2 条）",
+        "superseded_map": "SUPERSEDED-MAP-20260912.json 记 9 条被取代 r2 claim（8 条单一取代 + 1 条拆为 3 条）；该 9 条属 r2 侧被取代项，与 r3 侧新增 22 为不同口径，不对冲、不相加"
+      },
+      "action_count_note": "本文件 23 条动作与 R3 修订草稿 23 条动作一致；决策记录另加 dawn-locator-fix（技术修正，非原 23 条之一），故决策记录为 24 条。",
+      "boundary": "本对账仅在 action-queue 内落账；SUPERSEDED-MAP-20260912.json 属归档区，按独立审查 P2-6「账目清理仅触及列名两文件」不改动，其数值以上述 three_way_check 引用为准。"
+    },
+    "expression_count_reconciliation": {
+      "issue": "计划第 6 节修订 7 记『预期 expression 16』，PROJECTION-MANIFEST-20260912.json expected_counts.expressions 亦写 16；W2 实交 40。属文档未跟上实际，非实施缺陷。",
+      "measured_at": "2026-09-12",
+      "measured_by": "worldbook-side (workbuddy/阿砚)",
+      "decomposition": "40 = R3 target_spans 中带 layer 标注的 16 条（即计划口径）+ 中立内核 assertion 按 authoring.v1『expressions 必填』补挂的 summary 档 24 条。12 档合计 assertion 40 / expression 40 / grants 40，逐档可核。",
+      "schema_basis": "awake.worldbook.authoring.v1.schema.json：assertion.expressions 必填但无 minItems；expression.layer 枚举 rumor/summary/detail/secret。故 40 与 16 在 schema 下均合法。",
+      "status": "口径待裁定（OPEN，闭合复验 C14）。候选：(a) 维持 40（中立内核以 summary 层对 profile.commoner/regional 可达）；(b) 收严为 16（中立内核不挂表达段，仅作正典一致性用）。未裁定前不静默改写计划与 manifest 的原写数值。",
+      "ledger_note": "计划与 manifest 原写数值不改写，本口径以本修正记录为准；manifest 侧已同步追加同源 corrections_20260912。",
+      "evidence": "docs/evidence/authoring-closure-20260912.json（C3/C5/C6/C14）"
+    },
+    "w4_p1_3_referral_gap": {
+      "issue": "W4 独立审查修订 P1-3 要求 place_cluster → fallback_referral_ids 接线（每段表达挂同簇兄弟档 referral），W2~W4 实施未做。",
+      "measured_at": "2026-09-12",
+      "measured_by": "worldbook-side (workbuddy/阿砚)",
+      "actual": "referral-registry.v1.json 仅 4 条通用 referral，无 referral.cluster.*；12 档产物 fallback_referral_ids 覆盖 0/40。",
+      "impact": "补做将改动 12 档产物 + referral 登记表；登记表哈希（6E17075F…）变更会触发全部 12 档 registry_bindings 重绑。",
+      "status": "未实现待裁定（OPEN，闭合复验 C13）。需 Max 定是否补做、以及补做归属哪个批次。",
+      "evidence": "docs/evidence/authoring-closure-20260912.json（C13）"
+    }
+  }
 }

@@ -1,0 +1,84 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.culture.kachar-three-tales
+title: {zh-CN: "卡恰尔半岛·三族讲法"}
+status: needs_review
+domain: culture
+subdomain: identity
+universe: awake_current
+era: {key: historical, certainty: unknown}
+content_tier: base
+entity_ids: [entity.lore.kachar_peninsula]
+summary: {zh-CN: "巴旦尼亚、诺德、斯特吉亚三方对半岛易主的各自讲法，互不对账。"}
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+  - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/1/Content, quote_hash: 5BCDD828C801633CA765B77A7E6DEFAA279F5CAA7675AFAEC1F6FA52FBA4BEF8, quote: "他们互相咬，最后把肉送到了我们嘴里"}
+  - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/4/Content, quote_hash: 9BDB7D7AA9866AD7E11B033CE0806C8B5AE4AE11FA0B6E48F481EBC5D43E26E7, quote: "巴旦尼亚人耍了花招，雇了斯特吉亚的斧头来赶我们"}
+  - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/5/Content, quote_hash: B457938D9627615E98F058D0C1CF66D188D8299865D9551D780DCF5B491627CE, quote: "戴恩玛雇了斯特吉亚人来清理门户，结果斯特吉亚人打完仗不走了，把整片半岛都吞了"}
+  - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/7/Content, quote_hash: 8EFC66FDF521EADBB4B90A670C981CB2C7334AC22162C134FF5C5066A8B1DA82, quote: "听说那片半岛的历史全是背叛和趁火打劫"}
+authority: {owner: awake_canon, conflict_policy: canon_wins}
+assertions:
+  - id: assertion.kach-tales-1
+    revision: 1
+    kind: interpretation
+    text: {zh-CN: "巴旦尼亚叙述将易主归因于借斯特吉亚人清除诺德人后反失其地。"}
+    sources:
+      - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/5/Content, quote_hash: B457938D9627615E98F058D0C1CF66D188D8299865D9551D780DCF5B491627CE, quote: "戴恩玛雇了斯特吉亚人来清理门户，结果斯特吉亚人打完仗不走了，把整片半岛都吞了"}
+    expressions:
+      - id: expr.kach-tales-1
+        revision: 1
+        layer: detail
+        text: {zh-CN: "巴旦尼亚人的讲法：他们借斯特吉亚人的斧头赶走诺德人，末了引狼入室，地也没保住。"}
+        sources:
+          - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/5/Content, quote_hash: B457938D9627615E98F058D0C1CF66D188D8299865D9551D780DCF5B491627CE, quote: "戴恩玛雇了斯特吉亚人来清理门户，结果斯特吉亚人打完仗不走了，把整片半岛都吞了"}
+        grants: [{profile_id: profile.townsfolk, scope: regional, min_detail: detail}]
+        denies: []
+  - id: assertion.kach-tales-2
+    revision: 1
+    kind: interpretation
+    text: {zh-CN: "诺德叙述将易主归因于巴旦尼亚人设局、雇军反噬。"}
+    sources:
+      - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/4/Content, quote_hash: 9BDB7D7AA9866AD7E11B033CE0806C8B5AE4AE11FA0B6E48F481EBC5D43E26E7, quote: "巴旦尼亚人耍了花招，雇了斯特吉亚的斧头来赶我们"}
+    expressions:
+      - id: expr.kach-tales-2
+        revision: 1
+        layer: detail
+        text: {zh-CN: "诺德人的讲法：巴旦尼亚人设了局，雇来的人打完仗反客为主。"}
+        sources:
+          - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/4/Content, quote_hash: 9BDB7D7AA9866AD7E11B033CE0806C8B5AE4AE11FA0B6E48F481EBC5D43E26E7, quote: "巴旦尼亚人耍了花招，雇了斯特吉亚的斧头来赶我们"}
+        grants: [{profile_id: profile.townsfolk, scope: regional, min_detail: detail}]
+        denies: []
+  - id: assertion.kach-tales-3
+    revision: 1
+    kind: interpretation
+    text: {zh-CN: "斯特吉亚叙述将易主归因于两方相争而坐收其成。"}
+    sources:
+      - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/1/Content, quote_hash: 5BCDD828C801633CA765B77A7E6DEFAA279F5CAA7675AFAEC1F6FA52FBA4BEF8, quote: "他们互相咬，最后把肉送到了我们嘴里"}
+    expressions:
+      - id: expr.kach-tales-3
+        revision: 1
+        layer: detail
+        text: {zh-CN: "斯特吉亚人的讲法：两家相争两败俱伤，他们坐收其成。"}
+        sources:
+          - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/1/Content, quote_hash: 5BCDD828C801633CA765B77A7E6DEFAA279F5CAA7675AFAEC1F6FA52FBA4BEF8, quote: "他们互相咬，最后把肉送到了我们嘴里"}
+        grants: [{profile_id: profile.townsfolk, scope: regional, min_detail: detail}]
+        denies: []
+  - id: assertion.kach-tales-4
+    revision: 1
+    kind: interpretation
+    text: {zh-CN: "三方易主叙述彼此存在不同解释，互不对账。"}
+    sources:
+      - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/7/Content, quote_hash: 8EFC66FDF521EADBB4B90A670C981CB2C7334AC22162C134FF5C5066A8B1DA82, quote: "听说那片半岛的历史全是背叛和趁火打劫"}
+    expressions:
+      - id: expr.kach-tales-4
+        revision: 1
+        layer: detail
+        text: {zh-CN: "三套讲法对不上，谁也做不得准。"}
+        sources:
+          - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/7/Content, quote_hash: 8EFC66FDF521EADBB4B90A670C981CB2C7334AC22162C134FF5C5066A8B1DA82, quote: "听说那片半岛的历史全是背叛和趁火打劫"}
+        grants: [{profile_id: profile.townsfolk, scope: regional, min_detail: detail}]
+        denies: []

@@ -1,0 +1,116 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.deriat-furs
+title: {zh-CN: "德里亚特·毛皮生计"}
+status: needs_review
+domain: economy
+subdomain: trade
+universe: awake_current
+era: {key: current, certainty: bounded}
+content_tier: base
+entity_ids: [entity.lore.deriat_village]
+summary: {zh-CN: "德里亚特的毛皮油脂产出、交易去向、斗篷皮袄用途、海豹油点灯与道路不便的商旅解读。"}
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+  - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/0/Content, quote_hash: 0037E83438EE0E06D227EE318D9BC5C668D7068EC770472EEEBAD8EB1A591E6D, quote: "当地村民在山上捕获河狸与水貂，有时也会在海湾水域捉海豹，毛皮和油脂是他们的主要产出来源"}
+  - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/0/Content, quote_hash: 02D2FA5123B6DDBF5CFE1D3D19DC57EB14E0B8DCEB7E85C59762AD344FD8D4EA, quote: "毛皮和油脂是他们的主要产出来源"}
+  - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/1/Content, quote_hash: 6CC1A1B26A5518C657393665B0A46770AD3311BCFE2D32267FEB40608BCB919F, quote: "瓦尔切格湾那一带的海豹皮挺值钱，又厚又滑，做斗篷防水。卡琉斯堡的守军冬天穿的皮袄，有些料子就是从德里亚特收来的"}
+  - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/2/Content, quote_hash: 4787001312C3D45930D3476626A44C9D6B918EBF1A5C4C3430E081D8E60D599C, quote: "德里亚特的海豹皮在瓦尔切格湾一带算是一绝"}
+  - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/2/Content, quote_hash: EFC7EB4A72E8766DD60DFD62D3F83A692B530979980E7D822109E1B1CD9565FC, quote: "不过那地方路不好走，在山脊和海湾之间，进去一趟得费不少功夫"}
+  - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/3/Content, quote_hash: A5B1CB23192803D9E0721D7901916E165A409B9A0039C22A9D5399B519FA0ED8, quote: "那里的海豹油点灯特别好，烟少、火亮"}
+authority: {owner: awake_canon, conflict_policy: canon_wins}
+assertions:
+  - id: assertion.der-furs-1
+    revision: 1
+    kind: fact
+    text: {zh-CN: "村民上山下海讨生活：山里捕河狸、水貂，海豹则要到湾里捉；毛皮和油脂是村里的主要出产。"}
+    sources:
+      - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/0/Content, quote_hash: 0037E83438EE0E06D227EE318D9BC5C668D7068EC770472EEEBAD8EB1A591E6D, quote: "当地村民在山上捕获河狸与水貂，有时也会在海湾水域捉海豹，毛皮和油脂是他们的主要产出来源"}
+    expressions:
+      - id: expr.der-furs-1-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "村民上山下海讨生活：山里捕河狸、水貂，海豹则要到湾里捉；毛皮和油脂是村里的主要出产。"}
+        sources:
+          - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/0/Content, quote_hash: 0037E83438EE0E06D227EE318D9BC5C668D7068EC770472EEEBAD8EB1A591E6D, quote: "当地村民在山上捕获河狸与水貂，有时也会在海湾水域捉海豹，毛皮和油脂是他们的主要产出来源"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.der-furs-2
+    revision: 1
+    kind: fact
+    text: {zh-CN: "海豹还能炼油。"}
+    sources:
+      - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/0/Content, quote_hash: 02D2FA5123B6DDBF5CFE1D3D19DC57EB14E0B8DCEB7E85C59762AD344FD8D4EA, quote: "毛皮和油脂是他们的主要产出来源"}
+    expressions:
+      - id: expr.der-furs-2-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "海豹还能炼油。"}
+        sources:
+          - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/0/Content, quote_hash: 02D2FA5123B6DDBF5CFE1D3D19DC57EB14E0B8DCEB7E85C59762AD344FD8D4EA, quote: "毛皮和油脂是他们的主要产出来源"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.der-furs-3
+    revision: 1
+    kind: relation
+    text: {zh-CN: "海豹的皮货在瓦尔切格湾那片水面上有名，进的是湾内各处的交易；"}
+    sources:
+      - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/2/Content, quote_hash: 4787001312C3D45930D3476626A44C9D6B918EBF1A5C4C3430E081D8E60D599C, quote: "德里亚特的海豹皮在瓦尔切格湾一带算是一绝"}
+    expressions:
+      - id: expr.der-furs-3-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "海豹的皮货在瓦尔切格湾那片水面上有名，进的是湾内各处的交易；"}
+        sources:
+          - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/2/Content, quote_hash: 4787001312C3D45930D3476626A44C9D6B918EBF1A5C4C3430E081D8E60D599C, quote: "德里亚特的海豹皮在瓦尔切格湾一带算是一绝"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.der-furs-4
+    revision: 1
+    kind: relation
+    text: {zh-CN: "做成斗篷顶得住水汽，卡琉斯堡守军过冬的皮袄，有些料子就出自德里亚特。"}
+    sources:
+      - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/1/Content, quote_hash: 6CC1A1B26A5518C657393665B0A46770AD3311BCFE2D32267FEB40608BCB919F, quote: "瓦尔切格湾那一带的海豹皮挺值钱，又厚又滑，做斗篷防水。卡琉斯堡的守军冬天穿的皮袄，有些料子就是从德里亚特收来的"}
+    expressions:
+      - id: expr.der-furs-4-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "做成斗篷顶得住水汽，卡琉斯堡守军过冬的皮袄，有些料子就出自德里亚特。"}
+        sources:
+          - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/1/Content, quote_hash: 6CC1A1B26A5518C657393665B0A46770AD3311BCFE2D32267FEB40608BCB919F, quote: "瓦尔切格湾那一带的海豹皮挺值钱，又厚又滑，做斗篷防水。卡琉斯堡的守军冬天穿的皮袄，有些料子就是从德里亚特收来的"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.der-furs-5
+    revision: 1
+    kind: fact
+    text: {zh-CN: "海豹油点灯，烟少火亮。"}
+    sources:
+      - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/3/Content, quote_hash: A5B1CB23192803D9E0721D7901916E165A409B9A0039C22A9D5399B519FA0ED8, quote: "那里的海豹油点灯特别好，烟少、火亮"}
+    expressions:
+      - id: expr.der-furs-5-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "海豹油点灯，烟少火亮。"}
+        sources:
+          - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/3/Content, quote_hash: A5B1CB23192803D9E0721D7901916E165A409B9A0039C22A9D5399B519FA0ED8, quote: "那里的海豹油点灯特别好，烟少、火亮"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.der-furs-6
+    revision: 1
+    kind: interpretation
+    text: {zh-CN: "德里亚特道路被商旅叙述描述为进入费功夫，运出成本未经直接确证。"}
+    sources:
+      - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/2/Content, quote_hash: EFC7EB4A72E8766DD60DFD62D3F83A692B530979980E7D822109E1B1CD9565FC, quote: "不过那地方路不好走，在山脊和海湾之间，进去一趟得费不少功夫"}
+    expressions:
+      - id: expr.der-furs-6
+        revision: 1
+        layer: detail
+        text: {zh-CN: "只是路难走：进村要翻山脊、绕海湾，行商的说法是进去一趟很费功夫。至于把货运出去要多花多少脚钱，旧书没有明说，只能算作猜测。"}
+        sources:
+          - {source_id: source.calradia.chronicle.deriat-village, source_version: download-20260903, source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10, locator: chronicle-deriat-village.txt#/Variants/2/Content, quote_hash: EFC7EB4A72E8766DD60DFD62D3F83A692B530979980E7D822109E1B1CD9565FC, quote: "不过那地方路不好走，在山脊和海湾之间，进去一趟得费不少功夫"}
+        grants: [{profile_id: profile.merchant, scope: regional, min_detail: detail}]
+        denies: []

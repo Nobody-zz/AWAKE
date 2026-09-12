@@ -1,0 +1,116 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.lakonis-lake
+title: {zh-CN: "拉科尼斯湖·水陆与生计"}
+status: needs_review
+domain: geography
+subdomain: terrain
+universe: awake_current
+era: {key: current, certainty: bounded}
+content_tier: base
+entity_ids: [entity.lore.lakonis_lake]
+summary: {zh-CN: "拉科尼斯湖的自然形态、水系连接、冬季通航与沿岸生计、转运贸易，附帝国兵志的战略解读（带立场标记）。"}
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+  - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/0/Content, quote_hash: 4B8A0356509F7A300FF9B6C9523A2D6FDB5329AE0CF290DA921E33598713424A, quote: "渔民、船工、码头上扛货的，全指着这片水"}
+  - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/0/Content, quote_hash: A0182E1D8E6550F24CAC6CCD5D1206D66ED72E1572A08F757B83C2DEE2BAAF67, quote: "把帝国的麦子往斯特吉亚的蒂亚尔运，再把斯特吉亚的毛皮往回拉"}
+  - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/0/Content, quote_hash: ABBB30FB5B5C9FB78A8C02B69E008ED679DE8A2A2CEDB228F8B55DD8535E3A7C, quote: "这湖冬天不冻，这是最要紧的事"}
+  - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/1/Content, quote_hash: BBD2BF8A48837E37FCCBC6993F0A375BB3A08E50530F0169C1C0AD97BF7BE269, quote: "谁控制了湖上的舰队，谁就能在冬季掌握战略主动"}
+  - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/2/Content, quote_hash: 615C50874BF1B61F8562BCF2C2DD256772E4B93AD43A6315AE87064F854DE184, quote: "拉科尼斯湖是卡拉迪亚大陆北部最大、最深的封闭型内陆淡水湖"}
+  - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/2/Content, quote_hash: F04300DE00387CD00F30C28545B0CB2556746424DBE94E6843506375C72550BF, quote: "两大注入河流——弥戎河与喀拉卡兹河——分别从南方和东北方汇入"}
+authority: {owner: awake_canon, conflict_policy: canon_wins}
+assertions:
+  - id: assertion.lac-lake-1
+    revision: 1
+    kind: fact
+    text: {zh-CN: "拉科尼斯湖在卡拉迪亚北部，四面为山地与森林环抱，是一大片封闭的内陆淡水湖。"}
+    sources:
+      - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/2/Content, quote_hash: 615C50874BF1B61F8562BCF2C2DD256772E4B93AD43A6315AE87064F854DE184, quote: "拉科尼斯湖是卡拉迪亚大陆北部最大、最深的封闭型内陆淡水湖"}
+    expressions:
+      - id: expr.lac-lake-1-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "拉科尼斯湖在卡拉迪亚北部，四面为山地与森林环抱，是一大片封闭的内陆淡水湖。"}
+        sources:
+          - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/2/Content, quote_hash: 615C50874BF1B61F8562BCF2C2DD256772E4B93AD43A6315AE87064F854DE184, quote: "拉科尼斯湖是卡拉迪亚大陆北部最大、最深的封闭型内陆淡水湖"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.lac-lake-2
+    revision: 1
+    kind: relation
+    text: {zh-CN: "弥戎河与喀拉卡兹河从不同方向注入，把它接进北方的内河航运。"}
+    sources:
+      - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/2/Content, quote_hash: F04300DE00387CD00F30C28545B0CB2556746424DBE94E6843506375C72550BF, quote: "两大注入河流——弥戎河与喀拉卡兹河——分别从南方和东北方汇入"}
+    expressions:
+      - id: expr.lac-lake-2-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "弥戎河与喀拉卡兹河从不同方向注入，把它接进北方的内河航运。"}
+        sources:
+          - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/2/Content, quote_hash: F04300DE00387CD00F30C28545B0CB2556746424DBE94E6843506375C72550BF, quote: "两大注入河流——弥戎河与喀拉卡兹河——分别从南方和东北方汇入"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.lac-lake-3
+    revision: 1
+    kind: fact
+    text: {zh-CN: "湖水终年不冻。入冬后四邻的河道封冻、道路被大雪隔断，湖上的船却照常往来，是北方冬季少有的活水路。"}
+    sources:
+      - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/0/Content, quote_hash: ABBB30FB5B5C9FB78A8C02B69E008ED679DE8A2A2CEDB228F8B55DD8535E3A7C, quote: "这湖冬天不冻，这是最要紧的事"}
+    expressions:
+      - id: expr.lac-lake-3-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "湖水终年不冻。入冬后四邻的河道封冻、道路被大雪隔断，湖上的船却照常往来，是北方冬季少有的活水路。"}
+        sources:
+          - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/0/Content, quote_hash: ABBB30FB5B5C9FB78A8C02B69E008ED679DE8A2A2CEDB228F8B55DD8535E3A7C, quote: "这湖冬天不冻，这是最要紧的事"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.lac-lake-4
+    revision: 1
+    kind: relation
+    text: {zh-CN: "湖岸的营生三样：打鱼、行船、码头扛活。"}
+    sources:
+      - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/0/Content, quote_hash: 4B8A0356509F7A300FF9B6C9523A2D6FDB5329AE0CF290DA921E33598713424A, quote: "渔民、船工、码头上扛货的，全指着这片水"}
+    expressions:
+      - id: expr.lac-lake-4-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "湖岸的营生三样：打鱼、行船、码头扛活。"}
+        sources:
+          - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/0/Content, quote_hash: 4B8A0356509F7A300FF9B6C9523A2D6FDB5329AE0CF290DA921E33598713424A, quote: "渔民、船工、码头上扛货的，全指着这片水"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.lac-lake-5
+    revision: 1
+    kind: relation
+    text: {zh-CN: "帝国出产的麦子由水路北运，斯特吉亚的毛皮顺同一条水路南回，两头商货都在湖上转运。"}
+    sources:
+      - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/0/Content, quote_hash: A0182E1D8E6550F24CAC6CCD5D1206D66ED72E1572A08F757B83C2DEE2BAAF67, quote: "把帝国的麦子往斯特吉亚的蒂亚尔运，再把斯特吉亚的毛皮往回拉"}
+    expressions:
+      - id: expr.lac-lake-5-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "帝国出产的麦子由水路北运，斯特吉亚的毛皮顺同一条水路南回，两头商货都在湖上转运。"}
+        sources:
+          - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/0/Content, quote_hash: A0182E1D8E6550F24CAC6CCD5D1206D66ED72E1572A08F757B83C2DEE2BAAF67, quote: "把帝国的麦子往斯特吉亚的蒂亚尔运，再把斯特吉亚的毛皮往回拉"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.lac-lake-6
+    revision: 1
+    kind: interpretation
+    text: {zh-CN: "帝国兵志叙述将冬季航运视为北境防务与运兵之利。"}
+    sources:
+      - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/1/Content, quote_hash: BBD2BF8A48837E37FCCBC6993F0A375BB3A08E50530F0169C1C0AD97BF7BE269, quote: "谁控制了湖上的舰队，谁就能在冬季掌握战略主动"}
+    expressions:
+      - id: expr.lac-lake-6
+        revision: 1
+        layer: detail
+        text: {zh-CN: "帝国兵志对这条冬季水路另有盘算：北境若起烽烟，大雪封路之时，谁握着湖上的船队，谁就把兵员粮秣的路攥在手里。此乃帝国兵家的一家之言。"}
+        sources:
+          - {source_id: source.calradia.chronicle.lakonis-lake, source_version: download-20260903, source_content_hash: 1ef743140462dc9e6eb00cf731d92b9a92da06fa876abc3f8fb309a4402bba71, locator: chronicle-lakonis-lake.txt#/Variants/1/Content, quote_hash: BBD2BF8A48837E37FCCBC6993F0A375BB3A08E50530F0169C1C0AD97BF7BE269, quote: "谁控制了湖上的舰队，谁就能在冬季掌握战略主动"}
+        grants: [{profile_id: profile.noble_high_steward, scope: elite, min_detail: detail}]
+        denies: []

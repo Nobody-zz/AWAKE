@@ -95,3 +95,49 @@
 6. **【P2】W5 精确路径**：仓库内 `docs/worldbook-migration/SEMANTIC-MIGRATION-ACTION-QUEUE-R2-20260906.json`（der-04 错位）；归档区 `SEMANTIC-WORKSHEET-R3-REVISION-DRAFT-20260908.json`（孤儿 origin）。"明确不做"改为：不动 `r3-revision\documents`（已批准基线）与 v1 快照，账目清理仅触及列名两文件。
 7. **【P2】W6 闭合规格定数**：epistemic 映射表 source_fact→fact、relationship→relation、state→state、interpretation→interpretation、rumor→rumor、unresolved→interpretation（manifest 标记）；**预期 assertion 计数 40**（41 − 1 元数据 dd fb30ad）；**预期 expression 计数 16**（layer 标注 span 数）；排除清单 = {ddfb30ad}；kach-tales 框架句并入首 span。
 8. **【P3 附带】** create-document 模板自带 author_created（author.developer）在填入 sources 时必须移除（oneOf 约束）；scope 落位用 schema 枚举 local/regional/national/faction/elite/private，手册"跨国"→national 映射记入 W4 表。
+
+## 7. W5/W6 实施追记与口径订正（2026-09-12）
+
+> 追加记录，不改写上方第 1～6 节原写内容。凡上方数值与本节冲突，**以本节实测为准**。
+
+### 7.1 W5 实施结果
+
+- **action-queue JSON 修复**：`SEMANTIC-MIGRATION-ACTION-QUEUE-R2-20260906.json` 结尾缺一个 `}`，解析在 line 302 失败。根因：未提交的 `corrections_20260912` 追加修正节收尾时吃掉了原收口括号；**仓库已提交（HEAD）版本为合法 JSON**，缺陷由本次未提交改动引入。已修复，解析通过。
+- **der-04 action_map 归属修正**：已在 `corrections_20260912.der_04_attribution_fix` 落账（新 trade claim `57e81a17…` 归 der-01/der-03 拆分，非 der-04）。
+- **worksheet 孤儿 `origin.r3.*`**：上方第 1 节与 W5 小节记"14 个孤儿 claim"，系 R3 审阅阶段口头计数。**本次实测：27 条 `origin.r3.*` legacy_origin 条目 → 19 个不同 destination claim ID**；该 19 个 ID 与任何产物零重合（既不在 worksheet 30 个 source_unit 的 claims 中，也不在 r3-revision/documents 的 41 条 claim 中），且每条在同一 source_unit 内都存在同 `origin_locator` 的有效正常项 → 判定为**草稿层重复残留**，按 claim_authority（doc 为权威版）降级为噪声、不进入候选管线。清单见 `corrections_20260912.worksheet_orphan_origin_measured`。
+- **两份账目对账基线统一为 22**：口径 = **R3 新增 claim 数**。三向核对：① r3 documents 41 claim = r2 保留 19 + r3 新增 22；② worksheet `validation_summary.new_claims` = 22，action_map 23 条动作去重引用 = 22；③ SUPERSEDED-MAP 的 9 条属 **r2 侧被取代项**，与 r3 侧新增 22 为不同口径，**不对冲、不相加**。账目落 `corrections_20260912.reconciliation_baseline_unified`。
+
+### 7.2 W6 闭合复验结果
+
+工具：`tools-r3/validate-authoring-closure.ps1`（14 项检查，只读，可重跑）。
+Studio CLI 结构校验 `0 diagnostics`。
+闭合复验 **VERDICT = `STRUCTURALLY_CLOSED_OPEN_ITEMS`，PASS 12 / FAIL 0 / OPEN 2**。
+
+**实测计数**：12 档 / assertion 40 / expression 40 / grants 40 / R3 claim 41。
+
+### 7.3 口径订正：expression 16 → 实测 40
+
+上方第 6 节修订 7 记"预期 expression 计数 16（layer 标注 span 数）"，`PROJECTION-MANIFEST-20260912.json` 的 `expected_counts.expressions` 亦写 16；**W2 实交 40**。属**文档未跟上实际**，非实施缺陷。分解：
+
+- 40 = R3 `target_spans` 中**带 `layer` 标注的 16 条**（即计划口径） **+** 中立内核 assertion 按 authoring.v1『`expressions` 必填』**补挂的 summary 档 24 条**。
+- `awake.worldbook.authoring.v1.schema.json`：`assertion.expressions` 必填但**无 `minItems`**；`expression.layer` 枚举 rumor/summary/detail/secret。故 **40 与 16 在 schema 下均合法**。
+- 原写数值不改写；口径以 `corrections_20260912.expression_count_reconciliation` 与 manifest 同源修正节为准。
+
+### 7.4 遗留未实现：W4 审查 P1-3（referral 接线）
+
+上方第 6 节修订 3 要求"每个表达段落 `fallback_referral_ids` 指向同簇兄弟档，referral ID 命名 `referral.cluster.<place>.<seq>` 并登记进 referral-registry"。**本批未实施**：referral 登记表仅 4 条通用 referral、无 `referral.cluster.*`，12 档产物 `fallback_referral_ids` 覆盖 **0/40**。
+补做将改动 12 档产物 + referral 登记表，**登记表哈希（`6E17075F…`）变更会触发全部 12 档 registry_bindings 重绑**。属**待裁定项**，账目落 `corrections_20260912.w4_p1_3_referral_gap`。
+
+### 7.5 待裁定项（OPEN）
+
+| ID | 事项 | 候选 |
+|---|---|---|
+| C13 | place_cluster → `fallback_referral_ids` 接线 | 补做 / 挂账（并定归属批次） |
+| C14 | expression 计数口径 | (a) 维持 40；(b) 收严为 16 |
+
+### 7.6 证据
+
+- `AWAKE\docs\evidence\AWAKE-WORLDBOOK-AUTHORING-PROJECTION-E2-20260912.md`（E2 证据报告）
+- `AWAKE\docs\evidence\authoring-closure-20260912.json`（机读闭合证据，该目录 gitignore）
+- 本批产物清单与提交范围见同目录 `STATUS-20260912.md`。
+

@@ -1,0 +1,100 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.kachar-peninsula
+title: {zh-CN: "卡恰尔半岛·地要与用兵"}
+status: needs_review
+domain: geography
+subdomain: terrain
+universe: awake_current
+era: {key: current, certainty: bounded}
+content_tier: base
+entity_ids: [entity.lore.kachar_peninsula]
+summary: {zh-CN: "卡恰尔半岛的位置地形、港位稀少、用兵价值与库赛特远距判断。"}
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+  - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/0/Content, quote_hash: 673C929F392118D705A2FCA69EACED50A863A3D90F8BCA2BB8CC76657E49EC8B, quote: "适合建港口的地方不多"}
+  - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/0/Content, quote_hash: 6D70F4FE22046082A0AE2131295775EC7BB48E7CD6AF7BA38A26DEC876F32F66, quote: "它的地形怪石嶙峋，海崖陡峭"}
+  - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/0/Content, quote_hash: 7415982CDC8CE67C09B49B32F5E377CAEB1CBB742D9AA10861341737561DD5E0, quote: "一旦占住了，就能同时扼住北边诺德人的比尔里海和南边巴旦尼亚人的海域"}
+  - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/0/Content, quote_hash: 804C91FB865048E2AFE47859CF3AD124B3172A8940E52765EAA06F9E0FE75483, quote: "卡恰尔半岛是斯特吉亚东边一块从伊卡拉荒原延伸出去的狭长陆地"}
+  - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/7/Content, quote_hash: AFD68418D78E1C79B526DCB6F5E4AACC8E3FD783C078907E9A8BD924106767BE, quote: "地面全是石头和海崖，马跑不起来"}
+authority: {owner: awake_canon, conflict_policy: canon_wins}
+assertions:
+  - id: assertion.kach-land-1
+    revision: 1
+    kind: relation
+    text: {zh-CN: "卡恰尔半岛从伊卡拉荒原探进海里，是一条狭长的石地，恰好横在南北两片海域中间。"}
+    sources:
+      - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/0/Content, quote_hash: 804C91FB865048E2AFE47859CF3AD124B3172A8940E52765EAA06F9E0FE75483, quote: "卡恰尔半岛是斯特吉亚东边一块从伊卡拉荒原延伸出去的狭长陆地"}
+    expressions:
+      - id: expr.kach-land-1-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "卡恰尔半岛从伊卡拉荒原探进海里，是一条狭长的石地，恰好横在南北两片海域中间。"}
+        sources:
+          - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/0/Content, quote_hash: 804C91FB865048E2AFE47859CF3AD124B3172A8940E52765EAA06F9E0FE75483, quote: "卡恰尔半岛是斯特吉亚东边一块从伊卡拉荒原延伸出去的狭长陆地"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.kach-land-2
+    revision: 1
+    kind: fact
+    text: {zh-CN: "地面多是石头和陡崖，种不出庄稼，能泊大船的港位没有几处。"}
+    sources:
+      - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/0/Content, quote_hash: 6D70F4FE22046082A0AE2131295775EC7BB48E7CD6AF7BA38A26DEC876F32F66, quote: "它的地形怪石嶙峋，海崖陡峭"}
+    expressions:
+      - id: expr.kach-land-2-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "地面多是石头和陡崖，种不出庄稼，能泊大船的港位没有几处。"}
+        sources:
+          - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/0/Content, quote_hash: 6D70F4FE22046082A0AE2131295775EC7BB48E7CD6AF7BA38A26DEC876F32F66, quote: "它的地形怪石嶙峋，海崖陡峭"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.kach-land-3
+    revision: 1
+    kind: fact
+    text: {zh-CN: "地面多是石头和陡崖，种不出庄稼，能泊大船的港位没有几处。"}
+    sources:
+      - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/0/Content, quote_hash: 673C929F392118D705A2FCA69EACED50A863A3D90F8BCA2BB8CC76657E49EC8B, quote: "适合建港口的地方不多"}
+    expressions:
+      - id: expr.kach-land-3-summary
+        revision: 1
+        layer: summary
+        text: {zh-CN: "地面多是石头和陡崖，种不出庄稼，能泊大船的港位没有几处。"}
+        sources:
+          - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/0/Content, quote_hash: 673C929F392118D705A2FCA69EACED50A863A3D90F8BCA2BB8CC76657E49EC8B, quote: "适合建港口的地方不多"}
+        grants: [{profile_id: profile.commoner, scope: regional, min_detail: summary}]
+        denies: []
+  - id: assertion.kach-land-4
+    revision: 1
+    kind: interpretation
+    text: {zh-CN: "卡恰尔半岛被部分叙述赋予设哨望海、把扼水路的战略用途。"}
+    sources:
+      - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/0/Content, quote_hash: 7415982CDC8CE67C09B49B32F5E377CAEB1CBB742D9AA10861341737561DD5E0, quote: "一旦占住了，就能同时扼住北边诺德人的比尔里海和南边巴旦尼亚人的海域"}
+    expressions:
+      - id: expr.kach-land-4
+        revision: 1
+        layer: detail
+        text: {zh-CN: "用兵的人看的是它的位置：占了合适的岬角，南北两海的动静都收在眼里，因此旧书把它说成设哨望海、把扼水路的要地。"}
+        sources:
+          - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/0/Content, quote_hash: 7415982CDC8CE67C09B49B32F5E377CAEB1CBB742D9AA10861341737561DD5E0, quote: "一旦占住了，就能同时扼住北边诺德人的比尔里海和南边巴旦尼亚人的海域"}
+        grants: [{profile_id: profile.townsfolk, scope: regional, min_detail: detail}]
+        denies: []
+  - id: assertion.kach-land-5
+    revision: 1
+    kind: interpretation
+    text: {zh-CN: "库赛特叙述判断卡恰尔半岛地形不利于骑兵展开。"}
+    sources:
+      - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/7/Content, quote_hash: AFD68418D78E1C79B526DCB6F5E4AACC8E3FD783C078907E9A8BD924106767BE, quote: "地面全是石头和海崖，马跑不起来"}
+    expressions:
+      - id: expr.kach-land-5
+        revision: 1
+        layer: summary
+        text: {zh-CN: "库赛特人对它兴致有限——按他们的说法，满地石头陡崖，马蹄站不住，骑兵使不开。"}
+        sources:
+          - {source_id: source.calradia.chronicle.kachar-peninsula, source_version: download-20260903, source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb, locator: chronicle-kachar-peninsula.txt#/Variants/7/Content, quote_hash: AFD68418D78E1C79B526DCB6F5E4AACC8E3FD783C078907E9A8BD924106767BE, quote: "地面全是石头和海崖，马跑不起来"}
+        grants: [{profile_id: profile.merchant, scope: national, min_detail: summary}]
+        denies: []

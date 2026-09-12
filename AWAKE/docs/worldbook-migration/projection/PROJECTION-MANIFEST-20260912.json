@@ -1,0 +1,38 @@
+{
+  "schema_version": "awake.worldbook.projection-manifest.v1",
+  "manifest_id": "projection-manifest.20260912",
+  "status": "needs_review",
+  "plan": "PLAN-WORLDBOOK-AUTHORING-PROJECTION-20260912.md",
+  "r3_baseline": "r3-revision/documents/（已签收，冻结不回写）",
+  "schema_field_note": "place_cluster/split_from 无 authoring.v1 schema 字段承载（additionalProperties:false），统一记录在本 manifest，不硬塞档案",
+  "split_from_rule": "lifecycle.split_from = authoring_provisional.document.<hex>（provisional 血缘引用允许）；伴随 event_id = event.migration.r3-projection.20260912；revision = 3",
+  "documents": [
+    { "doc_key": "lac-lake",  "candidate_id": "authoring_provisional.document.7c1e0a4f2b9d46e3a85f01b7", "authoring_path": "authoring/lac-lake.yaml",  "place_cluster": "拉科尼斯湖", "split_from": "authoring_provisional.document.57455a7ba76bcab6ce45bca1", "event_id": "event.migration.r3-projection.20260912", "revision": 3 },
+    { "doc_key": "lac-tales", "candidate_id": "authoring_provisional.document.d8a63f91c2e57b04f17a93d2", "authoring_path": "authoring/lac-tales.yaml", "place_cluster": "拉科尼斯湖", "split_from": "authoring_provisional.document.57455a7ba76bcab6ce45bca1", "event_id": "event.migration.r3-projection.20260912", "revision": 3 },
+    { "doc_key": "sara-bay",  "candidate_id": "authoring_provisional.document.e2b94f76a0d13c58f96b27c4", "authoring_path": "authoring/sara-bay.yaml",  "place_cluster": "沙拉斯湾", "split_from": "authoring_provisional.document.19254d0e00505c440749b338", "event_id": "event.migration.r3-projection.20260912", "revision": 3 },
+    { "doc_key": "sara-tales","candidate_id": "authoring_provisional.document.3f9ab6d0e57c2841a9d6f0be", "authoring_path": "authoring/sara-tales.yaml","place_cluster": "沙拉斯湾", "split_from": "authoring_provisional.document.19254d0e00505c440749b338", "event_id": "event.migration.r3-projection.20260912", "revision": 3 },
+    { "doc_key": "kach-land", "candidate_id": "authoring_provisional.document.5d82c0a9f3e17b46d2a9c85e", "authoring_path": "authoring/kach-land.yaml", "place_cluster": "卡恰尔半岛", "split_from": "authoring_provisional.document.6f56c867548c16af9182acbd", "event_id": "event.migration.r3-projection.20260912", "revision": 3 },
+    { "doc_key": "kach-own",  "candidate_id": "authoring_provisional.document.8e3f57b1c9a04d26f7e5b31a", "authoring_path": "authoring/kach-own.yaml",  "place_cluster": "卡恰尔半岛", "split_from": "authoring_provisional.document.6f56c867548c16af9182acbd", "event_id": "event.migration.r3-projection.20260912", "revision": 3 },
+    { "doc_key": "kach-tales","candidate_id": "authoring_provisional.document.b9d74e28f5c03a61e8d294fc", "authoring_path": "authoring/kach-tales.yaml","place_cluster": "卡恰尔半岛", "split_from": "authoring_provisional.document.6f56c867548c16af9182acbd", "event_id": "event.migration.r3-projection.20260912", "revision": 3 },
+    { "doc_key": "dawn-mtn",  "candidate_id": "authoring_provisional.document.46c9e1b8a3f70d25c8e4a917", "authoring_path": "authoring/dawn-mtn.yaml",  "place_cluster": "黎明山脉", "split_from": "authoring_provisional.document.d766c02ab0c98cb7236341d8", "event_id": "event.migration.r3-projection.20260912", "revision": 3 },
+    { "doc_key": "dawn-taboo","candidate_id": "authoring_provisional.document.6f3b92ad0e84c571d9b26e4a", "authoring_path": "authoring/dawn-taboo.yaml", "place_cluster": "黎明山脉", "split_from": "authoring_provisional.document.d766c02ab0c98cb7236341d8", "event_id": "event.migration.r3-projection.20260912", "revision": 3 },
+    { "doc_key": "dawn-stew", "candidate_id": "authoring_provisional.document.94e7d2c5b8a36f10e5c7d948", "authoring_path": "authoring/dawn-stew.yaml", "place_cluster": "黎明山脉", "split_from": "authoring_provisional.document.d766c02ab0c98cb7236341d8", "event_id": "event.migration.r3-projection.20260912", "revision": 3 },
+    { "doc_key": "der-vill",  "candidate_id": "authoring_provisional.document.a8c5f09d3e62b741d0f95e63", "authoring_path": "authoring/der-vill.yaml",  "place_cluster": "德里亚特", "split_from": "authoring_provisional.document.7b7de79b571f0addb4d37eaf", "event_id": "event.migration.r3-projection.20260912", "revision": 3 },
+    { "doc_key": "der-furs",  "candidate_id": "authoring_provisional.document.c1d947ae8b06f35e92a47d0f", "authoring_path": "authoring/der-furs.yaml",  "place_cluster": "德里亚特", "split_from": "authoring_provisional.document.7b7de79b571f0addb4d37eaf", "event_id": "event.migration.r3-projection.20260912", "revision": 3 }
+  ],
+  "unresolved_projection": [
+    { "claim_id": "authoring_provisional.claim.9644824420c36a47d41eae1e", "projected_as": "interpretation", "doc": "kach-own" },
+    { "claim_id": "authoring_provisional.claim.fd78df11d0b49237fa8d34dd", "projected_as": "interpretation", "doc": "dawn-stew" }
+  ],
+  "excluded": [
+    { "claim_id": "authoring_provisional.claim.ddfb30ad3ffe6a7f19b28766", "reason": "纯注册元数据，不投影（der-vill metadata_claims）" }
+  ],
+  "expected_counts": { "assertions": 40, "expressions": 16, "documents": 12 },
+  "corrections_20260912": {
+    "source": "W5/W6 账目清理；追加记录，不改动上方原写数值",
+    "expected_counts_expressions_note": "expected_counts.expressions=16 为计划期口径，即 R3 target_spans 中带 layer 标注的 16 条。W2 实交 40 = 16 + 中立内核按 authoring.v1『expressions 必填』补挂的 summary 档 24 条。两者在作者 schema 下均合法（expressions 必填但无 minItems）。闭合校验以 assertion=40 / expression=40 / grants=40 为准；口径待裁定项见 docs/evidence/authoring-closure-20260912.json C14。",
+    "expected_counts_assertions_note": "assertions=40 与实交一致，无偏差。",
+    "referral_gap": "计划第 6 节修订 3 的 place_cluster → fallback_referral_ids 接线未实施（闭合校验 C13 OPEN）；补做会改 referral 登记表哈希并触发全部 registry_bindings 重绑，待裁定。",
+    "same_source_ledger": "SEMANTIC-MIGRATION-ACTION-QUEUE-R2-20260906.json corrections_20260912.expression_count_reconciliation / w4_p1_3_referral_gap"
+  }
+}
