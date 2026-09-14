@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "awake.persona.pilot-allowlist.v1",
+  "note": "草稿卡运行时放行名单（试行）。status=approved 的卡无需列出；这里只列源状态仍为 draft、但批准先行试跑的卡。条目按 definitionId 或 characterId 任一匹配即放行；放行只在内存内生效，源文件保持 draft。移除条目即撤销放行。",
+  "selectionBasis": "取自 docs/PERSONA-SPOTCHECK-11-20260914.md 的 11 张点测通过卡，按两两 LCS 覆盖最低的前 5 张（20.8%–23.8%，判据线 60%）。",
+  "entries": [
+    {
+      "characterId": "lord_2_12",
+      "definitionId": "awake.persona.character.calradia.svana.sturgia.v1",
+      "reason": "斯瓦娜 · 点测 LCS 20.8%（11 张里最低）"
+    },
+    {
+      "characterId": "lord_4_6",
+      "definitionId": "awake.persona.character.calradia.calatild.vlandia.v1",
+      "reason": "卡拉蒂尔德 · 点测 LCS 21.2%"
+    },
+    {
+      "characterId": "lord_1_47_1",
+      "definitionId": "awake.persona.character.calradia.mina.empire.south.v1",
+      "reason": "弥娜 · 点测 LCS 21.2%"
+    },
+    {
+      "characterId": "lord_2_2",
+      "definitionId": "awake.persona.character.calradia.asta.sturgia.v1",
+      "reason": "阿丝塔 · 点测 LCS 21.4%"
+    },
+    {
+      "characterId": "lord_3_2",
+      "definitionId": "awake.persona.character.calradia.jinda.aserai.v1",
+      "reason": "金达 · 点测 LCS 23.8%"
+    }
+  ]
+}

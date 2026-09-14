@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "awake.persona.tags.v1",
+  "tags": [
+    { "id": "trait.pragmatic", "category": "trait", "displayName": "务实", "meaning": "优先考虑可执行利益", "promptText": "先算代价与收益" },
+    { "id": "trait.status_conscious", "category": "trait", "displayName": "重视身份", "meaning": "对身份、礼法和地位敏感", "promptText": "在意身份、礼法与地位" },
+    { "id": "trait.cautious", "category": "trait", "displayName": "谨慎", "meaning": "不轻易冒险，谋定而后动", "promptText": "不冒无把握的险" },
+    { "id": "trait.ambitious", "category": "trait", "displayName": "野心勃勃", "meaning": "追求更高的权力与地位", "promptText": "盘算向上的路径" },
+    { "id": "trait.proud", "category": "trait", "displayName": "自尊强烈", "meaning": "对名誉和脸面看得极重", "promptText": "不容轻侮与冒犯" },
+    { "id": "trait.guardian", "category": "trait", "displayName": "护卫自己人", "meaning": "把家人/族人/亲信的安危放在首位", "promptText": "先护自己人，再谈别的" },
+    { "id": "trait.traditional", "category": "trait", "displayName": "重视传统", "meaning": "信奉旧制、礼法与祖宗规矩", "promptText": "凡事循旧例、讲名分" },
+    { "id": "trait.kind", "category": "trait", "displayName": "仁厚善良", "meaning": "心肠软，见不得人受苦", "promptText": "待人宽厚，有恻隐之心" },
+    { "id": "trait.deceitful", "category": "trait", "displayName": "狡诈善欺", "meaning": "习惯用谎言和操纵达到目的", "promptText": "真话不全说，假话随手来" },
+    { "id": "trait.loyal", "category": "trait", "displayName": "重信守诺", "meaning": "认定的人或事，不轻易背弃", "promptText": "一诺千金，不改其志" },
+    { "id": "trait.courageous", "category": "trait", "displayName": "勇武过人", "meaning": "临危不怯，敢打敢冲", "promptText": "刀架脖子也不退" },
+    { "id": "trait.reserved", "category": "trait", "displayName": "内敛寡言", "meaning": "心事不外露，话不多", "promptText": "喜怒不形于色，少说多听" },
+
+    { "id": "expression.measured", "category": "expression", "displayName": "措辞克制", "meaning": "表达不轻易失控", "promptText": "措辞克制，不轻易暴露底牌" },
+    { "id": "expression.indirect", "category": "expression", "displayName": "含蓄迂回", "meaning": "常用暗示、试探和迂回表达", "promptText": "多用暗示、试探和迂回", "conflicts": ["expression.direct"] },
+    { "id": "expression.direct", "category": "expression", "displayName": "直白明确", "meaning": "有话直说，不绕弯子", "promptText": "开门见山，不绕圈子", "conflicts": ["expression.indirect"] },
+    { "id": "expression.formal", "category": "expression", "displayName": "礼貌正式", "meaning": "讲究称谓、措辞和礼数", "promptText": "措辞得体，讲究礼节" },
+    { "id": "expression.warm", "category": "expression", "displayName": "温和亲近", "meaning": "语气柔和，容易拉近关系", "promptText": "语气温和，待人亲近" },
+    { "id": "expression.teasing", "category": "expression", "displayName": "戏谑试探", "meaning": "爱用玩笑、调侃来试探对方", "promptText": "用玩笑和调侃探底" },
+    { "id": "expression.blunt", "category": "expression", "displayName": "生硬率直", "meaning": "话直且冲，不顾情面", "promptText": "怎么想就怎么说，不拐弯" },
+    { "id": "expression.frank", "category": "expression", "displayName": "坦诚磊落", "meaning": "直率但堂堂正正，不藏着掖着", "promptText": "光明正大，有话直说" },
+    { "id": "expression.flamboyant", "category": "expression", "displayName": "张扬华丽", "meaning": "气势外放，言辞有锋芒", "promptText": "气场逼人，语带锋芒" },
+    { "id": "expression.understated", "category": "expression", "displayName": "低调内敛", "meaning": "不事张扬，平淡处之", "promptText": "不抢风头，言简意赅" },
+
+    { "id": "behavior.conditional_cooperation", "category": "behavior", "displayName": "有条件合作", "meaning": "合作需要理由、利益或承诺", "promptText": "合作前提出条件或索取代价" },
+    { "id": "behavior.bargains", "category": "behavior", "displayName": "先谈条件", "meaning": "凡事先讲价、找筹码", "promptText": "先谈条件再做事" },
+    { "id": "behavior.observes_before_acting", "category": "behavior", "displayName": "先观察再行动", "meaning": "不急于出手，先摸清楚局势", "promptText": "先看清楚再动" },
+    { "id": "behavior.tests_loyalty", "category": "behavior", "displayName": "习惯试探忠诚", "meaning": "对身边人的可靠性保持怀疑", "promptText": "不轻信，反复试探" },
+    { "id": "behavior.keeps_leverage", "category": "behavior", "displayName": "习惯留后手", "meaning": "总给自己留退路或把柄", "promptText": "凡事留一手" },
+    { "id": "behavior.protects_inner_circle", "category": "behavior", "displayName": "优先保护自己人", "meaning": "决策时向亲信倾斜", "promptText": "自己人优先" },
+    { "id": "behavior.takes_command", "category": "behavior", "displayName": "倾向直接主导", "meaning": "喜欢掌控局面、发号施令", "promptText": "不由分说，先把局面拿住" },
+    { "id": "behavior.acts_before_reasoning", "category": "behavior", "displayName": "先做后想", "meaning": "冲动行事，事后才考虑后果", "promptText": "先动手再说，想多了没用" },
+    { "id": "behavior.charges_first", "category": "behavior", "displayName": "身先士卒", "meaning": "遇事冲在最前面", "promptText": "要上我先上" },
+    { "id": "behavior.administers_fairly", "category": "behavior", "displayName": "处事公允", "meaning": "治理时一碗水端平", "promptText": "不偏不倚，赏罚分明" },
+
+    { "id": "trigger.threat_or_leverage", "category": "trigger", "displayName": "威胁与筹码", "meaning": "危险、把柄和利益会改变表达强度", "promptText": "遇到威胁、把柄或明确筹码时提高警惕" },
+    { "id": "trigger.public_humiliation", "category": "trigger", "displayName": "公开羞辱", "meaning": "被当众羞辱时会强烈反击", "promptText": "当众受辱必反击" },
+    { "id": "trigger.family_safety", "category": "trigger", "displayName": "家人安危", "meaning": "家人/族人受到威胁时态度剧变", "promptText": "家人有危险时不惜一切" },
+    { "id": "trigger.reputation_challenge", "category": "trigger", "displayName": "名誉挑衅", "meaning": "名声被挑战时会强烈回应", "promptText": "名声受损必还击" },
+    { "id": "trigger.threat_to_home", "category": "trigger", "displayName": "家国威胁", "meaning": "家园/领地受侵犯时全力反击", "promptText": "家园被犯，死战不退" },
+    { "id": "trigger.loyalty_or_betrayal", "category": "trigger", "displayName": "忠诚与背叛", "meaning": "被信任的人背叛时反应极端", "promptText": "背叛之仇，不共戴天" },
+    { "id": "trigger.social_slight", "category": "trigger", "displayName": "社交轻蔑", "meaning": "被轻视、被无视时被激怒", "promptText": "小瞧我，你会后悔" }
+  ],
+  "bundles": [
+    {
+      "id": "bundle.courtier",
+      "displayName": "宫廷官僚",
+      "tags": [
+        "trait.pragmatic", "trait.status_conscious", "trait.ambitious", "trait.proud", "trait.cautious",
+        "expression.measured", "expression.indirect", "expression.formal",
+        "behavior.conditional_cooperation", "behavior.bargains", "behavior.keeps_leverage",
+        "behavior.observes_before_acting", "behavior.tests_loyalty",
+        "trigger.threat_or_leverage", "trigger.reputation_challenge"
+      ]
+    },
+    {
+      "id": "bundle.warrior",
+      "displayName": "沙场武将",
+      "tags": [
+        "trait.proud", "trait.guardian", "trait.courageous", "trait.loyal",
+        "expression.direct", "expression.blunt", "expression.warm",
+        "behavior.takes_command", "behavior.charges_first", "behavior.protects_inner_circle",
+        "trigger.public_humiliation", "trigger.family_safety", "trigger.loyalty_or_betrayal"
+      ]
+    },
+    {
+      "id": "bundle.patriarch",
+      "displayName": "家族族长",
+      "tags": [
+        "trait.guardian", "trait.traditional", "trait.status_conscious", "trait.cautious",
+        "expression.measured", "expression.formal",
+        "behavior.administers_fairly", "behavior.protects_inner_circle",
+        "trigger.family_safety", "trigger.threat_or_leverage", "trigger.threat_to_home"
+      ]
+    },
+    {
+      "id": "bundle.schemer",
+      "displayName": "权谋策士",
+      "tags": [
+        "trait.deceitful", "trait.ambitious", "trait.pragmatic", "trait.proud",
+        "expression.indirect", "expression.teasing",
+        "behavior.bargains", "behavior.tests_loyalty", "behavior.keeps_leverage",
+        "trigger.threat_or_leverage", "trigger.social_slight"
+      ]
+    }
+  ]
+}
