@@ -1540,7 +1540,7 @@ internal sealed class RuntimeServiceHost
             {
                 var error = result.Error;
                 var retryable = error != null && (error.Retryable || error.Category == FrameworkErrorCategory.Cancelled || error.Category == FrameworkErrorCategory.Timeout);
-                var errorResponse = BuildErrorResponse(connection, envelope, error?.Code ?? "storage.operation_failed", retryable ? "retryable_reject" : "rejected");
+                var errorResponse = BuildErrorResponse(connection, envelope, error?.Code ?? "storage.operation_failed", retryable ? "retryable_reject" : "rejected", error);
                 var errorWrite = await WriteResponseAsync(connection, errorResponse, cancellationToken).ConfigureAwait(false);
                 if (!retryable && errorWrite.FrameComplete) SetTaskTemplate(ledgerEntry, ToTemplate(errorResponse));
                 else RemoveTaskLedger(envelope);
@@ -2474,9 +2474,9 @@ internal sealed class RuntimeServiceHost
         BeginDrain("client_shutdown");
     }
 
-    private PipeEnvelope BuildErrorResponse(ConnectionContext connection, PipeEnvelope request, string errorCode, string outcomeKind)
+    private PipeEnvelope BuildErrorResponse(ConnectionContext connection, PipeEnvelope request, string errorCode, string outcomeKind, FrameworkError? typedError = null)
     {
-        return BuildResponse(connection, request, ProtocolConstants.MessageTypeError, ProtocolConstants.GenericErrorSchemaV1, BuildGenericErrorPayload(errorCode), request.TaskScope != null && request.TaskScope.IsComplete ? request.TaskScope : null, outcomeKind, errorCode);
+        return BuildResponse(connection, request, ProtocolConstants.MessageTypeError, ProtocolConstants.GenericErrorSchemaV1, BuildGenericErrorPayload(errorCode, typedError), request.TaskScope != null && request.TaskScope.IsComplete ? request.TaskScope : null, outcomeKind, errorCode);
     }
 
     private PipeEnvelope BuildProviderErrorResponse(ConnectionContext connection, PipeEnvelope request, string errorCode)
@@ -2496,9 +2496,36 @@ internal sealed class RuntimeServiceHost
         return BuildResponse(connection, request, ProtocolConstants.MessageTypeError, ProtocolConstants.ProviderErrorSchemaV1, ProviderWireAdapter.BuildErrorPayload(wireRequest, error), request.TaskScope, error.Retryable ? ProtocolConstants.OutcomeRetryableReject : ProtocolConstants.OutcomeRejected, error.ErrorCode);
     }
 
-    private static string BuildGenericErrorPayload(string errorCode)
+    private static string BuildGenericErrorPayload(string errorCode, FrameworkError? typedError = null)
     {
-        return "{\"schema\":\"" + ProtocolConstants.GenericErrorSchemaV1 + "\",\"error_code\":\"" + (errorCode ?? "protocol_rejected") + "\",\"category\":\"" + GenericErrorCategory(errorCode) + "\",\"retryable\":" + (IsRetryableGenericError(errorCode) ? "true" : "false") + ",\"fallback_allowed\":" + (IsFallbackAllowedGenericError(errorCode) ? "true" : "false") + ",\"safe_message\":\"" + GenericErrorMessage(errorCode) + "\"}";
+        // Storage/RAG failures carry a real FrameworkErrorCategory set by the backend. Without this
+        // the generic category resolver flattens every one of them to "invalid_request" and the
+        // caller can no longer branch on conflict / resource_exhausted / denied.
+        var category = typedError != null ? GenericCategoryName(typedError.Category) : GenericErrorCategory(errorCode);
+        var retryable = typedError != null ? typedError.Retryable : IsRetryableGenericError(errorCode);
+        return "{\"schema\":\"" + ProtocolConstants.GenericErrorSchemaV1 + "\",\"error_code\":\"" + (errorCode ?? "protocol_rejected") + "\",\"category\":\"" + category + "\",\"retryable\":" + (retryable ? "true" : "false") + ",\"fallback_allowed\":" + (IsFallbackAllowedGenericError(errorCode) ? "true" : "false") + ",\"safe_message\":\"" + GenericErrorMessage(errorCode) + "\"}";
+    }
+
+    private static string GenericCategoryName(FrameworkErrorCategory category)
+    {
+        switch (category)
+        {
+            case FrameworkErrorCategory.InvalidRequest: return "invalid_request";
+            case FrameworkErrorCategory.Incompatible: return "incompatible";
+            case FrameworkErrorCategory.Unsupported: return "unsupported";
+            case FrameworkErrorCategory.Unavailable: return "unavailable";
+            case FrameworkErrorCategory.Denied: return "denied";
+            case FrameworkErrorCategory.NotFound: return "not_found";
+            case FrameworkErrorCategory.Conflict: return "conflict";
+            case FrameworkErrorCategory.Expired: return "expired";
+            case FrameworkErrorCategory.RateLimited: return "rate_limited";
+            case FrameworkErrorCategory.ProviderFailure: return "provider_failure";
+            case FrameworkErrorCategory.Timeout: return "timeout";
+            case FrameworkErrorCategory.Cancelled: return "cancelled";
+            case FrameworkErrorCategory.ResourceExhausted: return "resource_exhausted";
+            case FrameworkErrorCategory.RecoveryRequired: return "recovery_required";
+            default: return "internal_failure";
+        }
     }
 
     private static string GenericErrorCategory(string? errorCode)

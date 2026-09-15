@@ -30,7 +30,9 @@ namespace MarcusAwakeFramework.Api
             ProtocolConstants.CapabilityProviderCredentialsV1,
             ProtocolConstants.CapabilityProviderModelsV1,
             ProtocolConstants.CapabilityProviderCompleteV1,
-            ProtocolConstants.CapabilityProviderStreamV1
+            ProtocolConstants.CapabilityProviderStreamV1,
+            ProtocolConstants.CapabilityRagRead,
+            ProtocolConstants.CapabilityRagWrite
         };
 
         public RuntimeServiceClientOptions(
@@ -107,7 +109,7 @@ namespace MarcusAwakeFramework.Api
         }
     }
 
-    public sealed class RuntimeServiceClient : IRuntimeServicePort, IProviderRuntimePort, IAiGateway, IDisposable
+    public sealed partial class RuntimeServiceClient : IRuntimeServicePort, IProviderRuntimePort, IAiGateway, IRagService, IDisposable
     {
         private const int MaximumProviderStreamEvents = RuntimeResourceBudget.MaximumStreamFrameCount;
         private const string HealthPayloadSchema = "marcus-awake.health.v1";
@@ -538,14 +540,14 @@ namespace MarcusAwakeFramework.Api
             catch { }
         }
 
-        private OperationResult<bool> PrepareProviderCall(RequestContext context, CancellationToken cancellationToken, string requiredCapability, string operation, out ClientConnection activeConnection, out CancellationToken lifecycleToken)
+        private OperationResult<bool> PrepareProviderCall(RequestContext context, CancellationToken cancellationToken, string requiredCapability, string operation, out ClientConnection activeConnection, out CancellationToken lifecycleToken, string subject = "Provider")
         {
             activeConnection = null;
             lifecycleToken = CancellationToken.None;
             var validation = ValidateContext(context, operation);
             if (!validation.IsSuccess) return validation;
             if (cancellationToken == CancellationToken.None) return Failure<bool>("runtime.cancellation_token_missing", FrameworkErrorCategory.InvalidRequest, "A caller cancellation token is required.", context.CorrelationId);
-            if (cancellationToken.IsCancellationRequested || context.CancellationToken.IsCancellationRequested) return Failure<bool>("runtime.cancelled", FrameworkErrorCategory.Cancelled, "The Provider request was cancelled.", context.CorrelationId);
+            if (cancellationToken.IsCancellationRequested || context.CancellationToken.IsCancellationRequested) return Failure<bool>("runtime.cancelled", FrameworkErrorCategory.Cancelled, "The " + subject + " request was cancelled.", context.CorrelationId);
 
             lock (sync)
             {
@@ -556,7 +558,7 @@ namespace MarcusAwakeFramework.Api
                     return Failure<bool>(code, category, "The runtime service is not ready.", context.CorrelationId);
                 }
 
-                if (!HasCapability(capabilities, requiredCapability)) return Failure<bool>("runtime.capability_unavailable", FrameworkErrorCategory.Unsupported, "The runtime service did not negotiate the requested Provider capability.", context.CorrelationId);
+                if (!HasCapability(capabilities, requiredCapability)) return Failure<bool>("runtime.capability_unavailable", FrameworkErrorCategory.Unsupported, "The runtime service did not negotiate the requested " + subject + " capability.", context.CorrelationId);
                 activeConnection = connection;
                 lifecycleToken = lifecycleCancellation == null ? CancellationToken.None : lifecycleCancellation.Token;
             }
@@ -674,7 +676,7 @@ namespace MarcusAwakeFramework.Api
             }
         }
 
-        private async Task<OperationResult<T>> SendProviderOperationAsync<T>(ClientConnection activeConnection, PipeEnvelope envelope, DateTimeOffset deadline, CancellationToken lifecycleToken, CancellationToken callerToken, Func<PipeEnvelope, OperationResult<T>> parser)
+        private async Task<OperationResult<T>> SendProviderOperationAsync<T>(ClientConnection activeConnection, PipeEnvelope envelope, DateTimeOffset deadline, CancellationToken lifecycleToken, CancellationToken callerToken, Func<PipeEnvelope, OperationResult<T>> parser, string subject = "Provider")
         {
             try
             {
@@ -684,17 +686,17 @@ namespace MarcusAwakeFramework.Api
             catch (OperationCanceledException)
             {
                 await FailBusinessConnectionAsync(activeConnection).ConfigureAwait(false);
-                return Failure<T>("runtime.cancelled", FrameworkErrorCategory.Cancelled, "The Provider request was cancelled.", envelope.CorrelationId);
+                return Failure<T>("runtime.cancelled", FrameworkErrorCategory.Cancelled, "The " + subject + " request was cancelled.", envelope.CorrelationId);
             }
             catch (TimeoutException)
             {
                 await FailBusinessConnectionAsync(activeConnection).ConfigureAwait(false);
-                return Failure<T>("runtime.provider_timeout", FrameworkErrorCategory.Timeout, "The Provider request timed out.", envelope.CorrelationId);
+                return Failure<T>("runtime.provider_timeout", FrameworkErrorCategory.Timeout, "The " + subject + " request timed out.", envelope.CorrelationId);
             }
             catch (ClientProtocolException exception)
             {
                 await FailBusinessConnectionAsync(activeConnection).ConfigureAwait(false);
-                return Failure<T>("runtime.ipc_integrity_failed", FrameworkErrorCategory.Incompatible, "The runtime service returned an invalid Provider response.", envelope.CorrelationId, exception.Code);
+                return Failure<T>("runtime.ipc_integrity_failed", FrameworkErrorCategory.Incompatible, "The runtime service returned an invalid " + subject + " response.", envelope.CorrelationId, exception.Code);
             }
             catch (IOException)
             {

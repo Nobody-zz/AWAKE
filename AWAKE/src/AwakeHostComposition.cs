@@ -60,18 +60,20 @@ internal sealed class AwakeHostComposition : IDisposable
             if (host != null) return OperationResult<bool>.Succeeded(true);
 
             extension = awakeExtension;
+            runtimeOptions = new RuntimeServiceClientOptions(
+                ResolveRuntimeServicePath(),
+                "1.3.15");
+            runtimeClient = new RuntimeServiceClient(runtimeOptions);
             serviceOverrides = new FrameworkServiceOverrides
             {
                 Permissions = new AwakePermissionService(),
                 Prompts = new AwakePromptRegistry(),
                 Storage = new AwakeFileStorageService(),
-                GameData = new AwakePlayerSnapshotProvider()
-                // Rag 保持框架默认的 UnavailableRagService：本批不接 Runtime RAG 数据面（011 再决策）。
+                GameData = new AwakePlayerSnapshotProvider(),
+                // RAG 数据面经 IPC 转发给 Runtime Service；SQLite/FTS5 与语料仍由服务侧独占。
+                // 服务未就绪时返回 typed unavailable，不静默降级成本地空实现。
+                Rag = runtimeClient
             };
-            runtimeOptions = new RuntimeServiceClientOptions(
-                ResolveRuntimeServicePath(),
-                "1.3.15");
-            runtimeClient = new RuntimeServiceClient(runtimeOptions);
         }
 
         OperationResult<bool> registration = FrameworkHostLocator.Register(extension, runtimeClient, serviceOverrides);
