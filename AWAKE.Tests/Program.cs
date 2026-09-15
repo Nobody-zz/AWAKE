@@ -1185,12 +1185,17 @@ private static void RunMessengerHistorySmoke()
 		if (!result.IsUsable || result.UsedLegacyFallback || !StringComparer.Ordinal.Equals(expected, result.Dsl)) throw new InvalidOperationException("AWAKE output must match the shared canonical fixture");
 		Console.WriteLine("PASS shared Persona golden fixture smoke");
 	}
+	/// <summary>
+	/// 定位共享 Persona 金标样本。2026-09-11 工作区拆分后，样本位于权威副本
+	/// AWAKE\docs\fixtures；同时保留"输出目录旁 docs\fixtures"这一候选，
+	/// 兼容样本被复制到构建输出旁的情形。
+	/// </summary>
 	private static string FindSharedPersonaFixture()
 	{
 		DirectoryInfo directory = new DirectoryInfo(AppContext.BaseDirectory);
 		while (directory != null)
 		{
-			string candidate = Path.Combine(directory.FullName, "_houkai_merge", "AWAKE", "docs", "fixtures", "persona-load-v2-golden.json");
+			string candidate = Path.Combine(directory.FullName, "AWAKE", "docs", "fixtures", "persona-load-v2-golden.json");
 			if (File.Exists(candidate)) return candidate;
 			candidate = Path.Combine(directory.FullName, "docs", "fixtures", "persona-load-v2-golden.json");
 			if (File.Exists(candidate)) return candidate;
@@ -3457,8 +3462,8 @@ private static void RunMessengerHistorySmoke()
 				}
 			});
 
-			string terminalText = File.ReadAllText(Path.Combine(workspaceRoot, "_houkai_merge", "AWAKE", "src", "AwakeTerminalBehavior.cs"));
-			string worldbookText = File.ReadAllText(Path.Combine(workspaceRoot, "_houkai_merge", "AWAKE", "src", "WorldbookRuntime.cs"));
+			string terminalText = File.ReadAllText(Path.Combine(workspaceRoot, "AWAKE", "src", "AwakeTerminalBehavior.cs"));
+			string worldbookText = File.ReadAllText(Path.Combine(workspaceRoot, "AWAKE", "src", "WorldbookRuntime.cs"));
 			bool worldbookSourceValid = terminalText.IndexOf("SyncData(\"awake_worldbook_overlay_v1\"", StringComparison.Ordinal) >= 0
 				&& terminalText.IndexOf("SyncData(\"awake_worldbook_activation_v1\"", StringComparison.Ordinal) >= 0
 				&& terminalText.IndexOf("ExportOverlayJson", StringComparison.Ordinal) >= 0
@@ -3527,11 +3532,11 @@ private static void RunMessengerHistorySmoke()
 
 	private static void WriteG3S0Evidence(string workspaceRoot, List<JObject> events)
 	{
-		string artifactRoot = Path.Combine(workspaceRoot, "_houkai_merge", "AWAKE", "tools", "persona-awake-joint", "artifacts");
+		string artifactRoot = Path.Combine(workspaceRoot, "AWAKE", "tools", "persona-awake-joint", "artifacts");
 		Directory.CreateDirectory(artifactRoot);
 		string tracePath = Path.Combine(artifactRoot, "g3-s0-readiness-trace.json");
 		string reportPath = Path.Combine(artifactRoot, "g3-s0-readiness-focused.json");
-		string scopePath = Path.Combine(workspaceRoot, "_houkai_merge", "AWAKE", "docs", "persona-awake-joint-g3-s0-scope.v1.json");
+		string scopePath = Path.Combine(workspaceRoot, "AWAKE", "docs", "persona-awake-joint-g3-s0-scope.v1.json");
 		string scopeSha256 = ComputeG3S0Sha256(scopePath);
 		JArray sourceBindings = BuildG3S0SourceBindings(workspaceRoot);
 		JObject trace = new JObject
@@ -3590,13 +3595,13 @@ private static void RunMessengerHistorySmoke()
 	{
 		string[] paths = new[]
 		{
-			"_houkai_merge/AWAKE/src/AwakeStorageContract.cs",
-			"_houkai_merge/AWAKE/src/AiTaskConstants.cs",
-			"_houkai_merge/AWAKE/src/WorldStateStore.cs",
-			"_houkai_merge/AWAKE/src/AwakeRuntime.cs",
-			"_houkai_merge/AWAKE/src/PersonaPersistenceModels.cs",
-			"_houkai_merge/AWAKE/src/AwakeTerminalBehavior.cs",
-			"_houkai_merge/AWAKE/src/WorldbookRuntime.cs"
+			"AWAKE/src/AwakeStorageContract.cs",
+			"AWAKE/src/AiTaskConstants.cs",
+			"AWAKE/src/WorldStateStore.cs",
+			"AWAKE/src/AwakeRuntime.cs",
+			"AWAKE/src/PersonaPersistenceModels.cs",
+			"AWAKE/src/AwakeTerminalBehavior.cs",
+			"AWAKE/src/WorldbookRuntime.cs"
 		};
 		JArray bindings = new JArray();
 		foreach (string path in paths)
@@ -3879,15 +3884,24 @@ private static void RunMessengerHistorySmoke()
 		}
 		Console.WriteLine("PASS runtime.recovery.hook_safety");
 	}
+	/// <summary>
+	/// 定位工作区根：含 AWAKE\src 与 AWAKE\AGENTS.md 的最近祖先目录。
+	/// 2026-09-11 工作区从旧的 _houkai_merge 综合工作区拆出，旧路径已不存在；
+	/// G3-S0 证据绑定的源文件一律指向当前权威副本 AWAKE\src。
+	/// </summary>
 	private static string GetG3S0WorkspaceRoot()
 	{
 		DirectoryInfo current = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
 		while (current != null)
 		{
-			if (Directory.Exists(Path.Combine(current.FullName, "_houkai_merge", "AWAKE"))) return current.FullName;
+			if (Directory.Exists(Path.Combine(current.FullName, "AWAKE", "src"))
+				&& File.Exists(Path.Combine(current.FullName, "AWAKE", "AGENTS.md")))
+			{
+				return current.FullName;
+			}
 			current = current.Parent;
 		}
-		throw new InvalidOperationException("Could not locate the New project workspace for G3-S0 evidence.");
+		throw new InvalidOperationException("Could not locate the AWAKE workspace root for G3-S0 evidence.");
 	}
 
 	private static string ComputeG3S0Sha256(string path)
