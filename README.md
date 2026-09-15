@@ -49,14 +49,15 @@ The world book is not published here either. Earlier commits bundled the Calradi
 ## Remote
 
 - Repository: `https://github.com/Nobody-zz/AWAKE.git`
-- Local clean root: `C:\Users\26811\OneDrive\文档\New project\AWAKE-Repo`
-- Sync script: `C:\Users\26811\OneDrive\文档\New project\sync_awake_repo.ps1`
+- Authoritative workspace: `D:\AWAKE-Dev`
+- The public GitHub mirror is downstream; synchronize from this workspace only.
 
 After runtime code changes, run the sync script, then commit and push from this directory:
 
 ```powershell
-cd "C:\Users\26811\OneDrive\文档\New project\AWAKE-Repo"
-git add .
-git commit -m "Update AWAKE runtime"
+cd D:\AWAKE-Dev
+# This working tree hosts several concurrent agents sharing one index.
+# Do NOT stage the whole tree (`git add .`): commit only the paths you changed.
+git commit -m "Update AWAKE runtime" -- AWAKE/src AWAKE/framework AWAKE/tools
 git push origin main
 ```

@@ -17,7 +17,7 @@ AWAKE 是《骑马与砍杀2：霸主》的通用 AI 世界运行时：NPC 智�
 ## 目录结构
 
 ```text
-_houkai_merge/
+D:\AWAKE-Dev/
   AWAKE/                    # 运行时主工程
     src/                    # 运行时源码
     docs/                   # 路线图、切割、API 契约、分类表
@@ -26,9 +26,7 @@ _houkai_merge/
     GUI/                    # 运行时 UI
     tools/                  # 校验脚本
   AWAKE.Tests/              # 运行时 SdkSmoke
-  SlaneshsEmbraceContent/   # 内容包工程（基础 + frozen 支线）
   MarcusAIFramework_Reference/  # SDK/参考
-  archive/                  # 历史计划、备份、旧项目归档
 ```
 
 ## 版本路线

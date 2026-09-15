@@ -17,7 +17,7 @@ AWAKE is a generic AI world runtime for Mount & Blade II: Bannerlord. NPC intell
 ## Directory layout
 
 ```text
-_houkai_merge/
+D:\AWAKE-Dev/
   AWAKE/                    # runtime project
     src/                    # runtime source
     docs/                   # roadmap, split, API contract, classification
@@ -26,9 +26,7 @@ _houkai_merge/
     GUI/                    # runtime UI
     tools/                  # validation scripts
   AWAKE.Tests/              # runtime SdkSmoke
-  SlaneshsEmbraceContent/   # content pack (base + frozen branches)
   MarcusAIFramework_Reference/  # SDK/reference
-  archive/                  # history, backups, deprecated projects
 ```
 
 ## Version roadmap
