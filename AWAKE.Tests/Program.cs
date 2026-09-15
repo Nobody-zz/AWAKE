@@ -117,6 +117,7 @@ internal static class Program
 			// 加在末尾：保持前 55 条的序号不变（既有报告按序号引用判据）。
 			("world-fact-journal", () => { RunWorldFactJournalSmoke(); return Task.CompletedTask; }),
 			("world-fact-journal-roundtrip", () => RunWorldFactJournalRoundtripSmokeAsync()),
+			("world-fact-journal-recovery", () => RunWorldFactJournalRecoverySmokeAsync()),
 			// 本用例会重置 UI 调度线程绑定；放在最后，避免影响前面的用例。
 			("dialogue-chain-redtest", () =>
 			{
@@ -2171,6 +2172,60 @@ private static void RunMessengerHistorySmoke()
 			throw new InvalidOperationException("journal root must be persisted to the storage backend.");
 
 		Console.WriteLine("PASS world fact journal roundtrip smoke");
+	}
+
+	/// <summary>
+	/// 世界事实日志**坏账本自愈**判据（2026-09-15 补）。真坏（非 JSON / schema 不符）时，
+	/// 旧行为是读侧报 Corrupt ⇒ 写侧一开场读到 Corrupt 就**直接放弃写入**（WorldStateStore.cs:3657-3663）
+	/// ⇒ 坏一次就永久写不进去（这是"空 ⇒ Corrupt"那个死锁的另一半，读侧修好并不会自动解掉）。
+	/// 新行为：写侧先把坏值**隔离**到旁路 key，再按空账本继续、用新 root 覆盖。
+	/// 数据不丢（隔离件在存储里），死锁解开。
+	/// </summary>
+	private static async Task RunWorldFactJournalRecoverySmokeAsync()
+	{
+		SessionRef session = new SessionRef("smoke-recovery-campaign", "smoke-recovery-timeline", "smoke-recovery-session");
+		WorldStateStore store = new WorldStateStore(session);
+		FakeKeyValueStore journalStore = new FakeKeyValueStore();
+		journalStore.Seed(AiTaskConstants.WorldFactJournalRootKey, "{ this is not json");
+		store.InjectStoreForTesting(AiTaskConstants.WorldFactJournalNamespace, journalStore);
+		RequestContext context = new FakeClock(DateTimeOffset.UtcNow).Context("awake.smoke", session, "journal-recovery");
+
+		WorldFactJournalReadResult corrupt = await store.GetWorldFactJournalAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (corrupt.Status != WorldFactJournalReadStatus.Corrupt)
+			throw new InvalidOperationException("a malformed journal root must read as corrupt, got=" + corrupt.Status);
+
+		WorldFact fact = new WorldFact(
+			"wf1-journal-recovery-smoke",
+			3,
+			3L * 144L,
+			"smoke_kind",
+			new[] { new WorldFactEntity("hero", "hero-journal-recovery", "subject") },
+			"自愈烟测事实",
+			"smoke");
+		WorldStateCommand command = new WorldStateCommand(
+			AiTaskConstants.WorldEventsNamespace,
+			"world_events.smoke.v1",
+			"smoke.journal.recovery",
+			"idem-smoke-journal-recovery",
+			string.Empty,
+			WorldStateKind.WorldEvents,
+			new JObject { ["fact"] = fact.ToJson() },
+			DateTimeOffset.UtcNow,
+			context.CorrelationId);
+		if (!store.TryEnqueue(command)) throw new InvalidOperationException("recovery command should enqueue.");
+		await store.DrainAsync(CancellationToken.None).ConfigureAwait(false);
+
+		if (journalStore.GetValue(AiTaskConstants.WorldFactJournalRootKey + ".quarantine") == null)
+			throw new InvalidOperationException("the corrupt root must be quarantined before it is replaced.");
+
+		WorldFactJournalReadResult after = await store.GetWorldFactJournalAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (after.Status != WorldFactJournalReadStatus.Success || after.Facts.Count != 1)
+		{
+			throw new InvalidOperationException("the journal must recover after quarantining the corrupt root, got="
+				+ after.Status + " facts=" + after.Facts.Count + " code=" + after.ErrorCode);
+		}
+
+		Console.WriteLine("PASS world fact journal recovery smoke");
 	}
 
 	private static async Task RunStoragePipelineSmokeAsync()

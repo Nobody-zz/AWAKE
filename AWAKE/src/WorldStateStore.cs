@@ -263,6 +263,19 @@ internal sealed class WorldStateStore
     private static readonly ConcurrentDictionary<string, SemaphoreSlim> LogicalKeyGates =
         new ConcurrentDictionary<string, SemaphoreSlim>(StringComparer.Ordinal);
 
+    /// <summary>
+    /// 判断一次读取是不是"这个 key 不存在"。
+    ///
+    /// ⚠️ 2026-09-15 定案：**真后端不会产出 `storage.key_not_found`**。AWAKE 的文件后端
+    /// （AwakeFileStorageService.cs:142-143）对缺 key 返回的是 **Succeeded("")**（成功＋空串），
+    /// 全仓唯一产出该错误码的地方在 tools/ 下的**离线替身**里。故本判断在真后端上**恒为 False**。
+    /// 逐处核过：15 个调用点全部嵌在 `if (!loaded.IsSuccess)` 之内，它实际只决定"要不要打一条失败日志"，
+    /// **没有一处因此发生功能故障** —— 所以这里**刻意不改行为**（改了要动 15 处语义，收益近零）。
+    ///
+    /// ⇒ 真正的规矩是：**凡"缺 key 就用默认值"的逻辑，必须另有 `IsNullOrWhiteSpace(值)` 兜底。**
+    ///   缺了那半行就会出永久死锁（世界事实日志 2026-09-15 就是这么坏的：
+    ///   读空值判成 Corrupt ⇒ 写侧放弃写入 ⇒ 永远空 ⇒ 永远读坏）。
+    /// </summary>
     private static bool IsStorageKeyNotFound(OperationResult<string> result)
     {
         return result != null
@@ -3655,12 +3668,24 @@ internal sealed class WorldStateStore
         try
         {
             WorldFactJournalReadResult existing = await GetWorldFactJournalAsync(context, cancellationToken).ConfigureAwait(false);
-            if (existing.Status == WorldFactJournalReadStatus.Corrupt || existing.Status == WorldFactJournalReadStatus.Unavailable)
+            if (existing.Status == WorldFactJournalReadStatus.Corrupt)
+            {
+                // 坏账本不能让这本账永久写不进去（读坏 ⇒ 放弃写入 ⇒ 永远坏，是同一个死锁的另一半）。
+                // 先把坏值隔离到旁路 key（只复制、不删原件，数据不丢），再按空账本继续 ——
+                // 写入流程末尾会用新 root 覆盖掉坏值。2026-09-15 定案。
+                if (!await QuarantineCorruptJournalAsync(store, context, cancellationToken).ConfigureAwait(false))
+                    return new WorldApplyResult { Retryable = true, Code = "awake.world_fact.journal_quarantine_failed" };
+                existing = new WorldFactJournalReadResult(WorldFactJournalReadStatus.Missing);
+            }
+            else if (existing.Status == WorldFactJournalReadStatus.Unavailable)
+            {
+                // 存储不可用是环境问题，重试即可，不能靠隔离解决。
                 return new WorldApplyResult
                 {
-                    Retryable = existing.Status == WorldFactJournalReadStatus.Unavailable,
+                    Retryable = true,
                     Code = string.IsNullOrWhiteSpace(existing.ErrorCode) ? "awake.world_fact.journal_unavailable" : existing.ErrorCode
                 };
+            }
 
             List<JObject> facts = existing.Facts.Select(value => (JObject)value.DeepClone()).ToList();
             string factId = (string)fact["factId"] ?? string.Empty;
@@ -3726,6 +3751,30 @@ internal sealed class WorldStateStore
         {
             WorldFactJournalWriterGate.Release();
         }
+    }
+
+    /// <summary>
+    /// 把坏掉的世界事实日志 root 隔离到旁路 key。只复制、不删原件 —— 随后由新写入覆盖它；
+    /// 若本次写入最终失败，坏值仍在原位，下次重试会再隔离一次（同名覆盖，不会膨胀）。
+    /// 返回 false 表示隔离没做成，调用方应放弃本次写入。
+    /// </summary>
+    private static async Task<bool> QuarantineCorruptJournalAsync(
+        IKeyValueStore store,
+        RequestContext context,
+        CancellationToken cancellationToken)
+    {
+        OperationResult<string> current = await store.GetAsync(
+            AiTaskConstants.WorldFactJournalRootKey, context, cancellationToken).ConfigureAwait(false);
+        if (!current.IsSuccess) return false;
+        if (string.IsNullOrWhiteSpace(current.Value)) return true;
+        OperationResult<bool> stored = await store.SetAsync(
+            AiTaskConstants.WorldFactJournalRootKey + ".quarantine",
+            current.Value,
+            context,
+            cancellationToken).ConfigureAwait(false);
+        if (!stored.IsSuccess || !stored.Value) return false;
+        AwakeLog.Write("world_fact_journal_quarantined bytes=" + Encoding.UTF8.GetByteCount(current.Value));
+        return true;
     }
 
     private sealed class JournalChunkWrite
