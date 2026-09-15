@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace MarcusAwakeProvider;
 
-public sealed class ProviderRouter
+public sealed partial class ProviderRouter
 {
     private readonly IReadOnlyList<ProviderRouteCandidate> candidates;
 

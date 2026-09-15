@@ -218,10 +218,11 @@ public abstract class ProviderAdapterBase : IProviderAdapter
         DateTimeOffset deadline,
         CancellationToken cancellationToken,
         string accept,
-        string? model = null)
+        string? model = null,
+        IReadOnlyDictionary<string, string>? extraHeaders = null)
     {
         if (body == null) throw new ArgumentNullException(nameof(body));
-        return SendRequestAsync(method, endpointPath, body, credential, operation, deadline, cancellationToken, accept, model);
+        return SendRequestAsync(method, endpointPath, body, credential, operation, deadline, cancellationToken, accept, model, extraHeaders);
     }
 
     private async Task<ProviderResult<HttpResponseMessage>> SendRequestAsync(
@@ -233,7 +234,8 @@ public abstract class ProviderAdapterBase : IProviderAdapter
         DateTimeOffset deadline,
         CancellationToken cancellationToken,
         string accept,
-        string? model)
+        string? model,
+        IReadOnlyDictionary<string, string>? extraHeaders = null)
     {
         var cancellationError = GetCancellationError(cancellationToken, deadline);
         if (cancellationError != null) return ProviderResult<HttpResponseMessage>.Failed(cancellationError);
@@ -247,6 +249,15 @@ public abstract class ProviderAdapterBase : IProviderAdapter
         request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("identity"));
         request.Headers.Accept.Clear();
         request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(accept));
+        if (extraHeaders != null)
+        {
+            foreach (var header in extraHeaders)
+            {
+                if (string.IsNullOrWhiteSpace(header.Key)) continue;
+                request.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            }
+        }
+
         if (body != null)
         {
             request.Content = new ByteArrayContent(body);
@@ -254,6 +265,7 @@ public abstract class ProviderAdapterBase : IProviderAdapter
         }
 
         ApplyAuthentication(request, credential);
+
 
         using var requestCancellation = CreateCancellationSource(cancellationToken, deadline);
         try

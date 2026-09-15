@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 
 namespace MarcusAwakeProvider;
 
-public sealed class OpenAiCompatibleProvider : ProviderAdapterBase
+public sealed partial class OpenAiCompatibleProvider : ProviderAdapterBase, IProviderImageAdapter
 {
     public OpenAiCompatibleProvider(
         ProviderConnectionProfile profile,

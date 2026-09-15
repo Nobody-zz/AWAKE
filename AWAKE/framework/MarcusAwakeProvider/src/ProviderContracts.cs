@@ -13,7 +13,10 @@ public enum ProviderKind
 {
     OpenAiCompatible,
     Anthropic,
-    Ollama
+    Ollama,
+
+    /// <summary>只在生图这条路上使用；它不提供聊天补全。</summary>
+    Player2
 }
 
 public enum ProviderCapabilityId

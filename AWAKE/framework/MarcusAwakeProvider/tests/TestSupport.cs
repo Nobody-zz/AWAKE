@@ -111,13 +111,14 @@ internal sealed class FakeHttpMessageHandler : HttpMessageHandler
             body,
             request.Headers.TryGetValues("Authorization", out var authorization) ? authorization.SingleOrDefault() : null,
             request.Headers.TryGetValues("x-api-key", out var apiKey) ? apiKey.SingleOrDefault() : null,
-            request.Headers.TryGetValues("anthropic-version", out var version) ? version.SingleOrDefault() : null));
+            request.Headers.TryGetValues("anthropic-version", out var version) ? version.SingleOrDefault() : null,
+            request.Headers.TryGetValues("Idempotency-Key", out var idempotencyKey) ? idempotencyKey.SingleOrDefault() : null));
         RequestStarted.TrySetResult(true);
         return await responder(request, cancellationToken).ConfigureAwait(false);
     }
 }
 
-internal sealed record RequestSnapshot(HttpMethod Method, string Path, string Body, string? Authorization, string? ApiKey, string? AnthropicVersion);
+internal sealed record RequestSnapshot(HttpMethod Method, string Path, string Body, string? Authorization, string? ApiKey, string? AnthropicVersion, string? IdempotencyKey);
 
 internal sealed class ChunkedReadStream : Stream
 {
