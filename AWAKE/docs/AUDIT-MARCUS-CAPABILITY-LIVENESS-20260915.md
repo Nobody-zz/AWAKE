@@ -16,7 +16,7 @@
 
 **契约基本齐、框架真件不少、断口集中在「框架 → 玩法」那道缝上。**
 
-A0 那一档里，真正从头到尾通的是：AI 网关、会话生命周期、权限、命令、提示词、存储。而**媒体、模型、资产、工具候选、日志、存档锚点这六面，玩法侧一行都没调过**；RAG 是「调用点写了、服务是空壳」——每次必返回 typed 失败。
+A0 那一档里，真正从头到尾通的是：AI 网关、会话生命周期、权限、命令、提示词、存储、**以及 RAG（09-15 当天接通，见 §4）**。而**媒体、模型、资产、工具候选、日志、存档锚点这六面，玩法侧一行都没调过**。
 
 ---
 
@@ -37,7 +37,7 @@ A0 那一档里，真正从头到尾通的是：AI 网关、会话生命周期�
 | Commands | 2 | 真件 `HostCommandService` | 通 |
 | Context | 2 | 真件 `ContextPlanner` | 通 |
 | Events | 1 | `InMemoryEventService` | **半通**：调用点用了 `EventDelivery.Durable`，但背后是内存版，落盘/spool 未接 |
-| Rag | 3 | **`UnavailableRagService`** | **断**：`KnowledgeService.cs:199/283/322` 真在调，服务是空壳 ⇒ 每次 typed 失败 |
+| Rag | 3 | `runtimeClient` 充当 `IRagService`（09-15 填槽） | **通（代码层）**：`KnowledgeService.cs:199/283/322` 真在调；服务侧 `SqliteStorageAndRagBackend` 真件经 IPC 到达。**游戏内未验证** |
 | Models | 0 | **`UnavailableAiModelService`**，且无 override 槽 | 未碰 |
 | Media | 0 | **`UnavailableMediaService`**，且无 override 槽 | 未碰 |
 | Assets | 0 | **`UnavailableAssetService`**，且无 override 槽 | 未碰 |
@@ -46,7 +46,7 @@ A0 那一档里，真正从头到尾通的是：AI 网关、会话生命周期�
 | Capabilities | 0 | 真件 `HostCapabilityBroker` | 未碰（有真件，没人调） |
 | SaveAnchors | 0 | **`UnavailableSaveAnchorStore`** | 框架侧空壳；玩法侧用原生 SyncData 自存（`PersonaContinuitySync.cs`） |
 
-`FrameworkServiceOverrides` 只有 5 个槽：`Permissions / Prompts / Storage / GameData / Rag`。**`Rag` 有槽但 `AwakeHostComposition.cs:63-70` 明确不填**（注释原文：「本批不接 Runtime RAG 数据面（011 再决策）」），因此 `KnowledgeService` 那三处调用当前是**确定失败**的路径——不是"没写"，是"写了、对面是空壳"。
+`FrameworkServiceOverrides` 只有 5 个槽：`Permissions / Prompts / Storage / GameData / Rag`。**`Rag` 槽原为空缺**（`AwakeHostComposition.cs` 注释原文：「本批不接 Runtime RAG 数据面（011 再决策）」），于是 `KnowledgeService` 那三处调用落在 `UnavailableRagService` 上、是**确定失败**的路径——不是"没写"，是"写了、对面是空壳"。**09-15 当天已改填 `runtimeClient`，见 §4 第 3 条。**
 
 `Models / Media / Assets` 是 `HostApi.cs` 里**硬编码**的空壳，**连 override 槽都没有**（`PLAN-AI-PORTRAIT-IMAGE-20260913.md §1③` 已记）。
 
@@ -64,7 +64,7 @@ A0 = 矩阵 §2「第一版内置框架不可缺失；缺失即不再是 Marcus-
 | F-011 | 数据可见性 Scope | 在（4 文件） | 真件 | — | **available**（待验证） |
 | F-012 | Snapshot / 一致性 | 在（8 文件） | 真件 | — | **available**（待验证） |
 | F-013 | Context Provider / Planner | 在 | 真件 `ContextPlanner` | 2 处 | **available** |
-| F-015 | SQLite FTS5 RAG | 在 | **空壳 / 未填槽** | **3 处（确定失败）** | **blocked** ★最大缺口 |
+| F-015 | SQLite FTS5 RAG | 在 | **服务侧真件**；客户端 09-15 补齐转发 | **3 处（已通）** | **available（代码层）** ★原最大缺口，09-15 已接 |
 | F-017 | Prompt Registry | 在 | 玩法侧自填 | 3 处 | **available** |
 | F-018 | AI Gateway | 在 | Runtime 客户端充当 | 2 处 | **available** |
 | F-019 | Connection / Model / Route | 在 | 真件（5 路分派） | 经 Runtime | **available** |
@@ -95,7 +95,7 @@ A0 = 矩阵 §2「第一版内置框架不可缺失；缺失即不再是 Marcus-
 **状态词义**：`available` = 契约＋实现＋调用三样都在（或明确由静态证据支撑）；`contract_only` = 契约和真件都在、玩法侧没接线；`blocked` = 有调用点但对面是空壳；`split` = 有一条通、有一条断；`待验证` = 本次未逐行取证，不写死。
 
 **缺口排序（按"接了就能用"排名）**：
-1. **F-015 RAG** — 唯一"调用点已写、只要填槽就活"的一条。同时是 F-013 Context、F-063 NPC 对话的共同前置。
+1. ~~**F-015 RAG** — 唯一"调用点已写、只要填槽就活"的一条~~ ⇒ **09-15 当天已接**（填槽 + 客户端转发 + 端到端判据 9/9）。原判断成立：确实是"改一个赋值点就活"。
 2. **F-031 Tool Candidate** — 真件在，玩法侧零调用。
 3. **F-049/F-050 资产与生图** — 服务侧空壳（片 1 已把 Provider 层补齐，**服务层未接**）。
 4. **F-033 Durable Event** — 调用点写了 `Durable`，背后是内存。
@@ -109,6 +109,10 @@ A0 = 矩阵 §2「第一版内置框架不可缺失；缺失即不再是 Marcus-
    ⇒ **代码已越过矩阵的 A2 定级。** 需要在矩阵 §3.1 / §7 与 ownership map 的 F-024 / F-050 行**补一笔留痕**，说明这次提前实装是甲方决策、不是越权扩写。**本次只记录，不擅自改权威文档。**
 
 2. **08-24 清单的「当前状态」列**：`contract_locked` 是 P1.5 时代的值（矩阵 §10.5 明文：它**不表示** E2–E5 已通过）。§3 校准列与它不冲突，是给同一列补上更细的三段底。
+
+3. **F-015 RAG 状态变更留痕（09-15 当天，本表同步）**：本表首次落库（提交 `f513222`）时 F-015 记为 `blocked`，依据是"调用点已写、槽位为空、对面是 `UnavailableRagService`"。同日稍后该链路接通（提交 `9ca5af7`：`AwakeHostComposition` 填 `Rag = runtimeClient`；`RuntimeServiceClient` 补 `IRagService` 实现与 RAG 两能力名；新增 `StorageAndRagWire.cs` / `RuntimeServiceClient.Rag.cs` / `RagClientTests.cs`，端到端 9/9、两次变异检验均被抓住）。⇒ 本次把 §1 / §2 / §3 / §6 四处一并改为「代码层已通」。
+
+   ⚠️ **仍未取证**：① **游戏内未验证**（本线至今未进游戏）；② 08-24 三份权威文档里 F-015 仍记 `planned`，**未同步**（那三份不在本线写权内，另行处理）。
 
 ---
 
@@ -124,7 +128,9 @@ A0 = 矩阵 §2「第一版内置框架不可缺失；缺失即不再是 Marcus-
 
 ## 6. 下一步（三条腿，按能不能有 > 能不能用 > 好不好用 排）
 
-1. **接 RAG（F-015）**：`AwakeHostComposition` 填 `Rag` 槽 → `KnowledgeService` 那三处从"确定失败"变"真检索"。这是**改一个赋值点**就能让一条已写好的链路活过来的活。
+1. ~~**接 RAG（F-015）**：`AwakeHostComposition` 填 `Rag` 槽 → `KnowledgeService` 那三处从"确定失败"变"真检索"。这是**改一个赋值点**就能让一条已写好的链路活过来的活。~~
+   ⇒ **09-15 已完成**（提交 `9ca5af7`：填槽 + 客户端转发 + 端到端判据 9/9）。**原判断成立**——确实是"改一个赋值点就活"。
+   同一条腿的**延伸**：这条链至今**只在离线验台里通过**，本线一次都没进过游戏。
 2. **把本表变成会自己更新的东西**：现状是"人手工维护一列状态 → 必然停更"。可行的替代是让状态从证据里长出来（对每个 F-ID 记录"去哪找证据"的三个锚点，由探针跑）。
 3. **开采 AuthorSource**：先出四份"行为清单"（每个模组干了哪些事、对应哪个 F-ID、AWAKE 现在有没有），再决定接哪条。
 
