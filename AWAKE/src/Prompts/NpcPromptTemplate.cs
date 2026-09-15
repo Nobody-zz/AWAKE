@@ -126,13 +126,16 @@ internal static class NpcPromptTemplate
             false);
     }
 
+    /// <summary>
+    /// 旧入口，**只做转发**：唯一实现是 NpcDialoguePromptPipeline.RenderTemplate（单趟正则，
+    /// AwakePromptRegistry:82 也走它）。
+    /// 这里原本另有一份平行的 StringBuilder.Replace 循环实现 —— 值里若含 {{占位符}} 会被
+    /// **二次替换**：玩家发一句 "{{npc_id}}" 就能把自己的发言改写成别人的身份写进提示词。
+    /// 与唯一实现分叉（主验台 prompt-render-source-parity 实测：pipeline 1 次命中、旧入口 2 次）。
+    /// 2026-09-15 同源化，本方法不再自备渲染。
+    /// </summary>
     internal static string BuildDirectInput(IReadOnlyDictionary<string, string> variables)
     {
-        StringBuilder builder = new StringBuilder(TemplateText);
-        foreach (KeyValuePair<string, string> pair in variables)
-        {
-            builder.Replace("{{" + pair.Key + "}}", JsonConvert.SerializeObject(pair.Value ?? string.Empty));
-        }
-        return builder.ToString();
+        return NpcDialoguePromptPipeline.RenderTemplate(TemplateText, variables);
     }
 }
