@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-WORLD-REPORT-V2-PERSISTENCE-20260912",
+  "risk_class": "high-risk",
+  "max_rounds": 2,
+  "round": 2,
+  "status": "deferred_by_scope_reduction",
+  "user_signoff": false,
+  "implementation_allowed": false,
+  "plan": "docs/PLAN-WORLD-REPORT-V2-PERSISTENCE-20260912.md",
+  "plan_sha256": "5470746B856FDE05FF592A848639407E615C73E0700073390076211AC81BCF02",
+  "current_verdict": "DEFERRED",
+  "review": "docs/REVIEW-WORLD-REPORT-V2-PERSISTENCE-ROUND2-20260912.md",
+  "superseded_by": "docs/PLAN-WORLD-REPORT-V2-BUILD-E2-20260912.md",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "review": "docs/REVIEW-WORLD-REPORT-V2-PERSISTENCE-ROUND1-20260912.md",
+      "change_fingerprint": "5470746B856FDE05FF592A848639407E615C73E0700073390076211AC81BCF02",
+      "disposition": "plan revised"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "review": "docs/REVIEW-WORLD-REPORT-V2-PERSISTENCE-ROUND2-20260912.md",
+      "change_fingerprint": "5470746B856FDE05FF592A848639407E615C73E0700073390076211AC81BCF02",
+      "disposition": "P0-1 storage proof and P1-1..P1-3 determinism/test seam remain unresolved; new revision required"
+    }
+  ],
+  "dependencies": [
+    "AWAKE-WORLD-FACT-REPORT-MINIMAL-E2-20260912",
+    "WorldFactJournal E2",
+    "WorldFactQuery E2",
+    "WorldStateStore existing report-state seam"
+  ],
+  "evidence_ceiling": "E2",
+  "sync_allowed": false,
+  "game_launch_allowed": false
+}

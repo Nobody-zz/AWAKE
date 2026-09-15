@@ -25,8 +25,9 @@
 | `NpcDialogueService` | `NpcDialogueService.cs` | 对话会话、历史、记忆加载、命令执行 |
 | `NpcDialoguePromptPipeline` | `NpcDialoguePromptPipeline.cs` | Prompt 预算、截断、直接文本回退 |
 | `NpcDialogueOutputValidator` | `NpcDialogueOutput.cs` | 结构化输出校验 |
-| `NpcPromptTemplate` | `NpcPromptTemplate.cs` | NPC 内置提示词与输出 schema |
-| `NpcMemorySummaryTemplate` | `NpcMemoryService.cs` | 记忆摘要提示词与解析 |
+| `NpcPromptTemplate` | `src/Prompts/NpcPromptTemplate.cs` | NPC 内置提示词与输出 schema |
+| `SceneShoutPromptTemplate` | `src/Prompts/SceneShoutPromptTemplate.cs` | 场景喊话提示词与无 command 输出 schema |
+| `NpcMemorySummaryTemplate` | `src/Prompts/NpcMemorySummaryPrompt.cs` | 记忆摘要提示词与解析 |
 
 ## 3. 路由
 

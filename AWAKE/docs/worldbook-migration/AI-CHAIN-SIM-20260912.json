@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "awake.ai.simulation-result.v1",
+  "status": "pass",
+  "model": "qwen2.5:latest",
+  "ollamaEndpoint": "http://127.0.0.1:11434/api/chat",
+  "sources": {
+    "runtimeSimulator": "D:\\AWAKE-Dev\\AWAKE\\tools\\worldbook-runtime-sim\\WorldbookRuntimeSim.csproj",
+    "worldbookManifest": "D:\\AWAKE-Dev\\AWAKE\\release\\awake-worldbook-pilot\\manifest.json",
+    "personaCandidates": "D:\\AWAKE-Dev\\AWAKE\\tools\\persona-workbench\\characters",
+    "personaMaterializer": "D:\\AWAKE-Dev\\AWAKE\\tools\\persona-workbench\\tools\\materialize-definitions.ps1",
+    "promptTemplate": "D:\\AWAKE-Dev\\AWAKE\\src\\NpcPromptTemplate.cs"
+  },
+  "deterministic": {
+    "contextCommand": [
+      "FULL-CONTEXT-OK"
+    ],
+    "retrievalCommand": [
+      "SIM-OK"
+    ],
+    "personaCommand": [
+      "DSL-FIRST-LINE: [PERSONA_LOAD]"
+    ],
+    "reportSchema": "awake.worldbook.weekly-report.v2",
+    "reportSourceFactCount": 3,
+    "personaDslBytes": 4259,
+    "checks": {
+      "reportV2Validated": true,
+      "personaDslPresent": true,
+      "positiveKnowledgeReturned": true,
+      "negativeKnowledgeBlocked": true,
+      "allModelOutputsStructured": true
+    }
+  },
+  "cases": [
+    {
+      "case": "noble:领主",
+      "identity": "贵族",
+      "question": "领主",
+      "gateState": "partial",
+      "knowledgeBytes": 147,
+      "expectedGate": "known_or_partial",
+      "promptSha256": "5da67fcde7d9388083e5e07bb4183d527182fb9bec7a60d075cb00db0272f9e1",
+      "promptBytes": 6816,
+      "elapsedSeconds": 19.996,
+      "rawReply": "{\n  \"reply\": \"帝国来势汹汹，箭矢如雨。你最好打听清楚，哪边是友方。\",\n  \"mood\": \"警惕\",\n  \"effects\": [\"戒备\"],\n  \"command\": {\n    \"commandId\": \"awake.relationship.delta.v1\",\n    \"arguments\": {\n      \"heroId\": \"hero_sim_caladog\",\n      \"trustDelta\": -1,\n      \"loveDelta\": 0,\n      \"hostilityDelta\": 0,\n      \"reason\": \"提防玩家信息真实性\"\n    },\n    \"reason\": \"提醒玩家注意边境动态，表达谨慎态度\"\n  }\n}",
+      "outputStatus": "ok",
+      "reply": "帝国来势汹汹，箭矢如雨。你最好打听清楚，哪边是友方。",
+      "mood": "警惕",
+      "hasCommand": true
+    },
+    {
+      "case": "noble:收成",
+      "identity": "贵族",
+      "question": "收成",
+      "gateState": "not_found",
+      "knowledgeBytes": 0,
+      "expectedGate": "not_found",
+      "promptSha256": "5e98c232e72d6294cf0219bd6bbcec04834d41828207237a15014b885f7307e8",
+      "promptBytes": 6718,
+      "elapsedSeconds": 13.893,
+      "rawReply": "{\n  \"reply\": \"帝国兵锋锐利，巴旦尼亚首当其冲。你若想安身立命，须得小心些。\",\n  \"mood\": \"警觉\",\n  \"effects\": [\"戒备\"],\n    \"command\": {\n      \"commandId\": \"awake.relationship.delta.v1\",\n      \"arguments\": {\n        \"heroId\": \"lord_5_1\",\n        \"trustDelta\": -1,\n        \"loveDelta\": 0,\n        \"hostilityDelta\": 0,\n        \"reason\": \"提醒玩家边境紧张，保持距离\"\n      },\n      \"reason\": \"提示玩家当前局势紧张，需谨慎应对\"\n    }\n}",
+      "outputStatus": "ok",
+      "reply": "帝国兵锋锐利，巴旦尼亚首当其冲。你若想安身立命，须得小心些。",
+      "mood": "警觉",
+      "hasCommand": true
+    }
+  ],
+  "limitations": [
+    "不启动 Bannerlord，不执行真实战役回调、存档或 UI。",
+    "周报事实使用真实 WeeklyReportService，但事实本身是固定测试 fixture。",
+    "模型输出只用于观察提示词和门控效果，不会写回世界书、人物卡或源码。"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-WORLD-REPORT-V2-BUILD-E2-20260912",
+  "risk_class": "standard",
+  "max_rounds": 2,
+  "round": 1,
+  "status": "implemented_approved_e2",
+  "user_signoff": true,
+  "user_signoff_actor": "user-26811",
+  "user_signoff_at": "2026-09-12T16:18:00+08:00",
+  "implementation_allowed": false,
+  "plan": "docs/PLAN-WORLD-REPORT-V2-BUILD-E2-20260912.md",
+  "plan_sha256": "7F6FE7117DA84C8F73F7B6A1C26FC174222C2F71426BCB8E7F62B7354F312A51",
+  "current_verdict": "APPROVED",
+  "review": "docs/REVIEW-WORLD-REPORT-V2-BUILD-E2-IMPLEMENTATION-ROUND1-20260912.md",
+  "implementation_review": "docs/REVIEW-WORLD-REPORT-V2-BUILD-E2-IMPLEMENTATION-ROUND1-20260912.md",
+  "implementation_evidence": {
+    "smoke_build": "PASS",
+    "smoke_run": "PASS",
+    "diff_check": "PASS",
+    "sync": false,
+    "game_launch": false
+  },
+  "dependencies": [
+    "AWAKE-WORLD-FACT-REPORT-MINIMAL-E2-20260912",
+    "WorldFactJournal E2",
+    "WorldFactQuery E2"
+  ],
+  "evidence_ceiling": "E2",
+  "sync_allowed": false,
+  "game_launch_allowed": false
+}

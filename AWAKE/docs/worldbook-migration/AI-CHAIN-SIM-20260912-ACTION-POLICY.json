@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "awake.ai.simulation-result.v1",
+  "status": "pass",
+  "model": "qwen2.5:latest",
+  "ollamaEndpoint": "http://127.0.0.1:11434/api/chat",
+  "sources": {
+    "runtimeSimulator": "D:\\AWAKE-Dev\\AWAKE\\tools\\worldbook-runtime-sim\\WorldbookRuntimeSim.csproj",
+    "worldbookManifest": "D:\\AWAKE-Dev\\AWAKE\\release\\awake-worldbook-pilot\\manifest.json",
+    "personaCandidates": "D:\\AWAKE-Dev\\AWAKE\\tools\\persona-workbench\\characters",
+    "personaMaterializer": "D:\\AWAKE-Dev\\AWAKE\\tools\\persona-workbench\\tools\\materialize-definitions.ps1",
+    "promptTemplate": "D:\\AWAKE-Dev\\AWAKE\\src\\Prompts\\NpcPromptTemplate.cs"
+  },
+  "deterministic": {
+    "contextCommand": [
+      "FULL-CONTEXT-OK"
+    ],
+    "retrievalCommand": [
+      "SIM-OK"
+    ],
+    "personaCommand": [
+      "DSL-FIRST-LINE: [PERSONA_LOAD]"
+    ],
+    "reportSchema": "awake.worldbook.weekly-report.v2",
+    "reportSourceFactCount": 3,
+    "personaDslBytes": 4259,
+    "checks": {
+      "reportV2Validated": true,
+      "personaDslPresent": true,
+      "positiveKnowledgeReturned": true,
+      "negativeKnowledgeBlocked": true,
+      "allModelOutputsStructured": true
+    }
+  },
+  "cases": [
+    {
+      "case": "noble:领主",
+      "identity": "贵族",
+      "question": "领主",
+      "gateState": "partial",
+      "knowledgeBytes": 147,
+      "expectedGate": "known_or_partial",
+      "promptSha256": "725fde6d20b449630fecf2c12728ab9fd1d41ff090b396946d9516ba555548d2",
+      "promptBytes": 7506,
+      "elapsedSeconds": 6.28,
+      "rawReply": "{\n  \"reply\": \"帝国兵锋直指边境，箭雨如织。你最好掂量掂量自己的立场。\",\n  \"mood\": \"紧张\",\n  \"effects\": [\"警觉\"]\n}",
+      "outputStatus": "ok",
+      "reply": "帝国兵锋直指边境，箭雨如织。你最好掂量掂量自己的立场。",
+      "mood": "紧张",
+      "hasCommand": false
+    },
+    {
+      "case": "noble:收成",
+      "identity": "贵族",
+      "question": "收成",
+      "gateState": "not_found",
+      "knowledgeBytes": 0,
+      "expectedGate": "not_found",
+      "promptSha256": "05a6954347e3c3ac7e02f4e0d4e99e4c18c52da0150f67d91a1743efe4cdd8b5",
+      "promptBytes": 7408,
+      "elapsedSeconds": 8.202,
+      "rawReply": "{\n  \"reply\": \"最近的动静，箭雨在林子里响得比往年更甚。西帝国的前锋进来了，诸神保佑，我们还顶得住。可这股子气势，怕是不消几日，巴旦尼亚就要改换模样。\",\n  \"mood\": \"警惕\",\n  \"effects\": [\"紧张\"]\n}",
+      "outputStatus": "ok",
+      "reply": "最近的动静，箭雨在林子里响得比往年更甚。西帝国的前锋进来了，诸神保佑，我们还顶得住。可这股子气势，怕是不消几日，巴旦尼亚就要改换模样。",
+      "mood": "警惕",
+      "hasCommand": false
+    }
+  ],
+  "limitations": [
+    "不启动 Bannerlord，不执行真实战役回调、存档或 UI。",
+    "周报事实使用真实 WeeklyReportService，但事实本身是固定测试 fixture。",
+    "模型输出只用于观察提示词和门控效果，不会写回世界书、人物卡或源码。"
+  ]
+}

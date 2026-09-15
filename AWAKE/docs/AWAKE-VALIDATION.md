@@ -1,5 +1,19 @@
 # AWAKE Validation Matrix
 
+## 迁移后当前重基线（2026-09-11）
+
+- 权威工作区：`D:\AWAKE-Dev`。
+- 当前源码 BuildId：`awake-20260911-dialogue-chain-010`。
+- E1：AWAKE 构建通过；测试工程构建通过，0 warning / 0 error。
+- E2：`Awake.SdkSmoke.exe` 为 `PASS ALL`；Persona Workbench Core Tests 通过。
+- G3-S0：当前 Storage readiness focused evidence 与 scope 校验均为 `pass/0`；实现未超出批准六文件写集，lease 已释放。
+- E3：`unverified`。当前工作区没有可重新核验的 `docs/sync-reports`，不能把历史同步报告当作 010 的同步证据。
+- E4/E5：`not attempted` / `unverified`。没有当前 010 的用户游戏日志或存档回归证据。
+- 当前候选状态：`source_only_pending_rebaseline`；未授权游戏同步。
+- 详细迁移工作：[PLAN-WORKSPACE-MIGRATION-REPAIR-20260911.md](PLAN-WORKSPACE-MIGRATION-REPAIR-20260911.md)。
+
+以下旧矩阵与候选哈希记录保留用于历史追溯；若与本节冲突，以本节为当前状态。
+
 > Evidence is cumulative but not interchangeable. Updated: 2026-08-30 00:46 (Asia/Shanghai).
 > BuildId `awake-20260903-awake-runtime-repair-004` is the current unsynchronized source candidate. It has offline E1/E2 evidence only; historical `002`/`003` evidence is not attributable to `004`.
 > The 2026-08-20 candidate hashes and sync status are historical and are not current evidence.

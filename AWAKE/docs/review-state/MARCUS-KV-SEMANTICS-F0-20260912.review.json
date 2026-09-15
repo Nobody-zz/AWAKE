@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "MARCUS-KV-SEMANTICS-F0-20260912",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "review_cap_exhausted",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "926C3615728D2B07F34AFED97912ABC930D33BED1CC82E62FD6B095A72310DA6",
+      "changed_decision": "区分 FrameworkHost 默认不可用、Runtime Service SQLite 与 AWAKE 显式文件注入；文件适配器纳入完整 lease/cancellation/failure-visible 契约；S0 只使用 typed raw-read；统一 F0 契约 ID 与路径，并要求 verifier fail-closed。",
+      "new_evidence": "独立只读审查返回 REVISE：SQLite 并非 FrameworkHost 默认；文件适配器无身份/取消检查且 Save 失败后内存可见未持久化值；WorldStateStore 会合并 null/empty；S0 引用旧契约名/仍含框架写集；缺失 verifier 必须拒绝 pending/not_wired。",
+      "changed_acceptance": "新增 unavailable-default、文件身份边界、失败后重开、typed raw-read handoff 与 verifier fail-closed 要求。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "661661809E08830828471B6615EAAB382D0BD7A22404BC898C9C211798E43A68",
+      "changed_decision": "契约记录拆成 default-unavailable、runtime-SQLite、injected-file 三路径；文件持久化 lease envelope/按 lease 缓存；明确 cancellation precedence 与 commit_unknown reopen-confirm；S0 添加可验证单一 F0 handoff；verifier JSON 记录路径、入口和 reject statuses。",
+      "new_evidence": "独立只读复审返回 REVISE：default_path 合并两个实际路径；文件 store 无持久 lease/缓存隔离；取消语义不一致；unknown Save 不能承诺旧值；S0 依赖只有文字；verifier 输入为自由文本且 draft/planned 拒绝规则不完整。",
+      "changed_acceptance": "新增三路径独立 verdict、lease envelope、commit_unknown、S0 consumer_handoff 和 machine-readable verifier 约束。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "3811F001A4B8E696194C3D2772F81F434259D5D92BA82934C249178D8E325897",
+      "changed_decision": "冻结 SQLite/file cancellation/deadline priority；锁定 file envelope/lease fingerprint/legacy classification；F0 只证明 adapters + Runtime composition，S0 后续自证 raw-read caller；定义 verifier input/output schema、error/exit matrix，并标记审查额度用尽。",
+      "new_evidence": "独立终审 REVISE：取消/期限错误码与 None 不一致；legacy envelope 未定义；S0 handoff 未有 caller 闭环；Runtime SQLite 缺真实 business composition fixture；verifier 缺输入输出/退出码/未知字段规则。",
+      "changed_acceptance": "新增 cancellation precedence、legacy envelope、Runtime composition、verifier protocol 和 S0 post-F0 caller responsibility。"
+    }
+  ]
+}

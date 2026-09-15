@@ -1,0 +1,19 @@
+{
+  "recordStatus": "complete",
+  "taskId": "PERSONA-AWAKE-JOINT-G3-G0C-20260911",
+  "batchId": "persona-awake-joint-g3-g0c-completion-20260911",
+  "gate": "G3-G0C",
+  "scopeRevision": 1,
+  "scopePath": "docs/persona-awake-joint-g3-g0c-scope.v1.json",
+  "scopeSha256": "956FEEBB8AAB5C8530A9128B555448B1C9CC07CD923204C8AD5EAB21DE82049B",
+  "approvalPath": "docs/persona-awake-joint-g3-g0c-approval.v1.json",
+  "approvalSha256": "76DA8D2E1DDA3D8670741C02A2B62D879A9FE2142D31C5283D6F4F42182BD868",
+  "leasePath": "docs/persona-awake-joint-g3-g0c-lease.v1.json",
+  "leaseSha256": "7052F18FC465B47756F469CBD34E119387A09F3B2A145F859FAF425A30473DE4",
+  "releasedLeaseId": "g3-g0c-20260911-110948",
+  "verifierPath": "tools/persona-awake-joint/verify-g3-scope-authority.ps1",
+  "verifierSha256": "A6B81BBA4D88C810822A90C709D2347E751F6564B71D47A740035F66C405B2A8",
+  "checks": ["authority_pass", "matrix_static_exact_set_pass", "negative_rejects_pass"],
+  "sideEffects": { "launchGame": false, "syncGameDirectory": false, "mutateFrozenCandidate": false, "publish": false },
+  "recordSha256": "CBD830A9D9260F74034107C392EB67C279FE286C88DBBFD1F6288D8174E8FE9A"
+}

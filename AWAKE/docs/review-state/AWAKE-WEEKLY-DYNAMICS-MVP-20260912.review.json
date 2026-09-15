@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-WEEKLY-DYNAMICS-MVP-20260912",
+  "risk_class": "standard",
+  "max_rounds": 2,
+  "round": 2,
+  "consecutive_no_change": 0,
+  "status": "implemented_e2_pending_game",
+  "plan_sha256": "85FA630BD8D22B321A05E901AA8B5511FEE3C20D38F78D767119DB88A84785F9",
+  "user_signoff": true,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "changed_decision": "Terminal player-intent readiness route, explicit Overlay result transport, and latest-completed-week-only processing are now required.",
+      "new_evidence": "Independent static review found the planned terminal readiness route did not exist, the Overlay could not carry three states, and historical completed-week iteration would write misleading empty reports on late saves.",
+      "changed_acceptance": "Added direct terminal readiness, Overlay/VM state transport, and late-save no-backfill acceptance."
+    },
+    {
+      "round": 2,
+      "verdict": "APPROVED",
+      "changed_decision": "No new decision; targeted verification of the R1 correction diff.",
+      "new_evidence": "Independent read-only review confirmed the terminal readiness route, Terminal-to-Overlay-to-VM result transport, latest-completed-week-only rule, and scoped background no-Ensure claim.",
+      "changed_acceptance": "None. All R1 P1 findings closed."
+    }
+  ]
+}

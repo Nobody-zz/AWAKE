@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.persona.g3-a-runtime-evidence.v1",
+  "type": "object",
+  "required": ["schemaVersion", "commandLine", "normalizedCwd", "inputSha256", "outputSha256", "status", "exitCode", "cases"],
+  "properties": {
+    "schemaVersion": { "const": "awake.persona.g3-a-runtime-focused-report.v1" },
+    "commandLine": { "type": "string", "minLength": 1 },
+    "normalizedCwd": { "type": "string", "minLength": 1 },
+    "inputSha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+    "outputSha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+    "status": { "const": "pass" },
+    "exitCode": { "const": 0 },
+    "cases": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["id", "status", "contextFingerprint", "requestSha256", "traceSha256", "observed"],
+        "properties": {
+          "id": { "enum": ["PWB-AWAKE-010-runtime-caller", "PWB-AWAKE-011-dynamic-invalidation", "PWB-AWAKE-019-reload-last-known-good", "PWB-AWAKE-020-runtime-fallback-identity-only"] },
+          "status": { "const": "pass" },
+          "contextFingerprint": { "type": "string", "minLength": 1 },
+          "requestSha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+          "traceSha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+          "observed": { "type": "object", "minProperties": 1 }
+        },
+        "additionalProperties": false
+      },
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false
+}

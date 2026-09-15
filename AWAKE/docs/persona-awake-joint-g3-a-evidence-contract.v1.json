@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "awake.persona.g3-a-evidence-contract.v1",
+  "gate": "G3-A",
+  "reportPath": "tools/persona-awake-joint/artifacts/g3-a-runtime-focused.json",
+  "tracePath": "tools/persona-awake-joint/artifacts/g3-a-runtime-trace.json",
+  "reportSchema": "awake.persona.g3-a-runtime-focused-report.v1",
+  "traceSchema": "awake.persona.g3-a-runtime-focused-trace.v1",
+  "evidenceSchemaPath": "docs/persona-awake-g3-a-runtime-evidence.v1.schema.json",
+  "requiredCommonFields": ["commandLine", "normalizedCwd", "inputSha256", "outputSha256", "status", "exitCode"],
+  "caseRecordRequiredFields": ["id", "status", "contextFingerprint", "requestSha256", "traceSha256", "observed"],
+  "exactCaseIds": ["PWB-AWAKE-010-runtime-caller", "PWB-AWAKE-011-dynamic-invalidation", "PWB-AWAKE-019-reload-last-known-good", "PWB-AWAKE-020-runtime-fallback-identity-only"],
+  "cases": [
+    { "id": "PWB-AWAKE-010-runtime-caller", "capture": "NpcDialogueService.BuildPromptInputAsync -> PersonaRuntimeProvider.BuildProjection -> rawVariables.persona_dsl -> Prompts.CompileAsync request", "requiredObservedFields": ["npcCaller", "provider", "personaDsl", "compileRequest"] },
+    { "id": "PWB-AWAKE-011-dynamic-invalidation", "capture": "single canonical ContextSnapshot input mutation changes fingerprint and invalidates next projection", "requiredObservedFields": ["beforeFingerprint", "afterFingerprint", "invalidation"] },
+    { "id": "PWB-AWAKE-019-reload-last-known-good", "capture": "invalid candidate reload preserves prior bundle, activation, Knowledge, DSL and fingerprint", "requiredObservedFields": ["bundle", "activation", "knowledge", "personaDsl", "fingerprint"] },
+    { "id": "PWB-AWAKE-020-runtime-fallback-identity-only", "capture": "missing or invalid bundle emits fixed RUNTIME_FALLBACK without legacy BuildPersona call", "requiredObservedFields": ["fallbackCode", "identityOnly", "legacyBuildPersonaCalls"] }
+  ],
+  "expectedStatus": "pass",
+  "expectedExitCode": 0
+}

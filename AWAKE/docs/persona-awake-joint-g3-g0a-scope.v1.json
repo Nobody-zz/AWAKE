@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "awake.persona.g3-g0a-scope.v1",
+  "taskId": "PERSONA-AWAKE-JOINT-G3-G0A-20260911",
+  "batchId": "persona-awake-joint-g3-g0a-a0-predecessor-20260911",
+  "gate": "G3-G0A",
+  "scopeRevision": 1,
+  "status": "pending_independent_review",
+  "purpose": "为 G3-A 提供独立且 fail-closed 的已关闭 G3-A0 前序验证，不修改固定 G0C completion record 的通用 verifier。",
+  "authority": {
+    "approvalRecord": "docs/persona-awake-joint-g3-g0a-approval.v1.json",
+    "leaseRecord": "docs/persona-awake-joint-g3-g0a-lease.v1.json",
+    "scopeDigest": "raw_utf8_sha256_of_this_manifest"
+  },
+  "predecessor": {
+    "scopePath": "docs/persona-awake-joint-g3-g0c-scope.v1.json",
+    "scopeSha256": "956FEEBB8AAB5C8530A9128B555448B1C9CC07CD923204C8AD5EAB21DE82049B",
+    "leaseId": "g3-g0c-20260911-110948"
+  },
+  "writeSet": [
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-g3-a0-predecessor.ps1",
+    "_houkai_merge/AWAKE/docs/persona-awake-joint-g3-g0a-scope.v1.json"
+  ],
+  "excludedWriteSet": [
+    "_houkai_merge/AWAKE/src/*",
+    "_houkai_merge/AWAKE.Tests/*",
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-g3-scope-authority.ps1",
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-g3-a0-scope.ps1",
+    "_houkai_merge/AWAKE/ModuleData/*",
+    "_houkai_merge/AWAKE/dist/*",
+    "D:/SteamLibrary/steamapps/common/Mount & Blade II Bannerlord/Modules/AWAKE/*"
+  ],
+  "acceptanceIds": [
+    "G3-G0A-001-a0-historical-closure",
+    "G3-G0A-002-a0-predecessor-fail-closed"
+  ],
+  "requiredEvidence": {
+    "maximumLevel": "E2",
+    "commands": [
+      "verify-g3-a0-predecessor.ps1 positive current-record invocation",
+      "verify-g3-a0-predecessor.ps1 negative temporary-copy invocations"
+    ]
+  },
+  "sideEffects": {
+    "launchGame": false,
+    "syncGameDirectory": false,
+    "mutateFrozenCandidate": false,
+    "publish": false
+  }
+}

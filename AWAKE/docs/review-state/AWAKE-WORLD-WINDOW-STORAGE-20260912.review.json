@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-WORLD-WINDOW-STORAGE-20260912",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "blocked_by_f0_kv_contract",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "2C898AAC04BC32C717EBA2CC433309D3EF46D7B214ACB794297C99242D6D90A0",
+      "changed_decision": "锁定不可变 delta/packed chunk key、七日窗口和 canonical payload；将 AwakeRuntime/ProbeExtension 纳入 Evaluate-only 生命周期写集；Store 复用打开时的 generation-bound context；定义 manifest schema、typed-result 映射、384KiB 计量和容量算法；更新实际 HEAD。",
+      "new_evidence": "独立只读审查返回 REVISE：原 facts-{ordinal} 无 intent/revision 无法安全追加；后台 Evaluate-only 与排除的生命周期文件矛盾；WorldStateStore 默认 context 可能 generation=0；typed results/容量细节未锁定；计划 HEAD 已过期。",
+      "changed_acceptance": "新增 immutable append、packed rollover、generation-aware v1/v2 fixture、精确 typed-result 和 key/capacity 契约。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "41AC1B8FD7A17E5FE83CC935E78C58437A0DC4FDF2EE85C7A39B1D0066C35A7D",
+      "changed_decision": "Restore 改为消费唯一 generation-keyed Evaluate-only storage task；定义 packed schema、packing/unknown-write retry 矩阵；live manifest 限为 committed、intent 使用独立键且 Set 原子替换成为前置验证；保存 WorldStorageLease 而非过期 context；锁定 bounds/duplicate-first/eventId 派生。",
+      "new_evidence": "独立只读复审返回 REVISE：Native-ready Restore 仍可触发 EnsureAsync；packed 缺 schema；collecting/sealed 可能遮蔽旧 manifest；直接复用 RequestContext deadline 过期；day/key/capacity 的幂等顺序未定义；eventId 未含完整事实。",
+      "changed_acceptance": "新增完整 Restore permission、packed validation、live-manifest fault、fresh lease、full-window 与 full-capacity duplicate 断言。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "E440B38ECB522D761A0500618F5D7304C077486F4703AA23CAD1E2E105B6879E",
+      "changed_decision": "S0 以 Marcus atomic-replace 公开行为契约及 adapter proof 为前置；定义 payload ordinal/全量重打包/完整 duplicate scan；收紧 key/window 非零校验；锁定唯一 canonicalizer、UTC/escaping 与 eventId 派生，并标记审查额度用尽。",
+      "new_evidence": "终审 REVISE：计划头状态滞后；SetAsync 原子替换未在 API/adapter 得到证明；manifest 排序/ordinal 与二次 rollover 未定义；packed-only duplicate 未闭合；零日窗口可为 empty；eventId canonicalizer 未锁定。",
+      "changed_acceptance": "新增 framework default/injected atomic proof、two-rollover、64-entry packed duplicate、zero-window rejection、v2 invalid-eventId fail-closed fixture要求。"
+    }
+  ]
+}

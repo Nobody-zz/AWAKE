@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "awake.persona.g3-b-lease.v1",
+  "recordStatus": "released",
+  "taskId": "PERSONA-AWAKE-JOINT-G3-B-20260911",
+  "batchId": "AWAKE-G3-B-IMPLEMENT-20260911",
+  "gate": "G3-B",
+  "scopeRevision": "4.1",
+  "scopePath": "docs/PLAN-AWAKE-G3-B-PERSONA-PERSISTENCE-20260911.md",
+  "scopeSha256": "E6511A2A01F6394A557271D2224370AA125D58A3BDDEA1422DA872869103074E",
+  "currentPlanSha256AtLease": "7AD99E8FAE536A7E452B0CAA34DCFADA69D87EC09C10AE7D4964EA2F933E620D",
+  "approvedReviewState": "docs/review-state/AWAKE-G3-B-PERSONA-PERSISTENCE-R4-20260911.review.json",
+  "status": "released",
+  "owner": "codex-g3-b-persona-persistence",
+  "leaseId": "g3-b-20260911-123415",
+  "writeSet": [
+    "AWAKE/src/PersonaPersistenceModels.cs",
+    "AWAKE/src/AwakeStorageContract.cs",
+    "AWAKE/src/AiTaskConstants.cs",
+    "AWAKE/src/WorldStateStore.cs",
+    "AWAKE/src/AwakeRuntime.cs",
+    "AWAKE/src/AwakeConstants.cs",
+    "AWAKE/src/PersonaModels.cs",
+    "AWAKE/src/PersonaDslGenerator.cs",
+    "AWAKE/src/WorldbookRuntime.cs",
+    "AWAKE/src/NpcDialogueService.cs",
+    "AWAKE/src/PersonaPersistenceService.cs",
+    "AWAKE.Tests/Program.cs",
+    "AWAKE.Tests/AWAKE.Tests.csproj",
+    "AWAKE/docs/evidence/",
+    "AWAKE/docs/checkpoints/AWAKE-MOD-RETURN-20260911-checkpoint.md",
+    "AWAKE/docs/control-plane/CURRENT.json"
+  ],
+  "acquiredAt": "2026-09-11T12:34:15.3470856Z",
+  "releasedAt": "2026-09-11T12:50:15.9029823Z",
+  "sideEffects": {
+    "launchGame": false,
+    "syncGameDirectory": false,
+    "mutateFrozenCandidate": false,
+    "publish": false
+  }
+}

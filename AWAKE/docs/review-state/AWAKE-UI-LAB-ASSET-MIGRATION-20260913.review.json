@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-UI-LAB-ASSET-MIGRATION-20260913",
+  "risk_class": "standard",
+  "round": 2,
+  "prior_round": {
+    "round": 1,
+    "verdict": "REVISE",
+    "required": [
+      "AWAKE 自有宿主的唯一 movie/owner ID、重复打开合并、关闭/重开、界面切换、部分加载失败和卸载清理契约",
+      "新写 E2 生命周期测试：重复打开、关闭前打开、界面切换、部分加载失败、关闭重开；验证 movie、layer、焦点、输入限制全部释放",
+      "完善 verify-import.ps1：递归白名单、拒绝源码/二进制/包/旧命名，并记录历史 UiLabRuntime.cs 与 E2 报告的来源哈希"
+    ]
+  },
+  "status": "plan_revised_local_e2_implemented",
+  "current_verdict": "APPROVED_FOR_LOCAL_E2_ONLY",
+  "review_mode": "self_readonly_review_pass",
+  "independence_note": "本轮复审为同一会话内的只读复审记录，不是独立第三方评审；游戏内实施仍需用户签收。",
+  "user_signoff": false,
+  "implementation_allowed": {
+    "local_e2_slice": true,
+    "in_game_f10_shell_e4": false,
+    "game_directory": false,
+    "awake_dll": false,
+    "existing_dialogue_entry": false
+  },
+  "plan": "docs/PLAN-AWAKE-GAUNTLET-UI-LAB-MIGRATION-20260913.md",
+  "plan_sha256": "855dadc61784ef3be8e944c9482f70fa7f3afc76c73a6b374fe8f42f2d091322",
+  "evidence_ceiling": "E2",
+  "remediation": [
+    {
+      "requirement": "宿主契约",
+      "location": "计划 §1（唯一 movie/owner ID、会话状态机、逐条契约、部分加载失败判定边界）",
+      "artifact": "tools/awake-ui-lab/src/Awake.UiLab.Core/UiLabHostIdentity.cs, UiLabHostSession.cs",
+      "verdict": "covered"
+    },
+    {
+      "requirement": "E2 生命周期测试",
+      "location": "计划 §2",
+      "artifact": "tools/awake-ui-lab/tests/Awake.UiLab.Tests/（16 条用例）",
+      "verdict": "covered"
+    },
+    {
+      "requirement": "导入校验器",
+      "location": "计划 §3",
+      "artifact": "tools/awake-ui-lab/verify-import.ps1, import-manifest.v1.json",
+      "verdict": "covered"
+    }
+  ],
+  "implementation_evidence": {
+    "e0_source_integrity": "PASS: import-manifest.v1.json 中三处导入资产来源与 hash 齐备；prefab 实测哈希与清单一致（5B6ECCC7…42E3）",
+    "e1_import_guard": "PASS: verify-import.ps1 status=passed（scannedFiles=18, sourceFilesScanned=10, failures=0）",
+    "e0_legacy_reference_hashes": "matched: UiLabRuntime.cs=322B9E7D…E05F, ui-lab-owner-lifecycle-20260831.json=952B4F4D…A2197",
+    "e1_negative_test": "PASS: 注入 stray 文件 / .dll / SubModule.xml / 旧命名 / 泄漏依赖 / 篡改来源哈希 共 10 项失败被逐一报出，退出码 1",
+    "e2_lifecycle": "PASS: 16/16 用例通过（dotnet run，离线、game_launch=false、rendering=false）",
+    "e2_evidence_file": "tools/awake-ui-lab/evidence/ui-lab-lifecycle-e2-20260913.json",
+    "e2_evidence_sha256": "8B90B366B975884CF1F3964590F6E63A0127C8E835214E464F0129378C7A130C",
+    "e2_fixture_drive": "PASS: 17/17 登记状态全部造出非空壳（dotnet run -- --drive-fixtures，离线、game_launch=false、rendering=false）",
+    "e2_fixture_drive_evidence_file": "tools/awake-ui-lab/evidence/ui-lab-fixture-drive-20260913.json",
+    "e2_fixture_drive_sha256": "AAE06E206713A2418581C63DC42D7F21CE2AEEDEF4BE6CB05EE13076177AC3CB",
+    "sdk_build": "PASS: dotnet build Awake.UiLab.Tests.csproj（0 警告 0 错误）；dotnet build Awake.UiLab.Core.csproj（netstandard2.0，0 警告 0 错误）",
+    "scope": "tools/awake-ui-lab 内部；未触碰 Awake.dll / NpcDialogueOverlay / NpcDialogueVM / GUI/Prefabs/NpcDialogue.xml / 游戏目录 / 启动器 / 存档",
+    "game_launch": false,
+    "sync": false
+  },
+  "review_notes": [
+    "本地 E2 只证明夹具状态机与宿主生命周期契约；不渲染 Gauntlet，不等同于 Bannerlord 真机渲染。",
+    "基线 Prefab 无确认/拒绝控件，二次确认界面的 Prefab 需另立 AWAKE 自有 prefab，属 E4 前置项。",
+    "LocalOrder=560 为待验证取值，需在 E4 前与 NpcDialogue(541) 等实际层序确认。",
+    "有意不引入跨进程 owner 仲裁：Lab 无共同入口竞争方；若 F10 壳需与其它入口共用 owner 必须重新评估。",
+    "E2 证据文件含 generatedAtUtc，每次运行哈希会变；本记录绑定的是本次复审运行产物。"
+  ],
+  "unverified_e4": [
+    "真机 Gauntlet 渲染与布局（Prefab 在游戏内的实际呈现）",
+    "真机焦点与输入限制的实际夺取/归还",
+    "真机 ScreenManager 层序与 LocalOrder 取值",
+    "真机 movie 释放后置条件（GauntletMovieIdentifier 释放确认）",
+    "F10 壳与现有 NpcDialogueOverlay 的共存与互斥",
+    "确认/拒绝控件的 Prefab 实现",
+    "截图与实机验收"
+  ],
+  "sync_allowed": false,
+  "game_launch_allowed": false
+}

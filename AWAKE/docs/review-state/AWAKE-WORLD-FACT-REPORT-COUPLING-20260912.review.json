@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-WORLD-FACT-REPORT-COUPLING-20260912",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "superseded_by_minimal_e2_slice",
+  "user_signoff": false,
+  "implementation_allowed": false,
+  "plan": "docs/PLAN-WORLD-FACT-REPORT-COUPLING-20260912.md",
+  "plan_sha256": "8DFAA04D097CEC39225815EDBBF4CBCE24943F70B378AB6CDC96904F59D25E39",
+  "review": "docs/REVIEW-WORLD-FACT-REPORT-COUPLING-ROUND3-20260912.md",
+  "dependencies": [
+    "AWAKE-WORLD-FACT-FOUNDATION-20260912",
+    "WorldFactJournal E2",
+    "WorldFactQuery E2"
+  ],
+  "current_verdict": "REVISE",
+  "next_gate": "independent_static_review",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "review": "docs/REVIEW-WORLD-FACT-COUPLING-20260912.md"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "review": "docs/REVIEW-WORLD-FACT-REPORT-COUPLING-ROUND2-20260912.md",
+      "revision": "统一 v2 sourceFactIds/sourceEventIds、typed formal input、窗口/ID/指纹和报告状态交接；未修改源码。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "review": "docs/REVIEW-WORLD-FACT-REPORT-COUPLING-ROUND3-20260912.md",
+      "finding": "已结算周边界、来源数组排序、空结果状态、JournalDigest 算法、superseded 计划阻断标记和 v2 item required 规则仍未闭合。"
+    }
+  ],
+  "evidence_ceiling": "E2",
+  "sync_allowed": false,
+  "game_launch_allowed": false
+}

@@ -1,0 +1,196 @@
+{
+  "schema_version": "awake.worldbook.cluster-referral-map.v1",
+  "map_id": "cluster-referral-map.20260912",
+  "status": "prepared_not_wired",
+  "purpose": "W4 独立审查修订 P1-3（计划第 6 节修订 3）要求的 place_cluster → fallback_referral_ids 接线，其登记表侧与产物侧的待接线交付物。",
+  "blocked_by": "Studio golden 基线：referral-registry.v1.json 被 tests/Awake.WorldbookStudio.Tests/Program.cs:743 钉死为冻结输入；改其字节即 golden hash drifted。详见 review-state/WORLDBOOK-AUTHORING-PROJECTION-20260912.review.json 与 PLAN 第 8.2/8.3 节。",
+  "id_rule": "referral.cluster.<place>.<seq>（计划第 6 节修订 3 命名）；place 取投影批既用 slug，seq 为簇内按 doc_key 升序的 01 起序号。",
+  "semantics": "referral 指向\"同簇兄弟档\"（同一 place_cluster 的另一份档案），不指向人物；display 取目标档标题。运行时措辞未实现（B3 询问链未打通），本表只固定 ID 与映射。",
+  "registry_action_required": "将这 12 条并入 referral-registry.v1.json 并把 registry_version 升为 1.1.0（本次未执行）。",
+  "product_action_required": "为每档的每条 expression 追加 fallback_referral_ids = fallback_by_doc[doc_key]（本次未执行）。",
+  "rebind_required": "登记表哈希变更后，经 Application.cs:742（WB-REGISTRY-001）触发全部 12 档 registry_bindings 重绑。",
+  "cluster_referrals": [
+    {
+      "referral_id": "referral.cluster.kachar-peninsula.01",
+      "seq": "01",
+      "place_cluster": "卡恰尔半岛",
+      "target_doc_key": "kach-land",
+      "display": {
+        "zh-CN": "卡恰尔半岛·地要与用兵"
+      },
+      "publicly_askable": true
+    },
+    {
+      "referral_id": "referral.cluster.kachar-peninsula.02",
+      "seq": "02",
+      "place_cluster": "卡恰尔半岛",
+      "target_doc_key": "kach-own",
+      "display": {
+        "zh-CN": "卡恰尔半岛·归属沿革"
+      },
+      "publicly_askable": true
+    },
+    {
+      "referral_id": "referral.cluster.kachar-peninsula.03",
+      "seq": "03",
+      "place_cluster": "卡恰尔半岛",
+      "target_doc_key": "kach-tales",
+      "display": {
+        "zh-CN": "卡恰尔半岛·三族讲法"
+      },
+      "publicly_askable": true
+    },
+    {
+      "referral_id": "referral.cluster.deriat-village.01",
+      "seq": "01",
+      "place_cluster": "德里亚特",
+      "target_doc_key": "der-furs",
+      "display": {
+        "zh-CN": "德里亚特·毛皮生计"
+      },
+      "publicly_askable": true
+    },
+    {
+      "referral_id": "referral.cluster.deriat-village.02",
+      "seq": "02",
+      "place_cluster": "德里亚特",
+      "target_doc_key": "der-vill",
+      "display": {
+        "zh-CN": "德里亚特·村庄"
+      },
+      "publicly_askable": true
+    },
+    {
+      "referral_id": "referral.cluster.lakonis-lake.01",
+      "seq": "01",
+      "place_cluster": "拉科尼斯湖",
+      "target_doc_key": "lac-lake",
+      "display": {
+        "zh-CN": "拉科尼斯湖·水陆与生计"
+      },
+      "publicly_askable": true
+    },
+    {
+      "referral_id": "referral.cluster.lakonis-lake.02",
+      "seq": "02",
+      "place_cluster": "拉科尼斯湖",
+      "target_doc_key": "lac-tales",
+      "display": {
+        "zh-CN": "拉科尼斯湖·湖色与传说"
+      },
+      "publicly_askable": true
+    },
+    {
+      "referral_id": "referral.cluster.shalas-bay.01",
+      "seq": "01",
+      "place_cluster": "沙拉斯湾",
+      "target_doc_key": "sara-bay",
+      "display": {
+        "zh-CN": "沙拉斯湾·湾澳与港口"
+      },
+      "publicly_askable": true
+    },
+    {
+      "referral_id": "referral.cluster.shalas-bay.02",
+      "seq": "02",
+      "place_cluster": "沙拉斯湾",
+      "target_doc_key": "sara-tales",
+      "display": {
+        "zh-CN": "沙拉斯湾·起源之说与船人怪谈"
+      },
+      "publicly_askable": true
+    },
+    {
+      "referral_id": "referral.cluster.dawn-mountains.01",
+      "seq": "01",
+      "place_cluster": "黎明山脉",
+      "target_doc_key": "dawn-mtn",
+      "display": {
+        "zh-CN": "黎明山脉·山岳"
+      },
+      "publicly_askable": true
+    },
+    {
+      "referral_id": "referral.cluster.dawn-mountains.02",
+      "seq": "02",
+      "place_cluster": "黎明山脉",
+      "target_doc_key": "dawn-stew",
+      "display": {
+        "zh-CN": "黎明山脉·归属与守护"
+      },
+      "publicly_askable": true
+    },
+    {
+      "referral_id": "referral.cluster.dawn-mountains.03",
+      "seq": "03",
+      "place_cluster": "黎明山脉",
+      "target_doc_key": "dawn-taboo",
+      "display": {
+        "zh-CN": "黎明山脉·禁忌与传说"
+      },
+      "publicly_askable": true
+    }
+  ],
+  "fallback_by_doc": {
+    "dawn-mtn": [
+      "referral.cluster.dawn-mountains.02",
+      "referral.cluster.dawn-mountains.03"
+    ],
+    "dawn-stew": [
+      "referral.cluster.dawn-mountains.01",
+      "referral.cluster.dawn-mountains.03"
+    ],
+    "dawn-taboo": [
+      "referral.cluster.dawn-mountains.01",
+      "referral.cluster.dawn-mountains.02"
+    ],
+    "der-furs": [
+      "referral.cluster.deriat-village.02"
+    ],
+    "der-vill": [
+      "referral.cluster.deriat-village.01"
+    ],
+    "kach-land": [
+      "referral.cluster.kachar-peninsula.02",
+      "referral.cluster.kachar-peninsula.03"
+    ],
+    "kach-own": [
+      "referral.cluster.kachar-peninsula.01",
+      "referral.cluster.kachar-peninsula.03"
+    ],
+    "kach-tales": [
+      "referral.cluster.kachar-peninsula.01",
+      "referral.cluster.kachar-peninsula.02"
+    ],
+    "lac-lake": [
+      "referral.cluster.lakonis-lake.02"
+    ],
+    "lac-tales": [
+      "referral.cluster.lakonis-lake.01"
+    ],
+    "sara-bay": [
+      "referral.cluster.shalas-bay.02"
+    ],
+    "sara-tales": [
+      "referral.cluster.shalas-bay.01"
+    ]
+  },
+  "counts": {
+    "clusters": 5,
+    "referrals": 12,
+    "fallback_refs_per_doc": {
+      "dawn-mtn": 2,
+      "dawn-stew": 2,
+      "dawn-taboo": 2,
+      "der-furs": 1,
+      "der-vill": 1,
+      "kach-land": 2,
+      "kach-own": 2,
+      "kach-tales": 2,
+      "lac-lake": 1,
+      "lac-tales": 1,
+      "sara-bay": 1,
+      "sara-tales": 1
+    }
+  }
+}

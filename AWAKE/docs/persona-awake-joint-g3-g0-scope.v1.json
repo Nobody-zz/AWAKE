@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "awake.persona.g3-g0-scope.v1",
+  "taskId": "PERSONA-AWAKE-JOINT-G3-G0-20260911",
+  "batchId": "persona-awake-joint-g3-g0-gate-infrastructure-20260911",
+  "gate": "G3-G0",
+  "scopeRevision": 1,
+  "status": "approved_by_user_exception",
+  "purpose": "建立不属于 A0/A 写集的通用 scope/authority verifier 与结构化 evidence contract。",
+  "authority": {
+    "approvalRecord": "docs/persona-awake-joint-g3-g0-approval.v1.json",
+    "leaseRecord": "docs/persona-awake-joint-g3-g0-lease.v1.json",
+    "scopeDigest": "raw_utf8_sha256_of_this_manifest"
+  },
+  "writeSet": [
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-g3-scope-authority.ps1",
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-contract.ps1",
+    "_houkai_merge/AWAKE/docs/persona-awake-joint-g3-authority-record.v1.schema.json",
+    "_houkai_merge/AWAKE/docs/persona-awake-joint-g3-g0-scope.v1.json",
+    "_houkai_merge/AWAKE/docs/persona-awake-joint-g3-a0-check-matrix.v1.json",
+    "_houkai_merge/AWAKE/docs/fixtures/persona-awake-joint/PWB-AWAKE-017-g3-scope-authority/input.json",
+    "_houkai_merge/AWAKE/docs/fixtures/persona-awake-joint/PWB-AWAKE-017-g3-scope-authority/expected.json"
+  ],
+  "excludedWriteSet": [
+    "_houkai_merge/AWAKE/src/*",
+    "_houkai_merge/AWAKE.Tests/*",
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-runtime-bridge-static.ps1",
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-g3-a0-scope.ps1",
+    "_houkai_merge/AWAKE/ModuleData/*",
+    "_houkai_merge/AWAKE/dist/*",
+    "D:/SteamLibrary/steamapps/common/Mount & Blade II Bannerlord/Modules/AWAKE/*"
+  ],
+  "acceptanceIds": [
+    "G3-G0-001-authority-fail-closed",
+    "G3-G0-002-structured-predecessor",
+    "G3-G0-003-a0-check-matrix-separation"
+  ],
+  "requiredEvidence": {
+    "maximumLevel": "E2",
+    "commands": [
+      "verify-g3-scope-authority.ps1",
+      "PWB-AWAKE-017-g3-scope-authority fixture",
+      "verify-contract.ps1",
+      "verify-e2-matrix.ps1"
+    ]
+  },
+  "sideEffects": {
+    "launchGame": false,
+    "syncGameDirectory": false,
+    "mutateFrozenCandidate": false,
+    "publish": false
+  }
+}

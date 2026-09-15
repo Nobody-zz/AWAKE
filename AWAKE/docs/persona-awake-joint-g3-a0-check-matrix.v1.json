@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "awake.persona.g3-a0-check-matrix.v1",
+  "gate": "G3-A0",
+  "blockingLayer": "G3-A",
+  "checks": [
+    { "id": "s0_schema_constant_mapping", "staticCheckId": "persona_storage_schema_registered", "layer": "G3-S0", "expectedDisposition": "legacy_tool_false_negative", "countsTowardA0Blocking": false },
+    { "id": "g3a_provider_present", "staticCheckId": "persona_runtime_provider_present", "layer": "G3-A", "expectedDisposition": "reject_until_implemented", "countsTowardA0Blocking": true },
+    { "id": "g3a_context_snapshot_present", "staticCheckId": "context_snapshot_present", "layer": "G3-A", "expectedDisposition": "reject_until_implemented", "countsTowardA0Blocking": true },
+    { "id": "g3a_runtime_bundle_present", "staticCheckId": "runtime_bundle_present", "layer": "G3-A", "expectedDisposition": "reject_until_implemented", "countsTowardA0Blocking": true },
+    { "id": "g3a_real_npc_caller", "staticCheckId": "legacy_persona_entry_absent", "layer": "G3-A", "expectedDisposition": "reject_until_implemented", "countsTowardA0Blocking": true },
+    { "id": "g3a_reload_lkg_anchor", "staticCheckId": "reload_preserves_last_known_good", "layer": "G3-A", "expectedDisposition": "reject_until_implemented", "countsTowardA0Blocking": true },
+    { "id": "g3a_context_modes_fingerprint", "staticCheckId": "fingerprint_includes_context_modes", "layer": "G3-A", "expectedDisposition": "reject_until_implemented", "countsTowardA0Blocking": true },
+    { "id": "g3a_overlay_invalidation", "staticCheckId": "overlay_invalidates_persona_cache", "layer": "G3-A", "expectedDisposition": "reject_until_implemented", "countsTowardA0Blocking": true },
+    { "id": "g3b_persona_persistence_runtime_wired", "staticCheckId": "persona_persistence_runtime_wired", "layer": "G3-B", "expectedDisposition": "deferred", "countsTowardA0Blocking": false }
+  ],
+  "expectedStatus": "reject",
+  "expectedExitCode": 10,
+  "expectedFailedCheckIds": [
+    "g3a_provider_present",
+    "g3a_context_snapshot_present",
+    "g3a_runtime_bundle_present",
+    "g3a_real_npc_caller",
+    "g3a_reload_lkg_anchor",
+    "g3a_context_modes_fingerprint",
+    "g3a_overlay_invalidation"
+  ]
+}

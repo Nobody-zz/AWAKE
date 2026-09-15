@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-G3-B-PERSONA-PERSISTENCE-20260911",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "review_budget_exhausted_pending_user_decision",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "c14bfcd406b46419f217689710677e145690b5e2db29727b7f0ab123b5a01f5f",
+      "changed_decision": "",
+      "new_evidence": "Independent read-only review traced the real NPC prompt path, current Storage state construction and dispatch, namespace readiness replacement, SyncData anchor payload, and test-project reachability. It found five P1 blockers and one P2: subject mismatch; no Persona typed storage upsert; Persona namespace can replace existing required stores; anchor and Storage record are unbound; lifecycle/prompt reachability is not testable; snapshot/LKG mutability is unspecified. See docs/PLAN-AWAKE-G3-B-PERSONA-PERSISTENCE-20260911-REVIEW-LOG.md.",
+      "changed_acceptance": ""
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "ef9998c6cb928c47bff11dd9850149c31b646d79a728b4907a4f60145fda6ead",
+      "changed_decision": "Revision 2 was reviewed. It closes the round-1 storage dispatch, namespace replacement, player-anchor authority, hydration reachability and snapshot/LKG plan gaps. A new P1 remains: persistence subject stable id and projection character id are distinct identities and must not share a key or lookup field.",
+      "new_evidence": "Independent read-only reviewer traced NpcDialogueService.cs:1036-1051 and AwakeNpcTarget.cs:69-102. Hero subjects use hero:<id>; generic targets use npc:<character>:a<agent>; the current ContextSnapshot only carries CharacterId. The plan must define a separate persistence subject identity and fixture.",
+      "changed_acceptance": "Revision 3 must add subject-vs-character fixtures and generic-target fallback semantics before the final review round."
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "a60bc7e7b2e32ff1a1c4328b678054c321d2b2b9f1f9070a1dd0c0dd67f39c6c",
+      "changed_decision": "Revision 3 correctly separates Hero persistence subject from definition CharacterId and defers generic NPC persistence, but omitted an explicit exclusion for Hero.MainHero.",
+      "new_evidence": "Independent read-only reviewer verified AwakeNpcTarget.FromHero accepts any Hero and the plan did not require hydration/upsert to reject Hero.MainHero. This permits player Persona Storage I/O despite the plan boundary.",
+      "changed_acceptance": "Revision 4 adds the single eligibility predicate IsHero && Hero != Hero.MainHero && stableId == hero:<Hero.StringId>, requires it in hydration and upsert, and adds a no-Get/no-Set/no-DSL-continuity player Hero fixture."
+    }
+  ]
+}

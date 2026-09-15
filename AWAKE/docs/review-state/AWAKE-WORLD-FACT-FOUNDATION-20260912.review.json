@@ -1,0 +1,25 @@
+{
+  "reviewTarget": "AWAKE world fact foundation",
+  "plan": "docs/PLAN-WORLD-FACT-FOUNDATION-20260912.md",
+  "revision": 3,
+  "status": "implementing",
+  "maxReviewRounds": 3,
+  "completedReviewRounds": 3,
+  "userSignoff": true,
+  "implementationAllowed": true,
+  "scope": "AWAKE runtime world-fact journal, query policies, report bridge, and tests only; excludes Worldbook content, persona cards, dialogue wiring, and Marcus public API changes.",
+  "reviewLogs": [
+    "docs/REVIEW-WORLD-FACT-FOUNDATION-20260912-R1.md",
+    "docs/REVIEW-WORLD-FACT-FOUNDATION-20260912-R2.md",
+    "docs/REVIEW-WORLD-FACT-FOUNDATION-20260912-R3.md"
+  ],
+  "implementationEvidence": {
+    "build": "BUILD_OK api=1.3.15 configuration=Release",
+    "smoke": "PASS: runtime loader/query/overlay/identity/registry/weekly-report/event-ledger smoke",
+    "review": "docs/REVIEW-WORLD-FACT-QUERY-20260912.md",
+    "buildId": "awake-20260912-world-fact-query-004",
+    "sync": false,
+    "gameRun": false
+  },
+  "nextAction": "Independently review the query/report/knowledge handoff, then decide whether the separately governed weekly-report v2 batch may consume WeeklyDynamics; keep Persona Storage and dialogue wiring out of this batch."
+}

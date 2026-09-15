@@ -1,0 +1,51 @@
+{
+ "taskId": "WORLDBOOK-GEO-CAPITAL-BATCH-20260913",
+ "status": "implemented_verified_user_signed_off",
+ "scope": "地点批第二批（都城批 2 档）＋第三批（地理 6 档）＋帕拉汶德帝国版 rumor 增补＋矩阵两轮验收＋冲突③裁定落档",
+ "baselineCommit": "b42a942",
+ "priorReviews": [
+  "docs/review-state/WORLDBOOK-AUTHORING-PROJECTION-20260912.review.json（计划层签收；本文件不重复其范围）"
+ ],
+ "userSignoff": true,
+ "userSignoffSource": "Max 09-13 对话签发（原话）",
+ "userSignoffNote": "「1可以，2登陆地点就西南海岸沙拉斯附近没关系，差不多就行，3补但要注意村民的受教育程度/知识面，巴拉维诺斯可以是类似说书人传唱的传说，但不可能人人都记得清清楚楚，毕竟时间久了，而且离得远的、整日种地的农民也不太能了解，这是中世纪啊」——①8 档签收提交放行；②冲突③闭合＝西南海岸·沙拉斯附近；③帕拉汶德补帝国版 rumor（中世纪认知半径口径）。",
+ "implementation": {
+  "batch2_capitals": "saneopa.yaml + paravenos.yaml（A=官方 settlements 文＋B=编年史 rule 切片；萨涅俄帕定都史＝D 级裁定已登记）",
+  "batch3_geography": "tanaesis-lake / perassic-sea / dryatic-mountains / devseg-plateau / miron-river / nahasa-desert（6 档，身份分层＋文化门正反向）",
+  "paravenos_imperial_rumor": "doc rev 2→3、assertion.paravenos-3 rev 1→2、新增 expr.paravenos-imperial-rumor（rumor 层，villager+entity.culture.empire 门；说书人传说口径，引文＝编年史 V0a 21E39B1E ＋ V2a 95790BE4）",
+  "timeline_conflict3": "WORLDBOOK-TIMELINE-CHAIN-DRAFT-20260912.md 四处落定：头部签发记录、§一约84行、§四冲突表③行、§六迁都链段1（登陆地点＝西南海岸·沙拉斯附近；⑥维持 D 级挂起口径）",
+  "actualCounts": {
+   "documents": 34,
+   "expressions": 152,
+   "grants": 506,
+   "matrixRows": 49
+  }
+ },
+ "verification": {
+  "studioCliValidate": "0 diagnostics（workspace/full-geo1 全 34 档）",
+  "selfCheck": "SELF-CHECK-20260912.json：34 docs / 152 expressions / 506 grants，越限 0 违规（min_detail==layer 不变式＋身份上限）",
+  "matrix": "MATRIX-RESULT-20260912.md §五＋§六：matrix2 49/49 全绿（geo1-full3 包重跑）；I3 闭合实测＝帝国村民 known、返回说书人传说版；I4 封顶、T7 能力门照旧",
+  "compiledPackage": "tools/worldbook-studio/workspace/full-geo1/compiled/geo1-full3（六步权威链：validate→register rev3→select 34→approve→proof→compile；新表达正文程序化确认入包）"
+ },
+ "files": [
+  "docs/worldbook-migration/projection/authoring-out/saneopa.yaml",
+  "docs/worldbook-migration/projection/authoring-out/paravenos.yaml",
+  "docs/worldbook-migration/projection/authoring-out/tanaesis-lake.yaml",
+  "docs/worldbook-migration/projection/authoring-out/perassic-sea.yaml",
+  "docs/worldbook-migration/projection/authoring-out/dryatic-mountains.yaml",
+  "docs/worldbook-migration/projection/authoring-out/devseg-plateau.yaml",
+  "docs/worldbook-migration/projection/authoring-out/miron-river.yaml",
+  "docs/worldbook-migration/projection/authoring-out/nahasa-desert.yaml",
+  "docs/worldbook-migration/projection/authoring-out/_gen_batch2_capitals_20260912.py",
+  "docs/worldbook-migration/projection/authoring-out/_gen_batch3_geography_20260913.py",
+  "docs/worldbook-migration/projection/authoring-out/SELF-CHECK-20260912.json",
+  "docs/worldbook-migration/WORLDBOOK-IMPERIAL-CAPITALS-RESEARCH-20260912.md",
+  "docs/worldbook-migration/MATRIX-RESULT-20260912.md",
+  "docs/worldbook-migration/WORLDBOOK-TIMELINE-CHAIN-DRAFT-20260912.md"
+ ],
+ "notes": [
+  "编年史引文经 337 条台账与 rule json 原文逐字核对（生成器 assert 兜底）",
+  "译名一律官方（帕拉汶德/巴拉维诺斯/萨涅俄帕/沙拉斯/卡拉狄乌斯）；考据译名不进正文",
+  "矩阵判定片段已避开档简介撞词（I3 any_of「说书词里还唱着」为表达文本独有）"
+ ]
+}

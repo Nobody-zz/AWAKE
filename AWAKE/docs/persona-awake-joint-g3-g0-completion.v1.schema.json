@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "awake.persona.g3-g0-completion.v1",
+  "required": ["recordStatus", "taskId", "batchId", "gate", "scopeRevision", "scopePath", "scopeSha256", "approvalPath", "approvalSha256", "leasePath", "leaseSha256", "releasedLeaseId", "verifierPath", "verifierSha256", "checks", "recordSha256"],
+  "recordStatus": "complete",
+  "digestDomain": "canonical_utf8_json_without_recordSha256_property",
+  "requiredChecks": ["authority_pass", "matrix_static_exact_set_pass", "negative_rejects_pass"],
+  "forbiddenSideEffects": ["launchGame", "syncGameDirectory", "mutateFrozenCandidate", "publish"]
+}

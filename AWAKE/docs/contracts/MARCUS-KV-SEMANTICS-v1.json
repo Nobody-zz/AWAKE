@@ -1,0 +1,57 @@
+{
+  "contract_id": "marcus.kv.semantics.v1",
+  "status": "draft",
+  "baseline": {
+    "git_head": "b7eacaa4f679dfcdeb8a45b16337a35f60636a1f",
+    "build_id": "awake-20260911-g3b-persona-storage-001"
+  },
+  "changed_public_members": [
+    {
+      "member": "IKeyValueStore.GetAsync",
+      "semantic": "missing key is Succeeded(null), distinct from present empty string",
+      "status": "planned",
+      "callers": ["WorldStateStore typed raw-read", "MarcusAwakeStorage tests", "AwakeFileStorageService tests"]
+    },
+    {
+      "member": "IKeyValueStore.SetAsync",
+      "semantic": "per-key atomic old-or-new visibility; post-replacement uncertainty is storage.commit_unknown",
+      "status": "planned",
+      "callers": ["WorldStateStore typed raw-read", "MarcusAwakeStorage tests", "AwakeFileStorageService tests"]
+    }
+  ],
+  "default_path": {
+    "name": "FrameworkHost default unavailable storage",
+    "source_path": "framework/MarcusAwakeFramework/src/HostApi.cs",
+    "test_path": "framework/MarcusAwakeFramework/tests",
+    "test_entrypoint": "F0_DefaultUnavailableStorage",
+    "verdict": "pending"
+  },
+  "runtime_sqlite_path": {
+    "name": "Runtime Service SQLite storage",
+    "source_path": "framework/MarcusAwakeStorage/src/SqliteStorageAndRagBackend.cs",
+    "test_path": "framework/MarcusAwakeStorage/tests/Program.cs",
+    "test_entrypoint": "F0_SqliteKvSemantics",
+    "verdict": "pending"
+  },
+  "runtime_composition_path": {
+    "name": "Runtime Service storage business adapter composition",
+    "source_path": "framework/MarcusAwakeFramework/src/RuntimeServiceHost.cs",
+    "test_path": "framework/MarcusAwakeStorage/tests/Program.cs",
+    "test_entrypoint": "F0_RuntimeServiceKvComposition",
+    "verdict": "pending"
+  },
+  "injected_path": {
+    "name": "AWAKE explicit file storage injection",
+    "source_path": "src/AwakeFileStorageService.cs",
+    "test_path": "AWAKE.Tests/Program.cs",
+    "test_entrypoint": "F0_FileKvSemantics",
+    "verdict": "pending"
+  },
+  "verification": {
+    "verifier_path": "tools/verify-framework-contract-change.ps1",
+    "command": "tools/verify-framework-contract-change.ps1 -Contract docs/contracts/MARCUS-KV-SEMANTICS-v1.json",
+    "reject_statuses": ["draft", "pending", "planned", "not_wired"],
+    "required_status": "verified_e2",
+    "verdict": "pending"
+  }
+}

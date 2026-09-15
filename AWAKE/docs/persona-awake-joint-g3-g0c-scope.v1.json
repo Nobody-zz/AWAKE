@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "awake.persona.g3-g0c-scope.v1",
+  "taskId": "PERSONA-AWAKE-JOINT-G3-G0C-20260911",
+  "batchId": "persona-awake-joint-g3-g0c-completion-20260911",
+  "gate": "G3-G0C",
+  "scopeRevision": 1,
+  "status": "approved_by_user_exception",
+  "authority": {
+    "approvalRecord": "docs/persona-awake-joint-g3-g0c-approval.v1.json",
+    "leaseRecord": "docs/persona-awake-joint-g3-g0c-lease.v1.json",
+    "scopeDigest": "raw_utf8_sha256_of_this_manifest"
+  },
+  "predecessor": {
+    "scopePath": "docs/persona-awake-joint-g3-g0-scope.v1.json",
+    "scopeSha256": "657C2AFD40C0C1C86467AC6F058B7D20E6CE3160C22E470677197A35E21B7DA5",
+    "approvalPath": "docs/persona-awake-joint-g3-g0-approval.v1.json",
+    "approvalRecordStatus": "approved_by_user_exception",
+    "approvalUserSignoff": true,
+    "leasePath": "docs/persona-awake-joint-g3-g0-lease.v1.json",
+    "releasedLeaseId": "g3-g0-20260911-102613",
+    "releasedLeaseStatus": "released"
+  },
+  "purpose": "创建并验证不可变 G3-G0 completion record，供 G3-A0 predecessor 使用。",
+  "writeSet": [
+    "_houkai_merge/AWAKE/docs/persona-awake-joint-g3-g0-completion.v1.json",
+    "_houkai_merge/AWAKE/docs/persona-awake-joint-g3-g0-completion.v1.schema.json",
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-g3-scope-authority.ps1",
+    "_houkai_merge/AWAKE/docs/persona-awake-joint-g3-g0c-scope.v1.json",
+    "_houkai_merge/AWAKE/docs/fixtures/persona-awake-joint/PWB-AWAKE-021-g3-g0-completion/input.json",
+    "_houkai_merge/AWAKE/docs/fixtures/persona-awake-joint/PWB-AWAKE-021-g3-g0-completion/expected.json"
+  ],
+  "excludedWriteSet": ["_houkai_merge/AWAKE/src/*", "_houkai_merge/AWAKE.Tests/*", "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-runtime-bridge-static.ps1", "_houkai_merge/AWAKE/ModuleData/*", "_houkai_merge/AWAKE/dist/*", "D:/SteamLibrary/steamapps/common/Mount & Blade II Bannerlord/Modules/AWAKE/*", "frozen-candidate-roots/*", "sync/*", "publish/*"],
+  "acceptanceIds": ["G3-G0C-001-completion-record-pinned", "G3-G0C-002-predecessor-path-hash-fail-closed"],
+  "requiredEvidence": { "maximumLevel": "E2", "commands": ["verify-g3-scope-authority.ps1 completion mode", "PWB-AWAKE-021 completion fixture"] },
+  "sideEffects": { "launchGame": false, "syncGameDirectory": false, "mutateFrozenCandidate": false, "publish": false }
+}

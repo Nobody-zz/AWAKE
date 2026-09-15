@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-WORLD-FACT-REPORT-MINIMAL-E2-20260912",
+  "risk_class": "medium-risk",
+  "max_rounds": 2,
+  "round": 1,
+  "status": "implemented_approved_e2",
+  "user_signoff": true,
+  "implementation_allowed": false,
+  "plan": "docs/PLAN-WORLD-FACT-REPORT-MINIMAL-E2-20260912.md",
+  "plan_sha256": "63FD3C2E8FED4171CC8D6A5349741F18931F46C9FEB24D61B3AD8DFE1ED4428F",
+  "current_verdict": "APPROVED",
+  "review": "docs/REVIEW-WORLD-FACT-REPORT-MINIMAL-E2-IMPLEMENTATION-ROUND2-20260912.md",
+  "dependencies": [
+    "AWAKE-WORLD-FACT-FOUNDATION-20260912",
+    "WorldFactJournal E2",
+    "WorldFactQuery E2"
+  ],
+  "evidence_ceiling": "E2",
+  "implementation_evidence": {
+    "runtime_smoke": "PASS: runtime loader/query/overlay/identity/registry/weekly-report/event-ledger smoke",
+    "sdk_build": "PASS: dotnet build AWAKE.Tests/AWAKE.Tests.csproj --no-restore",
+    "journal_smoke": "PASS: Awake.SdkSmoke.exe --world-fact-journal",
+    "release_build": "PASS: AWAKE/tools/build.ps1 -Configuration Release",
+    "scope": "WorldFactQuery, WeeklyReportService, WorldEventContracts, runtime smoke only",
+    "sync": false,
+    "game_launch": false
+  },
+  "sync_allowed": false,
+  "game_launch_allowed": false
+}

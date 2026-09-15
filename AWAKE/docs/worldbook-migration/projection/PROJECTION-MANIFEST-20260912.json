@@ -33,6 +33,8 @@
     "expected_counts_expressions_note": "expected_counts.expressions=16 为计划期口径，即 R3 target_spans 中带 layer 标注的 16 条。W2 实交 40 = 16 + 中立内核按 authoring.v1『expressions 必填』补挂的 summary 档 24 条。两者在作者 schema 下均合法（expressions 必填但无 minItems）。闭合校验以 assertion=40 / expression=40 / grants=40 为准；口径待裁定项见 docs/evidence/authoring-closure-20260912.json C14。",
     "expected_counts_assertions_note": "assertions=40 与实交一致，无偏差。",
     "referral_gap": "计划第 6 节修订 3 的 place_cluster → fallback_referral_ids 接线未实施（闭合校验 C13 OPEN）；补做会改 referral 登记表哈希并触发全部 registry_bindings 重绑，待裁定。",
-    "same_source_ledger": "SEMANTIC-MIGRATION-ACTION-QUEUE-R2-20260906.json corrections_20260912.expression_count_reconciliation / w4_p1_3_referral_gap"
+    "same_source_ledger": "SEMANTIC-MIGRATION-ACTION-QUEUE-R2-20260906.json corrections_20260912.expression_count_reconciliation / w4_p1_3_referral_gap",
+    "expression_count_ruling_20260912": "C14 裁定：维持 40。40 = R3 带 layer 标注 target_span 16（计划口径）+ 中立内核补挂 summary 档 24；后者文本与断言正文逐字一致，属『授予可见性』的载体而非第二条文案——中立内核若无表达段则对任何身份不可达，分层失地基，故不可收严为 16。闭合复验 C14 由 OPEN 转 PASS。原写 expected_counts.expressions=16 保留不改写。",
+    "referral_gap_ruling_20260912": "C13 处置改挂 BLOCKED（跨线依赖），非世界书侧可单方面完成。阻断证据：① Studio 校验器 Core/Application.cs:820-821 强制 fallback_referral_ids 命中登记表且须 publicly_askable（WB-REFERRAL-001/002）；② referral-registry.v1.json 被 tests/Awake.WorldbookStudio.Tests/Program.cs:743 钉死为 golden 冻结输入（文件 SHA-256 == 6E17075F…），a3-1/a3-2/a3-3 夹具内嵌 version 1.0.0 + 该哈希；③ 改哈希经 Application.cs:742（WB-REGISTRY-001）触发全档 registry_bindings 重绑。golden 不得由实现运行时重生成，且属 Studio C# 测试代码（本计划第 2 节排除）。归属 Studio 侧联合批次；本侧待接线交付物 projection/CLUSTER-REFERRAL-MAP-20260912.json（status=prepared_not_wired，5 簇 / 12 条 / 逐档映射，由闭合复验 C15 校验）。"
   }
 }

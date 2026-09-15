@@ -141,3 +141,44 @@ Studio CLI 结构校验 `0 diagnostics`。
 - `AWAKE\docs\evidence\authoring-closure-20260912.json`（机读闭合证据，该目录 gitignore）
 - 本批产物清单与提交范围见同目录 `STATUS-20260912.md`。
 
+## 8. C13/C14 裁定与 C13 阻断判定（2026-09-12）
+
+> 追加记录，不改写上方第 1～7 节原写内容。凡与本节冲突，以本节为准。
+
+### 8.1 C14 裁定：expression 计数维持 40
+
+裁定：**维持 40**（不收严为 16）。
+
+理由：40 条中有 24 条是中立内核补挂的 summary 档，其文本与对应断言正文**逐字一致**——说明它不是"多写一句文案"，而是**授予可见性的载体**。
+`awake.worldbook.authoring.v1.schema.json` 中 `assertion.expressions` 为必填但无 `minItems`：断言不因无表达段而失效，但**无表达段即对任何身份不可达**。若中立内核一条表达段都不挂，分层机制就失去地基，与"知识要分层、各身份层次分明"的用户定则相冲突。
+
+- 第 6 节修订 7 与 `PROJECTION-MANIFEST.expected_counts.expressions` 原写"预期 16"，**保留不改写**；口径以本节与 `corrections_20260912.expression_count_ruling` 为准。
+- 闭合复验 **C14 由 OPEN 转 PASS**。
+
+### 8.2 C13 补做前调查：为什么不能在世界书侧单干
+
+第 6 节修订 3 要求"每个表达段落 `fallback_referral_ids` 指向同簇兄弟档"。原判"补做将改 12 档 + 登记表并触发重绑"，只算了**世界书侧**的成本。实测查证后又查出三条阻断，且都在本侧之外：
+
+| # | 阻断事实 | 证据位置 |
+|---|---|---|
+| 1 | 校验器强制 referral 必须命中登记表、且目标须公开可问 | `tools/worldbook-studio/src/Awake.WorldbookStudio.Core/Application.cs:820-821`（`WB-REFERRAL-001` 不存在 / `WB-REFERRAL-002` 未开放公开询问） |
+| 2 | 登记表被 Studio golden 测试**钉死为冻结输入**，改字节即测试失败 | `tools/worldbook-studio/tests/Awake.WorldbookStudio.Tests/Program.cs:743`（断言文件 SHA-256 == `6E17075F…`，失败信息 "referral registry golden hash drifted"）；`tests/fixtures/a3-1-authoring-template-golden.v1.json`（`registry.referral_hash` 与 `$.registry_bindings.referral_registry_hash`）、`a3-2-content-graph-golden.v1.json`、`a3-3-preview-golden.v1.json`（多处 `version 1.0.0` + 该哈希内嵌于 envelope/compiled 断言） |
+| 3 | 改哈希触发全部 12 档 registry_bindings 重绑 | `Application.cs:742`（`WB-REGISTRY-001`） |
+
+再叠加两条既有约束：golden 依 A3.1/A3.2 计划约定**不得由当前实现运行时重生成、须独立人工确认**；Studio C# 测试代码已被本计划第 2 节"明确不做"排除。
+
+**结论**：C13 不是世界书侧的小补丁，而是**跨线联合批次** —— 须由 Studio/主干侧改登记表、重签三份 golden，再由本侧重跑保存链完成 12 档重绑。
+
+### 8.3 C13 处置与已备交付物
+
+- **处置**：本侧不再挂"待办"，改挂 **BLOCKED（跨线依赖）**。闭合复验 C13 由 OPEN 转 **BLOCKED**，证据完整留档，**不降级为 PASS**。
+- **已备交付物**：`projection/CLUSTER-REFERRAL-MAP-20260912.json`（`status: prepared_not_wired`）
+  - 5 簇 / 12 条 `referral.cluster.<place>.<seq>` 命名 + 逐档 `fallback_by_doc` 映射，可直接供 Studio 侧批次消费；
+  - 由闭合复验 **C15** 独立校验：命名合规、簇归属与 R3 `place_cluster` 一致、逐档 fallback = 同簇兄弟档且不含自身。
+- **归属批次**：建议随 Studio 侧下一次 golden 基线变更一并做；若另行指定批次，以指定为准。
+
+### 8.4 本轮复验结果
+
+`tools-r3/validate-authoring-closure.ps1`（新增 C15 交付物校验、C13 改 BLOCKED 状态、C14 转 PASS）：
+**PASS 14 / FAIL 0 / OPEN 0 / BLOCKED 1**，VERDICT `STRUCTURALLY_CLOSED_OPEN_ITEMS`；实测 12 档 / assertion 40 / expression 40 / grants 40。
+

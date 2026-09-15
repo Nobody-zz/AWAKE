@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "awake.persona.g3-a-scope.v1",
+  "taskId": "PERSONA-AWAKE-JOINT-G3-A-20260911",
+  "batchId": "persona-awake-joint-g3-a-runtime-projection-20260911",
+  "gate": "G3-A",
+  "scopeRevision": 4,
+  "status": "pending_independent_review",
+  "purpose": "从已验证 v2 bundle 与本轮非 Storage 上下文建立唯一 Persona projection，并从真实 NPC 对话入口注入 persona_dsl。",
+  "authority": {
+    "approvalRecord": "docs/persona-awake-joint-g3-a-approval.v1.json",
+    "leaseRecord": "docs/persona-awake-joint-g3-a-lease.v1.json",
+    "scopeDigest": "raw_utf8_sha256_of_this_manifest",
+    "predecessor": "docs/persona-awake-joint-g3-a0-scope.v1.json must be approved, verified and lease-released"
+  },
+  "predecessor": {
+    "scopePath": "docs/persona-awake-joint-g3-g0-scope.v1.json",
+    "scopeSha256": "657C2AFD40C0C1C86467AC6F058B7D20E6CE3160C22E470677197A35E21B7DA5",
+    "leaseId": "g3-g0-20260911-102613",
+    "a0ScopePath": "docs/persona-awake-joint-g3-a0-scope.v1.json",
+    "a0ScopeSha256": "4D09F3BEF0D1374F595B43881799E0ED1B2AD7D3B1FC4D3C965715E634E472C9",
+    "a0ApprovalSha256": "83C2F22669B6ABF6048AC803FEA94164385C853A0CFF7EF96412EF8A6F721169",
+    "a0LeaseSha256": "F256CBAC6785AF6D8762A43B6DEB6FB52C1AD433466B05A64D2AACD4DE1337A2",
+    "a0LeaseId": "g3-a0-20260911-111638",
+    "requiredA0LeaseStatus": "released",
+    "a0VerifierPath": "tools/persona-awake-joint/verify-g3-a0-predecessor.ps1",
+    "a0VerifierSha256": "E360D674A67627B1A335428A998FE2554F9901E6561E4126B0C97954DC1F5DEF"
+  },
+  "writeSet": [
+    "_houkai_merge/AWAKE/src/NpcDialogueService.cs",
+    "_houkai_merge/AWAKE/src/WorldbookRuntime.cs",
+    "_houkai_merge/AWAKE/src/WorldbookService.cs",
+    "_houkai_merge/AWAKE/src/PersonaDslGenerator.cs",
+    "_houkai_merge/AWAKE/src/PersonaRuntimeModels.cs",
+    "_houkai_merge/AWAKE/src/PersonaRuntimeProvider.cs",
+    "_houkai_merge/AWAKE/src/PersonaRuntimeBundleLoader.cs",
+    "_houkai_merge/AWAKE.Tests/Program.cs",
+    "_houkai_merge/AWAKE/docs/fixtures/persona-load-v2-golden.json"
+  ],
+  "excludedWriteSet": [
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/*",
+    "_houkai_merge/AWAKE/src/AwakeStorageContract.cs",
+    "_houkai_merge/AWAKE/src/AiTaskConstants.cs",
+    "_houkai_merge/AWAKE/src/WorldStateStore.cs",
+    "_houkai_merge/AWAKE/src/AwakeRuntime.cs",
+    "_houkai_merge/AWAKE/src/PersonaPersistenceModels.cs",
+    "_houkai_merge/AWAKE/src/ProbeExtension.cs",
+    "_houkai_merge/AWAKE/ModuleData/*",
+    "_houkai_merge/AWAKE/dist/*",
+    "D:/SteamLibrary/steamapps/common/Mount & Blade II Bannerlord/Modules/AWAKE/*"
+  ],
+  "acceptanceIds": [
+    "PWB-AWAKE-010-runtime-caller",
+    "PWB-AWAKE-011-dynamic-invalidation",
+    "PWB-AWAKE-019-reload-last-known-good",
+    "PWB-AWAKE-020-runtime-fallback-identity-only"
+  ],
+  "requiredEvidence": {
+    "maximumLevel": "E2",
+    "contractStatus": "frozen_for_independent_review_before_execution",
+    "productionEntry": "NpcDialogueService.BuildPromptInputAsync -> PersonaRuntimeProvider.BuildProjection -> rawVariables[persona_dsl] -> Prompts.CompileAsync",
+    "runtimeTestHarness": "AWAKE.Tests/Program.cs captures the rawVariables passed by the real NpcDialogueService prompt-build path; direct PersonaDslGenerator calls are supplementary only.",
+    "testCases": [
+      "PWB-AWAKE-010 invokes the real NPC prompt-build path with a verified v2 bundle and proves ContextSnapshot is non-Storage, Provider is the sole Persona projection caller, persona_dsl reaches Prompts.CompileAsync, and WorldbookService.BuildPersona is not invoked.",
+      "PWB-AWAKE-011 changes exactly one overlay, activation, scene, relation/state or ContextModes input; it proves the canonical fingerprint changes, the cached Persona projection is invalidated, and the next prompt receives the changed DSL.",
+      "PWB-AWAKE-019 loads a valid bundle, then attempts invalid bundle, overlay and activation reloads; it proves the published RuntimeBundle, activation metadata, Knowledge projection, Persona DSL and fingerprint remain the previous last-known-good values.",
+      "PWB-AWAKE-020 exercises missing bundle, invalid bundle and incomplete runtime context; it proves the fixed identity-only RUNTIME_FALLBACK is emitted and the production path does not invoke WorldbookService.BuildPersona."
+    ],
+    "implementationObligations": [
+      "Remove the production NpcDialogueService reference/call to WorldbookRuntime.Current.BuildPersona before any G3-A acceptance can pass; legacy BuildPersona may remain only in an explicitly offline compatibility boundary with no production caller.",
+      "RuntimeBundle, ContextSnapshot and PersonaRuntimeProvider must exist and be reachable from the production NPC caller before PWB-AWAKE-010 can pass.",
+      "No G3-A acceptance may be inferred from A0/G0 static-gate output or symbol/grep presence."
+    ],
+    "negativeCases": [
+      "missing-or-invalid-bundle emits fixed identity-only RUNTIME_FALLBACK without WorldbookService.BuildPersona",
+      "invalid reload preserves bundle, activation metadata, Knowledge projection, Persona DSL and fingerprint",
+      "each overlay or activation mutation invalidates the next Persona projection",
+      "each canonical fingerprint input changes the fingerprint while unrelated values do not"
+    ],
+    "commands": [
+      "AWAKE.Tests focused PWB-AWAKE-010/011/019/020 smoke",
+      "dotnet build AWAKE.Tests.csproj -c Release --nologo",
+      "Awake.SdkSmoke.exe",
+      "verify-runtime-bridge-static.ps1",
+      "verify-g3-scope-authority.ps1",
+      "verify-g3-a0-predecessor.ps1 with the signed scope's A0 approval and lease hashes",
+      "verify-e2-matrix.ps1"
+    ]
+  },
+  "nonGoals": [
+    "PersonaContinuity, PersonaOverride or PersonaRecovery read/write",
+    "Persona persistence, save/load, branch/restart recovery",
+    "game sync, game launch, publication or BuildId change"
+  ],
+  "sideEffects": {
+    "launchGame": false,
+    "syncGameDirectory": false,
+    "mutateFrozenCandidate": false,
+    "publish": false
+  }
+}

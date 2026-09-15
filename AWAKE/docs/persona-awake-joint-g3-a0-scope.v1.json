@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "awake.persona.g3-a0-scope.v1",
+  "taskId": "PERSONA-AWAKE-JOINT-G3-A0-20260911",
+  "batchId": "persona-awake-joint-g3-a0-static-gate-20260911",
+  "gate": "G3-A0",
+  "scopeRevision": 1,
+  "status": "approved",
+  "purpose": "将 Persona runtime 静态门禁拆分为 S0/A/B，并对真实生产 caller 与 Reload 锚点 fail-closed；不修改 runtime 行为。",
+  "authority": {
+    "approvalRecord": "docs/persona-awake-joint-g3-a0-approval.v1.json",
+    "leaseRecord": "docs/persona-awake-joint-g3-a0-lease.v1.json",
+    "scopeDigest": "raw_utf8_sha256_of_this_manifest"
+  },
+  "predecessor": {
+    "completionPath": "docs/persona-awake-joint-g3-g0-completion.v1.json",
+    "completionSha256": "CBD830A9D9260F74034107C392EB67C279FE286C88DBBFD1F6288D8174E8FE9A",
+    "requiredStatus": "complete",
+    "requiredG0ScopeSha256": "657C2AFD40C0C1C86467AC6F058B7D20E6CE3160C22E470677197A35E21B7DA5",
+    "requiredUserSignoff": true
+  },
+  "writeSet": [
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-runtime-bridge-static.ps1",
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-g3-a0-scope.ps1",
+    "_houkai_merge/AWAKE/docs/fixtures/persona-awake-joint/PWB-AWAKE-018-g3-a0-static-gates/input.json",
+    "_houkai_merge/AWAKE/docs/fixtures/persona-awake-joint/PWB-AWAKE-018-g3-a0-static-gates/expected.json"
+  ],
+  "excludedWriteSet": [
+    "_houkai_merge/AWAKE/src/*",
+    "_houkai_merge/AWAKE.Tests/*",
+    "_houkai_merge/AWAKE/ModuleData/*",
+    "_houkai_merge/AWAKE/dist/*",
+    "D:/SteamLibrary/steamapps/common/Mount & Blade II Bannerlord/Modules/AWAKE/*"
+  ],
+  "requiredChecks": [
+    "S0 schema mapping is checked through constants, IsKnownSchema and ExpectedSchema(WorldStateKind.*), not duplicated literals",
+    "G3-A rejects missing PersonaRuntimeProvider, ContextSnapshot, RuntimeBundle, real NPC caller, Reload region or LKG evidence",
+    "G3-B-only persistence runtime wiring is reported outside the G3-A blocking result",
+    "comments, string literals and scene-shout paths cannot satisfy the production caller check"
+  ],
+  "checkMatrixPath": "docs/persona-awake-joint-g3-a0-check-matrix.v1.json",
+  "checkMatrixSha256": "26A1EE2A76BC8708D96F64CC4B7A3A7FF81BCDF5754994649FC4708FBD242B7C",
+  "acceptanceIds": [
+    "G3-A0-001-schema-constant-mapping",
+    "G3-A0-002-missing-anchor-fail-closed",
+    "G3-A0-003-real-npc-caller-only",
+    "G3-A0-004-g3b-storage-separation"
+  ],
+  "requiredEvidence": {
+    "maximumLevel": "E2",
+    "commands": [
+      "verify-g3-a0-scope.ps1",
+      "verify-g3-scope-authority.ps1",
+      "verify-runtime-bridge-static.ps1",
+      "PWB-AWAKE-018-g3-a0-static-gates fixture",
+      "verify-contract.ps1",
+      "verify-e2-matrix.ps1"
+    ],
+    "expectedRuntimeBridgeStatus": "reject",
+    "expectedRuntimeBridgeExitCode": 10,
+    "expectedFailedCheckIdsSource": "docs/persona-awake-joint-g3-a0-check-matrix.v1.json"
+  },
+  "sideEffects": {
+    "launchGame": false,
+    "syncGameDirectory": false,
+    "mutateFrozenCandidate": false,
+    "publish": false
+  }
+}

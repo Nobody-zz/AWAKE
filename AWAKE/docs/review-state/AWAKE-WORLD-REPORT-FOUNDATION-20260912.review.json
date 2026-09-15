@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-WORLD-REPORT-FOUNDATION-20260912",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 3,
+  "consecutive_no_change": 0,
+  "status": "split_superseded",
+  "user_signoff": false,
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "949DF24B4FF7FBBD4FB6B5B0F4F3A700A2C4BCF9F7427EE9454022E982D2CA7E",
+      "changed_decision": "纳入 ProbeExtension、正式报告独立调度与 EnableEventEngine 解耦；锁定 weekly-report.v2 schema/fixture/validator dispatch；同 reportId 指纹冲突 fail-closed；明确单写者/CAS/commit-unknown 边界；禁止 P0 的 200 条原始事实截断；补齐 BrowserVM、双语本地化和日志字段契约。",
+      "new_evidence": "独立只读审查返回 REVISE：报告仍受 Native readiness、读档恢复和 EnableEventEngine 门控；v2 尚无 schema/dispatch；WorldStateStore 对 applied 报告不比较内容且可覆盖；内存 50 与持久化 200 条上限可破坏完整周窗口；菜单仍读缓存并显示旧名；日志验收未闭合。",
+      "changed_acceptance": "新增 CampaignSessionReady/读档恢复/EnableEventEngine=false，v1/v2 fixture 与投影，内容冲突，>200 保留，commit-unknown，菜单状态和结构化日志字段断言。"
+    },
+    {
+      "round": 2,
+      "verdict": "REVISE",
+      "change_fingerprint": "2A6668424BDAF9E0D81F45A1AAF19E204FAE52534C886BFE87E25D73A2400F31",
+      "changed_decision": "将 CampaignSessionReady 的 storage/report 恢复与 Native continuation 分成独立任务；修复 v1 visibility schema；锁定 v1/v2 版本化 reportId、canonical JSON/SHA-256；改为 v2 index + weekly chunk 存储并以 384KiB 分块；定义 missing/empty/corrupt/unavailable、合法空报告修复与工作树基线归因。",
+      "new_evidence": "独立只读复审返回 REVISE：ProbeExtension 仅在 Native Ready 后启动 Restore；v1 JSON schema 漏 visibility；world state 的缺键补形状会掩盖损坏；单值上限 512KiB 且事实集中一键/截断 200；v1/v2 同窗口 ID 与指纹未定义；空报告被拒绝修复；计划 010 与实际 AwakeVersion 的 G3B BuildId 不一致。",
+      "changed_acceptance": "新增 Native=false 生命周期入口、v1 byte-preserved schema fixture、corrupt/empty 分流、跨 chunk 周窗口/512KiB、同窗口 v1/v2 UI 优先级、合法空报告修复和 canonical fingerprint fixture。"
+    },
+    {
+      "round": 3,
+      "verdict": "REVISE",
+      "change_fingerprint": "EA739CA2D6CD5F73BB5A92E0EC4BC1446792DBE9145A244DE870CABA79699919",
+      "changed_decision": "移除无限增长的全局 v2 index，改用每周确定性 manifest 作为唯一提交点；定义 chunk-first/manifest-last 崩溃恢复、64/16 chunk 容量上界、精确 v2 字段与 fingerprint 结构，以及后台仅 Evaluate 的 Storage 权限路径；基线 HEAD 更新为 f8cfc22。",
+      "new_evidence": "终审返回 REVISE：计划 HEAD 过期；计划状态仍写 round_2_pending；多键 index/chunk/report 无事务恢复；全局 index 无容量边界；v2 policy/window/canonical 细节不完整；CampaignSessionReady 会经 EnsureWorldStateReadyAsync 调用 PermissionGate.EnsureAsync，违反后台 Evaluate-only 规则。",
+      "changed_acceptance": "新增 multi-key crash recovery、manifest corruption、chunk capacity、无全局索引增长、后台无权限请求和基线证据断言。"
+    }
+  ]
+}

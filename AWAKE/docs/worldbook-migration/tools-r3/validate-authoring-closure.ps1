@@ -5,7 +5,9 @@
 #   1. assertion ↔ claim 计数与 epistemic 映射一一对应
 #   2. expression ↔ target span 覆盖（每条断言至少一条表达段）
 #   3. layer / grants / scope 一致性 + 登记表引用合法性
-# 同时把两项"口径待裁定/遗留未实现"显式记为 OPEN，不静默通过。
+# 同时把"口径待裁定/遗留未实现/跨线阻断"显式记为 OPEN 或 BLOCKED，不静默通过。
+#   OPEN    = 本侧可直接完成的待裁定/待办项
+#   BLOCKED = 经查不能由世界书侧单方面完成、依赖他线基线的项（须留证据，不降级为 PASS）
 #
 # 输入（全部只读）：
 #   - R3 权威文档（已签收基线，冻结不回写）
@@ -24,6 +26,7 @@ param(
     [string]$YamlDir       = 'D:\AWAKE-Dev\AWAKE\tools\worldbook-studio\workspace\authoring',
     [string]$PlanDir       = 'D:\AWAKE-Dev\AWAKE\docs\worldbook-studio-plan',
     [string]$ProjectionDir = 'D:\AWAKE-Dev\AWAKE\docs\worldbook-migration\projection',
+    [string]$EntityRegistryRoot = 'D:\AWAKE-Dev\AWAKE\docs\mappings\persona-entity\generations',
     [string]$OutFile       = 'D:\AWAKE-Dev\AWAKE\docs\evidence\authoring-closure-20260912.json'
 )
 $ErrorActionPreference = 'Stop'
@@ -114,7 +117,20 @@ $profileReg = Read-Json (Join-Path $PlanDir 'profile-registry.v1.json')
 $referralReg = Read-Json (Join-Path $PlanDir 'referral-registry.v1.json')
 
 $profileIds  = @($profileReg.profiles | ForEach-Object { $_.id })
-$loreIds     = @($loreReg.entities  | ForEach-Object { $_.entity_id })
+# 清单内两类锚点：lore（语义实体）与 game_anchored（游戏锚定实体，ID 权威来源为 persona-entity 登记表）
+$loreIds        = @($loreReg.entities | Where-Object { $_.anchor_class -ne 'game_anchored' } | ForEach-Object { $_.entity_id })
+$gameAnchorIds  = @($loreReg.entities | Where-Object { $_.anchor_class -eq 'game_anchored' } | ForEach-Object { $_.entity_id })
+
+# persona-entity 登记表（generations 下最新一版）——game_anchored 锚点的真实性复核面
+$registryIds = @()
+$registryDebug = "未找到 entity-registry.v1.json（root=$EntityRegistryRoot）"
+$entityRegFile = @(Get-ChildItem -Path $EntityRegistryRoot -Recurse -Filter 'entity-registry.v1.json' -ErrorAction SilentlyContinue |
+    Sort-Object LastWriteTime -Descending) | Select-Object -First 1
+if ($null -ne $entityRegFile) {
+    $entityReg = Read-Json $entityRegFile.FullName
+    $registryIds = @($entityReg.entities | ForEach-Object { $_.entity_id })
+    $registryDebug = "来源 $($entityRegFile.Directory.Name)/$($entityRegFile.Name)，$($registryIds.Count) 实体"
+}
 
 $r3 = [ordered]@{}
 foreach ($f in $docFiles) {
@@ -257,17 +273,40 @@ if ($badUnres.Count -eq 0 -and $missingMani.Count -eq 0) {
     Add-Check 'C11' 'unresolved 知识限制 claim 投影为 interpretation 且 manifest 有溯源标记' 'FAIL' (($badUnres + $missingMani) -join '; ')
 }
 
-# C12 entity_ids 合法且与 lore 清单一致
+# C12 entity_ids 合法：lore 锚点须登记于本清单，game_anchored 锚点须同时存在于 persona-entity 登记表
+# （2026-09-12 放宽：原口径『必须全部是 entity.lore.*』是德里亚特误分类的镜像，会把正确绑定误报 FAIL）
 $badEntity = @()
 foreach ($key in $perDoc.Keys) {
     $ids = @($perDoc[$key].entity_ids)
     if ($ids.Count -eq 0) { $badEntity += "$key entity_ids 为空"; continue }
-    foreach ($id in $ids) { if ($loreIds -notcontains $id) { $badEntity += "${key}:${id} 不在 lore 清单" } }
+    foreach ($id in $ids) {
+        if ($loreIds -contains $id) { continue }
+        if ($gameAnchorIds -contains $id) {
+            if ($registryIds.Count -gt 0 -and $registryIds -notcontains $id) { $badEntity += "${key}:${id} 声明为 game_anchored 但不在 persona-entity 登记表" }
+            continue
+        }
+        $badEntity += "${key}:${id} 不在清单（既非 lore 亦非 game_anchored）"
+    }
 }
-if ($badEntity.Count -eq 0) { Add-Check 'C12' 'entity_ids 非空且全部登记于 LORE-ENTITY-REGISTER（entity.lore.*）' 'PASS' "引用实体 $((($entityUsed | Sort-Object -Unique)) -join ', ')" }
-else { Add-Check 'C12' 'entity_ids 非空且全部登记于 LORE-ENTITY-REGISTER（entity.lore.*）' 'FAIL' ($badEntity -join '; ') }
+$c12title = 'entity_ids 非空；lore 锚点登记于本清单、game_anchored 锚点存在于 persona-entity 登记表'
+$c12detail = "lore=$($loreIds.Count) / game_anchored=$($gameAnchorIds.Count)；persona-entity $registryDebug；引用实体 $((($entityUsed | Sort-Object -Unique)) -join ', ')"
+if ($badEntity.Count -eq 0) { Add-Check 'C12' $c12title 'PASS' $c12detail }
+else { Add-Check 'C12' $c12title 'FAIL' ($badEntity -join '; ') }
 
-# C13 【OPEN】W4 独立审查修订 P1-3：place_cluster → fallback_referral_ids 接线
+# C16 【BLOCKED】语义锚点（entity.lore.*）在现行 RuntimePackageCompiler 下不可编译
+# 依据：CanonicalEntityRef 对非 hero/clan/settlement 的 kind 抛 WB-DOC-003（RuntimePackageCompiler.cs:253），
+# BuildEntry 对每档每个 entity_id 无条件调用（同文件 147）；测试 EditorContent.Tests/Program.cs:96-104 钉死该语义。
+# 属 Studio C# 侧改动，本侧不实施；显式记为 BLOCKED，不静默通过。
+$loreAnchorDocs = @($perDoc.Keys | Where-Object { @($perDoc[$_].entity_ids | Where-Object { $loreIds -contains $_ }).Count -gt 0 })
+$c16 = "含 entity.lore.* 锚点的档案 $($loreAnchorDocs.Count)/$($perDoc.Keys.Count) 档（$($loreAnchorDocs -join ', ')）；"
+$c16 += "RuntimePackageCompiler.CanonicalEntityRef（Core/RuntimePackageCompiler.cs:253）对 parts[1] 非 hero/clan/settlement 抛 WB-DOC-003，BuildEntry 无条件调用（同文件 147），故这些档案 Compile() 必失败。"
+$c16 += " 证据三条：① 源码白名单；② 无条件调用点；③ tests/Awake.WorldbookStudio.EditorContent.Tests/Program.cs:96-104（entity.settlement.town_v5 通过 / entity.bogus.thing 抛 WB-DOC-003）。"
+$c16 += " 与 ENTRY-LINKAGE-MAP 第 26 行『无需改 C#』矛盾：该结论只对锚点名称查找（LookupEntityAnchorNames，容错）成立，对引用规范化（CanonicalEntityRef，白名单）不成立，合并 lore 分区解决不了。"
+$c16 += " 未暴露原因：W6 走 schema 结构校验，未执行 Compile()（投影批 scope 已排除 compile/export/publish）。"
+$c16 += " 归属 Studio 侧（改 RuntimePackageCompiler + 测试夹具），处置选项见 LORE-ENTITY-REGISTER corrections_20260912.compile_blocker_lore_kind。"
+Add-Check 'C16' '语义锚点可编译性（entity.lore.* vs 编译器 kind 白名单）' 'BLOCKED' $c16
+
+# C13 【BLOCKED】W4 独立审查修订 P1-3：place_cluster → fallback_referral_ids 接线
 $referralIds = @($referralReg.referrals | ForEach-Object { $_.id })
 $clusterReferrals = @($referralIds | Where-Object { $_ -like 'referral.cluster.*' })
 $totalFallback = 0
@@ -275,21 +314,64 @@ foreach ($key in $yamlText.Keys) { $totalFallback += ([regex]::Matches($yamlText
 if ($clusterReferrals.Count -gt 0 -and $totalFallback -ge $totalExpressions) {
     Add-Check 'C13' 'W4 P1-3：place_cluster → fallback_referral_ids 接线' 'PASS' "referral.cluster.*=$($clusterReferrals.Count) 条；fallback 覆盖 $totalFallback/$totalExpressions"
 } else {
-    Add-Check 'C13' 'W4 P1-3：place_cluster → fallback_referral_ids 接线' 'OPEN' "未实现：referral 登记表仅有 $($referralIds.Count) 条通用 referral（无 referral.cluster.*），12 档产物 fallback_referral_ids 覆盖 0/$totalExpressions。计划第 6 节修订 3 要求每段表达挂同簇兄弟档 referral。需裁定是否补做（补做将改动 12 档产物 + referral 登记表，登记表哈希变更会触发全部 registry_bindings 重绑）"
+    $c13 = "未实施，经查为跨线阻断项，不能由世界书侧单方面完成："
+    $c13 += " ① 校验器 Core/Application.cs:820-821 对每条 fallback_referral_ids 强制命中登记表（WB-REFERRAL-001）、且目标须 publicly_askable（WB-REFERRAL-002）——故必须先扩 referral-registry；"
+    $c13 += " ② 该登记表被 Studio golden 测试钉死为冻结输入：tests/Awake.WorldbookStudio.Tests/Program.cs:743 断言其文件 SHA-256 == 6E17075F…（失败信息 'referral registry golden hash drifted'），tests/fixtures/a3-1-authoring-template-golden.v1.json 与 a3-2/a3-3 golden 夹具内嵌 version 1.0.0 + 该哈希；"
+    $c13 += " ③ 改哈希还会经 Application.cs:742（WB-REGISTRY-001）触发全部 12 档 registry_bindings 重绑；"
+    $c13 += " ④ golden 依 A3.1/A3.2 计划约定『不得由当前实现运行时重生成、须独立人工确认』，且属 Studio C# 测试代码——本投影计划第 2 节『明确不做』已排除。"
+    $c13 += " 结论：归 Studio 侧联合批次（改登记表 + 重签 golden + 12 档重绑）。世界书侧待接线交付物已备：projection/CLUSTER-REFERRAL-MAP-20260912.json（5 簇 / 12 条 referral.cluster.* / 逐档 fallback 映射，由 C15 独立校验）。"
+    $c13 += " 当前实测：referral 登记表 $($referralIds.Count) 条通用 referral、无 referral.cluster.*；12 档 fallback 覆盖 0/$totalExpressions。"
+    Add-Check 'C13' 'W4 P1-3：place_cluster → fallback_referral_ids 接线' 'BLOCKED' $c13
 }
 
-# C14 【OPEN】表达式计数口径
+# C14 【已裁定】表达式计数口径：维持 40
 $layerSpans = 0
 foreach ($key in $r3.Keys) { $layerSpans += @($r3[$key].target_spans | Where-Object { $_.PSObject.Properties.Name -contains 'layer' }).Count }
-if ($totalExpressions -eq $ExpectedExpressionsPlan) {
-    Add-Check 'C14' 'expression 计数口径（计划 16 / 实测）' 'PASS' "实测 $totalExpressions"
+$RuledExpressions = 40
+if ($totalExpressions -eq $RuledExpressions) {
+    Add-Check 'C14' "expression 计数口径已裁定：维持 $RuledExpressions" 'PASS' "实测 $totalExpressions = R3 带 layer 标注 target_span $layerSpans 条（即第 6 节修订 7 的计划口径 $ExpectedExpressionsPlan）+ 中立内核补挂 summary 档 $($totalExpressions - $layerSpans) 条。裁定理由：表达段是『可达性载体』而非文案副本（summary 档文本与断言正文逐字一致）——中立内核若无表达段则对任何身份不可达，分层失去地基。authoring.v1 schema 下 40 与 16 均合法（expressions 必填但无 minItems）。裁定记录：PLAN 第 8.1 节 / PROJECTION-MANIFEST.corrections_20260912.expression_count_ruling；第 6 节修订 7 原写『预期 16』保留不改写。"
 } else {
-    Add-Check 'C14' 'expression 计数口径（计划 16 / 实测）' 'OPEN' "实测 $totalExpressions 条 = R3 layer 标注 target_span $layerSpans 条 + 中立内核补挂摘要档 $($totalExpressions - $layerSpans) 条。计划第 6 节修订 7 记『预期 expression 16』，PROJECTION-MANIFEST.expected_counts.expressions 亦写 16。口径待裁定：(a) 维持 40（中立内核以 summary 层对 profile.commoner/regional 可达）；(b) 收严为 16（中立内核不挂表达段，仅作正典一致性用）。两种在 authoring.v1 schema 下均合法（expressions 必填但无 minItems）"
+    Add-Check 'C14' "expression 计数口径已裁定：维持 $RuledExpressions" 'FAIL' "实测 $totalExpressions，与裁定值 $RuledExpressions 不一致，须重新裁定。"
+}
+
+# C15 待接线交付物 CLUSTER-REFERRAL-MAP 与 R3 place_cluster 一致（校验本侧交付物本身）
+$mapPath = Join-Path $ProjectionDir 'CLUSTER-REFERRAL-MAP-20260912.json'
+$badMap = @(); $mapEntries = @(); $mapClusters = 0
+if (-not (Test-Path $mapPath)) { $badMap += 'CLUSTER-REFERRAL-MAP-20260912.json 缺失' }
+else {
+    $map = Read-Json $mapPath
+    $mapEntries = @($map.cluster_referrals)
+    $fb = $map.fallback_by_doc
+    $mapClusters = @($mapEntries | ForEach-Object { $_.place_cluster } | Sort-Object -Unique).Count
+    if ($mapEntries.Count -ne $docFiles.Count) { $badMap += "map referral 数 $($mapEntries.Count) 不等于档数 $($docFiles.Count)" }
+    $ids = @($mapEntries | ForEach-Object { $_.referral_id })
+    if (($ids | Sort-Object -Unique).Count -ne $ids.Count) { $badMap += 'referral_id 有重复' }
+    if ($ids.Count -ne ($ids | Sort-Object -Unique).Count) { $badMap += 'referral_id 去重后数量不符' }
+    foreach ($e in $mapEntries) {
+        if ($e.referral_id -notmatch '^referral\.cluster\.[a-z0-9]+(?:[._-][a-z0-9]+)*$') { $badMap += "命名不合规: $($e.referral_id)"; continue }
+        if (-not $r3.Contains($e.target_doc_key)) { $badMap += "target_doc_key 不在 R3: $($e.target_doc_key)"; continue }
+        if ($r3[$e.target_doc_key].place_cluster -ne $e.place_cluster) { $badMap += "簇归属与 R3 不符: $($e.target_doc_key)" }
+        if ($e.publicly_askable -ne $true) { $badMap += "publicly_askable 非 true: $($e.referral_id)" }
+    }
+    foreach ($key in $r3.Keys) {
+        $cl = $r3[$key].place_cluster
+        $expect = @($mapEntries | Where-Object { $_.place_cluster -eq $cl -and $_.target_doc_key -ne $key } | ForEach-Object { $_.referral_id } | Sort-Object)
+        $got = @()
+        $prop = $fb.PSObject.Properties[$key]
+        if ($prop) { $got = @($prop.Value | Sort-Object) }
+        if (($expect -join ',') -ne ($got -join ',')) { $badMap += "${key} fallback 映射不符（期望 $($expect -join '/')，实得 $($got -join '/')）" }
+    }
+}
+if ($badMap.Count -eq 0) {
+    Add-Check 'C15' '待接线交付物 CLUSTER-REFERRAL-MAP 与 R3 place_cluster 一致' 'PASS' "$mapClusters 簇 / $($mapEntries.Count) 条 referral.cluster.* / 逐档 fallback 映射与同簇兄弟档严格相等（status=prepared_not_wired，未接线）"
+} else {
+    Add-Check 'C15' '待接线交付物 CLUSTER-REFERRAL-MAP 与 R3 place_cluster 一致' 'FAIL' ($badMap -join '; ')
 }
 
 # ---------- 证据落盘 ----------
 $fail = @($checks | Where-Object { $_.status -eq 'FAIL' })
 $open = @($checks | Where-Object { $_.status -eq 'OPEN' })
+$blocked = @($checks | Where-Object { $_.status -eq 'BLOCKED' })
 $evidence = [ordered]@{
     schema_version = 'awake.worldbook.authoring-closure.v1'
     date           = '2026-09-12'
@@ -313,9 +395,11 @@ $evidence = [ordered]@{
         pass = @($checks | Where-Object { $_.status -eq 'PASS' }).Count
         fail = $fail.Count
         open = $open.Count
+        blocked = $blocked.Count
         blocking = @($fail | ForEach-Object { "$($_.id) $($_.title)" })
         open_items = @($open | ForEach-Object { "$($_.id) $($_.title)" })
-        verdict = if ($fail.Count -eq 0 -and $open.Count -eq 0) { 'CLOSED' }
+        blocked_items = @($blocked | ForEach-Object { "$($_.id) $($_.title)" })
+        verdict = if ($fail.Count -eq 0 -and $open.Count -eq 0 -and $blocked.Count -eq 0) { 'CLOSED' }
                   elseif ($fail.Count -eq 0) { 'STRUCTURALLY_CLOSED_OPEN_ITEMS' }
                   else { 'NOT_CLOSED' }
     }
@@ -328,13 +412,13 @@ if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Ou
 Write-Host ''
 Write-Host '===== W6 闭合复验 =====' -ForegroundColor Cyan
 foreach ($c in $checks) {
-    $color = switch ($c.status) { 'PASS' { 'Green' } 'FAIL' { 'Red' } default { 'Yellow' } }
+    $color = switch ($c.status) { 'PASS' { 'Green' } 'FAIL' { 'Red' } 'BLOCKED' { 'Magenta' } default { 'Yellow' } }
     Write-Host ("[{0}] {1,-4} {2}" -f $c.status, $c.id, $c.title) -ForegroundColor $color
     Write-Host ("        {0}" -f $c.detail)
 }
 Write-Host ''
 Write-Host ("assertion={0}  expression={1}  grants={2}  档数={3}" -f $totalAssertions, $totalExpressions, $totalGrants, $docFiles.Count)
-Write-Host ("VERDICT = {0}  (PASS {1} / FAIL {2} / OPEN {3})" -f $evidence.summary.verdict, $evidence.summary.pass, $fail.Count, $open.Count) -ForegroundColor Cyan
+Write-Host ("VERDICT = {0}  (PASS {1} / FAIL {2} / OPEN {3} / BLOCKED {4})" -f $evidence.summary.verdict, $evidence.summary.pass, $fail.Count, $open.Count, $blocked.Count) -ForegroundColor Cyan
 Write-Host ("evidence -> {0}" -f $OutFile)
 if ($fail.Count -gt 0) { exit 1 }
 exit 0

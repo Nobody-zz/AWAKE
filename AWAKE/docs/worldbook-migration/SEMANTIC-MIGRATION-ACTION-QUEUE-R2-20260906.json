@@ -357,8 +357,36 @@
       "measured_by": "worldbook-side (workbuddy/阿砚)",
       "actual": "referral-registry.v1.json 仅 4 条通用 referral，无 referral.cluster.*；12 档产物 fallback_referral_ids 覆盖 0/40。",
       "impact": "补做将改动 12 档产物 + referral 登记表；登记表哈希（6E17075F…）变更会触发全部 12 档 registry_bindings 重绑。",
-      "status": "未实现待裁定（OPEN，闭合复验 C13）。需 Max 定是否补做、以及补做归属哪个批次。",
-      "evidence": "docs/evidence/authoring-closure-20260912.json（C13）"
+      "status": "未实现（CLOSED 阶段判定为 BLOCKED，闭合复验 C13）。原待裁定项，2026-09-12 已裁定。",
+      "evidence": "docs/evidence/authoring-closure-20260912.json（C13）",
+      "ruling_20260912": "见同节 w4_p1_3_referral_gap_ruling：改挂 BLOCKED（跨线依赖），归 Studio 侧联合批次。"
+    },
+    "w4_p1_3_referral_gap_ruling": {
+      "decision": "C13 处置：改挂 BLOCKED（跨线依赖），不在世界书侧实施；归属 Studio 侧联合批次。",
+      "decided_at": "2026-09-12",
+      "decided_by": "worldbook-side (workbuddy/阿砚) 调查+建议，采纳前由 Max 指示『做』",
+      "why_not_worldbook_only": "原判只算了本侧成本（改 12 档 + 登记表 + 重绑）。实测另有三条本侧之外的硬阻断。",
+      "blocking_evidence": [
+        "① 校验器强制 referral 合法性：tools/worldbook-studio/src/Awake.WorldbookStudio.Core/Application.cs:820-821 —— 每条 fallback_referral_ids 必须命中 referral 登记表（WB-REFERRAL-001『fallback referral 不存在』），且目标须 publicly_askable（WB-REFERRAL-002『fallback referral 目标未开放公开询问』）。故必须先扩登记表，否则挂上即校验失败。",
+        "② 登记表被 Studio golden 测试钉死为冻结输入：tools/worldbook-studio/tests/Awake.WorldbookStudio.Tests/Program.cs:743 断言 docs/worldbook-studio-plan/referral-registry.v1.json 的文件 SHA-256 等于 golden 值 6E17075F…（失败信息 'referral registry golden hash drifted'）；tests/fixtures/a3-1-authoring-template-golden.v1.json（registry.referral_hash 与 $.registry_bindings.referral_registry_hash）、a3-2-content-graph-golden.v1.json、a3-3-preview-golden.v1.json（多处 version 1.0.0 + 该哈希内嵌于 envelope/compiled 断言）均内嵌同一哈希。改登记表字节即打掉 Studio 测试套件。",
+        "③ 重绑连锁：Application.cs:742（WB-REGISTRY-001）要求每档 registry_bindings.referral_registry_hash 等于当前登记表哈希，故改哈希触发全部 12 档重绑（此条原已识别）。"
+      ],
+      "additional_constraints": [
+        "A3.1/A3.2 计划明确 golden『不得由当前实现运行时重生成，必须独立人工确认』。",
+        "Studio C# 测试代码属本投影计划第 2 节『明确不做』范围。"
+      ],
+      "deliverable_prepared": "docs/worldbook-migration/projection/CLUSTER-REFERRAL-MAP-20260912.json（status=prepared_not_wired）：5 簇 / 12 条 referral.cluster.<place>.<seq> 命名 + 逐档 fallback_by_doc 映射，供 Studio 侧批次直接消费；由闭合复验 C15 独立校验（命名合规、簇归属与 R3 place_cluster 一致、逐档 fallback = 同簇兄弟档且不含自身）。",
+      "status": "BLOCKED（闭合复验 C13，证据不降级为 PASS）",
+      "evidence": "docs/evidence/authoring-closure-20260912.json（C13 BLOCKED / C15 PASS）"
+    },
+    "expression_count_ruling": {
+      "decision": "C14 裁定：维持 40（不收严为 16）。",
+      "decided_at": "2026-09-12",
+      "decided_by": "worldbook-side (workbuddy/阿砚) 建议，采纳前由 Max 指示『做』",
+      "rationale": "24 条补挂 summary 档的文本与对应断言正文逐字一致，说明其性质是『授予可见性的载体』而非第二条文案：断言不因无表达段而失效，但无表达段即对任何身份不可达。若中立内核一条表达段都不挂，分层机制失去地基，与用户定则『知识要分层、各身份层次分明』冲突。authoring.v1 schema 下 40 与 16 均合法（expressions 必填但无 minItems），故取 40。",
+      "ledger_note": "计划第 6 节修订 7 与 manifest expected_counts.expressions 原写 16 保留不改写；口径以本节与 manifest corrections_20260912.expression_count_ruling_20260912 为准。",
+      "status": "已裁定（闭合复验 C14 由 OPEN 转 PASS）",
+      "evidence": "docs/evidence/authoring-closure-20260912.json（C3/C5/C6/C14）"
     }
   }
 }

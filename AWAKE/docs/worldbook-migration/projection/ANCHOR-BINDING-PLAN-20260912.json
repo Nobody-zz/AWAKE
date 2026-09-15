@@ -3,19 +3,36 @@
   "plan_id": "anchor-binding-plan.20260912",
   "status": "needs_review",
   "based_on": ["LORE-ENTITY-REGISTER-20260912", "PLAN-WORLDBOOK-AUTHORING-PROJECTION-20260912 W1"],
+  "binding_kind_note": "binding_kind: lore = 语义实体锚点（entity.lore.*）；game_anchored = 游戏锚定实体锚点（entity.settlement.*）。2026-09-12 修正前全部 12 档均为 lore，德里亚特有误。",
   "bindings": [
     { "candidate_id": "authoring_provisional.document.7c1e0a4f2b9d46e3a85f01b7", "doc_key": "lac-lake", "entity_ids": ["entity.lore.lakonis_lake"], "binding_kind": "lore" },
     { "candidate_id": "authoring_provisional.document.d8a63f91c2e57b04f17a93d2", "doc_key": "lac-tales", "entity_ids": ["entity.lore.lakonis_lake"], "binding_kind": "lore" },
-    { "candidate_id": "authoring_provisional.document.e2b94f76a0d13c58f96b27c4", "doc_key": "sara-bay", "entity_ids": ["entity.lore.shalas_bay"], "binding_kind": "lore", "cross_refs": ["entity.settlement.town_V7"] },
-    { "candidate_id": "authoring_provisional.document.3f9ab6d0e57c2841a9d6f0be", "doc_key": "sara-tales", "entity_ids": ["entity.lore.shalas_bay"], "binding_kind": "lore", "cross_refs": ["entity.settlement.town_V7"] },
-    { "candidate_id": "authoring_provisional.document.5d82c0a9f3e17b46d2a9c85e", "doc_key": "kach-land", "entity_ids": ["entity.lore.kachar_peninsula"], "binding_kind": "lore", "cross_refs": ["entity.settlement.town_S1"] },
-    { "candidate_id": "authoring_provisional.document.8e3f57b1c9a04d26f7e5b31a", "doc_key": "kach-own", "entity_ids": ["entity.lore.kachar_peninsula"], "binding_kind": "lore", "cross_refs": ["entity.settlement.town_S1"] },
-    { "candidate_id": "authoring_provisional.document.b9d74e28f5c03a61e8d294fc", "doc_key": "kach-tales", "entity_ids": ["entity.lore.kachar_peninsula"], "binding_kind": "lore", "cross_refs": ["entity.settlement.town_S1"] },
+    { "candidate_id": "authoring_provisional.document.e2b94f76a0d13c58f96b27c4", "doc_key": "sara-bay", "entity_ids": ["entity.lore.shalas_bay"], "binding_kind": "lore", "cross_refs": ["entity.settlement.town_v7"] },
+    { "candidate_id": "authoring_provisional.document.3f9ab6d0e57c2841a9d6f0be", "doc_key": "sara-tales", "entity_ids": ["entity.lore.shalas_bay"], "binding_kind": "lore", "cross_refs": ["entity.settlement.town_v7"] },
+    { "candidate_id": "authoring_provisional.document.5d82c0a9f3e17b46d2a9c85e", "doc_key": "kach-land", "entity_ids": ["entity.lore.kachar_peninsula"], "binding_kind": "lore", "cross_refs": ["entity.settlement.town_s1"] },
+    { "candidate_id": "authoring_provisional.document.8e3f57b1c9a04d26f7e5b31a", "doc_key": "kach-own", "entity_ids": ["entity.lore.kachar_peninsula"], "binding_kind": "lore", "cross_refs": ["entity.settlement.town_s1"] },
+    { "candidate_id": "authoring_provisional.document.b9d74e28f5c03a61e8d294fc", "doc_key": "kach-tales", "entity_ids": ["entity.lore.kachar_peninsula"], "binding_kind": "lore", "cross_refs": ["entity.settlement.town_s1"] },
     { "candidate_id": "authoring_provisional.document.46c9e1b8a3f70d25c8e4a917", "doc_key": "dawn-mtn", "entity_ids": ["entity.lore.dawn_mountains"], "binding_kind": "lore" },
     { "candidate_id": "authoring_provisional.document.6f3b92ad0e84c571d9b26e4a", "doc_key": "dawn-taboo", "entity_ids": ["entity.lore.dawn_mountains"], "binding_kind": "lore" },
     { "candidate_id": "authoring_provisional.document.94e7d2c5b8a36f10e5c7d948", "doc_key": "dawn-stew", "entity_ids": ["entity.lore.dawn_mountains", "entity.lore.khergit_wardens"], "binding_kind": "lore" },
-    { "candidate_id": "authoring_provisional.document.a8c5f09d3e62b741d0f95e63", "doc_key": "der-vill", "entity_ids": ["entity.lore.deriat_village"], "binding_kind": "lore" },
-    { "candidate_id": "authoring_provisional.document.c1d947ae8b06f35e92a47d0f", "doc_key": "der-furs", "entity_ids": ["entity.lore.deriat_village"], "binding_kind": "lore" }
+    { "candidate_id": "authoring_provisional.document.a8c5f09d3e62b741d0f95e63", "doc_key": "der-vill", "entity_ids": ["entity.settlement.castle_village_v6_2"], "binding_kind": "game_anchored", "cross_refs": ["entity.settlement.castle_v6"] },
+    { "candidate_id": "authoring_provisional.document.c1d947ae8b06f35e92a47d0f", "doc_key": "der-furs", "entity_ids": ["entity.settlement.castle_village_v6_2"], "binding_kind": "game_anchored", "cross_refs": ["entity.settlement.castle_v6"] }
   ],
-  "verification": "12/12 档均有主实体绑定；无 game-anchored 直接绑定（五个源条目均为编年史语义对象，游戏聚落仅作交叉引用）；与 place_cluster 分组完全一致（5 簇）"
+  "verification": "12/12 档均有主实体绑定；11 档为语义实体（lore，游戏无对应对象，游戏聚落仅作交叉引用），2 档（der-vill / der-furs）绑定游戏锚定实体 entity.settlement.castle_village_v6_2 并交叉引用 entity.settlement.castle_v6。与 place_cluster 分组完全一致（5 簇）。",
+  "corrections_20260912": {
+    "source": "2026-09-12 锚点核验修正；追加记录，原值逐字保留于本区块。与本批 LORE-ENTITY-REGISTER-20260912.json corrections_20260912 同源。",
+    "original_bindings_changed": [
+      { "doc_key": "der-vill", "original_entity_ids": ["entity.lore.deriat_village"], "original_binding_kind": "lore", "corrected_entity_ids": ["entity.settlement.castle_village_v6_2"], "corrected_binding_kind": "game_anchored" },
+      { "doc_key": "der-furs", "original_entity_ids": ["entity.lore.deriat_village"], "original_binding_kind": "lore", "corrected_entity_ids": ["entity.settlement.castle_village_v6_2"], "corrected_binding_kind": "game_anchored" }
+    ],
+    "case_fixes": [
+      { "doc_key": "sara-bay", "field": "cross_refs[0]", "original": "entity.settlement.town_V7", "corrected": "entity.settlement.town_v7" },
+      { "doc_key": "sara-tales", "field": "cross_refs[0]", "original": "entity.settlement.town_V7", "corrected": "entity.settlement.town_v7" },
+      { "doc_key": "kach-land", "field": "cross_refs[0]", "original": "entity.settlement.town_S1", "corrected": "entity.settlement.town_s1" },
+      { "doc_key": "kach-own", "field": "cross_refs[0]", "original": "entity.settlement.town_S1", "corrected": "entity.settlement.town_s1" },
+      { "doc_key": "kach-tales", "field": "cross_refs[0]", "original": "entity.settlement.town_S1", "corrected": "entity.settlement.town_s1" }
+    ],
+    "evidence_summary": "见 LORE-ENTITY-REGISTER-20260912.json corrections_20260912.anchor_discrepancy_deriat（persona-entity 登记表 exact_base 记录 + 游戏本地化 Settlements.Settlement.text.castle_Village_V6_2 与编年史源文逐字同源）",
+    "review_status": "待独立复审 + Max 签收"
+  }
 }

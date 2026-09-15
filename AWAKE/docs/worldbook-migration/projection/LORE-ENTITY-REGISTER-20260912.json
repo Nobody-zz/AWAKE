@@ -4,12 +4,14 @@
   "status": "needs_review",
   "authority": "PLAN-WORLDBOOK-AUTHORING-PROJECTION-20260912 第 6 节修订 2（独立审查 P1：lore 分区降级为独立清单，不动 persona-entity 登记表链条）",
   "entity_two_kinds_rule": "游戏锚定实体走正式命名空间并可解析运行时对象；语义实体（游戏无对应代码）走 entity.lore.* 独立命名空间，同一性人工判定，绝不冒用正式实体 ID（B9 + ID-MIGRATION-CONTRACT）",
-  "compiler_behavior": "RuntimePackageCompiler.LookupEntityAnchorNames 对登记表外 ID 返回空（容错）；本清单登记的 lore 锚点在登记表 lore 分区合并前不折入 keywords，可检索性由文档 title/aliases 承担",
+  "anchor_class_note": "本清单同时承载两类锚点，逐条以 anchor_class 区分：lore = 语义实体（游戏无对象，entity.lore.*）；game_anchored = 游戏锚定实体（entity.settlement.* 等正式命名空间，ID 权威来源为 persona-entity 登记表 generations/<buildid>/entity-registry.v1.json）。2026-09-12 修正前本清单只登记 lore 一类，德里亚特分类有误见 corrections_20260912.anchor_discrepancy_deriat。",
+  "compiler_behavior": "RuntimePackageCompiler.LookupEntityAnchorNames 对登记表外 ID 返回空（容错，仅影响 keywords 折入）；但 RuntimePackageCompiler.CanonicalEntityRef 对非 hero/clan/settlement 的 kind 直接抛 WB-DOC-003（RuntimePackageCompiler.cs:253）——即 entity.lore.* 锚点在现行编译器下不可编译。原文写『本清单登记的 lore 锚点在登记表 lore 分区合并前不折入 keywords，可检索性由文档 title/aliases 承担』不足以成立：合并 lore 分区只解决锚点名称查找，不解决 CanonicalEntityRef 的 kind 白名单。详见 corrections_20260912.compile_blocker_lore_kind。",
   "entities": [
     {
       "entity_id": "entity.lore.lakonis_lake",
       "display_name": "拉科尼斯湖",
       "kind": "geography",
+      "anchor_class": "lore",
       "aliases": ["大镜子（当地俗称）", "北方的海（帝国口）", "蓝路水道（斯特吉亚口）"],
       "game_cross_refs": [],
       "source_basis": "编年史 rule_拉科尼斯湖 3 variants；来源考察体无游戏对应",
@@ -19,9 +21,10 @@
       "entity_id": "entity.lore.shalas_bay",
       "display_name": "沙拉斯湾",
       "kind": "geography",
+      "anchor_class": "lore",
       "aliases": ["帝国的摇篮（帝国史称）", "摇篮之岛（南部群岛旧称）"],
       "game_cross_refs": [
-        { "ref": "entity.settlement.town_V7", "note": "官方描述印证'第一批卡拉德殖民者登陆此海岸'；湾与港同域但湾体本身无游戏对象" }
+        { "ref": "entity.settlement.town_v7", "note": "官方描述印证'第一批卡拉德殖民者登陆此海岸'；湾与港同域但湾体本身无游戏对象" }
       ],
       "source_basis": "编年史 rule_沙拉斯湾 3 variants",
       "used_by_documents": ["sara-bay", "sara-tales"]
@@ -30,9 +33,10 @@
       "entity_id": "entity.lore.kachar_peninsula",
       "display_name": "卡恰尔半岛",
       "kind": "geography",
+      "anchor_class": "lore",
       "aliases": ["斯特吉亚东大门（斯特吉亚口）"],
       "game_cross_refs": [
-        { "ref": "entity.settlement.town_S1", "note": "官方描述明言'昔日巴旦尼亚领土的卡恰尔半岛'并复述易主线；半岛本体无游戏对象" }
+        { "ref": "entity.settlement.town_s1", "note": "官方描述明言'昔日巴旦尼亚领土的卡恰尔半岛'并复述易主线；半岛本体无游戏对象" }
       ],
       "source_basis": "编年史 rule_卡恰尔半岛 9 variants",
       "used_by_documents": ["kach-land", "kach-own", "kach-tales"]
@@ -41,31 +45,104 @@
       "entity_id": "entity.lore.dawn_mountains",
       "display_name": "黎明山脉",
       "kind": "geography",
+      "anchor_class": "lore",
       "aliases": ["柯希·罗希尼（全称）"],
       "game_cross_refs": [],
       "source_basis": "编年史 rule_黎明山脉（2 variants，含合儿必特部与阿赫哈克传说叙述）",
       "used_by_documents": ["dawn-mtn", "dawn-taboo", "dawn-stew"]
     },
     {
-      "entity_id": "entity.lore.deriat_village",
+      "entity_id": "entity.settlement.castle_village_v6_2",
       "display_name": "德里亚特",
-      "kind": "geography",
+      "kind": "settlement",
+      "anchor_class": "game_anchored",
       "aliases": [],
-      "game_cross_refs": [],
-      "source_basis": "编年史 rule_德里亚特 4 variants；所引卡琉斯堡经 BannerlordSage XML 查证非游戏实体，交叉引用悬空（与 dd fb30ad 注册元数据口径一致）",
-      "used_by_documents": ["der-vill", "der-furs"]
+      "game_cross_refs": [
+        { "ref": "entity.settlement.castle_v6", "note": "卡琉斯堡（Caleus Castle），德里亚特的绑定城堡（bound_settlement_code = castle_V6）；编年史所述'卡琉斯堡附近的一座村庄'即此关系" },
+        { "ref": "entity.settlement.castle_village_v6_1", "note": "卡琉斯（Caleus），同堡另一属村 castle_Village_V6_1，区别于本案的 V6_2" }
+      ],
+      "source_basis": "编年史 rule_德里亚特 4 variants；经游戏官方数据核定与游戏聚落同名同物（见 corrections_20260912.anchor_discrepancy_deriat）。原判『卡琉斯堡经 BannerlordSage XML 查证非游戏实体』不成立。",
+      "used_by_documents": ["der-vill", "der-furs"],
+      "supersedes": {
+        "entity_id": "entity.lore.deriat_village",
+        "reason": "原分类为语义实体（entity.lore.*）有误；德里亚特在游戏中有同名村庄对象，按 B9 + ID-MIGRATION-CONTRACT 必须走游戏锚定命名空间"
+      }
     },
     {
       "entity_id": "entity.lore.khergit_wardens",
-      "display_name": "合儿必特部",
+      "display_name": "库吉特",
       "kind": "faction",
-      "aliases": ["山地的看守人（自居称谓）"],
+      "anchor_class": "lore",
+      "aliases": ["山地的看守人（自居称谓）", "库吉特人"],
       "game_cross_refs": [],
-      "source_basis": "编年史 rule_黎明山脉 内叙述；游戏库赛特部族体系无对应代码",
-      "used_by_documents": ["dawn-stew"],
-      "note": "附录实体：dawn-stew 表达层提及；未单独立档，登记备查"
+      "source_basis": "编年史 rule_黎明山脉 内叙述；游戏库赛特部族体系无对应代码。⚠ 09-12 三审定案：编年史转写「合儿必特」废弃——合儿必特=Harfit=gXeF1yKn(clan_khuzait_5)是另一封臣家族，Khergit 官方 CN=库吉特(Q1nAHnV7=clan_khuzait_2)",
+      "used_by_documents": [],
+      "note": "附录实体：dawn-stew 表达层曾提及，09-12 修档后正文改用「库吉特」且 entity.lore 锚点已移除，本条仅留登记备查"
     }
   ],
   "deferred": "登记表（persona-entity）lore 分区合并显式推迟，需与 persona 线协调 schema/生成器/哈希链，记决策记录 deviations_projection_batch",
-  "verification": "实体 ID 均符合 authoring schema entity_ids pattern（^entity.[a-z0-9_]）；与 12 档 place_cluster 一一对应"
+  "verification": "lore 锚点 5 条 + 游戏锚定锚点 1 条（德里亚特）；ID 均符合 authoring schema entity_ids pattern（^entity.[a-z0-9_]）；与 12 档 place_cluster 一一对应。game_anchored 锚点的 ID 出处为 persona-entity 登记表 generations/b1-7590085e.../entity-registry.v1.json（890 实体，含 entity.settlement.castle_village_v6_2 = 德里亚特 / entity.settlement.castle_v6 = 卡琉斯堡，字段 settlement_code 分别为 castle_Village_V6_2 / castle_V6）。",
+  "corrections_20260912": {
+    "source": "2026-09-12 锚点核验（BannerlordSage 只读直查 + persona-entity 登记表）；追加记录。本清单为投影批产物、已过独立审查、所属实施批（WORLDBOOK-AUTHORING-PROJECTION-20260912）userSignoff=false 待签收，故按本线惯例：修正值为可读性就地更新，原值逐字保留于本区块，改动须经独立复审 + Max 签收。",
+    "anchor_discrepancy_deriat": {
+      "original_entity_id": "entity.lore.deriat_village",
+      "original_class": "语义实体（lore）",
+      "original_game_cross_refs": [],
+      "original_source_basis": "编年史 rule_德里亚特 4 variants；所引卡琉斯堡经 BannerlordSage XML 查证非游戏实体，交叉引用悬空（与 dd fb30ad 注册元数据口径一致）",
+      "corrected_entity_id": "entity.settlement.castle_village_v6_2",
+      "corrected_class": "游戏锚定实体（game_anchored）",
+      "corrected_game_cross_refs": ["entity.settlement.castle_v6", "entity.settlement.castle_village_v6_1"],
+      "evidence": [
+        "persona-entity 登记表 generations/b1-7590085e3662512d7c1c6646c529694bda9850146234827b2dafbd9f20c6a2b3/entity-registry.v1.json：entity.settlement.castle_village_v6_2 = 德里亚特，settlement_code=castle_Village_V6_2，village_type=trapper，bound_settlement_code=castle_V6，culture=vlandia，mapping_status=exact_base",
+        "同表：entity.settlement.castle_v6 = 卡琉斯堡（English: Caleus Castle），castle，culture=vlandia —— 即原判『非游戏实体』的城堡实际存在",
+        "游戏本地化 Settlements.Settlement.text.castle_Village_V6_2（CNs）全文：『德里亚特位于瓦尔切格湾与埃博半岛的山脊之间。当地村民会在山上捕获河狸与水貂，有时会在海湾水域捉海豹。』——与本案编年史源文（der-vill/der-furs 引文）几乎逐字相同，证明编年史该段系自游戏官方村庄描述派生，所指为同一对象",
+        "village_type=trapper（捕户村）与编年史『毛皮和油脂是他们的主要产出来源』互为印证",
+        "BannerlordSage 索引版本 v1.3.15.110062，与本模组目标 API v1.3.15 一致；查询为只读（mode=ro）"
+      ],
+      "root_cause_of_original_error": "城堡无官方描述文本：Settlements.Settlement.text.castle_V6 在本地化表中为 0 条（仅村庄/城镇有描述文），castle_V6 只有名称条目。若前次核验以『文本/XML 实体』为检索面，必然漏掉 castle_V6，从而误判为『非游戏实体』。属核验面选择问题，非数据缺失。",
+      "affected_documents": ["der-vill", "der-furs"],
+      "applied_changes": [
+        "LORE-ENTITY-REGISTER-20260912.json：deriat 条目 entity_id / kind / anchor_class / game_cross_refs / source_basis 就地更新，supersedes 保留原 ID",
+        "ANCHOR-BINDING-PLAN-20260912.json：der-vill / der-furs 的 entity_ids 与 binding_kind 更新",
+        "workspace/authoring/der-vill.yaml、der-furs.yaml（落库产物 rev2）entity_ids 重绑",
+        "projection/authoring-out/der-vill.yaml、der-furs.yaml（rev1 草稿）entity_ids 重绑"
+      ],
+      "review_status": "待独立复审 + Max 签收；复审前不得 approve/compile/export/publish"
+    },
+    "id_case_fix": {
+      "problem": "原写交叉引用 entity.settlement.town_V7 / entity.settlement.town_S1 使用了游戏原始 settlement_code 大小写（town_V7/town_S1），但实体 ID 一律小写（登记表 entity_id = entity.settlement.town_v7 / town_s1）。原值经 RuntimePackageCompiler.CanonicalEntityRef 的 ToLowerInvariant 后虽可解析，但作为『权威 ID 引用』写法不合规，且会误导下游按大写查找。",
+      "original_values": ["entity.settlement.town_V7", "entity.settlement.town_S1"],
+      "corrected_values": ["entity.settlement.town_v7", "entity.settlement.town_s1"],
+      "occurrences_fixed": [
+        "本清单 entity.lore.shalas_bay.game_cross_refs[0].ref: town_V7 → town_v7",
+        "本清单 entity.lore.kachar_peninsula.game_cross_refs[0].ref: town_S1 → town_s1",
+        "ANCHOR-BINDING-PLAN-20260912.json：sara-bay / sara-tales cross_refs、kach-land / kach-own / kach-tales cross_refs"
+      ],
+      "not_affected": "12 档 authoring YAML 内无任何 entity_ids / culture_ids / kingdom_ids / settlement_ids 使用大写 ID（实测：全档 0 处，且 grants 未使用三维度条件）",
+      "authority": "persona-entity 登记表：entity.settlement.town_v7 = 沙拉斯（town_V7 的 ID 形式）、entity.settlement.town_s1 = 瓦尔切格（town_S1 的 ID 形式）"
+    },
+    "compile_blocker_lore_kind": {
+      "status": "BLOCKED（跨线：Studio C# 编译器）",
+      "finding": "12 档现有 entity_ids 中 5 条为 entity.lore.*；RuntimePackageCompiler.CanonicalEntityRef（tools/worldbook-studio/src/Awake.WorldbookStudio.Core/RuntimePackageCompiler.cs:245-256）对 parts[1] 非 hero/clan/settlement 者抛 WB-DOC-003『entity_ids 类型不受支持（仅 hero/clan/settlement）』。BuildEntry 对每档每个 entity_id 均调用该函数（同文件 142-153），故任何含 entity.lore.* 的档案在 Compile() 时必然失败。",
+      "evidence": [
+        "RuntimePackageCompiler.cs:253 `if (parts[1] is not (\"hero\" or \"clan\" or \"settlement\")) throw ... WB-DOC-003`",
+        "RuntimePackageCompiler.cs:147 `.Select(value => CanonicalEntityRef(value!))`（BuildEntry 内、无条件）",
+        "测试钉死该语义：tools/worldbook-studio/tests/Awake.WorldbookStudio.EditorContent.Tests/Program.cs:96-104 —— entity.settlement.town_v5 编译通过得 awake:settlement:town_v5；entity.bogus.thing 抛 WB-DOC-003",
+        "Core 目录内 grep 无任何 'lore' 特判（仅 EntityCatalogService.cs:226 对未知 kind 默认归 clan，属另一函数，不影响编译器）"
+      ],
+      "contradicts": "ENTRY-LINKAGE-MAP-20260912.md 第 26 行『无需改 C#（登记表为数据文件，扩 lore 分区属数据变更）』——该结论对锚点名称查找（LookupEntityAnchorNames，容错）成立，对实体引用规范化（CanonicalEntityRef，白名单）不成立。合并 lore 分区解决不了编译。",
+      "why_not_caught": "W6 闭合复验走的是 authoring schema 结构校验与本侧校验器，均未触及 Compile()；投影批 scope 明确排除 compile（'game sync / compile / export / publish / approve'）。属未执行到的路径，非已通过项回退。",
+      "resolution_options": [
+        "A. 扩展编译器 kind 白名单（增 lore），把语义锚点规范化为 awake:lore:<code> 并折入 entityRefs —— 改动 RuntimePackageCompiler + 相关测试，属 Studio 侧",
+        "B. 语义锚点不进入 entity_ids，改由 title/aliases 承担可检索性（即回归 register 原文的降级方案），则需改 5 档文档元数据 + C12 口径",
+        "C. 语义实体并入 persona-entity 登记表并使用受支持 kind —— 与现有 lore 命名空间规则冲突，不推荐"
+      ],
+      "disposition": "本侧不实施（Studio C# 代码 + 测试夹具）；已记入 roadmap 批次 3 阻断项，归属与排期待 Max 指定。本侧校验器 C12 已相应放宽（见下）。"
+    },
+    "verifier_c12_relaxation": {
+      "original": "C12：entity_ids 非空且全部登记于 LORE-ENTITY-REGISTER（entity.lore.*）",
+      "changed_to": "C12：entity_ids 非空，且逐条满足 (a) anchor_class=lore 者登记于本清单，或 (b) anchor_class=game_anchored 者 ID 存在于 persona-entity 登记表 entities[].entity_id",
+      "reason": "原 C12 把『锚点必为 lore』写成了硬约束，是同一设计错误的镜像；德里亚特重绑后原口径会误报 FAIL"
+    }
+  }
 }

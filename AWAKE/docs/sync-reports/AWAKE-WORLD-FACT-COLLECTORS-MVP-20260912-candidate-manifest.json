@@ -1,0 +1,19 @@
+{
+  "build_id": "awake-20260912-world-fact-collectors-mvp-001",
+  "roots": {
+    "dist": "D:\\AWAKE-Dev\\AWAKE\\dist\\Modules\\AWAKE",
+    "game": "D:\\SteamLibrary\\steamapps\\common\\Mount & Blade II Bannerlord\\Modules\\AWAKE"
+  },
+  "managed_files": [
+    {
+      "path": "bin\\Win64_Shipping_Client\\Awake.dll",
+      "sha256": "D7612962036C994E7E7DF0064897FA93CD1B891CB41FDE5388995EA25C65C2C1"
+    }
+  ],
+  "exclusions": [
+    {
+      "path": "ModuleData\\Worldbook",
+      "reason": "This core-runtime candidate deliberately does not manage Worldbook content; the sync used -SkipWorldbook so separately maintained content was preserved."
+    }
+  ]
+}

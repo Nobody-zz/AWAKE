@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWAKE 世界书机制 + 编辑器 · 全景梳理</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1a1d21; --muted:#5f6672;
+    --line:#e3e6ea; --accent:#2f6feb; --accent-soft:#eaf1fe;
+    --ok:#17795e; --ok-soft:#e6f4ee;
+    --warn:#a86400; --warn-soft:#fdf3e2;
+    --bad:#b3261e; --bad-soft:#fdeceb;
+    --purple:#6b4eff; --purple-soft:#efecff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+    line-height:1.75;font-size:15px}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 24px 80px}
+  header{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:36px}
+  h1{font-size:27px;margin:0 0 8px;letter-spacing:-.3px}
+  .sub{color:var(--muted);font-size:14px}
+  h2{font-size:20px;margin:44px 0 16px;padding-left:12px;border-left:4px solid var(--accent)}
+  h3{font-size:16px;margin:26px 0 10px;color:var(--ink)}
+  p{margin:10px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:16px 0}
+  .lead{background:var(--accent-soft);border:1px solid #cfe0fd;border-radius:10px;padding:18px 22px;margin:20px 0;font-size:16px}
+  .lead b{color:var(--accent)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:#f0f2f5;font-weight:600;white-space:nowrap}
+  code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px;
+    font-family:"Cascadia Mono",Consolas,monospace}
+  pre{background:#1e2229;color:#e6e8eb;padding:14px 16px;border-radius:8px;overflow-x:auto;
+    font-size:12.5px;line-height:1.6;font-family:"Cascadia Mono",Consolas,monospace}
+  pre .c{color:#8b949e}
+  pre .k{color:#79c0ff}
+  .tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap}
+  .t-ok{background:var(--ok-soft);color:var(--ok)}
+  .t-warn{background:var(--warn-soft);color:var(--warn)}
+  .t-bad{background:var(--bad-soft);color:var(--bad)}
+  .t-info{background:var(--accent-soft);color:var(--accent)}
+  .t-pur{background:var(--purple-soft);color:var(--purple)}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .box h4{margin:0 0 6px;font-size:14px}
+  .box p{margin:0;font-size:13px;color:var(--muted)}
+  figure{margin:22px 0;text-align:center}
+  figcaption{font-size:12.5px;color:var(--muted);margin-top:8px}
+  ul{margin:8px 0;padding-left:22px}
+  li{margin:4px 0}
+  .foot{margin-top:50px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  @media(max-width:720px){.grid3,.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>世界书机制 + 世界书编辑器 · 全景梳理</h1>
+  <div class="sub">AWAKE（骑马与砍杀2 模组） · 世界书侧 · 2026-09-12 · 现状快照，含实测数据</div>
+</header>
+
+<div class="lead">
+  <b>一句话：</b>世界书是一套「NPC 知道什么、肯说多少」的知识系统。
+  人负责写内容（中世纪味的客观事实 + 不同身份的说法），机器负责判定（这个 NPC 该不该知道、能说到多细）。
+  两者之间隔着<b>一套权限契约</b>——那才是世界书的机制本体。
+</div>
+
+<h2>一、三层结构：内容 → 生产 → 运行</h2>
+
+<figure>
+<svg viewBox="0 0 680 200" width="100%" style="max-width:680px">
+  <defs>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L7,3.2 L0,6.4 z" fill="#5f6672"/>
+    </marker>
+  </defs>
+  <rect x="14" y="52" width="180" height="96" rx="10" fill="#eaf1fe" stroke="#2f6feb"/>
+  <text x="104" y="78" text-anchor="middle" font-size="14" font-weight="700" fill="#2f6feb">内容层</text>
+  <text x="104" y="99" text-anchor="middle" font-size="11.5" fill="#1a1d21">作者写词条</text>
+  <text x="104" y="117" text-anchor="middle" font-size="11.5" fill="#1a1d21">事实 + 分层说法</text>
+  <text x="104" y="135" text-anchor="middle" font-size="11.5" fill="#1a1d21">+ 谁能看</text>
+
+  <rect x="250" y="52" width="180" height="96" rx="10" fill="#efecff" stroke="#6b4eff"/>
+  <text x="340" y="78" text-anchor="middle" font-size="14" font-weight="700" fill="#6b4eff">生产层</text>
+  <text x="340" y="99" text-anchor="middle" font-size="11.5" fill="#1a1d21">Studio 编辑器</text>
+  <text x="340" y="117" text-anchor="middle" font-size="11.5" fill="#1a1d21">校验 → 编译 → 导出</text>
+  <text x="340" y="135" text-anchor="middle" font-size="11.5" fill="#1a1d21">（持证才能过）</text>
+
+  <rect x="486" y="52" width="180" height="96" rx="10" fill="#e6f4ee" stroke="#17795e"/>
+  <text x="576" y="78" text-anchor="middle" font-size="14" font-weight="700" fill="#17795e">运行层</text>
+  <text x="576" y="99" text-anchor="middle" font-size="11.5" fill="#1a1d21">游戏加载包</text>
+  <text x="576" y="117" text-anchor="middle" font-size="11.5" fill="#1a1d21">NPC 被问时</text>
+  <text x="576" y="135" text-anchor="middle" font-size="11.5" fill="#1a1d21">按身份查出那段</text>
+
+  <line x1="196" y1="100" x2="244" y2="100" stroke="#5f6672" stroke-width="1.6" marker-end="url(#ar)"/>
+  <line x1="432" y1="100" x2="480" y2="100" stroke="#5f6672" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="220" y="90" text-anchor="middle" font-size="10.5" fill="#5f6672">YAML</text>
+  <text x="456" y="90" text-anchor="middle" font-size="10.5" fill="#5f6672">v2 包</text>
+
+  <text x="340" y="34" text-anchor="middle" font-size="12" fill="#5f6672">三层之间全是「文件交接 + 哈希校验」，没有活的接口</text>
+  <text x="340" y="176" text-anchor="middle" font-size="12" fill="#b3261e">所以：内容改一个字 → 哈希变 → 编译证明失效 → 必须重走一遍生产层</text>
+</svg>
+<figcaption>图 1 · 三层结构与交接方式</figcaption>
+</figure>
+
+<h2>二、内容模型：一个词条长什么样</h2>
+
+<h3>四层嵌套</h3>
+<figure>
+<svg viewBox="0 0 680 250" width="100%" style="max-width:680px">
+  <rect x="20" y="16" width="640" height="46" rx="8" fill="#eaf1fe" stroke="#2f6feb"/>
+  <text x="36" y="36" font-size="13.5" font-weight="700" fill="#2f6feb">档案 document</text>
+  <text x="36" y="53" font-size="11.5" fill="#1a1d21">一份词条，如「德里亚特·村庄」　·　id / domain / era / summary / sources …</text>
+
+  <rect x="52" y="74" width="576" height="46" rx="8" fill="#f2f4f8" stroke="#9aa3af"/>
+  <text x="68" y="94" font-size="13" font-weight="700" fill="#1a1d21">断言 assertion</text>
+  <text x="68" y="111" font-size="11.5" fill="#5f6672">一条客观事实 = 中立内核，谁看到都一样，不带个人色彩</text>
+
+  <rect x="84" y="132" width="512" height="46" rx="8" fill="#efecff" stroke="#6b4eff"/>
+  <text x="100" y="152" font-size="13" font-weight="700" fill="#6b4eff">表达 expression</text>
+  <text x="100" y="169" font-size="11.5" fill="#1a1d21">同一事实的某种说法，按 layer 分层（村民说得土 / 商人讲行情 / 贵族论体面）</text>
+
+  <rect x="116" y="190" width="236" height="42" rx="8" fill="#e6f4ee" stroke="#17795e"/>
+  <text x="234" y="209" text-anchor="middle" font-size="12.5" font-weight="700" fill="#17795e">grants 授权</text>
+  <text x="234" y="225" text-anchor="middle" font-size="11" fill="#1a1d21">谁能看到这层说法</text>
+
+  <rect x="366" y="190" width="230" height="42" rx="8" fill="#fdeceb" stroke="#b3261e"/>
+  <text x="481" y="209" text-anchor="middle" font-size="12.5" font-weight="700" fill="#b3261e">denies 否决</text>
+  <text x="481" y="225" text-anchor="middle" font-size="11" fill="#1a1d21">谁绝对不能看（一票否决）</text>
+</svg>
+<figcaption>图 2 · 文档 → 断言 → 表达 → 授权的四层嵌套</figcaption>
+</figure>
+
+<p>这套结构是 Max 定的硬规矩的落地：<b>断言是共用的客观内核，表达是按身份分层的说法</b>。同一个事实可以有好几段说法，机器按问话人的身份挑一段给他。</p>
+
+<h3>真实例子</h3>
+<pre><span class="c"># authoring/der-vill.yaml（节选）</span>
+assertions:
+- id: assertion.der-vill-1
+  kind: fact
+  text: 德里亚特是卡琉斯堡左近的一座村庄，夹在瓦尔切格湾和埃博半岛之间的山脊上。  <span class="c"># ← 中立内核</span>
+  expressions:
+  - id: expr.der-vill-1-summary
+    layer: summary                                                            <span class="c"># ← 层级</span>
+    text: 德里亚特是卡琉斯堡左近的一座村庄，夹在瓦尔切格湾和埃博半岛之间的山脊上。  <span class="c"># ← 这一层的说法</span>
+    <span class="k">grants</span>:
+    - profile_id: profile.commoner   <span class="c"># 平民</span>
+      scope: regional                <span class="c"># 在本地区域内</span>
+      min_detail: summary            <span class="c"># 至少知道到 summary 这一层</span>
+    denies: []</pre>
+
+<h3>三个旋钮：决定"谁能知道多少"</h3>
+<div class="grid3">
+  <div class="box">
+    <h4>layer · 知道多细</h4>
+    <p><code>unknown</code> → <code>rumor</code> → <code>summary</code> → <code>detail</code> → <code>secret</code><br>（由浅到深五档）</p>
+  </div>
+  <div class="box">
+    <h4>scope · 知道多广</h4>
+    <p><code>local</code> → <code>regional</code> → <code>national</code> → <code>faction</code> → <code>elite</code> → <code>private</code></p>
+  </div>
+  <div class="box">
+    <h4>conditions · 具体是谁</h4>
+    <p>文化 / 王国 / 聚落 / 角色 / 性别 / 是否族长 / 年龄 / 管理等级 / 技能</p>
+  </div>
+</div>
+<p>另有一个独立维度 <b>profile（身份，共 12 个）</b>：村民 · 市民 · 平民 · 头人 · 乡绅 · 商人 · 酒馆老板 · 赎金经纪人 · 士兵 · 贵族 · 贵族总管 · 身份未知。</p>
+
+<h3>判定顺序：Deny &gt; Grant &gt; 继承 &gt; 未知</h3>
+<figure>
+<svg viewBox="0 0 680 120" width="100%" style="max-width:680px">
+  <defs><marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+    <path d="M0,0 L7,3.2 L0,6.4 z" fill="#9aa3af"/></marker></defs>
+  <rect x="14" y="30" width="132" height="58" rx="9" fill="#fdeceb" stroke="#b3261e"/>
+  <text x="80" y="53" text-anchor="middle" font-size="13" font-weight="700" fill="#b3261e">① 查 denies</text>
+  <text x="80" y="71" text-anchor="middle" font-size="11" fill="#1a1d21">命中→直接出局</text>
+
+  <rect x="172" y="30" width="132" height="58" rx="9" fill="#e6f4ee" stroke="#17795e"/>
+  <text x="238" y="53" text-anchor="middle" font-size="13" font-weight="700" fill="#17795e">② 查 grants</text>
+  <text x="238" y="71" text-anchor="middle" font-size="11" fill="#1a1d21">无命中→不可见</text>
+
+  <rect x="330" y="30" width="132" height="58" rx="9" fill="#eaf1fe" stroke="#2f6feb"/>
+  <text x="396" y="53" text-anchor="middle" font-size="13" font-weight="700" fill="#2f6feb">③ 身份继承</text>
+  <text x="396" y="71" text-anchor="middle" font-size="11" fill="#1a1d21">沿 parents 递归</text>
+
+  <rect x="488" y="30" width="132" height="58" rx="9" fill="#f2f4f8" stroke="#9aa3af"/>
+  <text x="554" y="53" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1d21">④ 比对能力</text>
+  <text x="554" y="71" text-anchor="middle" font-size="11" fill="#5f6672">Scope / Detail 秩</text>
+
+  <line x1="148" y1="59" x2="168" y2="59" stroke="#9aa3af" stroke-width="1.5" marker-end="url(#ar2)"/>
+  <line x1="306" y1="59" x2="326" y2="59" stroke="#9aa3af" stroke-width="1.5" marker-end="url(#ar2)"/>
+  <line x1="464" y1="59" x2="484" y2="59" stroke="#9aa3af" stroke-width="1.5" marker-end="url(#ar2)"/>
+  <text x="340" y="16" text-anchor="middle" font-size="11.5" fill="#5f6672">实现：AWAKE/src/WorldKnowledgeQueryService.cs（:52 / :57 / :173-187 / :241-253）</text>
+</svg>
+<figcaption>图 3 · 权限判定顺序</figcaption>
+</figure>
+
+<p>另外还有 <b>转介（referral）</b>：NPC 不知道时不是沉默，而是<b>指路</b>——"这方面我不清楚。你可以去问：……"。登记表现有 4 条（公证商人 / 赎金经纪人 / 酒馆老板 / 头人）。</p>
+
+<h2>三、编辑器：Worldbook Studio</h2>
+
+<h3>三个入口</h3>
+<table>
+  <tr><th>入口</th><th>是什么</th><th>谁用</th></tr>
+  <tr><td><b>Launcher</b><br><code>.exe</code></td><td><b>双击启动</b>。抢互斥锁防双开 → 起 Web 子进程 → 自动开浏览器</td><td><span class="tag t-ok">内容编辑者就用这个</span></td></tr>
+  <tr><td><b>Web</b></td><td>真正的操作界面，<code>http://127.0.0.1:5077</code>（只绑本机，可用 <code>AWAKE_WB_PORT</code> 改）</td><td>人在这个页面里干活</td></tr>
+  <tr><td><b>CLI</b></td><td><code>init / validate / compile / preview / export / authoring-register·select·approve·proof / publish-staging / ai-* / doctor</code></td><td>开发者 / 自动化脚本</td></tr>
+</table>
+
+<h3>两条创作路径</h3>
+<div class="grid2">
+  <div class="box">
+    <h4>A · 单份（Quick Authoring）</h4>
+    <p>导入资料 → 填"我想整理什么" → 选内容范围 → 生成草稿 → 看来源和警告 → <b>逐条人工采纳</b> → 创建待审核档案 → 补二级主题/权限/时代 → 保存</p>
+  </div>
+  <div class="box">
+    <h4>B · 批量</h4>
+    <p>扫描资料 → 提升为批次 → 勾选读取范围（<b>不勾就不读</b>）→ 提取事实 → 逐条人工审 → 生成草稿 → 回编辑器补字段保存</p>
+  </div>
+</div>
+<p><b>额度</b>：最多 200 文件 / 总 64 MiB / 单文件 16 MiB / 单单元 8 万字符；并发本地 1、云端默认 2。有租约防并发打架，结果不确定的项记「待确认」需人工确认。</p>
+
+<div class="card">
+  <b>共同的铁律：</b>
+  <ul>
+    <li>AI 草稿<b>必须逐条人工采纳</b>，改了字要重新采纳，<b>绝不自动写入正典</b>。</li>
+    <li>AI 建档后一律 <code>needs_review</code>。<b>不会因为你点了生成就自动发布、自动同步游戏。</b></li>
+    <li>不配 API Key 也能用「先做本地检查」查空字段、占位、权限问题。</li>
+  </ul>
+</div>
+
+<h3>权限链 Authority Gate：为什么要点"申请授权"</h3>
+<figure>
+<svg viewBox="0 0 680 96" width="100%" style="max-width:680px">
+  <defs><marker id="ar3" markerWidth="8" markerHeight="8" refX="6.5" refY="3" orient="auto">
+    <path d="M0,0 L6.5,3 L0,6 z" fill="#a86400"/></marker></defs>
+  <g font-size="10.5" text-anchor="middle" fill="#1a1d21">
+    <rect x="10" y="30" width="98" height="42" rx="7" fill="#fdf3e2" stroke="#a86400"/>
+    <text x="59" y="48" font-weight="700" fill="#a86400">文档登记</text><text x="59" y="64">revisions</text>
+
+    <rect x="122" y="30" width="98" height="42" rx="7" fill="#fdf3e2" stroke="#a86400"/>
+    <text x="171" y="48" font-weight="700" fill="#a86400">固化集合</text><text x="171" y="64">selections</text>
+
+    <rect x="234" y="30" width="98" height="42" rx="7" fill="#fdf3e2" stroke="#a86400"/>
+    <text x="283" y="48" font-weight="700" fill="#a86400">批准证明</text><text x="283" y="64">approval</text>
+
+    <rect x="346" y="30" width="98" height="42" rx="7" fill="#fdf3e2" stroke="#a86400"/>
+    <text x="395" y="48" font-weight="700" fill="#a86400">编译许可</text><text x="395" y="64">compile</text>
+
+    <rect x="458" y="30" width="98" height="42" rx="7" fill="#fdf3e2" stroke="#a86400"/>
+    <text x="507" y="48" font-weight="700" fill="#a86400">导出暂存</text><text x="507" y="64">staging</text>
+
+    <rect x="570" y="30" width="100" height="42" rx="7" fill="#fdf3e2" stroke="#a86400"/>
+    <text x="620" y="48" font-weight="700" fill="#a86400">发布指针</text><text x="620" y="64">publish</text>
+
+    <line x1="110" y1="51" x2="118" y2="51" stroke="#a86400" stroke-width="1.4" marker-end="url(#ar3)"/>
+    <line x1="222" y1="51" x2="230" y2="51" stroke="#a86400" stroke-width="1.4" marker-end="url(#ar3)"/>
+    <line x1="334" y1="51" x2="342" y2="51" stroke="#a86400" stroke-width="1.4" marker-end="url(#ar3)"/>
+    <line x1="446" y1="51" x2="454" y2="51" stroke="#a86400" stroke-width="1.4" marker-end="url(#ar3)"/>
+    <line x1="558" y1="51" x2="566" y2="51" stroke="#a86400" stroke-width="1.4" marker-end="url(#ar3)"/>
+  </g>
+  <text x="340" y="18" text-anchor="middle" font-size="11.5" fill="#5f6672">每步 proof_hash 自洽校验 —— 改一个字，证明就失效，必须重走</text>
+</svg>
+<figcaption>图 4 · 权限链：把"扫目录就干"改成"必须持证"</figcaption>
+</figure>
+<p>这么重是为了<b>防止未审核 / 已改动的内容混进游戏包</b>，且崩溃重启能 fail-closed、不产生半成品。编辑者会撞到它，但 UI 已包成一步——点「申请编译授权」自动串起四连，成功后编译/导出按钮才亮。</p>
+
+<h2>四、现状与断点：哪里通、哪里断</h2>
+
+<h3>通的</h3>
+<table>
+  <tr><th>环节</th><th>状态</th></tr>
+  <tr><td>12 档内容建档</td><td><span class="tag t-ok">已落库</span> 40 断言 / 40 表达 / 40 授权，全带来源引文</td></tr>
+  <tr><td>身份 / 转介登记表</td><td><span class="tag t-ok">齐</span> 12 profile + 4 referral</td></tr>
+  <tr><td>权限契约</td><td><span class="tag t-ok">机器完整实现</span> Deny &gt; Grant &gt; 继承 &gt; 未知</td></tr>
+  <tr><td>运行时消费</td><td><span class="tag t-ok">打通并验收</span> 游戏里跑着试点小样包（010 链路）</td></tr>
+  <tr><td>闭合复验工具</td><td><span class="tag t-ok">16 项检查</span> 可复用</td></tr>
+</table>
+
+<h3>断的（按严重度）</h3>
+
+<div class="card" style="border-left:4px solid var(--bad)">
+  <h3 style="margin-top:0">① C16 · 12 档里 <b>10 档编译不过</b> <span class="tag t-bad">最严重</span> <span class="tag t-warn">新发现</span></h3>
+  <p>这 10 档的锚点是 <code>entity.lore.*</code>，而编译器 <code>RuntimePackageCompiler.CanonicalEntityRef</code>（<code>RuntimePackageCompiler.cs:253</code>）<b>只认 <code>hero/clan/settlement</code> 三种 kind，其余直接抛 <code>WB-DOC-003</code></b>；<code>BuildEntry</code> 对每档每个锚点<b>无条件调用</b>。</p>
+  <p><b>一直没暴露的原因：Studio 至今一次都没编译出过包</b>（<code>compiled/</code> 与 <code>export/WorldbookV2/</code> 实测全空），而游戏里跑的是另做的试点小样包。</p>
+  <p><b>归属</b>：Studio 侧（要改 C# 编译器 + 测试夹具）。内容侧不实施，已记为 BLOCKED。<br>
+  09-12 已修掉其中一个（德里亚特重绑为 <code>entity.settlement.castle_village_v6_2</code>），其余 5 个语义锚点仍会触发。</p>
+</div>
+
+<div class="card" style="border-left:4px solid var(--warn)">
+  <h3 style="margin-top:0">② C13 · 转介接线未做</h3>
+  <p>地点簇 → <code>fallback_referral_ids</code> 未接。 blockers：referral 登记表被 golden 测试钉死哈希，改它会打掉测试套件并触发 12 档重绑。归 Studio 侧联合批次；本侧交付物已备（5 簇 / 12 条命名 + 逐档映射）。</p>
+</div>
+
+<div class="card" style="border-left:4px solid var(--warn)">
+  <h3 style="margin-top:0">③ 内容侧：门控有三条路径从未被触发</h3>
+  <table style="margin-bottom:0">
+    <tr><th>项</th><th>实测</th></tr>
+    <tr><td><code>secret</code> / <code>unknown</code> 层</td><td>各 <b>0 条</b></td></tr>
+    <tr><td><code>denies</code> 否决</td><td><b>40/40 全空</b>（而它是必填字段）</td></tr>
+    <tr><td><code>scope</code> 六档</td><td>只用了 4 档，<code>faction</code> / <code>private</code> 为 0</td></tr>
+    <tr><td>权限三维度（文化/王国/聚落 + 年龄 + 管理）</td><td><b>全为 0</b></td></tr>
+    <tr><td>身份 12 个</td><td>只用了 6 个</td></tr>
+    <tr><td>契约 golden case 6 条</td><td>内容<b>一条都没覆盖</b></td></tr>
+  </table>
+  <p style="margin-bottom:0">即：<b>机器造好了，内容一次都没走过。</b>这是「批次 1 · 授权结构做真」要解决的事。</p>
+</div>
+
+<figure>
+<svg viewBox="0 0 680 300" width="100%" style="max-width:680px">
+  <defs><marker id="ar4" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+    <path d="M0,0 L7,3.2 L0,6.4 z" fill="#5f6672"/></marker></defs>
+
+  <rect x="180" y="14" width="320" height="48" rx="9" fill="#eaf1fe" stroke="#2f6feb"/>
+  <text x="340" y="34" text-anchor="middle" font-size="13" font-weight="700" fill="#2f6feb">authoring/*.yaml（12 档，needs_review）</text>
+  <text x="340" y="52" text-anchor="middle" font-size="11" fill="#1a1d21">40 断言 · 40 表达 · 40 授权</text>
+
+  <path d="M340,64 L340,92" stroke="#b3261e" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ar4)"/>
+  <rect x="128" y="96" width="424" height="30" rx="7" fill="#fdeceb" stroke="#b3261e"/>
+  <text x="340" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#b3261e">✕ 断点 C16：10 档含 entity.lore.* → 编译抛 WB-DOC-003</text>
+
+  <path d="M340,128 L340,152" stroke="#9aa3af" stroke-width="1.6" marker-end="url(#ar4)"/>
+  <rect x="180" y="156" width="320" height="40" rx="8" fill="#f7f8fa" stroke="#c3c8cf" stroke-dasharray="5 4"/>
+  <text x="340" y="174" text-anchor="middle" font-size="12.5" fill="#5f6672">Studio 编译</text>
+  <text x="340" y="190" text-anchor="middle" font-size="11" fill="#b3261e">产物为空（至今没成过）</text>
+
+  <path d="M340,198 L340,222" stroke="#9aa3af" stroke-width="1.6" marker-end="url(#ar4)"/>
+  <rect x="180" y="226" width="320" height="40" rx="8" fill="#f7f8fa" stroke="#c3c8cf" stroke-dasharray="5 4"/>
+  <text x="340" y="244" text-anchor="middle" font-size="12.5" fill="#5f6672">Studio 导出</text>
+  <text x="340" y="260" text-anchor="middle" font-size="11" fill="#b3261e">产物为空</text>
+
+  <path d="M340,268 L340,286" stroke="#17795e" stroke-width="1.6" marker-end="url(#ar4)"/>
+
+  <rect x="96" y="0" width="0" height="0"/>
+  <text x="340" y="298" text-anchor="middle" font-size="11.5" fill="#17795e">实际在跑：试点小样包 awake:pilot.worldbook（3 条目 / 6 身份 / 0 转介）—— 另做的，不是这 12 档</text>
+</svg>
+<figcaption>图 5 · 现状断点图</figcaption>
+</figure>
+
+<h2>五、术语对照（人话 ↔ 代码）</h2>
+<table>
+  <tr><th>人话</th><th>代码里的词</th></tr>
+  <tr><td>一份词条</td><td>document（档案）</td></tr>
+  <tr><td>一条客观事实</td><td>assertion（断言）</td></tr>
+  <tr><td>同一事实的某种说法</td><td>expression（表达）</td></tr>
+  <tr><td>知道多细</td><td>layer（unknown→rumor→summary→detail→secret）</td></tr>
+  <tr><td>知道多广</td><td>scope（local→regional→national→faction→elite→private）</td></tr>
+  <tr><td>是谁</td><td>profile（12 个身份）+ conditions（文化/王国/聚落/角色/年龄/技能…）</td></tr>
+  <tr><td>谁能看 / 谁不能看</td><td>grants / denies</td></tr>
+  <tr><td>不知道时指路</td><td>referral（转介）</td></tr>
+  <tr><td>这个地名挂哪个游戏对象</td><td>entity_ids（锚点）</td></tr>
+  <tr><td>引文出处</td><td>sources（来源）</td></tr>
+  <tr><td>编译许可证</td><td>compile-proof（权限链四步之一）</td></tr>
+  <tr><td>进游戏的包</td><td>runtime.json + index.json + manifest.json（schema <code>awake.worldbook.v2</code>）</td></tr>
+</table>
+
+<h2>六、做内容时必须记住的硬约束</h2>
+<div class="card">
+<ol style="margin:0;padding-left:20px">
+  <li><b>锚点两类不可混</b>：游戏里有同名对象的 → <code>entity.settlement.*</code>；游戏里没有的 → 才用 <code>entity.lore.*</code>。出处 B9 + ID-MIGRATION-CONTRACT。</li>
+  <li><b>实体 ID 一律小写</b>（<code>entity.settlement.town_v7</code>），游戏原生写法是 <code>town_V7</code>——别照抄。</li>
+  <li><b>动基线数据前先查是否被 golden 钉死</b>：<code>grep -rin &lt;哈希前8位&gt; --include=*.cs --include=*.json</code>。被钉死 → 属跨线批次，别在内容侧硬做。</li>
+  <li><b>AI 草稿必须人工逐条采纳</b>，改字要重采纳；AI 不会自动发布。</li>
+  <li><b>知识要分层</b>：内核绝对中立，观感按身份分层；管理等级高 = 更渊博，不是更"科学"；<b>严禁现当代科学视角</b>。</li>
+  <li><b>不为拆分而拆分</b>——按边界拆，不按数量拆。</li>
+</ol>
+</div>
+
+<div class="foot">
+  数据截至 2026-09-12 13:10 · 世界书侧（阿砚）整理 · 完整版见
+  <code>AWAKE/docs/worldbook-migration/WORLDBOOK-MECHANISM-AND-STUDIO-20260912.md</code>
+</div>
+
+</div>
+</body>
+</html>

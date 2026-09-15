@@ -1,1561 +1,2045 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "persona-workbench-to-awake.crosswalk.v1",
-  "schemaVersion": "persona-workbench-to-awake.crosswalk.v1",
-  "sourceSchema": "persona-workbench.character.v1",
-  "targetAuthoringSchema": "awake.persona.authoring.v2",
-  "targetRuntimeSchema": "awake.persona.definition.v1",
-  "targetRegistry": {
-    "schemaVersion": "awake.persona.tags.v1",
-    "path": "ModuleData/Worldbook/persona_definitions/tag_registry.json",
-    "sha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-    "digestMode": "raw_utf8_bytes"
-  },
-  "sourceVocabulary": {
-    "rootFields": [
-      "schemaVersion",
-      "id",
-      "displayName",
-      "status",
-      "sourcePackId",
-      "templateVersion",
-      "sourceDescription",
-      "core",
-      "identityFacts",
-      "summary",
-      "publicDescription",
-      "privateDescription",
-      "contradictionDescription",
-      "foodPreference",
-      "selfClaimRules",
-      "realSelfBehaviors",
-      "selfClaimExamples"
-    ],
-    "tagIds": [
-      "trait.cautious",
-      "trait.ambitious",
-      "trait.proud",
-      "trait.pragmatic",
-      "trait.guardian",
-      "trait.traditional",
-      "expression.measured",
-      "expression.direct",
-      "expression.formal",
-      "expression.teasing",
-      "expression.warm",
-      "behavior.bargains",
-      "behavior.observes_before_acting",
-      "behavior.tests_loyalty",
-      "behavior.keeps_leverage",
-      "behavior.protects_inner_circle",
-      "behavior.takes_command",
-      "trigger.public_humiliation",
-      "boundary.no_empty_promises"
-    ],
-    "axisIds": [
-      "traitProfile.caution",
-      "traitProfile.ambition",
-      "traitProfile.pride",
-      "traitProfile.pragmatism",
-      "traitProfile.inGroupLoyalty",
-      "traitProfile.tradition",
-      "expressionProfile.restraint",
-      "expressionProfile.directness",
-      "expressionProfile.formality",
-      "expressionProfile.playfulness",
-      "expressionProfile.warmth",
-      "behaviorProfile.conditionality",
-      "behaviorProfile.deliberation",
-      "behaviorProfile.trustTesting",
-      "behaviorProfile.leverage",
-      "behaviorProfile.inGroupPriority",
-      "behaviorProfile.leadership",
-      "reactionProfile.confrontation",
-      "reactionProfile.expression",
-      "reactionProfile.timing",
-      "reactionProfile.resentment",
-      "reactionProfile.supportSeeking",
-      "commitmentProfile.promiseCaution",
-      "commitmentProfile.promisePersistence",
-      "commitmentProfile.valueTradeability"
-    ],
-    "flagIds": [
-      "providerCandidate.flags[0]",
-      "providerCandidate.flags[1]"
-    ],
-    "facetStrengthIds": [
-      "behavior.bargains",
-      "behavior.keeps_leverage",
-      "behavior.observes_before_acting",
-      "behavior.protects_inner_circle",
-      "behavior.takes_command",
-      "behavior.tests_loyalty",
-      "expression.direct",
-      "expression.formal",
-      "expression.measured",
-      "expression.teasing",
-      "expression.warm",
-      "trait.ambitious",
-      "trait.cautious",
-      "trait.guardian",
-      "trait.pragmatic",
-      "trait.proud",
-      "trait.traditional"
-    ],
-    "legacyFields": [
-      "reactionProfile.sensitiveConditions",
-      "reactionProfile.conditionalResponses",
-      "commitmentProfile.priorityOrder",
-      "commitmentProfile.protectedValues",
-      "commitmentProfile.applicableScope",
-      "commitmentProfile.exceptionCost",
-      "commitmentProfile.breachResponse",
-      "tags.trigger.public_humiliation",
-      "tags.boundary.no_empty_promises"
-    ],
-    "provenanceFields": [
-      "derived.confirmedTextSha256",
-      "migration.defaultObservationReviewState",
-      "migration.defaultObservationProvenance",
-      "providerCandidate.axes[].source",
-      "providerCandidate.flags[].source"
-    ]
-  },
-  "valueEncodings": [
-    {
-      "id": "copy_text_nfc",
-      "kind": "copy_text",
-      "normalization": "NFC"
-    },
-    {
-      "id": "derived_confirmed_text_sha256",
-      "kind": "derived",
-      "normalization": "NFC",
-      "notes": "SHA-256 of NFC-normalized confirmedText"
-    },
-    {
-      "id": "presence_emit",
-      "kind": "presence",
-      "domain": [
-        "false",
-        "true"
-      ],
-      "actions": {
-        "false": {
-          "action": "omit"
-        },
-        "true": {
-          "action": "emit",
-          "reviewState": "needs_review"
-        }
-      }
-    },
-    {
-      "id": "presence_preserve_only",
-      "kind": "presence",
-      "domain": [
-        "false",
-        "true"
-      ],
-      "actions": {
-        "false": {
-          "action": "omit"
-        },
-        "true": {
-          "action": "preserve_only"
-        }
-      }
-    },
-    {
-      "id": "facet_mapped",
-      "kind": "facet_strength",
-      "domain": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "actions": {
-        "1": {
-          "action": "emit",
-          "strength": "slight",
-          "reviewState": "needs_review"
-        },
-        "2": {
-          "action": "emit",
-          "strength": "moderate",
-          "reviewState": "needs_review"
-        },
-        "3": {
-          "action": "emit",
-          "strength": "strong",
-          "reviewState": "needs_review"
-        },
-        "4": {
-          "action": "emit",
-          "strength": "strong",
-          "warning": "legacy_strength_collapsed",
-          "reviewState": "needs_review"
-        }
-      }
-    },
-    {
-      "id": "facet_preserve_only",
-      "kind": "facet_strength",
-      "domain": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "actions": {
-        "1": {
-          "action": "preserve_only"
-        },
-        "2": {
-          "action": "preserve_only"
-        },
-        "3": {
-          "action": "preserve_only"
-        },
-        "4": {
-          "action": "preserve_only",
-          "warning": "legacy_strength_collapsed"
-        }
-      }
-    },
-    {
-      "id": "axis_unmapped_preserve_only",
-      "kind": "signed_axis",
-      "domain": [
-        -2,
-        -1,
-        0,
-        1,
-        2
-      ],
-      "actions": {
-        "-2": {
-          "action": "preserve_only"
-        },
-        "-1": {
-          "action": "preserve_only"
-        },
-        "0": {
-          "action": "omit"
-        },
-        "1": {
-          "action": "preserve_only"
-        },
-        "2": {
-          "action": "preserve_only"
-        }
-      }
-    },
-    {
-      "id": "axis_pragmatic_positive",
-      "kind": "signed_axis",
-      "domain": [
-        -2,
-        -1,
-        0,
-        1,
-        2
-      ],
-      "actions": {
-        "-2": {
-          "action": "preserve_only"
-        },
-        "-1": {
-          "action": "preserve_only"
-        },
-        "0": {
-          "action": "omit"
-        },
-        "1": {
-          "action": "emit",
-          "strength": "slight",
-          "reviewState": "needs_review"
-        },
-        "2": {
-          "action": "emit",
-          "strength": "strong",
-          "reviewState": "needs_review"
-        }
-      }
-    },
-    {
-      "id": "axis_measured_positive",
-      "kind": "signed_axis",
-      "domain": [
-        -2,
-        -1,
-        0,
-        1,
-        2
-      ],
-      "actions": {
-        "-2": {
-          "action": "preserve_only"
-        },
-        "-1": {
-          "action": "preserve_only"
-        },
-        "0": {
-          "action": "omit"
-        },
-        "1": {
-          "action": "emit",
-          "strength": "slight",
-          "reviewState": "needs_review"
-        },
-        "2": {
-          "action": "emit",
-          "strength": "strong",
-          "reviewState": "needs_review"
-        }
-      }
-    },
-    {
-      "id": "axis_indirect_negative",
-      "kind": "signed_axis",
-      "domain": [
-        -2,
-        -1,
-        0,
-        1,
-        2
-      ],
-      "actions": {
-        "-2": {
-          "action": "emit",
-          "strength": "strong",
-          "reviewState": "needs_review"
-        },
-        "-1": {
-          "action": "emit",
-          "strength": "slight",
-          "reviewState": "needs_review"
-        },
-        "0": {
-          "action": "omit"
-        },
-        "1": {
-          "action": "preserve_only"
-        },
-        "2": {
-          "action": "preserve_only"
-        }
-      }
-    },
-    {
-      "id": "axis_conditional_positive",
-      "kind": "signed_axis",
-      "domain": [
-        -2,
-        -1,
-        0,
-        1,
-        2
-      ],
-      "actions": {
-        "-2": {
-          "action": "preserve_only"
-        },
-        "-1": {
-          "action": "preserve_only"
-        },
-        "0": {
-          "action": "omit"
-        },
-        "1": {
-          "action": "emit",
-          "strength": "slight",
-          "reviewState": "needs_review"
-        },
-        "2": {
-          "action": "emit",
-          "strength": "strong",
-          "reviewState": "needs_review"
-        }
-      }
-    },
-    {
-      "id": "flag_public_humiliation",
-      "kind": "flag",
-      "domain": [
-        "false",
-        "true"
-      ],
-      "actions": {
-        "false": {
-          "action": "omit"
-        },
-        "true": {
-          "action": "preserve_only"
-        }
-      },
-      "requiredEvidence": [
-        "publicDescription",
-        "reaction.conditionalResponses"
-      ],
-      "index": 0
-    },
-    {
-      "id": "flag_no_empty_promises",
-      "kind": "flag",
-      "domain": [
-        "false",
-        "true"
-      ],
-      "actions": {
-        "false": {
-          "action": "omit"
-        },
-        "true": {
-          "action": "preserve_only"
-        }
-      },
-      "requiredEvidence": [
-        "commitment.priorityOrder",
-        "commitment.applicableScope"
-      ],
-      "index": 1
-    },
-    {
-      "id": "legacy_preserve_only",
-      "kind": "preserve",
-      "notes": "Verbatim migration bag only; never runtime meaning"
-    },
-    {
-      "id": "constant_needs_review",
-      "kind": "constant",
-      "notes": "Migrated Workbench values require review",
-      "constantValue": "needs_review"
-    },
-    {
-      "id": "constant_legacy_v1",
-      "kind": "constant",
-      "notes": "Generated provenance for Workbench v1 migration",
-      "constantValue": "legacy_v1"
-    },
-    {
-      "id": "evidence_quote",
-      "kind": "evidence_quote",
-      "requiredEvidence": [
-        "sourceHash",
-        "startUtf16",
-        "lengthUtf16",
-        "quote"
-      ],
-      "notes": "Provider quote is evidence only when its source hash and UTF-16 span validate"
-    }
-  ],
-  "rows": [
-    {
-      "sourceId": "schemaVersion",
-      "sourceKind": "root_field",
-      "targetField": "migration.originSchema",
-      "targetId": "persona-workbench.character.v1",
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/schemaVersion",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "id",
-      "sourceKind": "root_field",
-      "targetField": "documentId",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/id",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "displayName",
-      "sourceKind": "root_field",
-      "targetField": "displayName",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/displayName",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "status",
-      "sourceKind": "root_field",
-      "targetField": "reviewStatus",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/status",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "sourcePackId",
-      "sourceKind": "root_field",
-      "targetField": "sourcePackId",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/sourcePackId",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "templateVersion",
-      "sourceKind": "root_field",
-      "targetField": "migration.originTemplateVersion",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/templateVersion",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "sourceDescription",
-      "sourceKind": "root_field",
-      "targetField": "source.confirmedText",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/sourceDescription",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "core",
-      "sourceKind": "root_field",
-      "targetField": "authored.core",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/core",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "identityFacts",
-      "sourceKind": "root_field",
-      "targetField": "authored.identityFacts",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/identityFacts",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "summary",
-      "sourceKind": "root_field",
-      "targetField": "authored.summary",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/summary",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "publicDescription",
-      "sourceKind": "root_field",
-      "targetField": "authored.publicDescription",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/publicDescription",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "privateDescription",
-      "sourceKind": "root_field",
-      "targetField": "authored.privateDescription",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/privateDescription",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "contradictionDescription",
-      "sourceKind": "root_field",
-      "targetField": "authored.contradictionDescription",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/contradictionDescription",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "foodPreference",
-      "sourceKind": "root_field",
-      "targetField": "authored.foodPreference",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/foodPreference",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "selfClaimRules",
-      "sourceKind": "root_field",
-      "targetField": "authored.selfClaimRules",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/selfClaimRules",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "realSelfBehaviors",
-      "sourceKind": "root_field",
-      "targetField": "authored.realSelfBehaviors",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/realSelfBehaviors",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "selfClaimExamples",
-      "sourceKind": "root_field",
-      "targetField": "authored.selfClaimExamples",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "copy_text_nfc",
-      "lossPolicy": "reject",
-      "provenancePath": "/selfClaimExamples",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "derived.confirmedTextSha256",
-      "sourceKind": "derived",
-      "targetField": "source.confirmedTextSha256",
-      "targetId": null,
-      "mappingKind": "identity",
-      "valueEncoding": "derived_confirmed_text_sha256",
-      "lossPolicy": "reject",
-      "provenancePath": "/sourceDescription",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "tags.trait.cautious",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.trait.cautious",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/trait.cautious",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.trait.ambitious",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.trait.ambitious",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/trait.ambitious",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.trait.proud",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.trait.proud",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/trait.proud",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.trait.pragmatic",
-      "sourceKind": "tag",
-      "targetField": "observations",
-      "targetId": "trait.pragmatic",
-      "mappingKind": "identity",
-      "valueEncoding": "presence_emit",
-      "lossPolicy": "reject",
-      "provenancePath": "/tags/trait.pragmatic",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "tags.trait.guardian",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.trait.guardian",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/trait.guardian",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.trait.traditional",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.trait.traditional",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/trait.traditional",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.expression.measured",
-      "sourceKind": "tag",
-      "targetField": "observations",
-      "targetId": "expression.measured",
-      "mappingKind": "identity",
-      "valueEncoding": "presence_emit",
-      "lossPolicy": "reject",
-      "provenancePath": "/tags/expression.measured",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "tags.expression.direct",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.expression.direct",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/expression.direct",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.expression.formal",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.expression.formal",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/expression.formal",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.expression.teasing",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.expression.teasing",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/expression.teasing",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.expression.warm",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.expression.warm",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/expression.warm",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.behavior.bargains",
-      "sourceKind": "tag",
-      "targetField": "observations",
-      "targetId": "behavior.conditional_cooperation",
-      "mappingKind": "legacy_token",
-      "valueEncoding": "presence_emit",
-      "lossPolicy": "reject",
-      "provenancePath": "/tags/behavior.bargains",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "tags.behavior.observes_before_acting",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.behavior.observes_before_acting",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/behavior.observes_before_acting",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.behavior.tests_loyalty",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.behavior.tests_loyalty",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/behavior.tests_loyalty",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.behavior.keeps_leverage",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.behavior.keeps_leverage",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/behavior.keeps_leverage",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.behavior.protects_inner_circle",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.behavior.protects_inner_circle",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/behavior.protects_inner_circle",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.behavior.takes_command",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.behavior.takes_command",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/behavior.takes_command",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.trigger.public_humiliation",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.trigger.public_humiliation",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/trigger.public_humiliation",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "tags.boundary.no_empty_promises",
-      "sourceKind": "tag",
-      "targetField": "migration.preservedLegacyData.tags.boundary.no_empty_promises",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "presence_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/tags/boundary.no_empty_promises",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.behavior.bargains",
-      "sourceKind": "facet_strength",
-      "targetField": "observations",
-      "targetId": "behavior.conditional_cooperation",
-      "mappingKind": "facet_to_observation",
-      "valueEncoding": "facet_mapped",
-      "lossPolicy": "reject",
-      "provenancePath": "/facetStrengths/behavior.bargains",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "facetStrengths.behavior.keeps_leverage",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.behavior.keeps_leverage",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/behavior.keeps_leverage",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.behavior.observes_before_acting",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.behavior.observes_before_acting",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/behavior.observes_before_acting",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.behavior.protects_inner_circle",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.behavior.protects_inner_circle",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/behavior.protects_inner_circle",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.behavior.takes_command",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.behavior.takes_command",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/behavior.takes_command",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.behavior.tests_loyalty",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.behavior.tests_loyalty",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/behavior.tests_loyalty",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.expression.direct",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.expression.direct",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/expression.direct",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.expression.formal",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.expression.formal",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/expression.formal",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.expression.measured",
-      "sourceKind": "facet_strength",
-      "targetField": "observations",
-      "targetId": "expression.measured",
-      "mappingKind": "facet_to_observation",
-      "valueEncoding": "facet_mapped",
-      "lossPolicy": "reject",
-      "provenancePath": "/facetStrengths/expression.measured",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "facetStrengths.expression.teasing",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.expression.teasing",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/expression.teasing",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.expression.warm",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.expression.warm",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/expression.warm",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.trait.ambitious",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.trait.ambitious",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/trait.ambitious",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.trait.cautious",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.trait.cautious",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/trait.cautious",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.trait.guardian",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.trait.guardian",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/trait.guardian",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.trait.pragmatic",
-      "sourceKind": "facet_strength",
-      "targetField": "observations",
-      "targetId": "trait.pragmatic",
-      "mappingKind": "facet_to_observation",
-      "valueEncoding": "facet_mapped",
-      "lossPolicy": "reject",
-      "provenancePath": "/facetStrengths/trait.pragmatic",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "facetStrengths.trait.proud",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.trait.proud",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/trait.proud",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "facetStrengths.trait.traditional",
-      "sourceKind": "facet_strength",
-      "targetField": "migration.preservedLegacyData.trait.traditional",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "facet_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/facetStrengths/trait.traditional",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "traitProfile.caution",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.traitProfile.caution",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/traitProfile/caution",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "traitProfile.ambition",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.traitProfile.ambition",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/traitProfile/ambition",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "traitProfile.pride",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.traitProfile.pride",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/traitProfile/pride",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "traitProfile.pragmatism",
-      "sourceKind": "axis",
-      "targetField": "observations",
-      "targetId": "trait.pragmatic",
-      "mappingKind": "axis_to_observation",
-      "valueEncoding": "axis_pragmatic_positive",
-      "lossPolicy": "reject",
-      "provenancePath": "/traitProfile/pragmatism",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "traitProfile.inGroupLoyalty",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.traitProfile.inGroupLoyalty",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/traitProfile/inGroupLoyalty",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "traitProfile.tradition",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.traitProfile.tradition",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/traitProfile/tradition",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "expressionProfile.restraint",
-      "sourceKind": "axis",
-      "targetField": "observations",
-      "targetId": "expression.measured",
-      "mappingKind": "axis_to_observation",
-      "valueEncoding": "axis_measured_positive",
-      "lossPolicy": "reject",
-      "provenancePath": "/expressionProfile/restraint",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "expressionProfile.directness",
-      "sourceKind": "axis",
-      "targetField": "observations",
-      "targetId": "expression.indirect",
-      "mappingKind": "axis_to_observation",
-      "valueEncoding": "axis_indirect_negative",
-      "lossPolicy": "reject",
-      "provenancePath": "/expressionProfile/directness",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "expressionProfile.formality",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.expressionProfile.formality",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/expressionProfile/formality",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "expressionProfile.playfulness",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.expressionProfile.playfulness",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/expressionProfile/playfulness",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "expressionProfile.warmth",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.expressionProfile.warmth",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/expressionProfile/warmth",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "behaviorProfile.conditionality",
-      "sourceKind": "axis",
-      "targetField": "observations",
-      "targetId": "behavior.conditional_cooperation",
-      "mappingKind": "axis_to_observation",
-      "valueEncoding": "axis_conditional_positive",
-      "lossPolicy": "reject",
-      "provenancePath": "/behaviorProfile/conditionality",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "behaviorProfile.deliberation",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.behaviorProfile.deliberation",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/behaviorProfile/deliberation",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "behaviorProfile.trustTesting",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.behaviorProfile.trustTesting",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/behaviorProfile/trustTesting",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "behaviorProfile.leverage",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.behaviorProfile.leverage",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/behaviorProfile/leverage",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "behaviorProfile.inGroupPriority",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.behaviorProfile.inGroupPriority",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/behaviorProfile/inGroupPriority",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "behaviorProfile.leadership",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.behaviorProfile.leadership",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/behaviorProfile/leadership",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "reactionProfile.confrontation",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.reactionProfile.confrontation",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/reactionProfile/confrontation",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "reactionProfile.expression",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.reactionProfile.expression",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/reactionProfile/expression",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "reactionProfile.timing",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.reactionProfile.timing",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/reactionProfile/timing",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "reactionProfile.resentment",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.reactionProfile.resentment",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/reactionProfile/resentment",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "reactionProfile.supportSeeking",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.reactionProfile.supportSeeking",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/reactionProfile/supportSeeking",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "commitmentProfile.promiseCaution",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.commitmentProfile.promiseCaution",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/commitmentProfile/promiseCaution",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "commitmentProfile.promisePersistence",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.commitmentProfile.promisePersistence",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/commitmentProfile/promisePersistence",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "commitmentProfile.valueTradeability",
-      "sourceKind": "axis",
-      "targetField": "migration.preservedLegacyData.commitmentProfile.valueTradeability",
-      "targetId": null,
-      "mappingKind": "unmapped",
-      "valueEncoding": "axis_unmapped_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/commitmentProfile/valueTradeability",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "providerCandidate.flags[0]",
-      "sourceKind": "flag",
-      "targetField": "observations",
-      "targetId": "trigger.public_humiliation",
-      "mappingKind": "flag_to_observation",
-      "valueEncoding": "flag_public_humiliation",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/providerCandidate/flags/0",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "providerCandidate.flags[1]",
-      "sourceKind": "flag",
-      "targetField": "observations",
-      "targetId": "boundary.no_empty_promises",
-      "mappingKind": "flag_to_observation",
-      "valueEncoding": "flag_no_empty_promises",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/providerCandidate/flags/1",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "unmapped"
-    },
-    {
-      "sourceId": "reactionProfile.sensitiveConditions",
-      "sourceKind": "legacy_field",
-      "targetField": "migration.preservedLegacyData.reactionProfile.sensitiveConditions",
-      "targetId": null,
-      "mappingKind": "preserve_only",
-      "valueEncoding": "legacy_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/reactionProfile/sensitiveConditions",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "reactionProfile.conditionalResponses",
-      "sourceKind": "legacy_field",
-      "targetField": "migration.preservedLegacyData.reactionProfile.conditionalResponses",
-      "targetId": null,
-      "mappingKind": "preserve_only",
-      "valueEncoding": "legacy_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/reactionProfile/conditionalResponses",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "commitmentProfile.priorityOrder",
-      "sourceKind": "legacy_field",
-      "targetField": "migration.preservedLegacyData.commitmentProfile.priorityOrder",
-      "targetId": null,
-      "mappingKind": "preserve_only",
-      "valueEncoding": "legacy_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/commitmentProfile/priorityOrder",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "commitmentProfile.protectedValues",
-      "sourceKind": "legacy_field",
-      "targetField": "migration.preservedLegacyData.commitmentProfile.protectedValues",
-      "targetId": null,
-      "mappingKind": "preserve_only",
-      "valueEncoding": "legacy_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/commitmentProfile/protectedValues",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "commitmentProfile.applicableScope",
-      "sourceKind": "legacy_field",
-      "targetField": "migration.preservedLegacyData.commitmentProfile.applicableScope",
-      "targetId": null,
-      "mappingKind": "preserve_only",
-      "valueEncoding": "legacy_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/commitmentProfile/applicableScope",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "commitmentProfile.exceptionCost",
-      "sourceKind": "legacy_field",
-      "targetField": "migration.preservedLegacyData.commitmentProfile.exceptionCost",
-      "targetId": null,
-      "mappingKind": "preserve_only",
-      "valueEncoding": "legacy_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/commitmentProfile/exceptionCost",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "commitmentProfile.breachResponse",
-      "sourceKind": "legacy_field",
-      "targetField": "migration.preservedLegacyData.commitmentProfile.breachResponse",
-      "targetId": null,
-      "mappingKind": "preserve_only",
-      "valueEncoding": "legacy_preserve_only",
-      "lossPolicy": "preserve_only",
-      "provenancePath": "/commitmentProfile/breachResponse",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "migration.defaultObservationReviewState",
-      "sourceKind": "provenance",
-      "targetField": "observations[].reviewState",
-      "targetId": null,
-      "mappingKind": "preserve_only",
-      "valueEncoding": "constant_needs_review",
-      "lossPolicy": "reject",
-      "provenancePath": "/migration",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "migration.defaultObservationProvenance",
-      "sourceKind": "provenance",
-      "targetField": "observations[].provenance",
-      "targetId": null,
-      "mappingKind": "preserve_only",
-      "valueEncoding": "constant_legacy_v1",
-      "lossPolicy": "reject",
-      "provenancePath": "/migration",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "providerCandidate.axes[].source",
-      "sourceKind": "provenance",
-      "targetField": "observations[].evidence",
-      "targetId": null,
-      "mappingKind": "preserve_only",
-      "valueEncoding": "evidence_quote",
-      "lossPolicy": "reject",
-      "provenancePath": "/providerCandidate/axes/*/source",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    },
-    {
-      "sourceId": "providerCandidate.flags[].source",
-      "sourceKind": "provenance",
-      "targetField": "observations[].evidence",
-      "targetId": null,
-      "mappingKind": "preserve_only",
-      "valueEncoding": "evidence_quote",
-      "lossPolicy": "reject",
-      "provenancePath": "/providerCandidate/flags/*/source",
-      "registrySha256": "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6",
-      "status": "mapped"
-    }
-  ]
+    "$schema":  "https://json-schema.org/draft/2020-12/schema",
+    "$id":  "persona-workbench-to-awake.crosswalk.v1",
+    "schemaVersion":  "persona-workbench-to-awake.crosswalk.v1",
+    "sourceSchema":  "persona-workbench.character.v1",
+    "targetAuthoringSchema":  "awake.persona.authoring.v2",
+    "targetRuntimeSchema":  "awake.persona.definition.v1",
+    "targetRegistry":  {
+                           "schemaVersion":  "awake.persona.tags.v1",
+                           "path":  "ModuleData/Worldbook/persona_definitions/tag_registry.json",
+                           "sha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                           "digestMode":  "raw_utf8_bytes"
+                       },
+    "sourceVocabulary":  {
+                             "rootFields":  [
+                                                "schemaVersion",
+                                                "id",
+                                                "displayName",
+                                                "status",
+                                                "sourcePackId",
+                                                "templateVersion",
+                                                "sourceDescription",
+                                                "core",
+                                                "identityFacts",
+                                                "summary",
+                                                "publicDescription",
+                                                "privateDescription",
+                                                "contradictionDescription",
+                                                "selfClaimRules",
+                                                "realSelfBehaviors",
+                                                "selfClaimExamples",
+                                                "tensionAxes"
+                                            ],
+                             "tagIds":  [
+                                            "trait.pragmatic",
+                                            "trait.status_conscious",
+                                            "trait.cautious",
+                                            "trait.ambitious",
+                                            "trait.proud",
+                                            "trait.guardian",
+                                            "trait.traditional",
+                                            "trait.kind",
+                                            "trait.deceitful",
+                                            "trait.loyal",
+                                            "trait.courageous",
+                                            "trait.reserved",
+                                            "expression.measured",
+                                            "expression.indirect",
+                                            "expression.direct",
+                                            "expression.formal",
+                                            "expression.warm",
+                                            "expression.teasing",
+                                            "expression.blunt",
+                                            "expression.frank",
+                                            "expression.flamboyant",
+                                            "expression.understated",
+                                            "behavior.conditional_cooperation",
+                                            "behavior.bargains",
+                                            "behavior.observes_before_acting",
+                                            "behavior.tests_loyalty",
+                                            "behavior.keeps_leverage",
+                                            "behavior.protects_inner_circle",
+                                            "behavior.takes_command",
+                                            "behavior.acts_before_reasoning",
+                                            "behavior.charges_first",
+                                            "behavior.administers_fairly",
+                                            "trigger.threat_or_leverage",
+                                            "trigger.public_humiliation",
+                                            "trigger.family_safety",
+                                            "trigger.reputation_challenge",
+                                            "trigger.threat_to_home",
+                                            "trigger.loyalty_or_betrayal",
+                                            "trigger.social_slight"
+                                        ],
+                             "axisIds":  [
+                                             "traitProfile.caution",
+                                             "traitProfile.ambition",
+                                             "traitProfile.pride",
+                                             "traitProfile.pragmatism",
+                                             "traitProfile.inGroupLoyalty",
+                                             "traitProfile.tradition",
+                                             "expressionProfile.restraint",
+                                             "expressionProfile.directness",
+                                             "expressionProfile.formality",
+                                             "expressionProfile.playfulness",
+                                             "expressionProfile.warmth",
+                                             "behaviorProfile.conditionality",
+                                             "behaviorProfile.deliberation",
+                                             "behaviorProfile.trustTesting",
+                                             "behaviorProfile.leverage",
+                                             "behaviorProfile.inGroupPriority",
+                                             "behaviorProfile.leadership",
+                                             "reactionProfile.confrontation",
+                                             "reactionProfile.expression",
+                                             "reactionProfile.timing",
+                                             "reactionProfile.resentment",
+                                             "reactionProfile.supportSeeking",
+                                             "commitmentProfile.promiseCaution",
+                                             "commitmentProfile.promisePersistence",
+                                             "commitmentProfile.valueTradeability"
+                                         ],
+                             "flagIds":  [
+                                             "providerCandidate.flags[0]",
+                                             "providerCandidate.flags[1]"
+                                         ],
+                             "facetStrengthIds":  [
+                                                      "behavior.bargains",
+                                                      "behavior.keeps_leverage",
+                                                      "behavior.observes_before_acting",
+                                                      "behavior.protects_inner_circle",
+                                                      "behavior.takes_command",
+                                                      "behavior.tests_loyalty",
+                                                      "expression.direct",
+                                                      "expression.formal",
+                                                      "expression.measured",
+                                                      "expression.teasing",
+                                                      "expression.warm",
+                                                      "trait.ambitious",
+                                                      "trait.cautious",
+                                                      "trait.guardian",
+                                                      "trait.pragmatic",
+                                                      "trait.proud",
+                                                      "trait.traditional"
+                                                  ],
+                             "legacyFields":  [
+                                                  "reactionProfile.sensitiveConditions",
+                                                  "reactionProfile.conditionalResponses",
+                                                  "commitmentProfile.priorityOrder",
+                                                  "commitmentProfile.protectedValues",
+                                                  "commitmentProfile.applicableScope",
+                                                  "commitmentProfile.exceptionCost",
+                                                  "commitmentProfile.breachResponse",
+                                                  "tags.trigger.public_humiliation",
+                                                  "tags.boundary.no_empty_promises"
+                                              ],
+                             "provenanceFields":  [
+                                                      "derived.confirmedTextSha256",
+                                                      "migration.defaultObservationReviewState",
+                                                      "migration.defaultObservationProvenance",
+                                                      "providerCandidate.axes[].source",
+                                                      "providerCandidate.flags[].source"
+                                                  ],
+                             "facetIds":  [
+                                              "trait.pragmatic",
+                                              "trait.status_conscious",
+                                              "trait.cautious",
+                                              "trait.ambitious",
+                                              "trait.proud",
+                                              "trait.guardian",
+                                              "trait.traditional",
+                                              "trait.kind",
+                                              "trait.deceitful",
+                                              "trait.loyal",
+                                              "trait.courageous",
+                                              "trait.reserved",
+                                              "expression.measured",
+                                              "expression.indirect",
+                                              "expression.direct",
+                                              "expression.formal",
+                                              "expression.warm",
+                                              "expression.teasing",
+                                              "expression.blunt",
+                                              "expression.frank",
+                                              "expression.flamboyant",
+                                              "expression.understated",
+                                              "behavior.conditional_cooperation",
+                                              "behavior.bargains",
+                                              "behavior.observes_before_acting",
+                                              "behavior.tests_loyalty",
+                                              "behavior.keeps_leverage",
+                                              "behavior.protects_inner_circle",
+                                              "behavior.takes_command",
+                                              "behavior.acts_before_reasoning",
+                                              "behavior.charges_first",
+                                              "behavior.administers_fairly"
+                                          ]
+                         },
+    "valueEncodings":  [
+                           {
+                               "id":  "copy_text_nfc",
+                               "kind":  "copy_text",
+                               "normalization":  "NFC"
+                           },
+                           {
+                               "id":  "derived_confirmed_text_sha256",
+                               "kind":  "derived",
+                               "normalization":  "NFC",
+                               "notes":  "SHA-256 of NFC-normalized confirmedText"
+                           },
+                           {
+                               "id":  "presence_emit",
+                               "kind":  "presence",
+                               "domain":  [
+                                              "false",
+                                              "true"
+                                          ],
+                               "actions":  {
+                                               "false":  {
+                                                             "action":  "omit"
+                                                         },
+                                               "true":  {
+                                                            "action":  "emit",
+                                                            "reviewState":  "needs_review"
+                                                        }
+                                           }
+                           },
+                           {
+                               "id":  "presence_preserve_only",
+                               "kind":  "presence",
+                               "domain":  [
+                                              "false",
+                                              "true"
+                                          ],
+                               "actions":  {
+                                               "false":  {
+                                                             "action":  "omit"
+                                                         },
+                                               "true":  {
+                                                            "action":  "preserve_only"
+                                                        }
+                                           }
+                           },
+                           {
+                               "id":  "facet_mapped",
+                               "kind":  "facet_strength",
+                               "domain":  [
+                                              1,
+                                              2,
+                                              3,
+                                              4
+                                          ],
+                               "actions":  {
+                                               "1":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "2":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "3":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "4":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "5":  {
+                                                         "action":  "preserve_only"
+                                                     }
+                                           }
+                           },
+                           {
+                               "id":  "facet_preserve_only",
+                               "kind":  "facet_strength",
+                               "domain":  [
+                                              1,
+                                              2,
+                                              3,
+                                              4
+                                          ],
+                               "actions":  {
+                                               "1":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "2":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "3":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "4":  {
+                                                         "action":  "preserve_only",
+                                                         "warning":  "legacy_strength_collapsed"
+                                                     },
+                                               "5":  {
+                                                         "action":  "preserve_only"
+                                                     }
+                                           }
+                           },
+                           {
+                               "id":  "axis_unmapped_preserve_only",
+                               "kind":  "signed_axis",
+                               "domain":  [
+                                              -2,
+                                              -1,
+                                              0,
+                                              1,
+                                              2
+                                          ],
+                               "actions":  {
+                                               "-2":  {
+                                                          "action":  "preserve_only"
+                                                      },
+                                               "-1":  {
+                                                          "action":  "preserve_only"
+                                                      },
+                                               "0":  {
+                                                         "action":  "omit"
+                                                     },
+                                               "1":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "2":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "3":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "-3":  {
+                                                          "action":  "preserve_only"
+                                                      }
+                                           }
+                           },
+                           {
+                               "id":  "axis_pragmatic_positive",
+                               "kind":  "signed_axis",
+                               "domain":  [
+                                              -2,
+                                              -1,
+                                              0,
+                                              1,
+                                              2
+                                          ],
+                               "actions":  {
+                                               "-2":  {
+                                                          "action":  "preserve_only"
+                                                      },
+                                               "-1":  {
+                                                          "action":  "preserve_only"
+                                                      },
+                                               "0":  {
+                                                         "action":  "omit"
+                                                     },
+                                               "1":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "2":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "3":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "-3":  {
+                                                          "action":  "preserve_only"
+                                                      }
+                                           }
+                           },
+                           {
+                               "id":  "axis_measured_positive",
+                               "kind":  "signed_axis",
+                               "domain":  [
+                                              -2,
+                                              -1,
+                                              0,
+                                              1,
+                                              2
+                                          ],
+                               "actions":  {
+                                               "-2":  {
+                                                          "action":  "preserve_only"
+                                                      },
+                                               "-1":  {
+                                                          "action":  "preserve_only"
+                                                      },
+                                               "0":  {
+                                                         "action":  "omit"
+                                                     },
+                                               "1":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "2":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "3":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "-3":  {
+                                                          "action":  "preserve_only"
+                                                      }
+                                           }
+                           },
+                           {
+                               "id":  "axis_indirect_negative",
+                               "kind":  "signed_axis",
+                               "domain":  [
+                                              -2,
+                                              -1,
+                                              0,
+                                              1,
+                                              2
+                                          ],
+                               "actions":  {
+                                               "-2":  {
+                                                          "action":  "preserve_only"
+                                                      },
+                                               "-1":  {
+                                                          "action":  "preserve_only"
+                                                      },
+                                               "0":  {
+                                                         "action":  "omit"
+                                                     },
+                                               "1":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "2":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "3":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "-3":  {
+                                                          "action":  "preserve_only"
+                                                      }
+                                           }
+                           },
+                           {
+                               "id":  "axis_conditional_positive",
+                               "kind":  "signed_axis",
+                               "domain":  [
+                                              -2,
+                                              -1,
+                                              0,
+                                              1,
+                                              2
+                                          ],
+                               "actions":  {
+                                               "-2":  {
+                                                          "action":  "preserve_only"
+                                                      },
+                                               "-1":  {
+                                                          "action":  "preserve_only"
+                                                      },
+                                               "0":  {
+                                                         "action":  "omit"
+                                                     },
+                                               "1":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "2":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "3":  {
+                                                         "action":  "preserve_only"
+                                                     },
+                                               "-3":  {
+                                                          "action":  "preserve_only"
+                                                      }
+                                           }
+                           },
+                           {
+                               "id":  "flag_public_humiliation",
+                               "kind":  "flag",
+                               "domain":  [
+                                              "false",
+                                              "true"
+                                          ],
+                               "actions":  {
+                                               "false":  {
+                                                             "action":  "omit"
+                                                         },
+                                               "true":  {
+                                                            "action":  "preserve_only"
+                                                        }
+                                           },
+                               "requiredEvidence":  [
+                                                        "publicDescription",
+                                                        "reaction.conditionalResponses"
+                                                    ],
+                               "index":  0
+                           },
+                           {
+                               "id":  "flag_no_empty_promises",
+                               "kind":  "flag",
+                               "domain":  [
+                                              "false",
+                                              "true"
+                                          ],
+                               "actions":  {
+                                               "false":  {
+                                                             "action":  "omit"
+                                                         },
+                                               "true":  {
+                                                            "action":  "preserve_only"
+                                                        }
+                                           },
+                               "requiredEvidence":  [
+                                                        "commitment.priorityOrder",
+                                                        "commitment.applicableScope"
+                                                    ],
+                               "index":  1
+                           },
+                           {
+                               "id":  "legacy_preserve_only",
+                               "kind":  "preserve",
+                               "notes":  "Verbatim migration bag only; never runtime meaning"
+                           },
+                           {
+                               "id":  "constant_needs_review",
+                               "kind":  "constant",
+                               "notes":  "Migrated Workbench values require review",
+                               "constantValue":  "needs_review"
+                           },
+                           {
+                               "id":  "constant_legacy_v1",
+                               "kind":  "constant",
+                               "notes":  "Generated provenance for Workbench v1 migration",
+                               "constantValue":  "legacy_v1"
+                           },
+                           {
+                               "id":  "evidence_quote",
+                               "kind":  "evidence_quote",
+                               "requiredEvidence":  [
+                                                        "sourceHash",
+                                                        "startUtf16",
+                                                        "lengthUtf16",
+                                                        "quote"
+                                                    ],
+                               "notes":  "Provider quote is evidence only when its source hash and UTF-16 span validate"
+                           }
+                       ],
+    "rows":  [
+                 {
+                     "sourceId":  "schemaVersion",
+                     "sourceKind":  "root_field",
+                     "targetField":  "migration.originSchema",
+                     "targetId":  "persona-workbench.character.v1",
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/schemaVersion",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "id",
+                     "sourceKind":  "root_field",
+                     "targetField":  "documentId",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/id",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "displayName",
+                     "sourceKind":  "root_field",
+                     "targetField":  "displayName",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/displayName",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "status",
+                     "sourceKind":  "root_field",
+                     "targetField":  "reviewStatus",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/status",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "sourcePackId",
+                     "sourceKind":  "root_field",
+                     "targetField":  "sourcePackId",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/sourcePackId",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "templateVersion",
+                     "sourceKind":  "root_field",
+                     "targetField":  "migration.originTemplateVersion",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/templateVersion",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "core",
+                     "sourceKind":  "root_field",
+                     "targetField":  "authored.core",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/core",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "identityFacts",
+                     "sourceKind":  "root_field",
+                     "targetField":  "authored.identityFacts",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/identityFacts",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "summary",
+                     "sourceKind":  "root_field",
+                     "targetField":  "authored.summary",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/summary",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "publicDescription",
+                     "sourceKind":  "root_field",
+                     "targetField":  "authored.publicDescription",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/publicDescription",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "privateDescription",
+                     "sourceKind":  "root_field",
+                     "targetField":  "authored.privateDescription",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/privateDescription",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "contradictionDescription",
+                     "sourceKind":  "root_field",
+                     "targetField":  "authored.contradictionDescription",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/contradictionDescription",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "selfClaimRules",
+                     "sourceKind":  "root_field",
+                     "targetField":  "authored.selfClaimRules",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/selfClaimRules",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "realSelfBehaviors",
+                     "sourceKind":  "root_field",
+                     "targetField":  "authored.realSelfBehaviors",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/realSelfBehaviors",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "selfClaimExamples",
+                     "sourceKind":  "root_field",
+                     "targetField":  "authored.selfClaimExamples",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/selfClaimExamples",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "derived.confirmedTextSha256",
+                     "sourceKind":  "derived",
+                     "targetField":  "source.confirmedTextSha256",
+                     "targetId":  null,
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "derived_confirmed_text_sha256",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/sourceDescription",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "tags.trait.cautious",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.trait.cautious",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/trait.cautious",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.trait.ambitious",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.trait.ambitious",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/trait.ambitious",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.trait.proud",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.trait.proud",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/trait.proud",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.trait.pragmatic",
+                     "sourceKind":  "tag",
+                     "targetField":  "observations",
+                     "targetId":  "trait.pragmatic",
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "presence_emit",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/tags/trait.pragmatic",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "tags.trait.guardian",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.trait.guardian",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/trait.guardian",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.trait.traditional",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.trait.traditional",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/trait.traditional",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.expression.measured",
+                     "sourceKind":  "tag",
+                     "targetField":  "observations",
+                     "targetId":  "expression.measured",
+                     "mappingKind":  "identity",
+                     "valueEncoding":  "presence_emit",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/tags/expression.measured",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "tags.expression.direct",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.expression.direct",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/expression.direct",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.expression.formal",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.expression.formal",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/expression.formal",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.expression.teasing",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.expression.teasing",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/expression.teasing",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.expression.warm",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.expression.warm",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/expression.warm",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.behavior.bargains",
+                     "sourceKind":  "tag",
+                     "targetField":  "observations",
+                     "targetId":  "behavior.conditional_cooperation",
+                     "mappingKind":  "legacy_token",
+                     "valueEncoding":  "presence_emit",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/tags/behavior.bargains",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "tags.behavior.observes_before_acting",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.behavior.observes_before_acting",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/behavior.observes_before_acting",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.behavior.tests_loyalty",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.behavior.tests_loyalty",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/behavior.tests_loyalty",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.behavior.keeps_leverage",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.behavior.keeps_leverage",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/behavior.keeps_leverage",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.behavior.protects_inner_circle",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.behavior.protects_inner_circle",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/behavior.protects_inner_circle",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.behavior.takes_command",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.behavior.takes_command",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/behavior.takes_command",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "tags.trigger.public_humiliation",
+                     "sourceKind":  "tag",
+                     "targetField":  "migration.preservedLegacyData.tags.trigger.public_humiliation",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/tags/trigger.public_humiliation",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.behavior.bargains",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "observations",
+                     "targetId":  "behavior.conditional_cooperation",
+                     "mappingKind":  "facet_to_observation",
+                     "valueEncoding":  "facet_mapped",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/facetStrengths/behavior.bargains",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.behavior.keeps_leverage",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.behavior.keeps_leverage",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/behavior.keeps_leverage",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.behavior.observes_before_acting",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.behavior.observes_before_acting",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/behavior.observes_before_acting",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.behavior.protects_inner_circle",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.behavior.protects_inner_circle",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/behavior.protects_inner_circle",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.behavior.takes_command",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.behavior.takes_command",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/behavior.takes_command",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.behavior.tests_loyalty",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.behavior.tests_loyalty",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/behavior.tests_loyalty",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.expression.direct",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.expression.direct",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/expression.direct",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.expression.formal",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.expression.formal",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/expression.formal",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.expression.measured",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "observations",
+                     "targetId":  "expression.measured",
+                     "mappingKind":  "facet_to_observation",
+                     "valueEncoding":  "facet_mapped",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/facetStrengths/expression.measured",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.expression.teasing",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.expression.teasing",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/expression.teasing",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.expression.warm",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.expression.warm",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/expression.warm",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.trait.ambitious",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.trait.ambitious",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/trait.ambitious",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.trait.cautious",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.trait.cautious",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/trait.cautious",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.trait.guardian",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.trait.guardian",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/trait.guardian",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.trait.pragmatic",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "observations",
+                     "targetId":  "trait.pragmatic",
+                     "mappingKind":  "facet_to_observation",
+                     "valueEncoding":  "facet_mapped",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/facetStrengths/trait.pragmatic",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.trait.proud",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.trait.proud",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/trait.proud",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.trait.traditional",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "migration.preservedLegacyData.trait.traditional",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/facetStrengths/trait.traditional",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "traitProfile.caution",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.traitProfile.caution",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/traitProfile/caution",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "traitProfile.ambition",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.traitProfile.ambition",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/traitProfile/ambition",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "traitProfile.pride",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.traitProfile.pride",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/traitProfile/pride",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "traitProfile.pragmatism",
+                     "sourceKind":  "axis",
+                     "targetField":  "observations",
+                     "targetId":  "trait.pragmatic",
+                     "mappingKind":  "axis_to_observation",
+                     "valueEncoding":  "axis_pragmatic_positive",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/traitProfile/pragmatism",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "traitProfile.inGroupLoyalty",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.traitProfile.inGroupLoyalty",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/traitProfile/inGroupLoyalty",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "traitProfile.tradition",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.traitProfile.tradition",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/traitProfile/tradition",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "expressionProfile.restraint",
+                     "sourceKind":  "axis",
+                     "targetField":  "observations",
+                     "targetId":  "expression.measured",
+                     "mappingKind":  "axis_to_observation",
+                     "valueEncoding":  "axis_measured_positive",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/expressionProfile/restraint",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "expressionProfile.directness",
+                     "sourceKind":  "axis",
+                     "targetField":  "observations",
+                     "targetId":  "expression.indirect",
+                     "mappingKind":  "axis_to_observation",
+                     "valueEncoding":  "axis_indirect_negative",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/expressionProfile/directness",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "expressionProfile.formality",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.expressionProfile.formality",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/expressionProfile/formality",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "expressionProfile.playfulness",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.expressionProfile.playfulness",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/expressionProfile/playfulness",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "expressionProfile.warmth",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.expressionProfile.warmth",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/expressionProfile/warmth",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "behaviorProfile.conditionality",
+                     "sourceKind":  "axis",
+                     "targetField":  "observations",
+                     "targetId":  "behavior.conditional_cooperation",
+                     "mappingKind":  "axis_to_observation",
+                     "valueEncoding":  "axis_conditional_positive",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/behaviorProfile/conditionality",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "behaviorProfile.deliberation",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.behaviorProfile.deliberation",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/behaviorProfile/deliberation",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "behaviorProfile.trustTesting",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.behaviorProfile.trustTesting",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/behaviorProfile/trustTesting",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "behaviorProfile.leverage",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.behaviorProfile.leverage",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/behaviorProfile/leverage",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "behaviorProfile.inGroupPriority",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.behaviorProfile.inGroupPriority",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/behaviorProfile/inGroupPriority",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "behaviorProfile.leadership",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.behaviorProfile.leadership",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/behaviorProfile/leadership",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "reactionProfile.confrontation",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.reactionProfile.confrontation",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/reactionProfile/confrontation",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "reactionProfile.expression",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.reactionProfile.expression",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/reactionProfile/expression",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "reactionProfile.timing",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.reactionProfile.timing",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/reactionProfile/timing",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "reactionProfile.resentment",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.reactionProfile.resentment",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/reactionProfile/resentment",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "reactionProfile.supportSeeking",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.reactionProfile.supportSeeking",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/reactionProfile/supportSeeking",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "commitmentProfile.promiseCaution",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.commitmentProfile.promiseCaution",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/commitmentProfile/promiseCaution",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "commitmentProfile.promisePersistence",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.commitmentProfile.promisePersistence",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/commitmentProfile/promisePersistence",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "commitmentProfile.valueTradeability",
+                     "sourceKind":  "axis",
+                     "targetField":  "migration.preservedLegacyData.commitmentProfile.valueTradeability",
+                     "targetId":  null,
+                     "mappingKind":  "unmapped",
+                     "valueEncoding":  "axis_unmapped_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/commitmentProfile/valueTradeability",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "providerCandidate.flags[0]",
+                     "sourceKind":  "flag",
+                     "targetField":  "observations",
+                     "targetId":  "trigger.public_humiliation",
+                     "mappingKind":  "flag_to_observation",
+                     "valueEncoding":  "flag_public_humiliation",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/providerCandidate/flags/0",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "providerCandidate.flags[1]",
+                     "sourceKind":  "flag",
+                     "targetField":  "observations",
+                     "targetId":  "boundary.no_empty_promises",
+                     "mappingKind":  "flag_to_observation",
+                     "valueEncoding":  "flag_no_empty_promises",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/providerCandidate/flags/1",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "unmapped"
+                 },
+                 {
+                     "sourceId":  "reactionProfile.sensitiveConditions",
+                     "sourceKind":  "legacy_field",
+                     "targetField":  "migration.preservedLegacyData.reactionProfile.sensitiveConditions",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "legacy_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/reactionProfile/sensitiveConditions",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "reactionProfile.conditionalResponses",
+                     "sourceKind":  "legacy_field",
+                     "targetField":  "migration.preservedLegacyData.reactionProfile.conditionalResponses",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "legacy_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/reactionProfile/conditionalResponses",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "commitmentProfile.priorityOrder",
+                     "sourceKind":  "legacy_field",
+                     "targetField":  "migration.preservedLegacyData.commitmentProfile.priorityOrder",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "legacy_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/commitmentProfile/priorityOrder",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "commitmentProfile.protectedValues",
+                     "sourceKind":  "legacy_field",
+                     "targetField":  "migration.preservedLegacyData.commitmentProfile.protectedValues",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "legacy_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/commitmentProfile/protectedValues",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "commitmentProfile.applicableScope",
+                     "sourceKind":  "legacy_field",
+                     "targetField":  "migration.preservedLegacyData.commitmentProfile.applicableScope",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "legacy_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/commitmentProfile/applicableScope",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "commitmentProfile.exceptionCost",
+                     "sourceKind":  "legacy_field",
+                     "targetField":  "migration.preservedLegacyData.commitmentProfile.exceptionCost",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "legacy_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/commitmentProfile/exceptionCost",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "commitmentProfile.breachResponse",
+                     "sourceKind":  "legacy_field",
+                     "targetField":  "migration.preservedLegacyData.commitmentProfile.breachResponse",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "legacy_preserve_only",
+                     "lossPolicy":  "preserve_only",
+                     "provenancePath":  "/commitmentProfile/breachResponse",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "migration.defaultObservationReviewState",
+                     "sourceKind":  "provenance",
+                     "targetField":  "observations[].reviewState",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "constant_needs_review",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/migration",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "migration.defaultObservationProvenance",
+                     "sourceKind":  "provenance",
+                     "targetField":  "observations[].provenance",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "constant_legacy_v1",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/migration",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "providerCandidate.axes[].source",
+                     "sourceKind":  "provenance",
+                     "targetField":  "observations[].evidence",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "evidence_quote",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/providerCandidate/axes/*/source",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "providerCandidate.flags[].source",
+                     "sourceKind":  "provenance",
+                     "targetField":  "observations[].evidence",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "evidence_quote",
+                     "lossPolicy":  "reject",
+                     "provenancePath":  "/providerCandidate/flags/*/source",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "mapped"
+                 },
+                 {
+                     "sourceId":  "tags.trait.status_conscious",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trait.status_conscious",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.trait.kind",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trait.kind",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.trait.deceitful",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trait.deceitful",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.trait.loyal",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trait.loyal",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.trait.courageous",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trait.courageous",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.trait.reserved",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trait.reserved",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.expression.indirect",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "expression.indirect",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.expression.blunt",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "expression.blunt",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.expression.frank",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "expression.frank",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.expression.flamboyant",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "expression.flamboyant",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.expression.understated",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "expression.understated",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.behavior.conditional_cooperation",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "behavior.conditional_cooperation",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.behavior.acts_before_reasoning",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "behavior.acts_before_reasoning",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.behavior.charges_first",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "behavior.charges_first",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.behavior.administers_fairly",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "behavior.administers_fairly",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.trigger.threat_or_leverage",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trigger.threat_or_leverage",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.trigger.family_safety",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trigger.family_safety",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.trigger.reputation_challenge",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trigger.reputation_challenge",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.trigger.threat_to_home",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trigger.threat_to_home",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.trigger.loyalty_or_betrayal",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trigger.loyalty_or_betrayal",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tags.trigger.social_slight",
+                     "sourceKind":  "tag",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trigger.social_slight",
+                     "mappingKind":  "direct_tag",
+                     "valueEncoding":  "presence_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tags",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.trait.status_conscious",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trait.status_conscious",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.trait.kind",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trait.kind",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.trait.deceitful",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trait.deceitful",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.trait.loyal",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trait.loyal",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.trait.courageous",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trait.courageous",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.trait.reserved",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "trait.reserved",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.expression.indirect",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "expression.indirect",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.expression.blunt",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "expression.blunt",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.expression.frank",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "expression.frank",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.expression.flamboyant",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "expression.flamboyant",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.expression.understated",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "expression.understated",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.behavior.conditional_cooperation",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "behavior.conditional_cooperation",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.behavior.acts_before_reasoning",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "behavior.acts_before_reasoning",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.behavior.charges_first",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "behavior.charges_first",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "facetStrengths.behavior.administers_fairly",
+                     "sourceKind":  "facet_strength",
+                     "targetField":  "tagSelectors",
+                     "targetId":  "behavior.administers_fairly",
+                     "mappingKind":  "facet_to_selector",
+                     "valueEncoding":  "facet_preserve_only",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/facetStrengths",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "sourceDescription",
+                     "sourceKind":  "root_field",
+                     "targetField":  "migration.preservedLegacyData.sourceDescription",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/sourceDescription",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 },
+                 {
+                     "sourceId":  "tensionAxes",
+                     "sourceKind":  "root_field",
+                     "targetField":  "migration.preservedLegacyData.tensionAxes",
+                     "targetId":  null,
+                     "mappingKind":  "preserve_only",
+                     "valueEncoding":  "copy_text_nfc",
+                     "lossPolicy":  "preserve",
+                     "provenancePath":  "/tensionAxes",
+                     "registrySha256":  "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF",
+                     "status":  "preserve_only"
+                 }
+             ]
 }
-

@@ -1,0 +1,105 @@
+{
+  "taskId": "WORLDBOOK-ANCHOR-CORRECTION-20260912",
+  "status": "implemented_pending_independent_review_and_user_signoff",
+  "kind": "correction_to_reviewed_product",
+  "parentTask": "WORLDBOOK-AUTHORING-PROJECTION-20260912",
+  "parentTaskStatusAtCorrection": "implemented_verified_pending_user_signoff（userSignoff=false，父批尚未签收）",
+  "baselineCommit": "未提交（工作区改动，等独立复审 + Max 签收后再定提交）",
+  "trigger": "Max 指示『修』：修 LORE-ENTITY-REGISTER 中的锚点不一致",
+  "scope": [
+    "projection/LORE-ENTITY-REGISTER-20260912.json（值就地更新 + corrections_20260912 追加记录）",
+    "projection/ANCHOR-BINDING-PLAN-20260912.json（重绑 + 大小写 + corrections_20260912）",
+    "tools/worldbook-studio/workspace/authoring/der-vill.yaml、der-furs.yaml（落库产物 rev2，手工改）",
+    "projection/authoring-out/der-vill.yaml、der-furs.yaml（rev1 草稿）",
+    "tools-r3/validate-authoring-closure.ps1（C12 放宽 + 新增 C16）",
+    "docs/worldbook-migration/STATUS-20260912.md（第八节）",
+    "docs/worldbook-migration/GAME-DATA-ACCESS-AND-ANCHOR-DISCREPANCY-20260912.md（第七节）",
+    "docs/worldbook-migration/PLAN-WORLDBOOK-CONTENT-STRUCTURE-ROADMAP-20260912.md（8.4/8.5/8.6）"
+  ],
+  "excluded": [
+    "runtime / src / framework（主干侧）",
+    "studio C# 编译器与测试夹具（C16 归属 Studio 侧，本侧不实施）",
+    "referral-registry.v1.json（Studio golden 冻结输入）",
+    "compile / export / publish / approve",
+    "approve / 正式重存（未走官方保存链，故 revision 未 bump、registry_bindings 未重写）"
+  ],
+  "changes": [
+    {
+      "id": "A1",
+      "title": "德里亚特实体分类修正（语义实体 → 游戏锚定实体）",
+      "from": "entity.lore.deriat_village（anchor_class 隐含 lore）",
+      "to": "entity.settlement.castle_village_v6_2（anchor_class game_anchored）",
+      "evidence": [
+        "persona-entity 登记表 generations/b1-7590085e3662512d7c1c6646c529694bda9850146234827b2dafbd9f20c6a2b3/entity-registry.v1.json：entity.settlement.castle_village_v6_2 = 德里亚特，settlement_code=castle_Village_V6_2，village_type=trapper，bound_settlement_code=castle_V6，culture=vlandia，mapping_status=exact_base",
+        "同表 entity.settlement.castle_v6 = 卡琉斯堡（Caleus Castle），castle，culture=vlandia —— 推翻『非游戏实体』原判",
+        "游戏本地化 Settlements.Settlement.text.castle_Village_V6_2（CNs）全文『德里亚特位于瓦尔切格湾与埃博半岛的山脊之间。当地村民会在山上捕获河狸与水貂，有时会在海湾水域捉海豹。』与本案编年史源文（der-vill 断言正文 / der-furs 引文）几乎逐字相同",
+        "village_type=trapper 与编年史『毛皮和油脂是他们的主要产出来源』互证",
+        "BannerlordSage 索引 v1.3.15.110062（与模组目标 API v1.3.15 一致），只读（mode=ro）"
+      ],
+      "rootCauseOfOriginalError": "城堡无官方描述文本（Settlements.Settlement.text.castle_V6 = 0 条，仅名称条目）；按文本/XML 实体检索必漏 castle_V6，导致误判『非游戏实体』。属检索面选择问题，非数据缺失。",
+      "affectedDocuments": ["der-vill", "der-furs"]
+    },
+    {
+      "id": "A2",
+      "title": "交叉引用 ID 大小写修正",
+      "from": ["entity.settlement.town_V7", "entity.settlement.town_S1"],
+      "to": ["entity.settlement.town_v7", "entity.settlement.town_s1"],
+      "evidence": "persona-entity 登记表：entity.settlement.town_v7 = 沙拉斯、entity.settlement.town_s1 = 瓦尔切格（实体 ID 一律小写；town_V7/town_S1 是游戏 settlement_code 形式）",
+      "occurrencesFixed": [
+        "LORE-ENTITY-REGISTER：shalas_bay / kachar_peninsula 的 game_cross_refs",
+        "ANCHOR-BINDING-PLAN：sara-bay / sara-tales / kach-land / kach-own / kach-tales 的 cross_refs"
+      ],
+      "notAffected": "12 档 authoring YAML 内 0 处大写实体 ID（且 grants 未使用 culture/kingdom/settlement 三维度条件）"
+    },
+    {
+      "id": "A3",
+      "title": "闭合复验 C12 放宽为 lore + game_anchored 双通道",
+      "reason": "原口径『entity_ids 必须全部是 entity.lore.*』是同一分类错误的镜像，德里亚特重绑后会把正确绑定误报 FAIL",
+      "newRule": "lore 锚点须登记于本清单；game_anchored 锚点须同时存在于 persona-entity 登记表 entities[].entity_id"
+    }
+  ],
+  "newFindings": [
+    {
+      "id": "C16",
+      "title": "语义锚点（entity.lore.*）在现行 RuntimePackageCompiler 下不可编译",
+      "status": "BLOCKED（跨线：Studio C# 编译器）",
+      "detail": "RuntimePackageCompiler.CanonicalEntityRef（Core/RuntimePackageCompiler.cs:253）对 parts[1] 非 hero/clan/settlement 抛 WB-DOC-003；BuildEntry 对每档每个 entity_id 无条件调用（同文件 147）。12 档中 10 档含 entity.lore.*，故 Compile() 必失败。",
+      "evidence": [
+        "RuntimePackageCompiler.cs:253 kind 白名单",
+        "RuntimePackageCompiler.cs:147 无条件调用点",
+        "tests/Awake.WorldbookStudio.EditorContent.Tests/Program.cs:96-104（entity.settlement.town_v5 通过 / entity.bogus.thing 抛 WB-DOC-003）",
+        "Core 目录 grep 无任何 lore 特判（EntityCatalogService.cs:226 的未知 kind→clan 属另一函数，不影响编译器）"
+      ],
+      "contradicts": "ENTRY-LINKAGE-MAP-20260912.md 第 26 行『无需改 C#』——只对锚点名称查找（LookupEntityAnchorNames，容错）成立，对引用规范化（CanonicalEntityRef，白名单）不成立",
+      "whyNotCaughtEarlier": "W6 走 authoring schema 结构校验，从未执行 Compile()（投影批 scope 已排除 compile/export/publish）",
+      "resolutionOptions": [
+        "A. 扩展编译器 kind 白名单（增 lore），规范化为 awake:lore:<code>",
+        "B. 语义锚点不进入 entity_ids，可检索性由 title/aliases 承担（改 5 档元数据 + C12 口径）",
+        "C. 语义实体并入 persona-entity 登记表并用受支持 kind（与现有 lore 命名空间规则冲突，不推荐）"
+      ],
+      "disposition": "本侧不实施；归属 Studio 侧，排期待 Max 指定"
+    }
+  ],
+  "closureVerification": {
+    "tool": "docs/worldbook-migration/tools-r3/validate-authoring-closure.ps1",
+    "toolCheckCountAfter": 16,
+    "previousToolCheckCount": 15,
+    "verdict": "STRUCTURALLY_CLOSED_OPEN_ITEMS",
+    "pass": 14,
+    "fail": 0,
+    "open": 0,
+    "blocked": 2,
+    "blockedIds": ["C13", "C16"],
+    "c12Detail": "lore=5 / game_anchored=1；persona-entity 来源 b1-7590085e…/entity-registry.v1.json，890 实体；引用实体 entity.lore.dawn_mountains, entity.lore.kachar_peninsula, entity.lore.khergit_wardens, entity.lore.lakonis_lake, entity.lore.shalas_bay, entity.settlement.castle_village_v6_2"
+  },
+  "deviations": [
+    "workspace/authoring/ 为 gitignore 的落库产物，本次为手工改，未走官方保存链重存 —— 故 revision 未 bump、registry_bindings 未重写。是否补正式重存待 Max 定。",
+    "值为就地更新而非纯追加：为免产物自相矛盾（台账读起来是一份最新事实），原值逐字保留在 corrections_20260912 区块内，保留完整回溯。此为对『追加修正记录』约定的执行方式选择，需独立复审确认是否可接受。"
+  ],
+  "pending": [
+    "独立只读复审（对象：两份台账的 corrections_20260912、4 份 YAML 绑定、校验器 C12/C16 改动）",
+    "Max 签收",
+    "签收后再定是否提交、是否补官方重存、C16 归属与排期"
+  ],
+  "guard": "复审与签收完成前：不得 approve / compile / export / publish。"
+}

@@ -1,0 +1,49 @@
+{
+  "review_id": "WORLDBOOK-WAR-BATCH1-20260913",
+  "batch": "war-batch1",
+  "created_at": "2026-09-13T12:00:00+08:00",
+  "status": "signed_off",
+  "userSignoff": true,
+  "userSignoff_at": "2026-09-13T11:59:00+08:00",
+  "userSignoff_evidence": "Max 在会话中对选题稿 v2.1（PLAN-WORLDBOOK-WAR-BATCH1-20260913.md）回复「签收」；此前两轮裁定：①「战争域＝战争相关背景知识，非战役事件」（09-13）；②「一个知识可以划分在好几个相关领域」（09-13，多域规则成文）。",
+  "scope": {
+    "documents_added": [
+      "doc.war.sturgia-military",
+      "doc.war.vlandia-military",
+      "doc.war.khuzait-military",
+      "doc.war.royal-guard",
+      "doc.war.mamluk",
+      "doc.war.crossbow"
+    ],
+    "package": "geo1-war1",
+    "totals": { "docs": 40, "expressions": 186, "grants": 546 }
+  },
+  "acceptance": {
+    "validate_zero_diagnostics": true,
+    "selfcheck_zero_violations": true,
+    "matrix": "61/61 PASS（matrix2-spec W1-W12 增补，含别名检索首测与身份覆盖整改）",
+    "MATRIX-RESULT_section": "§七"
+  },
+  "decisions": [
+    "战争域定义＝军制/兵种/军团/兵器等战争背景知识；事件 64 条主档归政治史线（多域规则 §一.5 允许军事面拆副档）",
+    "军制档无锚点：不写 entity_ids，检索靠 aliases（首测通过）",
+    "B4 归类：军制知识按「战争」调取场景组织（D 级裁，记录于选题稿待核点 2 处置）",
+    "可汗亲卫→官方名「可汗卫士」；皇家侍卫＝Huscarl；正文一律官方译名",
+    "A 级引文：source.calradia.game.lore.war1（9 条程序化拉取）；B 级：source.calradia.chronicle.animusforge.war1（31 切片带断言校验）"
+  ],
+  "files": [
+    "docs/worldbook-migration/projection/authoring-out/sturgia-military.yaml",
+    "docs/worldbook-migration/projection/authoring-out/vlandia-military.yaml",
+    "docs/worldbook-migration/projection/authoring-out/khuzait-military.yaml",
+    "docs/worldbook-migration/projection/authoring-out/royal-guard.yaml",
+    "docs/worldbook-migration/projection/authoring-out/mamluk.yaml",
+    "docs/worldbook-migration/projection/authoring-out/crossbow.yaml",
+    "docs/worldbook-migration/projection/authoring-out/_gen_war1_20260913.py",
+    "docs/worldbook-migration/projection/authoring-out/_fix_ledger_head_20260913.py",
+    "docs/worldbook-migration/projection/authoring-out/SELF-CHECK-20260912.json",
+    "docs/worldbook-migration/MATRIX-RESULT-20260912.md",
+    "docs/worldbook-migration/PLAN-WORLDBOOK-WAR-BATCH1-20260913.md",
+    "docs/worldbook-migration/WORLDBOOK-CHRONICLE-LEDGER-20260912.md"
+  ],
+  "baselineCommit": "23803ee"
+}

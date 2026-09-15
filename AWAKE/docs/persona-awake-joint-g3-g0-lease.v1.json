@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "awake.persona.g3-g0-lease.v1",
+  "recordStatus": "released",
+  "taskId": "PERSONA-AWAKE-JOINT-G3-G0-20260911",
+  "batchId": "persona-awake-joint-g3-g0-gate-infrastructure-20260911",
+  "gate": "G3-G0",
+  "scopeRevision": 1,
+  "scopePath": "docs/persona-awake-joint-g3-g0-scope.v1.json",
+  "scopeSha256": "657C2AFD40C0C1C86467AC6F058B7D20E6CE3160C22E470677197A35E21B7DA5",
+  "status": "released",
+  "owner": "codex-g3-g0",
+  "leaseId": "g3-g0-20260911-102613",
+  "writeSet": [
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-g3-scope-authority.ps1",
+    "_houkai_merge/AWAKE/tools/persona-awake-joint/verify-contract.ps1",
+    "_houkai_merge/AWAKE/docs/persona-awake-joint-g3-authority-record.v1.schema.json",
+    "_houkai_merge/AWAKE/docs/persona-awake-joint-g3-g0-scope.v1.json",
+    "_houkai_merge/AWAKE/docs/persona-awake-joint-g3-a0-check-matrix.v1.json",
+    "_houkai_merge/AWAKE/docs/fixtures/persona-awake-joint/PWB-AWAKE-017-g3-scope-authority/input.json",
+    "_houkai_merge/AWAKE/docs/fixtures/persona-awake-joint/PWB-AWAKE-017-g3-scope-authority/expected.json"
+  ],
+  "acquiredAt": "2026-09-11T10:26:13.2062535Z",
+  "releasedAt": "2026-09-11T10:26:57.7054915Z",
+  "previousLeases": [
+    { "leaseId": "g3-g0-20260911-100332", "acquiredAt": "2026-09-11T10:03:32.9271748Z", "releasedAt": "2026-09-11T10:05:58.6687553Z" }
+    ,{ "leaseId": "g3-g0-20260911-101000", "acquiredAt": "2026-09-11T10:10:00Z", "releasedAt": "2026-09-11T10:13:14.0536503Z" }
+  ],
+  "sideEffects": {
+    "launchGame": false,
+    "syncGameDirectory": false,
+    "mutateFrozenCandidate": false,
+    "publish": false
+  }
+}

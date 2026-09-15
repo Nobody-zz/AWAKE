@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "review_target": "AWAKE-G3-B-PERSONA-PERSISTENCE-20260911-revision-4",
+  "risk_class": "high-risk",
+  "max_rounds": 3,
+  "round": 2,
+  "consecutive_no_change": 0,
+  "status": "approved",
+  "user_signoff": true,
+  "user_signoff_actor": "user-26811",
+  "user_signoff_at": "2026-09-11T12:34:15.3470856Z",
+  "predecessor_review_state": "docs/review-state/AWAKE-G3-B-PERSONA-PERSISTENCE-20260911.review.json",
+  "authorization": "user authorized a new revision review batch after the predecessor exhausted three rounds without APPROVED",
+  "history": [
+    {
+      "round": 1,
+      "verdict": "REVISE",
+      "change_fingerprint": "d9e938e3959db753b8f9a39c5cb9a867c5edbf13b6f701c9e1c59bdae98c7b74",
+      "changed_decision": "",
+      "new_evidence": "Independent reviewer found that the revision-4 subject predicate accepted empty Hero.StringId because AwakeNpcTarget.FromHero constructs hero: + Hero.StringId. Empty ids therefore collide at the Storage subject key.",
+      "changed_acceptance": "Revision 4.1 must use a fail-closed helper requiring non-null target/Hero/MainHero, non-player reference identity, non-empty Hero.StringId and exact stable-id equality; add empty-id no-Get/no-Set coverage."
+    },
+    {
+      "round": 2,
+      "verdict": "APPROVED",
+      "change_fingerprint": "aa1eb9e0b78f680c137035dc519aa2d353561c1da4b0e2a01661e5b0f5e1b708",
+      "changed_decision": "",
+      "new_evidence": "Independent read-only review verified revision 4.1 plan SHA-256 E6511A2A01F6394A557271D2224370AA125D58A3BDDEA1422DA872869103074E. No P0/P1 findings: the sole eligibility predicate rejects null target/Hero/MainHero, player Hero, empty StringId, generic targets and mismatched stable IDs; it permits only non-player Hero with an exact hero:<id> subject.",
+      "changed_acceptance": "None. G3-B-011/012 remain required implementation evidence, not current code claims."
+    }
+  ]
+}
