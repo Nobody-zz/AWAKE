@@ -129,7 +129,10 @@ internal static class WorldFactJournalCodec
     {
         root = null;
         if (json == null) return WorldFactJournalReadStatus.Missing;
-        if (string.IsNullOrWhiteSpace(json)) return WorldFactJournalReadStatus.Corrupt;
+        // 空/空白 = 存储层在说"这个 key 还没有值"（AwakeFileStorageService 对不存在的 key
+        // 返回的是 Succeeded("")，不是 storage.key_not_found）。判 Missing 而不是 Corrupt：
+        // 把"还没有"当"坏了"，会让写侧（读到 Corrupt 就放弃写入）永久死锁 —— 2026-09-15 定案。
+        if (string.IsNullOrWhiteSpace(json)) return WorldFactJournalReadStatus.Missing;
         try
         {
             root = JObject.Parse(json);

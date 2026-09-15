@@ -41,7 +41,10 @@ internal sealed class FakeKeyValueStore : IKeyValueStore
                 "key not found",
                 null)));
         }
-        return Task.FromResult(OperationResult<string>.Succeeded(GetValue(key)));
+        // 与真后端同源：AWAKE/src/AwakeFileStorageService.cs 对不存在的 key 返回 Succeeded("")，
+        // **不是** null、也不是 storage.key_not_found。替身若返回 null，ReadRoot 会走 Missing 分支
+        // 而真后端走 Corrupt 分支 —— 替身与真件分叉，判据在离线全绿、真机必坏（2026-09-15 定案）。
+        return Task.FromResult(OperationResult<string>.Succeeded(GetValue(key) ?? string.Empty));
     }
 
     public Task<OperationResult<bool>> SetAsync(string key, string valueJson, RequestContext context, CancellationToken cancellationToken)

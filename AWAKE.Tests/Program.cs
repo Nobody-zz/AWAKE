@@ -114,6 +114,8 @@ internal static class Program
 			("onboarding", () => { RunOnboardingSmoke(); return Task.CompletedTask; }),
 			("b9-infra", () => { RunB9InfraSmoke(); return Task.CompletedTask; }),
 			("marcus-link", () => { RunMarcusLinkSmoke(); return Task.CompletedTask; }),
+			// 加在末尾：保持前 55 条的序号不变（既有报告按序号引用判据）。
+			("world-fact-journal", () => { RunWorldFactJournalSmoke(); return Task.CompletedTask; }),
 			// 本用例会重置 UI 调度线程绑定；放在最后，避免影响前面的用例。
 			("dialogue-chain-redtest", () =>
 			{
@@ -2068,6 +2070,47 @@ private static void RunMessengerHistorySmoke()
 			throw new InvalidOperationException("memory summary prompt must register its output contract.");
 		}
 		Console.WriteLine("PASS npc memory smoke");
+	}
+
+	/// <summary>
+	/// 世界事实日志 codec 判据。2026-09-15 新增 —— 这条链此前在测试里**零覆盖**
+	/// （全仓 grep "WorldFactJournal" 在 AWAKE.Tests 下 0 命中），真机因此长期报
+	/// awake.world_fact.root_corrupt、周报整链不可用。
+	///
+	/// 已定案的真因链：存储后端对"这个 key 不存在"返回的是 **Succeeded("")**
+	/// （AWAKE/src/AwakeFileStorageService.cs:143），而 ReadRoot 把空串判成 Corrupt
+	/// （WorldFactJournal.cs:132）；写侧 AppendWorldFactJournalAsync 一开场读 journal，
+	/// 读到 Corrupt 就**直接放弃写入**（WorldStateStore.cs:3657-3663）
+	/// ⇒ 读坏 ⇒ 不写 ⇒ 永远空 ⇒ 永远读坏，永久死锁。
+	///
+	/// 本判据钉住两条边界：**"空 = 还没有"** 与 **"真坏仍然算坏"**（后者防反向静默）。
+	/// </summary>
+	private static void RunWorldFactJournalSmoke()
+	{
+		JObject scratch;
+		// 1) "key 不存在"在存储层的真实表示是"成功 + 空串"（不是 storage.key_not_found）。
+		if (WorldFactJournalCodec.ReadRoot(null, out scratch) != WorldFactJournalReadStatus.Missing)
+			throw new InvalidOperationException("journal root null must read as missing.");
+		if (WorldFactJournalCodec.ReadRoot(string.Empty, out scratch) != WorldFactJournalReadStatus.Missing)
+			throw new InvalidOperationException("journal root empty string must read as missing: the storage layer reports a missing key as an empty value.");
+		if (WorldFactJournalCodec.ReadRoot("   ", out scratch) != WorldFactJournalReadStatus.Missing)
+			throw new InvalidOperationException("journal root whitespace must read as missing.");
+
+		// 2) 真坏必须仍被判坏 —— 否则就是把"坏"也当"没有"，那是另一个方向的静默。
+		if (WorldFactJournalCodec.ReadRoot("{not json", out scratch) != WorldFactJournalReadStatus.Corrupt)
+			throw new InvalidOperationException("malformed journal root must stay corrupt.");
+		if (WorldFactJournalCodec.ReadRoot("{\"schema\":\"other\"}", out scratch) != WorldFactJournalReadStatus.Corrupt)
+			throw new InvalidOperationException("journal root with a foreign schema must stay corrupt.");
+
+		// 3) 正常路径不能被改坏。
+		JObject noChunks = WorldFactJournalCodec.BuildRoot(1, 7, 1, new string[0]);
+		if (WorldFactJournalCodec.ReadRoot(noChunks.ToString(Newtonsoft.Json.Formatting.None), out scratch) != WorldFactJournalReadStatus.Empty)
+			throw new InvalidOperationException("journal root without chunks must read as empty.");
+		JObject withChunk = WorldFactJournalCodec.BuildRoot(1, 7, 1, new[] { "facts-00000001-00000007-r00000001-0000-" + new string('a', 64) });
+		if (WorldFactJournalCodec.ReadRoot(withChunk.ToString(Newtonsoft.Json.Formatting.None), out scratch) != WorldFactJournalReadStatus.Success)
+			throw new InvalidOperationException("well-formed journal root must read as success.");
+
+		Console.WriteLine("PASS world fact journal smoke");
 	}
 
 	private static async Task RunStoragePipelineSmokeAsync()
