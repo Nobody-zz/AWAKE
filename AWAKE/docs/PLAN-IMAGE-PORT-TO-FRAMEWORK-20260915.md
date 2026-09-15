@@ -76,11 +76,11 @@ AWAKE 本地化时只留了纯文本三路。**媒体消息类型、`ProviderBin
 
 **原则**：先补「不碰共享协议」的那一层，把适配器形状和判据做死；协议层最后碰。
 
-**片 1（本轮）· Provider 侧 Player2 媒体适配器 + 离线验台**
+**片 1 · Provider 侧 Player2 媒体适配器 + 离线验台**
 - 范围：**`MarcusAwakeProvider` 单模块**。新增 `ProviderBinaryResult`；`ProviderRouter` 改 `partial` ＋ 新建 `ProviderRouter.Media.cs`（三路：`player2` / `openai-compatible` / 兜底抛 `media.image_adapter_unsupported`）。
 - **不碰** `MarcusAwakeTransport`、不碰 `MarcusAwakeRuntimeService`、不碰 `AWAKE/src`。
 - 为什么先它：**风险最低（单模块、纯库、无进程边界）、可离线证死、复用已测逻辑**（`AwakeImageShape` 的 17 条用例已覆盖线上形状）。
-- 产出：适配器 + 一个离线验台（照 `tools/image-shape-harness` 的样子，零替身通编 `src/**/*.cs`）。
+- 产出：适配器 + 判据。**验台位置见 §8**——不新建 harness，扩既有的 `MarcusAwakeProvider/tests`。
 
 **片 2 · 打通线**：Transport 加 media 消息 → `RuntimeServiceHost` 加分派 → `HostApi` 换真实现。**这一步才碰共享协议**，也是最容易返工的一步。
 
@@ -95,7 +95,7 @@ AWAKE 本地化时只留了纯文本三路。**媒体消息类型、`ProviderBin
 ## 5. 验收判据
 
 **片 1（离线，可证死）**
-1. 验台**编译通过**——含 `AWAKE.Tests.csproj` 那一步。它是**逐个 `<Compile Include>` 列举**，新增 `src/` 文件必须同步补 include，否则主构建过、第二步才炸 `CS0246`（容易误判成「构建没过」）。
+1. 验台**编译通过**。本片**不碰 `AWAKE/src`**，所以「`AWAKE.Tests.csproj` 是逐个 `<Compile Include>` 列举、新增文件必须同步补 include」这条**片 1 用不上**（`MarcusAwakeProvider.csproj` 是 `src\**\*.cs` 通配）；它适用的是**片 4**（改 `AWAKE/src` 时）。
 2. 四类形状用例：`player2` 无参考图走 `/image/generate`、有参考图走 `/image/edit`；`openai-compatible` 走 `/images/generations`；未知 adapter 抛 `media.image_adapter_unsupported`。
 3. **`Idempotency-Key` 头必须在**——判据要查**请求头**，不是只查 body。
 4. **前缀 + 上限**：喂 `data:image/jpeg;base64,` 前缀样本，断言解出字节数 **== 原图字节数**（不是 +15）；喂超限样本，断言抛 `media.provider_payload_too_large`。
@@ -126,3 +126,39 @@ AWAKE 本地化时只留了纯文本三路。**媒体消息类型、`ProviderBin
 - **不做 TTS。** 原版有 `media.tts.request` ＋ Player2 / OpenAI 两路语音，但 AWAKE 现在没有语音需求。片 1 不写，等有需求时用同一套搬法。
 - **不做 `managed-gguf`。** 那是本地 GGUF（LLamaSharp ＋ `llama.dll` / `ggml*`），要有模型文件才有意义，本轮不碰。
 - **片 1 不碰共享协议。** 哪怕「顺手加一条消息类型」看着很自然——协议一动，`ProtocolConstants` / 契约表 / 严格校验 / 帧夹具全都要跟，那是片 2 的活。
+
+---
+
+## 8. 片 1 落地记录（09-15，提交 `8a947ce`）
+
+**13 个文件、+1210 行，全部在 `AWAKE/framework/MarcusAwakeProvider/` 内。** 下游四个框架工程编译零警零错；Framework 测试 PASS ALL、RuntimeService **19/19**、Provider 自身 **36/36**（20 条基线 + 16 条新增）。
+
+### 落点（与 §2 的差异）
+
+| §2 原定 | 实际 | 为什么改了 |
+|---|---|---|
+| 新建 `tools/` 下的离线验台 | 扩既有的 `MarcusAwakeProvider/tests` | 那个工程**本来就是**零替身、通配编译 `*.cs`、带 20 条基线的测试台 —— 再建一个只是复制它。前提条件（测真代码、不要替身）已经满足 |
+| 新建 `ProviderBinaryResult.cs` 单文件 | 并入 `ProviderImageContracts.cs` | 契约、能力接口、字节鉴定三样是一组，分三个文件反而难找 |
+| `ProviderRouter.Media.cs` ＋ router 改 partial | 同左，另加 `ProviderAdapterFactory.CreateImage` | 路由靠工厂过滤候选，工厂得能回答「谁会生图」，且**不抛错**（不会生图是正常情况） |
+
+### 三条刻意偏离原版的地方
+
+1. **不走「按 adapter 名字符串 switch + default 抛错」。** 原版是 `case "player2"` / `case "openai-compatible"` / `default: throw`。这里改成能力接口 `IProviderImageAdapter` + 工厂过滤 —— 类型系统替你记住谁能生图，而不是靠一个字符串常量对得上。
+2. **不做 `url` 下载。** 原版在 OpenAI 形状里支持「响应只给 url 就去取回来」。**本次不做**，只认内联 base64；只给 url 时明确报 `media.image_url_unsupported`。理由：跟着响应里的地址去取，会绕开 `ExactOriginEndpointPolicy` 那条同源规矩，属于**该单独决定的开口子**，不该在 port 里顺手带。AWAKE 两条实际路径都在请求体里显式要了 `b64_json`，这条口子现在没有需求。
+3. **8 MB 上限从常量变成实例参数**（`maxImageAssetBytes`，默认 8 MB）。好处不只是可配 —— 它让「超限」这条判据能用 **32 字节**的限额测出来，不用真去造一张 8 MB 的图。
+
+### 一处诚实更正（写进注释了）
+
+§3 里我记的「`data:` 前缀会多解出 15 字节垃圾」**只在解码器对标点宽容时成立**。已核算：去标点后剩 `dataimage/jpegbase64`，正好 **20 字符、全为 base64 合法字符、整除 4** ⇒ 解出 **15 字节**，算术没问题。但**.NET 的 `Convert.FromBase64String` 是严格的**，碰到 `:` 直接抛 `FormatException`。所以本模块的症状是「报 base64 非法」，不是「多 15 字节」。**两种症状，同一个根因：前缀没剥。** 注释按这个口径写。
+
+### 变异检验（三处，全部回红后回滚，零残留）
+
+| 改坏哪里 | 预期 | 实到 |
+|---|---|---|
+| 不剥前缀 | 剥前缀判据红 | **2 条红**（`..._prefix_stripped_exactly`、`..._sniffing_and_dimensions`）|
+| 拆掉字节上限 | 上限判据红 | **1 条红**（`image_asset_limit_enforced`）|
+| 不做 sniff、直接假定 `png` | 媒体类型判据红 | **2 条红**（`..._follows_bytes_not_declared_mime`、`..._prefix_stripped_exactly`）|
+
+### 挂账（片 2 处理）
+
+**`Player2Provider` 的连接检查走基类实现，会给 `TextGeneration = Unverified` —— 而它根本不提供文字。** 根因两条：基类 `TestConnectionAsync` 不是 `virtual`（覆写不了）、`ProviderCapabilityId` 里没有 `ImageGeneration`。这两样都指向「能力上报」，而能力上报本来就要上协议 —— 所以归到片 2，不在这里打补丁。
