@@ -5,6 +5,12 @@
 > 核心目标：不是把 Marcus 改名后塞进 AWAKE，而是继承其核心能力和突出优势，再按 AWAKE 的 NPC、世界知识、事件、玩家配置和开发者工具需求重构。
 > 当前阶段：只做架构与契约盘点，不修改运行时代码。
 > 全功能逐项清单：`MARCUS-AWAKE-FULL-CAPABILITY-INVENTORY-v1-20260824.md`。
+>
+> ⚠️ **口径变更（2026-09-15，本条不可删）**：本矩阵对 **生图（`F-024` Player2 Adapter / `F-050` Image Generation）** 的
+> 定级（A2）与夹具名（`Player2UnavailableFixture` / `ImageGenerationUnavailableFixture`）**一律保留原文，一个数都不动**；
+> 但其**优先级已被甲方口径覆盖** —— 甲方 Max 原话：「**我建议做回去**」。
+> 覆盖后的口径与验收归口（v0.4「有脸」）见 **`docs/DECISION-20260915-IMAGEGEN-SCOPE.md`**。
+> **本矩阵按原文照读，不得再据 A2 判"这一版不做"。**
 
 ## 1. 总原则
 

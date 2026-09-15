@@ -49,7 +49,7 @@
 | F-021 OpenAI-compatible Adapter | Runtime Service | 文本/工具/Embedding 适配器 | `OpenAiCompatibleFixture` | P3 | planned |
 | F-022 Anthropic Adapter | Runtime Service | Messages/stream/tool 转换 | `AnthropicAdapterFixture` | P3 | planned |
 | F-023 Ollama Adapter | Runtime Service | 本地模型列表和文本路由 | `OllamaAdapterFixture` | P3 | planned |
-| F-024 Player2 Adapter | Runtime Service | 受版本门控的 Provider adapter | `Player2UnavailableFixture` | P3/A2 | deferred |
+| F-024 Player2 Adapter | Runtime Service | 受版本门控的 Provider adapter | `Player2UnavailableFixture` | P3/A2 | deferred ⬆口径见 `docs/DECISION-20260915-IMAGEGEN-SCOPE.md` |
 | F-025 ComfyUI Adapter | Runtime Service | Workflow descriptor、输出校验和取消 | `ComfyWorkflowFixture` | P6 | planned |
 | F-026 Managed GGUF Adapter | Runtime Service | 托管本地模型能力报告 | `ManagedGgufUnavailableFixture` | P3/A2 | deferred |
 | F-027 流式与取消 | Runtime Service | TextDelta/Completed/Cancelled 状态机 | `StreamingCancellationFixture` | P3 | contract_locked |
@@ -75,7 +75,7 @@
 | F-047 Cloud Export Policy | Runtime Service | Field registry、Evaluator、EgressBroker | `PermissionOrderAndEgressFixture` | P3/P4 | contract_locked |
 | F-048 离线与故障收缩 | Framework Core | typed degraded 状态和原版保留路径 | `DegradedModeFixture` | P2/P3 | contract_locked |
 | F-049 AssetHandle / CAS | Runtime Service | CAS、opaque handle、quota/retention | `AssetHandleFixture` | P3/A2 | planned |
-| F-050 Image Generation | Runtime Service | 图像路由、输出校验和资产落库 | `ImageGenerationUnavailableFixture` | P6/A2 | deferred |
+| F-050 Image Generation | Runtime Service | 图像路由、输出校验和资产落库 | `ImageGenerationUnavailableFixture` | P6/A2 | deferred ⬆口径见 `docs/DECISION-20260915-IMAGEGEN-SCOPE.md` |
 | F-051 TTS / VoiceProfile | Runtime Service | TTS route、VoiceProfile 和 fallback | `TtsUnavailableFixture` | P6/A2 | deferred |
 | F-052 Workflow / Asset Transform | Runtime Service | 受 Schema 约束的 transform | `AssetTransformFixture` | P6 | planned |
 | F-053 Retention / Quarantine / Quota | Runtime Service | retention、隔离和配额清理 | `AssetRetentionFixture` | P6 | planned |
