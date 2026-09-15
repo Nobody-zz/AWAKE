@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 namespace Awake;
@@ -57,6 +58,14 @@ public sealed class AwakeContentEvent
     public int LoveDelta { get; set; }
     public int HostilityDelta { get; set; }
     public string EffectReason { get; set; } = string.Empty;
+    public AwakeContentFactTrigger FactTrigger { get; set; }
+}
+
+public sealed class AwakeContentFactTrigger
+{
+    public IReadOnlyList<string> AllowedKinds { get; set; } = Array.Empty<string>();
+    public int MinimumMatches { get; set; } = 1;
+    public int MaximumAgeDays { get; set; } = 7;
 }
 
 public sealed class AwakeContentMotive
@@ -171,6 +180,15 @@ internal sealed class AwakeContentRegistry : IAwakeContentRegistry
             ["nextEventId"] = evt.NextEventId,
             ["event"] = eventObject
         };
+        if (evt.FactTrigger != null)
+        {
+            payload["factTrigger"] = new JObject
+            {
+                ["allowedKinds"] = new JArray(evt.FactTrigger.AllowedKinds ?? Array.Empty<string>()),
+                ["minimumMatches"] = evt.FactTrigger.MinimumMatches,
+                ["maximumAgeDays"] = evt.FactTrigger.MaximumAgeDays
+            };
+        }
         AwakeEventRule parsedRule;
         string parseError;
         if (!AwakeEventDataLoader.TryParseRule(payload, out parsedRule, out parseError))

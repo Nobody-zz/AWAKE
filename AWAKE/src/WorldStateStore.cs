@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using MarcusAwakeFramework.Api;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TaleWorlds.CampaignSystem;
 
 namespace Awake;
 
@@ -28,7 +30,8 @@ internal enum WorldStateKind
     InteractionIndex,
     PersonaContinuity,
     PersonaOverride,
-    PersonaRecovery
+    PersonaRecovery,
+    Letters
 }
 
 internal enum WorldStateStoreLifecycle
@@ -189,6 +192,7 @@ internal sealed class DrainWritePass
 internal sealed class WorldApplyResult
 {
     internal bool Applied { get; set; }
+    internal bool Duplicate { get; set; }
     internal bool Retryable { get; set; }
     internal bool CommitUnknown { get; set; }
     internal int Attempts { get; set; }
@@ -278,6 +282,7 @@ internal sealed class WorldStateStore
     private readonly Dictionary<string, int> _memorySequence = new Dictionary<string, int>(StringComparer.Ordinal);
     private readonly SemaphoreSlim _drainGate = new SemaphoreSlim(1, 1);
     private readonly SemaphoreSlim _namespaceOpenGate = new SemaphoreSlim(1, 1);
+    private static readonly SemaphoreSlim WorldFactJournalWriterGate = new SemaphoreSlim(1, 1);
     private bool _sessionEnded;
     private bool _memoryReservationsQueuedForFinalDrain;
     private WorldStateStoreLifecycle _lifecycleState = WorldStateStoreLifecycle.Active;
@@ -309,6 +314,20 @@ internal sealed class WorldStateStore
         get { lock (_gate) return _sessionEnded; }
     }
 
+    internal SessionRef Session => _sessionRef;
+
+    internal PersonaTimelineIdentity BuildPersonaTimeline()
+    {
+        return new PersonaTimelineIdentity
+        {
+            CampaignId = _sessionRef.CampaignId ?? string.Empty,
+            TimelineId = _sessionRef.TimelineId ?? string.Empty,
+            BranchId = "root",
+            ParentBranchId = string.Empty,
+            ForkSequence = 0
+        };
+    }
+
     internal WorldStateStoreLifecycle LifecycleState
     {
         get { lock (_gate) return _lifecycleState; }
@@ -336,9 +355,13 @@ internal sealed class WorldStateStore
         CancellationToken cancellationToken,
         IReadOnlyCollection<string> requiredNamespaces)
     {
-        string[] targetNamespaces = requiredNamespaces == null || requiredNamespaces.Count == 0
-            ? AiTaskConstants.StorageNamespaceIds
-            : new List<string>(requiredNamespaces).ToArray();
+        HashSet<string> targetNamespaceSet = new HashSet<string>(AiTaskConstants.StorageNamespaceIds, StringComparer.Ordinal);
+        if (requiredNamespaces != null)
+        {
+            foreach (string namespaceId in requiredNamespaces)
+                if (!string.IsNullOrWhiteSpace(namespaceId)) targetNamespaceSet.Add(namespaceId);
+        }
+        string[] targetNamespaces = targetNamespaceSet.ToArray();
         if (targetNamespaces.Length == 0) return false;
 
         await _namespaceOpenGate.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -833,7 +856,7 @@ internal sealed class WorldStateStore
         if (string.IsNullOrWhiteSpace(loaded.Value)) return NewWorldEventsState();
         try
         {
-            JObject doc = JObject.Parse(loaded.Value);
+            JObject doc = ParseJsonObjectPreservingDateStrings(loaded.Value);
             if (doc.Type != JTokenType.Object) throw new InvalidOperationException("world events root is not object");
             EnsureWorldEventsShape(doc);
             return doc;
@@ -845,6 +868,76 @@ internal sealed class WorldStateStore
         }
     }
 
+    internal async Task<WorldFactJournalReadResult> GetWorldFactJournalAsync(RequestContext context, CancellationToken cancellationToken)
+    {
+        if (!IsBusinessOperationOpen())
+            return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Unavailable, errorCode: "awake.world_state.stale_store_session");
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.WorldFactJournalNamespace, out store);
+        if (store == null)
+            return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Unavailable, errorCode: "awake.world_fact.storage_unavailable");
+
+        RequestContext readContext = context ?? CreateContext();
+        OperationResult<string> rootValue = await store.GetAsync(
+            AiTaskConstants.WorldFactJournalRootKey, readContext, cancellationToken).ConfigureAwait(false);
+        if (!rootValue.IsSuccess)
+        {
+            if (IsStorageKeyNotFound(rootValue)) return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Missing);
+            return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Unavailable,
+                errorCode: rootValue.Error?.Code ?? "awake.world_fact.root_read_failed");
+        }
+
+        JObject root;
+        WorldFactJournalReadStatus rootStatus = WorldFactJournalCodec.ReadRoot(rootValue.Value, out root);
+        if (rootStatus == WorldFactJournalReadStatus.Missing || rootStatus == WorldFactJournalReadStatus.Empty)
+            return new WorldFactJournalReadResult(rootStatus, revision: root == null ? 0 : IntValue(root["revision"]));
+        if (rootStatus != WorldFactJournalReadStatus.Success)
+            return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Corrupt, errorCode: "awake.world_fact.root_corrupt");
+
+        int rootStartDay = IntValue(root["startDay"]);
+        int rootEndDay = IntValue(root["endDay"]);
+        int expectedOrdinal = 0;
+        var facts = new List<JObject>();
+        foreach (string chunkKey in ((JArray)root["chunkKeys"]).Values<string>())
+        {
+            OperationResult<string> chunkValue = await store.GetAsync(chunkKey, readContext, cancellationToken).ConfigureAwait(false);
+            if (!chunkValue.IsSuccess)
+            {
+                if (IsStorageKeyNotFound(chunkValue))
+                    return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Corrupt, errorCode: "awake.world_fact.chunk_missing");
+                return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Unavailable,
+                    errorCode: chunkValue.Error?.Code ?? "awake.world_fact.chunk_read_failed");
+            }
+            int chunkStart;
+            int chunkEnd;
+            int chunkRevision;
+            int chunkOrdinal;
+            string chunkHash;
+            if (!WorldFactJournalCodec.TryParseChunkKey(chunkKey, out chunkStart, out chunkEnd, out chunkRevision, out chunkOrdinal, out chunkHash)
+                || chunkOrdinal != expectedOrdinal++
+                || chunkStart < rootStartDay
+                || chunkEnd > rootEndDay
+                || !StringComparer.OrdinalIgnoreCase.Equals(chunkHash, WorldFactJournalCodec.Sha256Hex(chunkValue.Value)))
+                return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Corrupt, errorCode: "awake.world_fact.chunk_key_mismatch");
+            JObject chunkDocument;
+            try { chunkDocument = JObject.Parse(chunkValue.Value); }
+            catch (Exception) { return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Corrupt, errorCode: "awake.world_fact.chunk_json_invalid"); }
+            if (IntValue(chunkDocument["startDay"]) != chunkStart
+                || IntValue(chunkDocument["endDay"]) != chunkEnd
+                || IntValue(chunkDocument["revision"]) != chunkRevision
+                || chunkRevision != IntValue(root["revision"]))
+                return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Corrupt, errorCode: "awake.world_fact.chunk_bounds_mismatch");
+            WorldFactJournalReadResult chunk = WorldFactJournalCodec.ReadChunk(chunkValue.Value);
+            if (chunk.Status != WorldFactJournalReadStatus.Success)
+                return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Corrupt,
+                    errorCode: string.IsNullOrWhiteSpace(chunk.ErrorCode) ? "awake.world_fact.chunk_corrupt" : chunk.ErrorCode);
+            facts.AddRange(chunk.Facts.Select(value => (JObject)value.DeepClone()));
+        }
+        return facts.Count == 0
+            ? new WorldFactJournalReadResult(WorldFactJournalReadStatus.Empty, revision: IntValue(root["revision"]))
+            : new WorldFactJournalReadResult(WorldFactJournalReadStatus.Success, facts, revision: IntValue(root["revision"]));
+    }
+
     internal async Task<List<WeeklyReportApplicationState>> GetWeeklyReportStatesAsync(CancellationToken cancellationToken)
     {
         JObject state = await GetWorldEventsAsync(null, cancellationToken).ConfigureAwait(false);
@@ -853,21 +946,37 @@ internal sealed class WorldStateStore
         foreach (JObject value in ((JArray)state["weeklyReports"] ?? new JArray()).Children<JObject>())
         {
             string reportId = (string)value["reportId"] ?? string.Empty;
-            if (!WorldEventContract.IsStableId(reportId)) continue;
+            string schemaVersion = (string)value["schemaVersion"] ?? (string)value["report"]?["schemaVersion"] ?? string.Empty;
             JObject report = value["report"] as JObject;
-            if (report != null
+            bool corrupt = !StringComparer.Ordinal.Equals(schemaVersion, string.Empty)
+                && !StringComparer.Ordinal.Equals(schemaVersion, "awake.worldbook.weekly-report.v1")
+                && !StringComparer.Ordinal.Equals(schemaVersion, "awake.worldbook.weekly-report.v2");
+            if (!WorldEventContract.IsStableId(reportId) && !StringComparer.Ordinal.Equals(schemaVersion, "awake.worldbook.weekly-report.v2")) continue;
+            if (StringComparer.Ordinal.Equals(schemaVersion, "awake.worldbook.weekly-report.v2"))
+            {
+                if (!IsValidV2WeeklyReportEntry(value, out report))
+                {
+                    report = null;
+                    corrupt = true;
+                }
+            }
+            else if (report != null
                 && (!StringComparer.Ordinal.Equals((string)report["reportId"], reportId)
                     || !WorldEventContract.TryValidateWeeklyReport(report, out _)))
                 report = null;
             result.Add(new WeeklyReportApplicationState
             {
                 ReportId = reportId,
+                SchemaVersion = schemaVersion,
                 WindowStartDay = IntValue(value["windowStartDay"]),
                 WindowEndDay = IntValue(value["windowEndDay"]),
                 Status = (string)value["status"] ?? "retryable",
                 AttemptCount = IntValue(value["attemptCount"]),
                 LastAttemptDay = IntValue(value["lastAttemptDay"]),
                 LastErrorCode = (string)value["lastErrorCode"] ?? string.Empty,
+                ContentFingerprint = (string)value["contentFingerprint"] ?? string.Empty,
+                SourceFactIds = ((JArray)value["sourceFactIds"] ?? new JArray()).Values<string>().ToArray(),
+                Corrupt = corrupt,
                 Report = report == null ? null : (JObject)report.DeepClone()
             });
         }
@@ -888,6 +997,8 @@ internal sealed class WorldStateStore
         {
             return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Retryable, Code = "awake.world_state.stale_store_session" };
         }
+        if (report != null && StringComparer.Ordinal.Equals((string)report["schemaVersion"], "awake.worldbook.weekly-report.v2"))
+            return await UpsertV2WeeklyReportStateAsync(report, reportId, windowStartDay, windowEndDay, status, lastAttemptDay, lastErrorCode, cancellationToken).ConfigureAwait(false);
         if (!WorldEventContract.IsStableId(reportId) || (status != "applied" && status != "retryable"))
         {
             return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Failed, Code = "awake.world_state.weekly_report.invalid" };
@@ -989,6 +1100,112 @@ internal sealed class WorldStateStore
         return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Failed, Attempts = attemptCount, Code = summary.HardFailureCode ?? summary.OwnerCode ?? "awake.world_state.weekly_report.write_failed" };
     }
 
+    private async Task<WeeklyReportStateWriteResult> UpsertV2WeeklyReportStateAsync(
+        JObject report,
+        string reportId,
+        int windowStartDay,
+        int windowEndDay,
+        string status,
+        int lastAttemptDay,
+        string lastErrorCode,
+        CancellationToken cancellationToken)
+    {
+        if (status != "applied")
+            return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Failed, Code = "awake.world_report.v2.invalid_status" };
+        if (!WorldEventContract.IsStableId(reportId)
+            || !WeeklyReportService.TryValidateV2Report(report, out _)
+            || !StringComparer.Ordinal.Equals((string)report["reportId"], reportId))
+            return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Failed, Code = "awake.world_report.v2.invalid_payload" };
+
+        JObject currentState = await GetWorldEventsAsync(null, cancellationToken).ConfigureAwait(false);
+        if (currentState == null)
+            return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Retryable, Code = SessionEnded ? "awake.world_state.stale_store_session" : "awake.world_report.v2.read_failed" };
+        JObject current = ((JArray)currentState["weeklyReports"] ?? new JArray()).Children<JObject>()
+            .FirstOrDefault(value => StringComparer.Ordinal.Equals((string)value["reportId"], reportId));
+        if (current != null)
+        {
+            string currentSchema = (string)current["schemaVersion"] ?? (string)current["report"]?["schemaVersion"] ?? string.Empty;
+            if (StringComparer.Ordinal.Equals(currentSchema, "awake.worldbook.weekly-report.v1"))
+                return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Conflict, Code = "awake.world_report.v2.v1_conflict" };
+            if (StringComparer.Ordinal.Equals(currentSchema, "awake.worldbook.weekly-report.v2")
+                && IsValidV2WeeklyReportEntry(current, out JObject currentReport))
+            {
+                if (SameV2WeeklyReport(current, currentReport, report, windowStartDay, windowEndDay))
+                    return new WeeklyReportStateWriteResult
+                    {
+                        Status = WeeklyReportStateWriteResult.AlreadyApplied,
+                        Attempts = IntValue(current["attemptCount"]),
+                        Report = (JObject)currentReport.DeepClone()
+                    };
+                return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Conflict, Code = "awake.world_report.v2.conflict" };
+            }
+        }
+
+        int attemptCount = IntValue(current?["attemptCount"]) + 1;
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.WorldEventsNamespace,
+            AiTaskConstants.WorldEventsKey,
+            "awake.world.weekly_report_state",
+            "awake:weekly-report-v2-state:" + reportId + ":" + attemptCount,
+            string.Empty,
+            WorldStateKind.WorldEvents,
+            new JObject
+            {
+                ["operation"] = "weekly_report_state",
+                ["reportId"] = reportId,
+                ["schemaVersion"] = "awake.worldbook.weekly-report.v2",
+                ["windowStartDay"] = windowStartDay,
+                ["windowEndDay"] = windowEndDay,
+                ["status"] = "applied",
+                ["attemptCount"] = attemptCount,
+                ["lastAttemptDay"] = lastAttemptDay,
+                ["lastErrorCode"] = lastErrorCode ?? string.Empty,
+                ["contentFingerprint"] = (string)report["contentFingerprint"],
+                ["sourceFactIds"] = report["sourceFactIds"].DeepClone(),
+                ["report"] = (JObject)report.DeepClone()
+            },
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command))
+            return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Retryable, Attempts = attemptCount, Code = "awake.world_report.v2.enqueue_failed" };
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        if (summary.OwnerApplied)
+        {
+            List<WeeklyReportApplicationState> readBack = await GetWeeklyReportStatesAsync(cancellationToken).ConfigureAwait(false);
+            WeeklyReportApplicationState confirmed = readBack?.FirstOrDefault(value =>
+                StringComparer.Ordinal.Equals(value.ReportId, reportId)
+                && StringComparer.Ordinal.Equals(value.SchemaVersion, WeeklyReportService.V2SchemaVersion)
+                && StringComparer.Ordinal.Equals(value.Status, "applied")
+                && !value.Corrupt
+                && value.Report != null
+                && value.WindowStartDay == windowStartDay
+                && value.WindowEndDay == windowEndDay
+                && StringComparer.Ordinal.Equals(value.ContentFingerprint, (string)report["contentFingerprint"])
+                && StringComparer.Ordinal.Equals(WeeklyReportService.CanonicalizeV2(value.Report), WeeklyReportService.CanonicalizeV2(report)));
+            if (confirmed == null)
+                return new WeeklyReportStateWriteResult
+                {
+                    Status = WeeklyReportStateWriteResult.Retryable,
+                    Attempts = attemptCount,
+                    Code = "awake.world_report.v2.readback_mismatch"
+                };
+            return new WeeklyReportStateWriteResult
+            {
+                Status = WeeklyReportStateWriteResult.Applied,
+                Attempts = attemptCount,
+                Report = (JObject)confirmed.Report.DeepClone()
+            };
+        }
+        if (summary.OwnerDuplicate)
+            return new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.AlreadyApplied, Attempts = attemptCount, Code = summary.OwnerCode };
+        return new WeeklyReportStateWriteResult
+        {
+            Status = WeeklyReportStateWriteResult.Retryable,
+            Attempts = attemptCount,
+            Code = summary.OwnerCode ?? summary.HardFailureCode ?? "awake.world_report.v2.write_failed"
+        };
+    }
+
     internal Task<WeeklyReportStateWriteResult> UpsertWeeklyReportStateAsync(
         string reportId,
         int windowStartDay,
@@ -1018,7 +1235,8 @@ internal sealed class WorldStateStore
         string domain,
         DateTimeOffset occurredAt,
         IReadOnlyList<string> visibilityIdentityIds,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        JObject structuredFact = null)
     {
         if (!IsBusinessOperationOpen())
         {
@@ -1040,6 +1258,7 @@ internal sealed class WorldStateStore
         }
         JObject arguments = new JObject
         {
+            ["operation"] = structuredFact == null ? null : "world_fact_append",
             ["day"] = day,
             ["kind"] = kind ?? "event",
             ["text"] = text ?? string.Empty,
@@ -1048,6 +1267,7 @@ internal sealed class WorldStateStore
             ["occurredAt"] = occurredAt.ToUniversalTime().ToString("O"),
             ["visibilityIdentityIds"] = new JArray(WorldEventAudience.Resolve(visibilityIdentityIds).Select(value => (object)value))
         };
+        if (structuredFact != null) arguments["fact"] = structuredFact.DeepClone();
         WorldStateCommand command = new WorldStateCommand(
             AiTaskConstants.WorldEventsNamespace,
             AiTaskConstants.WorldEventsKey,
@@ -1080,22 +1300,22 @@ internal sealed class WorldStateStore
                 Code = "awake.world_state.stale_store_session"
             };
         }
-        if (summary.OwnerApplied)
+        if (summary.OwnerDuplicate)
         {
             return new WorldEventAppendResult
             {
-                Status = WorldEventAppendResult.Persisted,
+                Status = WorldEventAppendResult.DuplicateConfirmed,
                 EventId = idempotencyKey,
                 EventKey = eventKey ?? idempotencyKey,
                 Attempts = summary.OwnerAttempts,
                 Code = summary.OwnerCode
             };
         }
-        if (summary.OwnerDuplicate)
+        if (summary.OwnerApplied)
         {
             return new WorldEventAppendResult
             {
-                Status = WorldEventAppendResult.DuplicateConfirmed,
+                Status = WorldEventAppendResult.Persisted,
                 EventId = idempotencyKey,
                 EventKey = eventKey ?? idempotencyKey,
                 Attempts = summary.OwnerAttempts,
@@ -1286,6 +1506,57 @@ internal sealed class WorldStateStore
             string.Empty,
             WorldStateKind.Onboarding,
             arguments,
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return false;
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return IsPersisted(summary);
+    }
+
+    internal async Task<JObject> GetLettersAsync(RequestContext context, CancellationToken cancellationToken)
+    {
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.LettersNamespace, out store);
+        if (store == null) return null;
+        OperationResult<string> loaded = await store.GetAsync(
+            AiTaskConstants.LettersKey,
+            context ?? CreateContext(),
+            cancellationToken).ConfigureAwait(false);
+        if (!loaded.IsSuccess)
+        {
+            if (!IsStorageKeyNotFound(loaded))
+            {
+                AwakeLog.Write("world_state_letters_load_failed code=" + (loaded.Error?.Code ?? "unknown"));
+            }
+            return null;
+        }
+        if (string.IsNullOrWhiteSpace(loaded.Value)) return LetterLedgerDocument.NewState();
+        try
+        {
+            JObject doc = JObject.Parse(loaded.Value);
+            return doc.Type == JTokenType.Object ? doc : null;
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("world_state_letters_corrupt error=" + ex.Message);
+            return null;
+        }
+    }
+
+    internal async Task<bool> UpdateLettersAsync(
+        JObject arguments,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(idempotencyKey)) return false;
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.LettersNamespace,
+            AiTaskConstants.LettersKey,
+            AiTaskConstants.LettersUpsertCommandId,
+            idempotencyKey,
+            string.Empty,
+            WorldStateKind.Letters,
+            arguments ?? new JObject(),
             DateTimeOffset.UtcNow,
             Guid.NewGuid().ToString("N"));
         if (!TryEnqueue(command)) return false;
@@ -1722,6 +1993,131 @@ internal sealed class WorldStateStore
             return null;
         }
     }
+
+    internal async Task<PersonaRuntimeStateDocument> GetPersonaStateAsync(
+        string key,
+        RequestContext context,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(key)) return null;
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.PersonaStateNamespace, out store);
+        if (store == null) return null;
+        OperationResult<string> loaded = await store.GetAsync(
+            key,
+            context ?? CreateContext(),
+            cancellationToken).ConfigureAwait(false);
+        if (!loaded.IsSuccess)
+        {
+            if (!IsStorageKeyNotFound(loaded))
+                AwakeLog.Write("persona.persistence.load_failed key=" + key + " code=" + (loaded.Error?.Code ?? "unknown"));
+            return null;
+        }
+        PersonaRuntimeStateDocument document = PersonaRuntimeStateDocument.FromJson(loaded.Value);
+        if (document == null)
+        {
+            AwakeLog.Write("persona.persistence.rejected key=" + key + " reason=persona.runtime_state.json_invalid");
+        }
+        return document;
+    }
+
+    private async Task<PersonaStateWriteResult> UpsertPersonaStateDocumentAsync(
+        PersonaRuntimeStateDocument document,
+        string idempotencyKey,
+        CancellationToken cancellationToken,
+        RuntimeBundle expectedBundle)
+    {
+        string validationError;
+        RuntimeBundle activeBundle = WorldbookRuntime.Persona?.Bundle;
+        if (!PersonaPersistenceValidator.TryValidateRuntimeState(
+            document,
+            BuildPersonaTimeline(),
+            null,
+            expectedBundle ?? activeBundle,
+            out validationError))
+            return new PersonaStateWriteResult { Code = validationError };
+        string key;
+        if (!PersonaStorageKey.TryBuild(document.Timeline, document.PersonaSubjectStableId, out key, out validationError))
+            return new PersonaStateWriteResult { Code = validationError };
+        if (string.IsNullOrWhiteSpace(idempotencyKey))
+            return new PersonaStateWriteResult { Code = "persona.persistence.idempotency_missing" };
+        WorldStateCommand command = new WorldStateCommand(
+            AiTaskConstants.PersonaStateNamespace,
+            key,
+            "awake.persona.continuity.upsert",
+            idempotencyKey,
+            document.PersonaSubjectStableId,
+            WorldStateKind.PersonaContinuity,
+            new JObject { ["document"] = document.ToJsonObject() },
+            DateTimeOffset.UtcNow,
+            Guid.NewGuid().ToString("N"));
+        if (!TryEnqueue(command)) return new PersonaStateWriteResult { Code = "persona.persistence.session_unavailable" };
+        WorldDrainSummary summary = await DrainAsync(command.CommandId, command.IdempotencyKey, cancellationToken).ConfigureAwait(false);
+        return new PersonaStateWriteResult
+        {
+            Applied = summary.OwnerApplied,
+            Duplicate = summary.OwnerDuplicate,
+            CommitUnknown = summary.OwnerCommitUnknown,
+            Code = summary.OwnerCode ?? string.Empty
+        };
+    }
+
+    internal Task<PersonaStateWriteResult> UpsertPersonaStateAsync(
+        AwakeNpcTarget target,
+        PersonaRuntimeStateDocument document,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        Hero mainHero;
+        try { mainHero = Hero.MainHero; }
+        catch { mainHero = null; }
+        return UpsertPersonaStateWithEligibilityAsync(target, mainHero, document, idempotencyKey, cancellationToken);
+    }
+
+#if AWAKE_TESTS
+    internal Task<PersonaStateWriteResult> UpsertPersonaStateAsync(
+        AwakeNpcTarget target,
+        Hero mainHero,
+        PersonaRuntimeStateDocument document,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        return UpsertPersonaStateWithEligibilityAsync(target, mainHero, document, idempotencyKey, cancellationToken);
+    }
+#endif
+
+    private Task<PersonaStateWriteResult> UpsertPersonaStateWithEligibilityAsync(
+        AwakeNpcTarget target,
+        Hero mainHero,
+        PersonaRuntimeStateDocument document,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        Hero hero;
+        string subjectStableId;
+        if (!PersonaSubjectEligibility.TryGetEligibleHeroSubject(target, mainHero, out hero, out subjectStableId))
+        {
+            return Task.FromResult(new PersonaStateWriteResult { Code = "persona.persistence.subject_ineligible" });
+        }
+        if (document == null || !StringComparer.Ordinal.Equals(document.PersonaSubjectStableId, subjectStableId))
+        {
+            return Task.FromResult(new PersonaStateWriteResult { Code = "persona.persistence.subject_mismatch" });
+        }
+        RuntimeBundle activeBundle = WorldbookRuntime.Persona?.Bundle;
+        if (activeBundle == null)
+            return Task.FromResult(new PersonaStateWriteResult { Code = "persona.persistence.bundle_unavailable" });
+        return UpsertPersonaStateDocumentAsync(document, idempotencyKey, cancellationToken, activeBundle);
+    }
+
+#if AWAKE_TESTS
+    internal Task<PersonaStateWriteResult> UpsertPersonaStateForTestingAsync(
+        PersonaRuntimeStateDocument document,
+        string idempotencyKey,
+        CancellationToken cancellationToken)
+    {
+        return UpsertPersonaStateDocumentAsync(document, idempotencyKey, cancellationToken, null);
+    }
+#endif
 
     internal Task<WorldFinalDrainResult> BeginFinalDrainAsync()
     {
@@ -2271,8 +2667,17 @@ internal sealed class WorldStateStore
 
     private async Task<WorldApplyResult> TryApplyCoreAsync(WorldStateCommand command, RequestContext context, CancellationToken cancellationToken)
     {
+        bool hasStructuredFact = command.Kind == WorldStateKind.WorldEvents && command.Arguments["fact"] is JObject;
         IKeyValueStore store;
         lock (_gate) _stores.TryGetValue(command.NamespaceId, out store);
+        if (hasStructuredFact)
+        {
+            WorldApplyResult journalResult = await AppendWorldFactJournalAsync((JObject)command.Arguments["fact"], context, cancellationToken).ConfigureAwait(false);
+            if (journalResult.Duplicate)
+                return new WorldApplyResult { Applied = true, Duplicate = true, Code = "awake.world_state.duplicate" };
+            if (!journalResult.Applied) return journalResult;
+            return new WorldApplyResult { Applied = true, Code = "awake.world_fact.persisted" };
+        }
         if (store == null)
         {
             return new WorldApplyResult { Retryable = true, Code = "awake.world_state.storage_unavailable" };
@@ -2313,11 +2718,21 @@ internal sealed class WorldStateStore
 
         if (command.Kind != WorldStateKind.EventMeta && !IsWeeklyReportStateCommand(command))
         {
-            JArray appliedKeys = (JArray)state["appliedKeys"];
-            foreach (JToken keyToken in appliedKeys)
+            // 安全取值：未知 Kind 由状态工厂落成空文档时这里没有 appliedKeys，
+            // 强制转换会得到 null 并让下面的迭代抛空引用（触发可重试的错误码，掩盖真正的接线问题）。
+            JArray appliedKeys = state["appliedKeys"] as JArray;
+            foreach (JToken keyToken in appliedKeys ?? Enumerable.Empty<JToken>())
             {
                 if (keyToken.Type == JTokenType.String && StringComparer.Ordinal.Equals((string)keyToken, command.IdempotencyKey))
                 {
+                    if (command.Kind == WorldStateKind.PersonaContinuity)
+                    {
+                        PersonaRuntimeStateDocument existingPersona = ParsePersonaStateForComparison(state);
+                        PersonaRuntimeStateDocument incomingPersona = PersonaRuntimeStateDocument.FromJson(
+                            (command.Arguments["document"] as JObject)?.ToString(Formatting.None));
+                        if (!PersonaPersistenceValidator.AreSameRuntimeState(existingPersona, incomingPersona))
+                            return new WorldApplyResult { Applied = false, Retryable = false, Code = "awake.world_state.key_conflict" };
+                    }
                     if (command.Kind == WorldStateKind.WorldEvents && !IsWeeklyReportStateCommand(command))
                     {
                         JArray records = state["records"] as JArray;
@@ -2375,6 +2790,19 @@ internal sealed class WorldStateStore
             case WorldStateKind.InteractionIndex:
                 applyError = ApplyInteractionRecoveryIndex(state, command);
                 break;
+            case WorldStateKind.PersonaContinuity:
+                applyError = ApplyPersonaContinuity(state, command);
+                break;
+            case WorldStateKind.Letters:
+                applyError = LetterLedgerDocument.Apply(state, command);
+                break;
+            default:
+                // 枚举已声明但尚未接入分发的 Kind 必须在这里被拒。
+                // 缺这一支时 applyError 会保持空 ⇒ 被判"成功" ⇒ 把未修改的文档连同新的 updatedUtc 写回存储：
+                // 不抛错、不告警，属静默失败。非重试——这是接线错误，不是暂态故障。
+                AwakeLog.Write("world_state_unknown_kind key=" + command.Key + " kind=" + command.Kind);
+                applyError = "awake.world_state.unknown_kind";
+                break;
         }
         if (!string.IsNullOrWhiteSpace(applyError))
         {
@@ -2391,6 +2819,24 @@ internal sealed class WorldStateStore
         OperationResult<bool> stored = await store.SetAsync(command.Key, json, context, cancellationToken).ConfigureAwait(false);
         if (!stored.IsSuccess || !stored.Value)
         {
+            if (command.Kind == WorldStateKind.PersonaContinuity && !stored.IsSuccess)
+            {
+                OperationResult<string> confirmed = await store.GetAsync(command.Key, context, cancellationToken).ConfigureAwait(false);
+                PersonaRuntimeStateDocument confirmedDocument = PersonaRuntimeStateDocument.FromJson(confirmed.Value);
+                PersonaRuntimeStateDocument intendedDocument = ParsePersonaStateForComparison(state);
+                if (confirmed.IsSuccess
+                    && PersonaPersistenceValidator.AreSameRuntimeState(confirmedDocument, intendedDocument))
+                {
+                    AwakeLog.Write("persona.persistence.commit_unknown_confirmed key=" + command.Key);
+                    return new WorldApplyResult { Applied = true, Code = "awake.world_state.commit_unknown_confirmed" };
+                }
+                return new WorldApplyResult
+                {
+                    Retryable = false,
+                    CommitUnknown = true,
+                    Code = stored.Error?.Code ?? "awake.world_state.commit_unknown"
+                };
+            }
             return new WorldApplyResult
             {
                 Retryable = true,
@@ -2441,8 +2887,55 @@ internal sealed class WorldStateStore
             case WorldStateKind.PendingDialogue: return NewDialogueQueueState();
             case WorldStateKind.Interaction: return NewInteractionState(heroId);
             case WorldStateKind.InteractionIndex: return NewInteractionRecoveryIndexState();
+            case WorldStateKind.PersonaContinuity: return NewPersonaContinuityState();
+            case WorldStateKind.Letters: return LetterLedgerDocument.NewState();
             default: return new JObject();
         }
+    }
+
+    private static JObject NewPersonaContinuityState()
+    {
+        return new JObject
+        {
+            ["schema"] = PersonaPersistenceConstants.ContinuitySchema,
+            ["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O"),
+            ["appliedKeys"] = new JArray(),
+            ["initialized"] = false
+        };
+    }
+
+    private static PersonaRuntimeStateDocument ParsePersonaStateForComparison(JObject state)
+    {
+        if (state == null) return null;
+        JObject copy = (JObject)state.DeepClone();
+        if (copy["initialized"] != null && !copy["initialized"].Value<bool>()) return null;
+        copy.Remove("appliedKeys");
+        copy.Remove("updatedUtc");
+        PersonaRuntimeStateDocument document = PersonaRuntimeStateDocument.FromJson(copy.ToString(Formatting.None));
+        if (document == null || string.IsNullOrWhiteSpace(document.PersonaSubjectStableId)) return null;
+        return document;
+    }
+
+    private static string ApplyPersonaContinuity(JObject state, WorldStateCommand command)
+    {
+        JObject incomingJson = command.Arguments["document"] as JObject;
+        PersonaRuntimeStateDocument incoming = PersonaRuntimeStateDocument.FromJson(incomingJson?.ToString(Formatting.None));
+        string error;
+        if (!PersonaPersistenceValidator.TryValidateRuntimeState(incoming, null, command.HeroId, null, out error)) return error;
+        PersonaRuntimeStateDocument current = ParsePersonaStateForComparison(state);
+        if (current != null && current.Sequence > incoming.Sequence)
+            return "persona.persistence.sequence_regression";
+        if (current != null && current.Sequence == incoming.Sequence
+            && !PersonaPersistenceValidator.AreSameRuntimeState(current, incoming))
+            return "awake.world_state.key_conflict";
+
+        JArray appliedKeys = state["appliedKeys"] as JArray ?? new JArray();
+        state.RemoveAll();
+        state.Merge(incoming.ToJsonObject());
+        appliedKeys.Add(command.IdempotencyKey);
+        state["appliedKeys"] = appliedKeys;
+        state["initialized"] = true;
+        return string.Empty;
     }
 
     private static JObject NewMemoryState(string heroId)
@@ -3140,7 +3633,8 @@ internal sealed class WorldStateStore
             ["eventKey"] = ClampTextElements(eventKey, 200),
             ["domain"] = WeeklyReportService.NormalizeDomain((string)command.Arguments["domain"], kind),
             ["occurredAt"] = (string)command.Arguments["occurredAt"] ?? DateTimeOffset.UtcNow.ToString("O"),
-            ["visibilityIdentityIds"] = visibilityIdentityIds
+            ["visibilityIdentityIds"] = visibilityIdentityIds,
+            ["fact"] = command.Arguments["fact"] == null ? null : command.Arguments["fact"].DeepClone()
         });
         Trim(records, 200);
         state["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
@@ -3150,6 +3644,160 @@ internal sealed class WorldStateStore
         return string.Empty;
     }
 
+    private async Task<WorldApplyResult> AppendWorldFactJournalAsync(JObject fact, RequestContext context, CancellationToken cancellationToken)
+    {
+        if (fact == null) return new WorldApplyResult { Code = "awake.world_fact.missing_payload" };
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.WorldFactJournalNamespace, out store);
+        if (store == null) return new WorldApplyResult { Retryable = true, Code = "awake.world_fact.storage_unavailable" };
+
+        await WorldFactJournalWriterGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            WorldFactJournalReadResult existing = await GetWorldFactJournalAsync(context, cancellationToken).ConfigureAwait(false);
+            if (existing.Status == WorldFactJournalReadStatus.Corrupt || existing.Status == WorldFactJournalReadStatus.Unavailable)
+                return new WorldApplyResult
+                {
+                    Retryable = existing.Status == WorldFactJournalReadStatus.Unavailable,
+                    Code = string.IsNullOrWhiteSpace(existing.ErrorCode) ? "awake.world_fact.journal_unavailable" : existing.ErrorCode
+                };
+
+            List<JObject> facts = existing.Facts.Select(value => (JObject)value.DeepClone()).ToList();
+            string factId = (string)fact["factId"] ?? string.Empty;
+            string eventKey = (string)fact["eventKey"] ?? string.Empty;
+            JObject same = facts.FirstOrDefault(value => StringComparer.Ordinal.Equals((string)value["factId"], factId)
+                || StringComparer.Ordinal.Equals((string)value["eventKey"], eventKey));
+            if (same != null)
+            {
+                bool equal = JToken.DeepEquals(same, fact);
+                return new WorldApplyResult { Duplicate = equal, Code = equal ? "awake.world_state.duplicate" : "awake.world_state.key_conflict" };
+            }
+
+            WorldFactJournalReadResult candidate = ValidateFactForJournal(fact);
+            if (candidate.Status != WorldFactJournalReadStatus.Success)
+                return new WorldApplyResult { Code = string.IsNullOrWhiteSpace(candidate.ErrorCode) ? "awake.world_fact.fact_invalid" : candidate.ErrorCode };
+            facts.Add((JObject)fact.DeepClone());
+
+            int revision = (existing.Revision ?? 0) + 1;
+            List<JournalChunkWrite> chunks = BuildJournalChunks(facts, revision);
+            if (chunks == null || chunks.Count == 0)
+                return new WorldApplyResult { Code = "awake.world_fact.too_large" };
+            var keys = new List<string>();
+            foreach (JournalChunkWrite chunk in chunks)
+            {
+                OperationResult<bool> stored = await store.SetAsync(chunk.Key, chunk.Json, context, cancellationToken).ConfigureAwait(false);
+                if (!stored.IsSuccess || !stored.Value)
+                {
+                    OperationResult<string> confirmed = await store.GetAsync(chunk.Key, context, cancellationToken).ConfigureAwait(false);
+                    if (!confirmed.IsSuccess || !StringComparer.Ordinal.Equals(confirmed.Value, chunk.Json))
+                        return new WorldApplyResult { Retryable = true, CommitUnknown = !confirmed.IsSuccess, Code = stored.Error?.Code ?? "awake.world_fact.chunk_write_failed" };
+                }
+                OperationResult<string> readBack = await store.GetAsync(chunk.Key, context, cancellationToken).ConfigureAwait(false);
+                if (!readBack.IsSuccess || !StringComparer.Ordinal.Equals(readBack.Value, chunk.Json))
+                    return new WorldApplyResult { Retryable = true, CommitUnknown = !readBack.IsSuccess, Code = "awake.world_fact.chunk_verify_failed" };
+                if (WorldFactJournalCodec.ReadChunk(readBack.Value).Status != WorldFactJournalReadStatus.Success)
+                    return new WorldApplyResult { Code = "awake.world_fact.chunk_verify_failed" };
+                keys.Add(chunk.Key);
+            }
+
+            int startDay = facts.Min(value => IntValue(value["occurred"]?["campaignDay"]));
+            startDay = ((startDay - 1) / 7) * 7 + 1;
+            int endDay = facts.Max(value => IntValue(value["occurred"]?["campaignDay"]));
+            endDay = ((endDay - 1) / 7) * 7 + 7;
+            JObject root = WorldFactJournalCodec.BuildRoot(startDay, endDay, revision, keys);
+            string rootJson = root.ToString(Formatting.None);
+            if (Encoding.UTF8.GetByteCount(rootJson) > AiTaskConstants.StorageValueMaximumBytes)
+                return new WorldApplyResult { Code = "awake.world_fact.root_too_large" };
+
+            OperationResult<bool> rootStored = await store.SetAsync(AiTaskConstants.WorldFactJournalRootKey, rootJson, context, cancellationToken).ConfigureAwait(false);
+            OperationResult<string> rootReadBack = await store.GetAsync(AiTaskConstants.WorldFactJournalRootKey, context, cancellationToken).ConfigureAwait(false);
+            if (rootReadBack.IsSuccess && StringComparer.Ordinal.Equals(rootReadBack.Value, rootJson))
+                return new WorldApplyResult { Applied = true, Code = "awake.world_fact.persisted" };
+            if (!rootReadBack.IsSuccess)
+                return new WorldApplyResult { Retryable = true, CommitUnknown = true, Code = rootStored.Error?.Code ?? "awake.world_fact.root_commit_unknown" };
+
+            JObject observedRoot;
+            WorldFactJournalReadStatus observedStatus = WorldFactJournalCodec.ReadRoot(rootReadBack.Value, out observedRoot);
+            if (observedStatus == WorldFactJournalReadStatus.Success && IntValue(observedRoot["revision"]) == existing.Revision)
+                return new WorldApplyResult { Retryable = true, Code = "awake.world_fact.root_replace_retryable" };
+            return new WorldApplyResult { Code = "awake.world_fact.root_conflict" };
+        }
+        finally
+        {
+            WorldFactJournalWriterGate.Release();
+        }
+    }
+
+    private sealed class JournalChunkWrite
+    {
+        internal string Key { get; set; }
+        internal string Json { get; set; }
+    }
+
+    private static WorldFactJournalReadResult ValidateFactForJournal(JObject fact)
+    {
+        int day = IntValue(fact?["occurred"]?["campaignDay"]);
+        try
+        {
+            JObject probe = WorldFactJournalCodec.BuildChunk(day, day, 1, new[] { fact });
+            return WorldFactJournalCodec.ReadChunk(probe.ToString(Formatting.None));
+        }
+        catch (Exception ex)
+        {
+            return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Corrupt, errorCode: ex.Message);
+        }
+    }
+
+    private static List<JournalChunkWrite> BuildJournalChunks(List<JObject> facts, int revision)
+    {
+        var result = new List<JournalChunkWrite>();
+        foreach (IGrouping<int, JObject> group in facts
+            .OrderBy(value => IntValue(value["occurred"]?["campaignDay"]))
+            .GroupBy(value => ((IntValue(value["occurred"]?["campaignDay"]) - 1) / 7) * 7 + 1)
+            .OrderBy(value => value.Key))
+        {
+            int startDay = group.Key;
+            int endDay = startDay + 6;
+            var buffer = new List<JObject>();
+            foreach (JObject value in group.OrderBy(item => IntValue(item["occurred"]?["campaignDay"]))
+                .ThenBy(item => (long?)item["occurred"]?["timeSlot"] ?? 0L)
+                .ThenBy(item => (string)item["factId"], StringComparer.Ordinal))
+            {
+                buffer.Add(value);
+                if (buffer.Count > WorldFactJournalCodec.MaximumFactsPerChunk)
+                {
+                    buffer.RemoveAt(buffer.Count - 1);
+                    AddJournalChunk(result, startDay, endDay, revision, result.Count, WorldFactJournalCodec.BuildChunk(startDay, endDay, revision, buffer).ToString(Formatting.None));
+                    buffer.Clear();
+                    buffer.Add(value);
+                }
+                JObject candidate = WorldFactJournalCodec.BuildChunk(startDay, endDay, revision, buffer);
+                string candidateJson = candidate.ToString(Formatting.None);
+                if (Encoding.UTF8.GetByteCount(candidateJson) <= AiTaskConstants.StorageValueMaximumBytes
+                    && buffer.Count <= WorldFactJournalCodec.MaximumFactsPerChunk) continue;
+                buffer.RemoveAt(buffer.Count - 1);
+                if (buffer.Count == 0) return null;
+                AddJournalChunk(result, startDay, endDay, revision, result.Count, WorldFactJournalCodec.BuildChunk(startDay, endDay, revision, buffer).ToString(Formatting.None));
+                buffer.Clear();
+                buffer.Add(value);
+                JObject single = WorldFactJournalCodec.BuildChunk(startDay, endDay, revision, buffer);
+                if (Encoding.UTF8.GetByteCount(single.ToString(Formatting.None)) > AiTaskConstants.StorageValueMaximumBytes) return null;
+            }
+            if (buffer.Count > 0)
+                AddJournalChunk(result, startDay, endDay, revision, result.Count, WorldFactJournalCodec.BuildChunk(startDay, endDay, revision, buffer).ToString(Formatting.None));
+        }
+        return result;
+    }
+
+    private static void AddJournalChunk(List<JournalChunkWrite> chunks, int startDay, int endDay, int revision, int ordinal, string json)
+    {
+        chunks.Add(new JournalChunkWrite
+        {
+            Key = "facts-" + startDay.ToString("D8") + "-" + endDay.ToString("D8") + "-r" + revision.ToString("D8") + "-" + ordinal.ToString("D4") + "-" + WorldFactJournalCodec.Sha256Hex(json),
+            Json = json
+        });
+    }
+
     private static string ApplyWeeklyReportState(JObject state, WorldStateCommand command)
     {
         string reportId = (string)command.Arguments["reportId"] ?? string.Empty;
@@ -3157,6 +3805,9 @@ internal sealed class WorldStateStore
         if (string.IsNullOrWhiteSpace(reportId) || (status != "applied" && status != "retryable"))
             return "awake.world_state.weekly_report.invalid";
         JObject incomingReport = command.Arguments["report"] as JObject;
+        if (StringComparer.Ordinal.Equals((string)command.Arguments["schemaVersion"], "awake.worldbook.weekly-report.v2")
+            || StringComparer.Ordinal.Equals((string)incomingReport?["schemaVersion"], "awake.worldbook.weekly-report.v2"))
+            return ApplyV2WeeklyReportState(state, command, incomingReport);
         if (incomingReport != null
             && (!WorldEventContract.TryValidateWeeklyReport(incomingReport, out _)
                 || !StringComparer.Ordinal.Equals((string)incomingReport["reportId"], reportId)))
@@ -3218,11 +3869,85 @@ internal sealed class WorldStateStore
         return string.Empty;
     }
 
+    private static string ApplyV2WeeklyReportState(JObject state, WorldStateCommand command, JObject incomingReport)
+    {
+        if (incomingReport == null || !WeeklyReportService.TryValidateV2Report(incomingReport, out _))
+            return "awake.world_report.v2.invalid_payload";
+        string reportId = (string)command.Arguments["reportId"] ?? string.Empty;
+        if (!StringComparer.Ordinal.Equals(reportId, (string)incomingReport["reportId"]))
+            return "awake.world_report.v2.invalid_payload";
+        JArray reports = (JArray)state["weeklyReports"];
+        JObject current = reports.Children<JObject>().FirstOrDefault(value => StringComparer.Ordinal.Equals((string)value["reportId"], reportId));
+        if (current != null)
+        {
+            string currentSchema = (string)current["schemaVersion"] ?? (string)current["report"]?["schemaVersion"] ?? string.Empty;
+            if (StringComparer.Ordinal.Equals(currentSchema, "awake.worldbook.weekly-report.v1"))
+                return "awake.world_report.v2.v1_conflict";
+            if (StringComparer.Ordinal.Equals(currentSchema, "awake.worldbook.weekly-report.v2")
+                && IsValidV2WeeklyReportEntry(current, out JObject currentReport))
+            {
+                if (SameV2WeeklyReport(current, currentReport, incomingReport,
+                    (int)incomingReport["extensions"]["awake:windowStartDay"],
+                    (int)incomingReport["extensions"]["awake:windowEndDay"]))
+                    return "awake.world_state.duplicate";
+                return "awake.world_report.v2.conflict";
+            }
+            current.RemoveAll();
+            WriteV2WeeklyReportEntry(current, command, incomingReport);
+        }
+        else
+        {
+            current = new JObject();
+            WriteV2WeeklyReportEntry(current, command, incomingReport);
+            reports.Add(current);
+        }
+        state["updatedUtc"] = DateTimeOffset.UtcNow.ToString("O");
+        return string.Empty;
+    }
+
+    private static void WriteV2WeeklyReportEntry(JObject entry, WorldStateCommand command, JObject report)
+    {
+        entry["reportId"] = (string)report["reportId"];
+        entry["schemaVersion"] = (string)report["schemaVersion"];
+        entry["windowStartDay"] = (int)report["extensions"]["awake:windowStartDay"];
+        entry["windowEndDay"] = (int)report["extensions"]["awake:windowEndDay"];
+        entry["status"] = "applied";
+        entry["attemptCount"] = IntValue(command.Arguments["attemptCount"]);
+        entry["lastAttemptDay"] = IntValue(command.Arguments["lastAttemptDay"]);
+        entry["lastErrorCode"] = (string)command.Arguments["lastErrorCode"] ?? string.Empty;
+        entry["contentFingerprint"] = (string)report["contentFingerprint"];
+        entry["sourceFactIds"] = report["sourceFactIds"].DeepClone();
+        entry["report"] = report.DeepClone();
+    }
+
     private static bool IsValidWeeklyReportSnapshot(JToken value, string reportId)
     {
         return value is JObject report
             && StringComparer.Ordinal.Equals((string)report["reportId"], reportId)
             && WorldEventContract.TryValidateWeeklyReport(report, out _);
+    }
+
+    private static bool IsValidV2WeeklyReportEntry(JObject entry, out JObject report)
+    {
+        report = entry?["report"] as JObject;
+        if (entry == null || report == null || !WeeklyReportService.TryValidateV2Report(report, out _)) return false;
+        return StringComparer.Ordinal.Equals((string)entry["reportId"], (string)report["reportId"])
+            && StringComparer.Ordinal.Equals((string)entry["schemaVersion"], (string)report["schemaVersion"])
+            && IntValue(entry["windowStartDay"]) == (int)report["extensions"]["awake:windowStartDay"]
+            && IntValue(entry["windowEndDay"]) == (int)report["extensions"]["awake:windowEndDay"]
+            && StringComparer.Ordinal.Equals((string)entry["contentFingerprint"], (string)report["contentFingerprint"])
+            && JToken.DeepEquals(entry["sourceFactIds"], report["sourceFactIds"]);
+    }
+
+    private static bool SameV2WeeklyReport(JObject entry, JObject currentReport, JObject incomingReport, int windowStartDay, int windowEndDay)
+    {
+        return currentReport != null
+            && StringComparer.Ordinal.Equals((string)entry["reportId"], (string)incomingReport["reportId"])
+            && IntValue(entry["windowStartDay"]) == windowStartDay
+            && IntValue(entry["windowEndDay"]) == windowEndDay
+            && StringComparer.Ordinal.Equals((string)entry["contentFingerprint"], (string)incomingReport["contentFingerprint"])
+            && JToken.DeepEquals(entry["sourceFactIds"], incomingReport["sourceFactIds"])
+            && StringComparer.Ordinal.Equals(WeeklyReportService.CanonicalizeV2(currentReport), WeeklyReportService.CanonicalizeV2(incomingReport));
     }
 
     private static bool IsEmptyWeeklyReport(JObject report)
@@ -3245,7 +3970,15 @@ internal sealed class WorldStateStore
             && StringComparer.Ordinal.Equals((string)existing["eventKey"] ?? (string)existing["id"], eventKey)
             && StringComparer.Ordinal.Equals((string)existing["domain"], domain)
             && StringComparer.Ordinal.Equals((string)existing["occurredAt"], occurredAt)
-            && SameIdentityIds(existing["visibilityIdentityIds"], command.Arguments["visibilityIdentityIds"]);
+            && SameIdentityIds(existing["visibilityIdentityIds"], command.Arguments["visibilityIdentityIds"])
+            && SameOptionalToken(existing["fact"], command.Arguments["fact"]);
+    }
+
+    private static bool SameOptionalToken(JToken left, JToken right)
+    {
+        bool leftEmpty = left == null || left.Type == JTokenType.Null;
+        bool rightEmpty = right == null || right.Type == JTokenType.Null;
+        return leftEmpty && rightEmpty || (!leftEmpty && !rightEmpty && JToken.DeepEquals(left, right));
     }
 
     private static bool SameIdentityIds(JToken left, JToken right)
@@ -3605,5 +4338,14 @@ internal sealed class WorldStateStore
             _sessionRef,
             Guid.NewGuid().ToString("N"),
             DateTimeOffset.UtcNow + AwakeConstants.RequestTimeout);
+    }
+
+    private static JObject ParseJsonObjectPreservingDateStrings(string json)
+    {
+        using (StringReader reader = new StringReader(json ?? string.Empty))
+        using (JsonTextReader jsonReader = new JsonTextReader(reader) { DateParseHandling = DateParseHandling.None })
+        {
+            return JObject.Load(jsonReader);
+        }
     }
 }

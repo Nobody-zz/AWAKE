@@ -13,7 +13,7 @@ internal sealed class WeeklyReportBrowserOverlay
 
     internal static bool IsOpen => _active != null && !_active._closed;
 
-    internal static bool Open(string report)
+    internal static bool Open(WeeklyReportDisplay display)
     {
         try
         {
@@ -24,7 +24,7 @@ internal sealed class WeeklyReportBrowserOverlay
                 AwakeLog.Write("weekly_report_open_failed reason=no_top_screen");
                 return false;
             }
-            WeeklyReportBrowserOverlay overlay = new WeeklyReportBrowserOverlay(screen, report);
+            WeeklyReportBrowserOverlay overlay = new WeeklyReportBrowserOverlay(screen, display);
             overlay.OpenLayer();
             if (!ReferenceEquals(ScreenManager.FocusedLayer, overlay._layer))
             {
@@ -74,10 +74,10 @@ internal sealed class WeeklyReportBrowserOverlay
     private object _movie;
     private bool _closed;
 
-    private WeeklyReportBrowserOverlay(ScreenBase screen, string report)
+    private WeeklyReportBrowserOverlay(ScreenBase screen, WeeklyReportDisplay display)
     {
         _screen = screen;
-        _dataSource = new WeeklyReportBrowserVM(Close, report);
+        _dataSource = new WeeklyReportBrowserVM(Close, display);
         _layer = new GauntletLayer("WeeklyReportBrowser", 544, false);
     }
 

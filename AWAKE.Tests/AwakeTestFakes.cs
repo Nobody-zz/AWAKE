@@ -12,9 +12,11 @@ internal sealed class FakeKeyValueStore : IKeyValueStore
     private readonly Dictionary<string, string> _values = new Dictionary<string, string>(StringComparer.Ordinal);
 
     internal int SetCount { get; private set; }
+    internal int GetCount { get; private set; }
     internal bool FailSet { get; set; }
     internal int FailSetAfter { get; set; } = 1;
     internal bool FailGetWithKeyNotFound { get; set; }
+    internal bool CommitUnknownAfterWrite { get; set; }
 
     internal string GetValue(string key)
     {
@@ -23,8 +25,14 @@ internal sealed class FakeKeyValueStore : IKeyValueStore
         return null;
     }
 
+    internal void Seed(string key, string value)
+    {
+        _values[key ?? string.Empty] = value;
+    }
+
     public Task<OperationResult<string>> GetAsync(string key, RequestContext context, CancellationToken cancellationToken)
     {
+        GetCount++;
         if (FailGetWithKeyNotFound && string.IsNullOrEmpty(GetValue(key)))
         {
             return Task.FromResult(OperationResult<string>.Failed(FrameworkErrors.Create(
@@ -48,6 +56,14 @@ internal sealed class FakeKeyValueStore : IKeyValueStore
                 null)));
         }
         _values[key ?? string.Empty] = valueJson;
+        if (CommitUnknownAfterWrite)
+        {
+            return Task.FromResult(OperationResult<bool>.Failed(FrameworkErrors.Create(
+                "storage.commit_unknown",
+                FrameworkErrorCategory.Unavailable,
+                "write result is unknown after the value was committed",
+                null)));
+        }
         return Task.FromResult(OperationResult<bool>.Succeeded(true));
     }
 

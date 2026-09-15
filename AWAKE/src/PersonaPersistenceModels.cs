@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Awake;
 
@@ -63,6 +65,83 @@ internal sealed class PersonaPersistenceEnvelope
     internal string PayloadHash { get; set; } = string.Empty;
 }
 
+internal sealed class PersonaRuntimeStateDocument
+{
+    [JsonProperty("schema")]
+    internal string Schema { get; set; } = PersonaPersistenceConstants.ContinuitySchema;
+    [JsonProperty("personaSubjectStableId")]
+    internal string PersonaSubjectStableId { get; set; } = string.Empty;
+    [JsonProperty("characterId")]
+    internal string CharacterId { get; set; } = string.Empty;
+    [JsonProperty("timeline")]
+    internal PersonaTimelineIdentity Timeline { get; set; } = new PersonaTimelineIdentity();
+    [JsonProperty("activeBundleId")]
+    internal string ActiveBundleId { get; set; } = string.Empty;
+    [JsonProperty("activeBundleRevision")]
+    internal int ActiveBundleRevision { get; set; }
+    [JsonProperty("activeBundleDigest")]
+    internal string ActiveBundleDigest { get; set; } = string.Empty;
+    [JsonProperty("payloadDigest")]
+    internal string PayloadDigest { get; set; } = string.Empty;
+    [JsonProperty("revision")]
+    internal long Revision { get; set; }
+    [JsonProperty("sequence")]
+    internal long Sequence { get; set; }
+    [JsonProperty("watermarks")]
+    internal PersonaProjectionWatermarks Watermarks { get; set; } = new PersonaProjectionWatermarks();
+    [JsonProperty("continuity")]
+    internal PersonaContinuityState Continuity { get; set; } = new PersonaContinuityState();
+
+    internal JObject ToJsonObject()
+    {
+        return JObject.Parse(JsonConvert.SerializeObject(this, Formatting.None));
+    }
+
+    internal string ToCanonicalJson()
+    {
+        JObject canonical = ToJsonObject();
+        canonical.Remove("payloadDigest");
+        return canonical.ToString(Formatting.None);
+    }
+
+    internal string ComputePayloadDigest()
+    {
+        using (SHA256 sha = SHA256.Create())
+        {
+            return BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(ToCanonicalJson())))
+                .Replace("-", string.Empty)
+                .ToUpperInvariant();
+        }
+    }
+
+    internal PersonaRuntimeStateDocument DeepClone()
+    {
+        return FromJson(ToJsonObject().ToString(Formatting.None));
+    }
+
+    internal static PersonaRuntimeStateDocument FromJson(string json)
+    {
+        if (string.IsNullOrWhiteSpace(json)) return null;
+        try
+        {
+            PersonaRuntimeStateDocument document = JsonConvert.DeserializeObject<PersonaRuntimeStateDocument>(json);
+            return document;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+}
+
+internal sealed class PersonaStateWriteResult
+{
+    internal bool Applied { get; set; }
+    internal bool Duplicate { get; set; }
+    internal bool CommitUnknown { get; set; }
+    internal string Code { get; set; } = string.Empty;
+}
+
 // 未启用：recovery 状态机属下一批次，本批次保留模型但不给消费者。
 internal sealed class PersonaRecoveryRecord
 {
@@ -77,14 +156,14 @@ internal sealed class PersonaRecoveryRecord
     internal string EffectsKey { get; set; } = string.Empty;
 }
 
-// 未启用：存档文件已提供隔离，persona 不再用组合存储键定位（权威载体是 SyncData）。
+// G3-B runtime state uses the campaign namespace key; PersonaContinuitySync remains player-anchor-only.
 internal static class PersonaStorageKey
 {
     internal const string NamespaceId = "awake.persona.state";
 
     internal static bool TryBuild(
         PersonaTimelineIdentity timeline,
-        string characterId,
+        string personaSubjectStableId,
         out string key,
         out string error)
     {
@@ -97,9 +176,15 @@ internal static class PersonaStorageKey
             error = "persona.storage.timeline_key_fields_missing";
             return false;
         }
-        if (string.IsNullOrWhiteSpace(characterId))
+        if (string.IsNullOrWhiteSpace(personaSubjectStableId))
         {
-            error = "persona.storage.character_key_missing";
+            error = "persona.storage.subject_key_missing";
+            return false;
+        }
+        if (!personaSubjectStableId.StartsWith("hero:", StringComparison.Ordinal)
+            || string.IsNullOrWhiteSpace(personaSubjectStableId.Substring("hero:".Length)))
+        {
+            error = "persona.storage.subject_key_invalid";
             return false;
         }
         key = string.Join("|", new[]
@@ -107,7 +192,7 @@ internal static class PersonaStorageKey
             Escape(timeline.CampaignId),
             Escape(timeline.TimelineId),
             Escape(timeline.BranchId),
-            Escape(characterId)
+            Escape(personaSubjectStableId)
         });
         return true;
     }
@@ -135,6 +220,82 @@ internal static class PersonaPersistenceValidator
             || envelope.Watermarks.PersonaAcceptedSequence > envelope.Sequence)
         {
             return Fail("persona.persistence.watermark_ahead_of_sequence", out error);
+        }
+        return true;
+    }
+
+    internal static bool TryValidateRuntimeState(
+        PersonaRuntimeStateDocument document,
+        PersonaTimelineIdentity expectedTimeline,
+        string expectedSubjectStableId,
+        RuntimeBundle expectedBundle,
+        out string error)
+    {
+        error = string.Empty;
+        if (document == null) return Fail("persona.runtime_state.document_missing", out error);
+        if (!StringComparer.Ordinal.Equals(document.Schema, PersonaPersistenceConstants.ContinuitySchema))
+            return Fail("persona.runtime_state.schema_invalid", out error);
+        if (string.IsNullOrWhiteSpace(document.PersonaSubjectStableId)
+            || !document.PersonaSubjectStableId.StartsWith("hero:", StringComparison.Ordinal)
+            || string.IsNullOrWhiteSpace(document.PersonaSubjectStableId.Substring("hero:".Length)))
+            return Fail("persona.runtime_state.subject_invalid", out error);
+        if (!string.IsNullOrWhiteSpace(expectedSubjectStableId)
+            && !StringComparer.Ordinal.Equals(document.PersonaSubjectStableId, expectedSubjectStableId))
+            return Fail("persona.runtime_state.subject_mismatch", out error);
+        if (string.IsNullOrWhiteSpace(document.CharacterId))
+            return Fail("persona.runtime_state.character_missing", out error);
+        if (!TryValidateTimeline(document.Timeline, out error)) return false;
+        if (expectedTimeline != null && !SameTimeline(document.Timeline, expectedTimeline))
+            return Fail("persona.runtime_state.timeline_mismatch", out error);
+        if (string.IsNullOrWhiteSpace(document.ActiveBundleId)
+            || document.ActiveBundleRevision <= 0
+            || !IsSha256(document.ActiveBundleDigest))
+            return Fail("persona.runtime_state.bundle_invalid", out error);
+        if (expectedBundle != null
+            && (!StringComparer.Ordinal.Equals(document.ActiveBundleId, expectedBundle.BundleId)
+                || document.ActiveBundleRevision != expectedBundle.Revision
+                || !StringComparer.OrdinalIgnoreCase.Equals(document.ActiveBundleDigest, expectedBundle.Digest)))
+            return Fail("persona.runtime_state.bundle_mismatch", out error);
+        if (document.PayloadDigest != document.ComputePayloadDigest())
+            return Fail("persona.runtime_state.digest_invalid", out error);
+        if (document.Revision < 0 || document.Sequence < 0)
+            return Fail("persona.runtime_state.sequence_invalid", out error);
+        if (document.Watermarks == null || document.Continuity == null)
+            return Fail("persona.runtime_state.payload_missing", out error);
+        if (document.Watermarks.TranscriptAcceptedSequence < 0
+            || document.Watermarks.EffectsAcceptedSequence < 0
+            || document.Watermarks.MemoryAcceptedSequence < 0
+            || document.Watermarks.PersonaAcceptedSequence < 0
+            || document.Watermarks.TranscriptAcceptedSequence > document.Sequence
+            || document.Watermarks.EffectsAcceptedSequence > document.Sequence
+            || document.Watermarks.MemoryAcceptedSequence > document.Sequence
+            || document.Watermarks.PersonaAcceptedSequence > document.Sequence)
+            return Fail("persona.runtime_state.watermark_invalid", out error);
+        return true;
+    }
+
+    internal static bool AreSameRuntimeState(PersonaRuntimeStateDocument left, PersonaRuntimeStateDocument right)
+    {
+        return left != null && right != null
+            && StringComparer.Ordinal.Equals(left.ToJsonObject().ToString(Formatting.None), right.ToJsonObject().ToString(Formatting.None));
+    }
+
+    private static bool SameTimeline(PersonaTimelineIdentity left, PersonaTimelineIdentity right)
+    {
+        return left != null && right != null
+            && StringComparer.Ordinal.Equals(left.CampaignId, right.CampaignId)
+            && StringComparer.Ordinal.Equals(left.TimelineId, right.TimelineId)
+            && StringComparer.Ordinal.Equals(left.BranchId, right.BranchId)
+            && StringComparer.Ordinal.Equals(left.ParentBranchId, right.ParentBranchId)
+            && left.ForkSequence == right.ForkSequence;
+    }
+
+    private static bool IsSha256(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value) || value.Length != 64) return false;
+        foreach (char item in value)
+        {
+            if (!Uri.IsHexDigit(item)) return false;
         }
         return true;
     }

@@ -12,6 +12,22 @@ internal static class AwakeDeveloperTestActions
         AwakeMcmActions.ShowDeveloperReport();
     }
 
+    /// <summary>
+    /// 画位探测：验证「png → 运行时纹理 → 控件上屏」这条链，不依赖出图后端。
+    /// 面板里可以直接写一张内置占位图进缓存，看见图就说明链路是通的。
+    /// </summary>
+    internal static void OpenPortraitProbe()
+    {
+        if (AwakePortraitProbeOverlay.Open())
+        {
+            AwakeFeedback.ShowSuccess("画位探测已打开：面板里会显示缓存目录和当前画位。");
+        }
+        else
+        {
+            AwakeFeedback.ShowError("画位探测打不开，看 Logs/Awake.log 的 portrait_probe_open_* 那几行。");
+        }
+    }
+
     internal static void TestNearbyDialogue()
     {
         List<Hero> heroes = NpcDialogueLauncher.GetNearbyHeroes(1);
@@ -34,6 +50,34 @@ internal static class AwakeDeveloperTestActions
             AwakeFeedback.ShowSuccess(AwakeLocalization.Resolve(
                 "awake.dev_tools.dialogue_ok",
                 "Dialogue opened."));
+        }
+    }
+
+    internal static void TestNearbyNegotiation()
+    {
+        List<Hero> heroes = NpcDialogueLauncher.GetNearbyHeroes(1);
+        if (heroes.Count == 0)
+        {
+            AwakeFeedback.ShowWarning(AwakeLocalization.Resolve(
+                "awake.dev_tools.no_target",
+                "Nearby target missing."));
+            return;
+        }
+        NpcDialogueLaunchResult result = NpcDialogueLauncher.TryOpenDialogue(
+            AwakeNpcTarget.FromHero(heroes[0]),
+            "dev_test.negotiation",
+            NpcDialogueActionMode.Negotiation);
+        if (result == NpcDialogueLaunchResult.None)
+        {
+            AwakeFeedback.ShowError(AwakeLocalization.Resolve(
+                "awake.dev_tools.negotiation_failed",
+                "Negotiation test failed to open."));
+        }
+        else
+        {
+            AwakeFeedback.ShowSuccess(AwakeLocalization.Resolve(
+                "awake.dev_tools.negotiation_ok",
+                "Negotiation test opened."));
         }
     }
 

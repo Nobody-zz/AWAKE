@@ -121,7 +121,9 @@ internal static class AwakeTranscriptService
         string location,
         string text,
         string idempotencyKey,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string speaker = null,
+        string kind = "player")
     {
         WorldStateStore store = AwakeRuntime.WorldStateStore;
         int sessionGeneration = AwakeRuntime.SessionGeneration;
@@ -149,11 +151,11 @@ internal static class AwakeTranscriptService
             "letter|" + idempotencyKey,
             day,
             location ?? string.Empty,
-            AwakeLocalization.Resolve("awake.ui.you", "你"),
+            string.IsNullOrWhiteSpace(speaker) ? AwakeLocalization.Resolve("awake.ui.you", "你") : speaker,
             text,
             "letter",
             conversationId ?? string.Empty,
-            "player");
+            string.IsNullOrWhiteSpace(kind) ? "player" : kind);
         string error;
         if (!AwakeTranscriptValidator.ValidateLine(line, out error))
         {

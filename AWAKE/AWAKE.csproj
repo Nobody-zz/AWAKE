@@ -25,6 +25,9 @@
     <ProjectReference Include="$(EmbeddedFrameworkProject)" />
     <Reference Include="netstandard" HintPath="C:\Windows\Microsoft.Net\assembly\GAC_MSIL\netstandard\v4.0_2.0.0.0__cc7b13ffcd2ddd51\netstandard.dll" Private="false" />
     <Reference Include="System.ValueTuple" HintPath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Facades\System.ValueTuple.dll" Private="false" />
+    <!-- 生图是 AWAKE 第一次从游戏进程直接出网：System.Net.Http 发请求，System.Security 走 DPAPI 保护密钥。 -->
+    <Reference Include="System.Net.Http" Private="false" />
+    <Reference Include="System.Security" Private="false" />
     <Reference Include="MCMv5" HintPath="$(GamePath)\Modules\Bannerlord.MBOptionScreen\bin\Win64_Shipping_Client\MCMv5.dll" Private="false" />
     <Reference Include="Newtonsoft.Json" HintPath="$(GamePath)\bin\Win64_Shipping_Client\Newtonsoft.Json.dll" Private="false" />
     <Reference Include="TaleWorlds.CampaignSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.CampaignSystem.dll" Private="false" />

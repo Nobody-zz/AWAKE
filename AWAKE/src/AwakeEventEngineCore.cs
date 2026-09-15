@@ -11,6 +11,7 @@ internal sealed class AwakeEventRule
     internal int MaxPerDay { get; }
     internal AwakeEventCondition Condition { get; }
     internal string NextEventId { get; }
+    internal AwakeEventFactTrigger FactTrigger { get; }
 
     internal AwakeEventRule(
         AwakeEventDefinition definition,
@@ -18,7 +19,8 @@ internal sealed class AwakeEventRule
         int cooldownHours,
         AwakeEventCondition condition,
         string nextEventId = null,
-        int maxPerDay = 0)
+        int maxPerDay = 0,
+        AwakeEventFactTrigger factTrigger = null)
     {
         Definition = definition ?? throw new ArgumentNullException(nameof(definition));
         Weight = weight < 1 ? 1 : weight;
@@ -26,6 +28,7 @@ internal sealed class AwakeEventRule
         MaxPerDay = maxPerDay < 0 ? 0 : maxPerDay;
         Condition = condition;
         NextEventId = nextEventId ?? string.Empty;
+        FactTrigger = factTrigger;
     }
 }
 

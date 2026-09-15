@@ -34,12 +34,16 @@ internal sealed class WorldEventAppendResult
 internal sealed class WeeklyReportApplicationState
 {
     internal string ReportId { get; set; } = string.Empty;
+    internal string SchemaVersion { get; set; } = string.Empty;
     internal int WindowStartDay { get; set; }
     internal int WindowEndDay { get; set; }
     internal string Status { get; set; } = "retryable";
     internal int AttemptCount { get; set; }
     internal int LastAttemptDay { get; set; }
     internal string LastErrorCode { get; set; } = string.Empty;
+    internal string ContentFingerprint { get; set; } = string.Empty;
+    internal IReadOnlyList<string> SourceFactIds { get; set; } = Array.Empty<string>();
+    internal bool Corrupt { get; set; }
     internal JObject Report { get; set; }
 }
 
@@ -47,6 +51,7 @@ internal sealed class WeeklyReportStateWriteResult
 {
     internal const string Applied = "applied";
     internal const string AlreadyApplied = "already_applied";
+    internal const string Conflict = "conflict";
     internal const string Retryable = "retryable";
     internal const string Failed = "failed";
 
@@ -56,6 +61,25 @@ internal sealed class WeeklyReportStateWriteResult
     internal JObject Report { get; set; }
     internal bool Succeeded => StringComparer.Ordinal.Equals(Status, Applied)
         || StringComparer.Ordinal.Equals(Status, AlreadyApplied);
+}
+
+internal sealed class FormalWeeklyReportResult
+{
+    internal const string Applied = "applied";
+    internal const string Preview = "preview";
+    internal const string Unavailable = "unavailable";
+
+    internal string Status { get; set; } = Unavailable;
+    internal string Code { get; set; } = string.Empty;
+    internal JObject Report { get; set; }
+    internal bool HasFormalReport => StringComparer.Ordinal.Equals(Status, Applied) && Report != null;
+}
+
+internal sealed class WeeklyFactReportBuildResult
+{
+    internal JObject Report { get; set; }
+    internal string ErrorCode { get; set; } = string.Empty;
+    internal bool Succeeded => Report != null && string.IsNullOrWhiteSpace(ErrorCode);
 }
 
 internal interface IWorldEventRecorder
@@ -96,7 +120,7 @@ internal static class WorldEventServices
 {
     private const int QueueRecordMaximumAttempts = 3;
     private static readonly object CampaignBoundaryGate = new object();
-    private static readonly SemaphoreSlim KnowledgeGate = new SemaphoreSlim(1, 1);
+    private static readonly SemaphoreSlim FormalReportGate = new SemaphoreSlim(1, 1);
 
     internal static IWorldEventRecorder Recorder { get; } = new WorldEventLedgerRecorder();
 
@@ -155,9 +179,129 @@ internal static class WorldEventServices
         });
     }
 
+    internal static bool TryProjectFactSourcesIfReady(
+        int campaignGeneration,
+        WorldStateStore store,
+        WorldEventLedgerSnapshot snapshot,
+        WorldFactQueryResult facts,
+        IReadOnlyList<JObject> reports)
+    {
+        return WithCampaignBoundary(() =>
+        {
+            return CanProject(campaignGeneration, store, snapshot)
+                && Projection.TryReplaceFacts(facts, snapshot, reports, null);
+        });
+    }
+
     internal static void BindKnowledge(WorldKnowledgeSnapshot snapshot, WorldKnowledgeQueryService query)
     {
         WithCampaignBoundary(() => Projection.Bind(snapshot, query));
+    }
+
+    /// <summary>Single runtime entry point for all structured-fact consumers.</summary>
+    internal static Task<WorldFactQueryResult> QueryFactsAsync(
+        WorldFactQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        return WorldEventContracts.QueryFactsAsync(request, cancellationToken);
+    }
+
+    internal static Task<WorldFactQueryResult> QueryRecentDynamicsAsync(int currentDay, CancellationToken cancellationToken)
+    {
+        return QueryFactsAsync(new WorldFactQueryRequest
+        {
+            Policy = WorldFactSelectionPolicy.RecentDynamics,
+            CurrentDay = currentDay,
+            MaximumResults = 20
+        }, cancellationToken);
+    }
+
+    internal static Task<WorldFactQueryResult> QueryWeeklyDynamicsAsync(int currentDay, CancellationToken cancellationToken)
+    {
+        return QueryFactsAsync(new WorldFactQueryRequest
+        {
+            Policy = WorldFactSelectionPolicy.WeeklyDynamics,
+            CurrentDay = currentDay,
+            MaximumResults = 0
+        }, cancellationToken);
+    }
+
+    internal static Task<WorldFactQueryResult> QueryCompletedWeeklyDynamicsAsync(int windowEndDay, CancellationToken cancellationToken)
+    {
+        return QueryFactsAsync(new WorldFactQueryRequest
+        {
+            Policy = WorldFactSelectionPolicy.WeeklyDynamics,
+            StartDay = windowEndDay - 6,
+            EndDay = windowEndDay,
+            MaximumResults = 0
+        }, cancellationToken);
+    }
+
+    internal static async Task<WeeklyFactReportBuildResult> BuildCompletedWeeklyReportFromFactsAsync(
+        int windowEndDay,
+        CancellationToken cancellationToken)
+    {
+        WorldFactQueryResult result = await QueryCompletedWeeklyDynamicsAsync(windowEndDay, cancellationToken).ConfigureAwait(false);
+        return TryBuildWeeklyReportFromQueryResult(result);
+    }
+
+    internal static async Task<WeeklyReportStateWriteResult> PersistV2WeeklyReportAsync(
+        JObject report,
+        int currentDay,
+        CancellationToken cancellationToken)
+    {
+        if (!WeeklyReportService.TryValidateV2Report(report, out _))
+            return new WeeklyReportStateWriteResult
+            {
+                Status = WeeklyReportStateWriteResult.Failed,
+                Code = "awake.world_report.v2.invalid_payload"
+            };
+        WorldStateStore store = CaptureWorldStateStore(WorldEventLedger.CampaignGeneration);
+        if (store == null)
+            return new WeeklyReportStateWriteResult
+            {
+                Status = WeeklyReportStateWriteResult.Retryable,
+                Code = "awake.world_report.v2.storage_unavailable"
+            };
+        return await store.UpsertWeeklyReportStateAsync(
+            (string)report["reportId"],
+            (int)report["extensions"]["awake:windowStartDay"],
+            (int)report["extensions"]["awake:windowEndDay"],
+            "applied",
+            currentDay,
+            string.Empty,
+            report,
+            cancellationToken).ConfigureAwait(false);
+    }
+
+    internal static WeeklyFactReportBuildResult TryBuildWeeklyReportFromQueryResult(WorldFactQueryResult result)
+    {
+        if (!WeeklyDynamicsInput.TryCreate(result, out WeeklyDynamicsInput input, out string inputError))
+            return new WeeklyFactReportBuildResult { ErrorCode = inputError };
+        if (!WeeklyReportService.TryBuildFromFacts(input, out JObject report, out string reportError))
+            return new WeeklyFactReportBuildResult { ErrorCode = reportError };
+        return new WeeklyFactReportBuildResult { Report = report };
+    }
+
+    internal static async Task<WorldFactQueryResult> QueryFactsForCampaignAsync(
+        WorldFactQuery query,
+        WorldFactQueryRequest request,
+        int campaignGeneration,
+        WorldStateStore store,
+        CancellationToken cancellationToken)
+    {
+        WorldFactQueryResult result = await query.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
+        if (!IsCurrentCampaign(campaignGeneration, store))
+            return new WorldFactQueryResult(
+                WorldFactQueryStatus.Unavailable,
+                request == null ? default(WorldFactSelectionPolicy) : request.Policy,
+                errorCode: "awake.world_fact.stale_session");
+        AwakeLog.Write("awake_world_fact_query policy=" + result.Policy
+            + " status=" + result.Status
+            + " count=" + result.Facts.Count
+            + " generation=" + campaignGeneration
+            + " error=" + result.ErrorCode);
+        return result;
     }
 
     internal static void ResetForCampaign()
@@ -166,6 +310,7 @@ internal static class WorldEventServices
         {
             Recorder.ResetForCampaign();
             Projection.Clear();
+            WorldEventContracts.ResetForCampaign();
         });
     }
 
@@ -221,74 +366,73 @@ internal static class WorldEventServices
             && !StringComparer.Ordinal.Equals(result.Code, "awake.world_event.stale_session");
     }
 
-    internal static async Task EnsureKnowledgeReadyAsync(int currentDay, CancellationToken cancellationToken)
+    internal static async Task<FormalWeeklyReportResult> EnsureFormalReportsReadyAsync(int currentDay, CancellationToken cancellationToken)
     {
-        if (currentDay <= 0) return;
+        if (currentDay <= 0) return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Preview };
         int campaignGeneration = WorldEventLedger.CampaignGeneration;
         WorldStateStore expectedStore = CaptureWorldStateStore(campaignGeneration);
-        if (expectedStore == null || !CanProject(campaignGeneration, expectedStore)) return;
-        await KnowledgeGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        if (expectedStore == null || !IsCurrentCampaign(campaignGeneration, expectedStore))
+            return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Unavailable, Code = "awake.weekly_report.storage_unavailable" };
+        await FormalReportGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            if (!CanProject(campaignGeneration, expectedStore)) return;
-            await Recorder.LoadAsync(cancellationToken).ConfigureAwait(false);
-            if (!CanProject(campaignGeneration, expectedStore)) return;
-            WorldEventLedgerSnapshot eventSnapshot = WorldEventLedger.CaptureSnapshot();
+            if (!IsCurrentCampaign(campaignGeneration, expectedStore))
+                return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Unavailable, Code = "awake.weekly_report.stale_session" };
             List<WeeklyReportApplicationState> states = await expectedStore.GetWeeklyReportStatesAsync(cancellationToken).ConfigureAwait(false);
-            if (states == null || !CanProject(campaignGeneration, expectedStore)) return;
-            var reports = new List<JObject>();
-            foreach (int endDay in WeeklyReportService.CompletedWindowEnds(currentDay))
+            if (states == null || !IsCurrentCampaign(campaignGeneration, expectedStore))
+                return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Unavailable, Code = "awake.weekly_report.read_failed" };
+            List<int> completed = WeeklyReportService.CompletedWindowEnds(currentDay);
+            if (completed.Count == 0) return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Preview };
+            int endDay = completed[completed.Count - 1];
+            int startDay = endDay - 6;
+            WorldFactQueryResult facts = await QueryCompletedWeeklyDynamicsAsync(endDay, cancellationToken).ConfigureAwait(false);
+            if (facts.Status != WorldFactQueryStatus.Success && facts.Status != WorldFactQueryStatus.Empty)
             {
-                if (!CanProject(campaignGeneration, expectedStore)) return;
-                int startDay = endDay - 6;
-                JObject report = Reports.BuildWindow(
-                    eventSnapshot.Records.Where(record => record.Day >= startDay && record.Day <= endDay).ToList(),
-                    startDay,
-                    endDay);
-                if (!WorldEventContract.TryValidateWeeklyReport(report, out string reportError))
-                {
-                    AwakeLog.Write("awake_weekly_report_invalid report=" + (string)report["reportId"] + " error=" + reportError);
-                    continue;
-                }
-                string reportId = (string)report["reportId"] ?? string.Empty;
-                WeeklyReportApplicationState state = states.FirstOrDefault(value => StringComparer.Ordinal.Equals(value.ReportId, reportId));
-                bool hasStableSnapshot = state?.Report != null
-                    && StringComparer.Ordinal.Equals((string)state.Report["reportId"], reportId)
-                    && WorldEventContract.TryValidateWeeklyReport(state.Report, out _);
-                if (state != null && StringComparer.Ordinal.Equals(state.Status, "applied") && hasStableSnapshot)
-                {
-                    reports.Add((JObject)state.Report.DeepClone());
-                    continue;
-                }
-                if (state != null && StringComparer.Ordinal.Equals(state.Status, "applied"))
-                    AwakeLog.Write("awake_weekly_report_snapshot_repair report=" + reportId);
-                WeeklyReportStateWriteResult write = await expectedStore.UpsertWeeklyReportStateAsync(
-                    reportId,
-                    startDay,
-                    endDay,
-                    "applied",
-                    currentDay,
-                    string.Empty,
-                    report,
-                    cancellationToken).ConfigureAwait(false);
-                if (!CanProject(campaignGeneration, expectedStore)) return;
-                if (!write.Succeeded)
-                {
-                    AwakeLog.Write("awake_weekly_report_state_not_applied report=" + reportId + " status=" + write.Status + " code=" + write.Code);
-                    return;
-                }
-                JObject appliedReport = write.Report ?? report;
-                string appliedReportError;
-                bool validAppliedReport = WorldEventContract.TryValidateWeeklyReport(appliedReport, out appliedReportError);
-                if (!StringComparer.Ordinal.Equals((string)appliedReport["reportId"], reportId) || !validAppliedReport)
-                {
-                    AwakeLog.Write("awake_weekly_report_snapshot_invalid report=" + reportId + " error=" + appliedReportError);
-                    return;
-                }
-                reports.Add((JObject)appliedReport.DeepClone());
+                AwakeLog.Write("awake_weekly_report_fact_query_failed window=" + endDay
+                    + " status=" + facts.Status + " error=" + facts.ErrorCode);
+                return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Unavailable, Code = facts.ErrorCode ?? "awake.weekly_report.fact_query_failed" };
             }
-            if (!TryProjectSourcesIfReady(campaignGeneration, expectedStore, eventSnapshot, reports))
-                AwakeLog.Write("awake_knowledge_projection_skipped generation=" + campaignGeneration);
+            WeeklyDynamicsInput input;
+            JObject report = null;
+            string inputError = string.Empty;
+            string reportError = string.Empty;
+            bool validInput = WeeklyDynamicsInput.TryCreate(facts, out input, out inputError);
+            bool built = validInput && WeeklyReportService.TryBuildV2FromFacts(input, out report, out reportError);
+            bool validReport = built && WeeklyReportService.TryValidateV2Report(report, out reportError);
+            if (!validInput || !built || !validReport)
+            {
+                AwakeLog.Write("awake_weekly_report_invalid window=" + endDay + " error=" + (reportError ?? inputError));
+                return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Unavailable, Code = reportError ?? inputError ?? "awake.weekly_report.invalid" };
+            }
+            string reportId = (string)report["reportId"] ?? string.Empty;
+            WeeklyReportApplicationState state = states.FirstOrDefault(value => StringComparer.Ordinal.Equals(value.ReportId, reportId));
+            bool hasStableSnapshot = state?.Report != null
+                && StringComparer.Ordinal.Equals((string)state.Report["reportId"], reportId)
+                && !state.Corrupt
+                && StringComparer.Ordinal.Equals(state.SchemaVersion, WeeklyReportService.V2SchemaVersion)
+                && WeeklyReportService.TryValidateV2Report(state.Report, out _);
+            if (state != null && StringComparer.Ordinal.Equals(state.Status, "applied") && hasStableSnapshot)
+                return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Applied, Report = (JObject)state.Report.DeepClone() };
+            if (state != null && StringComparer.Ordinal.Equals(state.Status, "applied"))
+                AwakeLog.Write("awake_weekly_report_snapshot_repair report=" + reportId);
+            WeeklyReportStateWriteResult write = await expectedStore.UpsertWeeklyReportStateAsync(
+                reportId, startDay, endDay, "applied", currentDay, string.Empty, report, cancellationToken).ConfigureAwait(false);
+            if (!IsCurrentCampaign(campaignGeneration, expectedStore))
+                return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Unavailable, Code = "awake.weekly_report.stale_session" };
+            if (!write.Succeeded)
+            {
+                AwakeLog.Write("awake_weekly_report_state_not_applied report=" + reportId + " status=" + write.Status + " code=" + write.Code);
+                return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Unavailable, Code = write.Code };
+            }
+            JObject appliedReport = write.Report ?? report;
+            string appliedReportError;
+            bool validAppliedReport = WeeklyReportService.TryValidateV2Report(appliedReport, out appliedReportError);
+            if (!StringComparer.Ordinal.Equals((string)appliedReport["reportId"], reportId) || !validAppliedReport)
+            {
+                AwakeLog.Write("awake_weekly_report_snapshot_invalid report=" + reportId + " error=" + appliedReportError);
+                return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Unavailable, Code = "awake.weekly_report.invalid_snapshot" };
+            }
+            return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Applied, Report = (JObject)appliedReport.DeepClone() };
         }
         catch (OperationCanceledException)
         {
@@ -296,12 +440,60 @@ internal static class WorldEventServices
         }
         catch (Exception ex)
         {
-            AwakeLog.Write("awake_knowledge_ready_error error=" + ex.Message);
+            AwakeLog.Write("awake_weekly_report_ready_error error=" + ex.Message);
+            return new FormalWeeklyReportResult { Status = FormalWeeklyReportResult.Unavailable, Code = "awake.weekly_report.exception" };
         }
         finally
         {
-            KnowledgeGate.Release();
+            FormalReportGate.Release();
         }
+    }
+
+    internal static async Task EnsureKnowledgeReadyAsync(int currentDay, CancellationToken cancellationToken)
+    {
+        if (currentDay <= 0) return;
+        int campaignGeneration = WorldEventLedger.CampaignGeneration;
+        WorldStateStore expectedStore = CaptureWorldStateStore(campaignGeneration);
+        if (expectedStore == null || !CanProject(campaignGeneration, expectedStore)) return;
+        JObject formal = await ReadLatestAppliedWeeklyReportAsync(currentDay, expectedStore, cancellationToken).ConfigureAwait(false);
+        if (formal == null || !CanProject(campaignGeneration, expectedStore)) return;
+        WorldEventLedgerSnapshot snapshot = WorldEventLedger.CaptureSnapshot();
+        WorldFactQueryResult facts = await QueryFactsAsync(new WorldFactQueryRequest
+        {
+            Policy = WorldFactSelectionPolicy.WorldKnowledge,
+            CurrentDay = currentDay,
+            MaximumResults = 100
+        }, cancellationToken).ConfigureAwait(false);
+        if (facts.Status != WorldFactQueryStatus.Success && facts.Status != WorldFactQueryStatus.Empty)
+        {
+            AwakeLog.Write("awake_knowledge_fact_query_skipped generation=" + campaignGeneration
+                + " status=" + facts.Status + " error=" + facts.ErrorCode);
+            return;
+        }
+        if (!TryProjectFactSourcesIfReady(campaignGeneration, expectedStore, snapshot, facts, new[] { formal }))
+            AwakeLog.Write("awake_knowledge_projection_skipped generation=" + campaignGeneration);
+    }
+
+    private static async Task<JObject> ReadLatestAppliedWeeklyReportAsync(
+        int currentDay,
+        WorldStateStore expectedStore,
+        CancellationToken cancellationToken)
+    {
+        List<WeeklyReportApplicationState> states = await expectedStore.GetWeeklyReportStatesAsync(cancellationToken).ConfigureAwait(false);
+        if (states == null) return null;
+        List<int> completed = WeeklyReportService.CompletedWindowEnds(currentDay);
+        if (completed.Count == 0) return null;
+        int endDay = completed[completed.Count - 1];
+        return states
+            .Where(state => state != null
+                && StringComparer.Ordinal.Equals(state.Status, "applied")
+                && !state.Corrupt
+                && state.WindowEndDay == endDay
+                && state.Report != null
+                && WorldEventContract.TryValidateWeeklyReport(state.Report, out _))
+            .OrderByDescending(state => StringComparer.Ordinal.Equals(state.SchemaVersion, WeeklyReportService.V2SchemaVersion))
+            .Select(state => (JObject)state.Report.DeepClone())
+            .FirstOrDefault();
     }
 
     private static bool IsCurrentCampaign(int campaignGeneration, WorldStateStore store)
@@ -325,6 +517,120 @@ internal static class WorldEventServices
         return store != null
             && IsCurrentCampaign(campaignGeneration, store)
             && AwakeRuntime.IsNativeKnowledgeReady();
+    }
+}
+
+internal static class WorldEventContracts
+{
+    private sealed class RuntimeFactContextReader : IWorldFactContextReader
+    {
+        public Task<WorldFactQueryResult> QueryAsync(
+            WorldFactQueryRequest request,
+            CancellationToken cancellationToken)
+        {
+            return QueryFactsFromRuntimeAsync(request, cancellationToken);
+        }
+    }
+
+    private static IWorldFactContextReader _factContextReader = new RuntimeFactContextReader();
+
+    internal static void SetFactContextReaderForTesting(IWorldFactContextReader reader)
+    {
+        _factContextReader = reader ?? new RuntimeFactContextReader();
+    }
+
+    internal static void ResetForCampaign()
+    {
+        _factContextReader = new RuntimeFactContextReader();
+    }
+
+    /// <summary>Single runtime entry point for all structured-fact consumers.</summary>
+    internal static Task<WorldFactQueryResult> QueryFactsAsync(
+        WorldFactQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        IWorldFactContextReader reader = _factContextReader ?? new RuntimeFactContextReader();
+        return reader.QueryAsync(request, cancellationToken);
+    }
+
+    internal static async Task<WorldFactQueryResult> QueryEventTriggerCandidatesAsync(
+        int currentDay,
+        CancellationToken cancellationToken)
+    {
+        WorldFactQueryResult result;
+        try
+        {
+            result = await QueryFactsAsync(new WorldFactQueryRequest
+            {
+                Policy = WorldFactSelectionPolicy.EventTriggerCandidate,
+                CurrentDay = currentDay,
+                MaximumResults = 0,
+                AllowLegacyFallback = false
+            }, cancellationToken).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            result = new WorldFactQueryResult(
+                WorldFactQueryStatus.Cancelled,
+                WorldFactSelectionPolicy.EventTriggerCandidate,
+                errorCode: "awake.cancelled");
+        }
+        catch (Exception ex)
+        {
+            AwakeLog.Write("awake_world_fact_event_query_error consumer=event policy=EventTriggerCandidate error_code=awake.world_fact.query_exception message=" + ex.Message);
+            result = new WorldFactQueryResult(
+                WorldFactQueryStatus.Unavailable,
+                WorldFactSelectionPolicy.EventTriggerCandidate,
+                errorCode: "awake.world_fact.query_exception");
+        }
+
+        if (result == null)
+        {
+            result = new WorldFactQueryResult(
+                WorldFactQueryStatus.Unavailable,
+                WorldFactSelectionPolicy.EventTriggerCandidate,
+                errorCode: "awake.world_fact.query_result_null");
+        }
+        else if (result.LegacyFallbackState == LegacyFallbackState.Used || result.UsedLegacyFallback)
+        {
+            result = new WorldFactQueryResult(
+                WorldFactQueryStatus.Unavailable,
+                WorldFactSelectionPolicy.EventTriggerCandidate,
+                errorCode: "awake.world_fact.event.legacy_fallback",
+                usedLegacyFallback: true,
+                legacyFallbackState: LegacyFallbackState.Used,
+                windowStartDay: result.WindowStartDay,
+                windowEndDay: result.WindowEndDay);
+        }
+        AwakeLog.Write("awake_world_fact_event_query consumer=event"
+            + " policy=EventTriggerCandidate"
+            + " status=" + result.Status
+            + " journal_revision=" + (result.JournalRevision.HasValue ? result.JournalRevision.Value.ToString(CultureInfo.InvariantCulture) : "missing")
+            + " fact_count=" + result.Facts.Count.ToString(CultureInfo.InvariantCulture)
+            + " source_fact_count=" + result.SourceFactIds.Count.ToString(CultureInfo.InvariantCulture)
+            + " used_legacy_fallback=" + result.UsedLegacyFallback
+            + " legacy_fallback_state=" + result.LegacyFallbackState
+            + " error_code=" + (result.ErrorCode ?? string.Empty)
+            + " correlation_id=" + Guid.NewGuid().ToString("N"));
+        return result;
+    }
+
+    private static Task<WorldFactQueryResult> QueryFactsFromRuntimeAsync(
+        WorldFactQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        int campaignGeneration = WorldEventLedger.CampaignGeneration;
+        WorldStateStore store = WorldEventServices.CaptureWorldStateStore(campaignGeneration);
+        IReadOnlyList<WorldEventRecord> legacySnapshot = WorldEventLedger.SnapshotAll();
+        var query = new WorldFactQuery(async token =>
+        {
+            if (store == null)
+                return new WorldFactJournalReadResult(
+                    WorldFactJournalReadStatus.Unavailable,
+                    errorCode: "awake.world_fact.storage_unavailable");
+            return await store.GetWorldFactJournalAsync(null, token).ConfigureAwait(false);
+        }, () => legacySnapshot);
+        return WorldEventServices.QueryFactsForCampaignAsync(query, request, campaignGeneration, store, cancellationToken);
     }
 }
 
@@ -598,6 +904,8 @@ internal static class WorldEventContract
     {
         error = string.Empty;
         if (report == null) return Fail("weekly report is null", out error);
+        if (StringComparer.Ordinal.Equals((string)report["schemaVersion"], WeeklyReportService.V2SchemaVersion))
+            return WeeklyReportService.TryValidateV2Report(report, out error);
         if (!HasOnlyProperties(report, "schemaVersion", "reportId", "period", "generatedBy", "sourceEventIds", "sections", "visibility", "extensions"))
             return Fail("weekly report contains unknown properties", out error);
         if (!StringComparer.Ordinal.Equals((string)report["schemaVersion"], "awake.worldbook.weekly-report.v1"))

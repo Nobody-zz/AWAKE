@@ -59,6 +59,8 @@ public sealed class SubModule : MBSubModuleBase
                 AwakeLog.Write("awake_encounter_behavior_added");
                 campaignStarter.AddBehavior(new AwakeEventBehavior());
                 AwakeLog.Write("awake_event_behavior_added");
+                campaignStarter.AddBehavior(new AwakeWorldFactCollectorBehavior());
+                AwakeLog.Write("awake_world_fact_collector_behavior_added");
             }
             catch (Exception ex)
             {
@@ -107,6 +109,7 @@ public sealed class SubModule : MBSubModuleBase
         WorldEventInboxOverlay.OnApplicationTick();
         WeeklyReportBrowserOverlay.OnApplicationTick();
         DeveloperCheckOverlay.OnApplicationTick();
+        AwakePortraitProbeOverlay.OnApplicationTick();
         SceneDialogueStatusOverlay.OnApplicationTick();
         NpcDialogueOverlay.OnApplicationTick();
         DrainEventDialogueQueue();

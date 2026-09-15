@@ -701,7 +701,7 @@ internal static class RedtestR1Behavioral
         DirectoryInfo current = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
         while (current != null)
         {
-            string awakeRoot = Path.Combine(current.FullName, "_houkai_merge", "AWAKE");
+			string awakeRoot = Path.Combine(current.FullName, "AWAKE");
             if (Directory.Exists(awakeRoot))
             {
                 return awakeRoot;

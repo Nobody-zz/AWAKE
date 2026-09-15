@@ -18,9 +18,6 @@
     <Compile Include="src\**\*.cs" />
     <Reference Include="netstandard" HintPath="C:\Windows\Microsoft.Net\assembly\GAC_MSIL\netstandard\v4.0_2.0.0.0__cc7b13ffcd2ddd51\netstandard.dll" Private="false" />
     <Reference Include="System.ValueTuple" HintPath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Facades\System.ValueTuple.dll" Private="false" />
-    <Reference Include="MarcusAwakeTransport">
-      <HintPath>..\MarcusAwakeTransport\_build_out\Release\MarcusAwakeTransport.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
+    <ProjectReference Include="..\MarcusAwakeTransport\MarcusAwakeTransport.csproj" />
   </ItemGroup>
 </Project>

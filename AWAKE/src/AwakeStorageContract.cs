@@ -17,6 +17,7 @@ internal static class AwakeStorageContract
     internal const string AuditSchema = AwakeTranscriptConstants.AuditSchema;
     internal const string OnboardingSchema = "awake.onboarding.v1";
     internal const string DialogueQueueSchema = "awake.dialogue.queue.v1";
+    internal const string LettersSchema = "awake.letters.v1";
     internal const string InteractionSchema = "awake.interactions.v1";
     internal const string InteractionRecoveryIndexSchema = "awake.interactions.recovery-index.v1";
     internal const string PersonaContinuitySchema = "awake.persona.continuity.v1";
@@ -24,6 +25,14 @@ internal static class AwakeStorageContract
     internal const string PersonaRecoverySchema = "awake.persona.recovery.v1";
     internal const string WorldbookOverlaySchema = "awake.worldbook.overlay.v1";
 
+    /// <summary>
+    /// 是否为已知存储 schema。
+    /// <para>
+    /// 不变式：<see cref="ExpectedSchema"/> 对任何 <see cref="WorldStateKind"/> 的返回值，
+    /// 在此必须判定为 true。两者一旦漂移，该命名空间会在运行期静默 schema 失配。
+    /// 回归断言见 <c>AWAKE.Tests</c>（b9 infra smoke）与 production smoke。
+    /// </para>
+    /// </summary>
     internal static bool IsKnownSchema(string schema)
     {
         return StringComparer.Ordinal.Equals(schema, MemorySchema)
@@ -42,7 +51,8 @@ internal static class AwakeStorageContract
             || StringComparer.Ordinal.Equals(schema, InteractionRecoveryIndexSchema)
             || StringComparer.Ordinal.Equals(schema, PersonaContinuitySchema)
             || StringComparer.Ordinal.Equals(schema, PersonaOverrideSchema)
-            || StringComparer.Ordinal.Equals(schema, PersonaRecoverySchema);
+            || StringComparer.Ordinal.Equals(schema, PersonaRecoverySchema)
+            || StringComparer.Ordinal.Equals(schema, LettersSchema);
     }
 
     internal static string ExpectedSchema(WorldStateKind kind)
@@ -81,6 +91,8 @@ internal static class AwakeStorageContract
                 return PersonaOverrideSchema;
             case WorldStateKind.PersonaRecovery:
                 return PersonaRecoverySchema;
+            case WorldStateKind.Letters:
+                return LettersSchema;
             default:
                 return string.Empty;
         }

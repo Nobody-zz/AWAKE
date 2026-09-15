@@ -94,6 +94,22 @@ internal static class NpcDialoguePromptPipeline
         return TruncateUtf8(text, budgetBytes);
     }
 
+    /// <summary>
+    /// 开发者诊断只保留最近一次直接对话的上下文来源是否到位；不保存人物正文、记忆或玩家输入。
+    /// </summary>
+    internal static IReadOnlyList<KeyValuePair<string, string>> BuildContextDiagnosticRows()
+    {
+        return NpcDialogueContextDiagnostics.Snapshot();
+    }
+
+    internal static void RecordContextDiagnostics(
+        string heroId,
+        bool sceneShout,
+        IReadOnlyDictionary<string, string> variables)
+    {
+        NpcDialogueContextDiagnostics.Record(heroId, sceneShout, variables);
+    }
+
     private static string BuildDirect(string template, Dictionary<string, string> variables)
     {
         return RenderTemplate(template, variables);
@@ -147,5 +163,56 @@ internal static class NpcDialoguePromptPipeline
             bytes += next;
         }
         return builder.ToString();
+    }
+}
+
+internal static class NpcDialogueContextDiagnostics
+{
+    private static readonly object Gate = new object();
+    private static List<KeyValuePair<string, string>> _latest = new List<KeyValuePair<string, string>>();
+
+    internal static void Record(string heroId, bool sceneShout, IReadOnlyDictionary<string, string> variables)
+    {
+        List<KeyValuePair<string, string>> rows = new List<KeyValuePair<string, string>>
+        {
+            Row("dialogue_context.target", string.IsNullOrWhiteSpace(heroId) ? "unknown" : heroId),
+            Row("dialogue_context.kind", sceneShout ? "scene_shout" : "npc_dialogue"),
+            Row("dialogue_context.persona", Present(variables, "persona_dsl")),
+            Row("dialogue_context.knowledge", Present(variables, "retrieved_knowledge")),
+            Row("dialogue_context.memory", Present(variables, "npc_memory")),
+            Row("dialogue_context.state", Present(variables, "npc_state")),
+            Row("dialogue_context.commitments", Present(variables, "npc_commitments")),
+            Row("dialogue_context.player_known", Present(variables, "player_known")),
+            Row("dialogue_context.scene", Present(variables, "scene")),
+            Row("dialogue_context.mode", Value(variables, "dialogue_action_mode"))
+        };
+        lock (Gate)
+        {
+            _latest = rows;
+        }
+    }
+
+    internal static IReadOnlyList<KeyValuePair<string, string>> Snapshot()
+    {
+        lock (Gate)
+        {
+            return new List<KeyValuePair<string, string>>(_latest);
+        }
+    }
+
+    private static KeyValuePair<string, string> Row(string key, string value)
+    {
+        return new KeyValuePair<string, string>(key, value ?? string.Empty);
+    }
+
+    private static string Present(IReadOnlyDictionary<string, string> variables, string key)
+    {
+        return string.IsNullOrWhiteSpace(Value(variables, key)) ? "absent" : "present";
+    }
+
+    private static string Value(IReadOnlyDictionary<string, string> variables, string key)
+    {
+        string value;
+        return variables != null && variables.TryGetValue(key, out value) ? value ?? string.Empty : string.Empty;
     }
 }

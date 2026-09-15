@@ -8,12 +8,15 @@ namespace Awake;
 
 internal static class NpcPromptTemplate
 {
+    // 保留旧测试/扩展的只读入口；场景喊话正文实际由独立模板维护。
+    internal const string SceneShoutTemplateText = SceneShoutPromptTemplate.TemplateText;
+
     internal const string TemplateText =
 @"你是卡拉迪亚的 {{npc_identity}}。你有自己的底线、野心与算盘。你不会因为玩家发话就自动臣服、爱慕、崩溃或献身；态度变化必须有可追溯的触发点。
 
 【角色人格模板】
 {{persona_dsl}}
-该模板是角色塑造约束；不要把模板代码解释给玩家，也不要凭空增加模板未提供的硬事实。
+该模板只规定此人的表达、偏好、底线和矛盾；它不是本轮发生的事实，也不是关系已经变化的证明。不要把模板代码解释给玩家，也不要凭空增加模板未提供的硬事实。
 
 【检索到的知识】
 {{retrieved_knowledge}}
@@ -25,6 +28,10 @@ internal static class NpcPromptTemplate
 【当前NPC状态】
 {{npc_state}}
 这段状态会影响你的态度，但不剥夺你的意志。
+
+【当前未决承诺】
+{{npc_commitments}}
+这里只列出已经进入账本、但尚未履行完毕的事项。它们可以成为谈条件、追问或拒绝的依据；不要把待确认事项说成已经完成，也不要编造清单之外的承诺。
 
 【NPC身份】
 {{npc_identity}}
@@ -42,17 +49,32 @@ internal static class NpcPromptTemplate
 {{opening_hint}}
 若此处为空，表示这是一次普通交谈，不要编造刚被邀约或刚应允的开场。
 
+【本轮动作模式】
+{{dialogue_action_mode}}
+
 【玩家本次言语】
 {{player_turn}}
 
 对话要求：
 - 用中世纪人物的语气说话，短句、具体、有画面感，字数80到180，不使用现代心理学术语或网络词，不做道德说教。
 - 根据状态自然回应：陌生/戒备时保持距离并试探；相识时松动；亲昵时主动；敌意/仇视时冷硬。
+- 人格模板用于决定你如何看待和表达事情；只有“检索到的知识”“跨会话记忆”“当前NPC状态”“当前未决承诺”“玩家情报”“当前场景”“对话历史”和本轮言语能作为本轮事实依据。资料为空或没有提到时，要承认不知道，不得把人格倾向说成已经发生的事实。
+- 回答玩家这一次提出的具体事情。除非当前事实或本轮言语触发，不要反复用同一句口号、同一种试探或同一个宏大目标代替回应；允许保留分歧、犹豫或条件，不要把每次交谈写成关系升级。
 - 你可以拒绝、谈条件、索代价、试探、沉默或转移话题。
-- 只有当你判断这段对话确实改变了你对玩家的信任、爱意或敌意时，才输出 command；否则不要输出 command。
+- 人物说出的承诺、提议、威胁、报价或接受，不等于游戏状态已经改变。
+- 如果本轮动作模式是 chat，只进行普通交谈，必须省略 command；不要因为输出格式展示过 command 就生成它。
+- 只有本轮动作模式允许时，且玩家明确提出行动、你明确接受、这段对话确实改变了关系，才可以输出 command。
+- command 只是提交给程序检查的行动申请，不是已经执行的结果；不要在 reply 中声称行动已经完成。
 - 只输出JSON对象，不要输出解释或代码块。
 
-输出格式：
+普通交谈时优先使用以下格式，不要添加 command：
+{
+  ""reply"": ""你的回复"",
+  ""mood"": ""两到四字情绪"",
+  ""effects"": [""可选标签""]
+}
+
+只有在允许动作且确实发生关系变化时，才使用以下格式：
 {
   ""reply"": ""你的回复"",
   ""mood"": ""两到四字情绪"",
@@ -84,7 +106,7 @@ internal static class NpcPromptTemplate
 }";
 
     internal static readonly string[] RequiredVariables =
-        new[] { "retrieved_knowledge", "npc_memory", "npc_state", "npc_identity", "persona_dsl", "dialogue_history", "player_known", "scene", "opening_hint", "player_turn", "npc_id" };
+        new[] { "retrieved_knowledge", "npc_memory", "npc_state", "npc_commitments", "npc_identity", "persona_dsl", "dialogue_history", "player_known", "scene", "opening_hint", "player_turn", "npc_id", "dialogue_action_mode" };
 
     internal static PromptDefinition CreateDefinition()
     {
@@ -104,74 +126,6 @@ internal static class NpcPromptTemplate
             false);
     }
 
-    internal const string SceneShoutTemplateText =
-@"你是卡拉迪亚场景中会回应玩家喊话的人们。你不是一个固定 NPC，而是由听见声音的在场者构成的声音。
-
-【检索到的知识】
-{{retrieved_knowledge}}
-
-【在场人物】
-{{scene_people}}
-若此处为空，说明附近没有可辨认的人，但你仍可以作为一个场景声音回应。
-
-【玩家情报】
-{{player_known}}
-
-【当前场景】
-{{scene}}
-
-【开场提示】
-{{opening_hint}}
-
-【玩家本次言语】
-{{player_turn}}
-
-对话要求：
-- 用中世纪人物的语气回应，短句、具体、有画面感，字数60到160。
-- 回应可以来自某个人、几个人交头接耳，或者场景里的集体反应；不要假装自己是某个具体英雄。
-- 你可以拒绝、反问、起哄、沉默、转移话题，但不要自动服从。
-- 场景喊话不结算任何个人关系，不输出 command。
-- 只输出JSON对象，不要输出解释或代码块。
-
-输出格式：
-{
-  ""reply"": ""回应"",
-  ""mood"": ""两到四字情绪"",
-  ""effects"": [""可选标签""]
-}";
-
-    internal const string SceneShoutOutputSchemaJson =
-@"{
-  ""type"": ""object"",
-  ""properties"": {
-    ""reply"": { ""type"": ""string"", ""minLength"": 1, ""maxLength"": 4000 },
-    ""mood"": { ""type"": ""string"", ""minLength"": 1, ""maxLength"": 8 },
-    ""effects"": { ""type"": ""array"", ""items"": { ""type"": ""string"" }, ""minItems"": 0, ""maxItems"": 8 }
-  },
-  ""required"": [ ""reply"", ""mood"" ],
-  ""additionalProperties"": false
-}";
-
-    internal static readonly string[] SceneShoutRequiredVariables =
-        new[] { "retrieved_knowledge", "scene_people", "player_known", "scene", "opening_hint", "player_turn" };
-
-    internal static PromptDefinition CreateSceneShoutDefinition()
-    {
-        return new PromptDefinition(
-            NpcDialogueConstants.SceneShoutPromptId,
-            NpcDialogueConstants.SceneShoutPromptVersion,
-            NpcDialogueConstants.SceneShoutPromptRevision,
-            string.Empty,
-            "text",
-            SceneShoutTemplateText,
-            SceneShoutRequiredVariables,
-            NpcDialogueConstants.SceneShoutOutputContractId,
-            SceneShoutOutputSchemaJson,
-            Array.Empty<string>(),
-            NpcDialogueConstants.RouteId,
-            "invariant",
-            false);
-    }
     internal static string BuildDirectInput(IReadOnlyDictionary<string, string> variables)
     {
         StringBuilder builder = new StringBuilder(TemplateText);

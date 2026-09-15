@@ -33,6 +33,14 @@ internal static class NpcDialogueLauncher
 
     internal static NpcDialogueLaunchResult TryOpenDialogue(AwakeNpcTarget target, string entrySource)
     {
+        return TryOpenDialogue(target, entrySource, NpcDialogueActionMode.Chat);
+    }
+
+    internal static NpcDialogueLaunchResult TryOpenDialogue(
+        AwakeNpcTarget target,
+        string entrySource,
+        NpcDialogueActionMode actionMode)
+    {
         AwakeDialogueSessionState session = null;
         try
         {
@@ -61,7 +69,9 @@ internal static class NpcDialogueLauncher
                 return NpcDialogueLaunchResult.None;
             }
 
-            NpcDialogueService service = new NpcDialogueService(host, target, CurrentSceneKeywords(), sourceKey);
+            NpcDialogueService service = actionMode == NpcDialogueActionMode.Negotiation
+                ? NpcDialogueService.CreateNegotiation(host, target, CurrentSceneKeywords(), sourceKey)
+                : new NpcDialogueService(host, target, CurrentSceneKeywords(), sourceKey);
             service.Initialize();
             bool opened = NpcDialogueOverlay.Open(service, sourceKey, target.StableId);
             if (opened)

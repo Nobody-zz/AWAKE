@@ -233,6 +233,31 @@ internal sealed class AwakeExtension : IFrameworkExtension
                     {
                         AwakeRuntime.ResetSessionStateForCampaign();
                     }
+                    int campaignGeneration = AwakeRuntime.SessionGeneration;
+                    IMarcusAiFrameworkHost storageHost = AwakeRuntime.ResolveHost();
+                    if (storageHost == null) FrameworkHostLocator.TryGetHost(out storageHost);
+                    Task<bool> storageReadiness = AwakeRuntime.EnsureWorldStateStorageReadyAsync(
+                        storageHost,
+                        AwakeRuntime.SessionCancellationToken);
+                    _ = storageReadiness.ContinueWith(
+                        task =>
+                        {
+                            if (task.Status == TaskStatus.RanToCompletion
+                                && task.Result
+                                && AwakeRuntime.IsCurrentSessionGeneration(campaignGeneration))
+                            {
+                                AwakeBackgroundTask.Run(
+                                    () => RestoreCampaignStateAsync(campaignGeneration),
+                                    "awake_campaign_state_restore");
+                            }
+                            else if (task.Status == TaskStatus.RanToCompletion)
+                            {
+                                AwakeLog.Write("awake_campaign_storage_not_ready generation=" + campaignGeneration);
+                            }
+                        },
+                        CancellationToken.None,
+                        TaskContinuationOptions.ExecuteSynchronously,
+                        TaskScheduler.Default);
                     Task<NativeReadinessResult> nativeReadiness = AwakeRuntime.EnsureNativeReadinessAsync(
                         session?.SessionId,
                         CancellationToken.None);
@@ -259,8 +284,8 @@ internal sealed class AwakeExtension : IFrameworkExtension
                                 && task.Result.SessionGeneration == AwakeRuntime.SessionGeneration)
                             {
                                 AwakeBackgroundTask.Run(
-                                    () => RestoreCampaignStateAsync(task.Result.SessionGeneration),
-                                    "awake_campaign_state_restore");
+                                    () => AwakeRuntime.EnsureKnowledgeReadyIfNativeReadyAsync(AwakeRuntime.SessionCancellationToken),
+                                    "awake_knowledge_projection");
                             }
                         },
                         CancellationToken.None,
@@ -337,23 +362,21 @@ internal sealed class AwakeExtension : IFrameworkExtension
     {
         CancellationToken cancellationToken = AwakeRuntime.SessionCancellationToken;
         if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
-        if (!FrameworkHostLocator.TryGetHost(out IMarcusAiFrameworkHost host))
-        {
-            AwakeLog.Write("awake_campaign_state_restore_skipped reason=host_missing");
-            return;
-        }
-        bool ready = await AwakeRuntime.EnsureWorldStateReadyAsync(host, cancellationToken).ConfigureAwait(false);
         WorldStateStore store = AwakeRuntime.WorldStateStore;
-        if (!ready || store == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, store))
+        if (store == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, store))
         {
             AwakeLog.Write("awake_campaign_state_restore_skipped reason=storage_not_ready");
             return;
         }
+        FormalWeeklyReportResult formal = await WorldEventServices.EnsureFormalReportsReadyAsync(
+            AwakeRuntime.CurrentGameDay(),
+            cancellationToken).ConfigureAwait(false);
+        if (!AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
+        AwakeLog.Write("awake_campaign_formal_report status=" + formal.Status + " code=" + formal.Code);
         await AwakeOnboardingService.LoadFromStoreAsync(sessionGeneration, store, cancellationToken).ConfigureAwait(false);
         if (!AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
         await EventDialogueQueue.LoadFromStoreAsync(cancellationToken).ConfigureAwait(false);
         if (!AwakeRuntime.IsCurrentSession(sessionGeneration, store)) return;
-        await AwakeRuntime.EnsureKnowledgeReadyIfNativeReadyAsync(cancellationToken).ConfigureAwait(false);
         AwakeLog.Write("awake_campaign_state_restore_completed generation=" + sessionGeneration);
     }
 

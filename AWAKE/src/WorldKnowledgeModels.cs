@@ -36,6 +36,7 @@ internal sealed class WorldKnowledgeEntry
     internal string SourceId { get; set; } = string.Empty;
     internal string ReportId { get; set; } = string.Empty;
     internal List<string> SourceEventIds { get; } = new List<string>();
+    internal List<string> SourceFactIds { get; } = new List<string>();
     internal List<string> Keywords { get; } = new List<string>();
     internal List<WorldKnowledgeExpression> Expressions { get; } = new List<WorldKnowledgeExpression>();
 }

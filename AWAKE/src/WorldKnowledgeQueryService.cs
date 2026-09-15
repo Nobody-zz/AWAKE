@@ -212,7 +212,35 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
             if (text.IndexOf(pair.Key, StringComparison.OrdinalIgnoreCase) < 0 && pair.Key.IndexOf(text, StringComparison.OrdinalIgnoreCase) < 0) continue;
             foreach (string id in pair.Value) ids.Add(id);
         }
-        return ids.Select(id => _snapshot.Entries.TryGetValue(id, out WorldKnowledgeEntry entry) ? entry : null).Where(x => x != null).OrderBy(x => x.Id, StringComparer.Ordinal).ToList();
+        return ids.Select(id => _snapshot.Entries.TryGetValue(id, out WorldKnowledgeEntry entry) ? entry : null)
+                  .Where(x => x != null)
+                  .Select(x => (Entry: x, Quality: MatchQuality(x, text)))
+                  .OrderBy(x => x.Quality.Rank)
+                  .ThenByDescending(x => x.Quality.Length)
+                  .ThenBy(x => x.Entry.Id, StringComparer.Ordinal)
+                  .Select(x => x.Entry)
+                  .ToList();
+    }
+
+    // 命中相关度：0=标题即所问，1=别名/关键词即所问，2=标题互为子串，3=仅关键词子串。
+    // 同级比「匹配串长度」降序（越长越具体），再按 Id 稳定排序。
+    // 起因：同名聚落在本作是常态（67 座城堡里 66 座有同名下属村），旧的 Id 字母序会让
+    //       `geography.castle-*`（c）恒排在 `geography.village-*`（v）之前 —— 问村名却先答堡档。
+    private static (int Rank, int Length) MatchQuality(WorldKnowledgeEntry entry, string text)
+    {
+        string title = entry.Title ?? string.Empty;
+        if (title.Length > 0 && title.Equals(text, StringComparison.OrdinalIgnoreCase)) return (0, title.Length);
+        int exactKeyword = entry.Keywords
+            .Where(k => !string.IsNullOrEmpty(k) && k.Equals(text, StringComparison.OrdinalIgnoreCase))
+            .Select(k => k.Length).DefaultIfEmpty(0).Max();
+        if (exactKeyword > 0) return (1, exactKeyword);
+        if (title.Length > 0 && (title.IndexOf(text, StringComparison.OrdinalIgnoreCase) >= 0
+            || text.IndexOf(title, StringComparison.OrdinalIgnoreCase) >= 0)) return (2, title.Length);
+        int matchedKeyword = entry.Keywords
+            .Where(k => !string.IsNullOrEmpty(k) && (text.IndexOf(k, StringComparison.OrdinalIgnoreCase) >= 0
+                || k.IndexOf(text, StringComparison.OrdinalIgnoreCase) >= 0))
+            .Select(k => k.Length).DefaultIfEmpty(0).Max();
+        return (3, matchedKeyword);
     }
 
     private bool HasMatchingDeny(WorldKnowledgeEntry entry, WorldbookQuery query, WorldKnowledgeIdentityEvaluation evaluation)

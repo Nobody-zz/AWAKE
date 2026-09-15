@@ -34,4 +34,14 @@ internal static class AwakeMcmActions
     {
         AwakeProviderConfiguration.RefreshRuntimeStatus();
     }
+
+    internal static void ConfigureImageApiKey()
+    {
+        AwakeImageConfiguration.PromptForApiKey();
+    }
+
+    internal static void TestImageGeneration()
+    {
+        AwakeImageProbe.Run();
+    }
 }

@@ -23,6 +23,10 @@ internal static class AwakeDeveloperReport
         builder.AppendLine("云外发=" + (config != null && config.EnableCloudExport ? "已启用" : "已禁用"));
         builder.AppendLine("云外发分类=" + CloudExportPolicy.DescribeAllowed(config));
         builder.AppendLine("快捷键冲突=" + BuildSceneKeyConflictText(config));
+        foreach (KeyValuePair<string, string> row in NpcDialoguePromptPipeline.BuildContextDiagnosticRows())
+        {
+            builder.AppendLine(row.Key + "=" + row.Value);
+        }
         if (host == null || host.Diagnostics == null)
         {
             return Truncate(builder.ToString());
@@ -47,6 +51,10 @@ internal static class AwakeDeveloperReport
         rows.Add(NewRow("cloud_export", config != null && config.EnableCloudExport ? "enabled" : "disabled"));
         rows.Add(NewRow("cloud_categories", CloudExportPolicy.DescribeAllowed(config)));
         rows.Add(NewRow("scene_key_conflicts", BuildSceneKeyConflictText(config)));
+        foreach (KeyValuePair<string, string> row in NpcDialoguePromptPipeline.BuildContextDiagnosticRows())
+        {
+            rows.Add(row);
+        }
         if (host == null || host.Diagnostics == null)
         {
             rows.Add(NewRow("health", "unavailable"));

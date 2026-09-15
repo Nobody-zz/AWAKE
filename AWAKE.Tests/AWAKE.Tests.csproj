@@ -6,14 +6,18 @@
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>10.0</LangVersion>
     <Nullable>disable</Nullable>
+    <DefineConstants>$(DefineConstants);AWAKE_TESTS</DefineConstants>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GamePath Condition="'$(GamePath)' == ''">D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord</GamePath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MarcusAwakeFramework" HintPath="$(MSBuildThisFileDirectory)..\AWAKE\framework\MarcusAwakeFramework\_build_out\Release\MarcusAwakeFramework.dll" Private="true" />
-    <Reference Include="MarcusAwakeTransport" HintPath="$(MSBuildThisFileDirectory)..\AWAKE\framework\MarcusAwakeTransport\_build_out\Release\MarcusAwakeTransport.dll" Private="true" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\AWAKE\framework\MarcusAwakeFramework\MarcusAwakeFramework.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\AWAKE\framework\MarcusAwakeTransport\MarcusAwakeTransport.csproj" />
     <Reference Include="netstandard" HintPath="C:\Windows\Microsoft.Net\assembly\GAC_MSIL\netstandard\v4.0_2.0.0.0__cc7b13ffcd2ddd51\netstandard.dll" Private="true" />
     <Reference Include="System.ValueTuple" HintPath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Facades\System.ValueTuple.dll" Private="true" />
+    <!-- 生图栈：HttpClient 发请求 + DPAPI（System.Security）保护出图密钥。 -->
+    <Reference Include="System.Net.Http" Private="true" />
+    <Reference Include="System.Security" Private="true" />
     <Reference Include="MCMv5" HintPath="$(GamePath)\Modules\Bannerlord.MBOptionScreen\bin\Win64_Shipping_Client\MCMv5.dll" Private="true" />
     <Reference Include="Newtonsoft.Json" HintPath="$(GamePath)\bin\Win64_Shipping_Client\Newtonsoft.Json.dll" Private="true" />
     <Reference Include="TaleWorlds.CampaignSystem" HintPath="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.CampaignSystem.dll" Private="true" />
@@ -43,6 +47,7 @@
     <Compile Include="..\AWAKE\src\AwakeTranscriptMigration.cs" Link="AwakeTranscriptMigration.cs" />
     <Compile Include="..\AWAKE\src\AwakeEventModels.cs" Link="AwakeEventModels.cs" />
     <Compile Include="..\AWAKE\src\AwakeEventEngineCore.cs" Link="AwakeEventEngineCore.cs" />
+    <Compile Include="..\AWAKE\src\AwakeEventCandidateEvaluator.cs" Link="AwakeEventCandidateEvaluator.cs" />
     <Compile Include="..\AWAKE\src\AwakeEventEffectRules.cs" Link="AwakeEventEffectRules.cs" />
     <Compile Include="..\AWAKE\src\AwakeUiDispatcher.cs" Link="AwakeUiDispatcher.cs" />
     <Compile Include="..\AWAKE\src\AwakeLocalization.cs" Link="AwakeLocalization.cs" />
@@ -67,7 +72,9 @@
     <Compile Include="..\AWAKE\src\NpcDialogueConstants.cs" Link="NpcDialogueConstants.cs" />
     <Compile Include="..\AWAKE\src\NpcProactiveModels.cs" Link="NpcProactiveModels.cs" />
     <Compile Include="..\AWAKE\src\NpcProactiveService.cs" Link="NpcProactiveService.cs" />
-    <Compile Include="..\AWAKE\src\NpcPromptTemplate.cs" Link="NpcPromptTemplate.cs" />
+    <Compile Include="..\AWAKE\src\Prompts\NpcPromptTemplate.cs" Link="Prompts\NpcPromptTemplate.cs" />
+    <Compile Include="..\AWAKE\src\Prompts\SceneShoutPromptTemplate.cs" Link="Prompts\SceneShoutPromptTemplate.cs" />
+    <Compile Include="..\AWAKE\src\Prompts\NpcMemorySummaryPrompt.cs" Link="Prompts\NpcMemorySummaryPrompt.cs" />
     <Compile Include="..\AWAKE\src\NpcDialogueOutput.cs" Link="NpcDialogueOutput.cs" />
     <Compile Include="..\AWAKE\src\NpcDialogueModels.cs" Link="NpcDialogueModels.cs" />
     <Compile Include="..\AWAKE\src\NpcDialogueReplyNormalizer.cs" Link="NpcDialogueReplyNormalizer.cs" />
@@ -79,10 +86,21 @@
     <Compile Include="..\AWAKE\src\AwakeMcmActions.cs" Link="AwakeMcmActions.cs" />
     <Compile Include="..\AWAKE\src\AwakePresetCatalog.cs" Link="AwakePresetCatalog.cs" />
     <Compile Include="..\AWAKE\src\AwakeMessengerHistory.cs" Link="AwakeMessengerHistory.cs" />
-
-    <Compile Include="..\AWAKE\src\AwakeLetterService.cs" Link="AwakeLetterService.cs" />
+    <!-- AwakeLetterService.cs 不在此列：它经 AwakeMessengerService → NpcDialogueLauncher 触及
+         Gauntlet UI overlay，本工程不引用 TaleWorlds.MountAndBlade。故只收零依赖的账本与校验器。 -->
+    <Compile Include="..\AWAKE\src\AwakeLetterLedger.cs" Link="AwakeLetterLedger.cs" />
+    <Compile Include="..\AWAKE\src\AwakeLetterRequestValidation.cs" Link="AwakeLetterRequestValidation.cs" />
     <Compile Include="..\AWAKE\src\AwakePromiseStateMachine.cs" Link="AwakePromiseStateMachine.cs" />
     <Compile Include="..\AWAKE\src\AwakeBackgroundTask.cs" Link="AwakeBackgroundTask.cs" />
+    <!-- 生图栈：AwakeConfig / AwakeMcmActions 已引用它们，缺一个就会在第二步炸 CS0246。
+         全部只依赖 TaleWorlds.Library + Newtonsoft + MCM，不需要 Gauntlet / MountAndBlade。 -->
+    <Compile Include="..\AWAKE\src\AwakePortraitCache.cs" Link="AwakePortraitCache.cs" />
+    <Compile Include="..\AWAKE\src\AwakeImageEndpoint.cs" Link="AwakeImageEndpoint.cs" />
+    <Compile Include="..\AWAKE\src\AwakeImageShape.cs" Link="AwakeImageShape.cs" />
+    <Compile Include="..\AWAKE\src\AwakeImageSecretStore.cs" Link="AwakeImageSecretStore.cs" />
+    <Compile Include="..\AWAKE\src\AwakeImageClient.cs" Link="AwakeImageClient.cs" />
+    <Compile Include="..\AWAKE\src\AwakeImageProbe.cs" Link="AwakeImageProbe.cs" />
+    <Compile Include="..\AWAKE\src\AwakeImageConfiguration.cs" Link="AwakeImageConfiguration.cs" />
     <Compile Include="..\AWAKE\src\AwakeRuleRegistry.cs" Link="AwakeRuleRegistry.cs" />
     <Compile Include="..\AWAKE\src\AwakeEventDataLoader.cs" Link="AwakeEventDataLoader.cs" />
     <Compile Include="..\AWAKE\src\NpcMemoryConsolidator.cs" Link="NpcMemoryConsolidator.cs" />
@@ -94,6 +112,9 @@
     <Compile Include="..\AWAKE\src\AwakeMarcusLinkService.cs" Link="AwakeMarcusLinkService.cs" />
     <Compile Include="..\AWAKE\src\NpcDialoguePromptPipeline.cs" Link="NpcDialoguePromptPipeline.cs" />
     <Compile Include="..\AWAKE\src\WorldEventLedger.cs" Link="WorldEventLedger.cs" />
+    <Compile Include="..\AWAKE\src\WorldFactCapture.cs" Link="WorldFactCapture.cs" />
+    <Compile Include="..\AWAKE\src\WorldFactJournal.cs" Link="WorldFactJournal.cs" />
+    <Compile Include="..\AWAKE\src\WorldFactQuery.cs" Link="WorldFactQuery.cs" />
     <Compile Include="..\AWAKE\src\WorldEventInboxFormatter.cs" Link="WorldEventInboxFormatter.cs" />
     <Compile Include="..\AWAKE\src\NarrativeReportBuilder.cs" Link="NarrativeReportBuilder.cs" />
     <Compile Include="..\AWAKE\src\AwakeRuntime.cs" Link="AwakeRuntime.cs" />
@@ -108,7 +129,10 @@
     <Compile Include="..\AWAKE\src\PersonaTagRegistry.cs" Link="PersonaTagRegistry.cs" />
     <Compile Include="..\AWAKE\src\PersonaDslGenerator.cs" Link="PersonaDslGenerator.cs" />
     <Compile Include="..\AWAKE\src\PersonaDataLoader.cs" Link="PersonaDataLoader.cs" />
+    <Compile Include="..\AWAKE\src\PersonaRoster.cs" Link="PersonaRoster.cs" />
+    <Compile Include="..\AWAKE\src\PersonaRootLocator.cs" Link="PersonaRootLocator.cs" />
     <Compile Include="..\AWAKE\src\PersonaPersistenceModels.cs" Link="PersonaPersistenceModels.cs" />
+    <Compile Include="..\AWAKE\src\PersonaPersistenceService.cs" Link="PersonaPersistenceService.cs" />
     <Compile Include="..\AWAKE\src\PersonaContinuitySync.cs" Link="PersonaContinuitySync.cs" />
     <Compile Include="..\AWAKE\src\WorldbookLoader.cs" Link="WorldbookLoader.cs" />
     <Compile Include="..\AWAKE\src\WorldbookService.cs" Link="WorldbookService.cs" />

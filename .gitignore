@@ -24,18 +24,41 @@ backups/
 AF_Source/
 AnimusForgeHoukai/
 
-# Legacy world book: superseded v1 format (runtime only accepts awake.worldbook.v2 / registry.v1).
-# The backup stays in the local workspace only.
-AWAKE/ModuleData/Worldbook/
+# Worldbook root. The legacy v1 CONTENT stays out of git: the eight old content directories
+# (rules / personality_background / unnamed_persona / voice_mapping / event_data / debt /
+# dialogue_history / compressed_memory) are dead -- the runtime rejects awake.worldbook.v1
+# (WB2-SCHEMA-UNSUPPORTED:entry) and no code under src/ reads them.
+# Two things under here DO ship, because the runtime reads them straight from the module:
+#   * persona_definitions/ -- build-time EmbeddedResource for Persona Workbench
+#     (PersonaWorkbench.Core.csproj) plus the source manifest and handoff validators.
+#     It is tag vocabulary, not world book content.
+#   * manifest.json + packages/ -- the repository-side package form (2026-09-14, see
+#     docs/worldbook-studio-plan/RUNTIME-MAPPING-CONTRACT.md). manifest.json is the registry
+#     (awake.worldbook.registry.v1); packages/<world>/ holds the compiled runtime three
+#     (manifest.json + runtime.json + index.json). src/WorldbookRuntime.cs walks up from the
+#     assembly directory and accepts ONLY registry.v1 / awake.worldbook.v2, so without these
+#     files the module ships no world book at all.
+AWAKE/ModuleData/Worldbook/*
+!AWAKE/ModuleData/Worldbook/persona_definitions/
+!AWAKE/ModuleData/Worldbook/manifest.json
+!AWAKE/ModuleData/Worldbook/packages/
 
 # Embedded framework: download caches and generated storage fixtures
 **/.nuget/
+**/.packages/
 **/.dotnet-home/
 **/fixtures/*.db
 
 # Local runtime state and published preview builds of the tooling apps
 AWAKE/tools/persona-workbench/.runtime/
 AWAKE/tools/worldbook-studio/workspace/
+
+# Local test / packaging outputs. All regenerable by their own scripts and
+# never part of the source of truth. The pre-split C: workspace let these
+# grow to 33+ GB of Worldbook Studio snapshots before the 2026-09-11 cleanup.
+AWAKE/docs/evidence/
+AWAKE/release/
+AWAKE/tools/*/artifacts/
 
 # Empty scratch file
 AWAKE/docs/_apply_patch_probe6.txt
@@ -64,3 +87,20 @@ AWAKE/docs/AwakeSplit-ContentClassification-20260815.md
 AWAKE/docs/FEATURE-BRAINSTORM-20260813.md
 AWAKE/docs/FEATURE-FEASIBILITY-RANKING-20260813.md
 AWAKE/docs/WORLDBOOK-CALRADIA-ENTRY-CATALOG-20260823.md
+
+# AI agent session state, memory and scratch. These hold the local session
+# records, long-term memory notes for the agents working this workspace, and
+# throwaway probe scripts. They are working state, not project assets, and the
+# repo has a public mirror -- so they must never be committed. Ignoring them
+# does NOT delete anything: the files stay on disk untouched.
+.zcode/
+.trae/
+.workbuddy/
+
+# Authoring scratch space. Empty placeholder tree today; the loaders and the
+# authoring tools write session/draft/compiled state into it at runtime.
+AWAKE/workspace/
+
+# Python bytecode caches left behind by the tooling scripts.
+__pycache__/
+*.py[cod]

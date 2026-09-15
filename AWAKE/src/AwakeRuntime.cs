@@ -354,6 +354,50 @@ internal static class AwakeRuntime
         }
     }
 
+    internal static Func<double> CurrentGameHoursProvider { get; set; } = ReadCampaignGameHours;
+
+    /// <summary>
+    /// 当前游戏内绝对小时数（自战役起算，含小数）。信件送达与过期以此为准。
+    /// 取不到小时粒度时确定性降级到 <c>CurrentGameDay() * 24</c>，保证离线/无战役场景仍可判定。
+    /// </summary>
+    internal static double CurrentGameHours()
+    {
+        try
+        {
+            double hours = (CurrentGameHoursProvider ?? ReadCampaignGameHours)();
+            if (!double.IsNaN(hours) && !double.IsInfinity(hours) && hours >= 0d) return hours;
+        }
+        catch
+        {
+        }
+        return CurrentGameDay() * 24d;
+    }
+
+    /// <summary>
+    /// 整点**绝对**小时：自战役起算的小时数，向下取整。**不是**"当日内 0–23 时"。
+    /// 名字显式带 Absolute 是刻意的：旧名 <c>CurrentGameHourOfDay</c> 读起来像当日小时，
+    /// 极易被拿去做 <c>% 24</c> 之类的跨日运算而静默出错；而账本全链路按绝对小时比较。
+    /// </summary>
+    internal static int CurrentGameAbsoluteHour()
+    {
+        double hours = CurrentGameHours();
+        if (double.IsNaN(hours) || double.IsInfinity(hours) || hours <= 0d) return 0;
+        return (int)Math.Floor(hours);
+    }
+
+    private static double ReadCampaignGameHours()
+    {
+        Type campaignTime = Type.GetType("TaleWorlds.CampaignSystem.CampaignTime, TaleWorlds.CampaignSystem", throwOnError: false);
+        if (campaignTime == null) return double.NaN;
+        System.Reflection.PropertyInfo now = campaignTime.GetProperty("Now", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+        if (now == null || !now.CanRead) return double.NaN;
+        object value = now.GetValue(null, null);
+        if (value == null) return double.NaN;
+        System.Reflection.PropertyInfo hours = value.GetType().GetProperty("ToHours", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+        if (hours == null || !hours.CanRead) return double.NaN;
+        return Convert.ToDouble(hours.GetValue(value, null));
+    }
+
     private static int ReadCampaignGameDay()
     {
         Type campaignTime = Type.GetType("TaleWorlds.CampaignSystem.CampaignTime, TaleWorlds.CampaignSystem", throwOnError: false);
@@ -734,6 +778,21 @@ internal static class AwakeRuntime
         }
     }
 
+    internal static Task<bool> EnsureWorldStateStorageReadyAsync(
+        IMarcusAiFrameworkHost host,
+        CancellationToken cancellationToken)
+    {
+        return EnsureWorldStateStorageReadyAsync(host, cancellationToken, null);
+    }
+
+    internal static async Task<bool> EnsureWorldStateStorageReadyAsync(
+        IMarcusAiFrameworkHost host,
+        CancellationToken cancellationToken,
+        IReadOnlyCollection<string> requiredNamespaces)
+    {
+        return await EnsureWorldStateCoreAsync(host, cancellationToken, requiredNamespaces, requestPermission: false).ConfigureAwait(false);
+    }
+
     internal static Task<bool> EnsureWorldStateReadyAsync(IMarcusAiFrameworkHost host, CancellationToken cancellationToken)
     {
         return EnsureWorldStateReadyAsync(host, cancellationToken, null);
@@ -744,6 +803,15 @@ internal static class AwakeRuntime
         CancellationToken cancellationToken,
         IReadOnlyCollection<string> requiredNamespaces)
     {
+        return await EnsureWorldStateCoreAsync(host, cancellationToken, requiredNamespaces, requestPermission: true).ConfigureAwait(false);
+    }
+
+    private static async Task<bool> EnsureWorldStateCoreAsync(
+        IMarcusAiFrameworkHost host,
+        CancellationToken cancellationToken,
+        IReadOnlyCollection<string> requiredNamespaces,
+        bool requestPermission)
+    {
         if (host == null) return false;
         if (SessionEnded)
         {
@@ -751,9 +819,13 @@ internal static class AwakeRuntime
             return false;
         }
 
-        string[] targetNamespaces = requiredNamespaces == null || requiredNamespaces.Count == 0
-            ? AiTaskConstants.StorageNamespaceIds
-            : new List<string>(requiredNamespaces).ToArray();
+        HashSet<string> targetNamespaceSet = new HashSet<string>(AiTaskConstants.StorageNamespaceIds, StringComparer.Ordinal);
+        if (requiredNamespaces != null)
+        {
+            foreach (string namespaceId in requiredNamespaces)
+                if (!string.IsNullOrWhiteSpace(namespaceId)) targetNamespaceSet.Add(namespaceId);
+        }
+        string[] targetNamespaces = targetNamespaceSet.ToArray();
         if (targetNamespaces.Length == 0) return false;
 
         await StoreTransitionGate.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -773,36 +845,28 @@ internal static class AwakeRuntime
                 AwakeLog.Write("world_state_storage_catalog_missing");
                 return false;
             }
-            PermissionGateResult gate = await new PermissionGate(host).EnsureAsync(
-                storagePermission,
-                context,
-                cancellationToken,
-                "AWAKE 需要写入运行时状态。").ConfigureAwait(false);
+            PermissionGateResult gate = requestPermission
+                ? await new PermissionGate(host).EnsureAsync(
+                    storagePermission,
+                    context,
+                    cancellationToken,
+                    "AWAKE 需要写入运行时状态。").ConfigureAwait(false)
+                : new PermissionGate(host).Evaluate(storagePermission, context);
             if (!gate.Granted)
             {
-                AwakeLog.Write("world_state_storage_permission_denied code=" + (gate.Error?.Code ?? "none"));
+                AwakeLog.Write("world_state_storage_permission_" + (requestPermission ? "permission_denied" : "evaluate_denied")
+                    + " code=" + (gate.Error?.Code ?? "none"));
                 return false;
             }
 
             int sessionGeneration;
-            Task<WorldFinalDrainResult> previousDrain = null;
+            WorldStateStore existing;
             lock (StaticGate)
             {
                 if (_sessionEnded) return false;
                 sessionGeneration = _sessionGeneration;
-                WorldStateStore existing = _worldStateStore;
+                existing = _worldStateStore;
                 if (existing != null && existing.HasNamespaces(targetNamespaces)) return true;
-                if (existing != null)
-                {
-                    previousDrain = RetireWorldStateStoreLocked(existing);
-                    _worldStateStore = null;
-                }
-            }
-            if (previousDrain != null) await previousDrain.ConfigureAwait(false);
-            if (!await AwaitRetiredWorldStateDrainsAsync(cancellationToken).ConfigureAwait(false))
-            {
-                AwakeLog.Write("world_state_ready_replacement_drain_failed code=" + _worldStateDrainFailureCode);
-                return false;
             }
 
             candidate = new WorldStateStore(host);
@@ -815,7 +879,42 @@ internal static class AwakeRuntime
                 return false;
             }
 
+            Task<WorldFinalDrainResult> previousDrain = null;
+            bool candidateReadyToReplace = false;
             bool installed = false;
+            lock (StaticGate)
+            {
+                if (!_sessionEnded
+                    && !_worldStateDrainFailed
+                    && _sessionGeneration == sessionGeneration
+                    && ReferenceEquals(_worldStateStore, existing)
+                    && candidate.LifecycleState == WorldStateStoreLifecycle.Active)
+                {
+                    candidateReadyToReplace = true;
+                    if (existing != null)
+                    {
+                        previousDrain = RetireWorldStateStoreLocked(existing);
+                        _worldStateStore = null;
+                    }
+                }
+            }
+            if (!candidateReadyToReplace)
+            {
+                await RetireStandaloneWorldStateStoreAsync(candidate).ConfigureAwait(false);
+                candidate = null;
+                return false;
+            }
+            if (previousDrain != null)
+            {
+                WorldFinalDrainResult drained = await previousDrain.ConfigureAwait(false);
+                if (drained == null || !drained.Succeeded)
+                {
+                    AwakeLog.Write("world_state_ready_replacement_drain_failed code=" + (drained?.ErrorCode ?? "unknown"));
+                    await RetireStandaloneWorldStateStoreAsync(candidate).ConfigureAwait(false);
+                    candidate = null;
+                    return false;
+                }
+            }
             lock (StaticGate)
             {
                 if (!_sessionEnded
@@ -887,6 +986,7 @@ internal static class AwakeRuntime
             _worldStateDrainFailureCode = string.Empty;
         }
         previousCancellation.Cancel();
+        WorldbookRuntime.SetKnowledgeForTesting(null);
         AwakeRuntimeStatus.ResetForTesting();
     }
 
@@ -911,6 +1011,7 @@ internal static class AwakeRuntime
             _worldStateDrainFailureCode = string.Empty;
             RetiredWorldStateDrains.Clear();
             CurrentGameDayProvider = ReadCampaignGameDay;
+            CurrentGameHoursProvider = ReadCampaignGameHours;
         }
         previousCancellation.Cancel();
         AwakeRuntimeStatus.ResetForTesting();

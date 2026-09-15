@@ -11,19 +11,26 @@ internal sealed class NpcDialogueValidatedOutput
     internal string Mood { get; }
     internal string[] Effects { get; }
     internal NpcDialogueCommandProposal Command { get; }
+    internal bool CommandSuppressed { get; }
 
-    internal NpcDialogueValidatedOutput(string reply, string mood, string[] effects, NpcDialogueCommandProposal command)
+    internal NpcDialogueValidatedOutput(string reply, string mood, string[] effects, NpcDialogueCommandProposal command, bool commandSuppressed = false)
     {
         Reply = reply ?? string.Empty;
         Mood = mood ?? string.Empty;
         Effects = effects ?? Array.Empty<string>();
         Command = command;
+        CommandSuppressed = commandSuppressed;
     }
 }
 
 internal static class NpcDialogueOutputValidator
 {
     internal static bool TryValidate(string text, string expectedContractId, out NpcDialogueValidatedOutput output, out string error)
+    {
+        return TryValidate(text, expectedContractId, true, out output, out error);
+    }
+
+    internal static bool TryValidate(string text, string expectedContractId, bool allowCommand, out NpcDialogueValidatedOutput output, out string error)
     {
         output = null;
         error = string.Empty;
@@ -95,6 +102,7 @@ internal static class NpcDialogueOutputValidator
         }
 
         NpcDialogueCommandProposal command = null;
+        bool commandSuppressed = false;
         if (root["command"] != null)
         {
             if (sceneContract)
@@ -127,10 +135,17 @@ internal static class NpcDialogueOutputValidator
                 error = "invalid_command";
                 return false;
             }
-            command = new NpcDialogueCommandProposal(
-                commandId,
-                argumentsObject.ToString(Newtonsoft.Json.Formatting.None),
-                reason);
+            if (allowCommand)
+            {
+                command = new NpcDialogueCommandProposal(
+                    commandId,
+                    argumentsObject.ToString(Newtonsoft.Json.Formatting.None),
+                    reason);
+            }
+            else
+            {
+                commandSuppressed = true;
+            }
         }
 
         if (root.Count > 4)
@@ -139,7 +154,7 @@ internal static class NpcDialogueOutputValidator
             return false;
         }
 
-        output = new NpcDialogueValidatedOutput(reply, mood, effectArray, command);
+        output = new NpcDialogueValidatedOutput(reply, mood, effectArray, command, commandSuppressed);
         return true;
     }
 }
@@ -171,6 +186,27 @@ internal static class NpcDialogueStateFormatter
         }
         if (body != null) parts.Add("附加状态由内容包提供");
         if (estrus != null) parts.Add("附加状态由内容包提供");
+        return string.Join("；", parts);
+    }
+
+    internal static string FormatCommitments(JObject interactions)
+    {
+        JArray promises = interactions?["promises"] as JArray;
+        if (promises == null || promises.Count == 0) return string.Empty;
+        List<string> parts = new List<string>();
+        foreach (JToken token in promises)
+        {
+            if (!(token is JObject promise)) continue;
+            string status = (string)promise["status"] ?? string.Empty;
+            string label;
+            if (StringComparer.Ordinal.Equals(status, AwakePromiseStateMachine.Pending)) label = "待确认";
+            else if (StringComparer.Ordinal.Equals(status, AwakePromiseStateMachine.Accepted)) label = "已应允";
+            else continue;
+            string text = ((string)promise["text"] ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(text)) continue;
+            parts.Add(label + "：" + AwakeRuntime.TruncateTextElements(text, 120));
+            if (parts.Count >= 3) break;
+        }
         return string.Join("；", parts);
     }
 

@@ -8,6 +8,72 @@ namespace Awake;
 
 internal static class PersonaDslGenerator
 {
+    /// <summary>人格 DSL 默认字节预算。4096 时约 55% 的卡装不下（外壳段被整段丢弃）；6144 为红测实测零丢失线。</summary>
+    internal const int DefaultMaximumDslBytes = 6144;
+
+    internal static PersonaGenerationResult Generate(RuntimeBundle bundle, ContextSnapshot snapshot, int maximumBytes)
+    {
+        snapshot = snapshot ?? new ContextSnapshot();
+        maximumBytes = maximumBytes <= 0 ? DefaultMaximumDslBytes : maximumBytes;
+        if (bundle == null || !bundle.IsApproved)
+        {
+            return BuildRuntimeFallback(snapshot, maximumBytes);
+        }
+        return Generate(bundle.Definition, bundle.Registry, snapshot, maximumBytes);
+    }
+
+    /// <summary>
+    /// 按「已经选定的卡 + 注册表」生成（方向丙-a）。
+    /// 运行时先经 <see cref="PersonaRoster"/> 按对话对象选卡，再把选中的卡交给这里，
+    /// 因此本重载<b>不再看 definition 的 Status</b>——状态门由名册统一把关（approved 全收，draft 需在试行名单内）。
+    /// 卡或注册表缺失、或展开失败时，退回只含 ID/NAME 的运行时兜底（语义与旧路径一致）。
+    /// </summary>
+    internal static PersonaGenerationResult Generate(
+        PersonaDefinition definition,
+        PersonaTagRegistry registry,
+        ContextSnapshot snapshot,
+        int maximumBytes)
+    {
+        snapshot = snapshot ?? new ContextSnapshot();
+        maximumBytes = maximumBytes <= 0 ? DefaultMaximumDslBytes : maximumBytes;
+        if (definition == null || registry == null)
+        {
+            return BuildRuntimeFallback(snapshot, maximumBytes);
+        }
+        PersonaGenerationResult result = Generate(
+            definition,
+            registry,
+            snapshot.ToPersonaContext(),
+            string.Empty,
+            string.Empty,
+            maximumBytes);
+        if (!result.UsedLegacyFallback) return result;
+        PersonaGenerationResult fallback = BuildRuntimeFallback(snapshot, maximumBytes);
+        fallback.HadConflict = result.HadConflict;
+        fallback.Warnings.AddRange(result.Warnings);
+        return fallback;
+    }
+
+    internal static PersonaGenerationResult BuildRuntimeFallback(ContextSnapshot snapshot, int maximumBytes)
+    {
+        snapshot = snapshot ?? new ContextSnapshot();
+        maximumBytes = maximumBytes <= 0 ? DefaultMaximumDslBytes : maximumBytes;
+        string dsl = "[PERSONA_RUNTIME]\nRUNTIME_FALLBACK\nIDENTITY_ONLY\nID=\""
+            + Safe(snapshot.CharacterId) + "\"\nNAME=\"" + Safe(snapshot.HeroName) + "\"";
+        PersonaGenerationResult result = new PersonaGenerationResult
+        {
+            IsUsable = true,
+            IsRuntimeFallback = true,
+            DefinitionId = "RUNTIME_FALLBACK",
+            Fingerprint = snapshot.ComputeFingerprint(),
+            Dsl = Encoding.UTF8.GetByteCount(dsl) <= maximumBytes
+                ? dsl
+                : NpcDialoguePromptPipeline.EnsureBudget(dsl, maximumBytes)
+        };
+        result.Warnings.Add("persona.runtime_fallback_identity_only");
+        return result;
+    }
+
     internal static PersonaGenerationResult Generate(
         PersonaDefinition definition,
         PersonaTagRegistry registry,
@@ -18,7 +84,7 @@ internal static class PersonaDslGenerator
     {
         PersonaGenerationResult result = new PersonaGenerationResult();
         context = context ?? new PersonaContext();
-        maximumBytes = maximumBytes <= 0 ? 4096 : maximumBytes;
+        maximumBytes = maximumBytes <= 0 ? DefaultMaximumDslBytes : maximumBytes;
         result.Fingerprint = ComputeFingerprint(definition, context, legacyPersonality, legacyBackground, maximumBytes);
 
         if (definition == null || !StringComparer.Ordinal.Equals(definition.Status, PersonaSchemaConstants.StatusApproved))
@@ -53,7 +119,8 @@ internal static class PersonaDslGenerator
 
         List<PersonaTagDefinition> tags;
         List<string> warnings;
-        bool expanded = registry.TryExpand(directTagIds, definition.Bundles, out tags, out warnings);
+        // 方向丙：bundle 仅作元数据，绝不注入 prompt——人格只由作者自选 tags 组成，避免越权激活。
+        bool expanded = registry.TryExpand(directTagIds, null, out tags, out warnings);
         result.Warnings.AddRange(warnings);
         string conflict;
         bool hasConflict = registry.HasConflict(tags, out conflict);
@@ -85,6 +152,7 @@ internal static class PersonaDslGenerator
             core,
             includeDynamic: false);
         List<string> optional = BuildDynamicSections(definition, context);
+        optional.Add(BuildPublicSection(definition, tags));
         string dsl = JoinSections(mandatory, optional);
         if (Encoding.UTF8.GetByteCount(dsl) > maximumBytes)
         {
@@ -127,6 +195,7 @@ internal static class PersonaDslGenerator
         foreach (PersonaExperience item in (context?.PlayerOverride?.Experiences ?? new List<PersonaExperience>()).OrderBy(item => item?.Id, StringComparer.Ordinal)) value.Append(item?.Id ?? string.Empty).Append('=').Append(item?.Status ?? string.Empty).Append('=').Append(item?.Text ?? string.Empty).Append('|');
         foreach (string item in (context?.PlayerOverride?.DisabledExperienceIds ?? new List<string>()).OrderBy(item => item, StringComparer.Ordinal)) value.Append("disabled=").Append(item).Append('|');
         value.Append(string.Join(",", (context?.SceneKeywords ?? new List<string>()).OrderBy(item => item, StringComparer.Ordinal))).Append('|');
+        value.Append(string.Join(",", (context?.ContextModes ?? new List<string>()).OrderBy(item => item, StringComparer.Ordinal))).Append('|');
         value.Append(legacyPersonality ?? string.Empty).Append('|').Append(legacyBackground ?? string.Empty);
         using (SHA256 sha = SHA256.Create())
         {
@@ -174,12 +243,6 @@ internal static class PersonaDslGenerator
         sections.Add(Section("PERSONA_IDENTITY", BuildIdentityValues(context, definition.IdentityFacts)));
         sections.Add(Section("PERSONALITY_CORE", BuildCoreValues(core, tags)));
 
-        List<string> publicValues = BuildTagValues(tags, PersonaTagCategories.Expression).ToList();
-        Add(publicValues, "DATA_CN", definition.PublicDescription);
-        AddDataList(publicValues, definition.SelfClaimRules);
-        AddDataList(publicValues, definition.SelfClaimExamples);
-        sections.Add(Section("PERSONALITY_PUBLIC", publicValues));
-
         List<string> privateValues = BuildTagValues(tags, PersonaTagCategories.Behavior).ToList();
         Add(privateValues, "DATA_CN", definition.PrivateDescription);
         AddDataList(privateValues, definition.RealSelfBehaviors);
@@ -194,6 +257,20 @@ internal static class PersonaDslGenerator
         return sections.Where(section => !String.IsNullOrWhiteSpace(section)).ToList();
     }
 
+    /// <summary>
+    /// 对外表演层（表达标签 + 公开描述 + 自称规则 + 自称样本）。
+    /// 单独成段，并在 Generate 中追加到 optional 末尾：截断是"从尾部整段丢弃"，
+    /// 置于末尾意味着超预算时先牺牲这一层，而私我/矛盾/当前处境等内里得以保留。
+    /// </summary>
+    private static string BuildPublicSection(PersonaDefinition definition, List<PersonaTagDefinition> tags)
+    {
+        List<string> publicValues = BuildTagValues(tags, PersonaTagCategories.Expression).ToList();
+        Add(publicValues, "DATA_CN", definition.PublicDescription);
+        AddDataList(publicValues, definition.SelfClaimRules);
+        AddDataList(publicValues, definition.SelfClaimExamples);
+        return Section("PERSONALITY_PUBLIC", publicValues);
+    }
+
     private static IEnumerable<string> BuildCanonicalConstraintTokens()
     {
         return new[]
@@ -204,7 +281,9 @@ internal static class PersonaDslGenerator
             "TOKEN=CONSTRAINT_NO_UNSUPPORTED_FACTS",
             "TOKEN=CONSTRAINT_NO_RELATIONSHIP_AUTO_ESCALATION",
             "TOKEN=CONSTRAINT_NO_OBEDIENCE_AUTO_ESCALATION",
-            "TOKEN=CONSTRAINT_PRESERVE_UNRESOLVED_CONTRADICTIONS"
+            "TOKEN=CONSTRAINT_PRESERVE_UNRESOLVED_CONTRADICTIONS",
+            "TOKEN=CONSTRAINT_NO_INSTANT_SUBMISSION",
+            "TOKEN=CONSTRAINT_NO_MODERN_PSYCHOLOGY"
         };
     }
 
@@ -219,8 +298,12 @@ internal static class PersonaDslGenerator
         Add(identity, "CURRENT", context.Continuity?.CurrentIdentity);
         Add(identity, "CULTURE_ID", context.CultureId);
         if (identity.Count > 0) sections.Add(Section("CURRENT_IDENTITY", identity));
-        if (!string.IsNullOrWhiteSpace(context.Relation)) sections.Add(Section("CURRENT_RELATION", new[] { Value("RELATION_CN", context.Relation) }));
-        if (!string.IsNullOrWhiteSpace(context.CurrentState)) sections.Add(Section("CURRENT_STATE", new[] { Value("STATE_CN", context.CurrentState) }));
+        string relation = context.Relation;
+        if (string.IsNullOrWhiteSpace(relation)) relation = definition?.RelationStyle ?? string.Empty;
+        if (!string.IsNullOrWhiteSpace(relation)) sections.Add(Section("CURRENT_RELATION", new[] { Value("RELATION_CN", relation) }));
+        string state = context.CurrentState;
+        if (string.IsNullOrWhiteSpace(state)) state = definition?.CurrentStateHints ?? string.Empty;
+        if (!string.IsNullOrWhiteSpace(state)) sections.Add(Section("CURRENT_STATE", new[] { Value("STATE_CN", state) }));
         if (!string.IsNullOrWhiteSpace(context.MemoryHint)) sections.Add(Section("MEMORY_HINT", new[] { Value("MEMORY_CN", context.MemoryHint) }));
         if (context.SceneKeywords != null && context.SceneKeywords.Count > 0)
         {

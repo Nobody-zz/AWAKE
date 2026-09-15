@@ -12,6 +12,7 @@ internal sealed class AwakeEventBehavior : CampaignBehaviorBase
     private readonly AwakeEventEngine _engine = new AwakeEventEngine();
     private int _lastWeeklyReportDay = -1;
     private int _knowledgeRefreshScheduled;
+    private int _formalReportRefreshScheduled;
     private string _personaAnchorJson = string.Empty;
     private PersonaPersistenceEnvelope _personaAnchor;
 
@@ -146,11 +147,17 @@ internal sealed class AwakeEventBehavior : CampaignBehaviorBase
     {
         try
         {
-            if (!AwakeSettings.Current.EnableEventEngine) return;
-            if (NpcDialogueOverlay.IsOpen || AwakeMessengerOverlay.IsOpen) return;
             int sessionGeneration = AwakeRuntime.SessionGeneration;
             CancellationToken sessionCancellationToken = AwakeRuntime.SessionCancellationToken;
             if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
+            ScheduleFormalReportRefresh(sessionGeneration, sessionCancellationToken);
+            int currentHour = AwakeRuntime.CurrentGameAbsoluteHour();
+            _ = AwakeLetterService.AdvanceAsync(currentHour, sessionCancellationToken);
+            // 主动来信只落未读、不打断玩家，故不受面板开关影响（面板一开就不来信是错的）；
+            // 是否寄由 NpcLetterInitiator 自己按开关、动机、冷却与"上一封未读"决定。
+            _ = NpcLetterInitiator.TryProduceAsync(currentHour, sessionCancellationToken);
+            if (!AwakeSettings.Current.EnableEventEngine) return;
+            if (NpcDialogueOverlay.IsOpen || AwakeMessengerOverlay.IsOpen) return;
             _engine.EnsureRulesLoadedFromRegistry();
             _ = _engine.OnHourlyTickAsync(sessionGeneration, sessionCancellationToken);
             _ = NpcProactiveService.Current?.OnHourlyTickAsync(sessionCancellationToken);
@@ -163,6 +170,37 @@ internal sealed class AwakeEventBehavior : CampaignBehaviorBase
         {
             AwakeLog.Write("awake_event_behavior_tick_error error=" + ex.Message);
         }
+    }
+
+    private void ScheduleFormalReportRefresh(int sessionGeneration, CancellationToken sessionCancellationToken)
+    {
+        int day = AwakeRuntime.CurrentGameDay();
+        if (day <= 0 || Volatile.Read(ref _lastWeeklyReportDay) == day || Interlocked.Exchange(ref _formalReportRefreshScheduled, 1) != 0) return;
+        AwakeBackgroundTask.Run(
+            async () =>
+            {
+                try
+                {
+                    WorldStateStore expectedStore = AwakeRuntime.WorldStateStore;
+                    if (expectedStore == null || !AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
+                    FormalWeeklyReportResult result = await WorldEventServices.EnsureFormalReportsReadyAsync(day, sessionCancellationToken).ConfigureAwait(false);
+                    if (!StringComparer.Ordinal.Equals(result.Status, FormalWeeklyReportResult.Unavailable))
+                        Volatile.Write(ref _lastWeeklyReportDay, day);
+                    AwakeLog.Write("awake_weekly_report_refresh status=" + result.Status + " code=" + result.Code);
+                }
+                catch (OperationCanceledException)
+                {
+                }
+                catch (Exception ex)
+                {
+                    AwakeLog.Write("awake_weekly_report_refresh_error error=" + ex.Message);
+                }
+                finally
+                {
+                    Interlocked.Exchange(ref _formalReportRefreshScheduled, 0);
+                }
+            },
+            "awake_weekly_report_refresh");
     }
 
     private void ScheduleKnowledgeRefresh(int sessionGeneration, CancellationToken sessionCancellationToken)

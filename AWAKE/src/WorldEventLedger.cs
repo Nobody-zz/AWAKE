@@ -19,6 +19,7 @@ internal sealed class WorldEventRecord
     internal string Text { get; }
     internal DateTimeOffset OccurredAt { get; }
     internal IReadOnlyList<string> VisibilityIdentityIds { get; }
+    internal JObject StructuredFact { get; }
 
     internal WorldEventRecord(int day, string kind, string text)
         : this(day, kind, text, null, null)
@@ -46,6 +47,11 @@ internal sealed class WorldEventRecord
     }
 
     internal WorldEventRecord(string eventId, int day, string kind, string domain, string text, DateTimeOffset occurredAt, string eventKey, IReadOnlyList<string> visibilityIdentityIds)
+        : this(eventId, day, kind, domain, text, occurredAt, eventKey, visibilityIdentityIds, null)
+    {
+    }
+
+    internal WorldEventRecord(string eventId, int day, string kind, string domain, string text, DateTimeOffset occurredAt, string eventKey, IReadOnlyList<string> visibilityIdentityIds, JObject structuredFact)
     {
         string normalizedEventId = string.IsNullOrWhiteSpace(eventId) || !WorldEventContract.IsStableId(eventId.Trim())
             ? BuildEventId(day, kind, text, eventKey)
@@ -58,6 +64,7 @@ internal sealed class WorldEventRecord
         Text = text ?? string.Empty;
         OccurredAt = occurredAt;
         VisibilityIdentityIds = WorldEventAudience.Resolve(visibilityIdentityIds);
+        StructuredFact = structuredFact == null ? null : (JObject)structuredFact.DeepClone();
     }
 
     private static string BuildEventId(int day, string kind, string text, string eventKey)
@@ -116,11 +123,17 @@ internal static class WorldEventLedger
     private static int _campaignGeneration;
     private static long _ledgerRevision;
     private static long _snapshotRevision;
+    private static WorldFactJournalReadStatus _journalStatus = WorldFactJournalReadStatus.Missing;
     internal static Func<long> UtcTicksProviderForTesting { get; set; }
 
     internal static int CampaignGeneration
     {
         get { return Volatile.Read(ref _campaignGeneration); }
+    }
+
+    internal static WorldFactJournalReadStatus JournalStatus
+    {
+        get { lock (Records) return _journalStatus; }
     }
 
     internal static bool IsCurrentCampaignGeneration(int generation)
@@ -162,6 +175,14 @@ internal static class WorldEventLedger
         return true;
     }
 
+    internal static void QueueFact(WorldFactCapture capture, int sessionGeneration)
+    {
+        if (capture == null) return;
+        AwakeBackgroundTask.Run(
+            () => RecordAsyncForCampaign(capture.Day, capture.Kind, capture.Text, capture.EventKey, null, sessionGeneration, CancellationToken.None, capture.Fact),
+            "awake_world_fact_record");
+    }
+
     private static async Task RecordInBackgroundAsync(int day, string kind, string text, string eventKey, IReadOnlyList<string> visibilityIdentityIds, int sessionGeneration)
     {
         WorldEventAppendResult result = await RecordAsync(day, kind, text, eventKey, visibilityIdentityIds, sessionGeneration, CancellationToken.None).ConfigureAwait(false);
@@ -196,9 +217,10 @@ internal static class WorldEventLedger
         string eventKey,
         IReadOnlyList<string> visibilityIdentityIds,
         int sessionGeneration,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        WorldFact structuredFact = null)
     {
-        return RecordAsync(day, kind, text, eventKey, visibilityIdentityIds, sessionGeneration, cancellationToken);
+        return RecordAsync(day, kind, text, eventKey, visibilityIdentityIds, sessionGeneration, cancellationToken, structuredFact);
     }
 
     private static async Task<WorldEventAppendResult> RecordAsync(
@@ -208,9 +230,10 @@ internal static class WorldEventLedger
         string eventKey,
         IReadOnlyList<string> visibilityIdentityIds,
         int sessionGeneration,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        WorldFact structuredFact = null)
     {
-        WorldEventRecord record = CreateRecord(day, kind, text, eventKey, visibilityIdentityIds);
+        WorldEventRecord record = CreateRecord(day, kind, text, eventKey, visibilityIdentityIds, structuredFact);
         if (record == null)
         {
             return new WorldEventAppendResult
@@ -282,7 +305,8 @@ internal static class WorldEventLedger
                     record.Domain,
                     record.OccurredAt,
                     record.VisibilityIdentityIds,
-                    cancellationToken).ConfigureAwait(false);
+                    cancellationToken,
+                    record.StructuredFact).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
@@ -384,16 +408,24 @@ internal static class WorldEventLedger
             loadStartRevision = _ledgerRevision;
         }
         JObject doc = null;
+        WorldFactJournalReadResult journal = null;
         try
         {
             doc = await store.GetWorldEventsAsync(null, cancellationToken).ConfigureAwait(false);
+            journal = await store.GetWorldFactJournalAsync(null, cancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
             AwakeLog.Write("world_event_load_error error=" + ex.Message);
             return;
         }
-        if (doc == null) return;
+        WorldFactJournalReadStatus journalStatus = journal?.Status ?? WorldFactJournalReadStatus.Unavailable;
+        if (journalStatus == WorldFactJournalReadStatus.Corrupt || journalStatus == WorldFactJournalReadStatus.Unavailable)
+        {
+            AwakeLog.Write("world_fact_journal_load_blocked status=" + journalStatus
+                + " code=" + (journal?.ErrorCode ?? "awake.world_fact.journal_unavailable"));
+        }
+        if (doc == null) doc = new JObject();
         WorldEventLedgerSnapshot projectionSnapshot = null;
         bool currentSession = WorldEventServices.WithCampaignBoundary(() =>
         {
@@ -403,6 +435,7 @@ internal static class WorldEventLedger
                 if (_campaignGeneration != campaignGeneration) return false;
                 bool revisionChangedWhileLoading = _ledgerRevision != loadStartRevision;
                 if (revisionChangedWhileLoading) return false;
+                _journalStatus = journalStatus;
                 Records.Clear();
                 SeenEventOrder.Clear();
                 SeenEventKeyOrder.Clear();
@@ -429,9 +462,33 @@ internal static class WorldEventLedger
                             text,
                             occurredAt,
                             eventKey,
-                            ReadVisibilityIdentityIds(record["visibilityIdentityIds"]));
+                            ReadVisibilityIdentityIds(record["visibilityIdentityIds"]),
+                            record["fact"] as JObject);
                         if (!TryRemember(loadedRecord)) continue;
                         loadedRecords.Add(loadedRecord);
+                    }
+                }
+                if (journal != null && journal.Status == WorldFactJournalReadStatus.Success)
+                {
+                    foreach (JObject fact in journal.Facts.OfType<JObject>())
+                    {
+                        int day = IntValue(fact["occurred"]?["campaignDay"]);
+                        string factId = (string)fact["factId"] ?? string.Empty;
+                        string eventKey = (string)fact["eventKey"] ?? factId;
+                        string kind = (string)fact["kind"] ?? "event";
+                        string text = (string)fact["presentation"]?["summary"] ?? kind;
+                        WorldEventRecord loadedFact = new WorldEventRecord(
+                            factId,
+                            day,
+                            kind,
+                            WeeklyReportService.InferDomain(kind),
+                            text,
+                            new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero).AddDays(day),
+                            eventKey,
+                            null,
+                            fact);
+                        if (!TryRemember(loadedFact)) continue;
+                        loadedRecords.Add(loadedFact);
                     }
                 }
                 foreach (WorldEventRecord loadedRecord in loadedRecords
@@ -496,6 +553,7 @@ internal static class WorldEventLedger
                 PendingEventKeys.Clear();
                 _loaded = false;
                 _loadedStore = null;
+                _journalStatus = WorldFactJournalReadStatus.Missing;
                 _lastLoadAttemptUtcTicks = 0;
                 Interlocked.Increment(ref _campaignGeneration);
                 _ledgerRevision++;
@@ -509,13 +567,16 @@ internal static class WorldEventLedger
         return new WorldEventLedgerSnapshot(_campaignGeneration, _ledgerRevision, ++_snapshotRevision, Records.ToList());
     }
 
-    private static WorldEventRecord CreateRecord(int day, string kind, string text, string eventKey, IReadOnlyList<string> visibilityIdentityIds)
+    private static WorldEventRecord CreateRecord(int day, string kind, string text, string eventKey, IReadOnlyList<string> visibilityIdentityIds, WorldFact structuredFact = null)
     {
         string safeKind = WorldEventContract.NormalizeEventType(AwakeRuntime.TruncateTextElements(kind ?? "event", 40));
         string safeText = AwakeRuntime.TruncateTextElements(text ?? string.Empty, 500);
         if (string.IsNullOrWhiteSpace(safeText)) return null;
         string safeEventKey = string.IsNullOrWhiteSpace(eventKey) ? null : AwakeRuntime.TruncateTextElements(eventKey.Trim(), 200);
-        return new WorldEventRecord(day, safeKind, safeText, safeEventKey, visibilityIdentityIds);
+        return structuredFact == null
+            ? new WorldEventRecord(day, safeKind, safeText, safeEventKey, visibilityIdentityIds)
+            : new WorldEventRecord(structuredFact.FactId, day, safeKind, WeeklyReportService.InferDomain(safeKind), safeText,
+                new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero).AddDays(day), safeEventKey, visibilityIdentityIds, structuredFact.ToJson());
     }
 
     private static WorldEventAppendResult StaleSessionResult(WorldEventRecord record)
@@ -553,7 +614,13 @@ internal static class WorldEventLedger
             && StringComparer.Ordinal.Equals(left.Text, right.Text)
             && left.OccurredAt == right.OccurredAt
             && new HashSet<string>(left.VisibilityIdentityIds ?? Array.Empty<string>(), StringComparer.Ordinal)
-                .SetEquals(right.VisibilityIdentityIds ?? Array.Empty<string>());
+                .SetEquals(right.VisibilityIdentityIds ?? Array.Empty<string>())
+            && SameStructuredFact(left.StructuredFact, right.StructuredFact);
+    }
+
+    private static bool SameStructuredFact(JObject left, JObject right)
+    {
+        return (left == null && right == null) || (left != null && right != null && JToken.DeepEquals(left, right));
     }
 
     private static bool TryRemember(WorldEventRecord record)

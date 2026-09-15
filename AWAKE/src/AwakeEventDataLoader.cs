@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace Awake;
@@ -64,13 +65,23 @@ internal static class AwakeEventDataLoader
                 error = "condition:" + conditionText;
                 return false;
             }
+            AwakeEventFactTrigger factTrigger;
+            if (!TryParseFactTrigger(payload["factTrigger"], out factTrigger, out error))
+            {
+                return false;
+            }
             rule = new AwakeEventRule(
                 definition,
                 IntValue(payload["weight"], 1),
                 IntValue(payload["cooldownHours"], 0),
                 condition ?? AwakeEventCondition.Always,
                 Str(payload["nextEventId"]),
-                IntValue(payload["maxPerDay"], 0));
+                IntValue(payload["maxPerDay"], 0),
+                factTrigger);
+            if (!AwakeEventCandidateEvaluator.Validate(factTrigger, out error))
+            {
+                return false;
+            }
             return true;
         }
         catch (Exception ex)
@@ -99,6 +110,51 @@ internal static class AwakeEventDataLoader
             IntValue(obj["loveDelta"], 0),
             IntValue(obj["hostilityDelta"], 0),
             Str(obj["reason"]));
+    }
+
+    private static bool TryParseFactTrigger(
+        JToken token,
+        out AwakeEventFactTrigger trigger,
+        out string error)
+    {
+        trigger = null;
+        error = null;
+        if (token == null || token.Type == JTokenType.Null) return true;
+        JObject obj = token as JObject;
+        if (obj == null)
+        {
+            error = "factTrigger";
+            return false;
+        }
+        JArray kinds = obj["allowedKinds"] as JArray;
+        if (kinds == null || kinds.Any(value => value.Type != JTokenType.String))
+        {
+            error = "factTrigger.allowedKinds";
+            return false;
+        }
+        if (obj["minimumMatches"] == null || obj["minimumMatches"].Type != JTokenType.Integer)
+        {
+            error = "factTrigger.minimumMatches";
+            return false;
+        }
+        if (obj["maximumAgeDays"] == null || obj["maximumAgeDays"].Type != JTokenType.Integer)
+        {
+            error = "factTrigger.maximumAgeDays";
+            return false;
+        }
+        try
+        {
+            trigger = new AwakeEventFactTrigger(
+                kinds.Values<string>(),
+                (int)obj["minimumMatches"],
+                (int)obj["maximumAgeDays"]);
+            return true;
+        }
+        catch
+        {
+            error = "factTrigger";
+            return false;
+        }
     }
 
     private static T? ParseEnum<T>(string value) where T : struct

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using MarcusAwakeFramework.Api;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.CampaignSystem.GameState;
@@ -856,10 +857,10 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 AwakeLocalization.Resolve("awake.terminal.inbox_hint", "查看近期世界事件")),
             new InquiryElement(
                 "weekly_report",
-                AwakeLocalization.Resolve("awake.menu.weekly_report", "世界周报"),
+                AwakeLocalization.Resolve("awake.menu.weekly_dynamics", "本周动态"),
                 (ImageIdentifier)null,
                 true,
-                AwakeLocalization.Resolve("awake.terminal.weekly_hint", "查看本周世界摘要")),
+                AwakeLocalization.Resolve("awake.terminal.weekly_hint", "查看近期世界动态")),
             new InquiryElement(
                 "developer_report",
                 AwakeLocalization.Resolve("awake.menu.developer_check", "开发者检查"),
@@ -1083,11 +1084,23 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 true,
                 AwakeLocalization.Resolve("awake.terminal.developer_hint", "查看运行时诊断")),
             new InquiryElement(
+                "portrait_probe",
+                "画位探测（全身像）",
+                (ImageIdentifier)null,
+                true,
+                "验证 png → 运行时纹理 → 上屏这条链；面板里可直接放一张内置测试图"),
+            new InquiryElement(
                 "test_dialogue",
                 AwakeLocalization.Resolve("awake.dev_tools.dialogue", "强制附近深谈"),
                 (ImageIdentifier)null,
                 true,
                 AwakeLocalization.Resolve("awake.dev_tools.dialogue_hint", "打开最近 NPC 深谈")),
+            new InquiryElement(
+                "test_negotiation",
+                AwakeLocalization.Resolve("awake.dev_tools.negotiation", "强制附近谈判"),
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.dev_tools.negotiation_hint", "以谈判模式打开最近 NPC，用于测试关系指令链")),
             new InquiryElement(
                 "test_inbox",
                 AwakeLocalization.Resolve("awake.menu.inbox", "事件收件箱"),
@@ -1166,9 +1179,19 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
             AwakeDeveloperTestActions.OpenDeveloperReport();
             return;
         }
+        if (StringComparer.Ordinal.Equals(id, "portrait_probe"))
+        {
+            AwakeDeveloperTestActions.OpenPortraitProbe();
+            return;
+        }
         if (StringComparer.Ordinal.Equals(id, "test_dialogue"))
         {
             AwakeDeveloperTestActions.TestNearbyDialogue();
+            return;
+        }
+        if (StringComparer.Ordinal.Equals(id, "test_negotiation"))
+        {
+            AwakeDeveloperTestActions.TestNearbyNegotiation();
             return;
         }
         if (StringComparer.Ordinal.Equals(id, "test_inbox"))
@@ -1240,9 +1263,39 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
             {
                 try
                 {
-                    await WorldEventServices.Recorder.LoadAsync(cancellationToken).ConfigureAwait(false);
+                    IMarcusAiFrameworkHost host = AwakeRuntime.ResolveHost();
+                    if (host == null || !await AwakeRuntime.EnsureWorldStateReadyAsync(host, cancellationToken).ConfigureAwait(false))
+                    {
+                        QueueWeeklyReportDisplay(sessionGeneration, new WeeklyReportDisplay(WeeklyReportDisplayState.Unavailable, string.Empty));
+                        return;
+                    }
+                    FormalWeeklyReportResult formal = await WorldEventServices.EnsureFormalReportsReadyAsync(day, cancellationToken).ConfigureAwait(false);
                     if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
-                    AwakeUiDispatcher.Enqueue(() => OpenWeeklyReportLoaded(sessionGeneration, day));
+                    if (formal.HasFormalReport)
+                    {
+                        string text = WeeklyReportService.BuildText(
+                            formal.Report,
+                            AwakeLocalization.Resolve("awake.menu.weekly_dynamics", "本周动态"),
+                            AwakeLocalization.Resolve("awake.ui.weekly_empty", "本周没有记录。"));
+                        QueueWeeklyReportDisplay(sessionGeneration, new WeeklyReportDisplay(WeeklyReportDisplayState.Formal, text));
+                        return;
+                    }
+                    if (StringComparer.Ordinal.Equals(formal.Status, FormalWeeklyReportResult.Preview))
+                    {
+                        WorldFactQueryResult recent = await WorldEventServices.QueryRecentDynamicsAsync(day, cancellationToken).ConfigureAwait(false);
+                        if (recent.Status != WorldFactQueryStatus.Success && recent.Status != WorldFactQueryStatus.Empty)
+                        {
+                            QueueWeeklyReportDisplay(sessionGeneration, new WeeklyReportDisplay(WeeklyReportDisplayState.Unavailable, string.Empty));
+                            return;
+                        }
+                        string text = WeeklyReportService.BuildTextFromFacts(
+                            recent.Facts,
+                            AwakeLocalization.Resolve("awake.menu.recent_dynamics", "近期动态"),
+                            AwakeLocalization.Resolve("awake.ui.weekly_empty", "本周没有记录。"));
+                        QueueWeeklyReportDisplay(sessionGeneration, new WeeklyReportDisplay(WeeklyReportDisplayState.Preview, text));
+                        return;
+                    }
+                    QueueWeeklyReportDisplay(sessionGeneration, new WeeklyReportDisplay(WeeklyReportDisplayState.Unavailable, string.Empty));
                 }
                 catch (OperationCanceledException)
                 {
@@ -1251,6 +1304,7 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 catch (Exception ex)
                 {
                     AwakeLog.Write("awake_weekly_report_load_error error=" + ex.Message);
+                    QueueWeeklyReportDisplay(sessionGeneration, new WeeklyReportDisplay(WeeklyReportDisplayState.Unavailable, string.Empty));
                 }
             }, "weekly_report_load");
         }
@@ -1260,17 +1314,21 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         }
     }
 
-    private static void OpenWeeklyReportLoaded(int sessionGeneration, int day)
+    private static void QueueWeeklyReportDisplay(int sessionGeneration, WeeklyReportDisplay display)
+    {
+        AwakeUiDispatcher.Enqueue(() => OpenWeeklyReportLoaded(sessionGeneration, display));
+    }
+
+    private static void OpenWeeklyReportLoaded(int sessionGeneration, WeeklyReportDisplay display)
     {
         if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
         try
         {
-            string text = WorldEventServices.Reports.BuildText(WorldEventServices.Recorder.SnapshotWeek(day), day);
-            if (!WeeklyReportBrowserOverlay.Open(text))
+            if (!WeeklyReportBrowserOverlay.Open(display))
             {
                 AwakeFeedback.ShowError(AwakeLocalization.Resolve(
                     "awake.feedback.weekly_report_open_failed",
-                    "无法打开世界周报。"));
+                    "无法打开本周动态。"));
             }
         }
         catch (Exception ex)

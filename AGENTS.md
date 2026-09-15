@@ -25,15 +25,19 @@
 ## 构建与同步
 
 - 构建入口 `AWAKE\tools\build.ps1`（调 MSBuild + `AWAKE.csproj`）；质量门见 `AWAKE\AGENTS.md`。
+  - `build.ps1` 自带 `/restore`：MSBuild.exe 不隐式还原 NuGet，去掉它会让干净克隆直接 `NETSDK1004`。
+  - 内嵌 Runtime 顺序固定：先 `package_embedded_runtime.ps1`，再 `sync_module.ps1`；后者只校验不重建，顺序反了会把旧 Runtime 留在游戏目录。
 - `AWAKE\framework` 是构建依赖，`AWAKE.csproj` 通过 `ProjectReference` 引用它，不得删除。
+  - framework 各子工程之间也必须整体走 `ProjectReference`（含 net8.0 → net472 的跨目标框架引用）；`_build_out` 只作产物目录，不得再当 `<Reference HintPath>` 输入，否则干净克隆编不出来。
 - 同步入口 `AWAKE\tools\sync_module.ps1`；游戏运行时不得覆盖游戏模块目录。
 - 构建产物 `_build_out\`、`obj\`、`bin\` 不入库，也不要在本工作区堆积。
 
 ## 版本控制
 
 - 本目录是 git 仓库（branch `main`，未配置 upstream）。
-- 2026-09-11 拆分后，工作树相对 `cc7b057` 有 35 处修改 + 230 处新增，**尚未提交**。
-- `framework\` 目前未入库，导致公开镜像不可独立构建。框架源码应入库；`.nuget`、`_build_out`、`obj` 不入库。
+- 2026-09-11 拆分批次已提交为 `69b9fc7`（含 `framework\` 的 160 个源码文件）；`origin/main` 仍停在 `cc7b057`，**未推送**。
+- `framework\` 已入库，公开镜像可独立构建：干净克隆下 `AWAKE\tools\build.ps1` 一条命令即可产出 `Awake.dll`，不需要预先手工编译任何依赖。
+- `.nuget`、`_build_out`、`obj`、`bin` 不入库。
 
 ## 临时产物
 

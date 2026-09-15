@@ -16,10 +16,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="MarcusAwakeTransport">
-      <HintPath>..\..\MarcusAwakeTransport\_build_out\Release\MarcusAwakeTransport.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
+    <ProjectReference Include="..\..\MarcusAwakeTransport\MarcusAwakeTransport.csproj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarcusAwakeFramework.csproj" />

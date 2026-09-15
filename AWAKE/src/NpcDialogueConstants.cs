@@ -7,7 +7,7 @@ internal static class NpcDialogueConstants
     internal const string RouteId = AiTaskConstants.RouteNpcDialogue;
     internal const string PromptId = "awake.npc.v1";
     internal const string PromptVersion = "v1";
-    internal const string PromptRevision = "release";
+    internal const string PromptRevision = "context-grounding-v2";
     internal const string OutputContractId = "awake.npc.output.v1";
     internal const string SceneShoutPromptId = SceneDialogueModePolicy.PromptId;
     internal const string SceneShoutPromptVersion = SceneDialogueModePolicy.PromptVersion;

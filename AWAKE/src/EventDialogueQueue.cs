@@ -6,19 +6,6 @@ using Newtonsoft.Json.Linq;
 
 namespace Awake;
 
-internal sealed class AwakeDialogueQueueEntry
-{
-    internal string Id { get; set; } = string.Empty;
-    internal string Source { get; set; } = "event";
-    internal string TargetId { get; set; } = string.Empty;
-    internal string CanonicalContactKey { get; set; } = string.Empty;
-    internal string OpeningHint { get; set; } = string.Empty;
-    internal string Motive { get; set; } = string.Empty;
-    internal int Day { get; set; }
-    internal int ExpiryDay { get; set; }
-    internal string State { get; set; } = "pending";
-}
-
 internal sealed class PendingDialogue
 {
     internal string Id { get; }

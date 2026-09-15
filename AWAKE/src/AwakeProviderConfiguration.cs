@@ -604,11 +604,19 @@ internal static class AwakeProviderConfiguration
         return true;
     }
 
+    /// <summary>
+    /// 归一化时要剥掉的尾部子路径。**全模组只此一张表**——AI 链路与生图共用，
+    /// 免得两处各剥各的、算法一分叉就出现"同一条地址两边认出的 root 不一样"。
+    /// </summary>
     private static readonly string[] ProviderEndpointSuffixes =
     {
         "/chat/completions",
         "/completions",
-        "/models"
+        "/models",
+        "/image/generate",
+        "/image/edit",
+        "/images/generations",
+        "/images/edits"
     };
 
     /// <summary>

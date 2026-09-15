@@ -53,7 +53,7 @@ internal abstract class BaseAwakeCommandAdapter : ICommandAdapter
         if (string.IsNullOrWhiteSpace(value)) return false;
         foreach (char c in value)
         {
-            bool ok = char.IsLetterOrDigit(c) || c == '.' || c == '_' || c == '-';
+            bool ok = char.IsLetterOrDigit(c) || c == '.' || c == '_' || c == '-' || c == ':';
             if (!ok) return false;
         }
         return true;

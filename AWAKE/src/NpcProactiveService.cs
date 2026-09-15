@@ -325,7 +325,7 @@ internal sealed class NpcProactiveService
                 }
             }
 
-            NpcProactiveMotiveDefinition motiveDefinition = SelectMotive(affinity);
+            NpcProactiveMotiveDefinition motiveDefinition = SelectMotive(affinity, _random);
             string triggerReason = BuildTriggerReason(affinity, hasRelationship);
             int chancePercent = Clamp(AwakeSettings.Current.NpcProactiveChance, 0, 100);
             double chance = ComputeTriggerChance(affinity, hasRelationship, chancePercent);
@@ -409,7 +409,8 @@ internal sealed class NpcProactiveService
         return Math.Min(NpcProactiveConstants.ChanceMaximum, scaled);
     }
 
-    private NpcProactiveMotiveDefinition SelectMotive(int affinity)
+    /// <summary>按亲和力加权挑一个动机。静态以便"主动来信"（NpcLetterInitiator）复用同一套选取口径。</summary>
+    internal static NpcProactiveMotiveDefinition SelectMotive(int affinity, Random random)
     {
         List<NpcProactiveMotiveDefinition> candidates = new List<NpcProactiveMotiveDefinition>();
         foreach (NpcProactiveMotiveDefinition definition in NpcProactiveMotiveRegistry.All())
@@ -422,7 +423,7 @@ internal sealed class NpcProactiveService
         {
             int total = 0;
             foreach (NpcProactiveMotiveDefinition definition in candidates) total += definition.BaseWeight;
-            int roll = _random.Next(0, total);
+            int roll = random.Next(0, total);
             int cursor = 0;
             foreach (NpcProactiveMotiveDefinition definition in candidates)
             {

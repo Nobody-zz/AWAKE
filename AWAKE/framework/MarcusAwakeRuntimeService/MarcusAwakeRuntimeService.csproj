@@ -7,6 +7,7 @@
     <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
+    <NoWarn>$(NoWarn);NU1702</NoWarn>
     <Deterministic>true</Deterministic>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <EnableDefaultItems>false</EnableDefaultItems>
@@ -16,14 +17,8 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarcusAwakeStorage\MarcusAwakeStorage.csproj" />
-    <Reference Include="MarcusAwakeFramework">
-      <HintPath>..\MarcusAwakeFramework\_build_out\Release\MarcusAwakeFramework.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
+    <ProjectReference Include="..\MarcusAwakeFramework\MarcusAwakeFramework.csproj" />
     <Compile Include="src\**\*.cs" />
-    <Reference Include="MarcusAwakeTransport">
-      <HintPath>..\MarcusAwakeTransport\_build_out\Release\MarcusAwakeTransport.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
+    <ProjectReference Include="..\MarcusAwakeTransport\MarcusAwakeTransport.csproj" />
   </ItemGroup>
 </Project>

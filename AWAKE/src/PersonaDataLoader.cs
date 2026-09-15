@@ -136,7 +136,6 @@ internal static class PersonaDataLoader
             PublicDescription = StringValue(obj, "publicDescription", "PublicDescription") ?? string.Empty,
             PrivateDescription = StringValue(obj, "privateDescription", "PrivateDescription") ?? string.Empty,
             ContradictionDescription = StringValue(obj, "contradictionDescription", "ContradictionDescription") ?? string.Empty,
-            FoodPreference = StringValue(obj, "foodPreference", "FoodPreference") ?? string.Empty,
             SelfClaimRules = StringList(obj, "selfClaimRules", "SelfClaimRules"),
             RealSelfBehaviors = StringList(obj, "realSelfBehaviors", "RealSelfBehaviors"),
             SelfClaimExamples = StringList(obj, "selfClaimExamples", "SelfClaimExamples"),

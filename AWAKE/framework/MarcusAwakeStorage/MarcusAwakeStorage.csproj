@@ -7,6 +7,7 @@
     <LangVersion>12.0</LangVersion>
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
+    <NoWarn>$(NoWarn);NU1702</NoWarn>
     <Deterministic>true</Deterministic>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <EnableDefaultItems>false</EnableDefaultItems>
@@ -17,10 +18,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src\**\*.cs" />
-    <Reference Include="MarcusAwakeFramework">
-      <HintPath>..\MarcusAwakeFramework\_build_out\Release\MarcusAwakeFramework.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
+    <ProjectReference Include="..\MarcusAwakeFramework\MarcusAwakeFramework.csproj" Private="false" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.21" />
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.10" />
   </ItemGroup>

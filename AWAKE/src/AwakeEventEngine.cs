@@ -40,6 +40,11 @@ internal sealed class AwakeEventEngine
             AwakeLog.Write("awake_event_register_invalid id=" + rule.Definition.Id + " error=" + error);
             return false;
         }
+        if (!AwakeEventCandidateEvaluator.Validate(rule.FactTrigger, out error))
+        {
+            AwakeLog.Write("awake_event_register_invalid id=" + rule.Definition.Id + " error=" + error);
+            return false;
+        }
         lock (_gate)
         {
             for (int i = 0; i < _rules.Count; i++)
@@ -130,6 +135,7 @@ internal sealed class AwakeEventEngine
     private async Task OnHourlyTickCoreAsync(int sessionGeneration, CancellationToken cancellationToken)
     {
         if (!AwakeRuntime.IsCurrentSessionGeneration(sessionGeneration)) return;
+        if (cancellationToken.IsCancellationRequested) return;
         if (_busy) return;
         List<AwakeEventRule> snapshot;
         lock (_gate)
@@ -145,14 +151,47 @@ internal sealed class AwakeEventEngine
             double nowHour = CurrentGameHour();
             int day = CurrentGameDay();
             await EnsureEventMetaLoadedAsync(sessionGeneration, cancellationToken).ConfigureAwait(false);
+            if (cancellationToken.IsCancellationRequested) return;
             WorldStateStore expectedStore = AwakeRuntime.WorldStateStore;
             if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)) return;
+
+            WorldFactQueryResult eventCandidates;
+            try
+            {
+                eventCandidates = await WorldEventContracts.QueryEventTriggerCandidatesAsync(
+                    day,
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                if (cancellationToken.IsCancellationRequested) return;
+                throw;
+            }
+            catch (Exception ex)
+            {
+                AwakeLog.Write("awake_event_fact_observation_error error=" + ex.Message);
+                eventCandidates = null;
+            }
+            if (cancellationToken.IsCancellationRequested
+                || (eventCandidates != null && eventCandidates.Status == WorldFactQueryStatus.Cancelled))
+                return;
 
             List<AwakeEventRule> eligible = new List<AwakeEventRule>();
             foreach (AwakeEventRule rule in snapshot)
             {
                 if (!IsHourlySource(rule.Definition.Source)) continue;
                 if (!CanTriggerSync(rule, nowHour, day)) continue;
+                AwakeEventCandidateEvaluation evaluation = AwakeEventCandidateEvaluator.Evaluate(
+                    rule,
+                    eventCandidates,
+                    day);
+                AwakeLog.Write("awake_event_fact_trigger id=" + rule.Definition.Id
+                    + " eligible=" + evaluation.Eligible
+                    + " reason=" + evaluation.ReasonCode
+                    + " status=" + evaluation.Status
+                    + " matched=" + evaluation.MatchedFactIds.Count
+                    + " journal_revision=" + (evaluation.JournalRevision.HasValue ? evaluation.JournalRevision.Value.ToString() : "missing"));
+                if (!evaluation.Eligible) continue;
                 if (!ConditionMet(rule.Condition)) continue;
                 eligible.Add(rule);
             }
@@ -412,7 +451,9 @@ internal sealed class AwakeEventEngine
             {
                 try
                 {
-                    if (!AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore) || !CanShowPopup())
+                    if (cancellationToken.IsCancellationRequested
+                        || !AwakeRuntime.IsCurrentSession(sessionGeneration, expectedStore)
+                        || !CanShowPopup())
                     {
                         _busy = false;
                         completion.TrySetResult(false);

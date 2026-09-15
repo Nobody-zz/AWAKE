@@ -21,7 +21,9 @@ internal sealed class AwakeMessengerVM : ViewModel
     private int _contactGeneration;
     private string _activeTargetId = string.Empty;
     private string _activeContactKey = string.Empty;
-    private string _titleText = AwakeLocalization.Resolve("awake.ui.messenger_title", "AWAKE 通讯录");
+    // 顶栏「当前对象」字段：选中联系人后显示对象名，未选中时留空
+    // （固定标题「信使」由 HeaderText 承担）。
+    private string _titleText = string.Empty;
     private string _statusText = AwakeLocalization.Resolve("awake.ui.messenger_choose", "选择联系人开始对话。");
     private string _noticeText = string.Empty;
     private string _inputText = string.Empty;
@@ -72,6 +74,21 @@ internal sealed class AwakeMessengerVM : ViewModel
     [DataSourceProperty]
     public bool HasActive => _activeService != null;
 
+    // 状态三件套（空通讯录 / 未选中会话）：Gauntlet 的 XML 绑定只支持正向属性路径，
+    // 不支持取反表达式（全 Modules 实测 0 处 "@!..."），所以空状态必须由 VM 侧
+    // 提供互补的正向布尔属性，UI 才能据此控制可见性。
+    [DataSourceProperty]
+    public bool IsContactsEmpty => _contacts.Count == 0;
+
+    [DataSourceProperty]
+    public bool HasNoActive => _activeService == null;
+
+    [DataSourceProperty]
+    public string EmptyContactsText => AwakeLocalization.Resolve("awake.ui.contacts_empty", "附近暂时没有可以交谈的人。");
+
+    [DataSourceProperty]
+    public string NoActiveHintText => AwakeLocalization.Resolve("awake.ui.no_active_hint", "从左侧选择一位交谈对象。");
+
     [DataSourceProperty]
     public bool IsLoading
     {
@@ -115,6 +132,7 @@ internal sealed class AwakeMessengerVM : ViewModel
             if (Set(ref _inputText, value, nameof(InputText)))
             {
                 OnPropertyChangedWithValue(CanSend, nameof(CanSend));
+                OnPropertyChanged(nameof(IsInputEmpty));
             }
         }
     }
@@ -131,6 +149,36 @@ internal sealed class AwakeMessengerVM : ViewModel
         && _activeService.IsAvailable
         && !_isLoading
         && !string.IsNullOrWhiteSpace(_inputText);
+
+    [DataSourceProperty]
+    public bool CanSelectActionMode => _activeService != null && !_activeService.IsSceneShout;
+
+    [DataSourceProperty]
+    public bool CanChangeActionMode => CanSelectActionMode && _activeService.CanChangeActionMode;
+
+    [DataSourceProperty]
+    public bool IsChatActionMode => _activeService == null || _activeService.ActionMode == NpcDialogueActionMode.Chat;
+
+    [DataSourceProperty]
+    public bool IsNegotiationActionMode => _activeService != null && _activeService.ActionMode == NpcDialogueActionMode.Negotiation;
+
+    // 单行 Tab（闲聊｜交涉｜往来）选中态：合并原「聊天/历史」+「闲聊/交涉」两组 Tab，
+    // 消除嵌套层级。绑定只支持正向路径，选中态由 VM 求值。
+    [DataSourceProperty]
+    public bool IsChatTabSelected => IsChatMode && IsChatActionMode;
+
+    [DataSourceProperty]
+    public bool IsNegotiationTabSelected => IsChatMode && IsNegotiationActionMode;
+
+    // 输入框占位提示：空输入时叠加显示，回车/按钮发送的可见性引导。
+    [DataSourceProperty]
+    public bool IsInputEmpty => string.IsNullOrWhiteSpace(_inputText);
+
+    [DataSourceProperty]
+    public string InputHintText => AwakeLocalization.Resolve("awake.ui.input_hint", "写下要说的话…（回车发送）");
+
+    [DataSourceProperty]
+    public string HeaderText => AwakeLocalization.Resolve("awake.ui.messenger_header", "信使");
 
     [DataSourceProperty]
     public bool CanWriteLetter
@@ -155,7 +203,13 @@ internal sealed class AwakeMessengerVM : ViewModel
     public string ChatTabText => AwakeLocalization.Resolve("awake.ui.chat_tab", "对话");
 
     [DataSourceProperty]
-    public string HistoryTabText => AwakeLocalization.Resolve("awake.ui.history_tab", "历史");
+    public string ChatModeText => AwakeLocalization.Resolve("awake.ui.chat_mode", "闲聊");
+
+    [DataSourceProperty]
+    public string NegotiationModeText => AwakeLocalization.Resolve("awake.ui.negotiation_mode", "交涉");
+
+    [DataSourceProperty]
+    public string HistoryTabText => AwakeLocalization.Resolve("awake.ui.transcript_tab", "往来");
 
     [DataSourceProperty]
     public string CloseButtonText => AwakeLocalization.Resolve("awake.ui.close", "离开");
@@ -173,6 +227,7 @@ internal sealed class AwakeMessengerVM : ViewModel
             _contacts.Add(new AwakeContactRowVM(captured, () => SelectContact(captured.TargetId)));
         }
         OnPropertyChangedWithValue(HasContacts, nameof(HasContacts));
+        OnPropertyChangedWithValue(IsContactsEmpty, nameof(IsContactsEmpty));
         AwakeContactRowVM firstNearby = null;
         foreach (AwakeContactRowVM row in _contacts)
         {
@@ -206,12 +261,42 @@ internal sealed class AwakeMessengerVM : ViewModel
     {
         IsChatMode = true;
         IsHistoryMode = false;
+        NotifyTabSelectionChanged();
     }
 
     public void ExecuteShowHistory()
     {
         IsChatMode = false;
         IsHistoryMode = true;
+        NotifyTabSelectionChanged();
+    }
+
+    public void ExecuteSelectChatTab()
+    {
+        ExecuteShowChat();
+        ExecuteSetChatActionMode();
+    }
+
+    public void ExecuteSelectNegotiationTab()
+    {
+        ExecuteShowChat();
+        ExecuteSetNegotiationActionMode();
+    }
+
+    private void NotifyTabSelectionChanged()
+    {
+        OnPropertyChanged(nameof(IsChatTabSelected));
+        OnPropertyChanged(nameof(IsNegotiationTabSelected));
+    }
+
+    public void ExecuteSetChatActionMode()
+    {
+        SetActionMode(NpcDialogueActionMode.Chat);
+    }
+
+    public void ExecuteSetNegotiationActionMode()
+    {
+        SetActionMode(NpcDialogueActionMode.Negotiation);
     }
 
     private async Task LoadHistoryAsync(string contactKey, bool auditLetter = false, int expectedContactGeneration = -1)
@@ -452,6 +537,7 @@ internal sealed class AwakeMessengerVM : ViewModel
             _contacts.Add(new AwakeContactRowVM(info, () => SelectContact(info.TargetId)));
         }
         OnPropertyChangedWithValue(HasContacts, nameof(HasContacts));
+        OnPropertyChangedWithValue(IsContactsEmpty, nameof(IsContactsEmpty));
     }
 
     public void ExecuteClose()
@@ -590,7 +676,7 @@ internal sealed class AwakeMessengerVM : ViewModel
         if (contact == null)
         {
             _selectedCard.Clear();
-            TitleText = AwakeLocalization.Resolve("awake.ui.messenger_title", "AWAKE 通讯录");
+            TitleText = string.Empty;
             StatusText = AwakeLocalization.Resolve("awake.ui.contact_expired", "联系人已失效。");
             return;
         }
@@ -632,7 +718,13 @@ internal sealed class AwakeMessengerVM : ViewModel
         NoticeText = AwakeLocalization.Resolve("awake.ui.notice_opening", "对方似乎有话想对你说。");
         StatusText = AwakeLocalization.Resolve("awake.ui.status_starting", "对话正在苏醒……");
         OnPropertyChangedWithValue(true, nameof(HasActive));
+        OnPropertyChangedWithValue(false, nameof(HasNoActive));
         OnPropertyChangedWithValue(CanSend, nameof(CanSend));
+        OnPropertyChanged(nameof(CanSelectActionMode));
+        OnPropertyChanged(nameof(CanChangeActionMode));
+        OnPropertyChanged(nameof(IsChatActionMode));
+        OnPropertyChanged(nameof(IsNegotiationActionMode));
+        NotifyTabSelectionChanged();
     }
 
     private void DisposeActiveService()
@@ -660,6 +752,26 @@ internal sealed class AwakeMessengerVM : ViewModel
         _historyRows.Clear();
         HistoryStatusText = string.Empty;
         OnPropertyChangedWithValue(false, nameof(HasActive));
+        OnPropertyChangedWithValue(true, nameof(HasNoActive));
+        OnPropertyChanged(nameof(CanSelectActionMode));
+        OnPropertyChanged(nameof(CanChangeActionMode));
+        OnPropertyChanged(nameof(IsChatActionMode));
+        OnPropertyChanged(nameof(IsNegotiationActionMode));
+        NotifyTabSelectionChanged();
+    }
+
+    private void SetActionMode(NpcDialogueActionMode mode)
+    {
+        if (_closed || _activeService == null || !_activeService.CanChangeActionMode) return;
+        if (!_activeService.TrySetActionMode(mode)) return;
+        OnPropertyChanged(nameof(IsChatActionMode));
+        OnPropertyChanged(nameof(IsNegotiationActionMode));
+        OnPropertyChanged(nameof(CanChangeActionMode));
+        NotifyTabSelectionChanged();
+        NoticeText = mode == NpcDialogueActionMode.Negotiation
+            ? AwakeLocalization.Resolve("awake.ui.negotiation_notice", "你正在明确提出条件；只有对方明确接受，且游戏状态实际完成结算，才会产生变化。")
+            : AwakeLocalization.Resolve("awake.ui.chat_notice", "当前只进行普通交谈；说出口的话不会直接改变游戏状态。");
+        AwakeLog.Write("awake_messenger_action_mode_changed mode=" + mode);
     }
 
     private async Task SendAsyncSafe(string text)

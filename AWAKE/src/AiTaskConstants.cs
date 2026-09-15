@@ -26,6 +26,8 @@ internal static class AiTaskConstants
     internal const string ProactiveNamespace = "awake.npc.proactive";
     internal const string WorldEventsNamespace = "awake.world.events";
     internal const string WorldEventsKey = "campaign.world_events.v1";
+    internal const string WorldFactJournalNamespace = "awake.world.fact.journal";
+    internal const string WorldFactJournalRootKey = "campaign.world_fact_journal.root.v1";
     internal const string MessengerNamespace = "awake.messenger";
     internal const string MessengerKey = "campaign.messenger.v1";
     internal const string EventMetaKey = "campaign.event_meta.v1";
@@ -39,6 +41,8 @@ internal static class AiTaskConstants
     internal const string InteractionsNamespace = "awake.interactions";
     internal const string InteractionsRecoveryIndexKey = "awake.interactions.recovery_index.v1";
     internal const string PersonaStateNamespace = "awake.persona.state";
+    internal const string LettersNamespace = "awake.letters";
+    internal const string LettersKey = "campaign.letters.v1";
 
     internal const string TranscriptAppendCommandId = "awake.transcript.append.v1";
     internal const string TranscriptPinCommandId = "awake.transcript.pin.v1";
@@ -54,6 +58,7 @@ internal static class AiTaskConstants
     internal const string GiveGoldCompleteCommandId = "awake.action.give_gold.complete.v1";
     internal const string GiveGoldCompensatedCommandId = "awake.action.give_gold.compensated.v1";
     internal const string InteractionsIndexUpdateCommandId = "awake.interactions.index.update.v1";
+    internal const string LettersUpsertCommandId = "awake.letters.upsert.v1";
 
     internal const string RelationshipDeltaCommandId = "awake.relationship.delta.v1";
     internal const string WorldEffectRecordCommandId = "awake.world.effect.record.v1";
@@ -115,15 +120,16 @@ internal static class AiTaskConstants
         RelationshipsNamespace,
         ProactiveNamespace,
         WorldEventsNamespace,
+        WorldFactJournalNamespace,
         MessengerNamespace,
         TranscriptNamespace,
         ContactsNamespace,
         AuditNamespace,
         OnboardingNamespace,
         DialogueQueueNamespace,
-        InteractionsNamespace
-        // PersonaStateNamespace 不进入默认打开列表：persona 权威载体是存档 SyncData，
-        // SQLite 命名空间若仍需打开必须由调用方显式传入。
+        InteractionsNamespace,
+        PersonaStateNamespace,
+        LettersNamespace
     };
 
     internal static string RoutePermission(string routeId) => "ai.route.invoke:" + routeId;
