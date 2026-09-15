@@ -1,10 +1,13 @@
 param(
-    [string]$PersonaMapPath = 'C:\Users\26811\OneDrive\文档\New project\_houkai_merge\AWAKE\docs\mappings\persona-game\persona-game-mapping.v1.json',
-    [string]$WarSailsMapPath = 'C:\Users\26811\OneDrive\文档\New project\_houkai_merge\AWAKE\docs\mappings\war-sails-reference\war-sails-reference-string-map.v1.json',
-    [string]$OutputDirectory = 'C:\Users\26811\OneDrive\文档\New project\_houkai_merge\AWAKE\docs\mappings\persona-game'
+    [string]$PersonaMapPath = '',
+    [string]$WarSailsMapPath = '',
+    [string]$OutputDirectory = ''
 )
 
 $ErrorActionPreference = 'Stop'
+if ([string]::IsNullOrWhiteSpace($OutputDirectory)) { $OutputDirectory = Join-Path (Split-Path -Parent $PSScriptRoot) 'docs\mappings\persona-game' }
+if ([string]::IsNullOrWhiteSpace($PersonaMapPath)) { $PersonaMapPath = Join-Path $OutputDirectory 'persona-game-mapping.v1.json' }
+if ([string]::IsNullOrWhiteSpace($WarSailsMapPath)) { $WarSailsMapPath = Join-Path (Split-Path -Parent $PSScriptRoot) 'docs\mappings\war-sails-reference\war-sails-reference-string-map.v1.json' }
 $personaMap = Get-Content -Raw -LiteralPath $PersonaMapPath -Encoding UTF8 | ConvertFrom-Json
 $warSailsMap = Get-Content -Raw -LiteralPath $WarSailsMapPath -Encoding UTF8 | ConvertFrom-Json
 

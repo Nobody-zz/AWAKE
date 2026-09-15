@@ -172,7 +172,6 @@ public sealed class WorkspaceDocumentService
             PublicDescription = source.PublicDescription,
             PrivateDescription = source.PrivateDescription,
             ContradictionDescription = source.ContradictionDescription,
-            FoodPreference = source.FoodPreference,
             SelfClaimRules = source.SelfClaimRules is null ? null! : source.SelfClaimRules.ToList(),
             RealSelfBehaviors = source.RealSelfBehaviors is null ? null! : source.RealSelfBehaviors.ToList(),
             SelfClaimExamples = source.SelfClaimExamples is null ? null! : source.SelfClaimExamples.ToList(),

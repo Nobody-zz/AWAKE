@@ -1,0 +1,103 @@
+{
+  "schema": "awake.ui-lab.native-prefab-support.v1",
+  "evidenceLevel": "E2",
+  "generatedAt": "2026-09-13T14:35:00+08:00",
+  "title": "几何引擎对原版 Prefab 写法的支持（原版 SPConversation 收敛）",
+  "gameLaunch": false,
+  "rendering": false,
+  "readOnly": true,
+  "limitation": "本地推导几何，不是渲染结果；不启动游戏、不碰原版文件。真机验收仍为 E4。",
+
+  "why": "原版 Prefab 的写法比 AWAKE 复杂。引擎若读不懂，会把外部 Prefab 引用当成默认 StretchToParent 的普通控件，让 CoverChildren 链一路放大——这不是精度问题，是结构性失真。",
+
+  "before": {
+    "note": "修复前实测（同一份原版文件）",
+    "prefab": "Modules/Native/GUI/Prefabs/Conversation/SPConversation.xml",
+    "panel_box": { "w": 2375, "h": 35044 },
+    "overflow_widgets": 16,
+    "widget_count": 62,
+    "symptom": "GridWidget 的 CoverChildren 高度被推到 77889：它的 item 是外部 Prefab 引用，未被展开，于是每个 item 用默认 StretchToParent 承接了祖先的可用高度"
+  },
+
+  "after": {
+    "command": "python awake_ui.py check  (或)  python preview/preview_prefab_geometry.py --prefab-dir <原版 Conversation 目录> --prefab SPConversation.xml --audit --json",
+    "prefab": "SPConversation.xml",
+    "panel_box": { "w": 1920, "h": 1080 },
+    "canvas": { "width": 1920, "height": 1080 },
+    "overflow_widgets": 0,
+    "widget_count": 140,
+    "issue_count": 40,
+    "issue_by_rule": {
+      "grid_off_5": 6,
+      "grid_off_5_size": 14,
+      "magic_large_literal": 1,
+      "zero_size_widget": 15,
+      "fixed_without_size": 4
+    },
+    "issue_by_severity": { "warn": 21, "info": 15, "error": 4 }
+  },
+
+  "supportedSyntax": [
+    {
+      "syntax": "外部 Prefab 引用",
+      "example": "<SPConversationAggresivePartyItem Parameter.Item.Width=\"50\" MarginTop=\"20\"/>",
+      "handling": "递归展开被引 Prefab；实例属性与原版默认属性合并，实例优先；用递归路径集合防引用环"
+    },
+    {
+      "syntax": "<Parameters> + *参数",
+      "example": "<Parameter Name=\"Item.Width\" DefaultValue=\"70\"/> → SuggestedWidth=\"*Item.Width\"",
+      "handling": "参数表；实例上的 Parameter.Item.Width 覆盖默认值，并把取值就地内联到被引子树（同一 Prefab 的不同实例取值不同，全局表装不下）"
+    },
+    {
+      "syntax": "<Constants> + !常量（含 MultiplyResult）",
+      "example": "<Constant Name=\"Item.Height\" MultiplyResult=\"0.71\" Value=\"*Item.Width\"/>",
+      "handling": "常量求解，支持常量互相引用与常量依赖参数"
+    },
+    {
+      "syntax": "GridWidget / LayoutImp=\"GridLayout\"",
+      "example": "<GridWidget LayoutImp=\"GridLayout\" ColumnCount=\"9\" DefaultCellWidth=\"60\" DefaultCellHeight=\"70\">",
+      "handling": "CoverChildren 下按 列数×格宽 / 行数×格高 推导，格子不继承父级尺寸"
+    },
+    {
+      "syntax": "DimensionSyncWidget",
+      "example": "WidgetToCopyHeightFrom=\"..\\..\\..\\AnswerListContainer\" DimensionToSync=\"Vertical\"",
+      "handling": "解析相对路径（上跳 N 级后按 Id 查），复制目标控件尺寸；带自引用防护"
+    },
+    {
+      "syntax": "Min / Max 尺寸约束",
+      "example": "MinHeight=\"192\"",
+      "handling": "推导尺寸后按上下限夹取"
+    },
+    {
+      "syntax": "逻辑控件",
+      "example": "NavigationScopeTargeter / HintWidget / DimensionSyncWidget",
+      "handling": "不占布局空间，也不参与审计（否则会被误报成零尺寸问题）"
+    }
+  ],
+
+  "auditCorrection": {
+    "rule": "审计只评判写死的字面值",
+    "detail": "值为 !常量 或 *参数 表达式的属性跳过栅格检查；审计读的是原始写法，不是内联参数后的数字。修此条后原版 SPConversation 的问题数由 49 降到 40（35.5 / 49.7 这类由 0.71 比例算出的值不再被误判为越格）。"
+  },
+
+  "regression": {
+    "note": "AWAKE 侧零回归",
+    "awake_baseline": {
+      "prefab_count": 6,
+      "widget_total": 185,
+      "issue_total": 267,
+      "by_severity": { "warn": 181, "info": 86, "error": 0 }
+    },
+    "diff_closure": {
+      "command": "awake_ui.py check --diff（把 NpcDialogue 的 MarginRight 由 12 改成 13）",
+      "result": "几何 +7 / -7 个矩形 · + ButtonWidget@2:1387,189,40,40 · - ButtonWidget@2:1388,189,40,40",
+      "meaning": "diff 精确到具体矩形，不是只比问题总数"
+    }
+  },
+
+  "knownGaps": [
+    "由 Sprite 决定尺寸的控件（BrushWidget / ImageWidget 配 UseSpriteDimensions）若未写 SuggestedWidth/Height，宽度推不出来——原版靠图集元数据，本地拿不到",
+    "STANDARD 件（Standard.VerticalScrollbar 等）尺寸仍用内置兜底值，未从游戏目录读取",
+    "遮罩层视觉压暗不做，只画轮廓"
+  ]
+}

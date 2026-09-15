@@ -23,7 +23,7 @@ public static class PersonaAuthoringV2Adapter
     {
         "schemaVersion", "id", "displayName", "status", "sourcePackId", "templateVersion", "sourceDescription",
         "core", "identityFacts", "summary", "publicDescription", "privateDescription", "contradictionDescription",
-        "foodPreference", "selfClaimRules", "realSelfBehaviors", "selfClaimExamples"
+        "selfClaimRules", "realSelfBehaviors", "selfClaimExamples", "tensionAxes"
     };
 
     private static readonly string[] LegacySourceIds =
@@ -81,7 +81,6 @@ public static class PersonaAuthoringV2Adapter
                 PublicDescription = NormalizeText(document.PublicDescription),
                 PrivateDescription = NormalizeText(document.PrivateDescription),
                 ContradictionDescription = NormalizeText(document.ContradictionDescription),
-                FoodPreference = NormalizeText(document.FoodPreference),
                 SelfClaimRules = NormalizeList(document.SelfClaimRules),
                 RealSelfBehaviors = NormalizeList(document.RealSelfBehaviors),
                 SelfClaimExamples = NormalizeList(document.SelfClaimExamples)
@@ -345,7 +344,6 @@ public sealed class AwakePersonaAuthoringAuthored
     [JsonPropertyName("publicDescription")] public string PublicDescription { get; set; } = string.Empty;
     [JsonPropertyName("privateDescription")] public string PrivateDescription { get; set; } = string.Empty;
     [JsonPropertyName("contradictionDescription")] public string ContradictionDescription { get; set; } = string.Empty;
-    [JsonPropertyName("foodPreference")] public string FoodPreference { get; set; } = string.Empty;
     [JsonPropertyName("selfClaimRules")] public List<string> SelfClaimRules { get; set; } = new List<string>();
     [JsonPropertyName("realSelfBehaviors")] public List<string> RealSelfBehaviors { get; set; } = new List<string>();
     [JsonPropertyName("selfClaimExamples")] public List<string> SelfClaimExamples { get; set; } = new List<string>();
@@ -501,10 +499,12 @@ internal sealed class PersonaAuthoringValueAction
 
 public sealed class PersonaAuthoringContractAssets
 {
-    private const string AuthoringSchemaSha256 = "5B5E704329C8383868D66CD41DFF9E693B67E5A8AED8ACBA0EF5511410340BF9";
-    private const string CrosswalkSha256 = "F15DEB55EFA34FC0224F6784FC9E3E03DB1649B41C680C5A43F92FAE6014ECFD";
+    // 契约摘要在取 sha 前先规范化行尾（见 StaticDigest）：同一份文件在 CRLF 与 LF 两种检出
+    // 环境下必须得到同一摘要，否则 core.autocrlf / 跨平台检出会让这里误报 digest drifted。
+    private const string AuthoringSchemaSha256 = "30647C7E583EC519B6E25532A2C8C7AF708B512475614611E2B98A66FAC70DAA";
+    private const string CrosswalkSha256 = "C8A94B177DE10EE9B400896864DF10FF0A246CF24C7125C1EE19549596E7087E";
     private const string CanonicalizationSha256 = "B9BE5523DAF6723E45C803157250FD5D96F2847C58C494CC0F5CD405F27E317C";
-    private const string RegistrySha256 = "59CB54D92F32B5CA9BDD5D739367FE7B9964A41EF54978FED9AEA22B950634E6";
+    private const string RegistrySha256 = "0E66E0344BA64CCF1F5F751F2B59AB37B7EF88609A48FE604272BD9D9F8791BF";
     private const string AuthoringSchemaResource = "PersonaWorkbench.Core.Contracts.awake.persona.authoring.v2.schema.json";
     private const string CrosswalkResource = "PersonaWorkbench.Core.Contracts.persona-workbench-to-awake.crosswalk.v1.json";
     private const string CanonicalizationResource = "PersonaWorkbench.Core.Contracts.persona-canonical-json.v1.json";
@@ -532,10 +532,12 @@ public sealed class PersonaAuthoringContractAssets
     public int CrosswalkRevision => PersonaContractClosureVersion.CrosswalkRevision;
     public int RegistryRevision => PersonaContractClosureVersion.RegistryRevision;
     public string CurrentSourceSha256 => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(PersonaSchema.Version)));
-    public string CurrentAuthoringSha256 => Convert.ToHexString(SHA256.HashData(AuthoringSchemaUtf8));
-    public string CurrentCrosswalkSha256 => Convert.ToHexString(SHA256.HashData(CrosswalkUtf8));
-    public string CurrentCanonicalizationSha256 => Convert.ToHexString(SHA256.HashData(CanonicalizationUtf8));
-    public string CurrentRegistrySha256 => Convert.ToHexString(SHA256.HashData(RegistryUtf8));
+    // 与 RequireDigest 同源：对外上报的契约摘要即校验用的那个摘要，避免"校验用规范化值、
+    // 上报用原始值"造成闭包票据（PersonaContractClosure.MatchesAssets）对不上。
+    public string CurrentAuthoringSha256 => StaticDigest(AuthoringSchemaUtf8);
+    public string CurrentCrosswalkSha256 => StaticDigest(CrosswalkUtf8);
+    public string CurrentCanonicalizationSha256 => StaticDigest(CanonicalizationUtf8);
+    public string CurrentRegistrySha256 => StaticDigest(RegistryUtf8);
     public bool IsValid { get; }
     public IReadOnlyList<string> Warnings { get; }
     internal IReadOnlyDictionary<string, PersonaAuthoringCrosswalkRow> Rows { get; }
@@ -617,7 +619,36 @@ public sealed class PersonaAuthoringContractAssets
 
     private static void RequireDigest(byte[] bytes, string expected, string label)
     {
-        if (!string.Equals(Convert.ToHexString(SHA256.HashData(bytes)), expected, StringComparison.Ordinal)) throw new InvalidOperationException(label + " digest drifted.");
+        if (!string.Equals(StaticDigest(bytes), expected, StringComparison.Ordinal)) throw new InvalidOperationException(label + " digest drifted.");
+    }
+
+    /// <summary>
+    /// 契约摘要：先把行尾规范化为 LF（CRLF→LF、孤立 CR→LF）再取 SHA-256。
+    /// 契约文件的行尾取决于 git 的 core.autocrlf / .gitattributes：同一份文件在不同机器、
+    /// 不同平台检出后字节并不相同。若直接对裸字节取摘要，"行尾一换就报 digest drifted"，
+    /// 常量被迫钉死在"某台机器某次检出"的形态上。规范化后摘要只取决于内容，与检出环境无关。
+    /// </summary>
+    private static string StaticDigest(byte[] bytes)
+    {
+        byte[] source = bytes ?? Array.Empty<byte>();
+        byte[] normalized = new byte[source.Length];
+        int length = 0;
+        for (int i = 0; i < source.Length; i++)
+        {
+            if (source[i] == 0x0D)
+            {
+                normalized[length++] = 0x0A;
+                if (i + 1 < source.Length && source[i + 1] == 0x0A) i++;
+            }
+            else normalized[length++] = source[i];
+        }
+        if (length != normalized.Length)
+        {
+            byte[] trimmed = new byte[length];
+            Array.Copy(normalized, trimmed, length);
+            normalized = trimmed;
+        }
+        return Convert.ToHexString(SHA256.HashData(normalized));
     }
 
     private static void RequireString(JsonElement parent, string name, string expected)
@@ -744,7 +775,6 @@ public static class PersonaAuthoringV2Validator
             ValidateText(diagnostics, "authored.publicDescription", document.Authored.PublicDescription, false, null);
             ValidateText(diagnostics, "authored.privateDescription", document.Authored.PrivateDescription, false, null);
             ValidateText(diagnostics, "authored.contradictionDescription", document.Authored.ContradictionDescription, false, null);
-            ValidateText(diagnostics, "authored.foodPreference", document.Authored.FoodPreference, false, null);
             ValidateTextList(diagnostics, "authored.selfClaimRules", document.Authored.SelfClaimRules);
             ValidateTextList(diagnostics, "authored.realSelfBehaviors", document.Authored.RealSelfBehaviors);
             ValidateTextList(diagnostics, "authored.selfClaimExamples", document.Authored.SelfClaimExamples);
@@ -865,7 +895,9 @@ public static class PersonaAuthoringV2Validator
         for (int index = 0; index < value.Length; index++)
         {
             char character = value[index];
-            if (character < 0x20 || character == 0x7f) return true;
+            // Allow tab (0x09), line feed (0x0A), and carriage return (0x0D); reject all other C0 controls and DEL
+            if ((character < 0x20 && character != 0x09 && character != 0x0A && character != 0x0D) || character == 0x7f)
+                return true;
             if (char.IsHighSurrogate(character))
             {
                 if (index + 1 >= value.Length || !char.IsLowSurrogate(value[index + 1])) return true;
@@ -969,6 +1001,5 @@ public static class PersonaAuthoringCanonicalJson
         }
     }
 }
-
 
 

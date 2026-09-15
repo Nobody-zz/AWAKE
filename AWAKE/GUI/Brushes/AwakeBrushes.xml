@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  AWAKE UI 自有 Brush 层（甲方 = UI 编辑层维护）
+
+  作用：把美术交付的 sprite 包成 Prefab 可直接引用的 Brush。Prefab 只写 Awake.* 名字，
+        换图/改状态不需要动 Prefab。
+
+  数据来源：M0 交付清单 tools/awake-art-lab/out/m0-manifest.json（21 个 sprite）。
+  贴图源文件：GUI/SpriteParts/ui_awake_{frame,ornament,button}/<名>.png
+
+  三条已取证的口径（照原版真实 schema，不发明写法）：
+   1. 九宫格边距写在本文件 <BrushLayer ExtendLeft/Top/Right/Bottom>（单位＝sprite 像素），
+      不写在 sprite、也不在 SpriteData。四处全写才是九宫格，缺一处退回整体拉伸。
+      —— 依据 BrushFactory.cs LoadBrushLayerInto 的 case "ExtendLeft/Top/Right/Bottom"。
+   2. 状态切换＝在 <Styles> 里覆盖**同名** BrushLayer 的 Sprite；
+      这是**部分覆盖**（没写的属性继承 <Layers>），所以 Extend 只需写一次。
+      —— 依据 BrushFactory.cs LoadStyleInto：style.GetLayer(name) 后 LoadBrushLayerInto 增量赋值；
+         原版同写法见 Native/GUI/Brushes/Main.xml 的 Popup.CloseButton（Default/Hovered/Pressed 三态）。
+   3. 状态名用 Gauntlet 原生词：Default / Hovered / Pressed / Disabled / Selected
+      —— 全库原版 Brushes 词频实测为这五个（另有 SelectedDisabled / Opened / Invalid）。
+
+  本文件由 GUI/Brushes/*.xml 自动加载，**不需要**在 SubModule.xml 里声明。
+  —— 依据 BrushFactory.LoadBrushes → GetBrushesNames → ResourceDepot.GetFiles("Brushes", ".xml")；
+     全库 0 个模组的 SubModule.xml 声明过 Brush / SpriteData，可互为旁证。
+
+  ⚠️ 未验：真机渲染 —— 本地预览 ≠ 真机（本文件只做静态可解析性验证）。
+-->
+<Brushes>
+
+  <!-- ==================== C1 面板底 / 框（ui_awake_frame） ==================== -->
+
+  <Brush Name="Awake.Panel.Main1280">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="panel_main_1280"
+                  ExtendLeft="32" ExtendTop="32" ExtendRight="32" ExtendBottom="32" />
+    </Layers>
+    <Styles>
+      <Style Name="Default"><BrushLayer Name="Default" Sprite="panel_main_1280" /></Style>
+    </Styles>
+  </Brush>
+
+  <Brush Name="Awake.Panel.Main960">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="panel_main_960"
+                  ExtendLeft="32" ExtendTop="32" ExtendRight="32" ExtendBottom="32" />
+    </Layers>
+    <Styles>
+      <Style Name="Default"><BrushLayer Name="Default" Sprite="panel_main_960" /></Style>
+    </Styles>
+  </Brush>
+
+  <!-- 弹窗底：WorldEventInbox / WeeklyReportBrowser / DeveloperCheck 三个 1100×680 共用 -->
+  <Brush Name="Awake.Panel.Dialog1100">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="panel_dialog_1100"
+                  ExtendLeft="32" ExtendTop="32" ExtendRight="32" ExtendBottom="32" />
+    </Layers>
+    <Styles>
+      <Style Name="Default"><BrushLayer Name="Default" Sprite="panel_dialog_1100" /></Style>
+    </Styles>
+  </Brush>
+
+  <Brush Name="Awake.Panel.Input800">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="panel_input_800"
+                  ExtendLeft="16" ExtendTop="16" ExtendRight="16" ExtendBottom="16" />
+    </Layers>
+    <Styles>
+      <Style Name="Default"><BrushLayer Name="Default" Sprite="panel_input_800" /></Style>
+    </Styles>
+  </Brush>
+
+  <Brush Name="Awake.Panel.Status720">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="panel_status_720"
+                  ExtendLeft="16" ExtendTop="16" ExtendRight="16" ExtendBottom="16" />
+    </Layers>
+    <Styles>
+      <Style Name="Default"><BrushLayer Name="Default" Sprite="panel_status_720" /></Style>
+    </Styles>
+  </Brush>
+
+  <!-- ==================== C2 栏头 / 分隔（ui_awake_ornament） ==================== -->
+
+  <!-- 顶栏带：上下不拉伸（ExtendTop/Bottom=0），否则上下沿刻线会被拉成斜纹 -->
+  <Brush Name="Awake.Ornament.HeaderBand">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="header_band"
+                  ExtendLeft="24" ExtendTop="0" ExtendRight="24" ExtendBottom="0" />
+    </Layers>
+    <Styles>
+      <Style Name="Default"><BrushLayer Name="Default" Sprite="header_band" /></Style>
+    </Styles>
+  </Brush>
+
+  <!-- 分隔线：整条拉伸（四边 Extend=0） -->
+  <Brush Name="Awake.Ornament.DividerGold">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="divider_gold"
+                  ExtendLeft="0" ExtendTop="0" ExtendRight="0" ExtendBottom="0" />
+    </Layers>
+    <Styles>
+      <Style Name="Default"><BrushLayer Name="Default" Sprite="divider_gold" /></Style>
+    </Styles>
+  </Brush>
+
+  <!-- ==================== C3 按钮（ui_awake_button） ====================
+
+       ⚠️ 09-15 起的统一口径（`docs/UI-CONTROL-CONTRACT-20260914.md` §4.1）：
+       **三个牌族（主 / 次 / 页签）的九宫格一律 16/16/16/16** —— 端头收束段是 13px，
+       左右边距必须 ≥ 13；上下 16 与左右对齐。**圆印（关闭键）不参与**：它恒 1:1 使用，
+       12/12/12/12 只为满足「四处都写」的形式要求。
+       ⚠️ 改端头长度或框厚必须重算这一组值。 -->
+
+  <!-- 关闭键：五个面板共用 -->
+  <Brush Name="Awake.Button.Close">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="btn_close_40"
+                  ExtendLeft="12" ExtendTop="12" ExtendRight="12" ExtendBottom="12" />
+    </Layers>
+    <Styles>
+      <Style Name="Default"><BrushLayer Name="Default" Sprite="btn_close_40" /></Style>
+      <Style Name="Hovered"><BrushLayer Name="Default" Sprite="btn_close_40_hover" /></Style>
+      <Style Name="Pressed"><BrushLayer Name="Default" Sprite="btn_close_40_pressed" /></Style>
+    </Styles>
+  </Brush>
+
+  <!-- Tab：信使 3 个 + 对话 2 个；Selected 用独立的已选中图（不靠提亮）
+       ⚠️ 09-15 收敛：九宫格由 14/14/10/10 收到 **16/16/16/16**，与主/次按钮同值。
+       依据端头收束段 = 13px（`build_m0.py` BUTTON_CUT 定案）⇒ 左右边距必须 ≥ 13；
+       写 16 留余量。上下由原来的 10 提到 16 与左右对齐（35 高的 sprite，16+16=32 ≤ 35 仍合法）。 -->
+  <Brush Name="Awake.Button.Tab">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="btn_tab_105"
+                  ExtendLeft="16" ExtendTop="16" ExtendRight="16" ExtendBottom="16" />
+    </Layers>
+    <Styles>
+      <Style Name="Default"><BrushLayer Name="Default" Sprite="btn_tab_105" /></Style>
+      <Style Name="Hovered"><BrushLayer Name="Default" Sprite="btn_tab_105_hover" /></Style>
+      <Style Name="Pressed"><BrushLayer Name="Default" Sprite="btn_tab_105_pressed" /></Style>
+      <Style Name="Selected"><BrushLayer Name="Default" Sprite="btn_tab_105_selected" /></Style>
+    </Styles>
+  </Brush>
+
+  <!-- 主按钮：发送（信使 + 对话）、开发工具四个 110×35 -->
+  <Brush Name="Awake.Button.Primary">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="btn_primary_110"
+                  ExtendLeft="16" ExtendTop="16" ExtendRight="16" ExtendBottom="16" />
+    </Layers>
+    <Styles>
+      <Style Name="Default"><BrushLayer Name="Default" Sprite="btn_primary_110" /></Style>
+      <Style Name="Hovered"><BrushLayer Name="Default" Sprite="btn_primary_110_hover" /></Style>
+      <Style Name="Pressed"><BrushLayer Name="Default" Sprite="btn_primary_110_pressed" /></Style>
+      <Style Name="Disabled"><BrushLayer Name="Default" Sprite="btn_primary_110_disabled" /></Style>
+    </Styles>
+  </Brush>
+
+  <!-- 次按钮：写信（信使）等 -->
+  <Brush Name="Awake.Button.Secondary">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="btn_secondary_100"
+                  ExtendLeft="16" ExtendTop="16" ExtendRight="16" ExtendBottom="16" />
+    </Layers>
+    <Styles>
+      <Style Name="Default"><BrushLayer Name="Default" Sprite="btn_secondary_100" /></Style>
+      <Style Name="Hovered"><BrushLayer Name="Default" Sprite="btn_secondary_100_hover" /></Style>
+      <Style Name="Pressed"><BrushLayer Name="Default" Sprite="btn_secondary_100_pressed" /></Style>
+    </Styles>
+  </Brush>
+
+</Brushes>

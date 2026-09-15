@@ -1,9 +1,11 @@
 param(
-    [string]$ClusterPath = 'C:\Users\26811\OneDrive\文档\New project\_houkai_merge\AWAKE\tools\worldbook-studio\tests\fixtures\official-reference\pravend-cluster',
-    [string]$EvidencePath = 'C:\Users\26811\OneDrive\文档\New project\_houkai_merge\AWAKE\tools\worldbook-studio\_tmp\pravend-real-worker-evidence.json'
+    [string]$ClusterPath = '',
+    [string]$EvidencePath = ''
 )
 $ErrorActionPreference = 'Stop'
-$studio = 'C:\Users\26811\OneDrive\文档\New project\_houkai_merge\AWAKE\tools\worldbook-studio'
+$studio = Split-Path -Parent $PSScriptRoot
+if ([string]::IsNullOrWhiteSpace($ClusterPath)) { $ClusterPath = Join-Path $studio 'tests\fixtures\official-reference\pravend-cluster' }
+if ([string]::IsNullOrWhiteSpace($EvidencePath)) { $EvidencePath = Join-Path $studio '_tmp\pravend-real-worker-evidence.json' }
 $cluster = $ClusterPath
 $expected = Get-Content -LiteralPath (Join-Path $cluster 'expected-facts.v1.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $evidence = Get-Content -LiteralPath $EvidencePath -Raw -Encoding UTF8 | ConvertFrom-Json

@@ -332,7 +332,7 @@ internal sealed class AuthorityGateService
         catch (AuthorityMutationUnknownException) { throw; }
         catch (InvalidOperationException error) when (IsStableAuthorityConflict(error)) { throw; }
         catch (Exception) when (!mutationStarted) { throw; }
-        catch (Exception) { throw new AuthorityMutationUnknownException(); }
+        catch (Exception error) { throw new AuthorityMutationUnknownException(error); }
         finally
         {
             targetLease?.Dispose();
@@ -1584,7 +1584,9 @@ internal sealed record AuthorityCompileProof(string CompileProofId, string Proof
 internal sealed record AuthorityCompileSettlement(CompileResult Result, string CompiledPath, JsonObject? PersistedEnvelope = null);
 internal sealed class AuthorityMutationUnknownException : InvalidOperationException
 {
-    public AuthorityMutationUnknownException() : base("WB-AUTHORITY-MUTATION-UNKNOWN: 编译已进入持久化流程，但最终结算状态未知。") { }
+    public AuthorityMutationUnknownException(Exception? cause = null)
+        : base("WB-AUTHORITY-MUTATION-UNKNOWN: 编译已进入持久化流程，但最终结算状态未知。"
+               + (cause is null ? "" : $" 原因: {cause.GetType().Name}: {cause.Message}"), cause) { }
 }
 
 internal enum CompileSettlementFaultPoint

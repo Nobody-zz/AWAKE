@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Awake;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 var root = Path.Combine(Path.GetTempPath(), "awake-worldbook-runtime-smoke", Guid.NewGuid().ToString("N"));
@@ -79,7 +80,19 @@ try
     TestPackageIntegrity();
     TestPermissionStateMachine();
     TestRegistrySelection();
+    TestRepositoryPackageForm();
     TestWeeklyReport();
+    TestWorldFactCapture();
+    TestWorldFactJournalCodec();
+    TestWorldFactQuery();
+    RunWorldFactContextInterfaceStateMatrix();
+    RunWorldFactContextInterfaceProvenance();
+    RunWorldFactContextInterfaceLegacyFallback();
+    RunWorldFactContextInterfaceCancellation();
+    RunAwakeEventFactTriggerEvaluation();
+    TestMinimalWeeklyReport();
+    TestWorldReportV2Build();
+    TestWorldReportV2PersistenceMinimal();
     TestWorldEventLedger();
     TestEventContractParity();
     TestDynamicKnowledgeProjection();
@@ -87,6 +100,7 @@ try
     TestCampaignIsolation();
     TestWeeklyReportCatchUp();
     TestKnowledgeReadinessAndStoreBoundary();
+    TestWorldFactCollectorWiring();
     TestProductionReadinessGateWiring();
     Console.WriteLine("PASS: runtime loader/query/overlay/identity/registry/weekly-report/event-ledger smoke");
 }
@@ -98,6 +112,801 @@ finally
 static void Require(bool condition, string message)
 {
     if (!condition) throw new InvalidOperationException(message);
+}
+
+static void TestWorldFactCapture()
+{
+    Require(WorldFactCapture.ToTimeSlot(2d) == 288L && WorldFactCapture.ToTimeSlot(-1d) == -1L, "world fact time-slot normalization failed");
+
+    Require(WorldFactCapture.TryCreateWar(10, 1441, "b", "乙国", "a", "甲国", out WorldFactCapture war)
+        && war.Kind == "war_declared"
+        && war.Text == "乙国与甲国开战。"
+        && war.EventKey.StartsWith("wf1-", StringComparison.Ordinal)
+        && war.Fact.Entities.Count == 2
+        && war.Fact.FactId == new WorldFact(war.EventKey, 10, 1441, war.Kind, war.Fact.Entities).FactId
+        && war.Fact.Entities[0].Id == "a" && war.Fact.Entities[1].Id == "b"
+        && WeeklyReportService.InferDomain(war.Kind) == "politics", "war capture/domain mapping failed");
+    Require(WorldFactCapture.TryCreatePeace(10, 1442, "a", "甲国", "b", "乙国", out WorldFactCapture peace)
+        && peace.EventKey.StartsWith("wf1-", StringComparison.Ordinal)
+        && WeeklyReportService.InferDomain(peace.Kind) == "politics", "peace capture/domain mapping failed");
+    Require(WorldFactCapture.TryCreateSettlementOwnerChanged(10, 1443, "town_A", "阿卡拉特", "old_lord", "new_lord", "新领主", out WorldFactCapture settlement)
+        && settlement.EventKey.StartsWith("wf1-", StringComparison.Ordinal)
+        && settlement.Fact.Entities.Any(x => x.Id == "old_lord" && x.Role == "previous_owner")
+        && settlement.Text == "阿卡拉特易主，现由新领主控制。"
+        && WeeklyReportService.InferDomain(settlement.Kind) == "war", "settlement capture/domain mapping failed");
+    Require(WorldFactCapture.TryCreateHeroKilled(10, 1444, "lord_a", "阿尔达", out WorldFactCapture death)
+        && death.EventKey.StartsWith("wf1-", StringComparison.Ordinal)
+        && death.Fact.Entities.Any(x => x.Id == "lord_a" && x.Role == "subject")
+        && WeeklyReportService.InferDomain(death.Kind) == "culture", "hero death capture/domain mapping failed");
+    Require(WorldFactCapture.TryCreateHeroPrisonerReleased(10, 1445, "lord_a", "阿尔达", "kingdom_a", "Ransom", out WorldFactCapture released)
+        && released.EventKey.StartsWith("wf1-", StringComparison.Ordinal)
+        && released.Fact.Entities.Any(x => x.Id == "kingdom_a" && x.Role == "capturer")
+        && WeeklyReportService.InferDomain(released.Kind) == "culture", "hero release capture/domain mapping failed");
+    Require(!WorldFactCapture.TryCreateHeroKilled(0, 1444, "lord_a", "阿尔达", out _)
+        && !WorldFactCapture.TryCreateHeroPrisonerReleased(10, 1445, "lord_a", "阿尔达", "kingdom_a", "", out _), "invalid world fact input was accepted");
+}
+
+static void TestWorldFactJournalCodec()
+{
+    Require(WorldFactCapture.TryCreateWar(10, 1441, "a", "甲国", "b", "乙国", out WorldFactCapture capture), "journal fixture fact creation failed");
+    JObject fact = capture.Fact.ToJson();
+    JObject chunk = WorldFactJournalCodec.BuildChunk(10, 16, 1, new[] { fact });
+    string chunkJson = chunk.ToString(Newtonsoft.Json.Formatting.None);
+    WorldFactJournalReadResult loaded = WorldFactJournalCodec.ReadChunk(chunkJson);
+    Require(loaded.Status == WorldFactJournalReadStatus.Success && loaded.Facts.Count == 1, "valid journal chunk was rejected");
+    string chunkKey = "facts-00000010-00000016-r00000001-0000-" + WorldFactJournalCodec.Sha256Hex(chunkJson);
+    Require(WorldFactJournalCodec.TryParseChunkKey(chunkKey, out int startDay, out int endDay, out int revision, out int ordinal, out string hash)
+        && startDay == 10 && endDay == 16 && revision == 1 && ordinal == 0 && hash.Length == 64,
+        "valid journal chunk key was rejected");
+    Require(!WorldFactJournalCodec.TryParseChunkKey("facts-invalid", out _, out _, out _, out _, out _), "invalid journal chunk key was accepted");
+    Require(WorldFactJournalCodec.ReadChunk(null).Status == WorldFactJournalReadStatus.Missing
+        && WorldFactJournalCodec.ReadChunk(" ").Status == WorldFactJournalReadStatus.Corrupt, "journal missing/corrupt states collapsed");
+    JObject bad = (JObject)fact.DeepClone(); bad["factId"] = "bad";
+    Require(WorldFactJournalCodec.ReadChunk(WorldFactJournalCodec.BuildChunk(10, 16, 1, new[] { bad }).ToString()).Status == WorldFactJournalReadStatus.Corrupt, "invalid fact identity was accepted");
+    JObject root = WorldFactJournalCodec.BuildRoot(10, 16, 1, new[] { "chunk-1" });
+    Require(WorldFactJournalCodec.ReadRoot(root.ToString(), out _) == WorldFactJournalReadStatus.Success, "valid journal root was rejected");
+    JObject unsortedRoot = WorldFactJournalCodec.BuildRoot(10, 16, 1, new[] { "facts-b", "facts-a" });
+    Require(WorldFactJournalCodec.ReadRoot(unsortedRoot.ToString(), out _) == WorldFactJournalReadStatus.Success, "root key canonicalization failed");
+    unsortedRoot["chunkKeys"] = new JArray("facts-b", "facts-a");
+    Require(WorldFactJournalCodec.ReadRoot(unsortedRoot.ToString(), out _) == WorldFactJournalReadStatus.Corrupt, "unsorted root was accepted");
+    Require(WorldFactJournalCodec.ReadRoot("{\"schema\":\"awake.world_fact_journal.root.v1\",\"phase\":\"collecting\",\"chunkKeys\":[]}", out _) == WorldFactJournalReadStatus.Corrupt, "collecting root was accepted");
+}
+
+static void TestWorldFactQuery()
+{
+    Require(WorldFactCapture.TryCreateWar(10, 1441, "faction:a", "甲国", "faction:b", "乙国", out WorldFactCapture war), "query war fixture creation failed");
+    Require(WorldFactCapture.TryCreateSettlementOwnerChanged(11, 1585, "settlement:town", "阿卡拉特", "hero:old", "hero:new", "新领主", out WorldFactCapture settlement), "query settlement fixture creation failed");
+    Require(WorldFactCapture.TryCreateHeroKilled(12, 1729, "hero:fallen", "阿尔达", out WorldFactCapture death), "query hero fixture creation failed");
+    Require(WorldFactCapture.TryCreatePeace(12, 1730, "faction:a", "甲国", "faction:c", "丙国", out WorldFactCapture modCapture), "query mod fixture creation failed");
+    JObject modFact = modCapture.Fact.ToJson();
+    modFact["origin"] = "mod_generated";
+    modFact["authority"] = "mod_asserted";
+    var facts = new[] { war.Fact.ToJson(), settlement.Fact.ToJson(), death.Fact.ToJson(), modFact };
+    var query = new WorldFactQuery(
+        _ => Task.FromResult(new WorldFactJournalReadResult(WorldFactJournalReadStatus.Success, facts, revision: 1)),
+        () => Array.Empty<WorldEventRecord>());
+
+    WorldFactQueryResult recent = query.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.RecentDynamics,
+        CurrentDay = 12,
+        MaximumResults = 2
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(recent.Status == WorldFactQueryStatus.Success
+        && recent.Facts.Count == 2
+        && (int)recent.Facts[0]["occurred"]["campaignDay"] == 12
+        && (int)recent.Facts[1]["occurred"]["campaignDay"] == 11
+        && recent.Decisions.Any(value => value.ReasonCode == "excluded_not_game_confirmed_public"),
+        "recent policy did not filter, order or explain facts");
+
+    WorldFactQueryResult weekly = query.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.WeeklyDynamics,
+        CurrentDay = 12,
+        MaximumResults = 0
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(weekly.Facts.Count == 3
+        && weekly.SourceFactIds.Count == 3
+        && (int)weekly.Facts[0]["occurred"]["campaignDay"] == 10,
+        "weekly policy did not return the stable seven-day fact set");
+
+    WorldFactQueryResult wide = query.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.WorldKnowledge,
+        MaximumResults = 0
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(wide.Status == WorldFactQueryStatus.Success
+        && wide.Facts.Count == 3
+        && wide.SourceFactIds.Count == 3,
+        "world knowledge wide query was truncated or included a non-knowledge fact");
+
+    WorldFactQueryResult character = query.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.CharacterMemoryCandidate,
+        CurrentDay = 12,
+        HeroId = "hero:fallen",
+        MaximumResults = 20
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(character.Facts.Count == 1
+        && (string)character.Facts[0]["factId"] == death.Fact.FactId
+        && character.Decisions.Any(value => value.ReasonCode == "excluded_no_related_entity"),
+        "character policy did not require an entity relation");
+
+    WorldFactQueryResult trigger = query.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.EventTriggerCandidate,
+        StartDay = 10,
+        EndDay = 12,
+        AllowedKinds = new[] { "hero_killed" },
+        MaximumResults = 20
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(trigger.Facts.Count == 1 && (string)trigger.Facts[0]["kind"] == "hero_killed"
+        && trigger.Decisions.Any(value => value.ReasonCode == "excluded_kind_not_subscribed"),
+        "event trigger policy did not enforce subscribed kinds");
+
+    var legacy = new WorldEventRecord("awake:event:legacy-1", 12, "battle", "war", "旧记录", DateTimeOffset.UtcNow, "legacy-1");
+    var fallbackQuery = new WorldFactQuery(
+        _ => Task.FromResult(new WorldFactJournalReadResult(WorldFactJournalReadStatus.Missing)),
+        () => new[] { legacy });
+    WorldFactQueryResult fallback = fallbackQuery.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.RecentDynamics,
+        CurrentDay = 12
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(fallback.Status == WorldFactQueryStatus.Unavailable && fallback.UsedLegacyFallback
+        && fallback.Facts.Count == 1
+        && (string)fallback.Facts[0]["origin"] == "legacy_import",
+        "legacy fallback was not explicitly marked");
+    WorldFactQueryResult legacyCharacter = fallbackQuery.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.CharacterMemoryCandidate,
+        CurrentDay = 12,
+        HeroId = "hero:fallen"
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(legacyCharacter.Facts.Count == 0
+        && legacyCharacter.Decisions.Any(value => value.ReasonCode == "excluded_legacy_has_no_entities"),
+        "legacy fallback was allowed into character memory candidates");
+
+    var corruptQuery = new WorldFactQuery(
+        _ => Task.FromResult(new WorldFactJournalReadResult(WorldFactJournalReadStatus.Corrupt, errorCode: "smoke.corrupt")),
+        () => new[] { legacy });
+    WorldFactQueryResult corrupt = corruptQuery.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.RecentDynamics,
+        CurrentDay = 12
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(corrupt.Status == WorldFactQueryStatus.Corrupt && corrupt.Facts.Count == 0 && !corrupt.UsedLegacyFallback,
+        "corrupt journal was mistaken for an empty legacy window");
+}
+
+static void TestMinimalWeeklyReport()
+{
+    Require(WorldFactCapture.TryCreateWar(7, 1008, "faction:a", "甲国", "faction:b", "乙国", out WorldFactCapture war), "minimal report war fixture creation failed");
+    Require(WorldFactCapture.TryCreateHeroKilled(7, 1009, "hero:fallen", "阿尔达", out WorldFactCapture death), "minimal report hero fixture creation failed");
+    var query = new WorldFactQuery(
+        _ => Task.FromResult(new WorldFactJournalReadResult(
+            WorldFactJournalReadStatus.Success,
+            new[] { death.Fact.ToJson(), war.Fact.ToJson() },
+            revision: 4)),
+        () => Array.Empty<WorldEventRecord>());
+    WorldFactQueryResult weekly = query.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.WeeklyDynamics,
+        StartDay = 1,
+        EndDay = 7,
+        MaximumResults = 0
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(weekly.Status == WorldFactQueryStatus.Success
+        && weekly.WindowStartDay == 1
+        && weekly.WindowEndDay == 7
+        && weekly.Facts.Count == 2, "completed weekly query did not preserve its explicit window");
+    WeeklyFactReportBuildResult routed = WorldEventServices.TryBuildWeeklyReportFromQueryResult(weekly);
+    Require(routed.Succeeded && routed.Report != null, routed.ErrorCode);
+    Require(WeeklyDynamicsInput.TryCreate(weekly, out WeeklyDynamicsInput input, out string inputError), inputError);
+    Require(WeeklyReportService.TryBuildFromFacts(input, out JObject first, out string reportError), reportError);
+    Require(WeeklyReportService.TryBuildFromFacts(input, out JObject second, out reportError), reportError);
+    Require(WorldFactJournalCodec.CanonicalJson(first) == WorldFactJournalCodec.CanonicalJson(second)
+        && WeeklyReportService.BuildText(first, "本周动态", "本周没有记录。") == WeeklyReportService.BuildText(second, "本周动态", "本周没有记录。"),
+        "minimal report was not deterministic");
+    Require((string)first["schemaVersion"] == "awake.worldbook.weekly-report.v0-preview"
+        && (int)first["windowStartDay"] == 1
+        && (int)first["windowEndDay"] == 7
+        && ((JArray)first["sourceFactIds"]).Count == 2
+        && ((JArray)first["sections"]).Count == 2,
+        "minimal report output contract is incomplete");
+    Require(((JArray)first["sections"]).Children<JObject>()
+        .SelectMany(section => ((JArray)section["items"]).Children<JObject>())
+        .SelectMany(item => ((JArray)item["sourceFactIds"]).Values<string>())
+        .OrderBy(value => value, StringComparer.Ordinal)
+        .SequenceEqual(((JArray)first["sourceFactIds"]).Values<string>().OrderBy(value => value, StringComparer.Ordinal), StringComparer.Ordinal),
+        "minimal report source-fact closure is incomplete");
+
+    WorldFactQueryResult incomplete = query.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.WeeklyDynamics,
+        StartDay = 5,
+        EndDay = 10,
+        MaximumResults = 0
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(incomplete.Status == WorldFactQueryStatus.InvalidRequest, "unfinished weekly window was accepted");
+
+    var emptyQuery = new WorldFactQuery(
+        _ => Task.FromResult(new WorldFactJournalReadResult(WorldFactJournalReadStatus.Empty, revision: 1)),
+        () => Array.Empty<WorldEventRecord>());
+    WorldFactQueryResult emptyResult = emptyQuery.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.WeeklyDynamics,
+        StartDay = 1,
+        EndDay = 7,
+        MaximumResults = 0
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(WeeklyDynamicsInput.TryCreate(emptyResult, out WeeklyDynamicsInput emptyInput, out inputError)
+        && WeeklyReportService.TryBuildFromFacts(emptyInput, out JObject emptyReport, out reportError)
+        && ((JArray)emptyReport["sections"]).Count == 0
+        && ((JArray)emptyReport["sourceFactIds"]).Count == 0, reportError ?? inputError);
+
+    foreach (WorldFactJournalReadStatus failureStatus in new[]
+    {
+        WorldFactJournalReadStatus.Missing,
+        WorldFactJournalReadStatus.Corrupt,
+        WorldFactJournalReadStatus.Unavailable
+    })
+    {
+        var failureQuery = new WorldFactQuery(
+            _ => Task.FromResult(new WorldFactJournalReadResult(failureStatus)),
+            () => Array.Empty<WorldEventRecord>());
+        WorldFactQueryResult failure = failureQuery.ExecuteAsync(new WorldFactQueryRequest
+        {
+            Policy = WorldFactSelectionPolicy.WeeklyDynamics,
+            StartDay = 1,
+            EndDay = 7,
+            MaximumResults = 0
+        }, CancellationToken.None).GetAwaiter().GetResult();
+        Require(!WeeklyDynamicsInput.TryCreate(failure, out _, out inputError)
+            && inputError == "awake.world_fact.report.query_failed", "journal failure was accepted as a report input");
+    }
+
+    var legacy = new WorldEventRecord("awake:event:legacy-minimal", 7, "battle", "war", "旧记录", DateTimeOffset.UtcNow, "legacy-minimal");
+    var legacyQuery = new WorldFactQuery(
+        _ => Task.FromResult(new WorldFactJournalReadResult(WorldFactJournalReadStatus.Missing)),
+        () => new[] { legacy });
+    WorldFactQueryResult legacyResult = legacyQuery.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.WeeklyDynamics,
+        StartDay = 1,
+        EndDay = 7,
+        MaximumResults = 0
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(!WeeklyDynamicsInput.TryCreate(legacyResult, out _, out inputError)
+        && inputError == "awake.world_fact.report.legacy_fallback", "legacy fallback entered the formal report seam");
+
+    WorldFactQueryResult duplicate = new WorldFactQueryResult(
+        WorldFactQueryStatus.Success,
+        WorldFactSelectionPolicy.WeeklyDynamics,
+        new[] { war.Fact.ToJson(), war.Fact.ToJson() },
+        windowStartDay: 1,
+        windowEndDay: 7);
+    Require(!WeeklyDynamicsInput.TryCreate(duplicate, out _, out inputError)
+        && inputError == "awake.world_fact.report.fact_invalid", "duplicate fact IDs entered the formal report seam");
+
+    JObject unknownDomain = war.Fact.ToJson();
+    unknownDomain["presentation"]["domain"] = "unknown-domain";
+    var unknownQuery = new WorldFactQuery(
+        _ => Task.FromResult(new WorldFactJournalReadResult(
+            WorldFactJournalReadStatus.Success,
+            new[] { unknownDomain },
+            revision: 5)),
+        () => Array.Empty<WorldEventRecord>());
+    WorldFactQueryResult unknownResult = unknownQuery.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.WeeklyDynamics,
+        StartDay = 1,
+        EndDay = 7,
+        MaximumResults = 0
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    WeeklyFactReportBuildResult unknownReport = WorldEventServices.TryBuildWeeklyReportFromQueryResult(unknownResult);
+    Require(!unknownReport.Succeeded && unknownReport.ErrorCode == "awake.world_fact.report.fact_invalid",
+        "unknown fact domain was silently assigned to a report section");
+}
+
+static void RunWorldFactContextInterfaceStateMatrix()
+{
+    Require(WorldFactCapture.TryCreateWar(7, 1008, "faction:a", "甲国", "faction:b", "乙国", out WorldFactCapture war), "context state fixture creation failed");
+    foreach (WorldFactJournalReadStatus status in new[]
+    {
+        WorldFactJournalReadStatus.Success,
+        WorldFactJournalReadStatus.Empty,
+        WorldFactJournalReadStatus.Missing,
+        WorldFactJournalReadStatus.Unavailable,
+        WorldFactJournalReadStatus.Corrupt
+    })
+    {
+        int reads = 0;
+        IReadOnlyList<JObject> facts = status == WorldFactJournalReadStatus.Success
+            ? new[] { war.Fact.ToJson() }
+            : Array.Empty<JObject>();
+        var query = new WorldFactQuery(
+            _ =>
+            {
+                reads++;
+                return Task.FromResult(new WorldFactJournalReadResult(status, facts, revision: status == WorldFactJournalReadStatus.Success || status == WorldFactJournalReadStatus.Empty ? 3 : (int?)null, errorCode: status == WorldFactJournalReadStatus.Corrupt ? "context.corrupt" : null));
+            },
+            () => Array.Empty<WorldEventRecord>());
+        WorldFactQueryResult result = query.ExecuteAsync(new WorldFactQueryRequest
+        {
+            Policy = WorldFactSelectionPolicy.EventTriggerCandidate,
+            CurrentDay = 7,
+            MaximumResults = 0
+        }, CancellationToken.None).GetAwaiter().GetResult();
+        Require(result.Status == (status == WorldFactJournalReadStatus.Success ? WorldFactQueryStatus.Success : MapContextStatus(status))
+            && reads == 1, "context state was not preserved: " + status);
+        if (status == WorldFactJournalReadStatus.Success || status == WorldFactJournalReadStatus.Empty)
+            Require(result.JournalRevision == 3, "valid journal revision was not propagated");
+    }
+
+    int invalidReads = 0;
+    var invalidQuery = new WorldFactQuery(
+        _ =>
+        {
+            invalidReads++;
+            return Task.FromResult(new WorldFactJournalReadResult(WorldFactJournalReadStatus.Success, revision: 1));
+        });
+    WorldFactQueryResult invalid = invalidQuery.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.EventTriggerCandidate,
+        MaximumResults = -1
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(invalid.Status == WorldFactQueryStatus.InvalidRequest && invalidReads == 0, "invalid context request reached the reader");
+
+    var missingRevisionQuery = new WorldFactQuery(
+        _ => Task.FromResult(new WorldFactJournalReadResult(WorldFactJournalReadStatus.Success, new[] { war.Fact.ToJson() })));
+    WorldFactQueryResult missingRevision = missingRevisionQuery.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.EventTriggerCandidate,
+        CurrentDay = 7,
+        MaximumResults = 0
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(missingRevision.Status == WorldFactQueryStatus.Corrupt
+        && missingRevision.JournalRevision == null
+        && missingRevision.ErrorCode == "awake.world_fact.journal_revision_missing",
+        "missing journal revision was mistaken for a successful query");
+}
+
+static void RunWorldFactContextInterfaceProvenance()
+{
+    Require(WorldFactCapture.TryCreateWar(7, 1008, "faction:a", "甲国", "faction:b", "乙国", out WorldFactCapture war), "context provenance fixture creation failed");
+    var query = new WorldFactQuery(
+        _ => Task.FromResult(new WorldFactJournalReadResult(
+            WorldFactJournalReadStatus.Success,
+            new[] { war.Fact.ToJson(), war.Fact.ToJson() },
+            revision: 9)));
+    WorldFactQueryResult result = query.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.EventTriggerCandidate,
+        CurrentDay = 7,
+        MaximumResults = 0
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(result.Status == WorldFactQueryStatus.Success
+        && result.JournalRevision == 9
+        && result.Facts.Count == 1
+        && result.SourceFactIds.Count == 1
+        && result.SourceFactIds[0] == war.Fact.FactId
+        && result.Decisions.Any(value => value.ReasonCode == "excluded_duplicate_fact_id"),
+        "context provenance or stable deduplication was not preserved");
+}
+
+static void RunWorldFactContextInterfaceLegacyFallback()
+{
+    var legacy = new WorldEventRecord("awake:event:legacy-context", 7, "battle", "war", "旧记录", DateTimeOffset.UtcNow, "legacy-context");
+    var query = new WorldFactQuery(
+        _ => Task.FromResult(new WorldFactJournalReadResult(WorldFactJournalReadStatus.Missing)),
+        () => new[] { legacy });
+    WorldFactQueryResult allowed = query.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.EventTriggerCandidate,
+        CurrentDay = 7,
+        MaximumResults = 0,
+        AllowLegacyFallback = true
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(allowed.Status == WorldFactQueryStatus.Unavailable
+        && allowed.LegacyFallbackState == LegacyFallbackState.Used
+        && allowed.UsedLegacyFallback
+        && allowed.JournalRevision == null,
+        "allowed legacy fallback was not marked as non-formal");
+
+    WorldFactQueryResult rejected = query.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.EventTriggerCandidate,
+        CurrentDay = 7,
+        MaximumResults = 0,
+        AllowLegacyFallback = false
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(rejected.Status == WorldFactQueryStatus.Unavailable
+        && rejected.LegacyFallbackState == LegacyFallbackState.Rejected
+        && !rejected.UsedLegacyFallback
+        && rejected.ErrorCode == "awake.world_fact.event.legacy_fallback",
+        "legacy fallback rejection was not explicit");
+
+    var emptyLegacyQuery = new WorldFactQuery(
+        _ => Task.FromResult(new WorldFactJournalReadResult(WorldFactJournalReadStatus.Missing)),
+        () => Array.Empty<WorldEventRecord>());
+    WorldFactQueryResult notUsed = emptyLegacyQuery.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.EventTriggerCandidate,
+        CurrentDay = 7,
+        MaximumResults = 0
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(notUsed.Status == WorldFactQueryStatus.Missing && notUsed.LegacyFallbackState == LegacyFallbackState.NotUsed,
+        "empty legacy source was mislabeled as used fallback");
+
+    WorldEventContracts.SetFactContextReaderForTesting(new FixedFactContextReader(allowed));
+    try
+    {
+        WorldFactQueryResult facade = WorldEventContracts.QueryEventTriggerCandidatesAsync(7, CancellationToken.None).GetAwaiter().GetResult();
+        Require(facade.Status == WorldFactQueryStatus.Unavailable
+            && facade.LegacyFallbackState == LegacyFallbackState.Used
+            && facade.ErrorCode == "awake.world_fact.event.legacy_fallback",
+            "event facade accepted a legacy fallback result");
+    }
+    finally
+    {
+        WorldEventContracts.SetFactContextReaderForTesting(null);
+    }
+}
+
+static void RunWorldFactContextInterfaceCancellation()
+{
+    int reads = 0;
+    var query = new WorldFactQuery(
+        _ =>
+        {
+            reads++;
+            return Task.FromException<WorldFactJournalReadResult>(new OperationCanceledException());
+        });
+    CancellationTokenSource preCancelled = new CancellationTokenSource();
+    preCancelled.Cancel();
+    WorldFactQueryResult pre = query.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.EventTriggerCandidate,
+        MaximumResults = -1
+    }, preCancelled.Token).GetAwaiter().GetResult();
+    Require(pre.Status == WorldFactQueryStatus.Cancelled && pre.ErrorCode == "awake.cancelled" && reads == 0,
+        "pre-cancel did not win over request validation");
+
+    WorldFactQueryResult during = query.ExecuteAsync(new WorldFactQueryRequest
+    {
+        Policy = WorldFactSelectionPolicy.EventTriggerCandidate,
+        CurrentDay = 7,
+        MaximumResults = 0
+    }, CancellationToken.None).GetAwaiter().GetResult();
+    Require(during.Status == WorldFactQueryStatus.Cancelled && during.ErrorCode == "awake.cancelled" && reads == 1,
+        "read cancellation was not converted to the stable result");
+}
+
+static void RunAwakeEventFactTriggerEvaluation()
+{
+    Require(WorldFactCapture.TryCreateWar(5, 720, "faction:a", "甲国", "faction:b", "乙国", out WorldFactCapture war),
+        "fact trigger war fixture creation failed");
+    Require(WorldFactCapture.TryCreateSettlementOwnerChanged(12, 1728, "settlement:x", "甲城", "hero:old", "hero:new", "新领主", out WorldFactCapture ownerChanged),
+        "fact trigger settlement fixture creation failed");
+    Require(WorldFactCapture.TryCreateWar(4, 576, "faction:c", "丙国", "faction:d", "丁国", out WorldFactCapture oldWar),
+        "fact trigger old fixture creation failed");
+    Require(WorldFactCapture.TryCreateWar(13, 1872, "faction:e", "戊国", "faction:f", "己国", out WorldFactCapture futureWar),
+        "fact trigger future fixture creation failed");
+
+    JObject payload = new JObject
+    {
+        ["kind"] = "event",
+        ["weight"] = 1,
+        ["condition"] = "Always",
+        ["event"] = new JObject
+        {
+            ["id"] = "smoke.fact-trigger",
+            ["title"] = "事实触发",
+            ["body"] = "测试事实条件。",
+            ["optionA"] = "继续",
+            ["optionB"] = "跳过",
+            ["source"] = "PresetRule",
+            ["context"] = "MapMarch",
+            ["subject"] = "World",
+            ["content"] = "World",
+            ["resolution"] = "NarrativeOnly",
+            ["choiceShape"] = "Informational",
+            ["persistence"] = "Repeatable"
+        },
+        ["factTrigger"] = new JObject
+        {
+            ["allowedKinds"] = new JArray("settlement_owner_changed", "war_declared", "war_declared"),
+            ["minimumMatches"] = 2,
+            ["maximumAgeDays"] = 7
+        }
+    };
+    Require(AwakeEventDataLoader.TryParseRule(payload, out AwakeEventRule rule, out string parseError), parseError);
+    Require(rule.FactTrigger.AllowedKinds.SequenceEqual(
+        new[] { "settlement_owner_changed", "war_declared" }, StringComparer.Ordinal),
+        "fact trigger kinds were not normalized deterministically");
+
+    WorldFactQueryResult success = new WorldFactQueryResult(
+        WorldFactQueryStatus.Success,
+        WorldFactSelectionPolicy.EventTriggerCandidate,
+        new[] { war.Fact.ToJson(), war.Fact.ToJson(), ownerChanged.Fact.ToJson(), oldWar.Fact.ToJson(), futureWar.Fact.ToJson() },
+        journalRevision: 4);
+    AwakeEventCandidateEvaluation matched = AwakeEventCandidateEvaluator.Evaluate(rule, success, 12);
+    Require(matched.Eligible
+        && matched.ReasonCode == "fact_trigger_matched"
+        && matched.Status == WorldFactQueryStatus.Success
+        && matched.JournalRevision == 4
+        && matched.MatchedFactIds.Count == 2
+        && matched.MatchedFactIds[0] == war.Fact.FactId
+        && matched.MatchedFactIds[1] == ownerChanged.Fact.FactId
+        && matched.MatchedFactIds.Distinct(StringComparer.Ordinal).Count() == 2,
+        "fact trigger did not apply kind, age, and duplicate rules");
+
+    AwakeEventCandidateEvaluation insufficient = AwakeEventCandidateEvaluator.Evaluate(
+        rule,
+        new WorldFactQueryResult(
+            WorldFactQueryStatus.Success,
+            WorldFactSelectionPolicy.EventTriggerCandidate,
+            new[] { oldWar.Fact.ToJson() },
+            journalRevision: 5),
+        12);
+    Require(!insufficient.Eligible && insufficient.ReasonCode == "fact_trigger_no_match",
+        "old fact incorrectly satisfied the trigger");
+
+    AwakeEventCandidateEvaluation empty = AwakeEventCandidateEvaluator.Evaluate(
+        rule,
+        new WorldFactQueryResult(WorldFactQueryStatus.Empty, WorldFactSelectionPolicy.EventTriggerCandidate, journalRevision: 6),
+        12);
+    Require(!empty.Eligible && empty.ReasonCode == "fact_trigger_no_match", "empty facts did not block the trigger");
+
+    AwakeEventCandidateEvaluation unavailable = AwakeEventCandidateEvaluator.Evaluate(
+        rule,
+        new WorldFactQueryResult(WorldFactQueryStatus.Unavailable, WorldFactSelectionPolicy.EventTriggerCandidate, errorCode: "smoke.fact_unavailable"),
+        12);
+    Require(!unavailable.Eligible && unavailable.ReasonCode == "smoke.fact_unavailable"
+        && unavailable.Status == WorldFactQueryStatus.Unavailable,
+        "unavailable facts did not fail closed with their reason");
+
+    AwakeEventRule legacyRule = new AwakeEventRule(rule.Definition, 1, 0, AwakeEventCondition.Always);
+    AwakeEventCandidateEvaluation legacy = AwakeEventCandidateEvaluator.Evaluate(
+        legacyRule,
+        new WorldFactQueryResult(WorldFactQueryStatus.Unavailable, WorldFactSelectionPolicy.EventTriggerCandidate),
+        12);
+    Require(legacy.Eligible && legacy.ReasonCode == "fact_trigger_not_required",
+        "legacy rule behavior changed when facts were unavailable");
+    foreach (WorldFactQueryStatus status in new[] { WorldFactQueryStatus.Success, WorldFactQueryStatus.Empty })
+    {
+        AwakeEventCandidateEvaluation legacyAvailable = AwakeEventCandidateEvaluator.Evaluate(
+            legacyRule,
+            new WorldFactQueryResult(status, WorldFactSelectionPolicy.EventTriggerCandidate),
+            12);
+        Require(legacyAvailable.Eligible && legacyAvailable.ReasonCode == "fact_trigger_not_required",
+            "legacy rule behavior changed for status " + status);
+    }
+
+    AwakeEventCandidateEvaluation cancelled = AwakeEventCandidateEvaluator.Evaluate(
+        rule,
+        new WorldFactQueryResult(WorldFactQueryStatus.Cancelled, WorldFactSelectionPolicy.EventTriggerCandidate, errorCode: "awake.cancelled"),
+        12);
+    Require(!cancelled.Eligible && cancelled.ReasonCode == "awake.cancelled", "cancelled facts entered eligibility");
+
+    AwakeEventCandidateEvaluation missing = AwakeEventCandidateEvaluator.Evaluate(
+        rule,
+        new WorldFactQueryResult(WorldFactQueryStatus.Missing, WorldFactSelectionPolicy.EventTriggerCandidate),
+        12);
+    Require(!missing.Eligible && missing.ReasonCode == "fact_trigger_no_match", "missing facts did not block the trigger");
+    AwakeEventCandidateEvaluation corrupt = AwakeEventCandidateEvaluator.Evaluate(
+        rule,
+        new WorldFactQueryResult(WorldFactQueryStatus.Corrupt, WorldFactSelectionPolicy.EventTriggerCandidate, errorCode: "smoke.fact_corrupt"),
+        12);
+    Require(!corrupt.Eligible && corrupt.ReasonCode == "smoke.fact_corrupt", "corrupt facts did not preserve the failure reason");
+    AwakeEventCandidateEvaluation fallback = AwakeEventCandidateEvaluator.Evaluate(
+        rule,
+        new WorldFactQueryResult(
+            WorldFactQueryStatus.Success,
+            WorldFactSelectionPolicy.EventTriggerCandidate,
+            new[] { war.Fact.ToJson() },
+            usedLegacyFallback: true,
+            legacyFallbackState: LegacyFallbackState.Used),
+        12);
+    Require(!fallback.Eligible && fallback.ReasonCode == "fact_trigger_legacy_fallback",
+        "legacy fallback facts entered formal trigger matching");
+
+    JObject invalid = (JObject)payload.DeepClone();
+    invalid["factTrigger"]["maximumAgeDays"] = 8;
+    Require(!AwakeEventDataLoader.TryParseRule(invalid, out _, out parseError)
+        && parseError == "factTrigger.maximumAgeDays",
+        "invalid fact trigger age was accepted");
+
+    invalid = (JObject)payload.DeepClone();
+    invalid["factTrigger"]["allowedKinds"] = new JArray("war_declared", " ");
+    Require(!AwakeEventDataLoader.TryParseRule(invalid, out _, out parseError)
+        && parseError == "factTrigger.allowedKinds",
+        "blank fact trigger kind was accepted");
+}
+
+static WorldFactQueryStatus MapContextStatus(WorldFactJournalReadStatus status)
+{
+    switch (status)
+    {
+        case WorldFactJournalReadStatus.Empty: return WorldFactQueryStatus.Empty;
+        case WorldFactJournalReadStatus.Missing: return WorldFactQueryStatus.Missing;
+        case WorldFactJournalReadStatus.Corrupt: return WorldFactQueryStatus.Corrupt;
+        default: return WorldFactQueryStatus.Unavailable;
+    }
+}
+
+static void TestWorldReportV2Build()
+{
+    Require(WorldFactCapture.TryCreateWar(7, 1008, "faction:a", "甲国", "faction:b", "乙国", out WorldFactCapture war), "v2 report war fixture creation failed");
+    Require(WorldFactCapture.TryCreateHeroKilled(7, 1009, "hero:fallen", "阿尔达", out WorldFactCapture death), "v2 report hero fixture creation failed");
+    WorldFactQueryResult result = new WorldFactQueryResult(
+        WorldFactQueryStatus.Success,
+        WorldFactSelectionPolicy.WeeklyDynamics,
+        new[] { death.Fact.ToJson(), war.Fact.ToJson() },
+        windowStartDay: 1,
+        windowEndDay: 7);
+    Require(WeeklyDynamicsInput.TryCreate(result, out WeeklyDynamicsInput input, out string inputError), inputError);
+    Require(WeeklyReportService.TryBuildV2FromFacts(input, out JObject first, out string reportError), reportError);
+    Require(WeeklyReportService.TryBuildV2FromFacts(input, out JObject second, out reportError), reportError);
+    Require(WeeklyReportService.TryValidateV2Report(first, out reportError), reportError);
+    Require(WeeklyReportService.CanonicalizeV2(first) == WeeklyReportService.CanonicalizeV2(second)
+        && StringComparer.Ordinal.Equals((string)first["contentFingerprint"], (string)second["contentFingerprint"]),
+        "v2 report generation was not deterministic");
+
+    string fixtureRoot = FindWorldReportV2FixtureRoot();
+    JObject schema = LoadJsonNoDates(Path.Combine(Directory.GetParent(fixtureRoot).FullName, "weekly-report.schema.json"));
+    Require((string)schema["$id"] == "awake.worldbook.weekly-report.v2"
+        && schema["additionalProperties"]?.Value<bool>() == false,
+        "v2 schema fixture is missing or has the wrong identity");
+    JObject validFixture = LoadJsonNoDates(Path.Combine(fixtureRoot, "valid-report.json"));
+    Require(WeeklyReportService.TryValidateV2Report(validFixture, out reportError), reportError);
+    Require(StringComparer.Ordinal.Equals(WeeklyReportService.CanonicalizeV2(validFixture), File.ReadAllText(Path.Combine(fixtureRoot, "expected-canonical.json")).TrimEnd('\r', '\n')),
+        "v2 golden canonical JSON changed");
+    Require(StringComparer.Ordinal.Equals(WeeklyReportService.ComputeV2Fingerprint(validFixture), (string)validFixture["contentFingerprint"]),
+        "v2 golden fingerprint is not reproducible");
+    Require(StringComparer.Ordinal.Equals(first.ToString(Formatting.None), validFixture.ToString(Formatting.None)),
+        "v2 generated report does not match the golden report");
+
+    JObject emptyFixture = LoadJsonNoDates(Path.Combine(fixtureRoot, "valid-empty-report.json"));
+    Require(WeeklyReportService.TryValidateV2Report(emptyFixture, out reportError), reportError);
+    Require(((JArray)emptyFixture["sections"]).Count == 0 && ((JArray)emptyFixture["sourceFactIds"]).Count == 0,
+        "v2 empty report contains fabricated content");
+    foreach (string name in new[] { "invalid-source-closure.json", "invalid-window.json", "invalid-fingerprint.json" })
+        Require(!WeeklyReportService.TryValidateV2Report(LoadJsonNoDates(Path.Combine(fixtureRoot, name)), out _), "invalid v2 fixture was accepted: " + name);
+
+    WorldFactQueryResult legacy = new WorldFactQueryResult(
+        WorldFactQueryStatus.Success,
+        WorldFactSelectionPolicy.WeeklyDynamics,
+        new[] { war.Fact.ToJson() },
+        usedLegacyFallback: true,
+        windowStartDay: 1,
+        windowEndDay: 7);
+    Require(!WeeklyDynamicsInput.TryCreate(legacy, out _, out inputError)
+        && inputError == "awake.world_fact.report.legacy_fallback", "legacy fallback entered the v2 report seam");
+    WorldFactQueryResult failed = new WorldFactQueryResult(
+        WorldFactQueryStatus.Corrupt,
+        WorldFactSelectionPolicy.WeeklyDynamics,
+        errorCode: "awake.world_fact.chunk_corrupt",
+        windowStartDay: 1,
+        windowEndDay: 7);
+    Require(!WeeklyDynamicsInput.TryCreate(failed, out _, out inputError), "failed journal entered the v2 report seam");
+}
+
+static void TestWorldReportV2PersistenceMinimal()
+{
+    Require(WorldFactCapture.TryCreateWar(7, 1008, "faction:a", "甲国", "faction:b", "乙国", out WorldFactCapture war), "v2 persistence war fixture creation failed");
+    WorldFactQueryResult result = new WorldFactQueryResult(
+        WorldFactQueryStatus.Success,
+        WorldFactSelectionPolicy.WeeklyDynamics,
+        new[] { war.Fact.ToJson() },
+        windowStartDay: 1,
+        windowEndDay: 7);
+    Require(WeeklyDynamicsInput.TryCreate(result, out WeeklyDynamicsInput input, out string inputError), inputError);
+    Require(WeeklyReportService.TryBuildV2FromFacts(input, out JObject report, out string reportError), reportError);
+
+    var store = new WorldStateStore();
+    AwakeRuntime.WorldStateStore = store;
+    WeeklyReportStateWriteResult applied = WorldEventServices.PersistV2WeeklyReportAsync(report, 7, CancellationToken.None).GetAwaiter().GetResult();
+    Require(applied.Status == WeeklyReportStateWriteResult.Applied && store.ReportWriteAttempts == 1, "new v2 report was not persisted");
+    store = store.Reopen();
+    AwakeRuntime.WorldStateStore = store;
+    List<WeeklyReportApplicationState> states = store.GetWeeklyReportStatesAsync(CancellationToken.None).GetAwaiter().GetResult();
+    Require(states.Count == 1 && states[0].SchemaVersion == "awake.worldbook.weekly-report.v2" && states[0].Report != null
+        && StringComparer.Ordinal.Equals(states[0].ContentFingerprint, (string)report["contentFingerprint"]), "reopened v2 report was incomplete");
+
+    WeeklyReportStateWriteResult duplicate = WorldEventServices.PersistV2WeeklyReportAsync(report, 7, CancellationToken.None).GetAwaiter().GetResult();
+    Require(duplicate.Status == WeeklyReportStateWriteResult.AlreadyApplied && store.ReportWriteAttempts == 1, "same v2 report was written twice");
+
+    JObject conflictReport = (JObject)report.DeepClone();
+    conflictReport["sections"][0]["items"][0]["text"]["zh-CN"] = "第 7 天：甲国与乙国暂时停战。";
+    conflictReport["contentFingerprint"] = WeeklyReportService.ComputeV2Fingerprint(conflictReport);
+    WeeklyReportStateWriteResult conflict = WorldEventServices.PersistV2WeeklyReportAsync(conflictReport, 7, CancellationToken.None).GetAwaiter().GetResult();
+    Require(conflict.Status == WeeklyReportStateWriteResult.Conflict && store.ReportWriteAttempts == 1, "different v2 content did not produce conflict");
+
+    store.Document["weeklyReports"][0]["report"] = new JObject { ["schemaVersion"] = "awake.worldbook.weekly-report.v2", ["reportId"] = (string)report["reportId"] };
+    WeeklyReportStateWriteResult repaired = WorldEventServices.PersistV2WeeklyReportAsync(report, 7, CancellationToken.None).GetAwaiter().GetResult();
+    Require(repaired.Status == WeeklyReportStateWriteResult.Applied && store.ReportWriteAttempts == 2, "corrupt v2 report was not repaired");
+    store = store.Reopen();
+    AwakeRuntime.WorldStateStore = store;
+    states = store.GetWeeklyReportStatesAsync(CancellationToken.None).GetAwaiter().GetResult();
+    Require(states.Count == 1 && states[0].Report != null && WeeklyReportService.TryValidateV2Report(states[0].Report, out _), "repaired v2 report was not readable after reopen");
+
+    JObject invalid = (JObject)report.DeepClone();
+    invalid["unexpected"] = true;
+    WeeklyReportStateWriteResult invalidResult = WorldEventServices.PersistV2WeeklyReportAsync(invalid, 7, CancellationToken.None).GetAwaiter().GetResult();
+    Require(invalidResult.Status == WeeklyReportStateWriteResult.Failed, "invalid v2 payload was accepted");
+
+    var failedStore = new WorldStateStore { FailReportWrites = true };
+    AwakeRuntime.WorldStateStore = failedStore;
+    WeeklyReportStateWriteResult failed = WorldEventServices.PersistV2WeeklyReportAsync(report, 7, CancellationToken.None).GetAwaiter().GetResult();
+    Require(failed.Status == WeeklyReportStateWriteResult.Retryable && failedStore.ReportWriteAttempts == 0, "v2 storage failure was reported as success");
+
+    var v1Store = new WorldStateStore();
+    JObject v1Report = WeeklyReportService.Build(
+        new[] { new WorldEventRecord("awake:event:v1-report", 7, "tax", "economy", "旧版报告", DateTimeOffset.UtcNow, "v1-report") }, 7);
+    v1Report["reportId"] = (string)report["reportId"];
+    v1Store.Document["weeklyReports"] = new JArray(new JObject
+    {
+        ["reportId"] = (string)report["reportId"],
+        ["windowStartDay"] = 1,
+        ["windowEndDay"] = 7,
+        ["status"] = "applied",
+        ["attemptCount"] = 1,
+        ["lastAttemptDay"] = 7,
+        ["lastErrorCode"] = string.Empty,
+        ["report"] = v1Report
+    });
+    AwakeRuntime.WorldStateStore = v1Store;
+    WeeklyReportStateWriteResult v1Conflict = WorldEventServices.PersistV2WeeklyReportAsync(report, 7, CancellationToken.None).GetAwaiter().GetResult();
+    Require(v1Conflict.Status == WeeklyReportStateWriteResult.Conflict
+        && StringComparer.Ordinal.Equals((string)v1Store.Document["weeklyReports"][0]["report"]["schemaVersion"], "awake.worldbook.weekly-report.v1"),
+        "v2 persistence overwrote an existing v1 report");
+
+    WorldEventLedger.ClearForTesting();
+    AwakeRuntime.NativeKnowledgeReady = true;
+    var v1ReadStore = new WorldStateStore();
+    Require(WorldFactCapture.TryCreateWar(7, 1008, "faction:a", "甲国", "faction:b", "乙国", out WorldFactCapture v1ReadFact), "v1 read fixture fact creation failed");
+    JObject v1ReadFactJson = v1ReadFact.Fact.ToJson();
+    v1ReadFactJson["legacyVisibilityIdentityIds"] = new JArray("commoner");
+    v1ReadStore.Journal = new WorldFactJournalReadResult(WorldFactJournalReadStatus.Success, new[] { v1ReadFactJson }, revision: 1);
+    JObject v1ReadReport = WeeklyReportService.Build(
+        new[] { new WorldEventRecord("awake:event:v1-read", 7, "tax", "economy", "旧版报告读取", DateTimeOffset.UtcNow, "v1-read", new[] { "commoner" }) }, 7);
+    v1ReadStore.Document["weeklyReports"] = new JArray(new JObject
+    {
+        ["reportId"] = (string)v1ReadReport["reportId"],
+        ["schemaVersion"] = "awake.worldbook.weekly-report.v1",
+        ["windowStartDay"] = 1,
+        ["windowEndDay"] = 7,
+        ["status"] = "applied",
+        ["attemptCount"] = 1,
+        ["lastAttemptDay"] = 7,
+        ["lastErrorCode"] = string.Empty,
+        ["report"] = v1ReadReport
+    });
+    AwakeRuntime.WorldStateStore = v1ReadStore;
+    WorldKnowledgeSnapshot v1Snapshot = WorldKnowledgeLoader.Load(Path.Combine(FindFixedFixtureRoot(), "manifest.json"));
+    var v1Query = new WorldKnowledgeQueryService(v1Snapshot);
+    WorldEventServices.BindKnowledge(v1Snapshot, v1Query);
+    WorldEventServices.EnsureKnowledgeReadyAsync(7, CancellationToken.None).GetAwaiter().GetResult();
+    WorldKnowledgeQueryResult v1Projected = v1Query.Query(new WorldbookQuery
+    {
+        IdentityId = "profile.commoner",
+        KnowledgeScope = "local",
+        KnowledgeScopeAvailable = true,
+        EffectiveDetail = "summary",
+        EffectiveDetailAvailable = true,
+        RequestedDetail = "summary",
+        PlayerText = "周报",
+        MaximumBytes = 4096
+    });
+    List<WeeklyReportApplicationState> v1States = v1ReadStore.GetWeeklyReportStatesAsync(CancellationToken.None).GetAwaiter().GetResult();
+    Require(v1States.Count == 1
+        && v1States[0].SchemaVersion == "awake.worldbook.weekly-report.v1"
+        && v1States[0].Report != null
+        && v1Projected.ReportIds.Contains((string)v1ReadReport["reportId"]),
+        "v1 report read/projection compatibility was not demonstrated");
+    AwakeRuntime.WorldStateStore = null;
 }
 
 static void TestIdentityCapabilityRules()
@@ -423,6 +1232,63 @@ static void TestRegistrySelection()
     finally { try { Directory.Delete(root, true); } catch { } }
 }
 
+static void TestRepositoryPackageForm()
+{
+    // Runs against the REAL AWAKE/ModuleData/Worldbook tree, not a synthetic fixture: a registry.v1
+    // at the root, one packages/<world>/ runtime three, and the persona layer beside them
+    // (2026-09-14, see docs/worldbook-studio-plan/RUNTIME-MAPPING-CONTRACT.md).
+    // ReadAndVerify recomputes all three hashes over the shipped runtime.json (~1.5 MB), so a single
+    // byte of drift in the committed package turns this red.
+    string worldbookRoot = FindRepositoryWorldbookRoot();
+    WorldbookPackageRegistry registry = WorldbookPackageRegistry.Load(Path.Combine(worldbookRoot, "manifest.json"));
+    WorldbookActivationState activation = registry.Select();
+    // NOTE the TWO-segment package_id (ns:name). Three segments (`awake:worldbook:calradia`) violate
+    // contract/v1/common.schema.json#/$defs/package_id and were corrected on 2026-09-15; `worldId`
+    // below is a stable_id and legitimately keeps three segments. Do not "unify" the two patterns.
+    Require(activation.PackageId == "awake:worldbook.calradia", "repository registry default selection is not the calradia world: " + activation.PackageId);
+    Require(activation.Version == "1.0.0", "repository registry version mismatch: " + activation.Version);
+    string expectedRoot = Path.GetFullPath(worldbookRoot).TrimEnd(Path.DirectorySeparatorChar);
+    Require(activation.ManifestPath.StartsWith(expectedRoot + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase), "repository registry resolved outside the worldbook root: " + activation.ManifestPath);
+
+    WorldbookVerifiedPackage verified = registry.LastSelectedPackage;
+    Require(verified.Manifest["worldId"]?.Value<string>() == "awake:world:calradia", "repository package worldId mismatch");
+    JArray runtimeEntries = verified.Runtime["entries"] as JArray;
+    JArray indexEntries = verified.Index["entryIds"] as JArray;
+    Require(runtimeEntries != null && runtimeEntries.Count > 0, "repository package runtime carries no entries");
+    Require(indexEntries != null && indexEntries.Count == runtimeEntries.Count, "repository package index does not cover the runtime entries");
+
+    // The same directory serves the persona layer. src/PersonaRootLocator.cs must find it by SHAPE
+    // from deep inside the package, without ever reading the worldbook manifest.
+    string personaRoot = PersonaRootLocator.Locate(Path.GetDirectoryName(verified.ManifestPath));
+    Require(personaRoot != null && Path.GetFullPath(personaRoot).TrimEnd(Path.DirectorySeparatorChar) == expectedRoot, "persona root locator did not resolve the shared worldbook root: " + (personaRoot ?? "<null>"));
+    string definitions = Path.Combine(personaRoot, "persona_definitions", "definitions");
+    Require(Directory.Exists(definitions) && Directory.GetFiles(definitions, "*.json").Length > 0, "persona definitions are missing beside the worldbook registry");
+    Require(File.Exists(Path.Combine(personaRoot, "persona_definitions", "tag_registry.json")), "persona tag registry is missing beside the worldbook registry");
+}
+
+static string FindRepositoryWorldbookRoot()
+{
+    // AWAKE_WORLDBOOK_ROOT points the same checks at a DEPLOYED copy (e.g. the game module's
+    // ModuleData/Worldbook) instead of the repository one. That is how "what the game will actually
+    // read" gets verified by the real reader rather than inferred from a byte-identical copy.
+    string overridden = Environment.GetEnvironmentVariable("AWAKE_WORLDBOOK_ROOT");
+    if (!string.IsNullOrWhiteSpace(overridden))
+    {
+        if (!File.Exists(Path.Combine(overridden, "manifest.json")))
+        {
+            throw new DirectoryNotFoundException("AWAKE_WORLDBOOK_ROOT has no manifest.json: " + overridden);
+        }
+        return overridden;
+    }
+    DirectoryInfo current = new DirectoryInfo(AppContext.BaseDirectory);
+    for (int i = 0; i < 10 && current != null; i++, current = current.Parent)
+    {
+        string candidate = Path.Combine(current.FullName, "ModuleData", "Worldbook", "manifest.json");
+        if (File.Exists(candidate)) return Path.Combine(current.FullName, "ModuleData", "Worldbook");
+    }
+    throw new DirectoryNotFoundException("repository worldbook root not found (ModuleData/Worldbook/manifest.json)");
+}
+
 static void TestWeeklyReport()
 {
     var records = new List<WorldEventRecord>
@@ -444,7 +1310,7 @@ static void TestWeeklyReport()
     Require(report["sections"]?[0]?["items"] is JArray politics && politics.Count == 1, "duplicate event id was not removed");
     Require(report["sections"]?[2]?["items"] is JArray culture && culture.Count == 2, "same text with distinct event ids was collapsed");
     Require(((DateTimeOffset)DateTimeOffset.Parse((string)report["period"]?["end"])).Day == 9, "weekly report period end is not exclusive");
-    Require(WeeklyReportService.BuildText(records, 7).Contains("战争与军务", StringComparison.Ordinal), "weekly report text rendering failed");
+    Require(WeeklyReportService.BuildText(records, 7).Contains("战争与领地", StringComparison.Ordinal), "weekly report text rendering failed");
 }
 
 static void TestWorldEventLedger()
@@ -717,15 +1583,23 @@ static void TestWeeklyReportCatchUp()
     var query = new WorldKnowledgeQueryService(snapshot);
     WorldEventServices.BindKnowledge(snapshot, query);
     var soldierAudience = new[] { "soldier" };
+    Require(WorldFactCapture.TryCreateWar(15, 2160, "faction:a", "甲国", "faction:b", "乙国", out WorldFactCapture catchupFact), "catch-up report fact fixture creation failed");
+    store.Journal = new WorldFactJournalReadResult(
+        WorldFactJournalReadStatus.Success,
+        new[] { catchupFact.Fact.ToJson() },
+        revision: 1);
     Require(WorldEventLedger.RecordAsync(1, "tax", "第一周粮税变化", "catchup.event.1", soldierAudience, CancellationToken.None).GetAwaiter().GetResult().Succeeded, "first catch-up event was not persisted");
     Require(WorldEventLedger.RecordAsync(8, "battle", "第二周边境交战", "catchup.event.8", soldierAudience, CancellationToken.None).GetAwaiter().GetResult().Succeeded, "second catch-up event was not persisted");
     Require(WorldEventLedger.RecordAsync(15, "feast", "第三周节庆举行", "catchup.event.15", soldierAudience, CancellationToken.None).GetAwaiter().GetResult().Succeeded, "third catch-up event was not persisted");
-    WorldEventServices.EnsureKnowledgeReadyAsync(21, CancellationToken.None).GetAwaiter().GetResult();
+    FormalWeeklyReportResult first = WorldEventServices.EnsureFormalReportsReadyAsync(21, CancellationToken.None).GetAwaiter().GetResult();
+    Require(first.HasFormalReport && (string)first.Report["reportId"] == "awake:report:weekly-v2-21", "latest completed weekly report was not applied");
     List<WeeklyReportApplicationState> states = store.GetWeeklyReportStatesAsync(CancellationToken.None).GetAwaiter().GetResult();
-    Require(states.Count == 3 && states.All(value => value.Status == "applied"), "day 21 did not apply all completed weekly report windows");
+    Require(states.Count == 1 && states.All(value => value.Status == "applied"), "day 21 did not apply only the latest completed weekly report window");
+    AwakeRuntime.NativeKnowledgeReady = true;
+    WorldEventServices.EnsureKnowledgeReadyAsync(21, CancellationToken.None).GetAwaiter().GetResult();
     WorldKnowledgeQueryResult weekly = query.Query(new WorldbookQuery
     {
-        IdentityId = "profile.soldier",
+        IdentityId = "profile.headman",
         KnowledgeScope = "local",
         KnowledgeScopeAvailable = true,
         EffectiveDetail = "summary",
@@ -734,7 +1608,12 @@ static void TestWeeklyReportCatchUp()
         PlayerText = "周报",
         MaximumBytes = 4096
     });
-    Require(weekly.ReportIds.Count == 3 && weekly.ReportIds.Contains("awake:report:weekly-7") && weekly.ReportIds.Contains("awake:report:weekly-14") && weekly.ReportIds.Contains("awake:report:weekly-21"), "weekly query did not expose all catch-up report IDs");
+    Require(weekly.ReportIds.Count == 1 && weekly.ReportIds.Contains("awake:report:weekly-v2-21"),
+        "weekly query did not expose the latest completed report ID; search="
+        + string.Join(",", query.Search("周报", 10).Select(value => value.ReportId ?? value.Id))
+        + " projectionRevision=" + WorldEventServices.Projection.Revision
+        + " state=" + weekly.State
+        + " text=" + weekly.RetrievedText);
     int writes = store.ReportWriteAttempts;
     WorldEventServices.EnsureKnowledgeReadyAsync(21, CancellationToken.None).GetAwaiter().GetResult();
     Require(store.ReportWriteAttempts == writes, "re-running the same completed day rewrote applied weekly reports");
@@ -743,7 +1622,7 @@ static void TestWeeklyReportCatchUp()
     WorldEventServices.EnsureKnowledgeReadyAsync(21, CancellationToken.None).GetAwaiter().GetResult();
     WorldKnowledgeQueryResult reloaded = query.Query(new WorldbookQuery
     {
-        IdentityId = "profile.soldier",
+        IdentityId = "profile.headman",
         KnowledgeScope = "local",
         KnowledgeScopeAvailable = true,
         EffectiveDetail = "summary",
@@ -752,15 +1631,15 @@ static void TestWeeklyReportCatchUp()
         PlayerText = "周报",
         MaximumBytes = 4096
     });
-    Require(reloaded.ReportIds.Count == 3 && store.ReportWriteAttempts == writes, "reload did not rebuild applied reports without duplicate writes");
+    Require(reloaded.ReportIds.Count == 1 && store.ReportWriteAttempts == writes, "reload did not reuse the latest applied report without duplicate writes");
     string originalReport = store.Document["weeklyReports"]?[0]?["report"]?.ToString(Newtonsoft.Json.Formatting.None);
     Require(WorldEventLedger.RecordAsync(2, "battle", "迟到事件不应改写已应用周报", "catchup.late.2", soldierAudience, CancellationToken.None).GetAwaiter().GetResult().Succeeded, "late event was not persisted");
-    WorldEventServices.EnsureKnowledgeReadyAsync(21, CancellationToken.None).GetAwaiter().GetResult();
+    WorldEventServices.EnsureFormalReportsReadyAsync(21, CancellationToken.None).GetAwaiter().GetResult();
     Require(store.ReportWriteAttempts == writes
         && StringComparer.Ordinal.Equals(store.Document["weeklyReports"]?[0]?["report"]?.ToString(Newtonsoft.Json.Formatting.None), originalReport),
         "late event changed an already applied weekly report snapshot");
-    store.Document["weeklyReports"][0]["report"] = new JObject { ["reportId"] = "awake:report:weekly-7" };
-    WorldEventServices.EnsureKnowledgeReadyAsync(21, CancellationToken.None).GetAwaiter().GetResult();
+    store.Document["weeklyReports"][0]["report"] = new JObject { ["reportId"] = "awake:report:weekly-v2-21" };
+    WorldEventServices.EnsureFormalReportsReadyAsync(21, CancellationToken.None).GetAwaiter().GetResult();
     Require(store.ReportWriteAttempts == writes + 1
         && WorldEventContract.TryValidateWeeklyReport((JObject)store.Document["weeklyReports"][0]["report"], out _),
         "invalid weekly report snapshot was not repaired");
@@ -777,37 +1656,51 @@ static void TestKnowledgeReadinessAndStoreBoundary()
     WorldKnowledgeSnapshot snapshot = WorldKnowledgeLoader.Load(Path.Combine(FindFixedFixtureRoot(), "manifest.json"));
     var query = new WorldKnowledgeQueryService(snapshot);
     WorldEventServices.BindKnowledge(snapshot, query);
-    var audience = new[] { "soldier" };
+    var audience = new[] { "commoner" };
+    Require(WorldFactCapture.TryCreateWar(7, 1008, "faction:a", "甲国", "faction:b", "乙国", out WorldFactCapture readinessFact), "readiness fact fixture creation failed");
+    JObject readinessFactJson = readinessFact.Fact.ToJson();
+    readinessFactJson["legacyVisibilityIdentityIds"] = new JArray("commoner");
+    blockedStore.Journal = new WorldFactJournalReadResult(WorldFactJournalReadStatus.Success, new[] { readinessFactJson }, revision: 1);
     Require(WorldEventLedger.RecordAsyncForCampaign(7, "battle", "就绪门控战事", "readiness.gated.7", audience, WorldEventLedger.CampaignGeneration, CancellationToken.None).GetAwaiter().GetResult().Succeeded, "readiness test event was not persisted");
     WorldKnowledgeQueryResult blocked = query.Query(new WorldbookQuery
     {
-        IdentityId = "profile.soldier",
+        IdentityId = "profile.commoner",
         KnowledgeScope = "local",
         KnowledgeScopeAvailable = true,
         EffectiveDetail = "summary",
         EffectiveDetailAvailable = true,
         RequestedDetail = "summary",
-        PlayerText = "就绪门控战事",
+        PlayerText = "甲国",
         MaximumBytes = 4096
     });
     Require(blocked.State != "known" && string.IsNullOrWhiteSpace(blocked.RetrievedText), "knowledge projected while native readiness was unavailable");
+    FormalWeeklyReportResult formalWhileNativeDown = WorldEventServices.EnsureFormalReportsReadyAsync(7, CancellationToken.None).GetAwaiter().GetResult();
+    Require(formalWhileNativeDown.HasFormalReport, "formal weekly report did not persist while native readiness was unavailable");
     WorldEventServices.EnsureKnowledgeReadyAsync(7, CancellationToken.None).GetAwaiter().GetResult();
-    Require(query.Query(new WorldbookQuery { IdentityId = "profile.soldier", PlayerText = "就绪门控战事", MaximumBytes = 4096 }).State != "known", "blocked readiness refresh projected knowledge");
+    Require(query.Query(new WorldbookQuery { IdentityId = "profile.commoner", PlayerText = "甲国", MaximumBytes = 4096 }).State != "known", "blocked readiness refresh projected knowledge");
     AwakeRuntime.NativeKnowledgeReady = true;
     WorldEventServices.EnsureKnowledgeReadyAsync(7, CancellationToken.None).GetAwaiter().GetResult();
     WorldKnowledgeQueryResult unblocked = query.Query(new WorldbookQuery
     {
-        IdentityId = "profile.soldier",
+        IdentityId = "profile.commoner",
         KnowledgeScope = "local",
         KnowledgeScopeAvailable = true,
         EffectiveDetail = "summary",
         EffectiveDetailAvailable = true,
         RequestedDetail = "summary",
-        PlayerText = "就绪门控战事",
+        PlayerText = "甲国",
         MaximumBytes = 4096
     });
-    WorldEventRecord persistedRecord = WorldEventLedger.SnapshotAll().Single();
-    Require(unblocked.State == "known" && unblocked.SourceIds.Contains(persistedRecord.EventId), "knowledge did not project after readiness recovered");
+    Require(unblocked.State == "known" && unblocked.SourceIds.Contains(readinessFact.Fact.FactId), "knowledge did not project after readiness recovered");
+
+    WorldEventLedger.ClearForTesting();
+    var unavailableStore = new WorldStateStore { FailReads = true };
+    AwakeRuntime.WorldStateStore = unavailableStore;
+    FormalWeeklyReportResult unavailable = WorldEventServices.EnsureFormalReportsReadyAsync(7, CancellationToken.None).GetAwaiter().GetResult();
+    Require(StringComparer.Ordinal.Equals(unavailable.Status, FormalWeeklyReportResult.Unavailable)
+        && !unavailable.HasFormalReport
+        && unavailableStore.ReportWriteAttempts == 0,
+        "failed storage read was treated as an empty formal report");
 
     WorldEventLedger.ClearForTesting();
     AwakeRuntime.NativeKnowledgeReady = true;
@@ -904,19 +1797,20 @@ static void TestKnowledgeReadinessAndStoreBoundary()
     WorldEventServices.BindKnowledge(evictionSnapshot, evictionQuery);
     WorldStateStore evictionStore = AwakeRuntime.WorldStateStore;
     var evictionAudience = new[] { "soldier" };
+    Require(WorldFactCapture.TryCreateWar(7, 1008, "faction:a", "甲国", "faction:b", "乙国", out WorldFactCapture evictionFact), "eviction report fact fixture creation failed");
+    evictionStore.Journal = new WorldFactJournalReadResult(WorldFactJournalReadStatus.Success, new[] { evictionFact.Fact.ToJson() }, revision: 1);
     Require(WorldEventLedger.RecordAsync(1, "battle", "即将被淘汰的战事", "eviction.old.1", evictionAudience, CancellationToken.None).GetAwaiter().GetResult().Succeeded, "eviction source event was not persisted");
-    WorldEventServices.EnsureKnowledgeReadyAsync(7, CancellationToken.None).GetAwaiter().GetResult();
+    Require(WorldEventServices.EnsureFormalReportsReadyAsync(7, CancellationToken.None).GetAwaiter().GetResult().HasFormalReport, "eviction weekly report was not applied");
     for (int day = 8; day <= 57; day++)
         Require(WorldEventLedger.RecordAsync(day, "battle", "容量挤出的新战事 " + day, "eviction.new." + day, evictionAudience, CancellationToken.None).GetAwaiter().GetResult().Succeeded, "eviction filler event was not persisted");
     Require(WorldEventLedger.SnapshotAll().All(value => value.EventKey != "eviction.old.1"), "evicted source event remained in the in-memory ledger");
-    evictionStore.Document["weeklyReports"][0]["report"] = new JObject { ["reportId"] = "awake:report:weekly-7" };
-    WorldEventServices.EnsureKnowledgeReadyAsync(7, CancellationToken.None).GetAwaiter().GetResult();
-    Require(StringComparer.Ordinal.Equals((string)evictionStore.Document["weeklyReports"][0]["report"]["reportId"], "awake:report:weekly-7")
-        && evictionStore.Document["weeklyReports"][0]["report"]["sections"] == null,
-        "unrecoverable applied weekly snapshot was overwritten by an empty report");
-    JObject emptyReport = WeeklyReportService.BuildWindow(Array.Empty<WorldEventRecord>(), 1, 7);
-    Require(WorldEventContract.TryValidateWeeklyReport(emptyReport, out string reportError)
-        && StringComparer.Ordinal.Equals((string)emptyReport["reportId"], "awake:report:weekly-7"), reportError);
+    evictionStore.Document["weeklyReports"][0]["report"] = new JObject { ["reportId"] = "awake:report:weekly-v2-7" };
+    FormalWeeklyReportResult repairedEviction = WorldEventServices.EnsureFormalReportsReadyAsync(7, CancellationToken.None).GetAwaiter().GetResult();
+    JObject repairedEvictionReport = evictionStore.Document["weeklyReports"][0]["report"] as JObject;
+    string reportError = string.Empty;
+    Require(repairedEviction.HasFormalReport
+        && StringComparer.Ordinal.Equals((string)repairedEvictionReport?["reportId"], "awake:report:weekly-v2-7")
+        && WorldEventContract.TryValidateWeeklyReport(repairedEvictionReport, out reportError), reportError);
     AwakeRuntime.WorldStateStore = null;
     AwakeRuntime.NativeKnowledgeReady = true;
 }
@@ -948,6 +1842,26 @@ static void TestProductionReadinessGateWiring()
     Require(services.Contains("TryProjectSourcesIfReady", StringComparison.Ordinal)
         && services.Contains("AwakeRuntime.IsNativeKnowledgeReady", StringComparison.Ordinal),
         "unified readiness-aware source projection entry is missing");
+}
+
+static void TestWorldFactCollectorWiring()
+{
+    string sourceRoot = FindAwakeSourceRoot();
+    string collector = File.ReadAllText(Path.Combine(sourceRoot, "src", "AwakeWorldFactCollectorBehavior.cs"));
+    string subModule = File.ReadAllText(Path.Combine(sourceRoot, "src", "SubModule.cs"));
+    Require(subModule.Contains("new AwakeWorldFactCollectorBehavior()", StringComparison.Ordinal), "world fact collector is not registered on campaign start");
+    Require(collector.Contains("CampaignEvents.WarDeclared.AddNonSerializedListener", StringComparison.Ordinal)
+        && collector.Contains("CampaignEvents.MakePeace.AddNonSerializedListener", StringComparison.Ordinal)
+        && collector.Contains("CampaignEvents.OnSettlementOwnerChangedEvent.AddNonSerializedListener", StringComparison.Ordinal)
+        && collector.Contains("CampaignEvents.HeroKilledEvent.AddNonSerializedListener", StringComparison.Ordinal)
+        && collector.Contains("CampaignEvents.HeroPrisonerReleased.AddNonSerializedListener", StringComparison.Ordinal),
+        "world fact collector does not subscribe to the approved five events");
+    Require(collector.Contains("awake_world_fact_capture_unavailable", StringComparison.Ordinal)
+        && collector.Contains("WorldStateStore store = AwakeRuntime.WorldStateStore", StringComparison.Ordinal)
+        && !collector.Contains("EnsureWorldStateReadyAsync", StringComparison.Ordinal)
+        && !collector.Contains("PermissionGate", StringComparison.Ordinal)
+        && !collector.Contains("EnsureAsync", StringComparison.Ordinal),
+        "world fact collector violates the no-store/no-permission boundary");
 }
 
 static JObject Manifest(string packageId = "calradia:base", string packageHash = "") => new JObject
@@ -1071,6 +1985,26 @@ static string FindContractRoot()
     throw new DirectoryNotFoundException("worldbook contract root not found");
 }
 
+static JObject LoadJsonNoDates(string path)
+{
+    using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
+    {
+        reader.DateParseHandling = DateParseHandling.None;
+        return (JObject)JToken.ReadFrom(reader);
+    }
+}
+
+static string FindWorldReportV2FixtureRoot()
+{
+    DirectoryInfo current = new DirectoryInfo(AppContext.BaseDirectory);
+    for (int i = 0; i < 10 && current != null; i++, current = current.Parent)
+    {
+        string candidate = Path.Combine(current.FullName, "tools", "worldbook-contract", "v2", "fixtures");
+        if (File.Exists(Path.Combine(candidate, "valid-report.json"))) return candidate;
+    }
+    throw new DirectoryNotFoundException("world report v2 fixture root not found");
+}
+
 static string FindFixedFixtureRoot()
 {
     string candidate = Path.Combine(AppContext.BaseDirectory, "fixtures", "fixed-v2");
@@ -1087,4 +2021,19 @@ static string FindAwakeSourceRoot()
         if (File.Exists(candidate)) return current.FullName;
     }
     throw new DirectoryNotFoundException("AWAKE source root not found");
+}
+
+sealed class FixedFactContextReader : IWorldFactContextReader
+{
+    private readonly WorldFactQueryResult _result;
+
+    internal FixedFactContextReader(WorldFactQueryResult result)
+    {
+        _result = result;
+    }
+
+    public Task<WorldFactQueryResult> QueryAsync(WorldFactQueryRequest request, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(_result);
+    }
 }

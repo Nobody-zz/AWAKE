@@ -1,0 +1,872 @@
+silent_chain_count=58
+# 全空 catch 链（每条：位置 / 子句数 / 各子句 filter / 被保护代码上文）
+
+===== AiTaskGateway.cs:323  (clauses=1 | (no filter)) =====
+        }
+    
+        internal void FinishTurn(string routeId, int generation)
+        {
+            AiRouteTurnEvents active;
+            lock (_gate)
+            {
+                AiRouteTurnEvents current;
+                if (!_active.TryGetValue(routeId, out current) || current.Generation != generation) return;
+                _active.Remove(routeId);
+                active = current;
+            }
+            try { active.Subscription?.Dispose(); } 
+
+===== AiTaskGateway.cs:324  (clauses=1 | (no filter)) =====
+    
+        internal void FinishTurn(string routeId, int generation)
+        {
+            AiRouteTurnEvents active;
+            lock (_gate)
+            {
+                AiRouteTurnEvents current;
+                if (!_active.TryGetValue(routeId, out current) || current.Generation != generation) return;
+                _active.Remove(routeId);
+                active = current;
+            }
+            try { active.Subscription?.Dispose(); } catch { }
+            try { active.Cancellation?.Dispose(); } 
+
+===== AiTaskGateway.cs:380  (clauses=1 | (no filter)) =====
+        {
+            lock (_gate)
+            {
+                int generation;
+                if (!_generations.TryGetValue(routeId, out generation)) generation = 0;
+                return generation;
+            }
+        }
+    
+        private static void CancelLocked(AiRouteTurnEvents active)
+        {
+            if (active == null) return;
+            try { active.Cancellation?.Cancel(); } 
+
+===== AiTaskGateway.cs:381  (clauses=1 | (no filter)) =====
+            lock (_gate)
+            {
+                int generation;
+                if (!_generations.TryGetValue(routeId, out generation)) generation = 0;
+                return generation;
+            }
+        }
+    
+        private static void CancelLocked(AiRouteTurnEvents active)
+        {
+            if (active == null) return;
+            try { active.Cancellation?.Cancel(); } catch { }
+            try { active.Subscription?.Dispose(); } 
+
+===== AiTaskGateway.cs:383  (clauses=1 | (no filter)) =====
+                int generation;
+                if (!_generations.TryGetValue(routeId, out generation)) generation = 0;
+                return generation;
+            }
+        }
+    
+        private static void CancelLocked(AiRouteTurnEvents active)
+        {
+            if (active == null) return;
+            try { active.Cancellation?.Cancel(); } catch { }
+            try { active.Subscription?.Dispose(); } catch { }
+            _ = active.Handle?.CancelAsync(CancellationToken.None);
+            try { active.Cancellation?.Dispose(); } 
+
+===== AwakeContactCardVM.cs:138  (clauses=1 | (no filter)) =====
+                {
+                    _portrait = null;
+                    OnPropertyChanged(nameof(Portrait));
+                }
+                return;
+            }
+            try
+            {
+                HeroVM heroVm = new HeroVM(hero, false);
+                _portrait = heroVm.ImageIdentifier;
+                OnPropertyChanged(nameof(Portrait));
+            }
+            
+
+===== AwakeFeedback.cs:23  (clauses=1 | (no filter)) =====
+        Error
+    }
+    
+    internal static class AwakeFeedback
+    {
+        internal static void Show(string text, AwakeFeedbackTone tone = AwakeFeedbackTone.Info)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return;
+            try
+            {
+                InformationManager.DisplayMessage(new InformationMessage(text, ColorFor(tone)));
+            }
+            
+
+===== AwakeLog.cs:19  (clauses=1 | (no filter)) =====
+    internal static class AwakeLog
+    {
+        internal static bool Enabled = true;
+        internal static Action<string> Recorder;
+        private static readonly object FileLock = new object();
+    
+        internal static void Write(string line)
+        {
+            try
+            {
+                Recorder?.Invoke(line);
+            }
+            
+
+===== AwakeLog.cs:49  (clauses=1 | (no filter)) =====
+                }
+                string logs = Path.Combine(moduleDir, "Logs");
+                Directory.CreateDirectory(logs);
+                string path = Path.Combine(logs, AwakeConstants.LogFileName);
+                lock (FileLock)
+                {
+                    TryRotate(path);
+                    File.AppendAllText(
+                        path,
+                        DateTimeOffset.UtcNow.ToString("yyyy-MM-dd HH:mm:ss'Z'") + " " + line + Environment.NewLine);
+                }
+            }
+            
+
+===== AwakeLog.cs:71  (clauses=1 | (no filter)) =====
+    
+        private static void TryRotate(string path)
+        {
+            try
+            {
+                if (!File.Exists(path)) return;
+                FileInfo info = new FileInfo(path);
+                if (info.Length < 2 * 1024 * 1024) return;
+                string rotated = path + ".1";
+                if (File.Exists(rotated)) File.Delete(rotated);
+                File.Move(path, rotated);
+            }
+            
+
+===== AwakeMessengerOverlay.cs:115  (clauses=1 | (no filter)) =====
+    
+        private void Close()
+        {
+            if (_closed) return;
+            _closed = true;
+            try
+            {
+                _layer.InputRestrictions.ResetInputRestrictions();
+                _layer.IsFocusLayer = false;
+                ScreenManager.TryLoseFocus(_layer);
+                _screen.RemoveLayer(_layer);
+            }
+            
+
+===== AwakeRuntime.cs:370  (clauses=1 | (no filter)) =====
+    
+        /// <summary>
+        /// 当前游戏内绝对小时数（自战役起算，含小数）。信件送达与过期以此为准。
+        /// 取不到小时粒度时确定性降级到 <c>CurrentGameDay() * 24</c>，保证离线/无战役场景仍可判定。
+        /// </summary>
+        internal static double CurrentGameHours()
+        {
+            try
+            {
+                double hours = (CurrentGameHoursProvider ?? ReadCampaignGameHours)();
+                if (!double.IsNaN(hours) && !double.IsInfinity(hours) && hours >= 0d) return hours;
+            }
+            
+
+===== AwakeTerminalBehavior.cs:425  (clauses=1 | (no filter)) =====
+            {
+                if (Mission.Current == null || Campaign.Current == null) return false;
+                if (Campaign.Current.ConversationManager != null
+                    && Campaign.Current.ConversationManager.IsConversationInProgress)
+                {
+                    return false;
+                }
+                if (NpcDialogueOverlay.IsOpen || AwakeMessengerOverlay.IsOpen) return false;
+                try
+                {
+                    if (InformationManager.IsAnyInquiryActive()) return false;
+                }
+                
+
+===== AwakeTerminalBehavior.cs:432  (clauses=1 | (no filter)) =====
+                if (NpcDialogueOverlay.IsOpen || AwakeMessengerOverlay.IsOpen) return false;
+                try
+                {
+                    if (InformationManager.IsAnyInquiryActive()) return false;
+                }
+                catch
+                {
+                }
+                try
+                {
+                    if (Input.IsOnScreenKeyboardActive) return false;
+                }
+                
+
+===== AwakeTerminalBehavior.cs:440  (clauses=1 | (no filter)) =====
+                try
+                {
+                    if (Input.IsOnScreenKeyboardActive) return false;
+                }
+                catch
+                {
+                }
+                try
+                {
+                    ScreenLayer focusedLayer = ScreenManager.FocusedLayer;
+                    if (focusedLayer != null && focusedLayer.IsFocusedOnInput()) return false;
+                }
+                
+
+===== AwakeTerminalBehavior.cs:799  (clauses=1 | (no filter)) =====
+                {
+                    _lastBlockReason = "overlay_open";
+                    return false;
+                }
+                try
+                {
+                    if (InformationManager.IsAnyInquiryActive())
+                    {
+                        _lastBlockReason = "inquiry_active";
+                        return false;
+                    }
+                }
+                
+
+===== AwakeTerminalBehavior.cs:810  (clauses=1 | (no filter)) =====
+                }
+                catch
+                {
+                }
+                try
+                {
+                    if (Input.IsOnScreenKeyboardActive)
+                    {
+                        _lastBlockReason = "onscreen_keyboard";
+                        return false;
+                    }
+                }
+                
+
+===== AwakeTerminalBehavior.cs:822  (clauses=1 | (no filter)) =====
+                catch
+                {
+                }
+                try
+                {
+                    ScreenLayer focusedLayer = ScreenManager.FocusedLayer;
+                    if (focusedLayer != null && focusedLayer.IsFocusedOnInput())
+                    {
+                        _lastBlockReason = "input_focused";
+                        return false;
+                    }
+                }
+                
+
+===== AwakeUnnamedProfileService.cs:33  (clauses=1 | (no filter)) =====
+            if (target == null) return "当前没有可用的角色状态。";
+            if (target.IsHero) return string.Empty;
+            return "你是无名角色，不是有名英雄；你只了解自己的身份、所处地点与日常见闻，不掌握领主账目、王国机密或超出身份的信息。";
+        }
+    
+        internal static string RoleLabel(CharacterObject character)
+        {
+            if (character == null) return "路人";
+            try
+            {
+                if (character.IsSoldier) return "士兵";
+            }
+            
+
+===== BannerlordNativeSocialReader.cs:17  (clauses=1 | (no filter)) =====
+    
+    namespace Awake;
+    
+    internal static class BannerlordNativeSocialReader
+    {
+        internal static NativeSocialSnapshot CapturePlayerToCurrentNpc(AwakeNpcTarget target)
+        {
+            Hero sourceHero = null;
+            try
+            {
+                if (Campaign.Current != null) sourceHero = Hero.MainHero;
+            }
+            
+
+===== BannerlordNativeSocialReader.cs:51  (clauses=1 | (no filter)) =====
+                SourceIdentity = sourceIdentity,
+                TargetIdentity = targetIdentity,
+                NativeFriendState = NativeFlagState.Unknown,
+                NativeEnemyState = NativeFlagState.Unknown,
+                NativeNeutralState = NativeFlagState.Unknown,
+                SameClan = ResolveSameClan(sourceClan, targetClan),
+                SameKingdom = ResolveSameKingdom(sourceClan, targetClan),
+                FamilyLinks = new List<FamilyLinkSnapshotInput>()
+            };
+    
+            if (sourceHero != null && targetHero != null)
+            {
+                try { input.BaseRelation = sourceHero.GetBaseHeroRelation(targetHero); } 
+
+===== BannerlordNativeSocialReader.cs:52  (clauses=1 | (no filter)) =====
+                TargetIdentity = targetIdentity,
+                NativeFriendState = NativeFlagState.Unknown,
+                NativeEnemyState = NativeFlagState.Unknown,
+                NativeNeutralState = NativeFlagState.Unknown,
+                SameClan = ResolveSameClan(sourceClan, targetClan),
+                SameKingdom = ResolveSameKingdom(sourceClan, targetClan),
+                FamilyLinks = new List<FamilyLinkSnapshotInput>()
+            };
+    
+            if (sourceHero != null && targetHero != null)
+            {
+                try { input.BaseRelation = sourceHero.GetBaseHeroRelation(targetHero); } catch { }
+                try { input.EffectiveRelation = sourceHero.GetRelation(targetHero); } 
+
+===== BannerlordNativeSocialReader.cs:53  (clauses=1 | (no filter)) =====
+                NativeFriendState = NativeFlagState.Unknown,
+                NativeEnemyState = NativeFlagState.Unknown,
+                NativeNeutralState = NativeFlagState.Unknown,
+                SameClan = ResolveSameClan(sourceClan, targetClan),
+                SameKingdom = ResolveSameKingdom(sourceClan, targetClan),
+                FamilyLinks = new List<FamilyLinkSnapshotInput>()
+            };
+    
+            if (sourceHero != null && targetHero != null)
+            {
+                try { input.BaseRelation = sourceHero.GetBaseHeroRelation(targetHero); } catch { }
+                try { input.EffectiveRelation = sourceHero.GetRelation(targetHero); } catch { }
+                try { input.NativeFriendState = ToFlag(sourceHero.IsFriend(targetHero)); } 
+
+===== BannerlordNativeSocialReader.cs:54  (clauses=1 | (no filter)) =====
+                NativeEnemyState = NativeFlagState.Unknown,
+                NativeNeutralState = NativeFlagState.Unknown,
+                SameClan = ResolveSameClan(sourceClan, targetClan),
+                SameKingdom = ResolveSameKingdom(sourceClan, targetClan),
+                FamilyLinks = new List<FamilyLinkSnapshotInput>()
+            };
+    
+            if (sourceHero != null && targetHero != null)
+            {
+                try { input.BaseRelation = sourceHero.GetBaseHeroRelation(targetHero); } catch { }
+                try { input.EffectiveRelation = sourceHero.GetRelation(targetHero); } catch { }
+                try { input.NativeFriendState = ToFlag(sourceHero.IsFriend(targetHero)); } catch { }
+                try { input.NativeEnemyState = ToFlag(sourceHero.IsEnemy(targetHero)); } 
+
+===== BannerlordNativeSocialReader.cs:55  (clauses=1 | (no filter)) =====
+                NativeNeutralState = NativeFlagState.Unknown,
+                SameClan = ResolveSameClan(sourceClan, targetClan),
+                SameKingdom = ResolveSameKingdom(sourceClan, targetClan),
+                FamilyLinks = new List<FamilyLinkSnapshotInput>()
+            };
+    
+            if (sourceHero != null && targetHero != null)
+            {
+                try { input.BaseRelation = sourceHero.GetBaseHeroRelation(targetHero); } catch { }
+                try { input.EffectiveRelation = sourceHero.GetRelation(targetHero); } catch { }
+                try { input.NativeFriendState = ToFlag(sourceHero.IsFriend(targetHero)); } catch { }
+                try { input.NativeEnemyState = ToFlag(sourceHero.IsEnemy(targetHero)); } catch { }
+                try { input.NativeNeutralState = ToFlag(sourceHero.IsNeutral(targetHero)); } 
+
+===== BannerlordNativeSocialReader.cs:61  (clauses=1 | (no filter)) =====
+            if (sourceHero != null && targetHero != null)
+            {
+                try { input.BaseRelation = sourceHero.GetBaseHeroRelation(targetHero); } catch { }
+                try { input.EffectiveRelation = sourceHero.GetRelation(targetHero); } catch { }
+                try { input.NativeFriendState = ToFlag(sourceHero.IsFriend(targetHero)); } catch { }
+                try { input.NativeEnemyState = ToFlag(sourceHero.IsEnemy(targetHero)); } catch { }
+                try { input.NativeNeutralState = ToFlag(sourceHero.IsNeutral(targetHero)); } catch { }
+                AddFamilyLinks(input.FamilyLinks, sourceHero, targetHero);
+            }
+    
+            if (sourceClan != null && targetClan != null)
+            {
+                try { input.EffectiveClanRelation = sourceClan.GetRelationWithClan(targetClan); } 
+
+===== BannerlordNativeSocialReader.cs:62  (clauses=1 | (no filter)) =====
+            {
+                try { input.BaseRelation = sourceHero.GetBaseHeroRelation(targetHero); } catch { }
+                try { input.EffectiveRelation = sourceHero.GetRelation(targetHero); } catch { }
+                try { input.NativeFriendState = ToFlag(sourceHero.IsFriend(targetHero)); } catch { }
+                try { input.NativeEnemyState = ToFlag(sourceHero.IsEnemy(targetHero)); } catch { }
+                try { input.NativeNeutralState = ToFlag(sourceHero.IsNeutral(targetHero)); } catch { }
+                AddFamilyLinks(input.FamilyLinks, sourceHero, targetHero);
+            }
+    
+            if (sourceClan != null && targetClan != null)
+            {
+                try { input.EffectiveClanRelation = sourceClan.GetRelationWithClan(targetClan); } catch { }
+                try { input.WeightedClanRelation = FactionManager.GetRelationBetweenClans(sourceClan, targetClan); } 
+
+===== BannerlordNativeSocialReader.cs:118  (clauses=1 | (no filter)) =====
+                IsFactionLeader = TryBool(() => hero.IsFactionLeader),
+                IsHeadman = TryBool(() => hero.IsHeadman),
+                IsRuralNotable = TryBool(() => hero.IsRuralNotable),
+                IsMerchant = TryBool(() => hero.IsMerchant),
+                IsGangLeader = TryBool(() => hero.IsGangLeader),
+                IsWanderer = TryBool(() => hero.IsWanderer)
+            };
+        }
+    
+        private static void AddFamilyLinks(List<FamilyLinkSnapshotInput> links, Hero source, Hero target)
+        {
+            if (links == null || source == null || target == null) return;
+            try { if (source.Father == target) links.Add(new FamilyLinkSnapshotInput(FamilyLinkKind.Father, target.StringId)); } 
+
+===== BannerlordNativeSocialReader.cs:119  (clauses=1 | (no filter)) =====
+                IsHeadman = TryBool(() => hero.IsHeadman),
+                IsRuralNotable = TryBool(() => hero.IsRuralNotable),
+                IsMerchant = TryBool(() => hero.IsMerchant),
+                IsGangLeader = TryBool(() => hero.IsGangLeader),
+                IsWanderer = TryBool(() => hero.IsWanderer)
+            };
+        }
+    
+        private static void AddFamilyLinks(List<FamilyLinkSnapshotInput> links, Hero source, Hero target)
+        {
+            if (links == null || source == null || target == null) return;
+            try { if (source.Father == target) links.Add(new FamilyLinkSnapshotInput(FamilyLinkKind.Father, target.StringId)); } catch { }
+            try { if (source.Mother == target) links.Add(new FamilyLinkSnapshotInput(FamilyLinkKind.Mother, target.StringId)); } 
+
+===== BannerlordNativeSocialReader.cs:120  (clauses=1 | (no filter)) =====
+                IsRuralNotable = TryBool(() => hero.IsRuralNotable),
+                IsMerchant = TryBool(() => hero.IsMerchant),
+                IsGangLeader = TryBool(() => hero.IsGangLeader),
+                IsWanderer = TryBool(() => hero.IsWanderer)
+            };
+        }
+    
+        private static void AddFamilyLinks(List<FamilyLinkSnapshotInput> links, Hero source, Hero target)
+        {
+            if (links == null || source == null || target == null) return;
+            try { if (source.Father == target) links.Add(new FamilyLinkSnapshotInput(FamilyLinkKind.Father, target.StringId)); } catch { }
+            try { if (source.Mother == target) links.Add(new FamilyLinkSnapshotInput(FamilyLinkKind.Mother, target.StringId)); } catch { }
+            try { if (source.Spouse == target) links.Add(new FamilyLinkSnapshotInput(FamilyLinkKind.Spouse, target.StringId)); } 
+
+===== BannerlordNativeSocialReader.cs:135  (clauses=1 | (no filter)) =====
+                if (source.Children != null)
+                {
+                    foreach (Hero child in source.Children)
+                    {
+                        if (child == target)
+                        {
+                            links.Add(new FamilyLinkSnapshotInput(FamilyLinkKind.Child, target.StringId));
+                            break;
+                        }
+                    }
+                }
+            }
+            
+
+===== BannerlordWorldbookIdentityAdapter.cs:88  (clauses=1 | (no filter)) =====
+        private static string ResolveHeroRole(Hero hero)
+        {
+            try
+            {
+                if (IsNoble(hero)) return "noble";
+                if (hero.Occupation != Occupation.NotAssigned) return hero.Occupation.ToString();
+                if (hero.IsHeadman) return "headman";
+                if (hero.IsRuralNotable) return "rural_notable";
+                if (hero.IsMerchant) return "merchant";
+                if (hero.IsGangLeader) return "gang_leader";
+                if (hero.IsWanderer) return "wanderer";
+            }
+            
+
+===== BannerlordWorldbookIdentityAdapter.cs:101  (clauses=1 | (no filter)) =====
+            {
+            }
+            return "unknown";
+        }
+    
+        private static string ResolveCharacterRole(CharacterObject character, string fallbackRole)
+        {
+            try
+            {
+                if (character.Occupation != Occupation.NotAssigned) return character.Occupation.ToString();
+                if (character.IsSoldier) return "soldier";
+            }
+            
+
+===== DeveloperCheckOverlay.cs:169  (clauses=1 | (no filter)) =====
+    
+        private void Close()
+        {
+            if (_closed) return;
+            _closed = true;
+            try
+            {
+                _layer.InputRestrictions.ResetInputRestrictions();
+                _layer.IsFocusLayer = false;
+                ScreenManager.TryLoseFocus(_layer);
+                _screen.RemoveLayer(_layer);
+            }
+            
+
+===== KnowledgeRuntime.cs:24  (clauses=1 | (no filter)) =====
+        }
+    
+        internal static void ShutdownCurrent()
+        {
+            KnowledgeService service = _current;
+            _current = null;
+            if (service != null)
+            {
+                try
+                {
+                    service.Dispose();
+                }
+                
+
+===== NpcDialogueLauncher.cs:322  (clauses=1 | (no filter)) =====
+                        break;
+                    case MissionMode.Duel:
+                        missionState = SceneShoutMissionState.Duel;
+                        break;
+                    case MissionMode.Stealth:
+                        missionState = SceneShoutMissionState.Stealth;
+                        break;
+                    case MissionMode.Tournament:
+                        missionState = SceneShoutMissionState.Tournament;
+                        break;
+                }
+            }
+            
+
+===== NpcDialogueLauncher.cs:330  (clauses=1 | (no filter)) =====
+                        missionState = SceneShoutMissionState.Tournament;
+                        break;
+                }
+            }
+            catch
+            {
+            }
+            bool conversationActive = false;
+            try
+            {
+                conversationActive = Campaign.Current?.ConversationManager?.IsConversationInProgress ?? false;
+            }
+            
+
+===== NpcDialogueLauncher.cs:623  (clauses=1 | (no filter)) =====
+        {
+            try
+            {
+                Settlement settlement = Settlement.CurrentSettlement;
+                try
+                {
+                    string menuId = Campaign.Current?.CurrentMenuContext?.StringId ?? string.Empty;
+                    if (string.Equals(menuId, "town_keep", StringComparison.Ordinal))
+                    {
+                        return AwakeConstants.GetSceneKeywords("town_keep");
+                    }
+                }
+                
+
+===== NpcDialogueOverlay.cs:143  (clauses=1 | (no filter)) =====
+    
+        private void Close()
+        {
+            if (_closed) return;
+            _closed = true;
+            try
+            {
+                _layer.InputRestrictions.ResetInputRestrictions();
+                _layer.IsFocusLayer = false;
+                ScreenManager.TryLoseFocus(_layer);
+                _screen.RemoveLayer(_layer);
+            }
+            
+
+===== NpcDialogueService.cs:823  (clauses=1 | (no filter)) =====
+                AwakeLog.Write("npc_dialogue_hero_info_error error=" + ex.Message);
+            }
+        }
+    
+        private void AddHeroSkill(Hero hero, string key, SkillObject skill)
+        {
+            try
+            {
+                int value = hero?.GetSkillValue(skill) ?? 0;
+                _heroSkills[key] = value;
+                if (StringComparer.Ordinal.Equals(key, "steward")) _heroSkills["management"] = value;
+            }
+            
+
+===== NpcDialogueStarter.cs:39  (clauses=1 | (no filter)) =====
+    
+                PartyBase party = ResolveNonHeroParty(target);
+                if (party == null) return false;
+    
+                bool inSettlement = Settlement.CurrentSettlement != null;
+                bool inLocation = LocationComplex.Current != null;
+                bool inMenu = Campaign.Current.CurrentMenuContext != null;
+                bool atSea = false;
+                try
+                {
+                    atSea = PartyBase.MainParty?.MobileParty?.IsCurrentlyAtSea == true;
+                }
+                
+
+===== NpcDialogueStarter.cs:161  (clauses=1 | (no filter)) =====
+                    party = PartyBase.MainParty;
+                }
+                if (party == null) return false;
+    
+                bool inSettlement = Settlement.CurrentSettlement != null;
+                bool inLocation = LocationComplex.Current != null;
+                bool inMenu = Campaign.Current.CurrentMenuContext != null;
+                bool atSea = false;
+                try
+                {
+                    atSea = PartyBase.MainParty?.MobileParty?.IsCurrentlyAtSea == true;
+                }
+                
+
+===== NpcMemoryService.cs:242  (clauses=1 | (no filter)) =====
+            Task[] tasks;
+            lock (_backgroundGate)
+            {
+                tasks = _backgroundTasks.ToArray();
+            }
+            if (tasks.Length == 0) return;
+            try
+            {
+                Task all = Task.WhenAll(tasks);
+                Task delay = Task.Delay(timeoutMilliseconds);
+                await Task.WhenAny(all, delay).ConfigureAwait(false);
+            }
+            
+
+===== NpcMemoryService.cs:507  (clauses=1 | (no filter)) =====
+                    {
+                        if (evt == null) return;
+                        if (evt.Kind == AiTaskEventKind.Completed)
+                        {
+                            string response = string.IsNullOrWhiteSpace(evt.StructuredJson) ? evt.Text : evt.StructuredJson;
+                            completion.TrySetResult(NpcMemorySummaryTemplate.ParseSummary(response));
+                        }
+                        else if (evt.Kind == AiTaskEventKind.Failed || evt.Kind == AiTaskEventKind.Cancelled)
+                        {
+                            completion.TrySetResult(string.Empty);
+                        }
+                    }
+                    
+
+===== NpcMemoryService.cs:589  (clauses=1 | (no filter)) =====
+        }
+        public void Dispose()
+        {
+            lock (_gate)
+            {
+                if (_disposed) return;
+                _disposed = true;
+            }
+            try
+            {
+                _cts.Cancel();
+            }
+            
+
+===== NpcMemoryService.cs:596  (clauses=1 | (no filter)) =====
+            }
+            try
+            {
+                _cts.Cancel();
+            }
+            catch
+            {
+            }
+            try
+            {
+                _cts.Dispose();
+            }
+            
+
+===== PermissionGate.cs:269  (clauses=1 | (no filter)) =====
+                        if (shared.ActiveWaiters <= 0)
+                        {
+                            SharedPermissionRequest current;
+                            if (_active.TryGetValue(permissionId, out current) && ReferenceEquals(current, shared))
+                            {
+                                _active.Remove(permissionId);
+                                dispose = true;
+                            }
+                        }
+                    }
+                    if (dispose)
+                    {
+                        try { shared.SharedCts?.Dispose(); } 
+
+===== PermissionGate.cs:304  (clauses=1 | (no filter)) =====
+                    {
+                        SharedPermissionRequest current;
+                        if (_active.TryGetValue(permissionId, out current) && ReferenceEquals(current, shared))
+                        {
+                            _active.Remove(permissionId);
+                            dispose = true;
+                        }
+                    }
+                }
+            }
+            if (cancel)
+            {
+                try { shared.SharedCts?.Cancel(); } 
+
+===== PermissionGate.cs:308  (clauses=1 | (no filter)) =====
+                            _active.Remove(permissionId);
+                            dispose = true;
+                        }
+                    }
+                }
+            }
+            if (cancel)
+            {
+                try { shared.SharedCts?.Cancel(); } catch { }
+            }
+            if (dispose)
+            {
+                try { shared.SharedCts?.Dispose(); } 
+
+===== ProbeExtension.cs:55  (clauses=1 | (no filter)) =====
+                    current = current.Parent;
+                }
+                string logs = Path.Combine(moduleDir, "Logs");
+                Directory.CreateDirectory(logs);
+                string path = Path.Combine(logs, "AwakeProbe.log");
+                lock (FileLock)
+                {
+                    TryRotate(path);
+                    File.AppendAllText(path,
+                        DateTimeOffset.UtcNow.ToString("yyyy-MM-dd HH:mm:ss'Z'") + " " + line + Environment.NewLine);
+                }
+            }
+            
+
+===== ProbeExtension.cs:72  (clauses=1 | (no filter)) =====
+    
+        private static void TryRotate(string path)
+        {
+            try
+            {
+                if (!File.Exists(path)) return;
+                FileInfo info = new FileInfo(path);
+                if (info.Length < 1024 * 1024) return;
+                string rotated = path + ".1";
+                if (File.Exists(rotated)) File.Delete(rotated);
+                File.Move(path, rotated);
+            }
+            
+
+===== SceneDialoguePreview.cs:117  (clauses=1 | (no filter)) =====
+            {
+                if (target != null && target.AgentIndex == agentIndex) return true;
+            }
+            return false;
+        }
+    
+        private static void TrySetContour(Agent agent, uint? color)
+        {
+            try
+            {
+                agent?.AgentVisuals?.SetContourColor(color, true);
+            }
+            
+
+===== SceneDialoguePreview.cs:188  (clauses=1 | (no filter)) =====
+                    MatrixFrame frame = CreateMarkerFrame(point);
+                    GameEntity entity = mission.SpawnWeaponWithNewEntity(
+                        ref weapon,
+                        Mission.WeaponSpawnFlags.CannotBePickedUp,
+                        frame);
+                    if (entity == null) continue;
+                    try
+                    {
+                        entity.SetMobility(GameEntity.Mobility.Stationary);
+                        entity.SetDoNotCheckVisibility(true);
+                        entity.SetContourColor(ColorFrom(0.15f, 0.95f, 1f), true);
+                    }
+                    
+
+===== SceneDialoguePreview.cs:233  (clauses=1 | (no filter)) =====
+                return null;
+            }
+        }
+    
+        private static void ClearMarkers()
+        {
+            foreach (GameEntity entity in Markers)
+            {
+                try
+                {
+                    entity?.Remove(0);
+                }
+                
+
+===== SceneDialogueStatusOverlay.cs:101  (clauses=1 | (no filter)) =====
+            _layer.InputRestrictions.SetInputRestrictions(false, InputUsageMask.All);
+        }
+    
+        private void Close()
+        {
+            if (_closed) return;
+            _closed = true;
+            try
+            {
+                _layer.InputRestrictions.ResetInputRestrictions();
+                _screen.RemoveLayer(_layer);
+            }
+            
+
+===== SubModule.cs:172  (clauses=1 | (no filter)) =====
+                    && Campaign.Current?.CurrentMenuContext == null)
+                {
+                    return;
+                }
+                try
+                {
+                    if (Campaign.Current?.ConversationManager != null
+                        && Campaign.Current.ConversationManager.IsConversationFlowActive)
+                    {
+                        return;
+                    }
+                }
+                
+
+===== WeeklyReportBrowserOverlay.cs:104  (clauses=1 | (no filter)) =====
+    
+        private void Close()
+        {
+            if (_closed) return;
+            _closed = true;
+            try
+            {
+                _layer.InputRestrictions.ResetInputRestrictions();
+                _layer.IsFocusLayer = false;
+                ScreenManager.TryLoseFocus(_layer);
+                _screen.RemoveLayer(_layer);
+            }
+            
+
+===== WorldEventInboxOverlay.cs:149  (clauses=1 | (no filter)) =====
+    
+        private void Close()
+        {
+            if (_closed) return;
+            _closed = true;
+            try
+            {
+                _layer.InputRestrictions.ResetInputRestrictions();
+                _layer.IsFocusLayer = false;
+                ScreenManager.TryLoseFocus(_layer);
+                _screen.RemoveLayer(_layer);
+            }
+            

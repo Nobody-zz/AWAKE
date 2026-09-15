@@ -1,14 +1,15 @@
 param(
     [string]$Model = 'qwen2.5:latest',
     [string]$EvidencePath = '_tmp\pravend-real-worker-evidence.json',
-    [string]$MappingRoot = 'C:\Users\26811\OneDrive\文档\New project\_houkai_merge\AWAKE\docs\mappings\persona-entity',
+    [string]$MappingRoot = '',
     [switch]$KeepWorkspace,
     [string]$SourceFile = '',
     [string]$CaseName = 'pravend'
 )
 $ErrorActionPreference = 'Stop'
-$root = 'C:\Users\26811\OneDrive\文档\New project\_houkai_merge\AWAKE\tools\worldbook-studio'
-$studioRoot = 'C:\Users\26811\OneDrive\文档\New project\_houkai_merge\AWAKE'
+$root = Split-Path -Parent $PSScriptRoot
+$studioRoot = Split-Path -Parent (Split-Path -Parent $root)
+if ([string]::IsNullOrWhiteSpace($MappingRoot)) { $MappingRoot = Join-Path $studioRoot 'docs\mappings\persona-entity' }
 $schemaRoot = Join-Path $studioRoot 'docs\worldbook-studio-plan'
 $cluster = Join-Path $root 'tests\fixtures\official-reference\pravend-cluster'
 $extractPath = if ([string]::IsNullOrWhiteSpace($SourceFile)) { Join-Path $cluster 'sources\pravend-official-cns-extract.txt' } else { [IO.Path]::GetFullPath($SourceFile) }

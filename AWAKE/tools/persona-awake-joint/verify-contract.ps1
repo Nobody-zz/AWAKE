@@ -49,7 +49,7 @@ try {
         Add-JointAssertion $assertions ('command_contract:' + $commandName) $present 'Contract-Lock command line is present.'
         if (-not $present) { $errors.Add([pscustomobject]@{ code = 'persona.contract_command_missing'; detail = $command }) }
     }
-    $requiredToolFiles = @('persona-awake-joint.ps1','run-fixtures.ps1','verify-contract.ps1','verify-old-entry-scan.ps1','verify-candidate-ledger.ps1','verify-runtime-bridge-static.ps1','verify-runtime-static-evidence.ps1','verify-native-prerequisite.ps1','verify-g3-s0-scope.ps1','verify-g3-s0-focused-evidence.ps1','verify-g3-plan.ps1','verify-e2-matrix.ps1')
+    $requiredToolFiles = @('persona-awake-joint.ps1','run-fixtures.ps1','verify-contract.ps1','verify-old-entry-scan.ps1','verify-candidate-ledger.ps1','verify-runtime-bridge-static.ps1','verify-runtime-static-evidence.ps1','verify-native-prerequisite.ps1','verify-g3-s0-scope.ps1','verify-g3-s0-focused-evidence.ps1','verify-g3-scope-authority.ps1','verify-g3-plan.ps1','verify-e2-matrix.ps1')
     foreach ($fileName in $requiredToolFiles) {
         $path = Join-Path $script:JointToolRoot $fileName
         $present = Test-Path -LiteralPath $path -PathType Leaf

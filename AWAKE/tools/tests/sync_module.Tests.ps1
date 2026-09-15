@@ -45,7 +45,7 @@ function New-RuntimePackage([string]$RuntimeRoot, $Payload) {
     Write-TestFile (Join-Path $RuntimeRoot 'SHA256SUMS.txt') (($sumLines -join [Environment]::NewLine) + [Environment]::NewLine)
 }
 
-function New-SyncFixture([string]$Name) {
+function New-SyncFixture([string]$Name, [switch]$OmitWorldbookPackage) {
     $base = Join-Path ([IO.Path]::GetTempPath()) ('awake-sync-tests-' + $Name + '-' + [Guid]::NewGuid().ToString('N'))
     $project = Join-Path $base 'AWAKE'
     $dist = Join-Path $project 'dist\Modules\AWAKE'
@@ -75,23 +75,47 @@ function New-SyncFixture([string]$Name) {
     Write-TestFile $runtimeServiceExe 'runtime-service-exe'
     Write-TestFile $provider 'provider-dll'
     Write-TestFile $storage 'storage-dll'
-    foreach ($file in @('AwakeMessenger.xml','DeveloperCheck.xml','NpcDialogue.xml','SceneDialogueStatus.xml','WeeklyReportBrowser.xml','WorldEventInbox.xml')) {
+    foreach ($file in @('AwakeMessenger.xml','AwakePortraitProbe.xml','DeveloperCheck.xml','NpcDialogue.xml','SceneDialogueStatus.xml','WeeklyReportBrowser.xml','WorldEventInbox.xml')) {
         Write-TestFile (Join-Path $project ('GUI\Prefabs\' + $file)) ('<' + $file + ' />')
     }
     Write-TestFile (Join-Path $project 'ModuleData\Languages\awake_strings.xml') '<strings />'
     Write-TestFile (Join-Path $project 'ModuleData\Languages\language_data.xml') '<language />'
     Write-TestFile (Join-Path $project 'ModuleData\Languages\CNs\awake_strings-zh-HANS.xml') '<strings-cn />'
     Write-TestFile (Join-Path $project 'ModuleData\Languages\CNs\language_data.xml') '<language-cn />'
-    $manifest = @{
-        schemaVersion = 'awake.worldbook.v1'
-        personaDefinitionDirectory = 'persona_definitions/definitions'
-        personaTagRegistryFile = 'persona_definitions/tag_registry.json'
-    } | ConvertTo-Json
-    Write-TestFile (Join-Path $project 'ModuleData\Worldbook\manifest.json') $manifest
+    # Repository-side package form (2026-09-14): a registry at the Worldbook root plus one
+    # packages/<slug>/ runtime three. The old v1 manifest / rules/ sample is gone on purpose.
+    $packageManifest = @{
+        schemaVersion = 'awake.worldbook.v2'
+        packageId = 'awake:worldbook:calradia'
+        worldId = 'awake:world:calradia'
+        version = '1.0.0'
+        kind = 'universe'
+        entrypoints = @{ runtime = 'runtime.json'; index = 'index.json' }
+        hashes = @{ manifestHash = ('a' * 64); contentHash = ('b' * 64); packageHash = ('c' * 64) }
+    } | ConvertTo-Json -Depth 6
+    $registryManifest = @{
+        schemaVersion = 'awake.worldbook.registry.v1'
+        registryId = 'awake:registry:installed'
+        packages = @(@{
+            packageId = 'awake:worldbook:calradia'
+            version = '1.0.0'
+            kind = 'universe'
+            relativePath = 'packages/calradia'
+            manifestHash = ('a' * 64)
+            contentHash = ('b' * 64)
+            packageHash = ('c' * 64)
+            enabledByDefault = $true
+        })
+    } | ConvertTo-Json -Depth 6
+    Write-TestFile (Join-Path $project 'ModuleData\Worldbook\manifest.json') $registryManifest
     Write-TestFile (Join-Path $project 'ModuleData\Worldbook\migration_report.json') '{}'
+    if (-not $OmitWorldbookPackage) {
+        Write-TestFile (Join-Path $project 'ModuleData\Worldbook\packages\calradia\manifest.json') $packageManifest
+        Write-TestFile (Join-Path $project 'ModuleData\Worldbook\packages\calradia\runtime.json') '{"schemaVersion":"awake.worldbook.v2","entries":[]}'
+        Write-TestFile (Join-Path $project 'ModuleData\Worldbook\packages\calradia\index.json') '{}'
+    }
     Write-TestFile (Join-Path $project 'ModuleData\Worldbook\persona_definitions\tag_registry.json') '{"tags":[]}'
     Write-TestFile (Join-Path $project 'ModuleData\Worldbook\persona_definitions\definitions\hero_default.json') '{"characterId":"hero.default"}'
-    Write-TestFile (Join-Path $project 'ModuleData\Worldbook\rules\sample.json') '{"KEYWORD":["sample"],"Priority":1,"When":{}}'
     New-RuntimePackage (Join-Path $dist 'bin\Win64_Shipping_Client\Runtime') ([ordered]@{
         'MarcusAwakeRuntimeService.exe' = 'runtime-service-exe'
         'MarcusAwakeRuntimeService.dll' = 'runtime-service-dll'
@@ -187,7 +211,8 @@ Run-Test 'Release staging uses a strict allowlist and leaves dist untouched' {
         Assert-True ($result.ExitCode -eq 0) $result.Output
         Assert-True (Test-Path -LiteralPath (Join-Path $staging 'SubModule.xml') -PathType Leaf) 'Release staging missed SubModule.xml.'
         Assert-True (Test-Path -LiteralPath (Join-Path $staging 'bin\Win64_Shipping_Client\Runtime\manifest.json') -PathType Leaf) 'Release staging missed Runtime manifest.'
-        Assert-True (Test-Path -LiteralPath (Join-Path $staging 'ModuleData\Worldbook\rules\sample.json') -PathType Leaf) 'Release staging missed worldbook content.'
+        Assert-True (Test-Path -LiteralPath (Join-Path $staging 'ModuleData\Worldbook\manifest.json') -PathType Leaf) 'Release staging missed the worldbook registry.'
+        Assert-True (Test-Path -LiteralPath (Join-Path $staging 'ModuleData\Worldbook\packages\calradia\runtime.json') -PathType Leaf) 'Release staging missed the compiled worldbook package.'
         foreach ($forbidden in @(
             'AGENTS.md',
             'AWAKE-Task-Queue-20260816.md',
@@ -365,6 +390,27 @@ Run-Test 'Injected failure restores files and created directories' {
         $reportValue = Get-Content -LiteralPath $report -Raw | ConvertFrom-Json
         Assert-True ($reportValue.state -eq 'rollback_verified') ('Unexpected rollback state: ' + $reportValue.state)
         Assert-True ($reportValue.rollback.verified -eq $true) 'Rollback was not verified.'
+    } finally { Remove-Item -LiteralPath $fixture.Base -Recurse -Force }
+}
+
+Run-Test 'Worldbook registry without its package is rejected before any copy' {
+    # Negative case for Assert-SourceManifest (2026-09-14 package form). Without this, the new
+    # assertion is only ever seen passing == never actually tested.
+    $fixture = New-SyncFixture 'worldbook-package-missing' -OmitWorldbookPackage
+    try {
+        $result = Invoke-Sync $fixture @('-SkipGame','-WhatIf')
+        Assert-True ($result.ExitCode -ne 0) 'Sync accepted a registry whose package is absent.'
+        Assert-True ($result.Output -match 'Worldbook registry package') ('Sync failed without naming the missing package: ' + $result.Output)
+    } finally { Remove-Item -LiteralPath $fixture.Base -Recurse -Force }
+}
+
+Run-Test 'Worldbook package missing a declared entrypoint is rejected before any copy' {
+    $fixture = New-SyncFixture 'worldbook-entrypoint-missing'
+    try {
+        Remove-Item -LiteralPath (Join-Path $fixture.Project 'ModuleData\Worldbook\packages\calradia\index.json') -Force
+        $result = Invoke-Sync $fixture @('-SkipGame','-WhatIf')
+        Assert-True ($result.ExitCode -ne 0) 'Sync accepted a package whose index entrypoint is absent.'
+        Assert-True ($result.Output -match 'entrypoints.index') ('Sync failed without naming the missing entrypoint: ' + $result.Output)
     } finally { Remove-Item -LiteralPath $fixture.Base -Recurse -Force }
 }
 

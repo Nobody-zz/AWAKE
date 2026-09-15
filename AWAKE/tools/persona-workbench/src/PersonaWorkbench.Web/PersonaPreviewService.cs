@@ -16,7 +16,6 @@ public class PersonaPreviewRequest
     public string PublicDescription { get; set; } = string.Empty;
     public string PrivateDescription { get; set; } = string.Empty;
     public string ContradictionDescription { get; set; } = string.Empty;
-    public string FoodPreference { get; set; } = string.Empty;
     public List<string> SelfClaimRules { get; set; } = new List<string>();
     public List<string> RealSelfBehaviors { get; set; } = new List<string>();
     public List<string> SelfClaimExamples { get; set; } = new List<string>();
@@ -92,7 +91,6 @@ public static class PersonaPreviewService
             PublicDescription = request.PublicDescription ?? string.Empty,
             PrivateDescription = request.PrivateDescription ?? string.Empty,
             ContradictionDescription = request.ContradictionDescription ?? string.Empty,
-            FoodPreference = request.FoodPreference ?? string.Empty,
             SelfClaimRules = request.SelfClaimRules ?? new List<string>(),
             RealSelfBehaviors = request.RealSelfBehaviors ?? new List<string>(),
             SelfClaimExamples = request.SelfClaimExamples ?? new List<string>(),

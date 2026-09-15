@@ -448,13 +448,20 @@ public static class CanonicalPersonaTemplateGenerator
     private static void AddAxisId(List<string> lines, string prefix, int? value, string negative, string positive)
     {
         if (!value.HasValue) return;
+        // 契约 domain 是 -3..3（persona-workbench.character.v1.schema.json 的数值轴 minimum/maximum）。
+        // 早期实现只覆盖 -2..2，遇到 |3| 直接抛 persona.axis_value_invalid——
+        // 而卡库里 44/76 张含 |3|，等于这些卡在预览/Provider 这条链上从来渲染不出来。
+        // ±3 用 _EXTREME 与 ±2 的 _STRONG 区分：抹平成 _STRONG 会让 render→parse 往返把 3 读回 2，
+        // 与「不得静默改变受保护字段」冲突。
         string suffix = value.Value switch
         {
+            -3 => negative + "_EXTREME",
             -2 => negative + "_STRONG",
             -1 => negative + "_SLIGHT",
             0 => "BALANCED",
             1 => positive + "_SLIGHT",
             2 => positive + "_STRONG",
+            3 => positive + "_EXTREME",
             _ => throw new InvalidOperationException("persona.axis_value_invalid")
         };
         lines.Add(prefix + "_" + suffix);

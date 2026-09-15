@@ -12,10 +12,15 @@ public static class RuntimePackageCompiler
 
     public static RuntimePackageCompilation Build(ValidatedSnapshot snapshot, IReadOnlyList<(string Path, JsonObject Document, ValidationReport Report)> documents, string contentTier)
     {
-        var first = documents.FirstOrDefault().Document;
-        var universe = Sanitize(first?["universe"]?.GetValue<string>() ?? "awake_current");
-        var packageId = $"awake:{universe}";
-        var worldId = $"awake:world:{universe}";
+        // 包身份＝**常量**，不从文档推导（2026-09-14 定，见 RUNTIME-MAPPING-CONTRACT〈身份定名〉）。
+        // 早先 packageId/worldId 由 first["universe"] 推出 —— 那是 schema 的「来源宇宙」枚举
+        // （awake_current/bannerlord_1084/warband_future/ck3_mod/unknown），属**溯源分类**，不是世界身份；
+        // displayName 又取 first["title"] ⇒ 随首篇文档改名而漂。AWAKE 只装一个世界，故写死。
+        // ⚠️ 拼法受契约约束（2026-09-15 纠）：`package_id` 的 pattern 是**两段**（`ns:name`），
+        //    只允许一个冒号 ⇒ 不能写 `awake:worldbook:calradia`。三段形只属于 `stable_id`（worldId 走这条）。
+        //    故按**先行的** `awake:pilot.worldbook` 惯例拼成 `awake:worldbook.calradia`（ns=awake，name=worldbook.calradia）。
+        const string packageId = "awake:worldbook.calradia";
+        const string worldId = "awake:world:calradia";
         var entries = new JsonArray();
         var entityAnchorNames = ResolveEntityAnchorNames(snapshot);
         foreach (var item in documents.OrderBy(x => x.Document["id"]?.GetValue<string>(), StringComparer.Ordinal))
@@ -89,7 +94,7 @@ public static class RuntimePackageCompiler
             ["packageId"] = packageId,
             ["version"] = "1.0.0",
             ["kind"] = "universe",
-            ["displayName"] = Clone(first?["title"] as JsonObject ?? new JsonObject { ["zh-CN"] = universe }),
+            ["displayName"] = new JsonObject { ["zh-CN"] = "卡拉迪亚", ["en"] = "Calradia" },
             ["worldId"] = worldId,
             ["entrypoints"] = new JsonObject { ["runtime"] = "runtime.json", ["index"] = "index.json" },
             ["hashes"] = new JsonObject()

@@ -41,7 +41,7 @@
     <string id="awake.terminal.close" text="Close" />
     <string id="awake.terminal.messenger_hint" text="Open the messenger and start a conversation." />
     <string id="awake.terminal.inbox_hint" text="View recent world events." />
-    <string id="awake.terminal.weekly_hint" text="View the weekly world summary." />
+    <string id="awake.terminal.weekly_hint" text="View recent world activity." />
     <string id="awake.terminal.developer_hint" text="View runtime diagnostics." />
     <string id="awake.terminal.dev_tools_hint" text="In-game testing tools." />
     <string id="awake.menu.developer_check" text="Developer Check" />
@@ -92,9 +92,9 @@
     <string id="awake.mcm.provider_test.name" text="Test connection" />
     <string id="awake.mcm.provider_test.content" text="Test connection" />
     <string id="awake.mcm.provider_test.hint" text="Read the model list to test the Runtime, address, credentials, and Provider connection." />
-    <string id="awake.mcm.group.data_debug" text="4. Data and Debug" />
-    <string id="awake.mcm.group.behavior" text="2. Proactive Behavior" />
-    <string id="awake.mcm.group.scene" text="1. Dialogue and Scene" />
+    <string id="awake.mcm.group.auth" text="2. Authorization and Export" />
+    <string id="awake.mcm.group.behavior" text="4. Proactive Behavior" />
+    <string id="awake.mcm.group.scene" text="3. Dialogue and Scene" />
     <string id="awake.mcm.ai_status.name" text="AI Link Status" />
     <string id="awake.mcm.ai_status.hint" text="Read-only summary of the embedded Runtime, Provider, routes, campaign session, and cloud export state. Configure all player-facing AI settings in this group." />
     <string id="awake.mcm.cloud_export.name" text="Enable Cloud Export" />
@@ -123,7 +123,7 @@
     <string id="awake.mcm.scene_far_to_near_key.hint" text="Input an InputKey name or a literal [ or ] key. Default ]." />
     <string id="awake.mcm.scene_shout_key.name" text="Scene Shout Key" />
     <string id="awake.mcm.scene_shout_key.hint" text="While holding T, press this key to switch to an untargeted scene call. Default V." />
-    <string id="awake.mcm.group.command" text="3. Command Deck" />
+    <string id="awake.mcm.group.dev" text="5. Developer and Diagnostics" />
     <string id="awake.mcm.world_effects.name" text="Enable World Effects" />
     <string id="awake.mcm.world_effects.hint" text="Enabled by default. When disabled, optional content-pack world effects are rejected; actual gameplay wiring is planned for 0.2.x." />
     <string id="awake.mcm.boon_offers.name" text="Enable Optional Content Proposals" />
@@ -160,12 +160,16 @@
     <string id="awake.dev_tools.title" text="AWAKE · Developer Testing" />
     <string id="awake.dev_tools.prompt" text="Choose a test action:" />
     <string id="awake.dev_tools.dialogue" text="Force Nearby Deep Talk" />
+    <string id="awake.dev_tools.negotiation" text="Force Nearby Negotiation" />
     <string id="awake.dev_tools.reset_proactive" text="Reset Proactive State" />
     <string id="awake.dev_tools.no_target" text="No nearby talkable target." />
     <string id="awake.dev_tools.dialogue_failed" text="Deep talk failed to open." />
     <string id="awake.dev_tools.dialogue_ok" text="Deep talk opened." />
+    <string id="awake.dev_tools.negotiation_failed" text="Negotiation test failed to open." />
+    <string id="awake.dev_tools.negotiation_ok" text="Negotiation test opened." />
     <string id="awake.dev_tools.proactive_reset" text="NPC proactive state reset." />
     <string id="awake.dev_tools.dialogue_hint" text="Open deep talk with the nearest NPC." />
+    <string id="awake.dev_tools.negotiation_hint" text="Open the nearest NPC in negotiation mode to test the relationship command chain." />
     <string id="awake.dev_tools.inbox_hint" text="Open the event inbox." />
     <string id="awake.dev_tools.weekly_hint" text="Open the weekly report." />
     <string id="awake.dev_tools.reset_proactive_hint" text="Clear NPC proactive talk candidates." />
@@ -198,7 +202,7 @@
     <string id="awake.terminal.map_scope_shout_hint" text="Shout to the current map context without a specific target." />
     <string id="awake.terminal.map_shout_failed" text="Map shout failed to open." />
     <string id="awake.feedback.inbox_open_failed" text="Could not open the event inbox." />
-    <string id="awake.feedback.weekly_report_open_failed" text="Could not open the weekly report." />
+    <string id="awake.feedback.weekly_report_open_failed" text="Could not open weekly activity." />
     <string id="awake.ui.talk" text="Talk" />
     <string id="awake.ui.send" text="Send" />
     <string id="awake.ui.close" text="Leave" />
@@ -227,6 +231,10 @@
     <string id="awake.ui.inbox_count" text="{COUNT} records this week" />
     <string id="awake.ui.weekly_status" text="Weekly world summary" />
     <string id="awake.ui.weekly_empty" text="No records this week." />
+    <string id="awake.ui.weekly_formal_status" text="Saved activity for the latest completed week" />
+    <string id="awake.ui.weekly_preview_status" text="Recent activity for the current unfinished week" />
+    <string id="awake.ui.weekly_unavailable_status" text="Activity is temporarily unavailable" />
+    <string id="awake.ui.weekly_unavailable" text="Activity is temporarily unavailable. Please try again later." />
     <string id="awake.ui.day" text="Day {DAY}" />
     <string id="awake.ui.contact_unknown" text="Unknown" />
     <string id="awake.ui.contact_unavailable" text="Unavailable" />
@@ -239,7 +247,20 @@
     <string id="awake.ui.card_relationship" text="Relationship not recorded" />
     <string id="awake.ui.card_relationship_value" text="Relationship: {RELATIONSHIP}" />
     <string id="awake.ui.chat_tab" text="Chat" />
+    <string id="awake.ui.chat_mode" text="Chat" />
+    <string id="awake.ui.negotiation_mode" text="Negotiation" />
+    <string id="awake.ui.chat_notice" text="This is ordinary conversation. Spoken words do not directly change game state." />
+    <string id="awake.ui.negotiation_notice" text="You are making a clear proposal. A change requires explicit acceptance and a successful game-state settlement." />
+    <string id="awake.ui.dialogue_settled" text="Relationship change settled." />
+    <string id="awake.ui.dialogue_settlement_failed" text="Relationship unchanged: {CODE}" />
+    <string id="awake.ui.dialogue_settlement_unavailable" text="Relationship could not be settled: runtime state unavailable." />
+    <string id="awake.ui.dialogue_proposal_title" text="Confirm Negotiation Result" />
+    <string id="awake.ui.dialogue_proposal_text" text="The other party proposed this state-changing action: {TEXT}\n\nIt will not be written until you confirm." />
+    <string id="awake.ui.dialogue_proposal_cancelled" text="Proposal was not confirmed; game state unchanged." />
     <string id="awake.ui.history_tab" text="History" />
+    <string id="awake.ui.transcript_tab" text="Log" />
+    <string id="awake.ui.messenger_header" text="Messenger" />
+    <string id="awake.ui.input_hint" text="Type your message... (Enter to send)" />
     <string id="awake.ui.history_empty" text="No history yet." />
     <string id="awake.ui.history_count" text="{COUNT} records" />
     <string id="awake.ui.history_pin" text="Pin" />
@@ -290,12 +311,35 @@
     <string id="awake.proactive.opening_hint" text="The other person initiated this conversation." />
     <string id="awake.dialogue.long_wait_hint" text="Still responding. You can close and cancel after 60 seconds." />
     <string id="awake.dialogue.cloud_export_denied" text="Cloud export was denied: enable cloud export in AWAKE MCM and verify the Provider settings." />
-    <string id="awake.dialogue.cloud_export_disabled" text="AWAKE cloud export is disabled: enable it under MCM Data &amp; Debug." />
+    <string id="awake.dialogue.cloud_export_disabled" text="AWAKE cloud export is disabled: enable it under MCM Authorization and Export." />
     <string id="awake.menu.inbox" text="Event Inbox" />
     <string id="awake.menu.weekly_report" text="Weekly Report" />
+    <string id="awake.menu.weekly_dynamics" text="Weekly Activity" />
+    <string id="awake.menu.recent_dynamics" text="Recent Activity" />
     <string id="awake.feedback.terminal_blocked" text="The command deck cannot be opened right now." />
     <string id="awake.feedback.proactive_accepted" text="The other person is willing to talk." />
     <string id="awake.feedback.proactive_declined" text="You decide to talk later." />
     <string id="awake.feedback.weekly_report" text="Weekly report generated. Open the command deck to read it." />
+    <string id="awake.mcm.group.image" text="1. Image Generation" />
+    <string id="awake.mcm.image_scope.name" text="This section is separate from the AI link" />
+    <string id="awake.mcm.image_scope.hint" text="Image generation uses AWAKE's own outbound path, so it needs its own URL and its own credential. The '0. AI Link' group covers dialogue only; the two share neither the URL nor the key." />
+    <string id="awake.mcm.image_shape.name" text="Image API shape" />
+    <string id="awake.mcm.image_shape.hint" text="Player2 takes base64 in and gives base64 out; OpenAI-compatible covers most vendors and self-hosted relays. A wrong shape usually shows up as a 404 or as 'no image field in the response'." />
+    <string id="awake.mcm.image_url.name" text="Image service URL" />
+    <string id="awake.mcm.image_url.hint" text="Enter the image API root, or paste a complete endpoint URL - both are accepted. Examples: local Player2 App = http://127.0.0.1:4315/v1; Player2 Cloud = https://api.player2.game/v1; Volcengine Ark = https://ark.cn-beijing.volces.com/api/v3. Never put the API Key in the URL." />
+    <string id="awake.mcm.image_cloud.name" text="Image service is cloud-hosted" />
+    <string id="awake.mcm.image_cloud.hint" text="Only cloud services carry an API Key. Turn this off for local services that need no authentication, such as a local desktop app or a local inference server." />
+    <string id="awake.mcm.image_key.name" text="Enter or replace image API Key" />
+    <string id="awake.mcm.image_key.content" text="Open input box" />
+    <string id="awake.mcm.image_key.hint" text="The input box stays visible so you can check it. The key is written only to local protected storage and never enters MCM, saves or logs. It is kept separately from the AI link key." />
+    <string id="awake.mcm.image_width.name" text="Image width (px)" />
+    <string id="awake.mcm.image_width.hint" text="Requested size, default 512. The server is allowed to ignore it - some endpoints return a larger image regardless - so saving and layout follow the actual pixels." />
+    <string id="awake.mcm.image_height.name" text="Image height (px)" />
+    <string id="awake.mcm.image_height.hint" text="Requested size, default 512. Likewise not guaranteed; trust the actual output, not the request." />
+    <string id="awake.mcm.image_probe.name" text="Test image generation" />
+    <string id="awake.mcm.image_probe.content" text="Send one request" />
+    <string id="awake.mcm.image_probe.hint" text="Really calls the configured endpoint once and saves the image into the local portrait folder, echoing the path. This is the only action that proves the URL and key actually work, and it spends service quota." />
+    <string id="awake.mcm.image_status.name" text="Image status" />
+    <string id="awake.mcm.image_status.hint" text="Read-only: whether a key is configured, plus the result of the most recent test generation." />
   </strings>
 </base>

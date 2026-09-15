@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Awake;
@@ -72,8 +74,29 @@ internal sealed class WorldStateStore
     internal TaskCompletionSource<bool> WorldEventsReadStarted { get; set; }
     internal bool FailReportWrites { get; set; }
     internal bool FailReads { get; set; }
+    internal WorldFactJournalReadResult Journal { get; set; }
     internal int EventWriteAttempts { get; private set; }
     internal int ReportWriteAttempts { get; private set; }
+
+    internal WorldStateStore Reopen()
+    {
+        using (JsonTextReader reader = new JsonTextReader(new StringReader(Document.ToString(Newtonsoft.Json.Formatting.None))))
+        {
+            reader.DateParseHandling = DateParseHandling.None;
+            WorldStateStore reopened = new WorldStateStore((JObject)JToken.ReadFrom(reader));
+            reopened.ReportWriteAttempts = ReportWriteAttempts;
+            return reopened;
+        }
+    }
+
+    internal WorldStateStore()
+    {
+    }
+
+    private WorldStateStore(JObject document)
+    {
+        Document = document ?? NewState();
+    }
 
     internal Task<JObject> GetWorldEventsAsync(object context, CancellationToken cancellationToken)
     {
@@ -82,30 +105,46 @@ internal sealed class WorldStateStore
         return Task.FromResult(FailReads ? null : Document ?? NewState());
     }
 
+    internal Task<WorldFactJournalReadResult> GetWorldFactJournalAsync(object context, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(Journal ?? new WorldFactJournalReadResult(WorldFactJournalReadStatus.Missing));
+    }
+
     internal Task<List<WeeklyReportApplicationState>> GetWeeklyReportStatesAsync(CancellationToken cancellationToken)
     {
+        if (FailReads) return Task.FromResult<List<WeeklyReportApplicationState>>(null);
         var result = new List<WeeklyReportApplicationState>();
         foreach (JObject value in ((JArray)Document["weeklyReports"] ?? new JArray()).Children<JObject>())
         {
             JObject report = value["report"] as JObject;
-            if (report != null && !StringComparer.Ordinal.Equals((string)report["reportId"], (string)value["reportId"]))
+            string schemaVersion = (string)value["schemaVersion"] ?? (string)report?["schemaVersion"] ?? string.Empty;
+            bool corrupt = false;
+            if (schemaVersion == "awake.worldbook.weekly-report.v2")
+            {
+                if (!IsValidV2Entry(value, report)) { report = null; corrupt = true; }
+            }
+            else if (report != null && !StringComparer.Ordinal.Equals((string)report["reportId"], (string)value["reportId"]))
                 report = null;
             result.Add(new WeeklyReportApplicationState
             {
                 ReportId = (string)value["reportId"] ?? string.Empty,
+                SchemaVersion = schemaVersion,
                 WindowStartDay = (int?)value["windowStartDay"] ?? 0,
                 WindowEndDay = (int?)value["windowEndDay"] ?? 0,
                 Status = (string)value["status"] ?? "retryable",
                 AttemptCount = (int?)value["attemptCount"] ?? 0,
                 LastAttemptDay = (int?)value["lastAttemptDay"] ?? 0,
                 LastErrorCode = (string)value["lastErrorCode"] ?? string.Empty,
+                ContentFingerprint = (string)value["contentFingerprint"] ?? string.Empty,
+                SourceFactIds = ((JArray)value["sourceFactIds"] ?? new JArray()).Values<string>().ToArray(),
+                Corrupt = corrupt,
                 Report = report == null ? null : (JObject)report.DeepClone()
             });
         }
         return Task.FromResult(result);
     }
 
-    internal Task<WorldEventAppendResult> AppendWorldEventAsync(int day, string kind, string text, string idempotencyKey, string eventKey, string domain, DateTimeOffset occurredAt, IReadOnlyList<string> visibilityIdentityIds, CancellationToken cancellationToken)
+    internal Task<WorldEventAppendResult> AppendWorldEventAsync(int day, string kind, string text, string idempotencyKey, string eventKey, string domain, DateTimeOffset occurredAt, IReadOnlyList<string> visibilityIdentityIds, CancellationToken cancellationToken, JObject structuredFact = null)
     {
         EventWriteAttempts++;
         LastDomain = domain;
@@ -135,14 +174,16 @@ internal sealed class WorldStateStore
                 && StringComparer.Ordinal.Equals((string)existing["domain"], domain)
                 && StringComparer.Ordinal.Equals((string)existing["occurredAt"], occurredAt.ToUniversalTime().ToString("O"))
                 && new HashSet<string>(((JArray)existing["visibilityIdentityIds"] ?? new JArray()).Values<string>(), StringComparer.Ordinal)
-                    .SetEquals(WorldEventAudience.Resolve(visibilityIdentityIds));
+                    .SetEquals(WorldEventAudience.Resolve(visibilityIdentityIds))
+                && ((existing["fact"] == null || existing["fact"].Type == JTokenType.Null) == (structuredFact == null)
+                    && (structuredFact == null || JToken.DeepEquals(existing["fact"], structuredFact)));
             return Task.FromResult(new WorldEventAppendResult
             {
                 Status = same ? WorldEventAppendResult.DuplicateConfirmed : WorldEventAppendResult.KeyConflict,
                 EventId = idempotencyKey,
                 EventKey = eventKey,
                 Code = same ? string.Empty : "smoke.event.key_conflict",
-                Record = same ? new WorldEventRecord(idempotencyKey, day, kind, domain, text, occurredAt, eventKey, visibilityIdentityIds) : null
+                Record = same ? new WorldEventRecord(idempotencyKey, day, kind, domain, text, occurredAt, eventKey, visibilityIdentityIds, structuredFact) : null
             });
         }
         records.Insert(0, new JObject
@@ -154,7 +195,8 @@ internal sealed class WorldStateStore
             ["eventKey"] = eventKey,
             ["domain"] = domain,
             ["occurredAt"] = occurredAt.ToUniversalTime().ToString("O"),
-            ["visibilityIdentityIds"] = new JArray(WorldEventAudience.Resolve(visibilityIdentityIds).Select(value => (object)value))
+            ["visibilityIdentityIds"] = new JArray(WorldEventAudience.Resolve(visibilityIdentityIds).Select(value => (object)value)),
+            ["fact"] = structuredFact == null ? null : structuredFact.DeepClone()
         });
         return Task.FromResult(new WorldEventAppendResult { Status = WorldEventAppendResult.Persisted, EventId = idempotencyKey, EventKey = eventKey });
     }
@@ -166,6 +208,8 @@ internal sealed class WorldStateStore
 
     internal Task<WeeklyReportStateWriteResult> UpsertWeeklyReportStateAsync(string reportId, int windowStartDay, int windowEndDay, string status, int lastAttemptDay, string lastErrorCode, JObject report, CancellationToken cancellationToken)
     {
+        if (report != null && StringComparer.Ordinal.Equals((string)report["schemaVersion"], "awake.worldbook.weekly-report.v2"))
+            return UpsertV2WeeklyReportStateAsync(report, reportId, windowStartDay, windowEndDay, lastAttemptDay, lastErrorCode);
         ReportWriteAttempts++;
         if (FailReportWrites)
         {
@@ -228,11 +272,62 @@ internal sealed class WorldStateStore
         return Task.FromResult(new WeeklyReportStateWriteResult { Status = status == "applied" ? WeeklyReportStateWriteResult.Applied : WeeklyReportStateWriteResult.Retryable, Attempts = attempt });
     }
 
+    private Task<WeeklyReportStateWriteResult> UpsertV2WeeklyReportStateAsync(JObject report, string reportId, int windowStartDay, int windowEndDay, int lastAttemptDay, string lastErrorCode)
+    {
+        if (FailReportWrites)
+            return Task.FromResult(new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Retryable, Code = "smoke.report.write_failed" });
+        if (!StringComparer.Ordinal.Equals((string)report["reportId"], reportId) || !WeeklyReportService.TryValidateV2Report(report, out _))
+            return Task.FromResult(new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Failed, Code = "awake.world_report.v2.invalid_payload" });
+        EnsureShape();
+        JArray reports = (JArray)Document["weeklyReports"];
+        JObject current = reports.Children<JObject>().FirstOrDefault(value => StringComparer.Ordinal.Equals((string)value["reportId"], reportId));
+        if (current != null)
+        {
+            string schemaVersion = (string)current["schemaVersion"] ?? (string)current["report"]?["schemaVersion"] ?? string.Empty;
+            if (schemaVersion == "awake.worldbook.weekly-report.v1")
+                return Task.FromResult(new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Conflict, Code = "awake.world_report.v2.v1_conflict" });
+            if (schemaVersion == "awake.worldbook.weekly-report.v2" && IsValidV2Entry(current, current["report"] as JObject))
+            {
+                if (StringComparer.Ordinal.Equals((string)current["contentFingerprint"], (string)report["contentFingerprint"]))
+                    return Task.FromResult(new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.AlreadyApplied, Attempts = (int?)current["attemptCount"] ?? 0, Report = (JObject)current["report"].DeepClone() });
+                return Task.FromResult(new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Conflict, Code = "awake.world_report.v2.conflict" });
+            }
+        }
+        int attempt = ((int?)current?["attemptCount"] ?? 0) + 1;
+        if (current == null) { current = new JObject(); reports.Add(current); }
+        current.RemoveAll();
+        current["reportId"] = reportId;
+        current["schemaVersion"] = "awake.worldbook.weekly-report.v2";
+        current["windowStartDay"] = windowStartDay;
+        current["windowEndDay"] = windowEndDay;
+        current["status"] = "applied";
+        current["attemptCount"] = attempt;
+        current["lastAttemptDay"] = lastAttemptDay;
+        current["lastErrorCode"] = lastErrorCode ?? string.Empty;
+        current["contentFingerprint"] = report["contentFingerprint"];
+        current["sourceFactIds"] = report["sourceFactIds"].DeepClone();
+        current["report"] = report.DeepClone();
+        ReportWriteAttempts++;
+        return Task.FromResult(new WeeklyReportStateWriteResult { Status = WeeklyReportStateWriteResult.Applied, Attempts = attempt, Report = (JObject)report.DeepClone() });
+    }
+
     private static bool IsEmptyWeeklyReport(JObject report)
     {
         return report != null
             && report["sourceEventIds"] is JArray sourceEventIds
             && sourceEventIds.Count == 0;
+    }
+
+    private static bool IsValidV2Entry(JObject entry, JObject report)
+    {
+        return entry != null && report != null
+            && WeeklyReportService.TryValidateV2Report(report, out _)
+            && StringComparer.Ordinal.Equals((string)entry["reportId"], (string)report["reportId"])
+            && StringComparer.Ordinal.Equals((string)entry["schemaVersion"], (string)report["schemaVersion"])
+            && (int?)entry["windowStartDay"] == (int?)report["extensions"]?["awake:windowStartDay"]
+            && (int?)entry["windowEndDay"] == (int?)report["extensions"]?["awake:windowEndDay"]
+            && StringComparer.Ordinal.Equals((string)entry["contentFingerprint"], (string)report["contentFingerprint"])
+            && JToken.DeepEquals(entry["sourceFactIds"], report["sourceFactIds"]);
     }
 
     internal Task<WeeklyReportStateWriteResult> UpsertWeeklyReportStateAsync(string reportId, int windowStartDay, int windowEndDay, string status, int lastAttemptDay, string lastErrorCode, CancellationToken cancellationToken)

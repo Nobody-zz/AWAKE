@@ -1,0 +1,18 @@
+{
+  "schema": "awake.ui-lab.reference-evidence.v1",
+  "sourcePath": "C:/Users/26811/OneDrive/文档/New project/tools/gauntlet-ui-lab/state/validation/ui-lab-owner-lifecycle-20260831.json",
+  "sourceGeneratedAt": "2026-08-31T13:27:34.6398783Z",
+  "status": "reference_only",
+  "evidenceLevel": "E2",
+  "assertions": [
+    "dual_owner_conflict",
+    "expiry_cleanup_no_takeover",
+    "stale_generation_release",
+    "close_intent_only",
+    "cross_tick_retry",
+    "runtime_retained_on_failure",
+    "all_cleanup_postconditions",
+    "lease_release_after_cleanup"
+  ],
+  "limitation": "Historical evidence applies only to the old implementation and does not verify any future AWAKE implementation."
+}

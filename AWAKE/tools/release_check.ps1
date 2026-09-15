@@ -2,11 +2,12 @@ param(
     [string]$ProjectRoot = '',
     [string]$BannerlordApi = "1.3.15",
     [string]$GameModule = "D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AWAKE",
-    [string]$RepoModule = "C:\Users\26811\OneDrive\文档\New project\AWAKE-Repo\AWAKE"
+    [string]$RepoModule = ''
 )
 
 $ErrorActionPreference = 'Stop'
 if ([string]::IsNullOrWhiteSpace($ProjectRoot)) { $ProjectRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path) }
+if ([string]::IsNullOrWhiteSpace($RepoModule)) { $RepoModule = $ProjectRoot }
 $distModule = Join-Path $ProjectRoot "dist\Modules\AWAKE"
 $buildDll = Join-Path $ProjectRoot "_build_out\$BannerlordApi\Release\Awake.dll"
 $distDll = Join-Path $distModule "bin\Win64_Shipping_Client\Awake.dll"
@@ -359,11 +360,36 @@ if (-not $gameManifestHash -or -not $sourceManifestHash -or $gameManifestHash -n
 
 $worldbookRoot = Join-Path $ProjectRoot "ModuleData\Worldbook"
 $worldbookJsonCount = @(Get-ChildItem -LiteralPath $worldbookRoot -Recurse -File -Filter *.json -ErrorAction SilentlyContinue).Count
-$worldbookRuleCount = @(Get-ChildItem -LiteralPath (Join-Path $worldbookRoot "rules") -File -Filter *.json -ErrorAction SilentlyContinue).Count
-$worldbookPersonaCount = @(Get-ChildItem -LiteralPath (Join-Path $worldbookRoot "personality_background") -File -Filter *.json -ErrorAction SilentlyContinue).Count
+# Repository-side package form (2026-09-14, docs/worldbook-studio-plan/RUNTIME-MAPPING-CONTRACT.md):
+# the root carries a registry (awake.worldbook.registry.v1) and the content lives in packages/<world>/.
+# The old rules/ + personality_background/ counts were always 0: the runtime rejects awake.worldbook.v1
+# (WB2-SCHEMA-UNSUPPORTED:entry) and nothing under src/ reads those directories.
+$worldbookRegistry = $null
+try { $worldbookRegistry = Get-Content -LiteralPath (Join-Path $worldbookRoot 'manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json } catch { }
+$worldbookPackageCount = @($worldbookRegistry.packages).Count
+$worldbookRuntimeBytes = 0
+foreach ($package in @($worldbookRegistry.packages)) {
+    $packageRoot = Join-Path $worldbookRoot ([string]$package.relativePath).Replace('/', '\')
+    $packageManifestPath = Join-Path $packageRoot 'manifest.json'
+    if (-not (Test-Path -LiteralPath $packageManifestPath -PathType Leaf)) { continue }
+    $packageManifest = $null
+    try { $packageManifest = Get-Content -LiteralPath $packageManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json } catch { continue }
+    $runtimeRelative = [string]$packageManifest.entrypoints.runtime
+    if ([string]::IsNullOrWhiteSpace($runtimeRelative)) { continue }
+    $runtimePath = Join-Path $packageRoot ($runtimeRelative.Replace('/', '\'))
+    if (-not (Test-Path -LiteralPath $runtimePath -PathType Leaf)) { continue }
+    # Do NOT ConvertFrom-Json the package runtime here. Windows PowerShell 5.1 pipes JSON through
+    # JavaScriptSerializer, which treats object keys CASE-INSENSITIVELY and throws on
+    # 'duplicate key "Cow" and "cow"' -- and the runtime keyword table legitimately holds both.
+    # Entry-level structure is verified by tools/worldbook-runtime-smoke (TestRepositoryPackageForm)
+    # and by WorldbookPackageIntegrity.ReadAndVerify, both of which use Newtonsoft.
+    $worldbookRuntimeBytes += (Get-Item -LiteralPath $runtimePath).Length
+}
 Write-Output "WorldbookJsonFiles=$worldbookJsonCount"
-Write-Output "WorldbookRuleFiles=$worldbookRuleCount"
-Write-Output "WorldbookPersonaFiles=$worldbookPersonaCount"
+Write-Output "WorldbookRegistryPackages=$worldbookPackageCount"
+Write-Output "WorldbookRuntimeBytes=$worldbookRuntimeBytes"
+Assert-True "Source worldbook registry lists at least one package" ($worldbookPackageCount -ge 1)
+Assert-True "Source worldbook packages carry a runtime payload" ($worldbookRuntimeBytes -gt 0)
 
 $required = @(
     "bin\Win64_Shipping_Client\Awake.dll",
@@ -380,6 +406,39 @@ $required = @(
 )
 foreach ($rel in $required) {
     Assert-True "Required file exists in dist: $rel" (Test-Path -LiteralPath (Join-Path $distModule $rel))
+}
+
+# The registry alone is not enough: without the package it points at, the module ships no world book
+# and the runtime throws WB2-MANIFEST-MISSING. Derive the expectation from the registry rather than
+# hardcoding a package slug (2026-09-14, repository-side package form).
+$distRegistryPath = Join-Path $distModule "ModuleData\Worldbook\manifest.json"
+if (Test-Path -LiteralPath $distRegistryPath -PathType Leaf) {
+    $distRegistry = $null
+    try { $distRegistry = Get-Content -LiteralPath $distRegistryPath -Raw -Encoding UTF8 | ConvertFrom-Json } catch { }
+    Assert-True "Dist worldbook registry parses and is awake.worldbook.registry.v1" ($null -ne $distRegistry -and [string]$distRegistry.schemaVersion -eq 'awake.worldbook.registry.v1')
+    Assert-True "Dist worldbook registry lists at least one package" (@($distRegistry.packages).Count -ge 1)
+    foreach ($package in @($distRegistry.packages)) {
+        $packageId = [string]$package.packageId
+        $packageRoot = Join-Path (Join-Path $distModule "ModuleData\Worldbook") ([string]$package.relativePath).Replace('/', '\')
+        $packageManifestPath = Join-Path $packageRoot "manifest.json"
+        Assert-True "Dist worldbook package manifest exists: $packageId" (Test-Path -LiteralPath $packageManifestPath -PathType Leaf)
+        if (-not (Test-Path -LiteralPath $packageManifestPath -PathType Leaf)) { continue }
+        $packageManifest = $null
+        try { $packageManifest = Get-Content -LiteralPath $packageManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json } catch { }
+        Assert-True "Dist worldbook package is awake.worldbook.v2: $packageId" ($null -ne $packageManifest -and [string]$packageManifest.schemaVersion -eq 'awake.worldbook.v2')
+        if ($null -eq $packageManifest) { continue }
+        foreach ($entrypoint in @('runtime', 'index')) {
+            $entryRelative = ([string]$packageManifest.entrypoints.$entrypoint).Replace('/', '\')
+            Assert-True "Dist worldbook package $entrypoint exists: $packageId" (-not [string]::IsNullOrWhiteSpace($entryRelative) -and (Test-Path -LiteralPath (Join-Path $packageRoot $entryRelative) -PathType Leaf))
+        }
+        $sourcePackageRoot = Join-Path $worldbookRoot ([string]$package.relativePath).Replace('/', '\')
+        foreach ($name in @('manifest.json', 'runtime.json', 'index.json')) {
+            $sourceFile = Join-Path $sourcePackageRoot $name
+            $distFile = Join-Path $packageRoot $name
+            if (-not (Test-Path -LiteralPath $sourceFile -PathType Leaf)) { continue }
+            Assert-True "Source and dist worldbook package $name match: $packageId" ((Get-Sha256 $sourceFile) -and (Get-Sha256 $sourceFile) -eq (Get-Sha256 $distFile))
+        }
+    }
 }
 
 $runtimeScriptExists = Test-Path -LiteralPath $embeddedRuntimeScript -PathType Leaf

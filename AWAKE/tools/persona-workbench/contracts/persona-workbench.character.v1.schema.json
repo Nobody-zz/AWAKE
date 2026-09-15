@@ -1,0 +1,173 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "persona-workbench.character.v1.schema.json",
+  "title": "PersonaWorkbench Character Card v1",
+  "type": "object",
+  "required": [
+    "schemaVersion", "id", "displayName", "core", "identityFacts",
+    "summary", "sourceDescription",
+    "status", "sourcePackId", "templateVersion"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "persona-workbench.character.v1" },
+    "id": { "type": "string", "pattern": "^calradia\\.[a-z0-9_]+(\\.[a-z0-9_]+){1,2}$" },
+    "displayName": { "type": "string" },
+    "core":                    { "type": "string" },
+    "identityFacts":           { "type": "string" },
+    "summary":                 { "type": "string" },
+    "sourceDescription":       { "type": "string" },
+    "publicDescription":       { "type": "string" },
+    "privateDescription":      { "type": "string" },
+    "contradictionDescription":{ "type": "string" },
+    "selfClaimRules":          { "type": "array", "items": { "type": "string" } },
+    "realSelfBehaviors":       { "type": "array", "items": { "type": "string" } },
+    "selfClaimExamples":       {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "决策样本·自由叙事片段（写精不凑，条数下限视为规范但不入 schema 硬锁）。每条 = 具体处境 + 具体利害；至少一条为第一人称散文/决断叙事（非统一问答框），供运行时吸收其判断而非背诵台词。禁止『可整句背』的金句/格言/对仗/座右铭式短句——此类口号会被小模型在索取/开价/质询场景整句复读。"
+    },
+    "tensionAxes": {
+      "description": "作者侧张力轴草稿（三轴齐备），不进运行时（物化时丢弃，同 traitProfile）。内容须已落实于 selfClaimRules / realSelfBehaviors / selfClaimExamples / contradictionDescription 这些运行时字段。",
+      "type": "object",
+      "required": ["hardLine", "negotiable", "breachSwitch"],
+      "properties": {
+        "hardLine":     { "type": "string" },
+        "negotiable":   { "type": "string" },
+        "breachSwitch": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "trait.pragmatic",
+          "trait.status_conscious",
+          "trait.cautious",
+          "trait.ambitious",
+          "trait.proud",
+          "trait.guardian",
+          "trait.traditional",
+          "trait.kind",
+          "trait.deceitful",
+          "trait.loyal",
+          "trait.courageous",
+          "trait.reserved",
+          "expression.measured",
+          "expression.indirect",
+          "expression.direct",
+          "expression.formal",
+          "expression.warm",
+          "expression.teasing",
+          "expression.blunt",
+          "expression.frank",
+          "expression.flamboyant",
+          "expression.understated",
+          "behavior.conditional_cooperation",
+          "behavior.bargains",
+          "behavior.observes_before_acting",
+          "behavior.tests_loyalty",
+          "behavior.keeps_leverage",
+          "behavior.protects_inner_circle",
+          "behavior.takes_command",
+          "behavior.acts_before_reasoning",
+          "behavior.charges_first",
+          "behavior.administers_fairly",
+          "trigger.threat_or_leverage",
+          "trigger.public_humiliation",
+          "trigger.family_safety",
+          "trigger.reputation_challenge",
+          "trigger.threat_to_home",
+          "trigger.loyalty_or_betrayal",
+          "trigger.social_slight"
+        ]
+      }
+    },
+    "facetStrengths": {
+      "description": "作者侧刻画草稿，可选；不进运行时（物化时丢弃）。",
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "trait.pragmatic",
+          "trait.status_conscious",
+          "trait.cautious",
+          "trait.ambitious",
+          "trait.proud",
+          "trait.guardian",
+          "trait.traditional",
+          "trait.kind",
+          "trait.deceitful",
+          "trait.loyal",
+          "trait.courageous",
+          "trait.reserved",
+          "expression.measured",
+          "expression.indirect",
+          "expression.direct",
+          "expression.formal",
+          "expression.warm",
+          "expression.teasing",
+          "expression.blunt",
+          "expression.frank",
+          "expression.flamboyant",
+          "expression.understated",
+          "behavior.conditional_cooperation",
+          "behavior.bargains",
+          "behavior.observes_before_acting",
+          "behavior.tests_loyalty",
+          "behavior.keeps_leverage",
+          "behavior.protects_inner_circle",
+          "behavior.takes_command",
+          "behavior.acts_before_reasoning",
+          "behavior.charges_first",
+          "behavior.administers_fairly"
+        ]
+      },
+      "additionalProperties": { "type": "integer", "minimum": 1, "maximum": 5 }
+    },
+    "traitProfile": {
+      "description": "作者侧刻画草稿，可选；不进运行时（物化时丢弃）。仅做早期刻画参考，勿作为交付依据。",
+      "type": "object",
+      "propertyNames": { "enum": ["caution","ambition","pride","pragmatism","inGroupLoyalty","tradition"] },
+      "additionalProperties": { "type": "integer", "minimum": -3, "maximum": 3 }
+    },
+    "expressionProfile": {
+      "description": "作者侧刻画草稿，可选；不进运行时（物化时丢弃）。",
+      "type": "object",
+      "propertyNames": { "enum": ["restraint","directness","formality","playfulness","warmth"] },
+      "additionalProperties": { "type": "integer", "minimum": -3, "maximum": 3 }
+    },
+    "behaviorProfile": {
+      "description": "作者侧刻画草稿，可选；不进运行时（物化时丢弃）。",
+      "type": "object",
+      "propertyNames": { "enum": ["conditionality","deliberation","trustTesting","leverage","inGroupPriority","leadership"] },
+      "additionalProperties": { "type": "integer", "minimum": -3, "maximum": 3 }
+    },
+    "reactionProfile":   {
+      "description": "作者侧刻画草稿，可选；不进运行时（物化时丢弃）。",
+      "type": "object",
+      "properties": {
+        "sensitiveConditions":   { "type": "string" },
+        "conditionalResponses":  { "type": "string" }
+      },
+      "additionalProperties": { "type": ["integer", "string"], "minimum": -3, "maximum": 3 }
+    },
+    "commitmentProfile": {
+      "description": "作者侧刻画草稿，可选；不进运行时（物化时丢弃）。关键承诺若需生效，请写入 core/contradictionDescription。",
+      "type": "object",
+      "required": ["priorityOrder"],
+      "properties": {
+        "priorityOrder":     { "type": "string" },
+        "protectedValues":   { "type": "string" },
+        "applicableScope":   { "type": "string" },
+        "exceptionCost":     { "type": "string" },
+        "breachResponse":    { "type": "string" }
+      },
+      "additionalProperties": { "type": "integer", "minimum": -3, "maximum": 3 }
+    },
+    "status": { "type": "string", "enum": ["draft", "translated", "review", "approved"] },
+    "sourcePackId": { "type": "string" },
+    "templateVersion": { "type": "string" }
+  },
+  "additionalProperties": false
+}

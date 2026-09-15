@@ -2,7 +2,7 @@ Set-StrictMode -Version Latest
 
 $script:JointToolRoot = [IO.Path]::GetFullPath($PSScriptRoot)
 $script:JointAwakeRoot = [IO.Path]::GetFullPath((Join-Path $script:JointToolRoot '..\..'))
-$script:JointWorkspaceRoot = [IO.Path]::GetFullPath((Join-Path $script:JointAwakeRoot '..\..'))
+$script:JointWorkspaceRoot = [IO.Path]::GetFullPath((Join-Path $script:JointAwakeRoot '..'))
 $script:JointUtf8 = [Text.UTF8Encoding]::new($false)
 $script:JointStatusCodes = [ordered]@{
     pass = 0
@@ -145,9 +145,23 @@ function Get-JointStatusCode([string]$Status) {
     return [int]$script:JointStatusCodes[$Status]
 }
 
+function Resolve-JointLegacyPath([string]$Path) {
+    $normalized = $Path.Replace([char]47, [char]92)
+    $awakePrefix = '_houkai_merge\AWAKE\'
+    $testsPrefix = '_houkai_merge\AWAKE.Tests\'
+    if ($normalized.StartsWith($awakePrefix, [StringComparison]::OrdinalIgnoreCase)) {
+        return Join-Path $script:JointAwakeRoot $normalized.Substring($awakePrefix.Length)
+    }
+    if ($normalized.StartsWith($testsPrefix, [StringComparison]::OrdinalIgnoreCase)) {
+        return Join-Path (Join-Path $script:JointWorkspaceRoot 'AWAKE.Tests') $normalized.Substring($testsPrefix.Length)
+    }
+    return $null
+}
+
 function Get-JointFullPath([string]$Path, [string]$BasePath = $script:JointWorkspaceRoot) {
     if ([string]::IsNullOrWhiteSpace($Path)) { throw [ArgumentException]::new('Path is required.') }
-    $candidate = if ([IO.Path]::IsPathRooted($Path)) { $Path } else { Join-Path $BasePath $Path }
+    $legacyCandidate = if ([IO.Path]::IsPathRooted($Path)) { $null } else { Resolve-JointLegacyPath $Path }
+    $candidate = if ($legacyCandidate) { $legacyCandidate } elseif ([IO.Path]::IsPathRooted($Path)) { $Path } else { Join-Path $BasePath $Path }
     return [IO.Path]::GetFullPath($candidate)
 }
 
@@ -543,15 +557,15 @@ function Get-JointStringArrayOrEmpty([object]$Value, [string]$Path) {
 }
 
 function Assert-JointWorkbenchDocument([object]$Document, [string]$Path = '$.workbench') {
-    $allowed = @('schemaVersion','id','displayName','core','identityFacts','summary','sourcePackId','templateVersion','status','sourceDescription','publicDescription','privateDescription','contradictionDescription','foodPreference','selfClaimRules','realSelfBehaviors','selfClaimExamples','tags','facetStrengths','traitProfile','expressionProfile','behaviorProfile','reactionProfile','commitmentProfile')
-    $required = @('schemaVersion','id','displayName','core','identityFacts','summary','sourcePackId','templateVersion','status','sourceDescription','publicDescription','privateDescription','contradictionDescription','foodPreference','selfClaimRules','realSelfBehaviors','selfClaimExamples','tags')
+    $allowed = @('schemaVersion','id','displayName','core','identityFacts','summary','sourcePackId','templateVersion','status','sourceDescription','publicDescription','privateDescription','contradictionDescription','selfClaimRules','realSelfBehaviors','selfClaimExamples','tags','facetStrengths','traitProfile','expressionProfile','behaviorProfile','reactionProfile','commitmentProfile')
+    $required = @('schemaVersion','id','displayName','core','identityFacts','summary','sourcePackId','templateVersion','status','sourceDescription','publicDescription','privateDescription','contradictionDescription','selfClaimRules','realSelfBehaviors','selfClaimExamples','tags')
     Assert-JointExactFields $Document $allowed $required $Path
     $schema = Get-JointRequiredString $Document 'schemaVersion' $Path
     if ($schema -ne 'persona-workbench.character.v1') { Throw-JointReject 'persona.schema_version_unsupported' 'migration' ($Path + '.schemaVersion') 'Workbench schema must be persona-workbench.character.v1.' }
     $id = Get-JointRequiredString $Document 'id' $Path
     Assert-JointStableId $id ($Path + '.id')
     [void](Get-JointRequiredString $Document 'displayName' $Path -AllowEmpty)
-    foreach ($name in @('core','identityFacts','summary','sourcePackId','templateVersion','status','sourceDescription','publicDescription','privateDescription','contradictionDescription','foodPreference')) { [void](Get-JointRequiredString $Document $name $Path -AllowEmpty) }
+    foreach ($name in @('core','identityFacts','summary','sourcePackId','templateVersion','status','sourceDescription','publicDescription','privateDescription','contradictionDescription')) { [void](Get-JointRequiredString $Document $name $Path -AllowEmpty) }
     $status = Get-JointRequiredString $Document 'status' $Path
     if ($status -notin @('draft','approved')) { Throw-JointReject 'persona.review_status_invalid' 'migration' ($Path + '.status') 'Workbench status must be draft or approved.' }
     foreach ($name in @('selfClaimRules','realSelfBehaviors','selfClaimExamples','tags')) { [void](Get-JointRequiredStringArray $Document $name $Path) }
@@ -896,11 +910,11 @@ function Assert-JointRuleOverrides([object]$FixtureInput, [string]$Path = '$.rul
 }
 
 function Assert-JointDefinition([object]$Definition, [string]$Path = '$.definition') {
-    $fields = @('schemaVersion','id','characterId','identityId','role','sourcePackId','templateVersion','status','priority','scope','core','identityFacts','relationStyle','currentStateHints','summary','publicDescription','privateDescription','contradictionDescription','foodPreference','selfClaimRules','realSelfBehaviors','selfClaimExamples','tags','bundles','experiences')
+    $fields = @('schemaVersion','id','characterId','identityId','role','sourcePackId','templateVersion','status','priority','scope','core','identityFacts','relationStyle','currentStateHints','summary','publicDescription','privateDescription','contradictionDescription','selfClaimRules','realSelfBehaviors','selfClaimExamples','tags','bundles','experiences')
     Assert-JointExactFields $Definition $fields $fields $Path
     if ((Get-JointRequiredString $Definition 'schemaVersion' $Path) -ne $script:JointDefinitionSchema) { Throw-JointReject 'persona.definition_invalid' 'export' ($Path + '.schemaVersion') 'Definition schema is unsupported.' }
     $id = Get-JointRequiredString $Definition 'id' $Path; Assert-JointStableId $id ($Path + '.id')
-    foreach ($name in @('characterId','identityId','role','sourcePackId','templateVersion','scope','core','identityFacts','relationStyle','currentStateHints','summary','publicDescription','privateDescription','contradictionDescription','foodPreference')) { [void](Get-JointRequiredString $Definition $name $Path -AllowEmpty) }
+    foreach ($name in @('characterId','identityId','role','sourcePackId','templateVersion','scope','core','identityFacts','relationStyle','currentStateHints','summary','publicDescription','privateDescription','contradictionDescription')) { [void](Get-JointRequiredString $Definition $name $Path -AllowEmpty) }
     $status = Get-JointRequiredString $Definition 'status' $Path
     if ($status -notin @('approved','draft','disabled')) { Throw-JointReject 'persona.definition_invalid' 'export' ($Path + '.status') 'Definition status is invalid.' }
     [void](Get-JointRequiredInteger $Definition 'priority' $Path)
@@ -1077,7 +1091,6 @@ function Convert-JointWorkbenchToAwake([object]$FixtureInput, [string]$FixtureId
         publicDescription = Get-JointOptionalString $workbench 'publicDescription' '$.workbench'
         privateDescription = Join-JointText @((Get-JointOptionalString $workbench 'privateDescription' '$.workbench'), ('SENSITIVE_CONDITIONS=' + (Get-JointOptionalString (Get-JointJsonProperty $workbench 'reactionProfile') 'sensitiveConditions' '$.workbench.reactionProfile')), ('CONDITIONAL_RESPONSES=' + (Get-JointOptionalString (Get-JointJsonProperty $workbench 'reactionProfile') 'conditionalResponses' '$.workbench.reactionProfile')))
         contradictionDescription = Join-JointText @((Get-JointOptionalString $workbench 'contradictionDescription' '$.workbench'), ('PRIORITY_ORDER=' + (Get-JointOptionalString (Get-JointJsonProperty $workbench 'commitmentProfile') 'priorityOrder' '$.workbench.commitmentProfile')), ('PROTECTED_VALUES=' + (Get-JointOptionalString (Get-JointJsonProperty $workbench 'commitmentProfile') 'protectedValues' '$.workbench.commitmentProfile')), ('APPLICABLE_SCOPE=' + (Get-JointOptionalString (Get-JointJsonProperty $workbench 'commitmentProfile') 'applicableScope' '$.workbench.commitmentProfile')), ('EXCEPTION_COST=' + (Get-JointOptionalString (Get-JointJsonProperty $workbench 'commitmentProfile') 'exceptionCost' '$.workbench.commitmentProfile')), ('BREACH_RESPONSE=' + (Get-JointOptionalString (Get-JointJsonProperty $workbench 'commitmentProfile') 'breachResponse' '$.workbench.commitmentProfile')))
-        foodPreference = Get-JointOptionalString $workbench 'foodPreference' '$.workbench'
         selfClaimRules = Get-JointStringArrayOrEmpty (Get-JointJsonProperty $workbench 'selfClaimRules') '$.workbench.selfClaimRules'
         realSelfBehaviors = Get-JointStringArrayOrEmpty (Get-JointJsonProperty $workbench 'realSelfBehaviors') '$.workbench.realSelfBehaviors'
         selfClaimExamples = Get-JointStringArrayOrEmpty (Get-JointJsonProperty $workbench 'selfClaimExamples') '$.workbench.selfClaimExamples'
@@ -1165,7 +1178,6 @@ function Convert-JointWorkbenchToAwake([object]$FixtureInput, [string]$FixtureId
         publicDescription = $authored.publicDescription
         privateDescription = $authored.privateDescription
         contradictionDescription = $authored.contradictionDescription
-        foodPreference = $authored.foodPreference
         selfClaimRules = @($authored.selfClaimRules)
         realSelfBehaviors = @($authored.realSelfBehaviors)
         selfClaimExamples = @($authored.selfClaimExamples)

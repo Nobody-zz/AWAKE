@@ -190,6 +190,7 @@ catch (InvalidOperationException ex)
 {
     var error = ex.Message.StartsWith("WB-AI-", StringComparison.Ordinal) ? ex.Message : ex.Message.Split(':', 2)[0];
     var status = error == "WB-AUTHORITY-MUTATION-UNKNOWN" ? 503 : 500;
+    if (status == 503) Console.Error.WriteLine($"[cli] {ex.Message}");
     WriteJson(new JsonObject { ["ok"] = false, ["error"] = error, ["status"] = status, ["side_effect"] = ex is AuthorityMutationUnknownException ? "unknown" : "none" });
     return 3;
 }

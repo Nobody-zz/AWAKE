@@ -41,7 +41,7 @@
     <string id="awake.terminal.close" text="关闭" />
     <string id="awake.terminal.messenger_hint" text="打开通讯录并开始对话。" />
     <string id="awake.terminal.inbox_hint" text="查看近期世界事件。" />
-    <string id="awake.terminal.weekly_hint" text="查看本周世界摘要。" />
+    <string id="awake.terminal.weekly_hint" text="查看近期世界动态。" />
     <string id="awake.terminal.developer_hint" text="查看运行时诊断。" />
     <string id="awake.terminal.dev_tools_hint" text="游戏内测试工具。" />
     <string id="awake.menu.developer_check" text="开发者检查" />
@@ -92,9 +92,9 @@
     <string id="awake.mcm.provider_test.name" text="测试连接" />
     <string id="awake.mcm.provider_test.content" text="测试连接" />
     <string id="awake.mcm.provider_test.hint" text="通过读取模型列表测试 Runtime、地址、凭据和 Provider 是否连通。" />
-    <string id="awake.mcm.group.data_debug" text="4. 数据与调试" />
-    <string id="awake.mcm.group.behavior" text="2. 主动行为" />
-    <string id="awake.mcm.group.scene" text="1. 对话与场景" />
+    <string id="awake.mcm.group.auth" text="2. 授权与外发" />
+    <string id="awake.mcm.group.behavior" text="4. 主动行为" />
+    <string id="awake.mcm.group.scene" text="3. 对话与场景" />
     <string id="awake.mcm.ai_status.name" text="AI 链路状态" />
     <string id="awake.mcm.ai_status.hint" text="只读显示内置 Runtime、Provider、路由、战役会话和云外发状态。玩家需要的 AI 配置都在本组完成。" />
     <string id="awake.mcm.cloud_export.name" text="启用云外发" />
@@ -123,7 +123,7 @@
     <string id="awake.mcm.scene_far_to_near_key.hint" text="输入 InputKey 名称或 [ ] 字面键，默认 ]。" />
     <string id="awake.mcm.scene_shout_key.name" text="场景喊话键" />
     <string id="awake.mcm.scene_shout_key.hint" text="按住 T 后按此键进入无目标场景喊话，默认 V。" />
-    <string id="awake.mcm.group.command" text="3. 命令台" />
+    <string id="awake.mcm.group.dev" text="5. 开发者与诊断" />
     <string id="awake.mcm.world_effects.name" text="启用世界效果" />
     <string id="awake.mcm.world_effects.hint" text="默认开启。关闭后可选内容包提供的世界效果都会被拒绝；该开关计划在 0.2.x 实际接入。" />
     <string id="awake.mcm.boon_offers.name" text="启用可选内容提案" />
@@ -160,12 +160,16 @@
     <string id="awake.dev_tools.title" text="醒世 · 开发者测试" />
     <string id="awake.dev_tools.prompt" text="选择测试动作：" />
     <string id="awake.dev_tools.dialogue" text="强制附近深谈" />
+    <string id="awake.dev_tools.negotiation" text="强制附近谈判" />
     <string id="awake.dev_tools.reset_proactive" text="重置主动状态" />
     <string id="awake.dev_tools.no_target" text="附近没有可交谈的目标。" />
     <string id="awake.dev_tools.dialogue_failed" text="深谈打开失败。" />
     <string id="awake.dev_tools.dialogue_ok" text="深谈已打开。" />
+    <string id="awake.dev_tools.negotiation_failed" text="谈判测试打开失败。" />
+    <string id="awake.dev_tools.negotiation_ok" text="谈判测试已打开。" />
     <string id="awake.dev_tools.proactive_reset" text="NPC 主动状态已重置。" />
     <string id="awake.dev_tools.dialogue_hint" text="打开最近 NPC 深谈。" />
+    <string id="awake.dev_tools.negotiation_hint" text="以谈判模式打开最近 NPC，用于测试关系指令链。" />
     <string id="awake.dev_tools.inbox_hint" text="打开事件收件箱。" />
     <string id="awake.dev_tools.weekly_hint" text="打开世界周报。" />
     <string id="awake.dev_tools.reset_proactive_hint" text="清空 NPC 主动聊天候选。" />
@@ -198,7 +202,7 @@
     <string id="awake.terminal.map_scope_shout_hint" text="不指定人物，向当前地图场合喊话。" />
     <string id="awake.terminal.map_shout_failed" text="地图喊话打开失败。" />
     <string id="awake.feedback.inbox_open_failed" text="无法打开事件收件箱。" />
-    <string id="awake.feedback.weekly_report_open_failed" text="无法打开世界周报。" />
+    <string id="awake.feedback.weekly_report_open_failed" text="无法打开本周动态。" />
     <string id="awake.ui.talk" text="交谈" />
     <string id="awake.ui.send" text="发送" />
     <string id="awake.ui.close" text="离开" />
@@ -227,6 +231,10 @@
     <string id="awake.ui.inbox_count" text="{COUNT} 条本周记录" />
     <string id="awake.ui.weekly_status" text="本周世界摘要" />
     <string id="awake.ui.weekly_empty" text="本周没有记录。" />
+    <string id="awake.ui.weekly_formal_status" text="已保存的最近一周动态" />
+    <string id="awake.ui.weekly_preview_status" text="当前尚未结算的近期动态" />
+    <string id="awake.ui.weekly_unavailable_status" text="暂时无法读取动态" />
+    <string id="awake.ui.weekly_unavailable" text="暂时无法读取动态，请稍后再试。" />
     <string id="awake.ui.day" text="第 {DAY} 天" />
     <string id="awake.ui.contact_unknown" text="未知" />
     <string id="awake.ui.contact_unavailable" text="不可用" />
@@ -239,7 +247,20 @@
     <string id="awake.ui.card_relationship" text="关系尚未记录" />
     <string id="awake.ui.card_relationship_value" text="关系：{RELATIONSHIP}" />
     <string id="awake.ui.chat_tab" text="对话" />
+    <string id="awake.ui.chat_mode" text="闲聊" />
+    <string id="awake.ui.negotiation_mode" text="交涉" />
+    <string id="awake.ui.chat_notice" text="当前只进行普通交谈；说出口的话不会直接改变游戏状态。" />
+    <string id="awake.ui.negotiation_notice" text="你正在明确提出条件；只有对方明确接受，且游戏状态实际完成结算，才会产生变化。" />
+    <string id="awake.ui.dialogue_settled" text="关系变化已落账。" />
+    <string id="awake.ui.dialogue_settlement_failed" text="关系没有改变：{CODE}" />
+    <string id="awake.ui.dialogue_settlement_unavailable" text="关系未能结算：运行时状态不可用。" />
+    <string id="awake.ui.dialogue_proposal_title" text="确认交涉结果" />
+    <string id="awake.ui.dialogue_proposal_text" text="对方提出以下可结算事项：{TEXT}\n\n确认后才会写入游戏状态。" />
+    <string id="awake.ui.dialogue_proposal_cancelled" text="提案未确认，未写入游戏状态。" />
     <string id="awake.ui.history_tab" text="历史" />
+    <string id="awake.ui.transcript_tab" text="往来" />
+    <string id="awake.ui.messenger_header" text="信使" />
+    <string id="awake.ui.input_hint" text="写下要说的话…（回车发送）" />
     <string id="awake.ui.history_empty" text="暂无历史记录" />
     <string id="awake.ui.history_count" text="{COUNT} 条记录" />
     <string id="awake.ui.history_pin" text="固定" />
@@ -290,12 +311,35 @@
     <string id="awake.proactive.opening_hint" text="对方主动发起了这次谈话。" />
     <string id="awake.dialogue.long_wait_hint" text="对方仍在回应。等待 60 秒后可关闭并取消生成。" />
     <string id="awake.dialogue.cloud_export_denied" text="云外发被拒绝：请在 AWAKE MCM 中开启云外发，并检查 Provider 配置。" />
-    <string id="awake.dialogue.cloud_export_disabled" text="AWAKE 云外发未开启：请到 MCM 数据与调试中打开云外发。" />
+    <string id="awake.dialogue.cloud_export_disabled" text="AWAKE 云外发未开启：请到 MCM「授权与外发」中打开云外发。" />
     <string id="awake.menu.inbox" text="事件收件箱" />
     <string id="awake.menu.weekly_report" text="世界周报" />
+    <string id="awake.menu.weekly_dynamics" text="本周动态" />
+    <string id="awake.menu.recent_dynamics" text="近期动态" />
     <string id="awake.feedback.terminal_blocked" text="当前无法打开命令台。" />
     <string id="awake.feedback.proactive_accepted" text="对方愿意谈谈。" />
     <string id="awake.feedback.proactive_declined" text="你决定改天再说。" />
     <string id="awake.feedback.weekly_report" text="世界周报已生成，可到命令台查看。" />
+    <string id="awake.mcm.group.image" text="1. 图片生成" />
+    <string id="awake.mcm.image_scope.name" text="本组与 AI 链路分开" />
+    <string id="awake.mcm.image_scope.hint" text="出图走 AWAKE 自己的出网口，所以需要自己的地址与凭据；「0. AI 链路」那组只管对话，两组不共享地址也不共享 Key。" />
+    <string id="awake.mcm.image_shape.name" text="出图接口形状" />
+    <string id="awake.mcm.image_shape.hint" text="Player2 是 base64 进、base64 出；OpenAI 兼容适用于多数服务商与自建中转。形状选错通常表现为 404，或提示“响应里没有图片字段”。" />
+    <string id="awake.mcm.image_url.name" text="出图服务地址" />
+    <string id="awake.mcm.image_url.hint" text="填写出图接口的 API 根地址，或直接粘贴完整接口地址，两种都接受。例：本机 Player2 App 为 http://127.0.0.1:4315/v1；云端 Player2 为 https://api.player2.game/v1；火山方舟为 https://ark.cn-beijing.volces.com/api/v3。不要把 API Key 写进地址。" />
+    <string id="awake.mcm.image_cloud.name" text="出图走云端服务" />
+    <string id="awake.mcm.image_cloud.hint" text="云端才带 API Key；本机 App、本机推理等免认证服务请关闭此项。" />
+    <string id="awake.mcm.image_key.name" text="输入或替换出图 API Key" />
+    <string id="awake.mcm.image_key.content" text="打开输入框" />
+    <string id="awake.mcm.image_key.hint" text="输入框保持可见，便于核对；密钥只写入本机保护存储，不进入 MCM、存档或日志。它与 AI 链路的 Key 各存各处。" />
+    <string id="awake.mcm.image_width.name" text="出图宽度（像素）" />
+    <string id="awake.mcm.image_width.hint" text="请求尺寸，默认 512。服务端有权不遵守它——实测有端点直接忽略、出更大的图——所以落盘与布局以实际像素为准。" />
+    <string id="awake.mcm.image_height.name" text="出图高度（像素）" />
+    <string id="awake.mcm.image_height.hint" text="请求尺寸，默认 512。同样不保证被遵守，以实际产出为准。" />
+    <string id="awake.mcm.image_probe.name" text="测试出图" />
+    <string id="awake.mcm.image_probe.content" text="打一发" />
+    <string id="awake.mcm.image_probe.hint" text="真往填好的地址打一发，并把图存到本机立绘目录，路径会回显。这是唯一能证明“地址 + 钥匙真的能用”的动作，会消耗服务端额度。" />
+    <string id="awake.mcm.image_status.name" text="出图状态" />
+    <string id="awake.mcm.image_status.hint" text="只读显示密钥是否已配置，以及最近一次测试出图的结果。" />
   </strings>
 </base>

@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [ValidateSet('1.3.15', '1.4.8')]
     [string]$BannerlordApi = '1.3.15',
@@ -31,11 +31,20 @@ if (-not $SkipGameVersionCheck) {
 
 Push-Location $root
 try {
-    & $msbuild $project /t:Rebuild "/p:Configuration=$Configuration" "/p:BannerlordApi=$BannerlordApi" "/p:GamePath=$GamePath" "/p:FrameworkPathOverride=$FrameworkPathOverride" /nologo /v:minimal
+    & $msbuild $project /restore /t:Rebuild "/p:Configuration=$Configuration" "/p:BannerlordApi=$BannerlordApi" "/p:GamePath=$GamePath" "/p:FrameworkPathOverride=$FrameworkPathOverride" /nologo /v:minimal
     if ($LASTEXITCODE -ne 0) { throw "AWAKE build failed with exit code $LASTEXITCODE" }
     $output = Join-Path $root "_build_out\$BannerlordApi\$Configuration\Awake.dll"
     if (-not (Test-Path -LiteralPath $output)) { throw "Build reported success but output is missing: $output" }
     Write-Output "BUILD_OK api=$BannerlordApi configuration=$Configuration output=$output"
+
+    # 判据：AWAKE.Tests 也必须能编译。该闸口此前不在任何构建链上 —— 这正是 F8
+    # （测试工程自 e9c9069 起编不过）长期无人发现的根因。红测记录见
+    # docs/AUDIT-REDTEST-GATES-20260913.md。只编译，不运行（persona 用例失败属角色卡线，见 TOPIC-CODE）。
+    $testsProject = '..\AWAKE.Tests\AWAKE.Tests.csproj'
+    if (-not (Test-Path -LiteralPath $testsProject)) { throw "AWAKE.Tests.csproj not found (relative to $root): $testsProject" }
+    & dotnet build $testsProject -c $Configuration --nologo -v:minimal
+    if ($LASTEXITCODE -ne 0) { throw "AWAKE.Tests build failed with exit code $LASTEXITCODE" }
+    Write-Output "TESTS_OK configuration=$Configuration"
 }
 finally {
     Pop-Location

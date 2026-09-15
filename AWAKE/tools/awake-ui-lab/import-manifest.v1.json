@@ -1,0 +1,99 @@
+{
+  "schema": "awake.ui-lab.import.v1",
+  "importedAt": "2026-09-13",
+  "revisedAt": "2026-09-13",
+  "revision": "r2",
+  "purpose": "AWAKE-owned isolated UI Lab baseline; source assets only, no legacy production code",
+  "source": {
+    "root": "C:/Users/26811/OneDrive/文档/New project/tools/gauntlet-ui-lab",
+    "gameApi": "Bannerlord v1.3.15.110062"
+  },
+  "assets": [
+    {
+      "id": "gauntlet-ui-lab-prefab-baseline",
+      "sourcePath": "host/GauntletUILabHost/GUI/Prefabs/GauntletUILab.xml",
+      "sourceSha256": "5B6ECCC76A89909FA8BDBAC1C279D39D3CE4B5CB82AAFC906D94D199A90D42E3",
+      "targetPath": "assets/GauntletUILab.baseline.xml",
+      "use": "layout and binding baseline only",
+      "status": "imported"
+    },
+    {
+      "id": "gauntlet-ui-lab-fixture-contract",
+      "sourcePath": "shared/UiLabRuntime.cs::UiLabViewModel.BuildRowsInCanonicalOrder",
+      "sourceSha256": "not_a_file_asset",
+      "targetPath": "fixtures/fixture-state-ids.v1.json",
+      "use": "stable fixture-state vocabulary",
+      "status": "reexpressed"
+    },
+    {
+      "id": "gauntlet-ui-lab-owner-lifecycle-e2",
+      "sourcePath": "state/validation/ui-lab-owner-lifecycle-20260831.json",
+      "sourceSha256": "recorded_in_evidence",
+      "targetPath": "evidence/legacy-owner-lifecycle-e2.json",
+      "use": "reference-only lifecycle constraints",
+      "status": "reference_only"
+    }
+  ],
+  "referenceAssets": [
+    {
+      "id": "legacy-ui-lab-runtime-source",
+      "sourcePath": "C:/Users/26811/OneDrive/文档/New project/tools/gauntlet-ui-lab/shared/UiLabRuntime.cs",
+      "sourceSha256": "322B9E7DC4A4CD8F7B1AB5D8DEA99426E446A8208B9879D6C47FA66547EBE05F",
+      "status": "reference_only",
+      "use": "旧宿主生命周期契约的来源哈希；只作参考，不入库、不复制"
+    },
+    {
+      "id": "legacy-owner-lifecycle-e2-report",
+      "sourcePath": "C:/Users/26811/OneDrive/文档/New project/tools/gauntlet-ui-lab/state/validation/ui-lab-owner-lifecycle-20260831.json",
+      "sourceSha256": "952B4F4D85834DCF90F9F561E5D6E8EA4D4985E9E42F2556765868468C2A2197",
+      "status": "reference_only",
+      "use": "旧 E2 生命周期报告的来源哈希；只作参考，不视为对 AWAKE 实现的验证"
+    }
+  ],
+  "whitelist": {
+    "note": "递归白名单；bin/ 与 obj/ 为本地构建产物、preview/out/ 为预览生成产物，均不参与白名单校验，但也不得出现被禁止的二进制或旧命名",
+    "files": [
+      "assets/GauntletUILab.baseline.xml",
+      "awake_ui.py",
+      "README.md",
+      "evidence/legacy-owner-lifecycle-e2.json",
+      "evidence/ui-lab-lifecycle-e2-20260913.json",
+      "evidence/ui-lab-fixture-drive-20260913.json",
+      "evidence/ui-lab-native-prefab-20260913.json",
+      "fixtures/fixture-state-ids.v1.json",
+      "preview/README.md",
+      "preview/preview_prefab_geometry.py",
+    "preview/ui_text_metrics.py",
+    "preview/ui_sprite_atlas.py",
+      "src/Awake.UiLab.Core/Awake.UiLab.Core.csproj",
+      "src/Awake.UiLab.Core/UiLabFixtureCatalog.cs",
+      "src/Awake.UiLab.Core/UiLabFixtureDto.cs",
+      "src/Awake.UiLab.Core/UiLabFixtureRunner.cs",
+      "src/Awake.UiLab.Core/UiLabFixtureStateIds.cs",
+      "src/Awake.UiLab.Core/UiLabHostIdentity.cs",
+      "src/Awake.UiLab.Core/UiLabHostPlatform.cs",
+      "src/Awake.UiLab.Core/UiLabHostSession.cs",
+      "src/Awake.UiLab.Core/UiLabPrefabAudit.cs",
+      "tests/Awake.UiLab.Tests/Awake.UiLab.Tests.csproj",
+      "tests/Awake.UiLab.Tests/FakeUiLabPlatform.cs",
+      "tests/Awake.UiLab.Tests/Program.cs",
+      "tests/Awake.UiLab.Tests/UiLabLifecycleFixtures.cs"
+    ]
+  },
+  "hostIdentity": {
+    "movieId": "AwakeUiLab",
+    "layerName": "AwakeUiLab",
+    "ownerId": "AwakeUiLabHost",
+    "candidateId": "AwakeUiLabHost-runtime-v1",
+    "reservedProductionMovieId": "NpcDialogue",
+    "note": "本地夹具与以后的游戏内 F10 壳共用同一份身份；不得借用生产对话入口的 movie/layer 名"
+  },
+  "exclusions": [
+    "legacy production adapters",
+    "legacy MCM integration",
+    "legacy profiles and content",
+    "legacy source code",
+    "game module binaries",
+    "release and staging packages"
+  ]
+}

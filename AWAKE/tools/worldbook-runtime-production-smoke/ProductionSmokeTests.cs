@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Awake.WorldbookRuntimeProductionSmoke;
 
@@ -28,6 +29,71 @@ internal static partial class Program
         Check(memories.SetCount == 1, "accepted pre-boundary reservation must be drained exactly once");
         await AwakeRuntime.ReleaseWorldStateStore(store).ConfigureAwait(false);
         Check(AwakeRuntime.WorldStateStore == null, "released store must be detached");
+    }
+
+    /// <summary>
+    /// 未被分发的 Kind（枚举已声明、但命令分发 switch 里没有对应分支）必须在落库前被拒。
+    /// 回归两条：① 分发缺 default 时 applyError 保持空 ⇒ 被判成功 ⇒ 把未修改的文档写回存储；
+    /// ② 状态工厂为空文档时 appliedKeys 强制转换取到 null ⇒ 迭代抛空引用（可重试错误码，噪音且掩盖真因）。
+    /// 全部离线，不调用任何 Provider，不触碰 UI。
+    /// </summary>
+    private static async Task TestUnknownStateKindRejectedAsync()
+    {
+        ProductionSmokeHost host = CreateHost("unknown-state-kind");
+        ProductionSmokeKeyValueStore worldEvents = new ProductionSmokeKeyValueStore(AiTaskConstants.WorldEventsNamespace);
+        WorldStateStore store = CreateStore(host, worldEvents);
+        await Install(store).ConfigureAwait(false);
+        try
+        {
+            WorldStateCommand command = new WorldStateCommand(
+                AiTaskConstants.WorldEventsNamespace,
+                "unknown-kind-probe",
+                "production-smoke.unknown-kind",
+                "unknown-kind-probe",
+                string.Empty,
+                WorldStateKind.PersonaOverride,
+                new JObject { ["operation"] = "production-smoke.unknown-kind" },
+                DateTimeOffset.UtcNow,
+                "production-smoke");
+
+            Check(store.TryEnqueue(command), "an unrouted kind must still enter the queue so the drain can reject it");
+            _ = AwakeRuntime.BeginSessionEnd();
+            WorldFinalDrainResult drain = await store.BeginFinalDrainAsync().ConfigureAwait(false);
+
+            Check(drain.DroppedItems == 1,
+                "an unrouted state kind must be rejected and dropped, never applied; logs=" + RecentCapturedLogs());
+            Check(worldEvents.Read("unknown-kind-probe") == null,
+                "an unrouted state kind must not write any document; logs=" + RecentCapturedLogs());
+            Check(CapturedLogs.Any(line => line != null && line.Contains("world_state_unknown_kind")),
+                "an unrouted state kind must leave a log trace; logs=" + RecentCapturedLogs());
+        }
+        finally
+        {
+            await AwakeRuntime.ReleaseWorldStateStore(store).ConfigureAwait(false);
+        }
+    }
+
+    /// <summary>
+    /// 存储契约不变式：<c>AwakeStorageContract.ExpectedSchema</c> 对任何 <c>WorldStateKind</c> 的返回值，
+    /// 都必须被 <c>IsKnownSchema</c> 认可。两者漂移 ⇒ 该命名空间在运行期静默 schema 失配。
+    /// 背景：2026-09-13 审核发现新增的 <c>awake.letters.v1</c> 未登记进白名单（同款缺口还有历史上
+    /// <c>WorldbookOverlaySchema</c> 无对应 Kind，属另一类、不在本断言范围）。
+    /// 全部离线，不调用任何 Provider，不触碰 UI。
+    /// </summary>
+    private static Task TestStorageSchemaContractAsync()
+    {
+        WorldStateKind[] kinds = (WorldStateKind[])Enum.GetValues(typeof(WorldStateKind));
+        Check(kinds.Length > 0, "WorldStateKind must declare at least one kind");
+        foreach (WorldStateKind kind in kinds)
+        {
+            string schema = AwakeStorageContract.ExpectedSchema(kind);
+            Check(!string.IsNullOrEmpty(schema), "every state kind must map to a schema; kind=" + kind);
+            Check(AwakeStorageContract.IsKnownSchema(schema),
+                "ExpectedSchema must imply IsKnownSchema; kind=" + kind + " schema=" + schema);
+        }
+        Check(AwakeStorageContract.IsKnownSchema(AwakeStorageContract.LettersSchema),
+            "awake.letters.v1 must be a known schema");
+        return Task.CompletedTask;
     }
 
     private static async Task TestEnsureWorldStateReplacementAsync()

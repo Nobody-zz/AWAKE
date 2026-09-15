@@ -1,0 +1,102 @@
+<Prefab>
+  <Constants>
+    <!-- 布局咬合链常量：改一处全局生效（与信使共用行高预算体系） -->
+    <Constant Name="StatusTextTop" Value="110" />
+    <Constant Name="NoticeTop" Value="140" />
+    <Constant Name="ChatStreamTop" Value="180" />
+    <Constant Name="ChatStreamBottom" Value="125" />
+    <Constant Name="InputButtonGap" Value="120" />
+  </Constants>
+  <Window>
+    <!-- AWAKE 交谈 · 重设计版（2026-09-13），与信使共用设计语言。
+         960×720 单栏。行高预算（自上而下）：
+           60      顶栏（标题+关闭唯一入口）
+           70-105  模式 Tab（闲聊｜交涉）
+           110-135 StatusText
+           140-175 NoticeText
+           180-..  聊天滚动区
+         自下而上：10-70 输入区(60) · 75-120 StreamingText(45) → 滚动区 MarginBottom=125 -->
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#000000FF" AlphaFactor="0.72" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+      <Children>
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="960" SuggestedHeight="720" HorizontalAlignment="Center" VerticalAlignment="Center" Sprite="npc_dialogue_panel_9" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+          <Children>
+
+            <!-- 顶栏：对话对象（左）+ 关闭（唯一入口） -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" Sprite="General\CharacterCreation\character_creation_background_gradient" AlphaFactor="0.45" DoNotAcceptEvents="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="20" MarginRight="60" Brush="Conversation.HeaderText" Brush.FontSize="26" Brush.TextHorizontalAlignment="Left" Brush.TextVerticalAlignment="Center" Text="@TitleText" DoNotAcceptEvents="true" />
+              </Children>
+            </Widget>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2" MarginTop="60" Sprite="GradientDivider_9" DoNotAcceptEvents="true" />
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" HorizontalAlignment="Right" VerticalAlignment="Top" MarginRight="10" MarginTop="10" Brush="Popup.CloseButton" Command.Click="ExecuteClose" DoNotPassEventsToChildren="true" UpdateChildrenStates="true" />
+
+            <!-- 模式 Tab：闲聊｜交涉 -->
+            <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="220" SuggestedHeight="35" HorizontalAlignment="Left" MarginLeft="20" MarginTop="70" StackLayout.LayoutMethod="HorizontalLeftToRight" Spacing="5" IsVisible="@CanSelectActionMode">
+              <Children>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="105" Command.Click="ExecuteSetChatMode" IsSelected="@IsChatMode" IsEnabled="@CanChangeActionMode" Brush="ConversationItemBrush" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ConversationItem.Text" Brush.FontSize="15" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@ChatModeText" DoNotAcceptEvents="true" />
+                  </Children>
+                </ButtonWidget>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="105" Command.Click="ExecuteSetNegotiationMode" IsSelected="@IsNegotiationMode" IsEnabled="@CanChangeActionMode" Brush="ConversationItemBrush" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ConversationItem.Text" Brush.FontSize="15" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@NegotiationModeText" DoNotAcceptEvents="true" />
+                  </Children>
+                </ButtonWidget>
+              </Children>
+            </ListPanel>
+
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="25" MarginLeft="20" MarginRight="20" MarginTop="!StatusTextTop" Brush="Popup.Description.Text" Brush.FontSize="15" Text="@StatusText" CanBreakWords="true" DoNotAcceptEvents="true" />
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" SuggestedHeight="35" MarginLeft="20" MarginRight="20" MarginTop="!NoticeTop" Brush="Popup.Description.Text" Brush.FontSize="15" Brush.FontColor="#FFE0C8B0" Text="@NoticeText" CanBreakWords="true" DoNotAcceptEvents="true" />
+
+            <!-- 聊天流：NPC 左（暖灰）／玩家右（暗金） -->
+            <ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="20" MarginRight="20" MarginTop="!ChatStreamTop" MarginBottom="!ChatStreamBottom" AutoHideScrollBars="true" ClipRect="ChatClip" InnerPanel="ChatClip\ChatInner" MouseScrollAxis="Vertical" VerticalScrollbar="..\ChatScrollbar\Scrollbar" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+              <Children>
+                <Widget Id="ChatClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true" MarginRight="10">
+                  <Children>
+                    <ListPanel Id="ChatInner" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" DataSource="{ChatRows}" StackLayout.LayoutMethod="VerticalBottomToTop" Spacing="10">
+                      <ItemTemplate>
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" DoNotAcceptEvents="true">
+                          <Children>
+                            <Widget WidthSizePolicy="Fixed" SuggestedWidth="700" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" IsVisible="@IsFromNpc" Sprite="dialog_option_canvas_9" AlphaFactor="0.75" DoNotAcceptEvents="true">
+                              <Children>
+                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" MarginLeft="15" MarginRight="15" MarginTop="5" Brush="Conversation.PersuasionTitle.Text" Brush.FontSize="15" Text="@Speaker" CanBreakWords="true" DoNotAcceptEvents="true" />
+                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" SuggestedHeight="35" MarginLeft="15" MarginRight="15" MarginTop="25" MarginBottom="5" Brush="ConversationItem.Text" Brush.FontSize="17" Text="@Text" CanBreakWords="true" DoNotAcceptEvents="true" />
+                              </Children>
+                            </Widget>
+                            <Widget WidthSizePolicy="Fixed" SuggestedWidth="700" HeightSizePolicy="CoverChildren" HorizontalAlignment="Right" IsVisible="@IsFromPlayer" Sprite="dialog_option_canvas_white_9" Color="#FFC8A468" AlphaFactor="0.30" DoNotAcceptEvents="true">
+                              <Children>
+                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" MarginLeft="15" MarginRight="15" MarginTop="5" Brush="Conversation.PersuasionTitle.Text" Brush.FontSize="15" Brush.TextHorizontalAlignment="Right" Text="@Speaker" CanBreakWords="true" DoNotAcceptEvents="true" />
+                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" SuggestedHeight="35" MarginLeft="15" MarginRight="15" MarginTop="25" MarginBottom="5" Brush="ConversationItem.Text" Brush.FontSize="17" Text="@Text" CanBreakWords="true" DoNotAcceptEvents="true" />
+                              </Children>
+                            </Widget>
+                          </Children>
+                        </Widget>
+                      </ItemTemplate>
+                    </ListPanel>
+                  </Children>
+                </Widget>
+              </Children>
+            </ScrollablePanel>
+            <Standard.VerticalScrollbar Id="ChatScrollbar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Bottom" MarginRight="10" MarginTop="!ChatStreamTop" MarginBottom="!ChatStreamBottom" />
+
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="45" MarginLeft="25" MarginRight="25" VerticalAlignment="Bottom" MarginBottom="75" Brush="Popup.Description.Text" Brush.FontSize="17" Brush.FontColor="#FFE8D8C8" Text="@StreamingText" CanBreakWords="true" DoNotAcceptEvents="true" />
+
+            <!-- 输入区：输入框占满 + 发送唯一主按钮（回车等效发送） -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" MarginLeft="20" MarginRight="20" VerticalAlignment="Bottom" MarginBottom="10" Sprite="General\CharacterCreation\name_input_area" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+              <Children>
+                <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="10" MarginRight="!InputButtonGap" Brush="Review.NameInput.Text" Brush.FontSize="17" RealText="@InputText" Command.TextEntered="ExecuteSend" />
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="15" MarginRight="!InputButtonGap" Brush="Popup.Description.Text" Brush.FontSize="15" Brush.FontColor="#FFA89878" Brush.TextVerticalAlignment="Center" Brush.TextHorizontalAlignment="Left" Text="@InputHintText" IsVisible="@IsInputEmpty" DoNotAcceptEvents="true" />
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="110" HorizontalAlignment="Right" MarginRight="5" Command.Click="ExecuteSend" IsEnabled="@CanSend" Brush="ConversationItemBrush" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ConversationItem.Text" Brush.FontSize="17" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@SendButtonText" DoNotAcceptEvents="true" />
+                  </Children>
+                </ButtonWidget>
+              </Children>
+            </Widget>
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

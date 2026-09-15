@@ -1,10 +1,11 @@
 param(
     [string]$PersonaDirectory = 'D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AnimusForge\PlayerExports\卡拉迪亚编年史\personality_background',
     [string]$GameModulesRoot = 'D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules',
-    [string]$OutputDirectory = 'C:\Users\26811\OneDrive\文档\New project\_houkai_merge\AWAKE\docs\mappings\persona-game'
+    [string]$OutputDirectory = ''
 )
 
 $ErrorActionPreference = 'Stop'
+if ([string]::IsNullOrWhiteSpace($OutputDirectory)) { $OutputDirectory = Join-Path (Split-Path -Parent $PSScriptRoot) 'docs\mappings\persona-game' }
 
 function Remove-Prefix([string]$Value, [string]$Prefix) {
     if ([string]::IsNullOrWhiteSpace($Value)) { return $null }

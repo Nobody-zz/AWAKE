@@ -1,0 +1,21 @@
+{
+  "schema": "awake.ui-lab.lifecycle-e2.v1",
+  "evidenceLevel": "E2",
+  "generatedAtUtc": "2026-09-13T04:10:41.3627263Z",
+  "command": "dotnet run --project tools/awake-ui-lab/tests/Awake.UiLab.Tests",
+  "labRoot": "D:\\AWAKE-Dev\\AWAKE\\tools\\awake-ui-lab",
+  "gameLaunch": false,
+  "rendering": false,
+  "limitation": "本地离线用例；不等于 Bannerlord 真机渲染，渲染/输入/焦点最终判定为 E4。",
+  "total": 13,
+  "passed": 13,
+  "failed": 0,
+  "assertionsCovered": [
+    "movie/layer/焦点/输入限制 四项释放",
+    "创建计数 == 释放计数",
+    "generation 单调且旧 generation 被栅栏忽略",
+    "确认/拒绝只改夹具内部状态"
+  ],
+  "passedCases": ["duplicate_open_coalesced", "open_while_closing_reopens_after_cleanup", "screen_switch_releases_all", "partial_load_failure_rolls_back", "close_reopen_no_leak", "unload_close_intent_only_then_tick_cleanup", "cleanup_retry_then_exhausted", "stale_generation_ignored", "dual_owner_conflict", "reserved_production_movie_rejected", "fixture_decision_state_is_internal_only", "fixture_state_ids_match_json", "prefab_binding_parity"],
+  "failedCases": []
+}

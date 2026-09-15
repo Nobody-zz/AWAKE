@@ -1,52 +1,219 @@
 <Prefab>
+  <!--
+    AWAKE 交谈 · 三列版（落地 docs/ui-design/npc-dialogue-layout-07.html）
+
+    三列：左＝在场名册 188 · 中＝全身像画位 212 ＋ 信息区 · 右＝对话流 488
+    面板恒 960×720，全部固定尺寸、1:1 使用 ⇒ 九宫格不参与缩放。
+
+    列宽取设计稿原值（188/212/488）；**位置与间距一律吸附到 5 的倍数**
+    （设计稿的 109/224/452/656 等不是 5 的倍数，照抄会挂一排 grid_off_5）。
+
+    ✅ 中列画位已接真控件：`<AwakePortraitSlot>`（212×360，稿 07 的四态齐），
+       宿主是**本面板自己的数据源** NpcDialogueVM（6 开关 ＋ 7 文案 ＋ ExecuteGeneratePortrait）。
+       出图走模组已有的链路：AwakeImageEndpointResolver → AwakeImageSecretStore →
+       AwakeImageClient → AwakePortraitCache → AwakePortraitTextureProvider。
+       ⚠️ **唯一还没定的东西是立绘提示词**（甲方 09-15：「先别动提示词，我还没做」）——
+       NpcDialogueVM.BuildPortraitPrompt 现在返回空串，画位会显示「提示词还没定下来」并**不发请求**。
+  -->
+  <Constants>
+    <Constant Name="ColumnTop" Value="110" />        <!-- 三列统一顶 -->
+    <Constant Name="ColumnHeight" Value="520" />     <!-- 三列统一高 -->
+    <Constant Name="RosterLeft" Value="20" />
+    <Constant Name="RosterWidth" Value="188" />
+    <Constant Name="SlotLeft" Value="225" />
+    <Constant Name="SlotWidth" Value="212" />
+    <Constant Name="SlotHeight" Value="360" />
+    <Constant Name="SlotInfoTop" Value="485" />      <!-- 画位下方信息区 -->
+    <Constant Name="StageLeft" Value="450" />
+    <Constant Name="StageWidth" Value="488" />
+    <Constant Name="BottomRowBottom" Value="15" />
+    <Constant Name="EndButtonRightGap" Value="120" />   <!-- 结束键右侧让开发送键（110）＋ 10 间距 -->
+  </Constants>
   <Window>
+    <!-- AWAKE 交谈 · 三列版（2026-09-15）。自上而下：
+           0-60    顶栏（标题 ＋ 状态行 ＋ 关闭唯一入口）
+           60-65   金线
+           65-100  模式 Tab（闲聊｜交涉）
+           110-630 三列
+           650-705 底行（输入框 680 ＋ 结束 100 ＋ 发送 110）
+         横向：20 [左列 188] 17 [中列 212] 13 [右列 488] 22 -->
     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#000000FF" AlphaFactor="0.72" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
       <Children>
-        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="960" SuggestedHeight="720" HorizontalAlignment="Center" VerticalAlignment="Center" Sprite="StdAssets\Popup\canvas" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="960" SuggestedHeight="720" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="Awake.Panel.Main960" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
           <Children>
-            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="58" Sprite="General\CharacterCreation\character_creation_background_gradient" AlphaFactor="0.35" DoNotAcceptEvents="true">
+
+            <!-- 顶栏：标题 ＋ 状态行（状态行＝设计稿的 meta 行） -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" Brush="Awake.Ornament.HeaderBand" DoNotAcceptEvents="true">
               <Children>
-                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="60" MarginRight="60" Brush="Popup.Title.Text" Brush.FontSize="28" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@TitleText" DoNotAcceptEvents="true" />
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginLeft="20" MarginRight="60" MarginTop="5" VerticalAlignment="Top" Brush="Popup.Title.Text" Brush.FontSize="24" Brush.TextHorizontalAlignment="Left" Brush.TextVerticalAlignment="Center" Text="@TitleText" DoNotAcceptEvents="true" />
+                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" SuggestedHeight="20" MarginLeft="20" MarginRight="60" MarginTop="35" VerticalAlignment="Top" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF8A7C66" Text="@StatusText" CanBreakWords="true" DoNotAcceptEvents="true" />
               </Children>
             </Widget>
-            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" HorizontalAlignment="Right" VerticalAlignment="Top" MarginRight="12" MarginTop="9" Brush="Popup.CloseButton" Command.Click="ExecuteClose" DoNotPassEventsToChildren="true" UpdateChildrenStates="true" />
-            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="26" MarginLeft="24" MarginRight="24" MarginTop="66" Brush="Popup.Description.Text" Brush.FontSize="17" Text="@StatusText" CanBreakWords="true" DoNotAcceptEvents="true" />
-            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" SuggestedHeight="36" MarginLeft="24" MarginRight="24" MarginTop="94" Brush="Popup.Description.Text" Brush.FontSize="16" Brush.FontColor="#FFE0C8B0" Text="@NoticeText" CanBreakWords="true" DoNotAcceptEvents="true" />
-            <ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="24" MarginRight="24" MarginTop="142" MarginBottom="220" AutoHideScrollBars="true" ClipRect="ChatClip" InnerPanel="ChatClip\ChatInner" MouseScrollAxis="Vertical" VerticalScrollbar="..\ChatScrollbar\Scrollbar" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="5" MarginTop="60" VerticalAlignment="Top" Brush="Awake.Ornament.DividerGold" DoNotAcceptEvents="true" />
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" HorizontalAlignment="Right" VerticalAlignment="Top" MarginRight="20" MarginTop="10" Brush="Awake.Button.Close" Command.Click="ExecuteClose" DoNotPassEventsToChildren="true" UpdateChildrenStates="true" />
+
+            <!-- 模式 Tab：闲聊｜交涉 -->
+            <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="220" SuggestedHeight="35" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="20" MarginTop="65" StackLayout.LayoutMethod="HorizontalLeftToRight" Spacing="5" IsVisible="@CanSelectActionMode">
               <Children>
-                <Widget Id="ChatClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true" MarginRight="8">
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="105" Command.Click="ExecuteSetChatMode" IsSelected="@IsChatMode" IsEnabled="@CanChangeActionMode" Brush="Awake.Button.Tab" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                   <Children>
-                    <ListPanel Id="ChatInner" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" DataSource="{ChatRows}" StackLayout.LayoutMethod="VerticalBottomToTop" Spacing="8">
-                      <ItemTemplate>
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" Sprite="BlankWhite" Color="#FFFFFFFF" AlphaFactor="0.08" DoNotAcceptEvents="true">
-                          <Children>
-                            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="12" MarginRight="12" MarginTop="5" Brush="Popup.Title.Text" Brush.FontSize="17" Text="@Speaker" CanBreakWords="true" DoNotAcceptEvents="true" />
-                            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" SuggestedHeight="40" MarginLeft="12" MarginRight="12" MarginTop="26" MarginBottom="5" Brush="Popup.Description.Text" Brush.FontSize="18" Text="@Text" CanBreakWords="true" DoNotAcceptEvents="true" />
-                          </Children>
-                        </Widget>
-                      </ItemTemplate>
-                    </ListPanel>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.TabControl.Text" Text="@ChatModeText" DoNotAcceptEvents="true" />
+                  </Children>
+                </ButtonWidget>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="105" Command.Click="ExecuteSetNegotiationMode" IsSelected="@IsNegotiationMode" IsEnabled="@CanChangeActionMode" Brush="Awake.Button.Tab" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.TabControl.Text" Text="@NegotiationModeText" DoNotAcceptEvents="true" />
+                  </Children>
+                </ButtonWidget>
+              </Children>
+            </ListPanel>
+
+            <!-- ==================== 左列：在场名册 188×520 ==================== -->
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!RosterWidth" SuggestedHeight="!ColumnHeight" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="!RosterLeft" MarginTop="!ColumnTop" Sprite="BlankWhite" Color="#FF000000" AlphaFactor="0.16">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" MarginLeft="10" MarginRight="10" MarginTop="10" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF9C7839" Brush.TextHorizontalAlignment="Left" Text="@PresentTitle" DoNotAcceptEvents="true" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="70" SuggestedHeight="20" HorizontalAlignment="Right" MarginRight="10" MarginTop="10" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF5A5142" Brush.TextHorizontalAlignment="Right" Text="@PresentCountText" DoNotAcceptEvents="true" />
+
+                <ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="40" MarginBottom="5" MarginLeft="5" MarginRight="5" AutoHideScrollBars="true" ClipRect="RosterClip" InnerPanel="RosterClip\RosterInner" MouseScrollAxis="Vertical" VerticalScrollbar="..\RosterScrollbar\Scrollbar" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+                  <Children>
+                    <Widget Id="RosterClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true" MarginRight="10">
+                      <Children>
+                        <ListPanel Id="RosterInner" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" DataSource="{PresentRows}" StackLayout.LayoutMethod="VerticalTopToBottom" Spacing="5">
+                          <ItemTemplate>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="70" Command.Click="ExecuteSelect" Brush="ButtonBrush1" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <!-- 选中：加底 ＋ 左侧 2px 金条（不靠"变亮"） -->
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsSelected" Sprite="BlankWhite" Color="#FFC8A468" AlphaFactor="0.12" DoNotAcceptEvents="true" />
+                                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="2" HorizontalAlignment="Left" IsVisible="@IsSelected" Sprite="BlankWhite" Color="#FFD9A953" AlphaFactor="1.0" DoNotAcceptEvents="true" />
+                                <!-- 头像 40×45：原生肖像 -->
+                                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="45" HorizontalAlignment="Left" VerticalAlignment="Center" MarginLeft="10" Sprite="frame_9" Color="#FFD700FF" ExtendLeft="4" ExtendTop="4" ExtendRight="4" ExtendBottom="4" AlphaFactor="0.55">
+                                  <Children>
+                                    <ImageIdentifierWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="5" MarginRight="5" MarginTop="5" MarginBottom="5" DataSource="{Portrait}" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+                                  </Children>
+                                </Widget>
+                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" MarginLeft="65" MarginRight="10" MarginTop="10" Brush="Popup.Title.Text" Brush.FontSize="15" Brush.TextHorizontalAlignment="Left" Text="@DisplayName" CanBreakWords="true" DoNotAcceptEvents="true" />
+                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" MarginLeft="65" MarginRight="10" MarginTop="30" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF8A7C66" Brush.TextHorizontalAlignment="Left" Text="@Identity" CanBreakWords="true" DoNotAcceptEvents="true" />
+                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" MarginLeft="65" MarginRight="10" MarginTop="50" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF6E6350" Brush.TextHorizontalAlignment="Left" Text="@Status" CanBreakWords="true" DoNotAcceptEvents="true" />
+                              </Children>
+                            </ButtonWidget>
+                          </ItemTemplate>
+                        </ListPanel>
+                      </Children>
+                    </Widget>
+                  </Children>
+                </ScrollablePanel>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginLeft="10" MarginRight="10" MarginTop="45" IsVisible="@IsPresentRowsEmpty" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FFE0C8B0" Text="@EmptyPresentText" CanBreakWords="true" DoNotAcceptEvents="true" />
+                <Standard.VerticalScrollbar Id="RosterScrollbar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Bottom" MarginTop="40" MarginBottom="5" MarginRight="5" />
+              </Children>
+            </Widget>
+
+            <!-- ==================== 中列：画位 212×360（AwakePortraitSlot） ====================
+                 宿主换成真画位控件，占位肖像撤掉。画位自带：空位细金线框 ＋「全身像」标签
+                 ＋ AI 图 ＋ 左上角标 ＋ 生成中遮罩 ＋ 失败行 ＋ 两颗落点不同的按钮（居中／底部），
+                 稿 07 的四态齐。
+
+                 ⚠️ 外层**不再画 frame_9 画框、不再放标签**：画位内部已经各有一份，留着会双层描边。
+                 ⚠️ 列底色归这里（α0.16，与左列同口径）：画位根是透明的 —— 07 稿的 `.slot`
+                    本身也没有底色，只有「生成中」那一层才是 α0.8 暗底（在画位内部）。
+                 ⚠️ 绑的是**本 Panel 的数据源**（NpcDialogueVM），画位不自己带 DataSource，
+                    直接继承父级 ⇒ 上面那 6 开关 / 7 文案 / ExecuteGeneratePortrait 都落在同一个 VM 上。 -->
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!SlotWidth" SuggestedHeight="!SlotHeight" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="!SlotLeft" MarginTop="!ColumnTop" Sprite="BlankWhite" Color="#FF000000" AlphaFactor="0.16">
+              <Children>
+                <AwakePortraitSlot WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" />
+              </Children>
+            </Widget>
+
+            <!-- 信息区：画位正下方，同一列宽 -->
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="!SlotWidth" SuggestedHeight="110" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="!SlotLeft" MarginTop="!SlotInfoTop" IsVisible="@SelectedCard.Visible">
+              <Children>
+                <Widget DataSource="{SelectedCard}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren">
+                  <Children>
+                    <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="25" Brush="Popup.Title.Text" Brush.FontSize="20" Brush.FontColor="#FFE2AF54" Brush.TextHorizontalAlignment="Left" Text="@Name" CanBreakWords="true" DoNotAcceptEvents="true" />
+                    <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" MarginTop="30" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF8A7C66" Brush.TextHorizontalAlignment="Left" Text="@Identity" CanBreakWords="true" DoNotAcceptEvents="true" />
+                    <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" SuggestedHeight="20" MarginTop="55" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.TextHorizontalAlignment="Left" Text="@RelationshipText" CanBreakWords="true" DoNotAcceptEvents="true" />
+                    <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" SuggestedHeight="20" MarginTop="80" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF6E6350" Brush.TextHorizontalAlignment="Left" Text="@Status" CanBreakWords="true" DoNotAcceptEvents="true" />
                   </Children>
                 </Widget>
               </Children>
-            </ScrollablePanel>
-            <Standard.VerticalScrollbar Id="ChatScrollbar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Bottom" MarginRight="10" MarginTop="142" MarginBottom="220" />
-            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="44" MarginLeft="24" MarginRight="24" VerticalAlignment="Bottom" MarginBottom="84" Brush="Popup.Description.Text" Brush.FontSize="17" Brush.FontColor="#FFE8D8C8" Text="@StreamingText" CanBreakWords="true" DoNotAcceptEvents="true" />
-            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="58" MarginLeft="24" MarginRight="24" VerticalAlignment="Bottom" MarginBottom="12" Sprite="General\CharacterCreation\name_input_area" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+            </Widget>
+
+            <!-- ==================== 右列：对话流 488×520 ==================== -->
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!StageWidth" SuggestedHeight="!ColumnHeight" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="!StageLeft" MarginTop="!ColumnTop" Sprite="BlankWhite" Color="#FF000000" AlphaFactor="0.26">
               <Children>
-                <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="10" MarginRight="230" Brush="Review.NameInput.Text" Brush.FontSize="19" RealText="@InputText" />
-                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="110" HorizontalAlignment="Right" MarginRight="112" Command.Click="ExecuteSend" IsEnabled="@CanSend" Brush="ButtonBrush1" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" MarginLeft="25" MarginRight="25" MarginTop="15" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF8A7C66" Text="@NoticeText" CanBreakWords="true" DoNotAcceptEvents="true" />
+
+                <ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="25" MarginRight="25" MarginTop="45" MarginBottom="60" AutoHideScrollBars="true" ClipRect="ChatClip" InnerPanel="ChatClip\ChatInner" MouseScrollAxis="Vertical" VerticalScrollbar="..\ChatScrollbar\Scrollbar" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
                   <Children>
-                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@SendButtonText" DoNotAcceptEvents="true" />
+                    <Widget Id="ChatClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true" MarginRight="10">
+                      <Children>
+                        <ListPanel Id="ChatInner" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" DataSource="{ChatRows}" StackLayout.LayoutMethod="VerticalBottomToTop" Spacing="10">
+                          <ItemTemplate>
+                            <Widget Id="ChatRow" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" DoNotAcceptEvents="true">
+                              <Children>
+                                <!-- 行内容：高度由文本撑 -->
+                                <Widget Id="ChatRowBody" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren">
+                                  <Children>
+                                    <!-- NPC 行 -->
+                                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" IsVisible="@IsFromNpc">
+                                      <Children>
+                                        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" MarginLeft="15" MarginRight="15" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF9C7839" Text="@Speaker" CanBreakWords="true" DoNotAcceptEvents="true" />
+                                        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" SuggestedHeight="35" MarginLeft="15" MarginRight="15" MarginTop="20" MarginBottom="10" Brush="Popup.Description.Text" Brush.FontSize="17" Text="@Text" CanBreakWords="true" DoNotAcceptEvents="true" />
+                                      </Children>
+                                    </Widget>
+                                    <!-- 玩家行 -->
+                                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" IsVisible="@IsFromPlayer">
+                                      <Children>
+                                        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" MarginLeft="15" MarginRight="15" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF6E6350" Text="@Speaker" CanBreakWords="true" DoNotAcceptEvents="true" />
+                                        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" SuggestedHeight="35" MarginLeft="15" MarginRight="15" MarginTop="20" MarginBottom="10" Brush="Popup.Description.Text" Brush.FontSize="17" Brush.FontColor="#FFC8B088" Text="@Text" CanBreakWords="true" DoNotAcceptEvents="true" />
+                                      </Children>
+                                    </Widget>
+                                  </Children>
+                                </Widget>
+                                <!-- 全流里唯一的视觉落点：最新一条左侧 2px 金条。
+                                     ⚠️ 高度**不能**写 HeightSizePolicy="StretchToParent" —— 本行的父级是
+                                     CoverChildren，Stretch 子级会反向把父级撑到「可用高度」（实测：每行被撑成
+                                     415 = 右列可用高、列表被撑成 3115）。原版 430 个 Prefab 里
+                                     「CoverChildren 父 × StretchToParent 子」只出现 12 处，且 11 处是 GridWidget；
+                                     官方给「装饰件匹配可变高内容块」的正解就是 DimensionSyncWidget
+                                     —— 见 Native/GUI/Prefabs/GameMenu/GameMenu.xml:73（装饰条同步旁边
+                                     CoverChildren 列表的高度）与 Information/HintTooltip.xml:18（边框同步内容块）。 -->
+                                <DimensionSyncWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="2" HorizontalAlignment="Left" VerticalAlignment="Top" Sprite="BlankWhite" Color="#FFD9A953" IsVisible="@IsLatest" DimensionToSync="Vertical" WidgetToCopyHeightFrom="..\ChatRowBody" DoNotAcceptEvents="true" />
+                              </Children>
+                            </Widget>
+                          </ItemTemplate>
+                        </ListPanel>
+                      </Children>
+                    </Widget>
+                  </Children>
+                </ScrollablePanel>
+                <Standard.VerticalScrollbar Id="ChatScrollbar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Bottom" MarginRight="5" MarginTop="45" MarginBottom="60" />
+
+                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginLeft="25" MarginRight="25" VerticalAlignment="Bottom" MarginBottom="15" Brush="Popup.Description.Text" Brush.FontSize="17" Brush.FontColor="#FFE8D8C8" Text="@StreamingText" CanBreakWords="true" DoNotAcceptEvents="true" />
+              </Children>
+            </Widget>
+
+            <!-- ==================== 底行：输入 680 ＋ 结束 100 ＋ 发送 110 ==================== -->
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="920" SuggestedHeight="55" HorizontalAlignment="Left" VerticalAlignment="Bottom" MarginLeft="20" MarginBottom="!BottomRowBottom">
+              <Children>
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="680" HorizontalAlignment="Left" Brush="Awake.Panel.Input800" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+                  <Children>
+                    <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="15" MarginRight="15" Brush="Review.NameInput.Text" Brush.FontSize="15" RealText="@InputText" Command.TextEntered="ExecuteSend" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="15" MarginRight="15" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FFA89878" Brush.TextVerticalAlignment="Center" Brush.TextHorizontalAlignment="Left" Text="@InputHintText" IsVisible="@IsInputEmpty" DoNotAcceptEvents="true" />
+                  </Children>
+                </Widget>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="100" SuggestedHeight="35" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="!EndButtonRightGap" Command.Click="ExecuteClose" Brush="Awake.Button.Secondary" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="15" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@EndButtonText" DoNotAcceptEvents="true" />
                   </Children>
                 </ButtonWidget>
-                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="110" HorizontalAlignment="Right" Command.Click="ExecuteClose" Brush="ButtonBrush1" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="110" SuggestedHeight="35" HorizontalAlignment="Right" VerticalAlignment="Center" Command.Click="ExecuteSend" IsEnabled="@CanSend" Brush="Awake.Button.Primary" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                   <Children>
-                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@CloseButtonText" DoNotAcceptEvents="true" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="15" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@SendButtonText" DoNotAcceptEvents="true" />
                   </Children>
                 </ButtonWidget>
               </Children>
             </Widget>
+
           </Children>
         </Widget>
       </Children>

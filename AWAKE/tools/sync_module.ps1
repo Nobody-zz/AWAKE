@@ -25,6 +25,7 @@ $embeddedRuntimeScript = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.P
 $managedRootFiles = @('SubModule.xml', 'README_CN.md', 'README_EN.txt', 'BUILD_VERIFICATION.txt')
 $managedGuiFiles = @(
     'GUI\Prefabs\AwakeMessenger.xml',
+    'GUI\Prefabs\AwakePortraitProbe.xml',
     'GUI\Prefabs\DeveloperCheck.xml',
     'GUI\Prefabs\NpcDialogue.xml',
     'GUI\Prefabs\SceneDialogueStatus.xml',
@@ -42,22 +43,25 @@ $managedWorldbookFiles = @(
     'ModuleData\Worldbook\persona_definitions\tag_registry.json'
 )
 $managedWorldbookDirectories = @(
-    'ModuleData\Worldbook\rules',
-    'ModuleData\Worldbook\personality_background',
-    'ModuleData\Worldbook\unnamed_persona',
-    'ModuleData\Worldbook\voice_mapping',
-    'ModuleData\Worldbook\event_data',
-    'ModuleData\Worldbook\debt',
-    'ModuleData\Worldbook\dialogue_history',
-    'ModuleData\Worldbook\compressed_memory',
+    # Repository-side package form (2026-09-14, see docs/worldbook-studio-plan/RUNTIME-MAPPING-CONTRACT.md):
+    # manifest.json above is the registry (awake.worldbook.registry.v1) and this directory holds the
+    # compiled runtime three (manifest.json + runtime.json + index.json) per world.
+    'ModuleData\Worldbook\packages',
     'ModuleData\Worldbook\persona_definitions\definitions'
 )
+# The eight v1 content directories (rules / personality_background / unnamed_persona / voice_mapping /
+# event_data / debt / dialogue_history / compressed_memory) were dropped here on 2026-09-14: the
+# runtime rejects awake.worldbook.v1 (WB2-SCHEMA-UNSUPPORTED:entry) and nothing in src/ reads them.
+# They were already dead entries -- absent on disk, silently skipped by the loop below.
 $obsoletePersonaFiles = @(
     'ModuleData\Worldbook\persona_definitions\persona_definitions\tag_registry.json',
     'ModuleData\Worldbook\persona_definitions\persona_definitions\definitions\hero_default.json'
 )
 if ($SkipWorldbook) {
-    # 试点包投放期间：不把工程的 ModuleData\Worldbook\** 当受管文件，避免用后备版 v1 覆盖游戏内的 v2 试点包。
+    # Opt-out only. The original reason (a fallback v1 manifest would clobber the v2 pilot package
+    # sitting in the game directory) is gone: the source is now a registry/v2 package itself, so a
+    # normal run REPLACES that pilot package on purpose. Keep the switch for "touch the module but
+    # leave whatever worldbook is already installed".
     $managedWorldbookFiles = @()
     $managedWorldbookDirectories = @()
 }
@@ -225,17 +229,19 @@ function Get-ManagedFiles([string]$SourceRoot, [string]$BuildDll) {
     Add-ManagedFile $list 'bin\Win64_Shipping_Client\MarcusAwakeTransport.dll' $SourceRoot $BuildDll
     foreach ($relative in $managedGuiFiles) { Add-ManagedFile $list $relative $SourceRoot $BuildDll }
     foreach ($relative in $managedLanguageFiles) { Add-ManagedFile $list $relative $SourceRoot $BuildDll }
-    foreach ($relative in $managedWorldbookFiles) { Add-ManagedFile $list $relative $SourceRoot $BuildDll }
-    foreach ($directory in $managedWorldbookDirectories) {
-        $directoryPath = Join-Path $SourceRoot $directory
-        if (-not (Test-Path -LiteralPath $directoryPath)) { continue }
-        Assert-NoReparseComponents $directoryPath
-        foreach ($file in Get-ChildItem -LiteralPath $directoryPath -Recurse -File -Force) {
-            if (($file.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0) { throw "Reparse source file is not allowed: $($file.FullName)" }
-            $relative = Get-RelativePath $SourceRoot $file.FullName
-            if ($relative -match '^ModuleData\\Worldbook\\persona_definitions\\persona_definitions(?:\\|$)') { throw "Nested Persona path is not an allowed source path: $relative" }
-            if ($list.Contains($relative)) { throw "Duplicate managed path: $relative" }
-            $list.Add($relative)
+    if (-not $SkipWorldbook) {
+        foreach ($relative in $managedWorldbookFiles) { Add-ManagedFile $list $relative $SourceRoot $BuildDll }
+        foreach ($directory in $managedWorldbookDirectories) {
+            $directoryPath = Join-Path $SourceRoot $directory
+            if (-not (Test-Path -LiteralPath $directoryPath)) { continue }
+            Assert-NoReparseComponents $directoryPath
+            foreach ($file in Get-ChildItem -LiteralPath $directoryPath -Recurse -File -Force) {
+                if (($file.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0) { throw "Reparse source file is not allowed: $($file.FullName)" }
+                $relative = Get-RelativePath $SourceRoot $file.FullName
+                if ($relative -match '^ModuleData\\Worldbook\\persona_definitions\\persona_definitions(?:\\|$)') { throw "Nested Persona path is not an allowed source path: $relative" }
+                if ($list.Contains($relative)) { throw "Duplicate managed path: $relative" }
+                $list.Add($relative)
+            }
         }
     }
     return @($list | Sort-Object)
@@ -450,14 +456,51 @@ function Invoke-ReleaseStaging(
 }
 
 function Assert-SourceManifest([string]$SourceRoot) {
-    $manifestPath = Join-Path $SourceRoot 'ModuleData\Worldbook\manifest.json'
-    Assert-ExistingFile $manifestPath 'worldbook manifest'
-    $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
-    if ($manifest.personaDefinitionDirectory -ne 'persona_definitions/definitions' -or $manifest.personaTagRegistryFile -ne 'persona_definitions/tag_registry.json') {
-        throw 'Worldbook manifest Persona paths are not canonical.'
+    # Repository-side package form (2026-09-14). Two things get asserted here:
+    #
+    #   (a) Persona: the canonical directory SHAPE exists. The old check read
+    #       personaDefinitionDirectory / personaTagRegistryFile out of the manifest -- but those are
+    #       awake.worldbook.v1 fields, and the manifest at this path is now a registry
+    #       (awake.worldbook.registry.v1) which does not carry them, while the runtime rejects a v1
+    #       manifest outright (WB2-SCHEMA-UNSUPPORTED:entry). Asserting the paths directly is both
+    #       stronger and schema-independent; src/PersonaRootLocator.cs finds the same layer by shape.
+    #
+    #   (b) Worldbook: the registry lists at least one package and every listed package really is a
+    #       runtime three (manifest + entrypoints.runtime + entrypoints.index) inside this source
+    #       tree. Without this, a half-assembled packages/ ships silently.
+    $worldbookRoot = Join-Path $SourceRoot 'ModuleData\Worldbook'
+    $manifestPath = Join-Path $worldbookRoot 'manifest.json'
+    Assert-ExistingFile $manifestPath 'worldbook registry manifest'
+    try { $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json }
+    catch { throw "Worldbook registry manifest is not valid JSON: $manifestPath . $($_.Exception.Message)" }
+    if ([string]$manifest.schemaVersion -ne 'awake.worldbook.registry.v1') {
+        throw "Worldbook manifest schemaVersion must be awake.worldbook.registry.v1 (got '$($manifest.schemaVersion)'). The runtime rejects awake.worldbook.v1 (WB2-SCHEMA-UNSUPPORTED:entry)."
     }
-    Assert-ExistingFile (Join-Path $SourceRoot 'ModuleData\Worldbook\persona_definitions\tag_registry.json') 'Persona tag registry'
-    $definitions = Join-Path $SourceRoot 'ModuleData\Worldbook\persona_definitions\definitions'
+    $packages = @($manifest.packages)
+    if ($packages.Count -lt 1) { throw 'Worldbook registry lists no packages.' }
+    foreach ($package in $packages) {
+        $label = "Worldbook registry package '$($package.packageId)'"
+        foreach ($field in @('packageId', 'version', 'kind', 'relativePath', 'packageHash')) {
+            if ([string]::IsNullOrWhiteSpace([string]$package.$field)) { throw "$label is missing $field." }
+        }
+        $relative = ([string]$package.relativePath).Replace('/', '\')
+        if ([IO.Path]::IsPathRooted($relative) -or $relative -match '(^|\\)\.\.(\\|$)') { throw "$label has an unsafe relativePath: $($package.relativePath)" }
+        $packageRoot = Join-Path $worldbookRoot $relative
+        $packageManifestPath = Join-Path $packageRoot 'manifest.json'
+        Assert-ExistingFile $packageManifestPath "$label manifest"
+        $packageManifest = Get-Content -LiteralPath $packageManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+        if ([string]$packageManifest.schemaVersion -ne 'awake.worldbook.v2') { throw "$label manifest schemaVersion must be awake.worldbook.v2 (got '$($packageManifest.schemaVersion)')" }
+        foreach ($entrypoint in @('runtime', 'index')) {
+            $entryRelative = [string]$packageManifest.entrypoints.$entrypoint
+            if ([string]::IsNullOrWhiteSpace($entryRelative)) { throw "$label manifest has no entrypoints.$entrypoint" }
+            if ([IO.Path]::IsPathRooted($entryRelative) -or $entryRelative -match '(^|[\\/])\.\.([\\/]|$)') { throw "$label entrypoints.$entrypoint is not a safe relative path: $entryRelative" }
+            Assert-ExistingFile (Join-Path $packageRoot ($entryRelative.Replace('/', '\'))) "$label entrypoints.$entrypoint"
+        }
+    }
+
+    $personaRoot = Join-Path $worldbookRoot 'persona_definitions'
+    Assert-ExistingFile (Join-Path $personaRoot 'tag_registry.json') 'Persona tag registry'
+    $definitions = Join-Path $personaRoot 'definitions'
     if (-not (Test-Path -LiteralPath $definitions -PathType Container)) { throw "Persona definitions directory is missing: $definitions" }
     Assert-NoReparseComponents $definitions
 }
@@ -600,7 +643,7 @@ if (-not (Test-PathUnderRoot $projectRoot $distModule)) { throw 'DistModule must
 Assert-SafeModuleRoot $distModule 'DistModule' | Out-Null
 Assert-SafeModuleRoot $gameModule 'GameModule' | Out-Null
 if (-not (Test-Path -LiteralPath $projectRoot -PathType Container)) { throw "ProjectRoot is missing: $projectRoot" }
-Assert-SourceManifest $projectRoot
+if (-not $SkipWorldbook) { Assert-SourceManifest $projectRoot }
 $buildArtifacts = [ordered]@{
     'Awake.dll' = $BuildDllPath
     'MarcusAwakeFramework.dll' = Join-Path $projectRoot 'framework\MarcusAwakeFramework\_build_out\Release\MarcusAwakeFramework.dll'

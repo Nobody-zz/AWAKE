@@ -541,7 +541,6 @@ try {
         publicDescription = '公开场合克制。'
         privateDescription = '私下核算代价。'
         contradictionDescription = '谨慎与野心并存。'
-        foodPreference = '热粥'
         selfClaimRules = @('对外只自称我。')
         realSelfBehaviors = @('先确认代价。')
         selfClaimExamples = @('我会如何回应？')

@@ -5,10 +5,11 @@ param(
     [string]$WarSailsChineseDirectory = 'C:\Users\26811\Downloads\战帆中文',
     [string]$WarSailsHeroesObjectPath = 'C:\Users\26811\Downloads\heroes.xml',
     [string]$WarSailsClansChineseOverridePath = 'C:\Users\26811\Downloads\std_clans_xml-zho-CN.xml',
-    [string]$OutputDirectory = 'C:\Users\26811\OneDrive\文档\New project\_houkai_merge\AWAKE\docs\mappings\persona-family'
+    [string]$OutputDirectory = ''
 )
 
 $ErrorActionPreference = 'Stop'
+if ([string]::IsNullOrWhiteSpace($OutputDirectory)) { $OutputDirectory = Join-Path (Split-Path -Parent $PSScriptRoot) 'docs\mappings\persona-family' }
 
 function Get-AttributeValue($Node, [string]$Name) {
     if ($null -eq $Node) { return $null }

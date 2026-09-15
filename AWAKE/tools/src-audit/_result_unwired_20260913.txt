@@ -1,0 +1,74 @@
+scanned: src=146 files, tools=174 files
+
+=== A. 全仓库零引用（候选死代码）: 51 ===
+  [method] AddListSection                                 src/PersonaDslGenerator.cs:327
+  [method] AppendTranscriptAsync                          src/WorldStateStore.cs:1851
+  [method] BuildCompletedWeeklyReportFromFactsAsync       src/WorldEventContracts.cs:240
+  [method] BuildDirectInput                               src/Prompts/NpcPromptTemplate.cs:129
+  [method] BuildMappingContext                            src/NpcDialogueService.cs:885
+  [method] BuildPersona                                   src/WorldbookService.cs:64
+  [method] CapturePlayerToCurrentNpc                      src/BannerlordNativeSocialReader.cs:10
+  [method] ClaimWorldStateStore                           src/AwakeRuntime.cs:581
+  [method] ComputeSha256Short                             src/AwakeConstants.cs:25
+  [method] FormatWeek                                     src/WorldEventLedger.cs:513
+  [method] GetHistory                                     src/AwakeMessengerHistory.cs:122
+  [method] GetRouteGeneration                             src/AiTaskGateway.cs:367
+  [method] GetSceneTargets                                src/NpcDialogueLauncher.cs:135
+  [method] HasNearbyHero                                  src/NpcDialogueLauncher.cs:402
+  [method] HasPermission                                  src/AiTaskGateway.cs:57
+  [method] HasSoftPermissionAsync                         src/AiTaskGateway.cs:96
+  [method] IsAcceptedForProjection                        src/PersonaPersistenceModels.cs:323
+  [method] IsEligibleNearbyHero                           src/NpcDialogueLauncher.cs:455
+  [method] IsKnownSchema                                  src/AwakeStorageContract.cs:28
+  [method] LoadDirectory                                  src/WorldbookLoader.cs:11
+  [method] LogConfigPresence                              src/AwakeConfig.cs:321
+  [method] MarkShownForTesting                            src/AwakeOnboardingService.cs:62
+  [method] NotifyProviderStatusChanged                    src/AwakeConfig.cs:269
+  [method] QueryWeeklyDynamicsAsync                       src/WorldEventContracts.cs:219
+  [method] RecordEventFactAsync                           src/NpcMemoryService.cs:334
+  [method] ResetConfigForTesting                          src/AwakeConfig.cs:331
+  [method] ResetGameThreadForTesting                      src/AwakeUiDispatcher.cs:20
+  [method] ResetSessionStateForTesting                    src/AwakeRuntime.cs:1020
+  [method] ResolveProviderKindLabel                       src/AwakeProviderConfiguration.cs:65
+  [method] RestoreForTesting                              src/AwakeConfig.cs:202
+  [method] RetrieveLocalAsync                             src/KnowledgeService.cs:254
+  [method] SetConfigForTesting                            src/AwakeConfig.cs:326
+  [method] SetForOfflineTest                              src/KnowledgeRuntime.cs:9
+  [method] SyncRoutesAsync                                src/AwakeMarcusLinkService.cs:57
+  [method] TranscriptMetaKey                              src/AwakeTranscriptKeys.cs:25
+  [method] TryBuildDocument                               src/PersonaPersistenceService.cs:117
+  [method] TryComputeFileSha256Short                      src/AwakeConstants.cs:48
+  [method] TryReadCache                                   src/WorldStateStore.cs:4286
+  [method] TryValidateRecovery                            src/PersonaPersistenceModels.cs:303
+  [method] UpdateInteractionRecoveryIndexAsync            src/WorldStateStore.cs:1731
+  [method] UpdatePromiseStatusAsync                       src/WorldStateStore.cs:1790
+  [method] UpsertPersonaStateForTestingAsync              src/WorldStateStore.cs:2113
+  [method] UpsertPromiseAsync                             src/WorldStateStore.cs:1760
+  [method] WriteCache                                     src/WorldStateStore.cs:4293
+  [method] WriteCode                                      src/AwakeLog.cs:55
+  [type] AwakeDialogueQueueEntry                        src/EventDialogueQueue.cs:9
+  [type] BannerlordNativeSocialReader                   src/BannerlordNativeSocialReader.cs:8
+  [type] NarrativeReportBuilder                         src/NarrativeReportBuilder.cs:7
+  [type] PersonaPersistenceProducerContract             src/PersonaPersistenceService.cs:115
+  [type] WorldEventInboxFormatter                       src/WorldEventInboxFormatter.cs:6
+  [type] WorldbookLoader                                src/WorldbookLoader.cs:9
+
+=== B. 仅夹具引用（生产代码零调用）: 16 ===
+  [method] CanonicalJson                                  src/WorldFactJournal.cs:58  tools_hits=176
+  [method] EnqueuePendingEventForTesting                  src/WorldStateStore.cs:447  tools_hits=2
+  [method] Format                                         src/WorldEventInboxFormatter.cs:8  tools_hits=158
+  [method] GetUnreadAsync                                 src/AwakeLetterService.cs:405  tools_hits=5
+  [method] InjectStoreForTesting                          src/WorldStateStore.cs:306  tools_hits=7
+  [method] MarkReadAsync                                  src/AwakeLetterService.cs:265  tools_hits=1
+  [method] PersistV2WeeklyReportAsync                     src/WorldEventContracts.cs:248  tools_hits=7
+  [method] ReleaseWorldStateStore                         src/AwakeRuntime.cs:635  tools_hits=3
+  [method] ReplyAsync                                     src/AwakeLetterService.cs:283  tools_hits=1
+  [method] SetFactContextReaderForTesting                 src/WorldEventContracts.cs:537  tools_hits=10
+  [method] SetHostOverrideForTesting                      src/AwakeRuntime.cs:178  tools_hits=4
+  [method] SetWorldStateStore                             src/AwakeRuntime.cs:497  tools_hits=3
+  [method] ToEventRecord                                  src/WorldEventContracts.cs:808  tools_hits=1
+  [method] TryProjectSourcesIfReady                       src/WorldEventContracts.cs:169  tools_hits=1
+  [method] TryValidateEventRecord                         src/WorldEventContracts.cs:853  tools_hits=3
+  [method] WriteEmptyMemoryAsync                          src/WorldStateStore.cs:2369  tools_hits=1
+
+total definitions considered: 1757

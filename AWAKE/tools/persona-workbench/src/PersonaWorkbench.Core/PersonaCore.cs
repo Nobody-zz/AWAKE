@@ -43,10 +43,12 @@ public sealed class PersonaDocument
     public string PublicDescription { get; set; } = string.Empty;
     public string PrivateDescription { get; set; } = string.Empty;
     public string ContradictionDescription { get; set; } = string.Empty;
-    public string FoodPreference { get; set; } = string.Empty;
     public List<string> SelfClaimRules { get; set; } = new List<string>();
     public List<string> RealSelfBehaviors { get; set; } = new List<string>();
     public List<string> SelfClaimExamples { get; set; } = new List<string>();
+    // 作者侧草稿（三张力轴）：hardLine / negotiable / breachSwitch。
+    // 只承载于源文档，编译期保留进 migration.preservedLegacyData、物化时丢弃，不进运行时。
+    public object? TensionAxes { get; set; }
     public List<string> Tags { get; set; } = new List<string>();
     public Dictionary<string, int> FacetStrengths { get; set; } = new Dictionary<string, int>(StringComparer.Ordinal);
     public PersonaTraitProfile TraitProfile { get; set; } = new PersonaTraitProfile();
@@ -135,25 +137,49 @@ public sealed class PersonaTagRegistry
     {
         return new PersonaTagRegistry(new[]
         {
+            // trait (12)
+            new PersonaTagDefinition("trait.pragmatic", PersonaTagCategory.Trait, "务实"),
+            new PersonaTagDefinition("trait.status_conscious", PersonaTagCategory.Trait, "重视身份"),
             new PersonaTagDefinition("trait.cautious", PersonaTagCategory.Trait, "谨慎"),
             new PersonaTagDefinition("trait.ambitious", PersonaTagCategory.Trait, "野心勃勃"),
             new PersonaTagDefinition("trait.proud", PersonaTagCategory.Trait, "自尊强烈"),
-            new PersonaTagDefinition("trait.pragmatic", PersonaTagCategory.Trait, "现实务实"),
             new PersonaTagDefinition("trait.guardian", PersonaTagCategory.Trait, "护卫自己人"),
             new PersonaTagDefinition("trait.traditional", PersonaTagCategory.Trait, "重视传统"),
+            new PersonaTagDefinition("trait.kind", PersonaTagCategory.Trait, "仁厚善良"),
+            new PersonaTagDefinition("trait.deceitful", PersonaTagCategory.Trait, "狡诈善欺"),
+            new PersonaTagDefinition("trait.loyal", PersonaTagCategory.Trait, "重信守诺"),
+            new PersonaTagDefinition("trait.courageous", PersonaTagCategory.Trait, "勇武过人"),
+            new PersonaTagDefinition("trait.reserved", PersonaTagCategory.Trait, "内敛寡言"),
+            // expression (10)
             new PersonaTagDefinition("expression.measured", PersonaTagCategory.Expression, "措辞克制"),
+            new PersonaTagDefinition("expression.indirect", PersonaTagCategory.Expression, "含蓄迂回"),
             new PersonaTagDefinition("expression.direct", PersonaTagCategory.Expression, "直白明确"),
             new PersonaTagDefinition("expression.formal", PersonaTagCategory.Expression, "礼貌正式"),
-            new PersonaTagDefinition("expression.teasing", PersonaTagCategory.Expression, "喜欢戏谑试探"),
             new PersonaTagDefinition("expression.warm", PersonaTagCategory.Expression, "温和亲近"),
+            new PersonaTagDefinition("expression.teasing", PersonaTagCategory.Expression, "戏谑试探"),
+            new PersonaTagDefinition("expression.blunt", PersonaTagCategory.Expression, "生硬率直"),
+            new PersonaTagDefinition("expression.frank", PersonaTagCategory.Expression, "坦诚磊落"),
+            new PersonaTagDefinition("expression.flamboyant", PersonaTagCategory.Expression, "张扬华丽"),
+            new PersonaTagDefinition("expression.understated", PersonaTagCategory.Expression, "低调内敛"),
+            // behavior (10)
+            new PersonaTagDefinition("behavior.conditional_cooperation", PersonaTagCategory.Behavior, "有条件合作"),
             new PersonaTagDefinition("behavior.bargains", PersonaTagCategory.Behavior, "先谈条件"),
             new PersonaTagDefinition("behavior.observes_before_acting", PersonaTagCategory.Behavior, "先观察再行动"),
             new PersonaTagDefinition("behavior.tests_loyalty", PersonaTagCategory.Behavior, "习惯试探忠诚"),
             new PersonaTagDefinition("behavior.keeps_leverage", PersonaTagCategory.Behavior, "习惯留后手"),
             new PersonaTagDefinition("behavior.protects_inner_circle", PersonaTagCategory.Behavior, "优先保护自己人"),
             new PersonaTagDefinition("behavior.takes_command", PersonaTagCategory.Behavior, "倾向直接主导"),
-            new PersonaTagDefinition("trigger.public_humiliation", PersonaTagCategory.Trigger, "被公开羞辱时反击"),
-            new PersonaTagDefinition("boundary.no_empty_promises", PersonaTagCategory.Boundary, "不作空头许诺")
+            new PersonaTagDefinition("behavior.acts_before_reasoning", PersonaTagCategory.Behavior, "先做后想"),
+            new PersonaTagDefinition("behavior.charges_first", PersonaTagCategory.Behavior, "身先士卒"),
+            new PersonaTagDefinition("behavior.administers_fairly", PersonaTagCategory.Behavior, "处事公允"),
+            // trigger (7)
+            new PersonaTagDefinition("trigger.threat_or_leverage", PersonaTagCategory.Trigger, "威胁与筹码"),
+            new PersonaTagDefinition("trigger.public_humiliation", PersonaTagCategory.Trigger, "公开羞辱"),
+            new PersonaTagDefinition("trigger.family_safety", PersonaTagCategory.Trigger, "家人安危"),
+            new PersonaTagDefinition("trigger.reputation_challenge", PersonaTagCategory.Trigger, "名誉挑衅"),
+            new PersonaTagDefinition("trigger.threat_to_home", PersonaTagCategory.Trigger, "家国威胁"),
+            new PersonaTagDefinition("trigger.loyalty_or_betrayal", PersonaTagCategory.Trigger, "忠诚与背叛"),
+            new PersonaTagDefinition("trigger.social_slight", PersonaTagCategory.Trigger, "社交轻蔑")
         });
     }
 
@@ -251,9 +277,9 @@ public static class PersonaValidator
                 {
                     result.Errors.Add(new PersonaValidationError("facet.category_not_supported", "Facet strength is not supported for trigger or boundary tags: " + tagId));
                 }
-                if (strength is < 1 or > 4)
+                if (strength is < 1 or > 5)
                 {
-                    result.Errors.Add(new PersonaValidationError("facet.strength_invalid", "Facet strength must be between 1 and 4: " + tagId));
+                    result.Errors.Add(new PersonaValidationError("facet.strength_invalid", "Facet strength must be between 1 and 5: " + tagId));
                 }
             }
         }
@@ -322,9 +348,9 @@ public static class PersonaValidator
 
     private static void ValidateAxis(PersonaValidationResult result, string axisId, int? value)
     {
-        if (value is < -2 or > 2)
+        if (value is < -3 or > 3)
         {
-            result.Errors.Add(new PersonaValidationError("axis.value_invalid", "Axis value must be between -2 and 2: " + axisId));
+            result.Errors.Add(new PersonaValidationError("axis.value_invalid", "Axis value must be between -3 and 3: " + axisId));
         }
     }
 }

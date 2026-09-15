@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    AWAKE UI Lab 的本地夹具核心（纯 C#，无游戏依赖）。
+    目标 netstandard2.0：本地测试（net10.0）与以后的游戏内 F10 壳（net472）都能引用同一份程序集。
+    本工程不得引用 TaleWorlds、NpcDialogueService、世界书、存储或战役状态。
+  -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Awake.UiLab</RootNamespace>
+    <AssemblyName>Awake.UiLab.Core</AssemblyName>
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+  </PropertyGroup>
+</Project>

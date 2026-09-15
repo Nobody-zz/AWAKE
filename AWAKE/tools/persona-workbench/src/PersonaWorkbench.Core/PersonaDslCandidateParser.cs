@@ -24,8 +24,7 @@ public static class PersonaDslCandidateParser
         "SELF_IDENTITY",
         "SELF_CLAIM_RULES",
         "REAL_SELF_BEHAVIOR",
-        "SELF_CLAIM_EXAMPLES",
-        "FOOD_PREFERENCE"
+        "SELF_CLAIM_EXAMPLES"
     };
     private static readonly AxisDefinition[] AxisDefinitions =
     {
@@ -145,10 +144,13 @@ public static class PersonaDslCandidateParser
         {
             if (definition.Section != section) continue;
             if (token == definition.Prefix + "_BALANCED") { axisKey = definition.Prefix; definition.Setter(document, 0); return true; }
+            // ±3 = _EXTREME：与 CanonicalPersonaTemplateGenerator.AddAxisId 保持同源（契约 domain 为 -3..3）。
+            if (token == definition.Prefix + "_" + definition.Negative + "_EXTREME") { axisKey = definition.Prefix; definition.Setter(document, -3); return true; }
             if (token == definition.Prefix + "_" + definition.Negative + "_STRONG") { axisKey = definition.Prefix; definition.Setter(document, -2); return true; }
             if (token == definition.Prefix + "_" + definition.Negative + "_SLIGHT") { axisKey = definition.Prefix; definition.Setter(document, -1); return true; }
             if (token == definition.Prefix + "_" + definition.Positive + "_SLIGHT") { axisKey = definition.Prefix; definition.Setter(document, 1); return true; }
             if (token == definition.Prefix + "_" + definition.Positive + "_STRONG") { axisKey = definition.Prefix; definition.Setter(document, 2); return true; }
+            if (token == definition.Prefix + "_" + definition.Positive + "_EXTREME") { axisKey = definition.Prefix; definition.Setter(document, 3); return true; }
         }
         return false;
     }
@@ -223,7 +225,6 @@ public static class PersonaDslCandidateParser
             case "PERSONALITY_CONTRADICTION.DESC_CN": document.ContradictionDescription = value; return true;
             case "PERSONALITY_SUMMARY.DESC_CN": document.Summary = value; return true;
             case "SELF_IDENTITY.FACTS_CN": document.IdentityFacts = value; return true;
-            case "FOOD_PREFERENCE.FOOD_CN": document.FoodPreference = value; return true;
         }
 
         if (section == "SELF_CLAIM_RULES" && TryReadIndexedKey(key, "RULE", out _)) { document.SelfClaimRules.Add(value); return true; }

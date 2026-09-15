@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using MarcusAwakeFramework.Api;
@@ -8,36 +9,150 @@ namespace Awake.WorldbookRuntimeProductionSmoke;
 
 internal sealed class ProductionSmokeHost : IMarcusAiFrameworkHost
 {
-    internal ProductionSmokeHost(SessionRef session, bool grantPermissions = true)
+    internal ProductionSmokeHost(SessionRef session, bool grantPermissions = true, bool enableWorldCommands = false)
     {
         CurrentSession = session ?? throw new ArgumentNullException(nameof(session));
         StorageAdapter = new ProductionSmokeStorage();
         EventsAdapter = new ProductionSmokeEvents();
         PermissionsAdapter = new ProductionSmokePermissions(grantPermissions);
+        AiAdapter = new ProductionSmokeAiGateway();
+        PromptsAdapter = new AwakePromptRegistry();
+        GameDataAdapter = CreateGameDataService();
+        CommandsAdapter = enableWorldCommands ? CreateWorldCommandService() : null;
     }
 
     internal ProductionSmokeStorage StorageAdapter { get; }
     internal ProductionSmokeEvents EventsAdapter { get; }
     internal ProductionSmokePermissions PermissionsAdapter { get; }
+    internal ICommandService CommandsAdapter { get; }
+    internal ProductionSmokeAiGateway AiAdapter { get; }
+    internal IPromptRegistry PromptsAdapter { get; }
+    internal IGameDataService GameDataAdapter { get; }
 
     public FrameworkIdentity Identity { get; } = FrameworkIdentity.Current("1.3.15");
     public SessionRef CurrentSession { get; }
     public ICapabilityBroker Capabilities => null;
     public IToolCandidateService Tools => null;
-    public IGameDataService GameData => null;
+    public IGameDataService GameData => GameDataAdapter;
     public IContextService Context => null;
     public IRagService Rag => null;
     public IEventService Events => EventsAdapter;
-    public ICommandService Commands => null;
-    public IAiGateway Ai => null;
+    public ICommandService Commands => CommandsAdapter;
+    public IAiGateway Ai => AiAdapter;
     public IAiModelService Models => null;
     public IMediaService Media => null;
-    public IPromptRegistry Prompts => null;
+    public IPromptRegistry Prompts => PromptsAdapter;
     public IStorageService Storage => StorageAdapter;
     public IAssetService Assets => null;
     public IPermissionService Permissions => PermissionsAdapter;
     public IDiagnosticsService Diagnostics => null;
     public ILoggingService Log => null;
+
+    private static ICommandService CreateWorldCommandService()
+    {
+        Type serviceType = typeof(FrameworkHost).Assembly.GetType(
+            "MarcusAwakeFramework.Api.HostCommandService",
+            throwOnError: true);
+        ICommandService service = (ICommandService)Activator.CreateInstance(
+            serviceType,
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+            binder: null,
+            args: null,
+            culture: null);
+        MethodInfo register = serviceType.GetMethod(
+            "Register",
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (register == null) throw new InvalidOperationException("Host command registration is unavailable.");
+
+        RegisterWorldCommand(service, register, new CommandDescriptor(
+            AiTaskConstants.RelationshipDeltaCommandId,
+            new ExtensionId(AwakeConstants.OwnerValue),
+            CommandRiskTier.R2Gameplay,
+            AiTaskConstants.CommandInputSchema(AiTaskConstants.RelationshipDeltaCommandId),
+            AiTaskConstants.CommandOutputSchema(AiTaskConstants.RelationshipDeltaCommandId),
+            new[] { "1.3.15" }), new AwakeRelationshipDeltaAdapter());
+        RegisterWorldCommand(service, register, new CommandDescriptor(
+            AiTaskConstants.PromiseRequestCommandId,
+            new ExtensionId(AwakeConstants.OwnerValue),
+            CommandRiskTier.R1Interface,
+            AiTaskConstants.CommandInputSchema(AiTaskConstants.PromiseRequestCommandId),
+            AiTaskConstants.CommandOutputSchema(AiTaskConstants.PromiseRequestCommandId),
+            new[] { "1.3.15" }), new AwakePromiseRequestAdapter());
+        RegisterWorldCommand(service, register, new CommandDescriptor(
+            AiTaskConstants.PromiseUpdateCommandId,
+            new ExtensionId(AwakeConstants.OwnerValue),
+            CommandRiskTier.R1Interface,
+            AiTaskConstants.CommandInputSchema(AiTaskConstants.PromiseUpdateCommandId),
+            AiTaskConstants.CommandOutputSchema(AiTaskConstants.PromiseUpdateCommandId),
+            new[] { "1.3.15" }), new AwakePromiseUpdateAdapter());
+        return service;
+    }
+
+    private static IGameDataService CreateGameDataService()
+    {
+        Type serviceType = typeof(FrameworkHost).Assembly.GetType(
+            "MarcusAwakeFramework.Api.ProviderBackedGameDataService", true);
+        return (IGameDataService)Activator.CreateInstance(serviceType,
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+            null, new object[] { new ProductionSmokePlayerSnapshotProvider() }, null);
+    }
+
+    private static void RegisterWorldCommand(object service, MethodInfo register, CommandDescriptor descriptor, ICommandAdapter adapter)
+    {
+        object registrationResult = register.Invoke(
+            service,
+            new object[] { descriptor, adapter });
+        OperationResult<bool> registered = registrationResult as OperationResult<bool>;
+        if (registered == null || !registered.IsSuccess || !registered.Value)
+        {
+            throw new InvalidOperationException("World command registration failed.");
+        }
+    }
+}
+
+internal sealed class ProductionSmokePlayerSnapshotProvider : IPlayerSnapshotProvider
+{
+    public Task<OperationResult<PlayerSnapshotDto>> GetCurrentPlayerAsync(RequestContext context, CancellationToken cancellationToken)
+    {
+        HeroDto hero = new HeroDto(new EntityRef("hero", "hero:player"), "测试玩家", null, null, true, true, 1, default(DataProvenance));
+        return Task.FromResult(OperationResult<PlayerSnapshotDto>.Succeeded(new PlayerSnapshotDto(hero, null, null, "smoke-player-v1")));
+    }
+}
+
+internal sealed class ProductionSmokeAiGateway : IAiGateway
+{
+    internal string LastInput { get; private set; } = string.Empty;
+    internal string NextStructuredJson { get; set; } = "{\"reply\":\"测试回复\",\"mood\":\"平静\",\"effects\":[]}";
+
+    public Task<OperationResult<IAiTaskHandle>> SubmitAsync(AiTaskRequest request, RequestContext context, CancellationToken cancellationToken)
+    {
+        LastInput = request?.InputJson ?? string.Empty;
+        return Task.FromResult(OperationResult<IAiTaskHandle>.Succeeded(
+            new ProductionSmokeAiTaskHandle(request, NextStructuredJson)));
+    }
+
+    public Task<OperationResult<AiTaskReceipt>> GetReceiptAsync(AiTaskScope scope, RequestContext context, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(TaskResult.Failure<AiTaskReceipt>("smoke.receipt_unavailable", FrameworkErrorCategory.NotFound, context));
+    }
+}
+
+internal sealed class ProductionSmokeAiTaskHandle : IAiTaskHandle
+{
+    private readonly AiTaskRequest _request;
+    private readonly string _json;
+    private Action<AiTaskEvent> _handler;
+    internal ProductionSmokeAiTaskHandle(AiTaskRequest request, string json) { _request = request; _json = json ?? string.Empty; }
+    public string TaskId => _request.TaskId;
+    public IReadOnlyList<AiTaskEvent> Snapshot() { return Array.Empty<AiTaskEvent>(); }
+    public IDisposable Subscribe(Action<AiTaskEvent> handler)
+    {
+        _handler = handler;
+        Task.Run(() => _handler?.Invoke(new AiTaskEvent(_request.TaskId, _request.MessageId, AiTaskEventKind.Completed, 1, string.Empty, null, "smoke", 0, 0, _json, "smoke", string.Empty, string.Empty)));
+        return new ProductionSmokeSubscription();
+    }
+    public Task<OperationResult<bool>> CancelAsync(CancellationToken cancellationToken) { return Task.FromResult(OperationResult<bool>.Succeeded(true)); }
+    public void Dispose() { }
 }
 
 internal sealed class ProductionSmokeStorage : IStorageService
@@ -239,11 +354,14 @@ internal sealed class ProductionSmokeSetBarrier
 internal sealed class ProductionSmokePermissions : IPermissionService
 {
     private readonly bool _grant;
+    private int _requestCount;
 
     internal ProductionSmokePermissions(bool grant)
     {
         _grant = grant;
     }
+
+    internal int RequestCount => Volatile.Read(ref _requestCount);
 
     public PermissionEvaluation Evaluate(string permissionId, RequestContext context)
     {
@@ -257,6 +375,7 @@ internal sealed class ProductionSmokePermissions : IPermissionService
 
     public Task<OperationResult<PermissionEvaluation>> RequestAsync(string permissionId, string purpose, RequestContext context, CancellationToken cancellationToken)
     {
+        Interlocked.Increment(ref _requestCount);
         PermissionEvaluation evaluation = Evaluate(permissionId, context);
         return Task.FromResult(OperationResult<PermissionEvaluation>.Succeeded(evaluation));
     }

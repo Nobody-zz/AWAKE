@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "awake.worldbook.weekly-report.v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "reportId",
+    "period",
+    "generatedBy",
+    "policyVersion",
+    "contentFingerprint",
+    "sourceFactIds",
+    "sections",
+    "visibility",
+    "extensions"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "awake.worldbook.weekly-report.v2" },
+    "reportId": { "type": "string", "pattern": "^awake:report:weekly-v2-[0-9]+$" },
+    "period": { "$ref": "#/$defs/period" },
+    "generatedBy": { "const": "awake:system:weekly-report-generator-v2" },
+    "policyVersion": { "const": "awake.weekly-report.policy.v2" },
+    "contentFingerprint": { "type": "string", "pattern": "^[0-9A-F]{64}$" },
+    "sourceFactIds": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/factId" },
+      "uniqueItems": true
+    },
+    "sections": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/section" }
+    },
+    "visibility": { "$ref": "#/$defs/visibility" },
+    "extensions": { "$ref": "#/$defs/extensions" }
+  },
+  "$defs": {
+    "factId": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "localized": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["zh-CN"],
+      "properties": { "zh-CN": { "type": "string", "minLength": 1 } }
+    },
+    "period": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end"],
+      "properties": {
+        "start": { "type": "string", "format": "date-time" },
+        "end": { "type": "string", "format": "date-time" }
+      }
+    },
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["itemId", "text", "sourceFactIds"],
+      "properties": {
+        "itemId": { "type": "string", "pattern": "^awake:item:weekly-v2-[0-9]+-(politics|war|people|local)-[0-9]+$" },
+        "text": { "$ref": "#/$defs/localized" },
+        "sourceFactIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/factId" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sectionId", "domain", "title", "items"],
+      "properties": {
+        "sectionId": { "type": "string", "pattern": "^awake:section:weekly-v2-[0-9]+-(politics|war|people|local)$" },
+        "domain": { "enum": ["politics", "war", "people", "local"] },
+        "title": { "$ref": "#/$defs/localized" },
+        "items": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/item" } }
+      }
+    },
+    "visibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "min_detail", "identity_ids"],
+      "properties": {
+        "scope": { "const": "local" },
+        "min_detail": { "const": "summary" },
+        "identity_ids": { "type": "array", "maxItems": 0 }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["awake:windowStartDay", "awake:windowEndDay"],
+      "properties": {
+        "awake:windowStartDay": { "type": "integer" },
+        "awake:windowEndDay": { "type": "integer" }
+      }
+    }
+  }
+}

@@ -1,10 +1,11 @@
 param(
     [string]$EnglishDirectory = 'C:\Users\26811\Downloads\战帆英文',
     [string]$ChineseDirectory = 'C:\Users\26811\Downloads\战帆中文',
-    [string]$OutputDirectory = 'C:\Users\26811\OneDrive\文档\New project\_houkai_merge\AWAKE\docs\mappings\war-sails-reference'
+    [string]$OutputDirectory = ''
 )
 
 $ErrorActionPreference = 'Stop'
+if ([string]::IsNullOrWhiteSpace($OutputDirectory)) { $OutputDirectory = Join-Path (Split-Path -Parent $PSScriptRoot) 'docs\mappings\war-sails-reference' }
 
 foreach ($path in @($EnglishDirectory, $ChineseDirectory)) {
     if (-not (Test-Path -LiteralPath $path -PathType Container)) { throw "Reference directory missing: $path" }

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Awake.WorldbookRuntimeProductionSmoke;
 
@@ -28,8 +31,17 @@ internal static partial class Program
         try
         {
             await RunAsync("lifecycle-final-drain", TestLifecycleAndFinalDrainAsync).ConfigureAwait(false);
+            await RunAsync("unknown-state-kind-rejected", TestUnknownStateKindRejectedAsync).ConfigureAwait(false);
+            await RunAsync("storage-schema-contract", TestStorageSchemaContractAsync).ConfigureAwait(false);
             await RunAsync("npc-dialogue-structured-completion", TestNpcDialogueStructuredCompletionAsync).ConfigureAwait(false);
+            await RunAsync("npc-dialogue-confirmed-settlement-observation", TestNpcDialogueConfirmedSettlementObservationAsync).ConfigureAwait(false);
+            await RunAsync("npc-dialogue-context-simulation", TestNpcDialogueContextSimulationAsync).ConfigureAwait(false);
+            await RunAsync("npc-dialogue-send-async-roundtrip", TestNpcDialogueSendAsyncRoundtripAsync).ConfigureAwait(false);
+            await RunAsync("npc-dialogue-action-mode-gate", TestNpcDialogueActionModeGateAsync).ConfigureAwait(false);
+            await RunAsync("developer-negotiation-entry", TestDeveloperNegotiationEntryAsync).ConfigureAwait(false);
             await RunAsync("npc-memory-structured-content", TestNpcMemoryStructuredContentAsync).ConfigureAwait(false);
+            await RunAsync("letter-delivery-lifecycle", TestLetterDeliveryLifecycleAsync).ConfigureAwait(false);
+            await RunAsync("npc-proactive-letter-initiative", TestNpcProactiveLetterInitiativeAsync).ConfigureAwait(false);
             await RunAsync("final-drain-single-flight", TestFinalDrainSingleFlightAsync).ConfigureAwait(false);
             await RunAsync("ensure-world-state-replacement", TestEnsureWorldStateReplacementAsync).ConfigureAwait(false);
             await RunAsync("record-before-boundary", TestRecordBeforeBoundaryAsync).ConfigureAwait(false);
@@ -45,6 +57,10 @@ internal static partial class Program
             await RunAsync("failed-drain-fail-closed", TestFailedDrainFailsClosedAsync).ConfigureAwait(false);
             await RunAsync("probe-session-ending-nonblocking", TestProbeSessionEndingNonBlockingAsync).ConfigureAwait(false);
             await RunAsync("pending-event-provenance-is-private", TestPendingEventProvenanceAsync).ConfigureAwait(false);
+            await RunAsync("world-fact-event-caller", RunWorldFactEventCallerTests).ConfigureAwait(false);
+            await RunAsync("world-fact-trigger-caller", RunWorldFactTriggerCallerTests).ConfigureAwait(false);
+            await RunAsync("world-fact-trigger-content-api", RunWorldFactTriggerContentApiTests).ConfigureAwait(false);
+            await RunAsync("world-fact-event-cancellation", RunWorldFactEventCancellationTests).ConfigureAwait(false);
         }
         finally
         {
@@ -136,14 +152,15 @@ internal static partial class Program
         lock (ObservedBackgroundTasks) ObservedBackgroundTasks.Add(task);
     }
 
-    private static ProductionSmokeHost CreateHost(string suffix, bool grantPermissions = true)
+    private static ProductionSmokeHost CreateHost(string suffix, bool grantPermissions = true, bool enableWorldCommands = false)
     {
         return new ProductionSmokeHost(
             new MarcusAwakeFramework.Api.SessionRef(
                 "campaign-production-smoke",
                 "timeline-production-smoke",
                 "session-" + suffix),
-            grantPermissions);
+            grantPermissions,
+            enableWorldCommands);
     }
 
     private static WorldStateStore CreateStore(ProductionSmokeHost host, ProductionSmokeKeyValueStore worldEvents, ProductionSmokeKeyValueStore memories = null)
@@ -205,6 +222,24 @@ internal static partial class Program
                     return true;
             }
             return false;
+        }
+    }
+
+    private static string RecentCapturedLogs()
+    {
+        lock (OutputGate)
+        {
+            int start = Math.Max(0, CapturedLogs.Count - 12);
+            return string.Join(" || ", CapturedLogs.Skip(start));
+        }
+    }
+
+    private static JObject ParseJsonObjectPreservingDateStrings(string json)
+    {
+        using (StringReader reader = new StringReader(json ?? string.Empty))
+        using (JsonTextReader jsonReader = new JsonTextReader(reader) { DateParseHandling = DateParseHandling.None })
+        {
+            return JObject.Load(jsonReader);
         }
     }
 

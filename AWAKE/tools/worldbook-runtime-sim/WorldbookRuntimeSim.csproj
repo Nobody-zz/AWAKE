@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    世界书运行时门控模拟器（只读、离线）
+    把 AWAKE 真实运行时源码 + 一份游戏依赖替身编成控制台程序，
+    不需要启动游戏即可加载运行时包并按身份/范围/详细度查询。
+    详见 README.md
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Awake.WorldbookRuntimeSim</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Nullable>disable</Nullable>
+    <AssemblyName>WorldbookRuntimeSim</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json" HintPath="D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\Newtonsoft.Json.dll" />
+    <Compile Include="..\..\src\WorldKnowledgeModels.cs" />
+    <Compile Include="..\..\src\WorldbookIdentityEvaluator.cs" />
+    <Compile Include="..\..\src\WorldbookIdentityCapabilityRules.cs" />
+    <Compile Include="..\..\src\WorldbookEntityId.cs" />
+    <Compile Include="..\..\src\WorldbookPackageIntegrity.cs" />
+    <Compile Include="..\..\src\WorldKnowledgeLoader.cs" />
+    <Compile Include="..\..\src\WorldKnowledgeQueryService.cs" />
+    <Compile Include="..\..\src\WorldKnowledgeProjectionService.cs" />
+    <Compile Include="..\..\src\WorldbookPackageRegistry.cs" />
+    <Compile Include="..\..\src\WorldEventLedger.cs" />
+    <Compile Include="..\..\src\WorldEventContracts.cs" />
+    <Compile Include="..\..\src\WeeklyReportService.cs" />
+    <Compile Include="..\..\src\WorldFactCapture.cs" />
+    <Compile Include="..\..\src\WorldFactJournal.cs" />
+    <Compile Include="..\..\src\WorldFactQuery.cs" />
+    <Compile Include="..\..\src\PersonaModels.cs" />
+    <Compile Include="..\..\src\PersonaTagRegistry.cs" />
+    <Compile Include="..\..\src\PersonaDslGenerator.cs" />
+    <Compile Include="..\..\src\WorldbookModels.cs" />
+    <Compile Include="..\..\src\PersonaDataLoader.cs" />
+    <Compile Include="..\..\src\PersonaRoster.cs" />
+    <Compile Include="SmokeStubs.cs" />
+    <Compile Include="PersonaSimStubs.cs" />
+    <Compile Include="PersonaDialogueSim.cs" />
+    <Compile Include="PersonaRosterSim.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+</Project>

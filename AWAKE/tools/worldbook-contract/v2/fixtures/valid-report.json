@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "awake.worldbook.weekly-report.v2",
+  "reportId": "awake:report:weekly-v2-7",
+  "period": {
+    "start": "1970-01-02T00:00:00.0000000+00:00",
+    "end": "1970-01-09T00:00:00.0000000+00:00"
+  },
+  "generatedBy": "awake:system:weekly-report-generator-v2",
+  "policyVersion": "awake.weekly-report.policy.v2",
+  "contentFingerprint": "C68D94F9BDBBCF220E9B7240461016834AFBA37ED79B0BEA2F523289602359CC",
+  "sourceFactIds": [
+    "be1e230bbc30e125755155eadf5b3cb58a0e9ce133c956f23d1bfd8f395c3aa8",
+    "f551caed8b5ffea897148ddc20357b0286c74dd839be2eeced68cc6b18a9dcee"
+  ],
+  "sections": [
+    {
+      "sectionId": "awake:section:weekly-v2-7-politics",
+      "domain": "politics",
+      "title": { "zh-CN": "政治与外交" },
+      "items": [
+        {
+          "itemId": "awake:item:weekly-v2-7-politics-0",
+          "text": { "zh-CN": "第 7 天：甲国与乙国开战。" },
+          "sourceFactIds": ["be1e230bbc30e125755155eadf5b3cb58a0e9ce133c956f23d1bfd8f395c3aa8"]
+        }
+      ]
+    },
+    {
+      "sectionId": "awake:section:weekly-v2-7-people",
+      "domain": "people",
+      "title": { "zh-CN": "人物近况" },
+      "items": [
+        {
+          "itemId": "awake:item:weekly-v2-7-people-0",
+          "text": { "zh-CN": "第 7 天：阿尔达死亡。" },
+          "sourceFactIds": ["f551caed8b5ffea897148ddc20357b0286c74dd839be2eeced68cc6b18a9dcee"]
+        }
+      ]
+    }
+  ],
+  "visibility": { "scope": "local", "min_detail": "summary", "identity_ids": [] },
+  "extensions": { "awake:windowStartDay": 1, "awake:windowEndDay": 7 }
+}
