@@ -116,6 +116,7 @@ internal static class Program
 			("marcus-link", () => { RunMarcusLinkSmoke(); return Task.CompletedTask; }),
 			// 加在末尾：保持前 55 条的序号不变（既有报告按序号引用判据）。
 			("world-fact-journal", () => { RunWorldFactJournalSmoke(); return Task.CompletedTask; }),
+			("world-fact-journal-roundtrip", () => RunWorldFactJournalRoundtripSmokeAsync()),
 			// 本用例会重置 UI 调度线程绑定；放在最后，避免影响前面的用例。
 			("dialogue-chain-redtest", () =>
 			{
@@ -2111,6 +2112,65 @@ private static void RunMessengerHistorySmoke()
 			throw new InvalidOperationException("well-formed journal root must read as success.");
 
 		Console.WriteLine("PASS world fact journal smoke");
+	}
+
+	/// <summary>
+	/// 世界事实日志**写读往返**判据（2026-09-15 补）。上一条只钉 codec 的边界；
+	/// 这条证明"空账本 ⇒ 读成 Missing ⇒ 写侧不再被拦 ⇒ 第一条落盘并可读回"整条路真的通。
+	/// 真机症状（09-14 23:17 连续三轮 root_corrupt、周报整链 unavailable）就断在这条路上。
+	/// </summary>
+	private static async Task RunWorldFactJournalRoundtripSmokeAsync()
+	{
+		SessionRef session = new SessionRef("smoke-journal-campaign", "smoke-journal-timeline", "smoke-journal-session");
+		WorldStateStore store = new WorldStateStore(session);
+		FakeKeyValueStore journalStore = new FakeKeyValueStore();
+		store.InjectStoreForTesting(AiTaskConstants.WorldFactJournalNamespace, journalStore);
+		RequestContext context = new FakeClock(DateTimeOffset.UtcNow).Context("awake.smoke", session, "journal-roundtrip");
+
+		// 1) 空账本必须读成"还没有"。真机就是这一步读成 Corrupt，而写侧读到 Corrupt
+		//    会直接放弃写入（WorldStateStore.cs:3657-3663）⇒ 读坏 / 不写 / 永远空 / 永远读坏。
+		WorldFactJournalReadResult empty = await store.GetWorldFactJournalAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (empty.Status != WorldFactJournalReadStatus.Missing)
+		{
+			throw new InvalidOperationException("an empty journal store must read as missing, got=" + empty.Status
+				+ " code=" + empty.ErrorCode);
+		}
+
+		// 2) 写入第一条事实。
+		WorldFact fact = new WorldFact(
+			"wf1-journal-roundtrip-smoke",
+			3,
+			3L * 144L,
+			"smoke_kind",
+			new[] { new WorldFactEntity("hero", "hero-journal-smoke", "subject") },
+			"烟测事实",
+			"smoke");
+		WorldStateCommand command = new WorldStateCommand(
+			AiTaskConstants.WorldEventsNamespace,
+			"world_events.smoke.v1",
+			"smoke.journal.append",
+			"idem-smoke-journal-append",
+			string.Empty,
+			WorldStateKind.WorldEvents,
+			new JObject { ["fact"] = fact.ToJson() },
+			DateTimeOffset.UtcNow,
+			context.CorrelationId);
+		if (!store.TryEnqueue(command)) throw new InvalidOperationException("journal command should enqueue.");
+		await store.DrainAsync(CancellationToken.None).ConfigureAwait(false);
+
+		// 3) 读回来：必须真有这条事实，且 root 确实落到了存储后端。
+		WorldFactJournalReadResult after = await store.GetWorldFactJournalAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (after.Status != WorldFactJournalReadStatus.Success
+			|| after.Facts.Count != 1
+			|| !StringComparer.Ordinal.Equals((string)after.Facts[0]["factId"], fact.FactId))
+		{
+			throw new InvalidOperationException("journal roundtrip mismatch status=" + after.Status
+				+ " facts=" + after.Facts.Count + " code=" + after.ErrorCode);
+		}
+		if (journalStore.GetValue(AiTaskConstants.WorldFactJournalRootKey) == null)
+			throw new InvalidOperationException("journal root must be persisted to the storage backend.");
+
+		Console.WriteLine("PASS world fact journal roundtrip smoke");
 	}
 
 	private static async Task RunStoragePipelineSmokeAsync()
