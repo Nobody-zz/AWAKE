@@ -20,96 +20,181 @@ internal static class Program
 		try
 		{
 			AwakeLog.Enabled = false;
-			if (args != null
-				&& args.Length > 0
-				&& string.Equals(args[0], "--redtest-r1-behavioral", StringComparison.Ordinal))
+			if (HasFlag(args, "--redtest-r1-behavioral"))
 			{
 				return await RedtestR1Behavioral.RunAsync();
 			}
-			if (args != null
-				&& args.Length > 0
-				&& string.Equals(args[0], "--persona-anchor", StringComparison.Ordinal))
+			if (HasFlag(args, "--persona-anchor"))
 			{
 				RunPersonaAnchorSmoke();
 				Console.WriteLine("PASS ALL persona anchor smoke");
 				return 0;
 			}
-			return await RunAsync();
+			if (HasFlag(args, "--list-cases"))
+			{
+				foreach (var item in BuildCaseList())
+				{
+					Console.WriteLine(item.Name);
+				}
+				return 0;
+			}
+			// 秤：逐条独立执行。默认"一条失败不掩盖其余"，否则一条判据坏掉会把后面几十条
+			// 判据的现状一起藏起来（G3-S0 的路径失效曾藏了 57 条，直到 09-15 才暴露）。
+			// 需要旧的"首败即停"语义时显式传 --stop-on-first-failure。
+			bool continueOnFailure = !HasFlag(args, "--stop-on-first-failure");
+			return await RunAsync(continueOnFailure);
 		}
 		catch (Exception ex)
 		{
-			Console.WriteLine("FAIL_TYPE " + ex.GetType().FullName);
-			Console.WriteLine("FAIL_MSG " + ex.Message);
-			if (ex.InnerException != null)
-			{
-				Console.WriteLine("INNER_MSG " + ex.InnerException.Message);
-			}
+			PrintFailure("(startup)", ex);
 			return 1;
 		}
 	}
 
-	private static async Task<int> RunAsync()
+	// 判据清单。声明式列出的好处有二：① 失败能报出"哪一条"（旧版只报异常类型，
+	// 要靠消息猜）；② 可逐条独立执行（--list-cases 打印全表）。
+	// 注意：用例之间仍有共享的可变状态（世界状态 store / UI 调度线程 / 静态注册表），
+	// 因此 continue-on-failure 模式下的失败可能包含被前一条带坏的"级联失败"——
+	// 判读时先看**序号最小的那条**。
+	private static List<(string Name, Func<Task> Body)> BuildCaseList()
 	{
-		RunBuildIdentitySmoke();
-		await RunB1NativeStateSmokeAsync();
-		await RunEchoAndProbeAsync();
-		await RunUiDispatcherMainThreadSmokeAsync();
-		RunNpcTargetStableIdSmoke();
-		RunUnnamedProfileSmoke();
-		RunSceneDialogueRangeSmoke();
-		RunSceneSelectionUxSmoke();
-		RunSceneShoutContractSmoke();
-		RunNpcDialogueOutputOptionalEffectsSmoke();
-		RunAwakeEventEngineCoreSmoke();
-		RunRelationshipCommandSmoke();
-		RunWorldEffectCommandSmoke();
-		RunPromiseStateMachineSmoke();
-		RunGiveGoldSmoke();
-		RunR1GoldAdapterBoundarySmoke();
-		await RunStoragePipelineSmokeAsync();
-		await RunPersistenceSettlementTruthSmokeAsync();
-		await RunG3S0FocusedReadinessSmokeAsync();
-		await RunPromptRegistrationCoordinatorSmokeAsync();
-		RunNpcMemorySmoke();
-		RunWorldbookSmoke();
-		RunWorldKnowledgeB2Smoke();
-		RunPersonaTemplateSmoke();
-		RunSharedPersonaGoldenFixtureSmoke();
-		RunPersonaPersistenceSmoke();
-		RunPersonaAnchorSmoke();
-		RunProviderFailureLogSmoke();
-		RunProviderBaseUrlToleranceSmoke();
-		RunRuntimeRecoverySmoke();
-		RunRouteContractSmoke();
-		RunTerminalHotkeySmoke();
-		RunNpcProactiveSmoke();
-		RunLongWaitSmoke();
-		RunEventInboxSmoke();
-		RunMemoryOverviewSmoke();
-		RunGuardPerfSmoke();
-		RunFeedbackSmoke();
-		RunMcmPresetSmoke();
-		RunCloudExportSmoke();
-		RunMessengerHistorySmoke();
-RunContactLabelSmoke();
-		RunTranscriptSourceSmoke();
-		RunB0StabilitySmoke();
-		RunRuleRegistrySmoke();
-		RunEventDataLoaderSmoke();
-		RunMemoryConsolidatorSmoke();
-		RunProactiveMotiveRegistrySmoke();
-		RunContentApiSmoke();
-		RunDialogueSessionCoordinatorSmoke();
-		RunDialogueQueueSmoke();
-		RunOnboardingSmoke();
-		RunB9InfraSmoke();
-		RunMarcusLinkSmoke();
-		// 本用例会重置 UI 调度线程绑定；放在最后，避免影响前面的用例。
-		AwakeUiDispatcher.ResetGameThreadForTesting();
-		AwakeUiDispatcher.Drain();
-		DialogueChainRedtest.Run();
+		return new List<(string Name, Func<Task> Body)>
+		{
+			("build-identity", () => { RunBuildIdentitySmoke(); return Task.CompletedTask; }),
+			("b1-native-state", () => RunB1NativeStateSmokeAsync()),
+			("echo-and-probe", () => RunEchoAndProbeAsync()),
+			("ui-dispatcher-main-thread", () => RunUiDispatcherMainThreadSmokeAsync()),
+			("npc-target-stable-id", () => { RunNpcTargetStableIdSmoke(); return Task.CompletedTask; }),
+			("unnamed-profile", () => { RunUnnamedProfileSmoke(); return Task.CompletedTask; }),
+			("scene-dialogue-range", () => { RunSceneDialogueRangeSmoke(); return Task.CompletedTask; }),
+			("scene-selection-ux", () => { RunSceneSelectionUxSmoke(); return Task.CompletedTask; }),
+			("scene-shout-contract", () => { RunSceneShoutContractSmoke(); return Task.CompletedTask; }),
+			("npc-dialogue-output-optional-effects", () => { RunNpcDialogueOutputOptionalEffectsSmoke(); return Task.CompletedTask; }),
+			("awake-event-engine-core", () => { RunAwakeEventEngineCoreSmoke(); return Task.CompletedTask; }),
+			("relationship-command", () => { RunRelationshipCommandSmoke(); return Task.CompletedTask; }),
+			("world-effect-command", () => { RunWorldEffectCommandSmoke(); return Task.CompletedTask; }),
+			("promise-state-machine", () => { RunPromiseStateMachineSmoke(); return Task.CompletedTask; }),
+			("give-gold", () => { RunGiveGoldSmoke(); return Task.CompletedTask; }),
+			("r1-gold-adapter-boundary", () => { RunR1GoldAdapterBoundarySmoke(); return Task.CompletedTask; }),
+			("storage-pipeline", () => RunStoragePipelineSmokeAsync()),
+			("persistence-settlement-truth", () => RunPersistenceSettlementTruthSmokeAsync()),
+			("g3-s0-focused-readiness", () => RunG3S0FocusedReadinessSmokeAsync()),
+			("prompt-registration-coordinator", () => RunPromptRegistrationCoordinatorSmokeAsync()),
+			("npc-memory", () => { RunNpcMemorySmoke(); return Task.CompletedTask; }),
+			("worldbook", () => { RunWorldbookSmoke(); return Task.CompletedTask; }),
+			("world-knowledge-b2", () => { RunWorldKnowledgeB2Smoke(); return Task.CompletedTask; }),
+			("persona-template", () => { RunPersonaTemplateSmoke(); return Task.CompletedTask; }),
+			("shared-persona-golden-fixture", () => { RunSharedPersonaGoldenFixtureSmoke(); return Task.CompletedTask; }),
+			("persona-persistence", () => { RunPersonaPersistenceSmoke(); return Task.CompletedTask; }),
+			("persona-anchor", () => { RunPersonaAnchorSmoke(); return Task.CompletedTask; }),
+			("provider-failure-log", () => { RunProviderFailureLogSmoke(); return Task.CompletedTask; }),
+			("provider-base-url-tolerance", () => { RunProviderBaseUrlToleranceSmoke(); return Task.CompletedTask; }),
+			("runtime-recovery", () => { RunRuntimeRecoverySmoke(); return Task.CompletedTask; }),
+			("route-contract", () => { RunRouteContractSmoke(); return Task.CompletedTask; }),
+			("terminal-hotkey", () => { RunTerminalHotkeySmoke(); return Task.CompletedTask; }),
+			("npc-proactive", () => { RunNpcProactiveSmoke(); return Task.CompletedTask; }),
+			("long-wait", () => { RunLongWaitSmoke(); return Task.CompletedTask; }),
+			("event-inbox", () => { RunEventInboxSmoke(); return Task.CompletedTask; }),
+			("memory-overview", () => { RunMemoryOverviewSmoke(); return Task.CompletedTask; }),
+			("guard-perf", () => { RunGuardPerfSmoke(); return Task.CompletedTask; }),
+			("feedback", () => { RunFeedbackSmoke(); return Task.CompletedTask; }),
+			("mcm-preset", () => { RunMcmPresetSmoke(); return Task.CompletedTask; }),
+			("cloud-export", () => { RunCloudExportSmoke(); return Task.CompletedTask; }),
+			("messenger-history", () => { RunMessengerHistorySmoke(); return Task.CompletedTask; }),
+			("contact-label", () => { RunContactLabelSmoke(); return Task.CompletedTask; }),
+			("transcript-source", () => { RunTranscriptSourceSmoke(); return Task.CompletedTask; }),
+			("b0-stability", () => { RunB0StabilitySmoke(); return Task.CompletedTask; }),
+			("rule-registry", () => { RunRuleRegistrySmoke(); return Task.CompletedTask; }),
+			("event-data-loader", () => { RunEventDataLoaderSmoke(); return Task.CompletedTask; }),
+			("memory-consolidator", () => { RunMemoryConsolidatorSmoke(); return Task.CompletedTask; }),
+			("proactive-motive-registry", () => { RunProactiveMotiveRegistrySmoke(); return Task.CompletedTask; }),
+			("content-api", () => { RunContentApiSmoke(); return Task.CompletedTask; }),
+			("dialogue-session-coordinator", () => { RunDialogueSessionCoordinatorSmoke(); return Task.CompletedTask; }),
+			("dialogue-queue", () => { RunDialogueQueueSmoke(); return Task.CompletedTask; }),
+			("onboarding", () => { RunOnboardingSmoke(); return Task.CompletedTask; }),
+			("b9-infra", () => { RunB9InfraSmoke(); return Task.CompletedTask; }),
+			("marcus-link", () => { RunMarcusLinkSmoke(); return Task.CompletedTask; }),
+			// 本用例会重置 UI 调度线程绑定；放在最后，避免影响前面的用例。
+			("dialogue-chain-redtest", () =>
+			{
+				AwakeUiDispatcher.ResetGameThreadForTesting();
+				AwakeUiDispatcher.Drain();
+				DialogueChainRedtest.Run();
+				return Task.CompletedTask;
+			}),
+		};
+	}
+
+	private static async Task<int> RunAsync(bool continueOnFailure)
+	{
+		List<(string Name, Func<Task> Body)> cases = BuildCaseList();
+		List<string> failed = new List<string>();
+		for (int i = 0; i < cases.Count; i++)
+		{
+			(string name, Func<Task> body) = cases[i];
+			string slot = "[" + (i + 1).ToString().PadLeft(2) + "/" + cases.Count + "] ";
+			try
+			{
+				await body();
+				Console.WriteLine(slot + "ok   " + name);
+			}
+			catch (Exception ex)
+			{
+				failed.Add(name);
+				Console.WriteLine(slot + "FAIL " + name);
+				PrintFailure(name, ex);
+				if (!continueOnFailure)
+				{
+					Console.WriteLine("RESULT total=" + cases.Count + " passed=" + i + " failed=1 stopped_at=" + name);
+					return 1;
+				}
+			}
+		}
+		Console.WriteLine("RESULT total=" + cases.Count + " passed=" + (cases.Count - failed.Count) + " failed=" + failed.Count);
+		if (failed.Count > 0)
+		{
+			Console.WriteLine("FAILED_CASES " + string.Join(",", failed));
+			return 1;
+		}
 		Console.WriteLine("PASS ALL Awake.SdkSmoke");
 		return 0;
+	}
+
+	// 失败明细。保留 FAIL_TYPE / FAIL_MSG / INNER_MSG 三个旧字段（既有阅读习惯），
+	// 新增 FAIL_CASE（哪条判据）与 FAIL_TRACE（逐行栈，便于直接 grep 定位）。
+	private static void PrintFailure(string name, Exception ex)
+	{
+		Console.WriteLine("FAIL_CASE " + name);
+		Console.WriteLine("FAIL_TYPE " + ex.GetType().FullName);
+		Console.WriteLine("FAIL_MSG " + ex.Message);
+		if (ex.InnerException != null)
+		{
+			Console.WriteLine("INNER_MSG " + ex.InnerException.Message);
+		}
+		foreach (string line in ex.ToString().Split('\n'))
+		{
+			string trimmed = line.TrimEnd('\r');
+			if (trimmed.Length > 0)
+			{
+				Console.WriteLine("FAIL_TRACE " + trimmed);
+			}
+		}
+	}
+
+	private static bool HasFlag(string[] args, string flag)
+	{
+		if (args == null)
+		{
+			return false;
+		}
+		for (int i = 0; i < args.Length; i++)
+		{
+			if (string.Equals(args[i], flag, StringComparison.Ordinal))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static void RunBuildIdentitySmoke()
