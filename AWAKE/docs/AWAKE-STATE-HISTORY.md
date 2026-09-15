@@ -1,4 +1,23 @@
-# AWAKE Current State
+# AWAKE State History（历史流水 · 已退役）
+
+> ⚠️ **本文件 2026-09-14 退役并改名**（原名 `AWAKE-CURRENT.md`）。
+> 它**从来不是"当前状态"**——而是一份按时间倒序累积的批次记录流水：标题从 **2026-08-24** 排到 **2026-09-11**，
+> 其中多条自标 `superseded` / `Historical` / `Previous`。**名字叫 CURRENT、装的是过去**，故退役。
+>
+> ⇒ **当前状态的唯一权威 ＝ [`AWAKE-ROADMAP.md`](AWAKE-ROADMAP.md) 的「现状」一节。**
+> 本文件**保留不删**（08-24～09-11 的批次记录仍有追溯价值），但 **不要再往里追加**。
+
+## 2026-09-11 迁移后重基线（历史 · 当时的说法）
+
+- 权威工作区：`D:\AWAKE-Dev`。
+- 当前源码 BuildId：`awake-20260911-dialogue-chain-010`。
+- 迁移后本地验证：AWAKE 构建通过；`AWAKE.Tests` 构建为 0 warning / 0 error；`Awake.SdkSmoke.exe` 为 `PASS ALL`；Persona Workbench Core Tests 通过。
+- G3-S0：Storage readiness 实现已在当前批准写集内完成；scope 校验、主 Smoke 与 focused evidence 均为 `pass/0`。本轮使用的 lease `g3-s0-20260911-072513` 已在验证完成后释放；未进入 G3-A/G3-B，未同步游戏目录。
+- 当前本地证据上限：E2。此工作区未找到可重新核验的 `AWAKE\docs\sync-reports`，因此不把旧文档中的 source/dist/game 同步描述归因给当前 010。
+- E3/E4/E5：迁移后待重新核验；本轮未同步游戏目录、未启动 Bannerlord、未改变版本号。
+- 当前迁移修复计划：[PLAN-WORKSPACE-MIGRATION-REPAIR-20260911.md](PLAN-WORKSPACE-MIGRATION-REPAIR-20260911.md)。
+- 世界书遗留处置（2026-09-11，用户四项决策）：旧工作区 v1 世界书本体（759 文件 / 2,993,320 字节，淘汰的后备版 `awake.worldbook.v1`）已归档至 `D:\AWAKE-Archive\worldbook-v1_20260911.zip`（SHA-256 `9298EE54…E9BB9`）后从旧工作区删除，解锁日后整删 `_houkai_merge`；`docs\worldbook-migration`（265 文件）已迁回 `D:\AWAKE-Dev\AWAKE\docs\worldbook-migration\` 并按工作区边界规则拆分——132 个含编年史正文的产物移至 `D:\AWAKE-Archive\worldbook-migration-content\`，仓库保留 133 个契约/报告/红测文档（指针与出仓哈希见该目录 `CONTENT-ARTIFACTS-POINTER.md`），`WORLDBOOKSTUDIO-AUTHOR-HANDBOOK-v3-20260910.md` 与 PILOT-REPAIR 交付目录两处悬空引用随之解除。挂账：v1 时代死代码 `WorldbookLoader.cs` / `WorldbookModels.cs` / `WorldbookService.cs` 待独立清理批次处置；公开镜像 git 历史中的 759 个 v1 文件**暂缓**，待正式 v2 包发布路径定案时一并决策。执行记录见 `docs/artifact-retention/CLEANUP-EXECUTION-20260911.md` 追加节。
+- 下方旧候选、同步、游戏日志和历史批次记录保留作历史证据，不覆盖以上当前重基线。
 
 > Updated: 2026-09-11 (Asia/Shanghai). Two paired batches are built, package-verified and synced from source/dist to the game directory: **008 runtime recovery** (`AWAKE-RUNTIME-RECOVERY-20260911`) and **009 health contract** (`AWAKE-HEALTH-CONTRACT-20260911`), both delivered under BuildId `awake-20260911-health-contract-009`. Root cause of "配置没准备好 / 填 KEY 填不进去": the client required the health ack payload to be byte-for-byte `{"state":"ready","ledger":"non_durable"}` while the transport's `StrictJson` renders object keys in Ordinal order, so the service always answered `{"ledger":"non_durable","state":"ready"}` and **every** self-check threw `response_health_payload_invalid`; `CheckHealthAsync` then called `FailConnectionAsync`, which killed the Runtime process, and AWAKE had no restart path inside a session. Fixes: `HealthAckPayload` now uses the StrictJson order, a failed health probe no longer tears the connection or the process down, and AWAKE can relaunch a `Stopped` runtime from the MCM gates (20 s cooldown, 3 attempts per session). Verified offline (runtime harness 19/0 with a red-then-green contract assertion, framework tests PASS ALL, AWAKE smoke / persona-anchor / red test all green) and synced (`sync-20260911-002651257.json`, `sync-20260911-002818395.json`). In-game verification against BuildId 009 is the user's step; user sign-off on both batches is still open.
 >

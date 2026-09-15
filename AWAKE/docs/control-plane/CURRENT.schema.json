@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://awake.local/schemas/control-plane/current.v1.json",
+  "title": "AWAKE Current Control Plane v1",
+  "description": "The compact, machine-readable pointer to the one active AWAKE task. It contains no historical narrative or evidence payloads.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "updated_at_utc",
+    "active_batch",
+    "task_status",
+    "evidence_level",
+    "blocker",
+    "candidate",
+    "checkpoint_path",
+    "next_action"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "awake.control-plane.current.v1"
+    },
+    "updated_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "active_batch": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_status": {
+      "enum": [
+        "idea",
+        "needs_plan",
+        "approved",
+        "implementing",
+        "candidate_frozen",
+        "done"
+      ]
+    },
+    "evidence_level": {
+      "enum": ["E0", "E1", "E2", "E3", "E4", "E5"]
+    },
+    "blocker": {
+      "type": ["string", "null"],
+      "enum": [
+        null,
+        "paused",
+        "blocked_sync",
+        "blocked_external",
+        "rate_limited",
+        "decision_needed",
+        "rejected"
+      ]
+    },
+    "candidate": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["build_id", "source_sha256", "evidence_path"],
+          "properties": {
+            "build_id": { "type": "string", "minLength": 1 },
+            "source_sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+            "evidence_path": { "type": "string", "pattern": "^(?![A-Za-z]:|/|\\\\).+" }
+          }
+        }
+      ]
+    },
+    "checkpoint_path": {
+      "type": ["string", "null"],
+      "pattern": "^(?![A-Za-z]:|/|\\\\).+"
+    },
+    "next_action": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "blocker": { "const": "decision_needed" } },
+        "required": ["blocker"]
+      },
+      "then": {
+        "properties": {
+          "next_action": { "pattern": "^decision:" }
+        }
+      }
+    }
+  ]
+}
