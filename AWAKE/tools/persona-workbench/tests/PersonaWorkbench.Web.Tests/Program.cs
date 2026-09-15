@@ -57,6 +57,7 @@ Run("blocks cross-action provider operations and releases the gate", BlocksCross
 Run("rejects unchanged or structured expansion output", RejectsUnchangedOrStructuredExpansionOutput);
 Run("rejects expansion that drops quoted source anchors", RejectsExpansionThatDropsQuotedSourceAnchors);
 Run("converts confirmed text through the complete Persona Provider draft chain", ConvertsConfirmedTextThroughCompletePersonaProviderDraftChain);
+Run("draft prompt constrains the three author arrays", DraftPromptConstrainsAuthorArrays);
 Run("enriches missing axes from grounded source evidence", EnrichesMissingAxesFromGroundedSourceEvidence);
 Run("enriches missing reaction and exchange evidence", EnrichesMissingReactionAndExchangeEvidence);
 Run("routes named DSL conversion through the sparse Provider client", RoutesNamedDslConversionThroughSparseProviderClient);
@@ -1996,6 +1997,50 @@ void RejectsProviderAuthoredFieldsWithoutEvidence()
     AssertTrue(string.IsNullOrWhiteSpace(result.Draft!.Summary), "authored text without evidence must be cleared");
 }
 
+/// <summary>
+/// 上一批 76 张卡里有 52 张的自称规则是同一句模板（"自称『我』或【显示名】"），
+/// 根因是草稿提示词只列了 selfClaimRules / realSelfBehaviors / selfClaimExamples 三个字段名，
+/// 对"该写什么"一个字没规定 —— 模型只能照界面示例编。
+/// 这条判据直接抓真实发出的请求体：规定必须在，可照抄的示例句式必须不在。
+/// </summary>
+void DraftPromptConstrainsAuthorArrays()
+{
+    string body = string.Empty;
+    ProviderDraftClient client = new ProviderDraftClient(new DelegateHttpMessageHandler(async request =>
+    {
+        body = await request.Content!.ReadAsStringAsync();
+        return new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(
+                JsonSerializer.Serialize(new { choices = new[] { new { message = new { content = "{\"core\":\"她只相信可验证的承诺。\"}" } } } }),
+                System.Text.Encoding.UTF8, "application/json")
+        };
+    }), PublicProviderEndpointResolver());
+
+    client.GenerateAsync(CreateProviderRequest()).GetAwaiter().GetResult();
+
+    using JsonDocument document = JsonDocument.Parse(body);
+    JsonElement messages = document.RootElement.GetProperty("messages");
+    string systemPrompt = messages[0].GetProperty("content").GetString() ?? string.Empty;
+
+    AssertTrue(systemPrompt.Length > 0, "draft prompt must be dispatched");
+    AssertTrue(
+        systemPrompt.Contains("hold for any character", StringComparison.Ordinal),
+        "draft prompt must say a rule that would hold for any character carries no information");
+    AssertTrue(
+        systemPrompt.Contains("return an empty array instead of a filler line", StringComparison.Ordinal),
+        "draft prompt must allow an empty author array instead of a filler line");
+    AssertTrue(
+        systemPrompt.Contains("never reuse a sentence that would fit a different character", StringComparison.Ordinal),
+        "draft prompt must forbid reusing a sentence across characters");
+    AssertTrue(
+        !systemPrompt.Contains("对外只自称", StringComparison.Ordinal),
+        "draft prompt must not ship a ready-to-copy sample rule");
+    AssertTrue(
+        !systemPrompt.Contains("方宜", StringComparison.Ordinal),
+        "draft prompt must not ship a sample display name");
+}
+
 void KeepsProviderApprovalMetadataLocal()
 {
     const string candidate = """
@@ -2986,7 +3031,7 @@ PersonaDocument CreateContractDocument()
 {
     return new PersonaDocument
     {
-        Id = "fixture.contract.persona", DisplayName = "契约夹具", Core = "先观察再行动。", IdentityFacts = "来自边境。", Summary = "谨慎。", SourcePackId = "fixture.pack", TemplateVersion = "persona-load.v2", Status = PersonaReviewStatus.Approved, SourceDescription = "先观察再行动。", PublicDescription = "公开场合克制。", PrivateDescription = "私下核算代价。", ContradictionDescription = "谨慎与野心并存。", FoodPreference = "热粥", SelfClaimRules = new List<string> { "对外只自称我。" }, RealSelfBehaviors = new List<string> { "先确认代价。" }, SelfClaimExamples = new List<string> { "我会如何回应？" }, Tags = new List<string>(), FacetStrengths = new Dictionary<string, int>(StringComparer.Ordinal), TraitProfile = new PersonaTraitProfile(), ExpressionProfile = new PersonaExpressionProfile(), BehaviorProfile = new PersonaBehaviorProfile(), ReactionProfile = new PersonaReactionProfile(), CommitmentProfile = new PersonaCommitmentProfile()
+        Id = "fixture.contract.persona", DisplayName = "契约夹具", Core = "先观察再行动。", IdentityFacts = "来自边境。", Summary = "谨慎。", SourcePackId = "fixture.pack", TemplateVersion = "persona-load.v2", Status = PersonaReviewStatus.Approved, SourceDescription = "先观察再行动。", PublicDescription = "公开场合克制。", PrivateDescription = "私下核算代价。", ContradictionDescription = "谨慎与野心并存。", SelfClaimRules = new List<string> { "对外只自称我。" }, RealSelfBehaviors = new List<string> { "先确认代价。" }, SelfClaimExamples = new List<string> { "我会如何回应？" }, Tags = new List<string>(), FacetStrengths = new Dictionary<string, int>(StringComparer.Ordinal), TraitProfile = new PersonaTraitProfile(), ExpressionProfile = new PersonaExpressionProfile(), BehaviorProfile = new PersonaBehaviorProfile(), ReactionProfile = new PersonaReactionProfile(), CommitmentProfile = new PersonaCommitmentProfile()
     };
 }
 

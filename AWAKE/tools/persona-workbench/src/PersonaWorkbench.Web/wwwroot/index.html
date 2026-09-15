@@ -114,10 +114,9 @@
             <label>对外人格补充<textarea id="public-description" rows="3" maxlength="2000"></textarea></label>
             <label>私下人格补充<textarea id="private-description" rows="3" maxlength="2000"></textarea></label>
             <label>结构性反差补充<textarea id="contradiction-description" rows="3" maxlength="2000"></textarea></label>
-            <label>自称与称呼规则（每行一条）<textarea id="self-claim-rules" rows="3" maxlength="3000" placeholder="例如：对外只自称“我”或角色名。"></textarea></label>
-            <label>真实自我行为（每行一条）<textarea id="real-self-behaviors" rows="3" maxlength="3000" placeholder="例如：独处时不再维持对外礼仪。"></textarea></label>
-            <label>自称示例（每行一条）<textarea id="self-claim-examples" rows="3" maxlength="3000" placeholder="例如：方宜会如何回应？"></textarea></label>
-            <label>饮食偏好<textarea id="food-preference" rows="2" maxlength="1000"></textarea></label>
+            <label>自称与称呼规则（每行一条）<textarea id="self-claim-rules" rows="3" maxlength="3000" placeholder="每行一条。写这个角色在什么场合怎么称呼自己、怎么称呼别人；只对他自己成立的说法才有用。"></textarea></label>
+            <label>真实自我行为（每行一条）<textarea id="real-self-behaviors" rows="3" maxlength="3000" placeholder="每行一条。写只有这个角色才会做的具体事，尽量带上他自己的人、地方或习惯。"></textarea></label>
+            <label>自称示例（每行一条）<textarea id="self-claim-examples" rows="3" maxlength="3000" placeholder="每行一条。写别人会拿来问他的话，要能问出他的处境和立场。"></textarea></label>
           </div>
         </details>
         <fieldset>
@@ -243,6 +242,20 @@
       </div>
       <p id="authoring-preview-status" class="status" aria-live="polite">尚未生成 AWAKE authoring-v2 预览。</p>
       <pre id="authoring-preview-output" aria-live="polite">这里显示只读迁移预览；它不是 AWAKE 批准文件，也不能直接作为游戏运行时文件。</pre>
+    </section>
+    <section class="panel audit-panel" aria-labelledby="audit-heading">
+      <div class="section-heading">
+        <p class="step">4 · 交卡前先体检</p>
+        <h2 id="audit-heading">全库一起看</h2>
+      </div>
+      <p class="helper">单张卡存盘时只看格式对不对，看不出"这批卡是不是一个模子刻的"。这里把整个文件夹的卡放在一起比：哪几条自称规则对谁都成立、哪几张卡用了同一句话、哪张卡在重复自己。</p>
+      <p class="helper">只读，不改任何文件。发现的地方按"错误 / 提醒"分开列，提醒不挡交卡，只是要你自己判断要不要改。</p>
+      <label>要体检的卡目录<input id="audit-root" maxlength="500" placeholder="留空则自动使用工作台自带的 characters 目录"></label>
+      <div class="actions">
+        <button id="run-corpus-audit" type="button">开始体检</button>
+      </div>
+      <p id="audit-status" class="status" aria-live="polite">尚未体检。</p>
+      <div id="audit-findings" class="audit-findings" aria-live="polite"></div>
     </section>
   </main>
 </body>

@@ -11,6 +11,7 @@ WebApplication app = builder.Build();
 string workstationInstanceId = "pwb-instance-" + Guid.NewGuid().ToString("N");
 WorkbenchSessionManager sessions = new WorkbenchSessionManager();
 WorkspaceDocumentService documents = new WorkspaceDocumentService();
+CorpusAuditService corpusAudit = new CorpusAuditService();
 ProviderSessionKeyVault providerSessionKeyVault = new ProviderSessionKeyVault();
 PersonaContractClosureService contractClosure = new PersonaContractClosureService();
 ProviderRequestCapture? providerRequestCapture = ProviderRequestCapture.FromEnvironment();
@@ -95,6 +96,12 @@ app.MapPost("/api/documents/save", (HttpRequest request, WorkspaceSaveRequest do
 app.MapPost("/api/documents/approve", (HttpRequest request, WorkspaceSaveRequest documentRequest) =>
 {
     return IsAuthorized(request) ? ToWorkspaceDocumentResult(documents.Approve(documentRequest)) : UnauthorizedJson();
+});
+app.MapPost("/api/audit/corpus", (HttpRequest request, CorpusAuditRequest auditRequest) =>
+{
+    if (!IsAuthorized(request)) return UnauthorizedJson();
+    CorpusAuditResponse response = corpusAudit.Analyze(auditRequest);
+    return response.IsSuccess ? Results.Ok(response) : Results.BadRequest(response);
 });
 app.MapPost("/api/provider/confirm-cloud", (HttpRequest request, ProviderCloudConfirmationRequest confirmationRequest) =>
 {

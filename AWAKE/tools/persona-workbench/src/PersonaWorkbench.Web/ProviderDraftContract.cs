@@ -297,7 +297,7 @@ public sealed class ProviderDraftClient : IProviderDraftClient
     {
         string allowedTags = string.Join(", ", PersonaTagRegistry.CreateDefault().Ids);
         return "Return exactly one JSON object for an editable Persona candidate. "
-            + "Allowed top-level fields are id, displayName, core, identityFacts, summary, publicDescription, privateDescription, contradictionDescription, foodPreference, selfClaimRules, realSelfBehaviors, selfClaimExamples, tags, traitProfile, expressionProfile, behaviorProfile, reactionProfile, commitmentProfile, evidence. "
+            + "Allowed top-level fields are id, displayName, core, identityFacts, summary, publicDescription, privateDescription, contradictionDescription, selfClaimRules, realSelfBehaviors, selfClaimExamples, tags, traitProfile, expressionProfile, behaviorProfile, reactionProfile, commitmentProfile, evidence. "
             + "core must always be one non-empty JSON string. displayName and identityFacts must be one JSON string or null. Only selfClaimRules, realSelfBehaviors, and selfClaimExamples may be arrays. Never return arrays or objects for core, displayName, or identityFacts. Every non-empty author field also needs evidence. Do not return sourceDescription, templateVersion, status, or sourcePackId because those are controlled locally. Profile axis values must be -2, -1, 0, 1, 2, or null. Use null whenever the source description does not provide enough evidence; never fill fields merely for completeness. "
             + "Every non-null axis, non-empty profile text, identityFacts value, and selected tag must have one evidence entry whose key is its JSON path, for example traitProfile.caution or tags.trait.cautious. "
             + "Each evidence value must be a short exact quotation from the user description. Synthesize and refine core instead of copying the entire description verbatim. "
@@ -307,7 +307,12 @@ public sealed class ProviderDraftClient : IProviderDraftClient
             + "expressionProfile={restraint,directness,formality,playfulness,warmth}; "
             + "behaviorProfile={conditionality,deliberation,trustTesting,leverage,inGroupPriority,leadership}; "
             + "reactionProfile={confrontation,expression,timing,resentment,supportSeeking,sensitiveConditions,conditionalResponses}; reactionProfile and commitmentProfile narrative text fields may be one string, an array of up to eight strings, or null. "
-            + "commitmentProfile={promiseCaution,promisePersistence,valueTradeability,priorityOrder,protectedValues,applicableScope,exceptionCost,breachResponse}; author arrays are selfClaimRules, realSelfBehaviors, selfClaimExamples.";
+            + "commitmentProfile={promiseCaution,promisePersistence,valueTradeability,priorityOrder,protectedValues,applicableScope,exceptionCost,breachResponse}; author arrays are selfClaimRules, realSelfBehaviors, selfClaimExamples. "
+            + "Those three arrays are the only fields written in the character's own voice, and they are what makes one character distinguishable from another. "
+            + "selfClaimRules states how this character addresses himself and the people around him in named situations; a rule that would hold for any character, such as merely using \"I\" or his own name, carries no information and must be omitted. "
+            + "realSelfBehaviors states concrete acts only this character performs, naming his own people, places, or habits. "
+            + "selfClaimExamples states questions other characters could put to him, chosen to expose his situation. "
+            + "Ground all three in this description alone, never reuse a sentence that would fit a different character, and return an empty array instead of a filler line when the description supports nothing.";
     }
 
     private static bool TryParseCandidate(string candidateText, string sourcePrompt, out PersonaDocument? draft, out string errorCode)
@@ -381,9 +386,6 @@ public sealed class ProviderDraftClient : IProviderDraftClient
                         break;
                     case "contradictionDescription":
                         if (!TryReadEvidenceBackedText(property.Value, "contradictionDescription", value => parsed.ContradictionDescription = value, requiredEvidence, out errorCode)) return false;
-                        break;
-                    case "foodPreference":
-                        if (!TryReadEvidenceBackedText(property.Value, "foodPreference", value => parsed.FoodPreference = value, requiredEvidence, out errorCode)) return false;
                         break;
                     case "selfClaimRules":
                         if (!TryReadEvidenceBackedList(property.Value, "selfClaimRules", parsed.SelfClaimRules, requiredEvidence, out errorCode)) return false;
@@ -730,7 +732,6 @@ public sealed class ProviderDraftClient : IProviderDraftClient
             case "publicDescription": parsed.PublicDescription = string.Empty; break;
             case "privateDescription": parsed.PrivateDescription = string.Empty; break;
             case "contradictionDescription": parsed.ContradictionDescription = string.Empty; break;
-            case "foodPreference": parsed.FoodPreference = string.Empty; break;
             case "selfClaimRules": parsed.SelfClaimRules.Clear(); break;
             case "realSelfBehaviors": parsed.RealSelfBehaviors.Clear(); break;
             case "selfClaimExamples": parsed.SelfClaimExamples.Clear(); break;

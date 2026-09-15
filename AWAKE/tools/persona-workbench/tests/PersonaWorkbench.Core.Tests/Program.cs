@@ -3,6 +3,9 @@ using System.Security.Cryptography;
 using PersonaWorkbench.Core;
 
 List<string> failures = new List<string>();
+// 体检用例的夹具计数器：给每张卡的 core 一个**逐卡不同、且与显示名无关**的自述，
+// 免得归一之后三张卡反而变成同一条（那样体检会正确地判成跨卡复用，把用例本身搞红）。
+int auditCardSerial = 0;
 Run("generates deterministic DSL in category order", GeneratesDeterministicDsl);
 Run("generates keyword constrained canonical DSL", GeneratesKeywordConstrainedCanonicalDsl);
 Run("matches the shared canonical golden fixture", MatchesSharedCanonicalGoldenFixture);
@@ -12,6 +15,8 @@ Run("renders explicit facet strengths over legacy tags", RendersExplicitFacetStr
 Run("renders disposition axes over matching legacy facets", RendersDispositionAxesOverLegacyFacets);
 Run("renders reaction and commitment profiles in stable order", RendersReactionAndCommitmentProfiles);
 Run("rejects out-of-range profile axes", RejectsOutOfRangeProfileAxes);
+Run("renders axes at the contract boundary", RendersAxesAtContractBoundary);
+Run("parses axis extreme tokens back to the boundary value", ParsesAxisExtremeTokens);
 Run("rejects invalid facet strengths", RejectsInvalidFacetStrengths);
 Run("rejects unknown tags", RejectsUnknownTags);
 Run("rejects unknown review status", RejectsUnknownReviewStatus);
@@ -64,6 +69,14 @@ Run("returns identical handoff for identical retry", ReturnsIdenticalHandoffForI
 Run("fails handoff closed on receipt warnings", FailsHandoffClosedOnReceiptWarnings);
 Run("rejects expired receipt and contract drift", RejectsExpiredReceiptAndContractDrift);
 Run("validates handoff semantic bindings", ValidatesHandoffSemanticBindings);
+Run("corpus audit: reports cross-card text reuse", CorpusAuditReportsCrossCardTextReuse);
+Run("corpus audit: ignores reuse below the card threshold", CorpusAuditIgnoresReuseBelowThreshold);
+Run("corpus audit: normalizes the display name before comparing", CorpusAuditNormalizesDisplayName);
+Run("corpus audit: reports a shared opening with differing tails", CorpusAuditReportsSkeletonPrefix);
+Run("corpus audit: flags a self-reference-only rule", CorpusAuditFlagsSelfReferenceOnlyRule);
+Run("corpus audit: keeps a rule that excludes the given name", CorpusAuditKeepsRuleThatExcludesName);
+Run("corpus audit: flags editor sample text and repeated lines", CorpusAuditFlagsSampleTextAndRepeats);
+Run("corpus audit: passes a clean corpus", CorpusAuditPassesCleanCorpus);
 
 if (failures.Count > 0)
 {
@@ -177,7 +190,6 @@ void RendersCanonicalAuthoredSections()
         PrivateDescription = "私下容易失措。",
         ContradictionDescription = "坚强与脆弱并存。",
         IdentityFacts = "来自边境。",
-        FoodPreference = "武陵炒饭",
         SelfClaimRules = new List<string> { "对外自称我或方宜。" },
         RealSelfBehaviors = new List<string> { "独处时不再端着架子。" },
         SelfClaimExamples = new List<string> { "方宜会如何回应？" }
@@ -193,7 +205,6 @@ void RendersCanonicalAuthoredSections()
     AssertTrue(dsl.Contains("DATA_CN=\"独处时不再端着架子。\"", StringComparison.Ordinal), "real self behavior data must render");
     AssertTrue(dsl.Contains("DATA_CN=\"方宜会如何回应？\"", StringComparison.Ordinal), "self claim example data must render");
     AssertTrue(!dsl.Contains("[PERSONALITY_SUMMARY]", StringComparison.Ordinal), "deferred legacy summary section must not be emitted by the minimal canonical template");
-    AssertTrue(!dsl.Contains("[FOOD_PREFERENCE]", StringComparison.Ordinal), "deferred legacy food section must not be emitted by the minimal canonical template");
 }
 
 void RegistersStarterPersonalityAndBehaviorTags()
@@ -419,19 +430,80 @@ void RendersReactionAndCommitmentProfiles()
 
 void RejectsOutOfRangeProfileAxes()
 {
+    // 契约 domain 是 -3..3（character.v1.schema.json 数值轴 minimum/maximum、PersonaValidator
+    // 的 axis.value_invalid 文案、以及卡库里 44/76 张卡的实际取值）。旧断言按 -2..2 写，与三者相悖。
     PersonaDocument document = new PersonaDocument
     {
         Id = "free.demo.invalid-profiles",
         Core = "测试。",
-        TraitProfile = new PersonaTraitProfile { Caution = -3 },
-        BehaviorProfile = new PersonaBehaviorProfile { Leadership = 3 },
-        ReactionProfile = new PersonaReactionProfile { Confrontation = -3 },
-        CommitmentProfile = new PersonaCommitmentProfile { ValueTradeability = 3 }
+        TraitProfile = new PersonaTraitProfile { Caution = -4 },
+        BehaviorProfile = new PersonaBehaviorProfile { Leadership = 4 },
+        ReactionProfile = new PersonaReactionProfile { Confrontation = -5 },
+        CommitmentProfile = new PersonaCommitmentProfile { ValueTradeability = 5 }
     };
 
     PersonaValidationResult validation = PersonaValidator.Validate(document, PersonaTagRegistry.CreateDefault());
 
-    AssertTrue(validation.Errors.Count(error => error.Code == "axis.value_invalid") == 4, "profile axes outside -2..2 must be rejected");
+    AssertTrue(validation.Errors.Count(error => error.Code == "axis.value_invalid") == 4, "profile axes outside -3..3 must be rejected");
+}
+
+/// <summary>
+/// 回归：契约允许的 |轴| = 3 必须能渲染。/ 修复前 AddAxisId 只覆盖 -2..2 并对 ±3 抛
+/// persona.axis_value_invalid，导致卡库里 44/76 张卡（蒙楚格、阿丝塔、乌尔玻斯等）在预览
+/// 与 Provider 这条链上完全渲染不出来。
+/// </summary>
+void RendersAxesAtContractBoundary()
+{
+    PersonaDocument document = new PersonaDocument
+    {
+        Id = "free.demo.axis-boundary",
+        Core = "测试。",
+        TraitProfile = new PersonaTraitProfile { Pragmatism = 3, Caution = -3 },
+        ExpressionProfile = new PersonaExpressionProfile { Warmth = 3 },
+        BehaviorProfile = new PersonaBehaviorProfile { InGroupPriority = 3 },
+        CommitmentProfile = new PersonaCommitmentProfile { PromisePersistence = 3, ValueTradeability = -3 },
+        Tags = new List<string> { "trait.cautious" }
+    };
+
+    string dsl = PersonaDslGenerator.Generate(document, PersonaTagRegistry.CreateDefault(), 4096).Dsl;
+
+    AssertTrue(dsl.Contains("TRAIT_PRAGMATISM_PRAGMATIC_EXTREME", StringComparison.Ordinal), "axis value 3 must render as _EXTREME");
+    AssertTrue(dsl.Contains("TRAIT_RISK_BOLD_EXTREME", StringComparison.Ordinal), "axis value -3 must render as the negative _EXTREME");
+    AssertTrue(dsl.Contains("EXPRESSION_WARMTH_WARM_EXTREME", StringComparison.Ordinal), "warmth 3 must render");
+    AssertTrue(dsl.Contains("BEHAVIOR_IN_GROUP_PRIORITY_PROTECTS_IN_GROUP_EXTREME", StringComparison.Ordinal), "in-group priority 3 must render");
+    AssertTrue(dsl.Contains("COMMITMENT_FULFILLMENT_PERSISTENT_FULFILLMENT_EXTREME", StringComparison.Ordinal), "promise persistence 3 must render");
+    AssertTrue(dsl.Contains("COMMITMENT_VALUE_TRADEABLE_VALUES_EXTREME", StringComparison.Ordinal), "value tradeability -3 must render");
+    AssertTrue(!dsl.Contains("_STRONG", StringComparison.Ordinal), "_EXTREME must not be flattened into _STRONG");
+}
+
+/// <summary>回归：解析侧必须与渲染侧同源——_EXTREME 读回 ±3，而不是被当成未知 token 丢掉。</summary>
+void ParsesAxisExtremeTokens()
+{
+    const string candidate = """
+        [PERSONA_LOAD]
+        SELF_CLAIM_NAME
+        LANG_ZH_CN_ONLY
+
+        [PERSONALITY_CORE]
+        TRAIT_PRAGMATISM_PRAGMATIC_EXTREME
+        TRAIT_RISK_BOLD_EXTREME
+        DESC_CN="测试。"
+
+        [PERSONALITY_CONTRADICTION]
+        COMMITMENT_FULFILLMENT_PERSISTENT_FULFILLMENT_EXTREME
+        """;
+
+    PersonaDslCandidateParseResult result = PersonaDslCandidateParser.Parse(
+        candidate,
+        "测试卡。",
+        "free.demo.axis-extreme",
+        "试",
+        PersonaTagRegistry.CreateDefault());
+
+    AssertTrue(result.IsValid && result.Document != null, "_EXTREME tokens must parse");
+    AssertTrue(result.Document!.TraitProfile.Pragmatism == 3, "positive _EXTREME must read back as 3");
+    AssertTrue(result.Document.TraitProfile.Caution == -3, "negative _EXTREME must read back as -3");
+    AssertTrue(result.Document.CommitmentProfile.PromisePersistence == 3, "commitment _EXTREME must read back as 3");
 }
 
 void RejectsUnknownReviewStatus()
@@ -463,7 +535,6 @@ void RoundTripsDocument()
         PublicDescription = "对外保持冷静。",
         PrivateDescription = "私下容易犹豫。",
         ContradictionDescription = "冷静与犹豫并存。",
-        FoodPreference = "烤鱼",
         SelfClaimRules = new List<string> { "对外自称我。" },
         RealSelfBehaviors = new List<string> { "独处时放松。" },
         SelfClaimExamples = new List<string> { "我会再想想。" },
@@ -487,7 +558,6 @@ void RoundTripsDocument()
     AssertEqual(original.DisplayName, restored.DisplayName, "display name must round trip");
     AssertEqual(original.Summary, restored.Summary, "summary must round trip");
     AssertEqual(original.SourcePackId, restored.SourcePackId, "source pack must round trip");
-    AssertEqual(original.FoodPreference, restored.FoodPreference, "food preference must round trip");
     AssertTrue(restored.SelfClaimRules.SequenceEqual(original.SelfClaimRules), "self claim rules must round trip");
     AssertTrue(restored.RealSelfBehaviors.SequenceEqual(original.RealSelfBehaviors), "real self behaviors must round trip");
     AssertTrue(restored.SelfClaimExamples.SequenceEqual(original.SelfClaimExamples), "self claim examples must round trip");
@@ -951,7 +1021,6 @@ void TrimsOversizedTemplatesByPriority()
         PrivateDescription = RepeatText("私下行为。", 400),
         ContradictionDescription = RepeatText("承诺与破例。", 400),
         Summary = RepeatText("摘要。", 400),
-        FoodPreference = RepeatText("食物。", 100),
         Tags = new List<string> { "boundary.no_empty_promises" },
         TraitProfile = new PersonaTraitProfile { Caution = 1, Pride = 2 },
         CommitmentProfile = new PersonaCommitmentProfile { PromiseCaution = 2 }
@@ -963,7 +1032,6 @@ void TrimsOversizedTemplatesByPriority()
     AssertTrue(dsl.Contains("[PERSONALITY_CORE]", StringComparison.Ordinal), "core section must be retained");
     AssertTrue(dsl.Contains("[PERSONA_IDENTITY]", StringComparison.Ordinal), "identity section must be retained");
     AssertTrue(dsl.Contains("BOUNDARY_NO_EMPTY_PROMISES", StringComparison.Ordinal), "boundary must be retained");
-    AssertTrue(!dsl.Contains("[FOOD_PREFERENCE]", StringComparison.Ordinal), "low-priority food section should be removed first");
 }
 void TrimsOptionalProseBeforeKeywordSections()
 {
@@ -1355,7 +1423,6 @@ PersonaDocument CreateAuthoringFixtureDocument()
         PublicDescription = "公开场合保持克制。",
         PrivateDescription = "私下先确认代价。",
         ContradictionDescription = "高傲与谨慎并存。",
-        FoodPreference = "热粥",
         SelfClaimRules = new List<string> { "对外只自称我。" },
         RealSelfBehaviors = new List<string> { "独处时放下戒备。" },
         SelfClaimExamples = new List<string> { "我会如何回应？" },
@@ -1691,7 +1758,7 @@ string FindGoldenFixture()
     DirectoryInfo? directory = new DirectoryInfo(AppContext.BaseDirectory);
     while (directory != null)
     {
-        string candidate = Path.Combine(directory.FullName, "_houkai_merge", "AWAKE", "docs", "fixtures", "persona-load-v2-golden.json");
+        string candidate = Path.Combine(directory.FullName, "AWAKE", "docs", "fixtures", "persona-load-v2-golden.json");
         if (File.Exists(candidate)) return candidate;
         candidate = Path.Combine(directory.FullName, "docs", "fixtures", "persona-load-v2-golden.json");
         if (File.Exists(candidate)) return candidate;
@@ -1699,6 +1766,154 @@ string FindGoldenFixture()
     }
 
     throw new FileNotFoundException("Shared Persona golden fixture was not found.");
+}
+
+// ── 全库产出体检（PersonaCorpusAudit，2026-09-15）───────────────────────────
+// 覆盖的正是「门禁 O5 扫不到」的那一维：selfClaimRules / realSelfBehaviors 的跨卡重复。
+// 门槛 ≥3 张卡（与 O5 同值）；下面每条用例都构造了刚好触发、或刚好不触发的输入。
+
+PersonaDocument CreateAuditCard(string displayName)
+{
+    auditCardSerial++;
+    return new PersonaDocument
+    {
+        Id = "audit." + displayName,
+        DisplayName = displayName,
+        Core = "专属自述 #" + auditCardSerial + "：这一段只属于这张卡，不参与跨卡比较。",
+        SourcePackId = "audit",
+        SelfClaimRules = new List<string>(),
+        RealSelfBehaviors = new List<string>(),
+        SelfClaimExamples = new List<string>()
+    };
+}
+
+PersonaCorpusAuditFinding? FindRule(PersonaCorpusAuditReport report, string rule)
+{
+    return report.Findings.FirstOrDefault(finding => finding.Rule == rule);
+}
+
+void CorpusAuditReportsCrossCardTextReuse()
+{
+    List<PersonaDocument> cards = new List<PersonaDocument>();
+    foreach (string name in new[] { "甲", "乙", "丙" })
+    {
+        PersonaDocument card = CreateAuditCard(name);
+        card.RealSelfBehaviors.Add("独处时会检查武器，回忆年轻时的战斗");
+        cards.Add(card);
+    }
+
+    PersonaCorpusAuditReport report = PersonaCorpusAudit.Analyze(cards);
+    PersonaCorpusAuditFinding? finding = FindRule(report, PersonaCorpusAudit.RuleTextReused);
+    AssertTrue(finding != null, "三张卡逐字相同的 realSelfBehaviors 必须被判为跨卡复用");
+    AssertTrue(finding!.Cards.Count == 3, "跨卡复用应列出全部 3 张卡，实际 " + finding.Cards.Count);
+    AssertTrue(!report.IsClean, "存在跨卡复用时报告不应是 clean");
+}
+
+void CorpusAuditIgnoresReuseBelowThreshold()
+{
+    List<PersonaDocument> cards = new List<PersonaDocument>();
+    foreach (string name in new[] { "甲", "乙" })
+    {
+        PersonaDocument card = CreateAuditCard(name);
+        card.RealSelfBehaviors.Add("独处时会检查武器，回忆年轻时的战斗");
+        cards.Add(card);
+    }
+
+    PersonaCorpusAuditReport report = PersonaCorpusAudit.Analyze(cards);
+    AssertTrue(FindRule(report, PersonaCorpusAudit.RuleTextReused) == null,
+        "只有 2 张卡重复时不应报警（门槛是 3 张）");
+}
+
+void CorpusAuditNormalizesDisplayName()
+{
+    List<PersonaDocument> cards = new List<PersonaDocument>();
+    foreach (string name in new[] { "甲", "乙", "丙" })
+    {
+        PersonaDocument card = CreateAuditCard(name);
+        card.SelfClaimRules.Add("自称“我”或“" + name + "”");
+        cards.Add(card);
+    }
+
+    PersonaCorpusAuditReport report = PersonaCorpusAudit.Analyze(cards);
+    AssertTrue(FindRule(report, PersonaCorpusAudit.RuleTextReused) != null,
+        "把显示名换成 {N} 后三张卡是同一条，必须判为跨卡复用");
+    AssertTrue(FindRule(report, PersonaCorpusAudit.RuleSelfReferenceOnly) != null,
+        "「自称我或本名」同时是零信息句，必须单独报出来");
+}
+
+void CorpusAuditReportsSkeletonPrefix()
+{
+    string[] names = { "甲", "乙", "丙" };
+    string[] tails = { "，谈人多论利害与退路", "，称族人时直呼其名", "，提及部属时语气生硬" };
+    List<PersonaDocument> cards = new List<PersonaDocument>();
+    for (int index = 0; index < names.Length; index++)
+    {
+        PersonaDocument card = CreateAuditCard(names[index]);
+        card.SelfClaimRules.Add("称可汗为“蒙楚格”" + tails[index]);
+        cards.Add(card);
+    }
+
+    PersonaCorpusAuditReport report = PersonaCorpusAudit.Analyze(cards);
+    PersonaCorpusAuditFinding? finding = FindRule(report, PersonaCorpusAudit.RuleSkeletonPrefix);
+    AssertTrue(finding != null, "开头相同、后半句各异的三条必须被判为槽位骨架");
+    AssertEqual("称可汗为“蒙楚格”", finding!.Text,
+        "报出来的必须是那段共用的开头本身，不是随便挑一条整句——否则看不出到底哪儿重复");
+    AssertTrue(FindRule(report, PersonaCorpusAudit.RuleTextReused) == null,
+        "整条并不相同，不应同时报整条复用");
+}
+
+void CorpusAuditFlagsSelfReferenceOnlyRule()
+{
+    PersonaDocument card = CreateAuditCard("甲");
+    card.SelfClaimRules.Add("自称“我”或“甲”");
+
+    PersonaCorpusAuditReport report = PersonaCorpusAudit.Analyze(new[] { card });
+    PersonaCorpusAuditFinding? finding = FindRule(report, PersonaCorpusAudit.RuleSelfReferenceOnly);
+    AssertTrue(finding != null, "「自称我或本名」是零信息句，必须报出来");
+    AssertEqual(PersonaCorpusAuditSeverity.Error, finding!.Severity, "零信息句应为 error 级");
+}
+
+void CorpusAuditKeepsRuleThatExcludesName()
+{
+    PersonaDocument card = CreateAuditCard("甲");
+    card.SelfClaimRules.Add("自称“我”");
+
+    PersonaCorpusAuditReport report = PersonaCorpusAudit.Analyze(new[] { card });
+    AssertTrue(FindRule(report, PersonaCorpusAudit.RuleSelfReferenceOnly) == null,
+        "「自称我」排除了本名、带信息，不该被判为零信息句");
+}
+
+void CorpusAuditFlagsSampleTextAndRepeats()
+{
+    PersonaDocument card = CreateAuditCard("甲");
+    card.RealSelfBehaviors.Add("对外只自称“我”或角色名。");
+    card.SelfClaimExamples.Add("同一句示例");
+    card.SelfClaimExamples.Add("同一句示例");
+
+    PersonaCorpusAuditReport report = PersonaCorpusAudit.Analyze(new[] { card });
+    AssertTrue(FindRule(report, PersonaCorpusAudit.RuleEditorSampleText) != null,
+        "抄了编辑器示例文字「角色名」必须报错");
+    AssertTrue(FindRule(report, PersonaCorpusAudit.RuleRepeatedLine) != null,
+        "同一张卡里两条完全相同必须报错");
+}
+
+void CorpusAuditPassesCleanCorpus()
+{
+    string[] names = { "甲", "乙", "丙" };
+    string[] rules = { "自称“我”，说话朴素平实", "称下属为“伙计们”", "提到家业时称“我的地”" };
+    string[] behaviors = { "独处时会去打理自己的兵器", "对受伤的旧部会亲自探望", "在熟人面前才说真心话" };
+    List<PersonaDocument> cards = new List<PersonaDocument>();
+    for (int index = 0; index < names.Length; index++)
+    {
+        PersonaDocument card = CreateAuditCard(names[index]);
+        card.SelfClaimRules.Add(rules[index]);
+        card.RealSelfBehaviors.Add(behaviors[index]);
+        cards.Add(card);
+    }
+
+    PersonaCorpusAuditReport report = PersonaCorpusAudit.Analyze(cards);
+    AssertTrue(report.CardCount == 3, "体检应扫描到 3 张卡");
+    AssertTrue(report.IsClean, "干净的三张卡不该有任何发现，实际发现 " + report.Findings.Count + " 条");
 }
 
 void AssertEqual(string expected, string actual, string message)

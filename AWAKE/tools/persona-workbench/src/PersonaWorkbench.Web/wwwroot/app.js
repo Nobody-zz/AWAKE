@@ -279,7 +279,6 @@ function applyAuthorFields(documentValue) {
   setLinesField("#self-claim-rules", documentValue.selfClaimRules);
   setLinesField("#real-self-behaviors", documentValue.realSelfBehaviors);
   setLinesField("#self-claim-examples", documentValue.selfClaimExamples);
-  document.querySelector("#food-preference").value = documentValue.foodPreference || "";
   setReviewStatus(documentValue.status);
 }
 
@@ -359,7 +358,6 @@ function clearDerivedPersonaFields() {
   document.querySelector("#public-description").value = "";
   document.querySelector("#private-description").value = "";
   document.querySelector("#contradiction-description").value = "";
-  document.querySelector("#food-preference").value = "";
   setLinesField("#self-claim-rules", []);
   setLinesField("#real-self-behaviors", []);
   setLinesField("#self-claim-examples", []);
@@ -399,7 +397,6 @@ function currentDocument() {
     publicDescription: document.querySelector("#public-description").value,
     privateDescription: document.querySelector("#private-description").value,
     contradictionDescription: document.querySelector("#contradiction-description").value,
-    foodPreference: document.querySelector("#food-preference").value,
     selfClaimRules: linesFromField("#self-claim-rules"),
     realSelfBehaviors: linesFromField("#real-self-behaviors"),
     selfClaimExamples: linesFromField("#self-claim-examples")
@@ -1549,6 +1546,110 @@ cancelBatchButton.addEventListener("click", async () => {
 });
 
 downloadBatchButton.addEventListener("click", downloadBatchResults);
+
+// ── 全库体检：把整个文件夹的卡放在一起比，只读，不改任何文件 ──
+const auditRootInput = document.querySelector("#audit-root");
+const runCorpusAuditButton = document.querySelector("#run-corpus-audit");
+const auditStatus = document.querySelector("#audit-status");
+const auditFindings = document.querySelector("#audit-findings");
+
+function auditFieldLabel(field) {
+  if (field === "selfClaimRules") return "自称与称呼规则";
+  if (field === "realSelfBehaviors") return "真实自我行为";
+  if (field === "selfClaimExamples") return "自称示例";
+  if (field === "core") return "核心人格";
+  return field || "未标注字段";
+}
+
+function auditRuleLabel(rule) {
+  if (rule === "corpus.text_reused") return "整条跨卡逐字相同";
+  if (rule === "corpus.skeleton_prefix") return "开头一样、后面各写各的";
+  if (rule === "card.self_reference_only") return "这句话对谁都成立";
+  if (rule === "card.repeated_line") return "同一张卡里说了两遍";
+  if (rule === "card.editor_sample_text") return "照抄了界面上的示例";
+  return rule;
+}
+
+function renderCorpusAuditFindings(findings) {
+  auditFindings.replaceChildren();
+  if (findings.length === 0) {
+    const clean = document.createElement("p");
+    clean.className = "helper";
+    clean.textContent = "没有发现跨卡重复、对谁都成立的空话或卡内重复。";
+    auditFindings.append(clean);
+    return;
+  }
+
+  findings.forEach((finding) => {
+    const card = document.createElement("article");
+    card.className = "audit-finding " + (finding.severity === "error" ? "error" : "warning");
+    const heading = document.createElement("h3");
+    heading.textContent = auditRuleLabel(finding.rule) + "（" + auditFieldLabel(finding.field) + "）";
+    const why = document.createElement("p");
+    why.className = "audit-why";
+    why.textContent = finding.message || "";
+    const quote = document.createElement("p");
+    quote.className = "audit-quote";
+    quote.textContent = "涉及的文字：" + (finding.text || "");
+    const names = Array.isArray(finding.cards) ? finding.cards : [];
+    const cards = document.createElement("p");
+    cards.className = "audit-cards";
+    cards.textContent = "涉及 " + names.length + " 张卡：" + names.join("、");
+    card.append(heading, why, quote, cards);
+    auditFindings.append(card);
+  });
+}
+
+async function runCorpusAudit() {
+  const headers = sessionHeaders();
+  if (!headers) {
+    auditStatus.textContent = "本地会话未就绪。请从工作台启动链接打开页面。";
+    return;
+  }
+
+  runCorpusAuditButton.disabled = true;
+  auditStatus.textContent = "正在读取并比较整个文件夹的卡…";
+  auditFindings.replaceChildren();
+  try {
+    const response = await fetch("/api/audit/corpus", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ rootPath: auditRootInput.value })
+    });
+    const payload = await readJsonOrEmpty(response);
+    if (response.status === 401) {
+      auditStatus.textContent = "本地会话已过期；请重新打开工作台启动链接后再体检。";
+      return;
+    }
+    if (!response.ok || !payload.isSuccess) {
+      auditStatus.textContent = payload.errorMessage || "体检没跑起来；请检查卡目录是否填对。";
+      return;
+    }
+
+    if (!auditRootInput.value.trim() && payload.resolvedRootPath) {
+      auditRootInput.value = payload.resolvedRootPath;
+    }
+
+    const findings = Array.isArray(payload.findings) ? payload.findings : [];
+    const unreadable = Array.isArray(payload.unreadableFiles) ? payload.unreadableFiles : [];
+    const parts = [
+      "体检目录：" + (payload.resolvedRootPath || "未记录"),
+      "读入 " + payload.cardCount + " 张卡",
+      "错误 " + payload.errorCount + " 条，提醒 " + payload.warningCount + " 条"
+    ];
+    if (unreadable.length > 0) {
+      parts.push("读不进来的文件 " + unreadable.length + " 个：" + unreadable.join("、"));
+    }
+    auditStatus.textContent = parts.join("；");
+    renderCorpusAuditFindings(findings);
+  } catch {
+    auditStatus.textContent = "体检请求发送失败；请确认工作台仍在运行。";
+  } finally {
+    runCorpusAuditButton.disabled = false;
+  }
+}
+
+runCorpusAuditButton.addEventListener("click", runCorpusAudit);
 
 updateProviderGuidance();
 bootstrapSession().then(refreshProviderFailures).catch(() => { status.textContent = "本地保存会话初始化失败；可以继续预览。"; });
