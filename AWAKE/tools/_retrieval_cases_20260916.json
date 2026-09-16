@@ -1,0 +1,41 @@
+{
+  "schema": "awake.retrieval-cases.v1",
+  "createdAt": "2026-09-16",
+  "note": "检索题集唯一来源：Python 探针 tools/_bge_probe_20260916.py 与 C# 验台 tools/worldbook-runtime-smoke 都读这一份，避免两边各写一套（平行实现必须同源）。",
+  "method": {
+    "groupA": "含实体名的直白问法 —— 对照组，字面侧应当能赢。用来守『不许回退』。",
+    "groupB": "不含实体名的描述型问法 —— 玩家想问什么就说什么。这才是现在最容易漏的一类。",
+    "authoring": "目标条目由人选定；写问法时只读了 title/summary，没有看 keywords，避免按关键词反推问法。"
+  },
+  "cases": [
+    { "group": "A", "target": "awake:entry:geography.villages-lamesa", "query": "拉迈萨那地方养什么？" },
+    { "group": "A", "target": "awake:entry:geography.castles-simira-castle", "query": "西米拉堡是谁的城堡？" },
+    { "group": "A", "target": "awake:entry:geography.villages-chornobas", "query": "乔诺巴斯在哪儿？" },
+    { "group": "A", "target": "awake:entry:culture.tales-husn-fulq", "query": "富勒格是谁？" },
+    { "group": "A", "target": "awake:entry:culture.tales-kachar-rulership", "query": "卡恰尔半岛归谁？" },
+    { "group": "A", "target": "awake:entry:politics.throne-saneopa", "query": "萨涅俄帕是什么地方？" },
+    { "group": "A", "target": "awake:entry:war.military-sturgia", "query": "斯特吉亚的军队怎么打仗？" },
+    { "group": "A", "target": "awake:entry:war.military-khuzait", "query": "库赛特靠什么打仗？" },
+    { "group": "A", "target": "awake:entry:war.troops-royal-guard", "query": "皇家侍卫是什么兵？" },
+    { "group": "A", "target": "awake:entry:economy.goods-fur", "query": "毛皮值钱吗？" },
+    { "group": "A", "target": "awake:entry:economy.goods-salt", "query": "盐是从哪儿来的？" },
+    { "group": "A", "target": "awake:entry:economy.items-western_plated_helmet", "query": "侧护覆板盔谁在用？" },
+    { "group": "A", "target": "awake:entry:politics.territories-varcheg-swap", "query": "瓦尔切格怎么会换主人？" },
+    { "group": "B", "target": "awake:entry:geography.villages-lamesa", "query": "这一带有好马吗？" },
+    { "group": "B", "target": "awake:entry:geography.castles-simira-castle", "query": "哪座城堡底下管着两个村子？" },
+    { "group": "B", "target": "awake:entry:geography.villages-chornobas", "query": "有大瀑布的村子是哪个？" },
+    { "group": "B", "target": "awake:entry:culture.tales-husn-fulq", "query": "集市上说书人讲的那个鬼点子是谁的？" },
+    { "group": "B", "target": "awake:entry:culture.tales-kachar-rulership", "query": "有个半岛被三家抢过，谁说了算？" },
+    { "group": "B", "target": "awake:entry:culture.tales-dawn-taboo", "query": "山里有不让进的地方吗？" },
+    { "group": "B", "target": "awake:entry:politics.throne-saneopa", "query": "隘口上那个商埠，哪个家族在那儿定过都？" },
+    { "group": "B", "target": "awake:entry:war.troops-royal-guard", "query": "什么人拿大圆盾扔飞斧？" },
+    { "group": "B", "target": "awake:entry:war.military-khuzait", "query": "游牧的人怎么用骑马射手打仗？" },
+    { "group": "B", "target": "awake:entry:war.military-sturgia", "query": "盾墙加飞斧是哪个国家的打法？" },
+    { "group": "B", "target": "awake:entry:economy.goods-fur", "query": "北方有什么又暖又贵的皮货？" },
+    { "group": "B", "target": "awake:entry:economy.goods-salt", "query": "桌上少不了、产地又集中的日用品是什么？" },
+    { "group": "B", "target": "awake:entry:economy.items-western_plated_helmet", "query": "哪种头盔护到腮帮子和耳朵？" }
+  ],
+  "baselineLexical": { "A_hit1": "9/13", "A_hit3": "10/13", "B_hit1": "0/13", "B_hit3": "0/13", "ALL_hit1": "9/26", "ALL_hit3": "10/26" },
+  "baselineNote": "9/13/9/26 是 C# 真代码（tools/worldbook-runtime-smoke 量数模式）与 Python 复刻（tools/_bge_probe_20260916.py 的 LexicalIndex 臂）逐条 26/26 一致的结果。早先 Python 侧写 7/13 是漏了 MatchQuality 的 Rank 体系所致，已修正；两套实现现已同源。",
+  "targetAfterFix": { "B_hit1": ">=7/13", "ALL_hit1": ">=16/26", "note": "2026-09-16 上线实测（C# 验台 tools/worldbook-runtime-smoke）：A 9/13（不动）、B 0→7/13、合计 9→16/26；B_hit3 0→9/13、合计 hit3 10→19/26。原目标只写 B>=5、合计>=13（对齐 Python 的探索臂），实际超过；门禁已按实现值抬到 7/16。" }
+}

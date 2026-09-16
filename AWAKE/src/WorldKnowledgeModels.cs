@@ -23,6 +23,10 @@ internal sealed class WorldKnowledgeSnapshot
     internal Dictionary<string, WorldKnowledgeIdentity> Identities { get; } = new Dictionary<string, WorldKnowledgeIdentity>(StringComparer.Ordinal);
     internal Dictionary<string, WorldKnowledgeReferral> Referrals { get; } = new Dictionary<string, WorldKnowledgeReferral>(StringComparer.Ordinal);
     internal Dictionary<string, List<string>> KeywordIndex { get; } = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+    // 兜底 term 索引（2026-09-16）：标题/综述切成的 term → 条目 id。
+    // **与 KeywordIndex 并列、互不混**：关键词那条路径仍走「整串包含」，只有它一无所获时才查这张表。
+    // 起因：中文没有空格 ⇒ 查询「斯特吉亚的军队怎么打仗」永远不含关键词整串 ⇒ 零命中。
+    internal Dictionary<string, List<string>> FallbackTermIndex { get; } = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
     internal List<string> Warnings { get; } = new List<string>();
 }
 

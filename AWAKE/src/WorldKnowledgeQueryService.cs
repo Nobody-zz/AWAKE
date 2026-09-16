@@ -212,6 +212,8 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
             if (text.IndexOf(pair.Key, StringComparison.OrdinalIgnoreCase) < 0 && pair.Key.IndexOf(text, StringComparison.OrdinalIgnoreCase) < 0) continue;
             foreach (string id in pair.Value) ids.Add(id);
         }
+        // 关键词层一无所获时，才走标题/综述 term 兜底通道。既有位次 0/1/2/3 的语义与排序**一个字不动**。
+        if (ids.Count == 0) return FindFallbackCandidates(text);
         return ids.Select(id => _snapshot.Entries.TryGetValue(id, out WorldKnowledgeEntry entry) ? entry : null)
                   .Where(x => x != null)
                   .Select(x => (Entry: x, Quality: MatchQuality(x, text)))
@@ -220,6 +222,41 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
                   .ThenBy(x => x.Entry.Id, StringComparer.Ordinal)
                   .Select(x => x.Entry)
                   .ToList();
+    }
+
+    // 兜底通道（2026-09-16）：只读 `FallbackTermIndex`，与关键词路径**完全并列**。
+    // 排序不套用 MatchQuality（那四级的语义是「整串」），而是按「共享 term 数 → 最长共享 term → id」。
+    // 两个旋钮（都按数调，见 docs/PLAN-SUMMARY-INTO-INDEX-20260916.md 第 3 步）：
+    //   `FallbackMinSharedTerms`  —— 至少共享几个 term 才算候选；
+    //   `FallbackMaxCandidates`   —— 最多吐几条。为什么需要这条上限：`Query()` 的输出受 `ByteBudget`
+    //      截断且**按本方法的排序顺序装**（`WorldKnowledgeQueryService.cs` 的循环），所以排第一的答案
+    //      一定进得去；把尾巴砍掉只省 token、不丢答案。
+    private const int FallbackMinSharedTerms = 1;
+    private const int FallbackMaxCandidates = 5;
+
+    private List<WorldKnowledgeEntry> FindFallbackCandidates(string text)
+    {
+        HashSet<string> queryTerms = WorldbookTermIndex.TermSet(text);
+        if (queryTerms.Count == 0) return new List<WorldKnowledgeEntry>();
+        var shared = new Dictionary<string, int>(StringComparer.Ordinal);
+        var longest = new Dictionary<string, int>(StringComparer.Ordinal);
+        foreach (string term in queryTerms)
+        {
+            if (!_snapshot.FallbackTermIndex.TryGetValue(term, out List<string> ids)) continue;
+            foreach (string id in ids)
+            {
+                shared[id] = shared.TryGetValue(id, out int count) ? count + 1 : 1;
+                longest[id] = Math.Max(longest.TryGetValue(id, out int len) ? len : 0, term.Length);
+            }
+        }
+        return shared.Where(x => x.Value >= FallbackMinSharedTerms)
+                     .OrderByDescending(x => x.Value)
+                     .ThenByDescending(x => longest[x.Key])
+                     .ThenBy(x => x.Key, StringComparer.Ordinal)
+                     .Take(FallbackMaxCandidates)
+                     .Select(x => _snapshot.Entries.TryGetValue(x.Key, out WorldKnowledgeEntry entry) ? entry : null)
+                     .Where(x => x != null)
+                     .ToList();
     }
 
     // 命中相关度：0=标题即所问，1=别名/关键词即所问，2=标题互为子串，3=仅关键词子串。
@@ -359,6 +396,7 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
                 if (!_snapshot.KeywordIndex.TryGetValue(keyword, out List<string> ids)) _snapshot.KeywordIndex[keyword] = ids = new List<string>();
                 if (!ids.Contains(entry.Id)) ids.Add(entry.Id);
             }
+        WorldbookTermIndex.Build(_snapshot);
     }
 }
 

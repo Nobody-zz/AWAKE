@@ -167,6 +167,7 @@ internal static class WorldKnowledgeLoader
                 if (!ids.Any(x => StringComparer.Ordinal.Equals(x, entry.Id))) ids.Add(entry.Id);
             }
         }
+        WorldbookTermIndex.Build(snapshot);
     }
 
     private static string RequireChildPath(string root, string relative)
@@ -200,4 +201,78 @@ internal static class WorldKnowledgeLoader
     private static bool? NullableBool(JObject value, string name) => value?[name]?.Type == JTokenType.Boolean ? value[name].Value<bool>() : (bool?)null;
     private static int? NullableInt(JObject value, string name) => value?[name]?.Type == JTokenType.Integer ? value[name].Value<int>() : (int?)null;
     private static string Localized(JObject value) => value?["zh-CN"]?.Value<string>() ?? value?["zh"]?.Value<string>() ?? value?["en"]?.Value<string>() ?? value?.Properties().FirstOrDefault()?.Value?.Value<string>() ?? string.Empty;
+}
+
+// 兜底 term 索引的**唯一**建法与切词法（2026-09-16）。
+// ⚠️ 为什么放在一个类里：`WorldKnowledgeLoader.BuildKeywordIndex`（加载时）与
+//    `WorldKnowledgeQueryService.RebuildKeywordIndex`（动态条目/Overlay 时）是**两处平行实现**，
+//    本项目纪律「平行实现必须同源」⇒ 两边都只调用 `Build`，不各写一遍循环。
+// ⚠️ 切词规则三个原则：
+//    ① 查询与被检索文本**必须用同一个 `EnumerateTerms`** —— 否则查得到与查不到是两套口径。
+//    ② 起点版本＝「去标点断句 → 每段原样（≥2 字）＋ 段内全部 2-gram」，**虚词暂不丢**（简单可测）。
+//       词表来源＝标题＋综述；关键词**不进这张表**（它自己那条路径仍在，见 `FindCandidates`）。
+//    ③ **高频 term 不进口**（见 `MaxTermDocumentFrequency`）。实测：`坐落` 覆盖 133 条、`的一` 118、
+//       `城堡` 67 —— 这类 gram 谁都有，留着就是过匹配（「哪座城堡底下管着两个村子？」曾召回 67 条，
+//       把正确的城堡压出前 1）。光调阈值拦不住它们（它们常常一次就贡献 2 个 gram）。
+internal static class WorldbookTermIndex
+{
+    // 覆盖条目数超过这个值的 term 不进索引（= 全表 448 条的一小截）。按数调，见验台 RETRIEVAL_* 行。
+    internal const int MaxTermDocumentFrequency = 40;
+
+    internal static void Build(WorldKnowledgeSnapshot snapshot)
+    {
+        snapshot.FallbackTermIndex.Clear();
+        var documentFrequency = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        var perEntry = new List<KeyValuePair<string, HashSet<string>>>();
+        foreach (WorldKnowledgeEntry entry in snapshot.Entries.Values)
+        {
+            var terms = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (string term in EnumerateTerms(entry.Title)) terms.Add(term);
+            foreach (string term in EnumerateTerms(entry.Summary)) terms.Add(term);
+            foreach (string term in terms)
+                documentFrequency[term] = documentFrequency.TryGetValue(term, out int count) ? count + 1 : 1;
+            perEntry.Add(new KeyValuePair<string, HashSet<string>>(entry.Id, terms));
+        }
+        foreach (var pair in perEntry)
+            foreach (string term in pair.Value)
+                if (documentFrequency[term] <= MaxTermDocumentFrequency) Add(snapshot, term, pair.Key);
+    }
+
+    // 查询侧用：把一句玩家话切成 term 集合（与建表同一个切词器）。
+    internal static HashSet<string> TermSet(string text)
+    {
+        var set = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (string term in EnumerateTerms(text)) set.Add(term);
+        return set;
+    }
+
+    internal static IEnumerable<string> EnumerateTerms(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) yield break;
+        foreach (string segment in SplitSegments(text))
+        {
+            if (segment.Length >= 2) yield return segment;
+            for (int i = 0; i + 2 <= segment.Length; i++) yield return segment.Substring(i, 2);
+        }
+    }
+
+    private static void Add(WorldKnowledgeSnapshot snapshot, string term, string id)
+    {
+        if (!snapshot.FallbackTermIndex.TryGetValue(term, out List<string> ids)) snapshot.FallbackTermIndex[term] = ids = new List<string>();
+        if (!ids.Any(x => StringComparer.Ordinal.Equals(x, id))) ids.Add(id);
+    }
+
+    private static IEnumerable<string> SplitSegments(string text)
+    {
+        int start = 0;
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (!IsSeparator(text[i])) continue;
+            if (i > start) yield return text.Substring(start, i - start);
+            start = i + 1;
+        }
+        if (start < text.Length) yield return text.Substring(start);
+    }
+
+    private static bool IsSeparator(char ch) => char.IsPunctuation(ch) || char.IsWhiteSpace(ch) || char.IsSymbol(ch);
 }

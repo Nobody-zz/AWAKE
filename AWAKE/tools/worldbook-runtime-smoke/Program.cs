@@ -102,6 +102,7 @@ try
     TestKnowledgeReadinessAndStoreBoundary();
     TestWorldFactCollectorWiring();
     TestProductionReadinessGateWiring();
+    RetrievalProbeCases.Run(FindRepositoryWorldbookRoot(), FindAwakeSourceRoot());
     Console.WriteLine("PASS: runtime loader/query/overlay/identity/registry/weekly-report/event-ledger smoke");
 }
 finally
