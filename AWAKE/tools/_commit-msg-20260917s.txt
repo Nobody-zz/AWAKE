@@ -1,0 +1,68 @@
+判据 E 追查之三：该加的是检索之前的一步「指代绑定」——材料早就躺在查询里了
+
+甲方追问「你再想想呢，是不是得加一个判断还是什么的步骤」。是，而且比上一条提交里
+写的"没有上下文"更准：**上下文有，只是没人用**。
+
+上一条提交（fa6b253）说「查询里没有"刚才说到哪儿了"」——**这句要更正**。
+09-17 晚顺着"消费方"再查一遍，是这样的：
+
+· `NpcDialogueService.cs:1051` 已经把聚落填进查询了 ——
+  `SettlementId` 取自 `hero.CurrentSettlement ?? hero.StayingInSettlement`，
+  1062 行再经 `BannerlordWorldbookIdentityAdapter.Apply` 规范化。
+· 但检索链上**没人把它当"玩家在说哪儿"用**：
+  `SettlementId` 只在 `WorldbookIdentityEvaluator.cs:71` 被读，是**当身份条件**（`settlement_ids`）；
+  `SceneKeywords`／`HeroId`／`CharacterId` **全仓无人读**（只有写入侧在往里塞）。
+
+而「这边」「附近」在中文里天生指代**眼前这个地方** —— 系统手里正好有"这个地方"，
+却把它当成检索用不上的摆设。所以病根是：**缺一步"先判这句话在说哪儿"**，
+不是缺上下文、也不是检索调得不够严。
+
+正面实验（决定性，`AWAKE_NOANSWER_DIAG=1`，输出见 tools/_noanswer_diag_20260917.txt）
+----------------------------------------------------------------------------------
+把句子里的指代词换成**当前聚落的名字**，答案立刻从"随便一座"变成"就是那儿"：
+
+  「这边的人怎么样」          7 条，首位 迪纳尔堡            ← 原句，随便抓一座
+  「哲米扬的人怎么样」        4 条，首位 geography.villages-zhemyan   ✅
+  「附近有什么好东西」        5 条，首位 拉迈萨              ← 原句
+  「哲米扬附近有什么好东西」  4 条，首位 geography.villages-zhemyan   ✅
+
+映射本来就是现成的：游戏聚落 StringId 就写在条目的 keywords 里
+（geography.villages-zhemyan 的 keywords 含 `castle_village_S1_2`）。
+
+同一份输出里还撞出两个坑，写进文档了：
+· `castle_village_S1_2` **不在** `snapshot.KeywordIndex`（`哲米扬` 在）；
+  ⇒ 映射**不能走索引**，得直接扫条目的 `Keywords`。
+· **不许把 StringId 直接塞进句子**：「`castle_village_S1_2` 的人怎么样」⇒
+  首位变成 `geography.settlement-types-village`（**换错条了**）。
+  ⇒ 必须**先按 StringId 找到条目、取出条目的名字**，再把**名字**放进句子，顺序错不得。
+
+三类"没有所指"要分开（这一版把它们归了类）
+------------------------------------------
+1. 指代**眼前这个地方**（这边／附近）⇒ 缺**一步绑定**，材料已在查询里。对话层的活，本文件给了实验。
+2. 指代**前文的人/事**（那谁／你说的谁／他们都怎么说）⇒ 查询里**确实没有**对话历史，要真加历史。
+3. **类别词**没有概念条（领主）⇒ 内容活，补一张概念条即可，改语料不改代码。
+
+不动手
+------
+第 1 类要落的是 `NpcDialogueService` 构造 `PlayerText` 那里 —— **产品代码，不是本线的活**，
+改它要同批复跑三根门禁。本次**只把方案与实验摆出来**。
+⚠️ 绑错比不绑更坏（把玩家没指的地方当成所指），绑完必须由判据 E 守：
+这两条题要么答到**当前聚落那条**，要么空手，不许答成别的。
+
+本次改动
+--------
+M AWAKE/tools/worldbook-rag-merge/Program.cs   仅诊断块：加 DeixisResolveProbes ＋ Top1()
+                                                （默认不跑，AWAKE_NOANSWER_DIAG=1 才跑）
+M AWAKE/docs/SPEC-20260917-该空手时空手判据.md   §六 标题改为「…该加的是检索之前的一步『指代绑定』」；
+                                                「病根」节重写（缺口＝先判在说哪儿，材料早在查询里）；
+                                                加正面实验表、两个坑、三类"没有所指"归类表
+M AWAKE/tools/_noanswer_diag_20260917.txt       诊断全量输出（含第 ③ 段正面实验）
+M AWAKE/tools/_merge_ruler_20260917.txt         刷新读数
+
+读数（改后重跑，逐字未变）
+--------------------------
+NOANSWER_RULER offenders=0/0 concept_offenders=0/0 known_gaps=3/3 OK
+JUDGE 全 PASS（八项）
+MERGE_GATE PASS   exit=0
+hit@3：字面 A 10/13 B 9/11 合计 19/24；语义 22/24；★合并 23/24（涨 4 跌 0）
+      —— 正判据 A~D 读数与改前基线 tools/_merge_baseline_20260917.txt 逐字一致。

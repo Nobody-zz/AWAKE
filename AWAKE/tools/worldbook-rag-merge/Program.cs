@@ -96,6 +96,15 @@ internal static class Program
         "什么人拿大圆盾扔飞斧？"
     };
 
+    // 正面实验用（同样只在 AWAKE_NOANSWER_DIAG=1 时跑）：左＝原句，右＝把指代词换成"当前聚落"。
+    // 聚落取 `castle_village_S1_2`＝哲米扬（它本身就是条目 geography.villages-zhemyan 的一个 keyword）。
+    private static readonly string[][] DeixisResolveProbes =
+    {
+        new[] { "这边的人怎么样", "哲米扬的人怎么样" },
+        new[] { "附近有什么好东西", "哲米扬附近有什么好东西" },
+        new[] { "这边的人怎么样", "castle_village_S1_2 的人怎么样" }
+    };
+
     internal static int Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
@@ -683,6 +692,34 @@ internal static class Program
         Console.WriteLine("   ⇒ 「没有入口词」那 " + withoutEntryWord + " 条，一旦上了这条出口规则就会被判成『不算知道』；"
             + "它们现在是命中还是没命中，决定这条规则能不能上。");
         if (noEntryWord.Count > 0) Console.WriteLine("   ★没有入口词的题目：" + Join(noEntryWord));
+
+        // ③ 正面实验：把指代词换成"当前聚落"，检索是不是就答得上了。
+        //    这是"缺一个判断步骤"的证据 —— 上游**已经**把聚落放进查询了
+        //    （`NpcDialogueService.cs:1051 SettlementId = _heroSettlementId`，取自
+        //     `hero.CurrentSettlement ?? hero.StayingInSettlement`），只是检索层没用它：
+        //    `SettlementId` 只在身份条件里被读（`WorldbookIdentityEvaluator.cs:71`），
+        //    `SceneKeywords` 全仓无人读。
+        Console.WriteLine();
+        Console.WriteLine("── 诊断：把「这边／附近」换成当前聚落之后，检索是不是就答得上了 ──");
+        Console.WriteLine("   （聚落 → 条目的机制：游戏 StringId 就在条目的 keywords 里，例："
+            + "geography.villages-zhemyan 的 keywords 含 `castle_village_S1_2`）");
+        foreach (string[] pair in DeixisResolveProbes)
+        {
+            WorldKnowledgeQueryResult before = merged.Query(BuildQuery(pair[0], "awake:identity:commoner"));
+            WorldKnowledgeQueryResult after = merged.Query(BuildQuery(pair[1], "awake:identity:commoner"));
+            Console.WriteLine("   「" + pair[0] + "」⇒ " + before.HitIds.Count + " 条，喂模型=" + before.State
+                + "  top1=" + Top1(before));
+            Console.WriteLine("   「" + pair[1] + "」⇒ " + after.HitIds.Count + " 条，喂模型=" + after.State
+                + "  top1=" + Top1(after));
+            Console.WriteLine();
+        }
+        foreach (string key in new[] { "castle_village_S1_2", "哲米扬" })
+            Console.WriteLine("   关键词索引里有 `" + key + "` 吗：" + (snapshot.KeywordIndex.ContainsKey(key) ? "有" : "没有"));
+    }
+
+    private static string Top1(WorldKnowledgeQueryResult result)
+    {
+        return result.HitIds.Count > 0 ? result.HitIds[0].Split(':').Last() : "-";
     }
 
     // 与门禁验台 `RetrievalProbeCases.PickIdentity` 同源：身份取目标条目自己授权里的第一个，

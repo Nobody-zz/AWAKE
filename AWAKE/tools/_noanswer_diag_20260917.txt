@@ -5,7 +5,7 @@
 [A] 维度 512，不同向量 5/5，自比 1.000000  => PASS
 [入库] 拼法 feed-D-v1，示例：沙拉斯湾·三种来历。沙拉斯湾·三种来历、沙拉斯湾、帝国摇篮、卡拉德登陆。帝国“摇篮”史称、先祖登陆传说（未经确证）与船人…
 [入库] 语料指纹 = awake:worldbook.calradia@1.0.0#feed-D-v1
-[入库] OK，写入 451 条，用时 7693 ms
+[入库] OK，写入 451 条，用时 7569 ms
 
 ──────────────────────────────────────────────────────────────────────────────
 组  问法                            目标                                  字面  语义  合并  上限  池  涨
@@ -179,6 +179,20 @@ NOANSWER OK expect=concept q=城镇
    小计：目标条目的入口词出现在问句里 11 条，**没有** 13 条（另有 1 条不计入）
    ⇒ 「没有入口词」那 13 条，一旦上了这条出口规则就会被判成『不算知道』；它们现在是命中还是没命中，决定这条规则能不能上。
    ★没有入口词的题目：斯特吉亚的军队怎么打仗？ / 库赛特靠什么打仗？ / 有大瀑布的村子是哪个？ / 集市上说书人讲的那个鬼点子是谁的？ / 有个半岛被三家抢过，谁说了算？ / 山里有不让进的地方吗？ / 隘口上那个商埠，哪个家族在那儿定过都？ / 什么人拿大圆盾扔飞斧？ / 游牧的人怎么用骑马射手打仗？ / 盾墙加飞斧是哪个国家的打法？ / 北方有什么又暖又贵的皮货？ / 桌上少不了、产地又集中的日用品是什么？ / 哪种头盔护到腮帮子和耳朵？
+
+── 诊断：把「这边／附近」换成当前聚落之后，检索是不是就答得上了 ──
+   （聚落 → 条目的机制：游戏 StringId 就在条目的 keywords 里，例：geography.villages-zhemyan 的 keywords 含 `castle_village_S1_2`）
+   「这边的人怎么样」⇒ 7 条，喂模型=partial  top1=geography.castles-dinar-castle
+   「哲米扬的人怎么样」⇒ 4 条，喂模型=partial  top1=geography.villages-zhemyan
+
+   「附近有什么好东西」⇒ 5 条，喂模型=partial  top1=geography.villages-lamesa
+   「哲米扬附近有什么好东西」⇒ 4 条，喂模型=partial  top1=geography.villages-zhemyan
+
+   「这边的人怎么样」⇒ 7 条，喂模型=partial  top1=geography.castles-dinar-castle
+   「castle_village_S1_2 的人怎么样」⇒ 4 条，喂模型=partial  top1=geography.settlement-types-village
+
+   关键词索引里有 `castle_village_S1_2` 吗：没有
+   关键词索引里有 `哲米扬` 吗：有
 NOANSWER_RULER offenders=0/0 concept_offenders=0/0 known_gaps=3/3 OK
 
 JUDGE positive_control=PASS literal_unchanged=PASS merged_improves=PASS negative_clean=PASS overmatch_bounded=PASS no_answer_clean=PASS concept_clean=PASS known_gaps_bounded=PASS
