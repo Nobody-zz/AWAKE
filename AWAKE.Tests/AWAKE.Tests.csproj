@@ -137,8 +137,19 @@
     <Compile Include="..\AWAKE\src\WorldbookLoader.cs" Link="WorldbookLoader.cs" />
     <Compile Include="..\AWAKE\src\WorldbookService.cs" Link="WorldbookService.cs" />
     <Compile Include="..\AWAKE\src\WorldbookRuntime.cs" Link="WorldbookRuntime.cs" />
+    <!-- 2026-09-18 补记：09-17 语义臂接上生产路径时新增了 AwakeSemanticArmBootstrap.cs，
+         并改了 WorldbookRuntime.cs:191 与 ProbeExtension.cs:316 去调它，**但漏了同步这一份清单**
+         ⇒ 本工程从那天起就编不过（CS0103: 当前上下文中不存在名称"AwakeSemanticArmBootstrap"）。
+         与上面「生图栈」那条注释是同一个坑：**src/ 在 AWAKE.csproj 里是通配编译，本工程是显式清单，
+         往 src/ 新增任何源文件，都必须同步加到这里，否则只在第二步炸。** -->
+    <Compile Include="..\AWAKE\src\AwakeSemanticArmBootstrap.cs" Link="AwakeSemanticArmBootstrap.cs" />
+    <!-- 同上，09-17 同一批漏掉的第二个文件。三个工具工程
+         （semantic-arm-bootstrap-smoke / worldbook-runtime-sim / worldbook-rag-merge）都同步了它，
+         唯独本工程漏了 —— 所以本工程是那一批里唯一编不过的。 -->
+    <Compile Include="..\AWAKE\src\AwakeWorldKnowledgeSemanticIndex.cs" Link="AwakeWorldKnowledgeSemanticIndex.cs" />
     <Compile Include="..\AWAKE\src\WorldKnowledgeModels.cs" Link="WorldKnowledgeModels.cs" />
     <Compile Include="..\AWAKE\src\WorldKnowledgeQueryService.cs" Link="WorldKnowledgeQueryService.cs" />
+    <Compile Include="..\AWAKE\src\WorldKnowledgeSemantic.cs" Link="WorldKnowledgeSemantic.cs" />
     <Compile Include="..\AWAKE\src\WorldKnowledgeLoader.cs" Link="WorldKnowledgeLoader.cs" />
     <Compile Include="..\AWAKE\src\WorldbookIdentityEvaluator.cs" Link="WorldbookIdentityEvaluator.cs" />
     <Compile Include="..\AWAKE\src\WorldbookPackageIntegrity.cs" Link="WorldbookPackageIntegrity.cs" />
