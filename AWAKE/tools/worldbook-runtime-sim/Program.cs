@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Awake;
+using MarcusAwakeStorage;
 using Newtonsoft.Json.Linq;
 
 // ============================================================
@@ -98,6 +99,37 @@ foreach (string name in new[] { "manifest.json", "runtime.json", "index.json" })
 
 var snapshot = WorldKnowledgeLoader.Load(Path.Combine(workDir, "manifest.json"));
 var service = new WorldKnowledgeQueryService(snapshot);
+
+// ── 语义臂（可选）：置 AWAKE_SIM_SEMANTIC=1 才挂，默认不挂 ⇒ 不动原有行为。
+//    次序照游戏来：**世界书先到**（此时没有 host，应当挂不上）→ 战役会话就绪 → RetryCurrent 补一次。
+//    挂上以后，下面同一套门控矩阵就是"带语义"的结果，可与不置开关那一跑直接对照。
+if (Environment.GetEnvironmentVariable("AWAKE_SIM_SEMANTIC") == "1")
+{
+    string simModelDir = Environment.GetEnvironmentVariable("AWAKE_SIM_MODEL_DIR")
+        ?? @"D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AnimusForge\ONNX";
+    string simVocabPath = Environment.GetEnvironmentVariable("AWAKE_SIM_VOCAB")
+        ?? @"D:\AWAKE-Dev\AWAKE\tools\_af_tokenizer_20260916\vocab.txt";
+    string simDbPath = Path.Combine(Path.GetTempPath(), "awake-runtime-sim", "sim-semantic.db");
+
+    Console.WriteLine("=== 语义臂 ===");
+    AwakeSemanticArmBootstrap.Schedule(service, snapshot);
+    AwakeBackgroundTask.LastTask?.Wait(TimeSpan.FromMinutes(5));
+    Console.WriteLine($"[semantic] 世界书先到（host 未就位）⇒ HasSemanticIndex={service.HasSemanticIndex}，问过 host {AwakeRuntime.ResolveCallCount} 次");
+
+    var simEmbedderOptions = new OnnxEmbedderOptions
+    {
+        ModelDirectory = simModelDir,
+        VocabularyPath = simVocabPath,
+        ModelId = "bge-small-zh-v1.5|" + WorldKnowledgePassage.Revision,
+    };
+    var simEmbedder = new OnnxSentenceEmbedder(simEmbedderOptions);
+    var simBackend = new SqliteStorageAndRagBackend(simDbPath, null, simEmbedder);
+    AwakeRuntime.BootHostForSim(simBackend, "sim-campaign", "sim-timeline", "sim-session");
+    AwakeSemanticArmBootstrap.RetryCurrent();
+    AwakeBackgroundTask.LastTask?.Wait(TimeSpan.FromMinutes(5));
+    Console.WriteLine($"[semantic] 会话就绪后重试 ⇒ HasSemanticIndex={service.HasSemanticIndex}（条目 {snapshot.Entries.Count} 条）");
+}
+
 
 Console.WriteLine("=== 包概览 ===");
 Console.WriteLine($"packageId={snapshot.PackageId}  version={snapshot.Version}  revision={snapshot.Revision}");

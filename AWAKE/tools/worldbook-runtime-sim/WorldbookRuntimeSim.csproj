@@ -7,7 +7,7 @@
   -->
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <RootNamespace>Awake.WorldbookRuntimeSim</RootNamespace>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <Nullable>disable</Nullable>
@@ -15,6 +15,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json" HintPath="D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\Newtonsoft.Json.dll" />
+    <!-- 语义臂要 Framework 的 Api（IMarcusAiFrameworkHost / RequestContext），
+         以及 Storage 的**真后端**（真 SQLite + 真 ONNX），才挂得上、量得出。 -->
+    <ProjectReference Include="..\..\framework\MarcusAwakeFramework\MarcusAwakeFramework.csproj" />
+    <ProjectReference Include="..\..\framework\MarcusAwakeStorage\MarcusAwakeStorage.csproj" />
     <Compile Include="..\..\src\WorldKnowledgeModels.cs" />
     <Compile Include="..\..\src\WorldbookIdentityEvaluator.cs" />
     <Compile Include="..\..\src\WorldbookIdentityCapabilityRules.cs" />
@@ -22,6 +26,12 @@
     <Compile Include="..\..\src\WorldbookPackageIntegrity.cs" />
     <Compile Include="..\..\src\WorldKnowledgeLoader.cs" />
     <Compile Include="..\..\src\WorldKnowledgeQueryService.cs" />
+    <Compile Include="..\..\src\WorldKnowledgeSemantic.cs" />
+    <!-- 语义臂（09-17 接进模拟器）：适配器 + 挂载器。挂载器要的 `AwakeRuntime` 三个成员
+         由 SemanticArmStubs.cs 补，与 tools/semantic-arm-bootstrap-smoke 的那一份同源。 -->
+    <Compile Include="..\..\src\AwakeWorldKnowledgeSemanticIndex.cs" />
+    <Compile Include="..\..\src\AwakeSemanticArmBootstrap.cs" />
+    <Compile Include="SemanticArmStubs.cs" />
     <Compile Include="..\..\src\WorldKnowledgeProjectionService.cs" />
     <Compile Include="..\..\src\WorldbookPackageRegistry.cs" />
     <Compile Include="..\..\src\WorldEventLedger.cs" />

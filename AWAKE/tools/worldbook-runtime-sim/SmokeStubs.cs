@@ -11,7 +11,7 @@ namespace Awake;
 // （本工程 2026-09-14 起编译该文件，以支撑 PersonaDataLoader / PersonaRoster 的目录扫描）。
 // 此前的精简替身已删除，避免与真实类型重名。
 
-internal static class AwakeRuntime
+internal static partial class AwakeRuntime
 {
     internal static WorldStateStore WorldStateStore { get; set; }
     internal static bool SessionEnded { get; set; }

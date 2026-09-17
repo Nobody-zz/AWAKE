@@ -1,0 +1,30 @@
+tools+docs(09-17): 本机模拟器接上语义臂 —— 门控矩阵可直接对照「挂 / 不挂」
+
+起因：甲方「不是有本机模拟吗，就是把 AI 链路单拎出来的那种」。
+语义臂此前只在**专用验台**（semantic-arm-bootstrap-smoke）里量过，
+而**已有的那台**模拟器 `worldbook-runtime-sim` 还没接。
+
+改动：
+- `WorldbookRuntimeSim.csproj`：TFM `net10.0` → **`net10.0-windows`** —— 不改就引不到
+  `net8.0-windows` 的 `MarcusAwakeStorage`，报 `CS0246 未能找到类型 OnnxSentenceEmbedderOptions`
+  （这个报错很像"类型名写错"，其实是 TFM 不兼容把引用整个吞了）；
+  加 `ProjectReference`（`MarcusAwakeFramework` ＋ `MarcusAwakeStorage`）；补 3 条 `Compile`
+- `SemanticArmStubs.cs`（新）：`AwakeRuntime` 的 host 三件 ＋ `BootHostForSim`，
+  与专用验台那份**同源**（`CreateContext` 逐句一致：有 lease 用 lease）
+- `SmokeStubs.cs`：`AwakeRuntime` 改 `partial`（该文件里 `AwakeBackgroundTask.LastTask` 已有，可直接等）
+- `Program.cs`：`AWAKE_SIM_SEMANTIC=1` 才挂 —— **默认不动原行为**；次序照游戏：
+  先 `Schedule`（host 未就位，应挂不上）→ 摆宿主 → `RetryCurrent`（挂上）
+
+结果（448 条真包 `awake:worldbook.calradia` ＋ 真 ONNX，本机）：
+- `世界书先到 ⇒ HasSemanticIndex=False（问过 host 20 次）`；
+  `会话就绪后重试 ⇒ HasSemanticIndex=True（条目 448 条）`
+  ⇒ 连「世界书早于战役会话」那条原本只有真机能证的时序，这里也证到了
+- 门控矩阵挂／不挂对照：`not_found` **15 → 12**、`partial` **6 → 9**；
+  差在「提问：领主」段（soldier／noble／merchant → partial，召回到 `war.troops-mamluk`）
+  ⚠️ 如实记：「领主」→「马穆鲁克」只是弱相关 ⇒ 更像"差一点够上"，
+  **过召回的边界要拿真实玩家问法再量**
+
+另收：
+- `tools/_package_runtime_20260917.txt`：打包器失败日志 —— 记下 `package_embedded_runtime.ps1`
+  在本机被 safe-delete 护栏拦住，且它只收 `dotnet publish` 输出、**会丢掉 `Runtime/` 里的 `models/`**
+- `docs/DONE-20260917-语义臂接上生产路径.md` 新增「六 本机模拟器里也跑通了」
