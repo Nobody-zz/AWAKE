@@ -1,0 +1,251 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-head-cheekguard
+title:
+  zh-CN: 护颊盔
+  en: Cheek Guard Helmet
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 护颊盔
+  - 护颊钢帽
+  - 护颊铜帽
+  - 护颊片
+  - 穗饰护颊钢帽
+  - 脊状装饰护颊钢帽
+  - 耳罩盔
+  en:
+  - Cheek Guard Helmet
+  - Cap with Cheek Guards
+  - Earmuff Helmet
+  - Ear Flap Helmet
+summary:
+  zh-CN: 圆钢帽两侧垂下护颊片，把耳朵与腮帮护住——护头三十一到四十一。卡拉迪亚只此一家：九件全出自巴旦尼亚的山地。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#battania_earmuff_helmet_b
+  quote_hash: 1773946AFAB25E94B7DD1C9FF17890448174DC57A28DAFD68C765A9933B44137
+  quote: 护颊钢帽 | HeadArmor | 护头 32 | 重 2.9 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#battania_earmuff_helmet_a
+  quote_hash: 12C434A07BB1DA2DAF78081DF9BBFE3B00B934E0188D7B294469107162EBB3EA
+  quote: 穗饰护颊钢帽 | HeadArmor | 护头 36 | 重 3 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#battania_earmuff_helmet_d
+  quote_hash: C0E4716092A3DDD29C8C8FFC57D07A8471899B4EBBE5D53D6442A91CD4E22B5F
+  quote: 脊状装饰护颊钢帽 | HeadArmor | 护头 41 | 重 3.2 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#battania_earmuff_helmet_b_brnz
+  quote_hash: C5FBF338C2D561EB644FC0BF812231E005CCC1A7ED81270735E66768A35DD05F
+  quote: 护颊铜帽 | HeadArmor | 护头 31 | 重 3 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#battania_earmuff_helmet_c_cpr
+  quote_hash: DF2B352B11BC600CFAE63899368A1ADB8F8B381537767B5400E9991DF2CCFFD5
+  quote: 装饰护颊铜盔 | HeadArmor | 护头 35 | 重 3.3 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#battania_earmuff_helmet_c
+  quote_hash: 8C482643F36FAC5AB70BC79A485034F4A9805A08B7FAB2E9F98DFE850A6B47CE
+  quote: 穗饰装饰护颊钢帽 | HeadArmor | 护头 38 | 重 3.1 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二 | 认队色
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-head-cheekguard-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 护颊盔是一顶圆钢帽，两侧各垂下一片弧形护板，把耳朵与腮帮包住；护头值位于三十一到四十一之间，材质一律为板。这一形制在卡拉迪亚只有一个出处——全部九件都出自巴旦尼亚，出了山地就再看不到。同一形制分钢与铜两版，另有穗饰与脊状两类装饰变体。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#battania_earmuff_helmet_b
+    quote_hash: 1773946AFAB25E94B7DD1C9FF17890448174DC57A28DAFD68C765A9933B44137
+    quote: 护颊钢帽 | HeadArmor | 护头 32 | 重 2.9 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#battania_earmuff_helmet_a
+    quote_hash: 12C434A07BB1DA2DAF78081DF9BBFE3B00B934E0188D7B294469107162EBB3EA
+    quote: 穗饰护颊钢帽 | HeadArmor | 护头 36 | 重 3 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#battania_earmuff_helmet_d
+    quote_hash: C0E4716092A3DDD29C8C8FFC57D07A8471899B4EBBE5D53D6442A91CD4E22B5F
+    quote: 脊状装饰护颊钢帽 | HeadArmor | 护头 41 | 重 3.2 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二 | 认队色
+  expressions:
+  - id: expr.weapon-head-cheekguard-battania-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 咱山里的盔，两边是两片垂下来的铁护着耳朵。别处的盔不这么做，他们嫌重、嫌挡耳朵听令。我们在林子里打，四面八方都可能有斧子过来，耳朵不能豁着。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#battania_earmuff_helmet_b
+      quote_hash: 1773946AFAB25E94B7DD1C9FF17890448174DC57A28DAFD68C765A9933B44137
+      quote: 护颊钢帽 | HeadArmor | 护头 32 | 重 2.9 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#battania_earmuff_helmet_a
+      quote_hash: 12C434A07BB1DA2DAF78081DF9BBFE3B00B934E0188D7B294469107162EBB3EA
+      quote: 穗饰护颊钢帽 | HeadArmor | 护头 36 | 重 3 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#battania_earmuff_helmet_d
+      quote_hash: C0E4716092A3DDD29C8C8FFC57D07A8471899B4EBBE5D53D6442A91CD4E22B5F
+      quote: 脊状装饰护颊钢帽 | HeadArmor | 护头 41 | 重 3.2 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二 | 认队色
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.battania
+    denies: []
+  - id: expr.weapon-head-cheekguard-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 那两片垂着的铁皮，看着像耳朵，其实是护腮的。挨过一斧子的人都留着它。穗子和棱脊是给头领看的——一样的铁，多花一道工的贵一半。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#battania_earmuff_helmet_b
+      quote_hash: 1773946AFAB25E94B7DD1C9FF17890448174DC57A28DAFD68C765A9933B44137
+      quote: 护颊钢帽 | HeadArmor | 护头 32 | 重 2.9 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#battania_earmuff_helmet_a
+      quote_hash: 12C434A07BB1DA2DAF78081DF9BBFE3B00B934E0188D7B294469107162EBB3EA
+      quote: 穗饰护颊钢帽 | HeadArmor | 护头 36 | 重 3 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#battania_earmuff_helmet_d
+      quote_hash: C0E4716092A3DDD29C8C8FFC57D07A8471899B4EBBE5D53D6442A91CD4E22B5F
+      quote: 脊状装饰护颊钢帽 | HeadArmor | 护头 41 | 重 3.2 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二 | 认队色
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+- id: assertion.weapon-head-cheekguard-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 护颊盔的档次靠加厚与装饰区分：最朴素的一副护头三十一，最厚的一副四十一，中间以钢、铜与穗饰、脊状排开。铜版比钢版轻而软，多给年轻武士；脊状装饰款在帽脊上起棱，兼作加固。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#battania_earmuff_helmet_b_brnz
+    quote_hash: C5FBF338C2D561EB644FC0BF812231E005CCC1A7ED81270735E66768A35DD05F
+    quote: 护颊铜帽 | HeadArmor | 护头 31 | 重 3 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#battania_earmuff_helmet_c_cpr
+    quote_hash: DF2B352B11BC600CFAE63899368A1ADB8F8B381537767B5400E9991DF2CCFFD5
+    quote: 装饰护颊铜盔 | HeadArmor | 护头 35 | 重 3.3 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#battania_earmuff_helmet_c
+    quote_hash: 8C482643F36FAC5AB70BC79A485034F4A9805A08B7FAB2E9F98DFE850A6B47CE
+    quote: 穗饰装饰护颊钢帽 | HeadArmor | 护头 38 | 重 3.1 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二 | 认队色
+  expressions:
+  - id: expr.weapon-head-cheekguard-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 护颊盔按壳厚与装差分档：铜版护头三十一到三十五，钢版三十二到四十一；穗饰款在护颊片下沿挂一排短穗，脊状装饰款在帽脊上起一道棱。买的人先看护颊片的活动轴——轴松了就贴不住腮，等于白垂两片铁。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#battania_earmuff_helmet_b_brnz
+      quote_hash: C5FBF338C2D561EB644FC0BF812231E005CCC1A7ED81270735E66768A35DD05F
+      quote: 护颊铜帽 | HeadArmor | 护头 31 | 重 3 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#battania_earmuff_helmet_c_cpr
+      quote_hash: DF2B352B11BC600CFAE63899368A1ADB8F8B381537767B5400E9991DF2CCFFD5
+      quote: 装饰护颊铜盔 | HeadArmor | 护头 35 | 重 3.3 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#battania_earmuff_helmet_c
+      quote_hash: 8C482643F36FAC5AB70BC79A485034F4A9805A08B7FAB2E9F98DFE850A6B47CE
+      quote: 穗饰装饰护颊钢帽 | HeadArmor | 护头 38 | 重 3.1 | 材质 板 | 属 battania | 遮发 全 | 遮须 型二 | 认队色
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

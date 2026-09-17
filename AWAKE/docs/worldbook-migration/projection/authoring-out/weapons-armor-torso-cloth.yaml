@@ -1,0 +1,382 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-torso-cloth
+title:
+  zh-CN: 布袍与束腰衣
+  en: Cloth Robes and Tunics
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 布袍
+  - 束腰衣
+  - 托加
+  - 重磅束腰衣
+  - 裹身连衣裙
+  - 格子连衣裙
+  - 流苏袍
+  - 丝绸长衫
+  en:
+  - Cloth Robe
+  - Tunic
+  - Toga
+  - Dress
+  - Sleeved Robe
+summary:
+  zh-CN: 织出来的袍子，护值二到二十五。布本身挡不住什么，但织得够密、层数够多，也能卸掉一点力道。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#imperial_robes
+  quote_hash: A3CA74FC517CA4FAF516DC2B88E3DF29EAE985E4DD472917BDCB2E05E88CC395
+  quote: 托加 | 躯干 | 护 8 | 重 0.9 | 材质 布 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#heavy_nordic_tunic
+  quote_hash: B36A602AF3A154C0028B931EF214991B6B16584972E24D3A2B6D80A2AE274E74
+  quote: 重磅束腰衣 | 躯干 | 护 7 | 重 1.0 | 材质 布 | 属 sturgia | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#empire_dress
+  quote_hash: 5950B2638585CD9D72E5963B5C66B9A0DB7DAEC979CF011122A6845A5CC0AC21
+  quote: 女士连衣裙 | 躯干 | 护 7 | 重 0.7 | 材质 布 | 属 empire | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#khuzait_dress_b
+  quote_hash: 32BC289454EA4708F2C212C07C333F2DA3D0A9D99C702EA7976527975704F95D
+  quote: 毛皮连衣裙 | 躯干 | 护 8 | 重 0.9 | 材质 布 | 属 khuzait | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#steppe_dress
+  quote_hash: F8AED22C5F3C8A443BB276C8DB2962CCAD1732C528578D649A8ED0436DAC6C28
+  quote: 裹身连衣裙 | 躯干 | 护 8 | 重 0.6 | 材质 布 | 属 khuzait | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#highland_cloth
+  quote_hash: 5E2CA2FDD474157F6AAC4AE319A2F7C48FD39166C3A197EA63B39B96C6175C64
+  quote: 林地布甲 | 躯干 | 护 9 | 重 1.5 | 材质 布 | 属 battania | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#tassled_southern_robes
+  quote_hash: 50DEB71B623C008D6E5C68D0D758EF6BB93A3BC5F4DF36D6A507EB1AA2EB5267
+  quote: 流苏袍 | 躯干 | 护 6 | 重 0.9 | 材质 布 | 属 aserai | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#aserai_robe_c_chain
+  quote_hash: A88F1A17B9E4A04D6195A66605FDC83DFA32EF0FE1C0ED08DC080672A2128B69
+  quote: 袍衬链甲衫 | 躯干 | 护 25 | 重 8.2 | 材质 链甲 | 属 aserai | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#eastern_silk_clothing
+  quote_hash: 38A2A14ACD55D1CF49E0FF677B72B018099DBBA1EF50ED0F5620C2B25B75E0DA
+  quote: 丝绸长衫 | 躯干 | 护 6 | 重 0.4 | 材质 布 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#layered_robe
+  quote_hash: BD0A20C927C86CAF9EB88AB5D4E85176DD9B8C2C48B7D75EE03329844AE2B3FA
+  quote: 多层袍 | 躯干 | 护 5 | 重 2.0 | 材质 布 | 属 aserai | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#desert_robe
+  quote_hash: 45D997581DFECACE467517750D7EDC6E0CD51546D00CAAC6FD8005893CE59EBD
+  quote: 简易长衫 | 躯干 | 护 5 | 重 1.6 | 材质 布 | 属 aserai | 分男女
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-torso-cloth-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 布袍与束腰衣占了卡拉迪亚衣物的大半：托加、连衣裙、长衫、束腰衣，护值二到二十五，材质几乎全是布。厚薄是唯一的差别——重磅束腰衣用粗线密织，护值七；帝国托加是整幅布裹出来的，护值八。它们与平民便服的区别不在形制，而在穿的人与场合：这套更常出现在城里、席上和队列里。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#imperial_robes
+    quote_hash: A3CA74FC517CA4FAF516DC2B88E3DF29EAE985E4DD472917BDCB2E05E88CC395
+    quote: 托加 | 躯干 | 护 8 | 重 0.9 | 材质 布 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#heavy_nordic_tunic
+    quote_hash: B36A602AF3A154C0028B931EF214991B6B16584972E24D3A2B6D80A2AE274E74
+    quote: 重磅束腰衣 | 躯干 | 护 7 | 重 1.0 | 材质 布 | 属 sturgia | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#empire_dress
+    quote_hash: 5950B2638585CD9D72E5963B5C66B9A0DB7DAEC979CF011122A6845A5CC0AC21
+    quote: 女士连衣裙 | 躯干 | 护 7 | 重 0.7 | 材质 布 | 属 empire | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#khuzait_dress_b
+    quote_hash: 32BC289454EA4708F2C212C07C333F2DA3D0A9D99C702EA7976527975704F95D
+    quote: 毛皮连衣裙 | 躯干 | 护 8 | 重 0.9 | 材质 布 | 属 khuzait | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#steppe_dress
+    quote_hash: F8AED22C5F3C8A443BB276C8DB2962CCAD1732C528578D649A8ED0436DAC6C28
+    quote: 裹身连衣裙 | 躯干 | 护 8 | 重 0.6 | 材质 布 | 属 khuzait | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#highland_cloth
+    quote_hash: 5E2CA2FDD474157F6AAC4AE319A2F7C48FD39166C3A197EA63B39B96C6175C64
+    quote: 林地布甲 | 躯干 | 护 9 | 重 1.5 | 材质 布 | 属 battania | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#tassled_southern_robes
+    quote_hash: 50DEB71B623C008D6E5C68D0D758EF6BB93A3BC5F4DF36D6A507EB1AA2EB5267
+    quote: 流苏袍 | 躯干 | 护 6 | 重 0.9 | 材质 布 | 属 aserai | 分男女
+  expressions:
+  - id: expr.weapon-armor-torso-cloth-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 好布和赖布差在手上。好布贴身不扎，洗十遍也不起球；赖布第一水就散边。买的时候用指甲刮一下，起毛的就别要了。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#imperial_robes
+      quote_hash: A3CA74FC517CA4FAF516DC2B88E3DF29EAE985E4DD472917BDCB2E05E88CC395
+      quote: 托加 | 躯干 | 护 8 | 重 0.9 | 材质 布 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#heavy_nordic_tunic
+      quote_hash: B36A602AF3A154C0028B931EF214991B6B16584972E24D3A2B6D80A2AE274E74
+      quote: 重磅束腰衣 | 躯干 | 护 7 | 重 1.0 | 材质 布 | 属 sturgia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#empire_dress
+      quote_hash: 5950B2638585CD9D72E5963B5C66B9A0DB7DAEC979CF011122A6845A5CC0AC21
+      quote: 女士连衣裙 | 躯干 | 护 7 | 重 0.7 | 材质 布 | 属 empire | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#khuzait_dress_b
+      quote_hash: 32BC289454EA4708F2C212C07C333F2DA3D0A9D99C702EA7976527975704F95D
+      quote: 毛皮连衣裙 | 躯干 | 护 8 | 重 0.9 | 材质 布 | 属 khuzait | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#steppe_dress
+      quote_hash: F8AED22C5F3C8A443BB276C8DB2962CCAD1732C528578D649A8ED0436DAC6C28
+      quote: 裹身连衣裙 | 躯干 | 护 8 | 重 0.6 | 材质 布 | 属 khuzait | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#highland_cloth
+      quote_hash: 5E2CA2FDD474157F6AAC4AE319A2F7C48FD39166C3A197EA63B39B96C6175C64
+      quote: 林地布甲 | 躯干 | 护 9 | 重 1.5 | 材质 布 | 属 battania | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#tassled_southern_robes
+      quote_hash: 50DEB71B623C008D6E5C68D0D758EF6BB93A3BC5F4DF36D6A507EB1AA2EB5267
+      quote: 流苏袍 | 躯干 | 护 6 | 重 0.9 | 材质 布 | 属 aserai | 分男女
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-torso-cloth-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 袍服按布幅与织法分档。粗纺一件几枚银币，重磅密织的要三倍；帝国的托加讲究垂感，用整幅布裹、不打剪，一块布就是一件衣。护值多在二到九之间，最厚的一档不过二十五——布再密也是布。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#imperial_robes
+      quote_hash: A3CA74FC517CA4FAF516DC2B88E3DF29EAE985E4DD472917BDCB2E05E88CC395
+      quote: 托加 | 躯干 | 护 8 | 重 0.9 | 材质 布 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#heavy_nordic_tunic
+      quote_hash: B36A602AF3A154C0028B931EF214991B6B16584972E24D3A2B6D80A2AE274E74
+      quote: 重磅束腰衣 | 躯干 | 护 7 | 重 1.0 | 材质 布 | 属 sturgia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#empire_dress
+      quote_hash: 5950B2638585CD9D72E5963B5C66B9A0DB7DAEC979CF011122A6845A5CC0AC21
+      quote: 女士连衣裙 | 躯干 | 护 7 | 重 0.7 | 材质 布 | 属 empire | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#khuzait_dress_b
+      quote_hash: 32BC289454EA4708F2C212C07C333F2DA3D0A9D99C702EA7976527975704F95D
+      quote: 毛皮连衣裙 | 躯干 | 护 8 | 重 0.9 | 材质 布 | 属 khuzait | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#steppe_dress
+      quote_hash: F8AED22C5F3C8A443BB276C8DB2962CCAD1732C528578D649A8ED0436DAC6C28
+      quote: 裹身连衣裙 | 躯干 | 护 8 | 重 0.6 | 材质 布 | 属 khuzait | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#highland_cloth
+      quote_hash: 5E2CA2FDD474157F6AAC4AE319A2F7C48FD39166C3A197EA63B39B96C6175C64
+      quote: 林地布甲 | 躯干 | 护 9 | 重 1.5 | 材质 布 | 属 battania | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#tassled_southern_robes
+      quote_hash: 50DEB71B623C008D6E5C68D0D758EF6BB93A3BC5F4DF36D6A507EB1AA2EB5267
+      quote: 流苏袍 | 躯干 | 护 6 | 重 0.9 | 材质 布 | 属 aserai | 分男女
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-torso-cloth-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 只有一个例外：袍子底下衬链甲的，护值二十五。这是把链甲缝进袍里当里子，外面看仍是件布袍。南方与草原惯用这一手——穿得不显眼，走夜路踏实。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#aserai_robe_c_chain
+    quote_hash: A88F1A17B9E4A04D6195A66605FDC83DFA32EF0FE1C0ED08DC080672A2128B69
+    quote: 袍衬链甲衫 | 躯干 | 护 25 | 重 8.2 | 材质 链甲 | 属 aserai | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#eastern_silk_clothing
+    quote_hash: 38A2A14ACD55D1CF49E0FF677B72B018099DBBA1EF50ED0F5620C2B25B75E0DA
+    quote: 丝绸长衫 | 躯干 | 护 6 | 重 0.4 | 材质 布 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#layered_robe
+    quote_hash: BD0A20C927C86CAF9EB88AB5D4E85176DD9B8C2C48B7D75EE03329844AE2B3FA
+    quote: 多层袍 | 躯干 | 护 5 | 重 2.0 | 材质 布 | 属 aserai | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#desert_robe
+    quote_hash: 45D997581DFECACE467517750D7EDC6E0CD51546D00CAAC6FD8005893CE59EBD
+    quote: 简易长衫 | 躯干 | 护 5 | 重 1.6 | 材质 布 | 属 aserai | 分男女
+  expressions:
+  - id: expr.weapon-armor-torso-cloth-aserai-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿塞莱的做法是把链甲缝进袍子里。外面是丝绸或细布，里子是锁甲，走起来不响，看着还是一身常服。赶长路的人爱穿这个——商道上不显富，也不怕碰见人。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_robe_c_chain
+      quote_hash: A88F1A17B9E4A04D6195A66605FDC83DFA32EF0FE1C0ED08DC080672A2128B69
+      quote: 袍衬链甲衫 | 躯干 | 护 25 | 重 8.2 | 材质 链甲 | 属 aserai | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_silk_clothing
+      quote_hash: 38A2A14ACD55D1CF49E0FF677B72B018099DBBA1EF50ED0F5620C2B25B75E0DA
+      quote: 丝绸长衫 | 躯干 | 护 6 | 重 0.4 | 材质 布 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#layered_robe
+      quote_hash: BD0A20C927C86CAF9EB88AB5D4E85176DD9B8C2C48B7D75EE03329844AE2B3FA
+      quote: 多层袍 | 躯干 | 护 5 | 重 2.0 | 材质 布 | 属 aserai | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#desert_robe
+      quote_hash: 45D997581DFECACE467517750D7EDC6E0CD51546D00CAAC6FD8005893CE59EBD
+      quote: 简易长衫 | 躯干 | 护 5 | 重 1.6 | 材质 布 | 属 aserai | 分男女
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    denies: []

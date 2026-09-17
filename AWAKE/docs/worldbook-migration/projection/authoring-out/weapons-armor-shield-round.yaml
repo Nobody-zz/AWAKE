@@ -1,0 +1,657 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-shield-round
+title:
+  zh-CN: 圆盾
+  en: Round Shield
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 圆盾
+  - 大圆盾
+  - 重型圆盾
+  - 椭圆盾
+  - 沙漠圆盾
+  - 高地圆盾
+  - 草原圆盾
+  - 小圆盾
+  en:
+  - Round Shield
+  - Large Round Shield
+  - Oval Shield
+  - Target Shield
+summary:
+  zh-CN: 一整块木头旋出来的圆盘，中间加一块铁凸——最好做的一面盾，草原、北地、沙漠各有各的做法。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#heavy_round_shield
+  quote_hash: EBC2D923E87215C56AFCF1326451FD55E3DD58DEECB36ABD411D27E98ECC0B42
+  quote: 重型圆盾 | Shield | 盾类 大盾 | 护 9 | 长 70 | 耐久 500 | 重 4.7 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#leather_round_shield
+  quote_hash: 16DB54957A491E26F6EACEE00A8D8B39A2FD17247BE0E8D3E49F55232D4D3A67
+  quote: 大圆盾 | Shield | 盾类 大盾 | 护 7 | 长 70 | 耐久 480 | 重 6.9 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#strapped_round_shield
+  quote_hash: 337083D8F6E8E7AA212801254A1B27749C5A2435744F31D7DCF6B1640F0FC6E3
+  quote: 强化大圆盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 490 | 重 7.3 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sturgia_old_shield_a
+  quote_hash: 1EA7C506A31653ECF4D02810F311B79E180B57264B2A45ADF0B64A939715610B
+  quote: 铁边大圆盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 380 | 重 4.2 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sturgia_old_shield_b
+  quote_hash: A6A6BAC85BF0DAE1E0029DC239221ED9CF0D818039A264276454BF9FA0A0A7FD
+  quote: 简易大圆盾 | Shield | 盾类 大盾 | 护 0 | 长 70 | 耐久 280 | 重 7.3 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#oval_shield
+  quote_hash: 87746D7CDE49E5E8F9DF3133FC82B3B7AF5383CF363B4B6E6E396C4450ACC2D8
+  quote: 木制椭圆盾 | Shield | 盾类 大盾 | 护 1 | 长 132 | 耐久 430 | 重 5.6 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#desert_round_shield
+  quote_hash: F5923A5561B6C476508C27C1BB1CA3A358FCE9D10C760CF5F1AB0EFAFB8676A2
+  quote: 强化沙漠圆盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 360 | 重 3.2 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#curved_round_shield
+  quote_hash: E04185F57E96FDAAFD134E031D236CB186C3704A5C38ED5FF98458A271A5B37C
+  quote: 曲面圆盾 | Shield | 盾类 大盾 | 护 1 | 长 66 | 耐久 345 | 重 3.4 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#studded_round_shield
+  quote_hash: 38759953D4F613A493E69B298273D90B0268CF9A1321DB7F7DCAC6839E85CFC4
+  quote: 铁制圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 300 | 重 2.7 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#steel_round_shield
+  quote_hash: 413D32C332B09A62DE9E2FA6AAF1546C1FDD027C12D4A1530CB10A78509EA3AA
+  quote: 钢制圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 540 | 重 4.4 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#viking_round_shield
+  quote_hash: B5B7BE4EBD8DC16078ABB4170F3CB02FF04E0A74EF6C495BACB612C4A37BEFAD
+  quote: 北境圆盾 | Shield | 盾类 大盾 | 护 6 | 长 70 | 耐久 360 | 重 3.5 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#northern_round_shield
+  quote_hash: 0E0997BBDC3B163A6E9058D4F402820414564B0885810DBF31FF547FA2572EF8
+  quote: 圆盾 | Shield | 盾类 大盾 | 护 5 | 长 70 | 耐久 300 | 重 3.0 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#southern_oval_shield
+  quote_hash: DB5831339091317DC1C21FB975B68F3129D47092005778BBB632713E1FF387DA
+  quote: 强化椭圆盾 | Shield | 盾类 大盾 | 护 1 | 长 435 | 耐久 360 | 重 4.9 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#tribal_steppe_shield
+  quote_hash: 1485E5DE4D62C791538F4014051E17E51DA01BAC8FAD676FDFB2E61B10848CA7
+  quote: 草原部落盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 310 | 重 3.0 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#decorated_steppe_shield
+  quote_hash: 7F7460BEB0A3CCB325CDFDD0E3C621653184C54B9031AB60FCEFF7206A701357
+  quote: 草原圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 340 | 重 3.2 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#noyans_shield
+  quote_hash: 5FBADF2409A4678845B2764903FE982EBB912BC819AB29E4BAD868E35BEC02D6
+  quote: 东方装饰盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 460 | 重 4.2 | 属 -
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#steppe_guardian_shield
+  quote_hash: 50B2FF3421B99D60A5F205855DF1362CA16E3A02DC899EF288D3240A292BCF9C
+  quote: 东方骑兵盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 340 | 重 3.4 | 属 -
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_targe_b
+  quote_hash: FBDAF554AE3E5857DF3500CFBE99325EEEEAA0F9BC8BEB70A1E2BA24E4935B41
+  quote: 靶标盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 215 | 重 1.6 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_shield_targe_a
+  quote_hash: 7E07433CB172DB6D8E8D85B59DE333E3BD814BE359954425C685A54CFD448A8D
+  quote: 强化靶标盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 250 | 重 2.0 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_large_shield_a
+  quote_hash: C24F571A79D3D3819C6FF9D6061C609DA1382611987392483996C370CA9F355B
+  quote: 铜强化高地大盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 430 | 重 4.2 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_large_shield_b
+  quote_hash: BF105344A9C2004352619D02BF716899DA1BC787F7CF50FC703F1158B52029B5
+  quote: 铁强化高地大盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 410 | 重 3.6 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#highland_scouts_shield
+  quote_hash: 384BE78029AEBE41B252D2D3834B30ED18A1F053BCD54E7A926027021F614C49
+  quote: 装饰圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 390 | 重 4.8 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#highland_riders_shield
+  quote_hash: EC75976354710A94218C99D9B0006312FF636B54E86BDFF4B52CC2DB4BD8A779
+  quote: 高地圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 520 | 重 5.4 | 属 battania
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-shield-round-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 圆盾是一整块木头旋成形、再在中心加一块铁凸。它比筝形盾好做、也比筝形盾便宜：一整块料旋出来，中间加铁凸就是全部工序。直径多在六十到一百三十之间；另有一路椭圆盾，比圆盾抻长得多，归在大盾那一档。这一路二十八件，耐久二百一十五到五百四十，护值零到九——多数是零或一，重型圆盾与大圆盾那几只到九。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#heavy_round_shield
+    quote_hash: EBC2D923E87215C56AFCF1326451FD55E3DD58DEECB36ABD411D27E98ECC0B42
+    quote: 重型圆盾 | Shield | 盾类 大盾 | 护 9 | 长 70 | 耐久 500 | 重 4.7 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#leather_round_shield
+    quote_hash: 16DB54957A491E26F6EACEE00A8D8B39A2FD17247BE0E8D3E49F55232D4D3A67
+    quote: 大圆盾 | Shield | 盾类 大盾 | 护 7 | 长 70 | 耐久 480 | 重 6.9 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#strapped_round_shield
+    quote_hash: 337083D8F6E8E7AA212801254A1B27749C5A2435744F31D7DCF6B1640F0FC6E3
+    quote: 强化大圆盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 490 | 重 7.3 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sturgia_old_shield_a
+    quote_hash: 1EA7C506A31653ECF4D02810F311B79E180B57264B2A45ADF0B64A939715610B
+    quote: 铁边大圆盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 380 | 重 4.2 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sturgia_old_shield_b
+    quote_hash: A6A6BAC85BF0DAE1E0029DC239221ED9CF0D818039A264276454BF9FA0A0A7FD
+    quote: 简易大圆盾 | Shield | 盾类 大盾 | 护 0 | 长 70 | 耐久 280 | 重 7.3 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#oval_shield
+    quote_hash: 87746D7CDE49E5E8F9DF3133FC82B3B7AF5383CF363B4B6E6E396C4450ACC2D8
+    quote: 木制椭圆盾 | Shield | 盾类 大盾 | 护 1 | 长 132 | 耐久 430 | 重 5.6 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#desert_round_shield
+    quote_hash: F5923A5561B6C476508C27C1BB1CA3A358FCE9D10C760CF5F1AB0EFAFB8676A2
+    quote: 强化沙漠圆盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 360 | 重 3.2 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#curved_round_shield
+    quote_hash: E04185F57E96FDAAFD134E031D236CB186C3704A5C38ED5FF98458A271A5B37C
+    quote: 曲面圆盾 | Shield | 盾类 大盾 | 护 1 | 长 66 | 耐久 345 | 重 3.4 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#studded_round_shield
+    quote_hash: 38759953D4F613A493E69B298273D90B0268CF9A1321DB7F7DCAC6839E85CFC4
+    quote: 铁制圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 300 | 重 2.7 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#steel_round_shield
+    quote_hash: 413D32C332B09A62DE9E2FA6AAF1546C1FDD027C12D4A1530CB10A78509EA3AA
+    quote: 钢制圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 540 | 重 4.4 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#viking_round_shield
+    quote_hash: B5B7BE4EBD8DC16078ABB4170F3CB02FF04E0A74EF6C495BACB612C4A37BEFAD
+    quote: 北境圆盾 | Shield | 盾类 大盾 | 护 6 | 长 70 | 耐久 360 | 重 3.5 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#northern_round_shield
+    quote_hash: 0E0997BBDC3B163A6E9058D4F402820414564B0885810DBF31FF547FA2572EF8
+    quote: 圆盾 | Shield | 盾类 大盾 | 护 5 | 长 70 | 耐久 300 | 重 3.0 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#southern_oval_shield
+    quote_hash: DB5831339091317DC1C21FB975B68F3129D47092005778BBB632713E1FF387DA
+    quote: 强化椭圆盾 | Shield | 盾类 大盾 | 护 1 | 长 435 | 耐久 360 | 重 4.9 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#tribal_steppe_shield
+    quote_hash: 1485E5DE4D62C791538F4014051E17E51DA01BAC8FAD676FDFB2E61B10848CA7
+    quote: 草原部落盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 310 | 重 3.0 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#decorated_steppe_shield
+    quote_hash: 7F7460BEB0A3CCB325CDFDD0E3C621653184C54B9031AB60FCEFF7206A701357
+    quote: 草原圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 340 | 重 3.2 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#noyans_shield
+    quote_hash: 5FBADF2409A4678845B2764903FE982EBB912BC819AB29E4BAD868E35BEC02D6
+    quote: 东方装饰盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 460 | 重 4.2 | 属 -
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#steppe_guardian_shield
+    quote_hash: 50B2FF3421B99D60A5F205855DF1362CA16E3A02DC899EF288D3240A292BCF9C
+    quote: 东方骑兵盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 340 | 重 3.4 | 属 -
+  expressions:
+  - id: expr.weapon-armor-shield-round-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 村里自己的匠人就能做。找块好木，旋圆了，中间那枚铁凸是买的。便宜、拿得住，坏了再做一个。就是不比外头的盾好看。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#heavy_round_shield
+      quote_hash: EBC2D923E87215C56AFCF1326451FD55E3DD58DEECB36ABD411D27E98ECC0B42
+      quote: 重型圆盾 | Shield | 盾类 大盾 | 护 9 | 长 70 | 耐久 500 | 重 4.7 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_round_shield
+      quote_hash: 16DB54957A491E26F6EACEE00A8D8B39A2FD17247BE0E8D3E49F55232D4D3A67
+      quote: 大圆盾 | Shield | 盾类 大盾 | 护 7 | 长 70 | 耐久 480 | 重 6.9 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#strapped_round_shield
+      quote_hash: 337083D8F6E8E7AA212801254A1B27749C5A2435744F31D7DCF6B1640F0FC6E3
+      quote: 强化大圆盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 490 | 重 7.3 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_old_shield_a
+      quote_hash: 1EA7C506A31653ECF4D02810F311B79E180B57264B2A45ADF0B64A939715610B
+      quote: 铁边大圆盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 380 | 重 4.2 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_old_shield_b
+      quote_hash: A6A6BAC85BF0DAE1E0029DC239221ED9CF0D818039A264276454BF9FA0A0A7FD
+      quote: 简易大圆盾 | Shield | 盾类 大盾 | 护 0 | 长 70 | 耐久 280 | 重 7.3 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#oval_shield
+      quote_hash: 87746D7CDE49E5E8F9DF3133FC82B3B7AF5383CF363B4B6E6E396C4450ACC2D8
+      quote: 木制椭圆盾 | Shield | 盾类 大盾 | 护 1 | 长 132 | 耐久 430 | 重 5.6 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#desert_round_shield
+      quote_hash: F5923A5561B6C476508C27C1BB1CA3A358FCE9D10C760CF5F1AB0EFAFB8676A2
+      quote: 强化沙漠圆盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 360 | 重 3.2 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#curved_round_shield
+      quote_hash: E04185F57E96FDAAFD134E031D236CB186C3704A5C38ED5FF98458A271A5B37C
+      quote: 曲面圆盾 | Shield | 盾类 大盾 | 护 1 | 长 66 | 耐久 345 | 重 3.4 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#studded_round_shield
+      quote_hash: 38759953D4F613A493E69B298273D90B0268CF9A1321DB7F7DCAC6839E85CFC4
+      quote: 铁制圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 300 | 重 2.7 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#steel_round_shield
+      quote_hash: 413D32C332B09A62DE9E2FA6AAF1546C1FDD027C12D4A1530CB10A78509EA3AA
+      quote: 钢制圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 540 | 重 4.4 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#viking_round_shield
+      quote_hash: B5B7BE4EBD8DC16078ABB4170F3CB02FF04E0A74EF6C495BACB612C4A37BEFAD
+      quote: 北境圆盾 | Shield | 盾类 大盾 | 护 6 | 长 70 | 耐久 360 | 重 3.5 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_round_shield
+      quote_hash: 0E0997BBDC3B163A6E9058D4F402820414564B0885810DBF31FF547FA2572EF8
+      quote: 圆盾 | Shield | 盾类 大盾 | 护 5 | 长 70 | 耐久 300 | 重 3.0 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#southern_oval_shield
+      quote_hash: DB5831339091317DC1C21FB975B68F3129D47092005778BBB632713E1FF387DA
+      quote: 强化椭圆盾 | Shield | 盾类 大盾 | 护 1 | 长 435 | 耐久 360 | 重 4.9 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#tribal_steppe_shield
+      quote_hash: 1485E5DE4D62C791538F4014051E17E51DA01BAC8FAD676FDFB2E61B10848CA7
+      quote: 草原部落盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 310 | 重 3.0 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#decorated_steppe_shield
+      quote_hash: 7F7460BEB0A3CCB325CDFDD0E3C621653184C54B9031AB60FCEFF7206A701357
+      quote: 草原圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 340 | 重 3.2 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#noyans_shield
+      quote_hash: 5FBADF2409A4678845B2764903FE982EBB912BC819AB29E4BAD868E35BEC02D6
+      quote: 东方装饰盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 460 | 重 4.2 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#steppe_guardian_shield
+      quote_hash: 50B2FF3421B99D60A5F205855DF1362CA16E3A02DC899EF288D3240A292BCF9C
+      quote: 东方骑兵盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 340 | 重 3.4 | 属 -
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-shield-round-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 圆盾的价钱在木料和中心铁凸上：软木旋得快但不经砸，硬木沉、要慢慢掏。中心铁凸是护住握把的那一块——没有它，一矛捅进来先断的就是手。耐久从二百一十五到五百四十：钢制圆盾最经打，靶标盾最不济。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#heavy_round_shield
+      quote_hash: EBC2D923E87215C56AFCF1326451FD55E3DD58DEECB36ABD411D27E98ECC0B42
+      quote: 重型圆盾 | Shield | 盾类 大盾 | 护 9 | 长 70 | 耐久 500 | 重 4.7 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_round_shield
+      quote_hash: 16DB54957A491E26F6EACEE00A8D8B39A2FD17247BE0E8D3E49F55232D4D3A67
+      quote: 大圆盾 | Shield | 盾类 大盾 | 护 7 | 长 70 | 耐久 480 | 重 6.9 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#strapped_round_shield
+      quote_hash: 337083D8F6E8E7AA212801254A1B27749C5A2435744F31D7DCF6B1640F0FC6E3
+      quote: 强化大圆盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 490 | 重 7.3 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_old_shield_a
+      quote_hash: 1EA7C506A31653ECF4D02810F311B79E180B57264B2A45ADF0B64A939715610B
+      quote: 铁边大圆盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 380 | 重 4.2 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_old_shield_b
+      quote_hash: A6A6BAC85BF0DAE1E0029DC239221ED9CF0D818039A264276454BF9FA0A0A7FD
+      quote: 简易大圆盾 | Shield | 盾类 大盾 | 护 0 | 长 70 | 耐久 280 | 重 7.3 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#oval_shield
+      quote_hash: 87746D7CDE49E5E8F9DF3133FC82B3B7AF5383CF363B4B6E6E396C4450ACC2D8
+      quote: 木制椭圆盾 | Shield | 盾类 大盾 | 护 1 | 长 132 | 耐久 430 | 重 5.6 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#desert_round_shield
+      quote_hash: F5923A5561B6C476508C27C1BB1CA3A358FCE9D10C760CF5F1AB0EFAFB8676A2
+      quote: 强化沙漠圆盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 360 | 重 3.2 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#curved_round_shield
+      quote_hash: E04185F57E96FDAAFD134E031D236CB186C3704A5C38ED5FF98458A271A5B37C
+      quote: 曲面圆盾 | Shield | 盾类 大盾 | 护 1 | 长 66 | 耐久 345 | 重 3.4 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#studded_round_shield
+      quote_hash: 38759953D4F613A493E69B298273D90B0268CF9A1321DB7F7DCAC6839E85CFC4
+      quote: 铁制圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 300 | 重 2.7 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#steel_round_shield
+      quote_hash: 413D32C332B09A62DE9E2FA6AAF1546C1FDD027C12D4A1530CB10A78509EA3AA
+      quote: 钢制圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 540 | 重 4.4 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#viking_round_shield
+      quote_hash: B5B7BE4EBD8DC16078ABB4170F3CB02FF04E0A74EF6C495BACB612C4A37BEFAD
+      quote: 北境圆盾 | Shield | 盾类 大盾 | 护 6 | 长 70 | 耐久 360 | 重 3.5 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_round_shield
+      quote_hash: 0E0997BBDC3B163A6E9058D4F402820414564B0885810DBF31FF547FA2572EF8
+      quote: 圆盾 | Shield | 盾类 大盾 | 护 5 | 长 70 | 耐久 300 | 重 3.0 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#southern_oval_shield
+      quote_hash: DB5831339091317DC1C21FB975B68F3129D47092005778BBB632713E1FF387DA
+      quote: 强化椭圆盾 | Shield | 盾类 大盾 | 护 1 | 长 435 | 耐久 360 | 重 4.9 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#tribal_steppe_shield
+      quote_hash: 1485E5DE4D62C791538F4014051E17E51DA01BAC8FAD676FDFB2E61B10848CA7
+      quote: 草原部落盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 310 | 重 3.0 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#decorated_steppe_shield
+      quote_hash: 7F7460BEB0A3CCB325CDFDD0E3C621653184C54B9031AB60FCEFF7206A701357
+      quote: 草原圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 340 | 重 3.2 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#noyans_shield
+      quote_hash: 5FBADF2409A4678845B2764903FE982EBB912BC819AB29E4BAD868E35BEC02D6
+      quote: 东方装饰盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 460 | 重 4.2 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#steppe_guardian_shield
+      quote_hash: 50B2FF3421B99D60A5F205855DF1362CA16E3A02DC899EF288D3240A292BCF9C
+      quote: 东方骑兵盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 340 | 重 3.4 | 属 -
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-shield-round-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 圆盾里有一路是专给巴旦尼亚人做的：靶标盾与高地盾，直径七十上下，配短矛与投石用，腰间一挂就走；做得讲究的在盾面缀铜、缀铁，耐久到四百三十。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_targe_b
+    quote_hash: FBDAF554AE3E5857DF3500CFBE99325EEEEAA0F9BC8BEB70A1E2BA24E4935B41
+    quote: 靶标盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 215 | 重 1.6 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_shield_targe_a
+    quote_hash: 7E07433CB172DB6D8E8D85B59DE333E3BD814BE359954425C685A54CFD448A8D
+    quote: 强化靶标盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 250 | 重 2.0 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_large_shield_a
+    quote_hash: C24F571A79D3D3819C6FF9D6061C609DA1382611987392483996C370CA9F355B
+    quote: 铜强化高地大盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 430 | 重 4.2 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_large_shield_b
+    quote_hash: BF105344A9C2004352619D02BF716899DA1BC787F7CF50FC703F1158B52029B5
+    quote: 铁强化高地大盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 410 | 重 3.6 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#highland_scouts_shield
+    quote_hash: 384BE78029AEBE41B252D2D3834B30ED18A1F053BCD54E7A926027021F614C49
+    quote: 装饰圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 390 | 重 4.8 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#highland_riders_shield
+    quote_hash: EC75976354710A94218C99D9B0006312FF636B54E86BDFF4B52CC2DB4BD8A779
+    quote: 高地圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 520 | 重 5.4 | 属 battania
+  expressions:
+  - id: expr.weapon-armor-shield-round-battania-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我们的小圆盾不挡阵，是配着短矛用的——一只手举着，另一只手照样能投石。直径不到一臂，挂在腰上走山路不碍事。大的那些是部里凑阵用的，边上一圈包铜，是拿战利品化的。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_targe_b
+      quote_hash: FBDAF554AE3E5857DF3500CFBE99325EEEEAA0F9BC8BEB70A1E2BA24E4935B41
+      quote: 靶标盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 215 | 重 1.6 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_shield_targe_a
+      quote_hash: 7E07433CB172DB6D8E8D85B59DE333E3BD814BE359954425C685A54CFD448A8D
+      quote: 强化靶标盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 250 | 重 2.0 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_large_shield_a
+      quote_hash: C24F571A79D3D3819C6FF9D6061C609DA1382611987392483996C370CA9F355B
+      quote: 铜强化高地大盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 430 | 重 4.2 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_large_shield_b
+      quote_hash: BF105344A9C2004352619D02BF716899DA1BC787F7CF50FC703F1158B52029B5
+      quote: 铁强化高地大盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 410 | 重 3.6 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#highland_scouts_shield
+      quote_hash: 384BE78029AEBE41B252D2D3834B30ED18A1F053BCD54E7A926027021F614C49
+      quote: 装饰圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 390 | 重 4.8 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#highland_riders_shield
+      quote_hash: EC75976354710A94218C99D9B0006312FF636B54E86BDFF4B52CC2DB4BD8A779
+      quote: 高地圆盾 | Shield | 盾类 大盾 | 护 1 | 长 60 | 耐久 520 | 重 5.4 | 属 battania
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.battania
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.battania
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.battania
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.battania
+    denies: []

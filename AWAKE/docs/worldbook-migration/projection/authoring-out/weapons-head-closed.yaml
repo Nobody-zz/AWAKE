@@ -1,0 +1,317 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-head-closed
+title:
+  zh-CN: 全覆面盔
+  en: Closed Helmet
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 全覆面盔
+  - 闭面盔
+  - 眼眶盔
+  - 全覆盔
+  - 覆面盔
+  - 闭面军阀盔
+  - 闭面骑士盔
+  - 护面盔
+  en:
+  - Closed Helmet
+  - Goggled Helmet
+  - Full Helm
+  - Visored Helmet
+  - Faceguard Helmet
+summary:
+  zh-CN: 整张脸罩住，只留视缝与呼吸孔——护头能到五十三、五十四，是全库顶格；代价是视野与呼吸。斯特吉亚的卫士与瓦兰迪亚的骑士用它。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#sturgian_helmet_closed
+  quote_hash: B537857AB4D5EB2190F113BE7B40E798BBD7B44532198B8EDBB78002E55283DD
+  quote: 闭面军阀盔 | HeadArmor | 护头 53 | 重 3.8 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 全
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#sturgian_helmet_b_close
+  quote_hash: F3695680B052986EC14CE354A00B3E475028F4B4ACECBBCE2C707A53F3FF2DA5
+  quote: 闭面装饰眼眶盔 | HeadArmor | 护头 54 | 重 3.8 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 全 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#vlandian_faceguard_helmet_a
+  quote_hash: 32B78B02A1EC8E30BDE03F2811EB2058A4AC72C5E2A75FCE435085E03F27DFE5
+  quote: 闭面骑士盔 | HeadArmor | 护头 45 | 重 2.2 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 全
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#nordic_helmet
+  quote_hash: 0DC0CCD51D28353FECDD45BD67AA46C94D9A9B77462AA18895AE9641C39889CD
+  quote: 闭面链甲眼眶盔 | HeadArmor | 护头 51 | 重 3.65 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#helmet_with_faceguard
+  quote_hash: 502C8D1CBB78F46BD63A064247E839BC988402FF1D76315080BB48E544D0692C
+  quote: 护面盔 | HeadArmor | 护头 25 | 重 2.5 | 材质 板 | 属 empire | 遮发 型二
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#decorated_goggled_helmet
+  quote_hash: E679428BEACE6DC8FFEAD0842F2236C4C3199C80BC52E299FAD4CBC2954A9FC9
+  quote: 强化闭面眼眶盔 | HeadArmor | 护头 52 | 重 3.2 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-head-closed-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 全覆面盔把整张脸罩住，只在眼位留视缝、在口鼻处留孔——护头值因此做到全库顶格的五十三与五十四，远超任何开面款式。代价同样明确：视野收窄成两条缝，呼吸闷在里面，戴久了耳朵也听不清阵列外的动静。以斯特吉亚的头领与卫士用得最多，瓦兰迪亚的骑士款式则带可翻起的护面板，行军时掀开透气。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#sturgian_helmet_closed
+    quote_hash: B537857AB4D5EB2190F113BE7B40E798BBD7B44532198B8EDBB78002E55283DD
+    quote: 闭面军阀盔 | HeadArmor | 护头 53 | 重 3.8 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 全
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#sturgian_helmet_b_close
+    quote_hash: F3695680B052986EC14CE354A00B3E475028F4B4ACECBBCE2C707A53F3FF2DA5
+    quote: 闭面装饰眼眶盔 | HeadArmor | 护头 54 | 重 3.8 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 全 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#vlandian_faceguard_helmet_a
+    quote_hash: 32B78B02A1EC8E30BDE03F2811EB2058A4AC72C5E2A75FCE435085E03F27DFE5
+    quote: 闭面骑士盔 | HeadArmor | 护头 45 | 重 2.2 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 全
+  expressions:
+  - id: expr.weapon-head-closed-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 那种盔连脸都不露，只留两条缝看人。站到跟前你都不知道他在看谁。听老兵说戴着它冲阵最稳，就是喘不上气——打完一场得赶紧掀开。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#sturgian_helmet_closed
+      quote_hash: B537857AB4D5EB2190F113BE7B40E798BBD7B44532198B8EDBB78002E55283DD
+      quote: 闭面军阀盔 | HeadArmor | 护头 53 | 重 3.8 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 全
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#sturgian_helmet_b_close
+      quote_hash: F3695680B052986EC14CE354A00B3E475028F4B4ACECBBCE2C707A53F3FF2DA5
+      quote: 闭面装饰眼眶盔 | HeadArmor | 护头 54 | 重 3.8 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#vlandian_faceguard_helmet_a
+      quote_hash: 32B78B02A1EC8E30BDE03F2811EB2058A4AC72C5E2A75FCE435085E03F27DFE5
+      quote: 闭面骑士盔 | HeadArmor | 护头 45 | 重 2.2 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 全
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-head-closed-sturgia-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 头领的盔整张脸都盖住，风吹不进来。北边的人认这个——脸不露，血不沾，站在盾墙前头才像话。新兵第一回戴多半要晕。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#sturgian_helmet_closed
+      quote_hash: B537857AB4D5EB2190F113BE7B40E798BBD7B44532198B8EDBB78002E55283DD
+      quote: 闭面军阀盔 | HeadArmor | 护头 53 | 重 3.8 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 全
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#sturgian_helmet_b_close
+      quote_hash: F3695680B052986EC14CE354A00B3E475028F4B4ACECBBCE2C707A53F3FF2DA5
+      quote: 闭面装饰眼眶盔 | HeadArmor | 护头 54 | 重 3.8 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#vlandian_faceguard_helmet_a
+      quote_hash: 32B78B02A1EC8E30BDE03F2811EB2058A4AC72C5E2A75FCE435085E03F27DFE5
+      quote: 闭面骑士盔 | HeadArmor | 护头 45 | 重 2.2 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 全
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []
+- id: assertion.weapon-head-closed-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 全覆面盔另有一条支流叫眼眶盔：不封整张脸，而是在眼位上做两个凸起的圆罩，形如一对眼眶——视缝比全闭款式宽，防护只在眼周加厚，护头四十九到五十一。它多与链甲同用，闭面链甲眼眶盔即把圆罩、链甲与护鼻合成一件。护面盔是这条路最轻的一档，只护住面门与下颌，护头二十五。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#nordic_helmet
+    quote_hash: 0DC0CCD51D28353FECDD45BD67AA46C94D9A9B77462AA18895AE9641C39889CD
+    quote: 闭面链甲眼眶盔 | HeadArmor | 护头 51 | 重 3.65 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#sturgian_helmet_b_close
+    quote_hash: F3695680B052986EC14CE354A00B3E475028F4B4ACECBBCE2C707A53F3FF2DA5
+    quote: 闭面装饰眼眶盔 | HeadArmor | 护头 54 | 重 3.8 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 全 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#helmet_with_faceguard
+    quote_hash: 502C8D1CBB78F46BD63A064247E839BC988402FF1D76315080BB48E544D0692C
+    quote: 护面盔 | HeadArmor | 护头 25 | 重 2.5 | 材质 板 | 属 empire | 遮发 型二
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#decorated_goggled_helmet
+    quote_hash: E679428BEACE6DC8FFEAD0842F2236C4C3199C80BC52E299FAD4CBC2954A9FC9
+    quote: 强化闭面眼眶盔 | HeadArmor | 护头 52 | 重 3.2 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全
+  expressions:
+  - id: expr.weapon-head-closed-vlandia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 骑士用的款式护面板能翻起来。行军和扎营时掀开，见人说话不必摘盔；列阵前落下去扣死，从鼻梁一直护到下巴，护头四十五。做这件的铁匠说，翻轴是最费工的地方——打歪一点就卡。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#nordic_helmet
+      quote_hash: 0DC0CCD51D28353FECDD45BD67AA46C94D9A9B77462AA18895AE9641C39889CD
+      quote: 闭面链甲眼眶盔 | HeadArmor | 护头 51 | 重 3.65 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#sturgian_helmet_b_close
+      quote_hash: F3695680B052986EC14CE354A00B3E475028F4B4ACECBBCE2C707A53F3FF2DA5
+      quote: 闭面装饰眼眶盔 | HeadArmor | 护头 54 | 重 3.8 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#helmet_with_faceguard
+      quote_hash: 502C8D1CBB78F46BD63A064247E839BC988402FF1D76315080BB48E544D0692C
+      quote: 护面盔 | HeadArmor | 护头 25 | 重 2.5 | 材质 板 | 属 empire | 遮发 型二
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#decorated_goggled_helmet
+      quote_hash: E679428BEACE6DC8FFEAD0842F2236C4C3199C80BC52E299FAD4CBC2954A9FC9
+      quote: 强化闭面眼眶盔 | HeadArmor | 护头 52 | 重 3.2 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+  - id: expr.weapon-head-closed-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 全覆面盔里最重的一档是闭面装饰眼眶盔，护头五十四，重量三点几公斤，顶上还缀饰条。这类盔多为赏赐或头领自购，极少成批列装——一副壳子的铁，够打三顶圆顶锅盔。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#nordic_helmet
+      quote_hash: 0DC0CCD51D28353FECDD45BD67AA46C94D9A9B77462AA18895AE9641C39889CD
+      quote: 闭面链甲眼眶盔 | HeadArmor | 护头 51 | 重 3.65 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#sturgian_helmet_b_close
+      quote_hash: F3695680B052986EC14CE354A00B3E475028F4B4ACECBBCE2C707A53F3FF2DA5
+      quote: 闭面装饰眼眶盔 | HeadArmor | 护头 54 | 重 3.8 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#helmet_with_faceguard
+      quote_hash: 502C8D1CBB78F46BD63A064247E839BC988402FF1D76315080BB48E544D0692C
+      quote: 护面盔 | HeadArmor | 护头 25 | 重 2.5 | 材质 板 | 属 empire | 遮发 型二
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#decorated_goggled_helmet
+      quote_hash: E679428BEACE6DC8FFEAD0842F2236C4C3199C80BC52E299FAD4CBC2954A9FC9
+      quote: 强化闭面眼眶盔 | HeadArmor | 护头 52 | 重 3.2 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

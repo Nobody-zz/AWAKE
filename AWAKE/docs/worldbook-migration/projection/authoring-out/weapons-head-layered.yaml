@@ -1,0 +1,437 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-head-layered
+title:
+  zh-CN: 叠穿：盔下的那一层
+  en: Layered Headgear
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 叠穿
+  - 盔下的那一层
+  - 衬盔
+  - 盔衬围帽
+  - 盔衬链甲
+  - 头盔衬
+  - 分层护甲
+  en:
+  - Layered Headgear
+  - Helmet over Coif
+  - Helmet over Mail
+  - Layered Armor
+summary:
+  zh-CN: 一层不够就套两层：外面扣盔滑刀，底下垫围帽、填充帽或链甲接住剩下的力道。这一层决定护头是三十五还是五十四。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#pointed_skullcap_over_mail
+  quote_hash: 034359B149A3A23F8FF6B3671A22A14536C7ED7E7DCDA4341EAB8BFF64261229
+  quote: 尖顶头盖盔衬软甲 | HeadArmor | 护头 32 | 重 2.2 | 材质 板 | 属 aserai | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#pointed_skullcap_over_mail_coif
+  quote_hash: EC34B31448AEFB543AE41614A8EC87B1338D71BF54B317B29D5D45ECED6D132E
+  quote: 尖顶头盖盔衬链甲围帽 | HeadArmor | 护头 37 | 重 2.8 | 材质 板 | 属 aserai | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#peaked_helmet_over_mail_coif
+  quote_hash: 84E5F6585FAEE0A9A1B04ABA2C224E95E5F429D4B4D1F5E60DA3E5E02463153F
+  quote: 檐盔衬链甲围帽 | HeadArmor | 护头 42 | 重 3 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#lendman_helmet_over_full_mail
+  quote_hash: 66749C9788065A7C4415E8C9D3140617F6F8E384AFF93E1FCA0AB2EF335E860A
+  quote: 军阀盔衬全覆链甲 | HeadArmor | 护头 54 | 重 3.8 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#segmented_cervelliere_over_mail
+  quote_hash: A731E4EE5F9ADA9EE9F5F2EC55444C2596C9985A9AE85941D3BA505F090FA524
+  quote: 分段碗盔衬链甲 | HeadArmor | 护头 26 | 重 2.85 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#leather_studdedhelm_over_thinhide
+  quote_hash: 0E0E5B929E4ECB7F637554DDB5483D7FA08AAFF0CBD61A94530B3EABA29FD4EA
+  quote: 皮革镶钉盔衬薄兽皮 | HeadArmor | 护头 12 | 重 0.8 | 材质 皮 | 属 battania | 遮发 全 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#peaked_helmet_over_padded_cloth
+  quote_hash: D0D8A38607D88B2269DCD4E29B235AD0EFA9CF6FD7CA486F49CC1D879ED2617D
+  quote: 檐盔衬填充布 | HeadArmor | 护头 36 | 重 2.5 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#segmented_cervelliere_over_padded_cloth
+  quote_hash: 635FB998020F8DEC6C100F5544CAB261FEC530EA552B32ACCE4317075310D8AF
+  quote: 分段碗盔衬填充布 | HeadArmor | 护头 28 | 重 2.8 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#lendman_helmet_over_mail
+  quote_hash: D460F137CC8EEF56B75B7B88A5BDE4097EC4130B37629E4B36F355654A79F332
+  quote: 军阀盔衬链甲 | HeadArmor | 护头 48 | 重 3.1 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 不遮 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#visored_helmet_over_mail_coif
+  quote_hash: 33D179D334D5062DE7502179DE14D5F9DF7583B01A5A72277550B81247FB3483
+  quote: 覆面盔衬链甲围帽 | HeadArmor | 护头 52 | 重 3.6 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型四 | 认队色 | 叠穿
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-head-layered-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 卡拉迪亚的护头有一件别的器物没有的做法：一层不够就套两层。外面扣一顶开面或半开的盔，底下垫上围帽、填充帽、皮革或链甲，两层一起戴。做法在名字里就写着——尖顶头盖盔衬软甲、檐盔衬链甲围帽、军阀盔衬全覆链甲。它把护头一路推上去：尖顶头盖盔单戴护头三十五，衬一圈链甲围帽到三十七，檐下的款式到四十二，一直垫到全覆链甲就是全库最高的五十四。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#pointed_skullcap_over_mail
+    quote_hash: 034359B149A3A23F8FF6B3671A22A14536C7ED7E7DCDA4341EAB8BFF64261229
+    quote: 尖顶头盖盔衬软甲 | HeadArmor | 护头 32 | 重 2.2 | 材质 板 | 属 aserai | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#pointed_skullcap_over_mail_coif
+    quote_hash: EC34B31448AEFB543AE41614A8EC87B1338D71BF54B317B29D5D45ECED6D132E
+    quote: 尖顶头盖盔衬链甲围帽 | HeadArmor | 护头 37 | 重 2.8 | 材质 板 | 属 aserai | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#peaked_helmet_over_mail_coif
+    quote_hash: 84E5F6585FAEE0A9A1B04ABA2C224E95E5F429D4B4D1F5E60DA3E5E02463153F
+    quote: 檐盔衬链甲围帽 | HeadArmor | 护头 42 | 重 3 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#lendman_helmet_over_full_mail
+    quote_hash: 66749C9788065A7C4415E8C9D3140617F6F8E384AFF93E1FCA0AB2EF335E860A
+    quote: 军阀盔衬全覆链甲 | HeadArmor | 护头 54 | 重 3.8 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全 | 叠穿
+  expressions:
+  - id: expr.weapon-head-layered-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 新兵只戴发的铁帽子，后脖子露着一片。老兵看一眼就知道——那一片让人从后头一箭就完。加一层铁环帽，或者随便垫块厚布，能多活一阵。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#pointed_skullcap_over_mail
+      quote_hash: 034359B149A3A23F8FF6B3671A22A14536C7ED7E7DCDA4341EAB8BFF64261229
+      quote: 尖顶头盖盔衬软甲 | HeadArmor | 护头 32 | 重 2.2 | 材质 板 | 属 aserai | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#pointed_skullcap_over_mail_coif
+      quote_hash: EC34B31448AEFB543AE41614A8EC87B1338D71BF54B317B29D5D45ECED6D132E
+      quote: 尖顶头盖盔衬链甲围帽 | HeadArmor | 护头 37 | 重 2.8 | 材质 板 | 属 aserai | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#peaked_helmet_over_mail_coif
+      quote_hash: 84E5F6585FAEE0A9A1B04ABA2C224E95E5F429D4B4D1F5E60DA3E5E02463153F
+      quote: 檐盔衬链甲围帽 | HeadArmor | 护头 42 | 重 3 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#lendman_helmet_over_full_mail
+      quote_hash: 66749C9788065A7C4415E8C9D3140617F6F8E384AFF93E1FCA0AB2EF335E860A
+      quote: 军阀盔衬全覆链甲 | HeadArmor | 护头 54 | 重 3.8 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全 | 叠穿
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-head-layered-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 叠穿的壳子以锅盔、头盖盔、檐盔与碗盔为主，垫层则按价钱分四档：填充布最省钱，填充帽次之，皮革再上，链甲最贵。同一顶壳子换垫层，护头能从三十三一路做到五十四——行家买盔先量壳，再单独挑垫层，两件分开买比成套便宜。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#pointed_skullcap_over_mail
+      quote_hash: 034359B149A3A23F8FF6B3671A22A14536C7ED7E7DCDA4341EAB8BFF64261229
+      quote: 尖顶头盖盔衬软甲 | HeadArmor | 护头 32 | 重 2.2 | 材质 板 | 属 aserai | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#pointed_skullcap_over_mail_coif
+      quote_hash: EC34B31448AEFB543AE41614A8EC87B1338D71BF54B317B29D5D45ECED6D132E
+      quote: 尖顶头盖盔衬链甲围帽 | HeadArmor | 护头 37 | 重 2.8 | 材质 板 | 属 aserai | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#peaked_helmet_over_mail_coif
+      quote_hash: 84E5F6585FAEE0A9A1B04ABA2C224E95E5F429D4B4D1F5E60DA3E5E02463153F
+      quote: 檐盔衬链甲围帽 | HeadArmor | 护头 42 | 重 3 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#lendman_helmet_over_full_mail
+      quote_hash: 66749C9788065A7C4415E8C9D3140617F6F8E384AFF93E1FCA0AB2EF335E860A
+      quote: 军阀盔衬全覆链甲 | HeadArmor | 护头 54 | 重 3.8 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全 | 叠穿
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+  - id: expr.weapon-head-layered-vlandia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 瓦兰迪亚的军械里叠穿是现成的成套配：锅盔衬填充帽、锅盔衬系带围帽、锅盔衬链甲围帽，按征召、常备、亲卫三层分发。铁帽是同一个模具打的，区别全在底下的那一层——这也让军需官好管：壳子坏了补壳子，垫层破了补垫层。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#pointed_skullcap_over_mail
+      quote_hash: 034359B149A3A23F8FF6B3671A22A14536C7ED7E7DCDA4341EAB8BFF64261229
+      quote: 尖顶头盖盔衬软甲 | HeadArmor | 护头 32 | 重 2.2 | 材质 板 | 属 aserai | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#pointed_skullcap_over_mail_coif
+      quote_hash: EC34B31448AEFB543AE41614A8EC87B1338D71BF54B317B29D5D45ECED6D132E
+      quote: 尖顶头盖盔衬链甲围帽 | HeadArmor | 护头 37 | 重 2.8 | 材质 板 | 属 aserai | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#peaked_helmet_over_mail_coif
+      quote_hash: 84E5F6585FAEE0A9A1B04ABA2C224E95E5F429D4B4D1F5E60DA3E5E02463153F
+      quote: 檐盔衬链甲围帽 | HeadArmor | 护头 42 | 重 3 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#lendman_helmet_over_full_mail
+      quote_hash: 66749C9788065A7C4415E8C9D3140617F6F8E384AFF93E1FCA0AB2EF335E860A
+      quote: 军阀盔衬全覆链甲 | HeadArmor | 护头 54 | 重 3.8 | 材质 链甲 | 属 sturgia | 遮发 全 | 遮须 全 | 叠穿
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+- id: assertion.weapon-head-layered-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 叠穿的代价是分量。单戴一件轻型锅盔不到两公斤，垫上链甲围帽接近三公斤，垫到全覆链甲则近四公斤——压得脖子发酸，戴久了人也迟钝。因此这一做法分人用：征召兵垫布，常备兵垫皮，只有亲卫与头领才肯整日顶着最厚的那一套。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#segmented_cervelliere_over_mail
+    quote_hash: A731E4EE5F9ADA9EE9F5F2EC55444C2596C9985A9AE85941D3BA505F090FA524
+    quote: 分段碗盔衬链甲 | HeadArmor | 护头 26 | 重 2.85 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#leather_studdedhelm_over_thinhide
+    quote_hash: 0E0E5B929E4ECB7F637554DDB5483D7FA08AAFF0CBD61A94530B3EABA29FD4EA
+    quote: 皮革镶钉盔衬薄兽皮 | HeadArmor | 护头 12 | 重 0.8 | 材质 皮 | 属 battania | 遮发 全 | 叠穿
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#peaked_helmet_over_padded_cloth
+    quote_hash: D0D8A38607D88B2269DCD4E29B235AD0EFA9CF6FD7CA486F49CC1D879ED2617D
+    quote: 檐盔衬填充布 | HeadArmor | 护头 36 | 重 2.5 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#segmented_cervelliere_over_padded_cloth
+    quote_hash: 635FB998020F8DEC6C100F5544CAB261FEC530EA552B32ACCE4317075310D8AF
+    quote: 分段碗盔衬填充布 | HeadArmor | 护头 28 | 重 2.8 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#lendman_helmet_over_mail
+    quote_hash: D460F137CC8EEF56B75B7B88A5BDE4097EC4130B37629E4B36F355654A79F332
+    quote: 军阀盔衬链甲 | HeadArmor | 护头 48 | 重 3.1 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 不遮 | 叠穿
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#visored_helmet_over_mail_coif
+    quote_hash: 33D179D334D5062DE7502179DE14D5F9DF7583B01A5A72277550B81247FB3483
+    quote: 覆面盔衬链甲围帽 | HeadArmor | 护头 52 | 重 3.6 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型四 | 认队色 | 叠穿
+  expressions:
+  - id: expr.weapon-head-layered-sturgia-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 最厚的那套戴上，脖子一天下来像被人掐过。可盾墙第一排就得这么戴——第一排挨得最多，也退得最晚。头领赏的那一顶，我留着给孩子了，我自己戴轻的。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#segmented_cervelliere_over_mail
+      quote_hash: A731E4EE5F9ADA9EE9F5F2EC55444C2596C9985A9AE85941D3BA505F090FA524
+      quote: 分段碗盔衬链甲 | HeadArmor | 护头 26 | 重 2.85 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#leather_studdedhelm_over_thinhide
+      quote_hash: 0E0E5B929E4ECB7F637554DDB5483D7FA08AAFF0CBD61A94530B3EABA29FD4EA
+      quote: 皮革镶钉盔衬薄兽皮 | HeadArmor | 护头 12 | 重 0.8 | 材质 皮 | 属 battania | 遮发 全 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#peaked_helmet_over_padded_cloth
+      quote_hash: D0D8A38607D88B2269DCD4E29B235AD0EFA9CF6FD7CA486F49CC1D879ED2617D
+      quote: 檐盔衬填充布 | HeadArmor | 护头 36 | 重 2.5 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#segmented_cervelliere_over_padded_cloth
+      quote_hash: 635FB998020F8DEC6C100F5544CAB261FEC530EA552B32ACCE4317075310D8AF
+      quote: 分段碗盔衬填充布 | HeadArmor | 护头 28 | 重 2.8 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#lendman_helmet_over_mail
+      quote_hash: D460F137CC8EEF56B75B7B88A5BDE4097EC4130B37629E4B36F355654A79F332
+      quote: 军阀盔衬链甲 | HeadArmor | 护头 48 | 重 3.1 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 不遮 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#visored_helmet_over_mail_coif
+      quote_hash: 33D179D334D5062DE7502179DE14D5F9DF7583B01A5A72277550B81247FB3483
+      quote: 覆面盔衬链甲围帽 | HeadArmor | 护头 52 | 重 3.6 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型四 | 认队色 | 叠穿
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []
+  - id: expr.weapon-head-layered-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 叠穿的省法是缝成一件：分段碗盔衬链甲把壳子与链甲缝死，护头二十六；檐盔衬填充布把壳与垫层合成一件，护头三十六。合缝的省事，坏了整件换；分体的费工，但哪一层破了只换哪一层——同一顶壳子能配填充布、系带围帽或链甲围帽，长年算下来更划算。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#segmented_cervelliere_over_mail
+      quote_hash: A731E4EE5F9ADA9EE9F5F2EC55444C2596C9985A9AE85941D3BA505F090FA524
+      quote: 分段碗盔衬链甲 | HeadArmor | 护头 26 | 重 2.85 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#leather_studdedhelm_over_thinhide
+      quote_hash: 0E0E5B929E4ECB7F637554DDB5483D7FA08AAFF0CBD61A94530B3EABA29FD4EA
+      quote: 皮革镶钉盔衬薄兽皮 | HeadArmor | 护头 12 | 重 0.8 | 材质 皮 | 属 battania | 遮发 全 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#peaked_helmet_over_padded_cloth
+      quote_hash: D0D8A38607D88B2269DCD4E29B235AD0EFA9CF6FD7CA486F49CC1D879ED2617D
+      quote: 檐盔衬填充布 | HeadArmor | 护头 36 | 重 2.5 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#segmented_cervelliere_over_padded_cloth
+      quote_hash: 635FB998020F8DEC6C100F5544CAB261FEC530EA552B32ACCE4317075310D8AF
+      quote: 分段碗盔衬填充布 | HeadArmor | 护头 28 | 重 2.8 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#lendman_helmet_over_mail
+      quote_hash: D460F137CC8EEF56B75B7B88A5BDE4097EC4130B37629E4B36F355654A79F332
+      quote: 军阀盔衬链甲 | HeadArmor | 护头 48 | 重 3.1 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 不遮 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#visored_helmet_over_mail_coif
+      quote_hash: 33D179D334D5062DE7502179DE14D5F9DF7583B01A5A72277550B81247FB3483
+      quote: 覆面盔衬链甲围帽 | HeadArmor | 护头 52 | 重 3.6 | 材质 板 | 属 vlandia | 遮发 全 | 遮须 型四 | 认队色 | 叠穿
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

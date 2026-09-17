@@ -1,0 +1,560 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-cape-shoulders
+title:
+  zh-CN: 软甲护肩与背带
+  en: Mail and Leather Shoulder Guards
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 皮护肩
+  - 链甲护肩
+  - 镶钉护肩
+  - 皮革背带
+  - 装饰背带
+  - 肩带
+  - 软甲护肩
+  en:
+  - Leather Shoulder Guard
+  - Mail Shoulders
+  - Shoulder Strap
+  - Studded Shoulders
+summary:
+  zh-CN: 皮的、链的、缀钉的护肩与背带，护值一到十五——真正的重甲底下，垫着的都是这些东西。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#varangian_bra_scale
+  quote_hash: 4D6A5D10B4C7880E50C130673194666DFCD69324B211AA1A3578FA8223EC340D
+  quote: 装饰皮革背带衬鳞甲 | 披风 | 护 15 | 重 13.5 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#varangian_bra_mail
+  quote_hash: 174D67BED5189A06576CBE668B5A6864DC9C0029EC70756E58DEFFAF8925C231
+  quote: 装饰皮革背带衬链甲 | 披风 | 护 14 | 重 11.5 | 材质 链甲 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#varangian_bra_padded
+  quote_hash: 00DDED319633B3C9593B6806E7C69F0FB4C411D28034A3F14CBFC181B3FC9F62
+  quote: 装饰皮革背带配填充甲 | 披风 | 护 12 | 重 8.5 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#varangian_bra_royal
+  quote_hash: 2B6639101485062A5DE4503B33B62FD6B112072615160E19A7128FD4D29D1752
+  quote: 披风皮革背带 | 披风 | 护 7 | 重 4.9 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#varangian_bra_basic
+  quote_hash: 8BEDBE29555A3A8E292AE07797B33358B808C2CF5CA8E7F1F8EB2128CB5CFD73
+  quote: 装饰皮革背带 | 披风 | 护 6 | 重 4.5 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#eastern_studded_shoulders
+  quote_hash: ADA1275D79BD326B0E65CDC63003FCC648AF0900B9FF78853F0C9BC089B9F87A
+  quote: 强化镶钉护肩 | 披风 | 护 9 | 重 9.9 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#chainmail_shoulder_armor
+  quote_hash: 9B4878C1987E7074952589872F22A1F5E4D32D70E3D0F439123B13E3F9224E95
+  quote: 强化链甲护肩 | 披风 | 护 9 | 重 5.8 | 材质 链甲 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#mail_shoulders
+  quote_hash: E2C9FEE3465112438C3855AAE4348DC8B6E86BB276122E1A3FD8C0F5F91379F8
+  quote: 链甲护肩 | 披风 | 护 9 | 重 5.7 | 材质 链甲 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battanian_chainmail_shoulder_b
+  quote_hash: 724EA690DEE96DA106BE930CC8DBDBCC09D24F31BB0421AF017CF8DBB7D1E32B
+  quote: 强化链甲护肩 | 披风 | 护 8 | 重 3.5 | 材质 链甲 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#bolted_leather_strips
+  quote_hash: 006DAD3E38785DEE905ED709AA544B50E690F89A671AB839017663EF97FF2A77
+  quote: 螺钉皮革条甲 | 披风 | 护 8 | 重 0.8 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#leather_lamellar_shoulders
+  quote_hash: 5D7F0FD482E402A673CEBBEF890A35DEE859AA38C467C4FC1FF1B5F5A1448D3E
+  quote: 皮扎甲护肩 | 披风 | 护 6 | 重 3.5 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#imperial_studded_strip_shoulders
+  quote_hash: 018E56A07CF7DE4EA1DD9B9B5591139F813432A0F253ADB216C2734D843F43BE
+  quote: 军团强化镶钉背带 | 披风 | 护 6 | 重 3.9 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#stitched_leather_shoulders
+  quote_hash: B14EA0942E38B542035F831818D6CC2BBBC6620DFE1B3DAD49F0FAD624EBCA9B
+  quote: 缝制皮护肩 | 披风 | 护 1 | 重 0.9 | 材质 皮 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#woven_leather_shoulders
+  quote_hash: 07779C42BF27D4F25BE929FABD928A74B9AF422191CBB8F6F4D261A2CD408888
+  quote: 编织皮护肩 | 披风 | 护 2 | 重 2.8 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#steppe_leather_shoulders
+  quote_hash: F29F755814C9ABD796491C865D2E64C4D40F246A612F043F59BB49BD297F7A16
+  quote: 硬皮肩甲 | 披风 | 护 1 | 重 0.8 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#reinforced_suede_shoulders
+  quote_hash: 9D385700C720969C90C3C18BF6B276ACE6BE6AD93BACCF665869C91A1A20AAF3
+  quote: 强化绒面护肩 | 披风 | 护 1 | 重 0.75 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#aserai_horseman_shoulder
+  quote_hash: 9833BA32D7699975D50F1CD8FA6B663E068AE44EA6A8540830FFD9BA6E84DD7E
+  quote: 环甲护肩 | 披风 | 护 7 | 重 2.9 | 材质 皮 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_shoulder_strap
+  quote_hash: 4CC6EAC7D14D1A0B1ADD5A607EE215F15E26AC0B29DA83B77D02D3E4D0D826AE
+  quote: 肩带 | 披风 | 护 1 | 重 0.65 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battanian_leather_shoulder_a
+  quote_hash: 250F8FF7B765DEB07F0E37AC2D5A92BA8D0B81B36556B69D02AD29E7FA0D6EA8
+  quote: 硬皮肩衬 | 披风 | 护 4 | 重 0.85 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#assassin_shoulder
+  quote_hash: A6A525C6A4A87D27DFA1ECF773F19F0F5620F364BF7FC940410A2CF0799F7635
+  quote: 黑披风 | 披风 | 护 4 | 重 0.85 | 材质 皮 | 属 nord
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-cape-shoulders-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 软甲护肩与背带是披挂位里真正干活的那些：皮护肩、链甲护肩、缀钉护肩，以及在胸前交叉的皮革背带，护值一到十五。它们不像金属肩甲那样显眼，却是重甲穿戴的基础——链甲贴肉会磨破，靠背带把分量匀到肩上；帝国瓦兰吉式的装饰背带更在皮带上缀鳞片或环甲，护值十四。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#varangian_bra_scale
+    quote_hash: 4D6A5D10B4C7880E50C130673194666DFCD69324B211AA1A3578FA8223EC340D
+    quote: 装饰皮革背带衬鳞甲 | 披风 | 护 15 | 重 13.5 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#varangian_bra_mail
+    quote_hash: 174D67BED5189A06576CBE668B5A6864DC9C0029EC70756E58DEFFAF8925C231
+    quote: 装饰皮革背带衬链甲 | 披风 | 护 14 | 重 11.5 | 材质 链甲 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#varangian_bra_padded
+    quote_hash: 00DDED319633B3C9593B6806E7C69F0FB4C411D28034A3F14CBFC181B3FC9F62
+    quote: 装饰皮革背带配填充甲 | 披风 | 护 12 | 重 8.5 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#varangian_bra_royal
+    quote_hash: 2B6639101485062A5DE4503B33B62FD6B112072615160E19A7128FD4D29D1752
+    quote: 披风皮革背带 | 披风 | 护 7 | 重 4.9 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#varangian_bra_basic
+    quote_hash: 8BEDBE29555A3A8E292AE07797B33358B808C2CF5CA8E7F1F8EB2128CB5CFD73
+    quote: 装饰皮革背带 | 披风 | 护 6 | 重 4.5 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#eastern_studded_shoulders
+    quote_hash: ADA1275D79BD326B0E65CDC63003FCC648AF0900B9FF78853F0C9BC089B9F87A
+    quote: 强化镶钉护肩 | 披风 | 护 9 | 重 9.9 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#chainmail_shoulder_armor
+    quote_hash: 9B4878C1987E7074952589872F22A1F5E4D32D70E3D0F439123B13E3F9224E95
+    quote: 强化链甲护肩 | 披风 | 护 9 | 重 5.8 | 材质 链甲 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#mail_shoulders
+    quote_hash: E2C9FEE3465112438C3855AAE4348DC8B6E86BB276122E1A3FD8C0F5F91379F8
+    quote: 链甲护肩 | 披风 | 护 9 | 重 5.7 | 材质 链甲 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battanian_chainmail_shoulder_b
+    quote_hash: 724EA690DEE96DA106BE930CC8DBDBCC09D24F31BB0421AF017CF8DBB7D1E32B
+    quote: 强化链甲护肩 | 披风 | 护 8 | 重 3.5 | 材质 链甲 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#bolted_leather_strips
+    quote_hash: 006DAD3E38785DEE905ED709AA544B50E690F89A671AB839017663EF97FF2A77
+    quote: 螺钉皮革条甲 | 披风 | 护 8 | 重 0.8 | 材质 皮 | 属 khuzait
+  expressions:
+  - id: expr.weapon-armor-cape-shoulders-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 链甲直接搭在肩上，走上半天就磨出血。老兵的肩上都有一对厚背带，皮的，或是缀了钉的。这玩意儿不显眼，可少了它一身甲穿不住。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#varangian_bra_scale
+      quote_hash: 4D6A5D10B4C7880E50C130673194666DFCD69324B211AA1A3578FA8223EC340D
+      quote: 装饰皮革背带衬鳞甲 | 披风 | 护 15 | 重 13.5 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#varangian_bra_mail
+      quote_hash: 174D67BED5189A06576CBE668B5A6864DC9C0029EC70756E58DEFFAF8925C231
+      quote: 装饰皮革背带衬链甲 | 披风 | 护 14 | 重 11.5 | 材质 链甲 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#varangian_bra_padded
+      quote_hash: 00DDED319633B3C9593B6806E7C69F0FB4C411D28034A3F14CBFC181B3FC9F62
+      quote: 装饰皮革背带配填充甲 | 披风 | 护 12 | 重 8.5 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#varangian_bra_royal
+      quote_hash: 2B6639101485062A5DE4503B33B62FD6B112072615160E19A7128FD4D29D1752
+      quote: 披风皮革背带 | 披风 | 护 7 | 重 4.9 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#varangian_bra_basic
+      quote_hash: 8BEDBE29555A3A8E292AE07797B33358B808C2CF5CA8E7F1F8EB2128CB5CFD73
+      quote: 装饰皮革背带 | 披风 | 护 6 | 重 4.5 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_studded_shoulders
+      quote_hash: ADA1275D79BD326B0E65CDC63003FCC648AF0900B9FF78853F0C9BC089B9F87A
+      quote: 强化镶钉护肩 | 披风 | 护 9 | 重 9.9 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#chainmail_shoulder_armor
+      quote_hash: 9B4878C1987E7074952589872F22A1F5E4D32D70E3D0F439123B13E3F9224E95
+      quote: 强化链甲护肩 | 披风 | 护 9 | 重 5.8 | 材质 链甲 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#mail_shoulders
+      quote_hash: E2C9FEE3465112438C3855AAE4348DC8B6E86BB276122E1A3FD8C0F5F91379F8
+      quote: 链甲护肩 | 披风 | 护 9 | 重 5.7 | 材质 链甲 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battanian_chainmail_shoulder_b
+      quote_hash: 724EA690DEE96DA106BE930CC8DBDBCC09D24F31BB0421AF017CF8DBB7D1E32B
+      quote: 强化链甲护肩 | 披风 | 护 8 | 重 3.5 | 材质 链甲 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#bolted_leather_strips
+      quote_hash: 006DAD3E38785DEE905ED709AA544B50E690F89A671AB839017663EF97FF2A77
+      quote: 螺钉皮革条甲 | 披风 | 护 8 | 重 0.8 | 材质 皮 | 属 khuzait
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-cape-shoulders-empire-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帝国那边有一种装饰背带，皮带上缀甲片，从两肩交叉到腰后。原本是给外来卫队用的，后来讲究起来——边上缀鳞片还是缀环甲，成了分身份的东西。护值十四，可没人真指望它挡刀。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#varangian_bra_scale
+      quote_hash: 4D6A5D10B4C7880E50C130673194666DFCD69324B211AA1A3578FA8223EC340D
+      quote: 装饰皮革背带衬鳞甲 | 披风 | 护 15 | 重 13.5 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#varangian_bra_mail
+      quote_hash: 174D67BED5189A06576CBE668B5A6864DC9C0029EC70756E58DEFFAF8925C231
+      quote: 装饰皮革背带衬链甲 | 披风 | 护 14 | 重 11.5 | 材质 链甲 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#varangian_bra_padded
+      quote_hash: 00DDED319633B3C9593B6806E7C69F0FB4C411D28034A3F14CBFC181B3FC9F62
+      quote: 装饰皮革背带配填充甲 | 披风 | 护 12 | 重 8.5 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#varangian_bra_royal
+      quote_hash: 2B6639101485062A5DE4503B33B62FD6B112072615160E19A7128FD4D29D1752
+      quote: 披风皮革背带 | 披风 | 护 7 | 重 4.9 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#varangian_bra_basic
+      quote_hash: 8BEDBE29555A3A8E292AE07797B33358B808C2CF5CA8E7F1F8EB2128CB5CFD73
+      quote: 装饰皮革背带 | 披风 | 护 6 | 重 4.5 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_studded_shoulders
+      quote_hash: ADA1275D79BD326B0E65CDC63003FCC648AF0900B9FF78853F0C9BC089B9F87A
+      quote: 强化镶钉护肩 | 披风 | 护 9 | 重 9.9 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#chainmail_shoulder_armor
+      quote_hash: 9B4878C1987E7074952589872F22A1F5E4D32D70E3D0F439123B13E3F9224E95
+      quote: 强化链甲护肩 | 披风 | 护 9 | 重 5.8 | 材质 链甲 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#mail_shoulders
+      quote_hash: E2C9FEE3465112438C3855AAE4348DC8B6E86BB276122E1A3FD8C0F5F91379F8
+      quote: 链甲护肩 | 披风 | 护 9 | 重 5.7 | 材质 链甲 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battanian_chainmail_shoulder_b
+      quote_hash: 724EA690DEE96DA106BE930CC8DBDBCC09D24F31BB0421AF017CF8DBB7D1E32B
+      quote: 强化链甲护肩 | 披风 | 护 8 | 重 3.5 | 材质 链甲 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#bolted_leather_strips
+      quote_hash: 006DAD3E38785DEE905ED709AA544B50E690F89A671AB839017663EF97FF2A77
+      quote: 螺钉皮革条甲 | 披风 | 护 8 | 重 0.8 | 材质 皮 | 属 khuzait
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+- id: assertion.weapon-armor-cape-shoulders-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 这一路的另一种做法：不单独做肩，而是把护肩嵌进背带里——皮革肩衬上缀一层鳞片或短环，护值十一到十五，穿着比成套肩甲活络。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#leather_lamellar_shoulders
+    quote_hash: 5D7F0FD482E402A673CEBBEF890A35DEE859AA38C467C4FC1FF1B5F5A1448D3E
+    quote: 皮扎甲护肩 | 披风 | 护 6 | 重 3.5 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#imperial_studded_strip_shoulders
+    quote_hash: 018E56A07CF7DE4EA1DD9B9B5591139F813432A0F253ADB216C2734D843F43BE
+    quote: 军团强化镶钉背带 | 披风 | 护 6 | 重 3.9 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#stitched_leather_shoulders
+    quote_hash: B14EA0942E38B542035F831818D6CC2BBBC6620DFE1B3DAD49F0FAD624EBCA9B
+    quote: 缝制皮护肩 | 披风 | 护 1 | 重 0.9 | 材质 皮 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#woven_leather_shoulders
+    quote_hash: 07779C42BF27D4F25BE929FABD928A74B9AF422191CBB8F6F4D261A2CD408888
+    quote: 编织皮护肩 | 披风 | 护 2 | 重 2.8 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#steppe_leather_shoulders
+    quote_hash: F29F755814C9ABD796491C865D2E64C4D40F246A612F043F59BB49BD297F7A16
+    quote: 硬皮肩甲 | 披风 | 护 1 | 重 0.8 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#reinforced_suede_shoulders
+    quote_hash: 9D385700C720969C90C3C18BF6B276ACE6BE6AD93BACCF665869C91A1A20AAF3
+    quote: 强化绒面护肩 | 披风 | 护 1 | 重 0.75 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#aserai_horseman_shoulder
+    quote_hash: 9833BA32D7699975D50F1CD8FA6B663E068AE44EA6A8540830FFD9BA6E84DD7E
+    quote: 环甲护肩 | 披风 | 护 7 | 重 2.9 | 材质 皮 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_shoulder_strap
+    quote_hash: 4CC6EAC7D14D1A0B1ADD5A607EE215F15E26AC0B29DA83B77D02D3E4D0D826AE
+    quote: 肩带 | 披风 | 护 1 | 重 0.65 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battanian_leather_shoulder_a
+    quote_hash: 250F8FF7B765DEB07F0E37AC2D5A92BA8D0B81B36556B69D02AD29E7FA0D6EA8
+    quote: 硬皮肩衬 | 披风 | 护 4 | 重 0.85 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#assassin_shoulder
+    quote_hash: A6A525C6A4A87D27DFA1ECF773F19F0F5620F364BF7FC940410A2CF0799F7635
+    quote: 黑披风 | 披风 | 护 4 | 重 0.85 | 材质 皮 | 属 nord
+  expressions:
+  - id: expr.weapon-armor-cape-shoulders-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 把护肩嵌进背带是省料的办法：一条皮带从肩到腰，肩那一段加厚、缀上甲片。一副这样的背带重不到一公斤，护值能到十五，比单买肩甲便宜一半。骑兵多半用它——转身、举矛都不碍事。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_lamellar_shoulders
+      quote_hash: 5D7F0FD482E402A673CEBBEF890A35DEE859AA38C467C4FC1FF1B5F5A1448D3E
+      quote: 皮扎甲护肩 | 披风 | 护 6 | 重 3.5 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#imperial_studded_strip_shoulders
+      quote_hash: 018E56A07CF7DE4EA1DD9B9B5591139F813432A0F253ADB216C2734D843F43BE
+      quote: 军团强化镶钉背带 | 披风 | 护 6 | 重 3.9 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#stitched_leather_shoulders
+      quote_hash: B14EA0942E38B542035F831818D6CC2BBBC6620DFE1B3DAD49F0FAD624EBCA9B
+      quote: 缝制皮护肩 | 披风 | 护 1 | 重 0.9 | 材质 皮 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#woven_leather_shoulders
+      quote_hash: 07779C42BF27D4F25BE929FABD928A74B9AF422191CBB8F6F4D261A2CD408888
+      quote: 编织皮护肩 | 披风 | 护 2 | 重 2.8 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#steppe_leather_shoulders
+      quote_hash: F29F755814C9ABD796491C865D2E64C4D40F246A612F043F59BB49BD297F7A16
+      quote: 硬皮肩甲 | 披风 | 护 1 | 重 0.8 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#reinforced_suede_shoulders
+      quote_hash: 9D385700C720969C90C3C18BF6B276ACE6BE6AD93BACCF665869C91A1A20AAF3
+      quote: 强化绒面护肩 | 披风 | 护 1 | 重 0.75 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_horseman_shoulder
+      quote_hash: 9833BA32D7699975D50F1CD8FA6B663E068AE44EA6A8540830FFD9BA6E84DD7E
+      quote: 环甲护肩 | 披风 | 护 7 | 重 2.9 | 材质 皮 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_shoulder_strap
+      quote_hash: 4CC6EAC7D14D1A0B1ADD5A607EE215F15E26AC0B29DA83B77D02D3E4D0D826AE
+      quote: 肩带 | 披风 | 护 1 | 重 0.65 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battanian_leather_shoulder_a
+      quote_hash: 250F8FF7B765DEB07F0E37AC2D5A92BA8D0B81B36556B69D02AD29E7FA0D6EA8
+      quote: 硬皮肩衬 | 披风 | 护 4 | 重 0.85 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#assassin_shoulder
+      quote_hash: A6A525C6A4A87D27DFA1ECF773F19F0F5620F364BF7FC940410A2CF0799F7635
+      quote: 黑披风 | 披风 | 护 4 | 重 0.85 | 材质 皮 | 属 nord
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

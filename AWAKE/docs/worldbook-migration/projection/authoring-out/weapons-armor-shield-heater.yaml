@@ -1,0 +1,397 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-shield-heater
+title:
+  zh-CN: 扇形盾
+  en: Heater Shield
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 扇形盾
+  - 扇形小盾
+  - 刻印扇形盾
+  - 平面扇形盾
+  - 宽扇形盾
+  - 加固扇形盾
+  - 巨盾
+  en:
+  - Heater Shield
+  - Kite-shaped Shield
+  - Pavise
+summary:
+  zh-CN: 上宽下尖、形如熨斗的一面盾——瓦兰迪亚骑兵的手艺，也是纹章漆得最多的那一种。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#small_heater_shield
+  quote_hash: C362C2FA86DE0FB84D7C7794533DD12723C1878AE66A3F6791C8EBAFA2111D21
+  quote: 扇形小盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 225 | 重 2.2 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#flat_heater_shield
+  quote_hash: 921EA142BAA19AB1C1429AD6582B2F71CC6680E794548632DEBA436A940E4544
+  quote: 平面扇形盾 | Shield | 盾类 大盾 | 护 10 | 长 90 | 耐久 300 | 重 3.1 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#heater_shield_with_cutout
+  quote_hash: A5524D2D7FBB34D486AE8989EF6922D17C65731CCA71EB0CD2B28370E8152658
+  quote: 刻印扇形盾 | Shield | 盾类 大盾 | 护 1 | 长 80 | 耐久 220 | 重 2.1 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#heavy_heater_shield
+  quote_hash: 2F4D310DE2309D39E796B81B22CF90ED71B3BE0C974B6DA27001F26BC90B1549
+  quote: 重型扇形盾 | Shield | 盾类 大盾 | 护 17 | 长 100 | 耐久 470 | 重 5.6 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#wide_heater_shield
+  quote_hash: F37B9470D14AF9D0FD4DAB387F66B9B7C4B66568EC0AF7B84A5E3BB1705F1388
+  quote: 宽扇形盾 | Shield | 盾类 大盾 | 护 1 | 长 90 | 耐久 430 | 重 5.2 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#bracketed_heater_shield
+  quote_hash: 118A286023C8F39CA81CA75AF8FFBE0481CB1FC4A69670F44E15B0DCE5B14CF1
+  quote: 加固扇形盾 | Shield | 盾类 大盾 | 护 1 | 长 95 | 耐久 370 | 重 4.4 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#tall_heater_shield
+  quote_hash: 7B07A7CABA79C41BC956397B545475FFD8171913B9AC89520888A5B7B86A2A94
+  quote: 扇形长盾 | Shield | 盾类 大盾 | 护 13 | 长 105 | 耐久 560 | 重 7.0 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#horsemans_heater_shield
+  quote_hash: 05C98523D7A685DAB9B78A7694D124509E4212110BA227D2091DD448C7ACA298
+  quote: 骑兵扇形小盾 | Shield | 盾类 大盾 | 护 10 | 长 65 | 耐久 205 | 重 1.9 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#small_flat_heater_shield
+  quote_hash: 692D7B5710F6DC29EAAE752C1676A1C91DE1DBF95CB7CB121B83F8F3F6C5B70D
+  quote: 平面扇形小盾 | Shield | 盾类 大盾 | 护 7 | 长 70 | 耐久 240 | 重 2.3 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#jousting_shield
+  quote_hash: 694DD83C1671D561890E708A91E948A39E891FD26306B4766FB7341D1AC55B75
+  quote: 骑士盾 | Shield | 盾类 大盾 | 护 1 | 长 90 | 耐久 235 | 重 2.4 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#pavise_shield
+  quote_hash: 528E5AE9C356297CD12CACBA0F02E9A851DC0015D6B7CE3A99ED5F24CC8ED1F1
+  quote: 巨盾 | Shield | 盾类 大盾 | 护 1 | 长 118 | 耐久 750 | 重 10.0 | 属 vlandia
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-shield-heater-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 扇形盾上宽下收、边线平直，是瓦兰迪亚一路的形制。它比筝形盾短，护住躯干到腰就止；好处是轻、是平——凹面的盾挨打会扭手，平的看着薄，接刀反而稳。长六十五到一百一十八，耐久二百零五到七百五十，护值一到十七：多数只有一，重型扇形盾到十七、扇形长盾到十三、平面扇形盾到十。刻印的那一款把边角削去一块，用来搁长矛。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#small_heater_shield
+    quote_hash: C362C2FA86DE0FB84D7C7794533DD12723C1878AE66A3F6791C8EBAFA2111D21
+    quote: 扇形小盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 225 | 重 2.2 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#flat_heater_shield
+    quote_hash: 921EA142BAA19AB1C1429AD6582B2F71CC6680E794548632DEBA436A940E4544
+    quote: 平面扇形盾 | Shield | 盾类 大盾 | 护 10 | 长 90 | 耐久 300 | 重 3.1 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#heater_shield_with_cutout
+    quote_hash: A5524D2D7FBB34D486AE8989EF6922D17C65731CCA71EB0CD2B28370E8152658
+    quote: 刻印扇形盾 | Shield | 盾类 大盾 | 护 1 | 长 80 | 耐久 220 | 重 2.1 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#heavy_heater_shield
+    quote_hash: 2F4D310DE2309D39E796B81B22CF90ED71B3BE0C974B6DA27001F26BC90B1549
+    quote: 重型扇形盾 | Shield | 盾类 大盾 | 护 17 | 长 100 | 耐久 470 | 重 5.6 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#wide_heater_shield
+    quote_hash: F37B9470D14AF9D0FD4DAB387F66B9B7C4B66568EC0AF7B84A5E3BB1705F1388
+    quote: 宽扇形盾 | Shield | 盾类 大盾 | 护 1 | 长 90 | 耐久 430 | 重 5.2 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#bracketed_heater_shield
+    quote_hash: 118A286023C8F39CA81CA75AF8FFBE0481CB1FC4A69670F44E15B0DCE5B14CF1
+    quote: 加固扇形盾 | Shield | 盾类 大盾 | 护 1 | 长 95 | 耐久 370 | 重 4.4 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#tall_heater_shield
+    quote_hash: 7B07A7CABA79C41BC956397B545475FFD8171913B9AC89520888A5B7B86A2A94
+    quote: 扇形长盾 | Shield | 盾类 大盾 | 护 13 | 长 105 | 耐久 560 | 重 7.0 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#horsemans_heater_shield
+    quote_hash: 05C98523D7A685DAB9B78A7694D124509E4212110BA227D2091DD448C7ACA298
+    quote: 骑兵扇形小盾 | Shield | 盾类 大盾 | 护 10 | 长 65 | 耐久 205 | 重 1.9 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#small_flat_heater_shield
+    quote_hash: 692D7B5710F6DC29EAAE752C1676A1C91DE1DBF95CB7CB121B83F8F3F6C5B70D
+    quote: 平面扇形小盾 | Shield | 盾类 大盾 | 护 7 | 长 70 | 耐久 240 | 重 2.3 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#jousting_shield
+    quote_hash: 694DD83C1671D561890E708A91E948A39E891FD26306B4766FB7341D1AC55B75
+    quote: 骑士盾 | Shield | 盾类 大盾 | 护 1 | 长 90 | 耐久 235 | 重 2.4 | 属 vlandia
+  expressions:
+  - id: expr.weapon-armor-shield-heater-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 面平的这种，挡刀不如凹面的好看，可手稳——凹面的吃一下劲儿会扭，手腕受不了。骑兵用得多，因为我们不用它挡阵，只要那一瞬间。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#small_heater_shield
+      quote_hash: C362C2FA86DE0FB84D7C7794533DD12723C1878AE66A3F6791C8EBAFA2111D21
+      quote: 扇形小盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 225 | 重 2.2 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#flat_heater_shield
+      quote_hash: 921EA142BAA19AB1C1429AD6582B2F71CC6680E794548632DEBA436A940E4544
+      quote: 平面扇形盾 | Shield | 盾类 大盾 | 护 10 | 长 90 | 耐久 300 | 重 3.1 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#heater_shield_with_cutout
+      quote_hash: A5524D2D7FBB34D486AE8989EF6922D17C65731CCA71EB0CD2B28370E8152658
+      quote: 刻印扇形盾 | Shield | 盾类 大盾 | 护 1 | 长 80 | 耐久 220 | 重 2.1 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#heavy_heater_shield
+      quote_hash: 2F4D310DE2309D39E796B81B22CF90ED71B3BE0C974B6DA27001F26BC90B1549
+      quote: 重型扇形盾 | Shield | 盾类 大盾 | 护 17 | 长 100 | 耐久 470 | 重 5.6 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#wide_heater_shield
+      quote_hash: F37B9470D14AF9D0FD4DAB387F66B9B7C4B66568EC0AF7B84A5E3BB1705F1388
+      quote: 宽扇形盾 | Shield | 盾类 大盾 | 护 1 | 长 90 | 耐久 430 | 重 5.2 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#bracketed_heater_shield
+      quote_hash: 118A286023C8F39CA81CA75AF8FFBE0481CB1FC4A69670F44E15B0DCE5B14CF1
+      quote: 加固扇形盾 | Shield | 盾类 大盾 | 护 1 | 长 95 | 耐久 370 | 重 4.4 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#tall_heater_shield
+      quote_hash: 7B07A7CABA79C41BC956397B545475FFD8171913B9AC89520888A5B7B86A2A94
+      quote: 扇形长盾 | Shield | 盾类 大盾 | 护 13 | 长 105 | 耐久 560 | 重 7.0 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#horsemans_heater_shield
+      quote_hash: 05C98523D7A685DAB9B78A7694D124509E4212110BA227D2091DD448C7ACA298
+      quote: 骑兵扇形小盾 | Shield | 盾类 大盾 | 护 10 | 长 65 | 耐久 205 | 重 1.9 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#small_flat_heater_shield
+      quote_hash: 692D7B5710F6DC29EAAE752C1676A1C91DE1DBF95CB7CB121B83F8F3F6C5B70D
+      quote: 平面扇形小盾 | Shield | 盾类 大盾 | 护 7 | 长 70 | 耐久 240 | 重 2.3 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#jousting_shield
+      quote_hash: 694DD83C1671D561890E708A91E948A39E891FD26306B4766FB7341D1AC55B75
+      quote: 骑士盾 | Shield | 盾类 大盾 | 护 1 | 长 90 | 耐久 235 | 重 2.4 | 属 vlandia
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-shield-heater-vlandia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 扇形盾是骑士的体面：盾面正中漆家徽，边上一圈颜色分长幼。比武用的那种更厚，重型扇形盾到十七；实战的反倒轻，因为要一手持矛——比武用的那种到二点四公斤就已算重了。刻口的那一款是专门为长矛留的，举矛时盾不挡视线。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#small_heater_shield
+      quote_hash: C362C2FA86DE0FB84D7C7794533DD12723C1878AE66A3F6791C8EBAFA2111D21
+      quote: 扇形小盾 | Shield | 盾类 大盾 | 护 1 | 长 70 | 耐久 225 | 重 2.2 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#flat_heater_shield
+      quote_hash: 921EA142BAA19AB1C1429AD6582B2F71CC6680E794548632DEBA436A940E4544
+      quote: 平面扇形盾 | Shield | 盾类 大盾 | 护 10 | 长 90 | 耐久 300 | 重 3.1 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#heater_shield_with_cutout
+      quote_hash: A5524D2D7FBB34D486AE8989EF6922D17C65731CCA71EB0CD2B28370E8152658
+      quote: 刻印扇形盾 | Shield | 盾类 大盾 | 护 1 | 长 80 | 耐久 220 | 重 2.1 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#heavy_heater_shield
+      quote_hash: 2F4D310DE2309D39E796B81B22CF90ED71B3BE0C974B6DA27001F26BC90B1549
+      quote: 重型扇形盾 | Shield | 盾类 大盾 | 护 17 | 长 100 | 耐久 470 | 重 5.6 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#wide_heater_shield
+      quote_hash: F37B9470D14AF9D0FD4DAB387F66B9B7C4B66568EC0AF7B84A5E3BB1705F1388
+      quote: 宽扇形盾 | Shield | 盾类 大盾 | 护 1 | 长 90 | 耐久 430 | 重 5.2 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#bracketed_heater_shield
+      quote_hash: 118A286023C8F39CA81CA75AF8FFBE0481CB1FC4A69670F44E15B0DCE5B14CF1
+      quote: 加固扇形盾 | Shield | 盾类 大盾 | 护 1 | 长 95 | 耐久 370 | 重 4.4 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#tall_heater_shield
+      quote_hash: 7B07A7CABA79C41BC956397B545475FFD8171913B9AC89520888A5B7B86A2A94
+      quote: 扇形长盾 | Shield | 盾类 大盾 | 护 13 | 长 105 | 耐久 560 | 重 7.0 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#horsemans_heater_shield
+      quote_hash: 05C98523D7A685DAB9B78A7694D124509E4212110BA227D2091DD448C7ACA298
+      quote: 骑兵扇形小盾 | Shield | 盾类 大盾 | 护 10 | 长 65 | 耐久 205 | 重 1.9 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#small_flat_heater_shield
+      quote_hash: 692D7B5710F6DC29EAAE752C1676A1C91DE1DBF95CB7CB121B83F8F3F6C5B70D
+      quote: 平面扇形小盾 | Shield | 盾类 大盾 | 护 7 | 长 70 | 耐久 240 | 重 2.3 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#jousting_shield
+      quote_hash: 694DD83C1671D561890E708A91E948A39E891FD26306B4766FB7341D1AC55B75
+      quote: 骑士盾 | Shield | 盾类 大盾 | 护 1 | 长 90 | 耐久 235 | 重 2.4 | 属 vlandia
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+- id: assertion.weapon-armor-shield-heater-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 这一路里最大的一面叫巨盾：高过人肩、下缘带支脚，立在地上就是一面活动墙，耐久七百五十，是全场最经打的一件，用来给攻城的弓手遮身。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#pavise_shield
+    quote_hash: 528E5AE9C356297CD12CACBA0F02E9A851DC0015D6B7CE3A99ED5F24CC8ED1F1
+    quote: 巨盾 | Shield | 盾类 大盾 | 护 1 | 长 118 | 耐久 750 | 重 10.0 | 属 vlandia
+  expressions:
+  - id: expr.weapon-armor-shield-heater-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 巨盾不是拿着打的，是立着的：底下两支脚钉进土里，人蹲在后头装弩。正面蒙一层厚皮、或者干脆两面包铁，一般的箭射不穿。缺点是重——一个人扛不动，得用小车推。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#pavise_shield
+      quote_hash: 528E5AE9C356297CD12CACBA0F02E9A851DC0015D6B7CE3A99ED5F24CC8ED1F1
+      quote: 巨盾 | Shield | 盾类 大盾 | 护 1 | 长 118 | 耐久 750 | 重 10.0 | 属 vlandia
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

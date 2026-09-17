@@ -1,0 +1,392 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-torso-gambeson
+title:
+  zh-CN: 填充衣
+  en: Gambeson
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 填充衣
+  - 武装衣
+  - 填充外套
+  - 填充甲
+  - 软甲
+  - 辅兵甲
+  - 填充袍
+  - 纳缝甲
+  en:
+  - Gambeson
+  - Padded Coat
+  - Padded Armor
+  - Aketon
+  - Padded Robe
+summary:
+  zh-CN: 十几层布纳缝在一起，护值七到三十六——最便宜的甲，也是最管用的甲。征召兵穿它，骑士也在它外面再穿铁。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#gambeson_b
+  quote_hash: A630CE091D11EB92C89B7F28826E1E8425F60751E1DC87BA8F8E81D5C2021FCA
+  quote: 重磅武装衣 | 躯干 | 护 18 | 重 2 | 材质 布 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sleeveless_padded_coat
+  quote_hash: 8B42BED89FEB9BE06A0082246EFC52F35BB1C5271A64DA5294276C71652A5504
+  quote: 无袖填充外套 | 躯干 | 护 18 | 重 2.2 | 材质 布 | 属 vlandia | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#empire_warrior_padded_armor_f
+  quote_hash: EB6AC15B6A8A96A8F9116BB0E3A8E35D7E813D834CF5E438E0B1CB94656D2034
+  quote: 辅兵甲 | 躯干 | 护 17 | 重 1.9 | 材质 布 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#padded_coat
+  quote_hash: ADCF39E404DD884AE0504323CBC4DF9C135B23A474F1A30BCA1A858597856129
+  quote: 填充步卒外套 | 躯干 | 护 16 | 重 2.4 | 材质 布 | 属 vlandia | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#padded_leather_shirt
+  quote_hash: 103BFACBAA49B3E3B1FB0FEEA80F7ABED49977337DBA522E4F0119EC818AC727
+  quote: 填充皮衬衫 | 躯干 | 护 16 | 重 1.8 | 材质 皮 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#aketon
+  quote_hash: DC7E2018ECC6B92C5EDAF43009D5B8CDB2CF5D827503F40E39189249313CFF94
+  quote: 武装衣 | 躯干 | 护 13 | 重 3.4 | 材质 布 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#bandit_gambeson
+  quote_hash: A08BBEF208B72F856DE600D69AF1EA9206DA577CE92246FDA404CDD617C5FCF5
+  quote: 陈旧软甲 | 躯干 | 护 14 | 重 2.2 | 材质 布 | 属 looters | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#leather_strips_over_padded_robe
+  quote_hash: A7234497CECC06C1B749CF2A50D6B1BC68315092F1EA32EB9604E5CA2B5BA43D
+  quote: 皮革条甲衬填充袍 | 躯干 | 护 36 | 重 5.5 | 材质 布 | 属 aserai | 叠穿
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#desert_padded_cloth
+  quote_hash: 2BA1B1CC1294B979C19F89F6D020B28EA5124D869F84CC0A5477EB74EC8D2FB9
+  quote: 轻型长摆填充甲 | 躯干 | 护 16 | 重 1.3 | 材质 布 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#imperial_padded_cloth
+  quote_hash: 62F625E05540034D22A78CF4655DA0332E0D6A133A1D23532746ECAC3EEA2986
+  quote: 步兵粗糙软甲 | 躯干 | 护 16 | 重 2.8 | 材质 布 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#northern_padded_gambeson
+  quote_hash: 42BF883C357947E91DD41DD7D7E28D6B3BF205894EC83AACA9F3620B1A862F88
+  quote: 短摆软甲衬束腰衣 | 躯干 | 护 16 | 重 1.5 | 材质 布 | 属 sturgia | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#padded_cloth_with_strips
+  quote_hash: 0AD9569563D2EF60046846C5A3796350AD39CA6724F8999222C8672D498FB4C8
+  quote: 填充衣配条甲 | 躯干 | 护 14 | 重 2.2 | 材质 布 | 属 empire
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-torso-gambeson-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 填充衣是把十几层粗布摞起来、用线纳成菱格缝死的厚衣，护值七到三十六，材质多为布，少数夹一层皮。它便宜、家里就能做，是卡拉迪亚数量最大的甲——征召兵拿到的第一件护具就是它。重磅武装衣护值十八，无袖填充外套也是十八，帝国的辅兵甲十七。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#gambeson_b
+    quote_hash: A630CE091D11EB92C89B7F28826E1E8425F60751E1DC87BA8F8E81D5C2021FCA
+    quote: 重磅武装衣 | 躯干 | 护 18 | 重 2 | 材质 布 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sleeveless_padded_coat
+    quote_hash: 8B42BED89FEB9BE06A0082246EFC52F35BB1C5271A64DA5294276C71652A5504
+    quote: 无袖填充外套 | 躯干 | 护 18 | 重 2.2 | 材质 布 | 属 vlandia | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#empire_warrior_padded_armor_f
+    quote_hash: EB6AC15B6A8A96A8F9116BB0E3A8E35D7E813D834CF5E438E0B1CB94656D2034
+    quote: 辅兵甲 | 躯干 | 护 17 | 重 1.9 | 材质 布 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#padded_coat
+    quote_hash: ADCF39E404DD884AE0504323CBC4DF9C135B23A474F1A30BCA1A858597856129
+    quote: 填充步卒外套 | 躯干 | 护 16 | 重 2.4 | 材质 布 | 属 vlandia | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#padded_leather_shirt
+    quote_hash: 103BFACBAA49B3E3B1FB0FEEA80F7ABED49977337DBA522E4F0119EC818AC727
+    quote: 填充皮衬衫 | 躯干 | 护 16 | 重 1.8 | 材质 皮 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#aketon
+    quote_hash: DC7E2018ECC6B92C5EDAF43009D5B8CDB2CF5D827503F40E39189249313CFF94
+    quote: 武装衣 | 躯干 | 护 13 | 重 3.4 | 材质 布 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#bandit_gambeson
+    quote_hash: A08BBEF208B72F856DE600D69AF1EA9206DA577CE92246FDA404CDD617C5FCF5
+    quote: 陈旧软甲 | 躯干 | 护 14 | 重 2.2 | 材质 布 | 属 looters | 分男女
+  expressions:
+  - id: expr.weapon-armor-torso-gambeson-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 这东西看着像被子，真挨一刀就知道好了。村妇都会做，家里的旧布拆出来纳上两天就成一件。新兵发下来的头一件就是它，穿上又热又沉，可没人敢不穿。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#gambeson_b
+      quote_hash: A630CE091D11EB92C89B7F28826E1E8425F60751E1DC87BA8F8E81D5C2021FCA
+      quote: 重磅武装衣 | 躯干 | 护 18 | 重 2 | 材质 布 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sleeveless_padded_coat
+      quote_hash: 8B42BED89FEB9BE06A0082246EFC52F35BB1C5271A64DA5294276C71652A5504
+      quote: 无袖填充外套 | 躯干 | 护 18 | 重 2.2 | 材质 布 | 属 vlandia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#empire_warrior_padded_armor_f
+      quote_hash: EB6AC15B6A8A96A8F9116BB0E3A8E35D7E813D834CF5E438E0B1CB94656D2034
+      quote: 辅兵甲 | 躯干 | 护 17 | 重 1.9 | 材质 布 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#padded_coat
+      quote_hash: ADCF39E404DD884AE0504323CBC4DF9C135B23A474F1A30BCA1A858597856129
+      quote: 填充步卒外套 | 躯干 | 护 16 | 重 2.4 | 材质 布 | 属 vlandia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#padded_leather_shirt
+      quote_hash: 103BFACBAA49B3E3B1FB0FEEA80F7ABED49977337DBA522E4F0119EC818AC727
+      quote: 填充皮衬衫 | 躯干 | 护 16 | 重 1.8 | 材质 皮 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aketon
+      quote_hash: DC7E2018ECC6B92C5EDAF43009D5B8CDB2CF5D827503F40E39189249313CFF94
+      quote: 武装衣 | 躯干 | 护 13 | 重 3.4 | 材质 布 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#bandit_gambeson
+      quote_hash: A08BBEF208B72F856DE600D69AF1EA9206DA577CE92246FDA404CDD617C5FCF5
+      quote: 陈旧软甲 | 躯干 | 护 14 | 重 2.2 | 材质 布 | 属 looters | 分男女
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-torso-gambeson-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 填充衣按纳缝的层数与行距分档。行距越密越硬挺，护值从七到十八不等；纳得稀的软塌塌，穿久了絮往一处跑，护值就散了。市上一件成品五到十枚银币，自己做的只算布钱。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#gambeson_b
+      quote_hash: A630CE091D11EB92C89B7F28826E1E8425F60751E1DC87BA8F8E81D5C2021FCA
+      quote: 重磅武装衣 | 躯干 | 护 18 | 重 2 | 材质 布 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sleeveless_padded_coat
+      quote_hash: 8B42BED89FEB9BE06A0082246EFC52F35BB1C5271A64DA5294276C71652A5504
+      quote: 无袖填充外套 | 躯干 | 护 18 | 重 2.2 | 材质 布 | 属 vlandia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#empire_warrior_padded_armor_f
+      quote_hash: EB6AC15B6A8A96A8F9116BB0E3A8E35D7E813D834CF5E438E0B1CB94656D2034
+      quote: 辅兵甲 | 躯干 | 护 17 | 重 1.9 | 材质 布 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#padded_coat
+      quote_hash: ADCF39E404DD884AE0504323CBC4DF9C135B23A474F1A30BCA1A858597856129
+      quote: 填充步卒外套 | 躯干 | 护 16 | 重 2.4 | 材质 布 | 属 vlandia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#padded_leather_shirt
+      quote_hash: 103BFACBAA49B3E3B1FB0FEEA80F7ABED49977337DBA522E4F0119EC818AC727
+      quote: 填充皮衬衫 | 躯干 | 护 16 | 重 1.8 | 材质 皮 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aketon
+      quote_hash: DC7E2018ECC6B92C5EDAF43009D5B8CDB2CF5D827503F40E39189249313CFF94
+      quote: 武装衣 | 躯干 | 护 13 | 重 3.4 | 材质 布 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#bandit_gambeson
+      quote_hash: A08BBEF208B72F856DE600D69AF1EA9206DA577CE92246FDA404CDD617C5FCF5
+      quote: 陈旧软甲 | 躯干 | 护 14 | 重 2.2 | 材质 布 | 属 looters | 分男女
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-torso-gambeson-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 这一路的上限是护值三十六：在填充袍外面再箍一圈竖排皮条的款式。它挡刀靠皮条、吃震靠填充，两样都不贵，做出来却顶得上一副旧札甲。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#leather_strips_over_padded_robe
+    quote_hash: A7234497CECC06C1B749CF2A50D6B1BC68315092F1EA32EB9604E5CA2B5BA43D
+    quote: 皮革条甲衬填充袍 | 躯干 | 护 36 | 重 5.5 | 材质 布 | 属 aserai | 叠穿
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#desert_padded_cloth
+    quote_hash: 2BA1B1CC1294B979C19F89F6D020B28EA5124D869F84CC0A5477EB74EC8D2FB9
+    quote: 轻型长摆填充甲 | 躯干 | 护 16 | 重 1.3 | 材质 布 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#imperial_padded_cloth
+    quote_hash: 62F625E05540034D22A78CF4655DA0332E0D6A133A1D23532746ECAC3EEA2986
+    quote: 步兵粗糙软甲 | 躯干 | 护 16 | 重 2.8 | 材质 布 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#northern_padded_gambeson
+    quote_hash: 42BF883C357947E91DD41DD7D7E28D6B3BF205894EC83AACA9F3620B1A862F88
+    quote: 短摆软甲衬束腰衣 | 躯干 | 护 16 | 重 1.5 | 材质 布 | 属 sturgia | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#padded_cloth_with_strips
+    quote_hash: 0AD9569563D2EF60046846C5A3796350AD39CA6724F8999222C8672D498FB4C8
+    quote: 填充衣配条甲 | 躯干 | 护 14 | 重 2.2 | 材质 布 | 属 empire
+  expressions:
+  - id: expr.weapon-armor-torso-gambeson-leatherstrip-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 最重的一档是皮革条甲衬填充袍：里子是厚填充袍，外面用皮条竖着一道道箍住，护值三十六。皮条挡刀、填充吃震，做出来比不上正经甲好看，可比它便宜得多。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_strips_over_padded_robe
+      quote_hash: A7234497CECC06C1B749CF2A50D6B1BC68315092F1EA32EB9604E5CA2B5BA43D
+      quote: 皮革条甲衬填充袍 | 躯干 | 护 36 | 重 5.5 | 材质 布 | 属 aserai | 叠穿
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#desert_padded_cloth
+      quote_hash: 2BA1B1CC1294B979C19F89F6D020B28EA5124D869F84CC0A5477EB74EC8D2FB9
+      quote: 轻型长摆填充甲 | 躯干 | 护 16 | 重 1.3 | 材质 布 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#imperial_padded_cloth
+      quote_hash: 62F625E05540034D22A78CF4655DA0332E0D6A133A1D23532746ECAC3EEA2986
+      quote: 步兵粗糙软甲 | 躯干 | 护 16 | 重 2.8 | 材质 布 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_padded_gambeson
+      quote_hash: 42BF883C357947E91DD41DD7D7E28D6B3BF205894EC83AACA9F3620B1A862F88
+      quote: 短摆软甲衬束腰衣 | 躯干 | 护 16 | 重 1.5 | 材质 布 | 属 sturgia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#padded_cloth_with_strips
+      quote_hash: 0AD9569563D2EF60046846C5A3796350AD39CA6724F8999222C8672D498FB4C8
+      quote: 填充衣配条甲 | 躯干 | 护 14 | 重 2.2 | 材质 布 | 属 empire
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,190 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-torso-ring
+title:
+  zh-CN: 环甲与软甲
+  en: Ring Armor
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 环甲
+  - 重型环甲
+  - 软甲
+  - 环甲护肩
+  - 软甲衬链甲
+  en:
+  - Ring Armor
+  - Ringed Armor
+  - Ring Mail
+summary:
+  zh-CN: 把铁环钉在皮底或布底上——护值十三到二十，落在锁甲与皮甲之间那条缝里。阿塞莱的骑手爱用。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#ringed_desert_armor
+  quote_hash: 8EFA9A799F4BAD1D400ACD825C864A4C778C8A07724020EDD1037842F901F12E
+  quote: 重型环甲 | 躯干 | 护 20 | 重 10.5 | 材质 链甲 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#aserai_horseman_armor
+  quote_hash: E8DAAA4FE06351088BF3E7C59A452D2C4B10AB0DE0E34722AC02F5A8961553C1
+  quote: 环甲 | 躯干 | 护 13 | 重 4.4 | 材质 皮 | 属 aserai | 分男女
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-torso-ring-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 环甲是把一个个铁环缝在皮或厚布底子上，环与环之间靠底衬连着，不像锁甲那样环环相扣。护值十三到二十，同重之下比锁甲低，胜在做起来快、破一个补一个。这条路几乎只见于阿塞莱：环甲护值十三，底衬加厚的重型环甲护值二十。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#ringed_desert_armor
+    quote_hash: 8EFA9A799F4BAD1D400ACD825C864A4C778C8A07724020EDD1037842F901F12E
+    quote: 重型环甲 | 躯干 | 护 20 | 重 10.5 | 材质 链甲 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#aserai_horseman_armor
+    quote_hash: E8DAAA4FE06351088BF3E7C59A452D2C4B10AB0DE0E34722AC02F5A8961553C1
+    quote: 环甲 | 躯干 | 护 13 | 重 4.4 | 材质 皮 | 属 aserai | 分男女
+  expressions:
+  - id: expr.weapon-armor-torso-ring-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 环甲是我们这边的手艺。皮底子上缝铁环，缝密了就顶事，破一个补一个，不像链甲那样一断就得整片拆。太阳底下晒久了皮底发硬，得抹油。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#ringed_desert_armor
+      quote_hash: 8EFA9A799F4BAD1D400ACD825C864A4C778C8A07724020EDD1037842F901F12E
+      quote: 重型环甲 | 躯干 | 护 20 | 重 10.5 | 材质 链甲 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_horseman_armor
+      quote_hash: E8DAAA4FE06351088BF3E7C59A452D2C4B10AB0DE0E34722AC02F5A8961553C1
+      quote: 环甲 | 躯干 | 护 13 | 重 4.4 | 材质 皮 | 属 aserai | 分男女
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-torso-ring-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 环甲按底衬与铁环的密度分档：布底轻，皮底耐，环缝得越密越顶事。护值落在十三到二十——同重之下比锁甲低一档，赢在做起来快、破一个补一个，不必像链甲那样一断就整片拆。养护上正好反过来：皮底怕晒，晒久了发硬要上油，比链甲费心；可修起来比链甲省事。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#ringed_desert_armor
+      quote_hash: 8EFA9A799F4BAD1D400ACD825C864A4C778C8A07724020EDD1037842F901F12E
+      quote: 重型环甲 | 躯干 | 护 20 | 重 10.5 | 材质 链甲 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_horseman_armor
+      quote_hash: E8DAAA4FE06351088BF3E7C59A452D2C4B10AB0DE0E34722AC02F5A8961553C1
+      quote: 环甲 | 躯干 | 护 13 | 重 4.4 | 材质 皮 | 属 aserai | 分男女
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+  - id: expr.weapon-armor-torso-ring-aserai-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿塞莱骑手多半穿环甲：十三的护值、轻，跑长途不累；重型环甲底衬加厚，护值二十，一件顶两件，穿去冲阵也不亏。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#ringed_desert_armor
+      quote_hash: 8EFA9A799F4BAD1D400ACD825C864A4C778C8A07724020EDD1037842F901F12E
+      quote: 重型环甲 | 躯干 | 护 20 | 重 10.5 | 材质 链甲 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_horseman_armor
+      quote_hash: E8DAAA4FE06351088BF3E7C59A452D2C4B10AB0DE0E34722AC02F5A8961553C1
+      quote: 环甲 | 躯干 | 护 13 | 重 4.4 | 材质 皮 | 属 aserai | 分男女
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    denies: []

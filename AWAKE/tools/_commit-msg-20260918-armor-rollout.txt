@@ -1,0 +1,65 @@
+feat(worldbook): 头盔批并线 + 护甲形制批全族上线（21 卡）+ 两处定点修复
+
+一、并线（v14）：把 09-16 做好的头盔批 10 档并入上线包，448 → 461
+   此前 _v2j_kwclean_20260916.py:9-11 明写「属于并行的头盔批，尚未 assemble/deploy，
+   不并入本次」，此后 v11 / v12 / v13f 全沿用不含它的 448 档基线
+   ⇒ 该批会在后续每一轮重编里静默消失，日志不报错。
+   读数：新增恰好 10 档，其余 451 档逐条不变（逐字节比 canonical JSON）。
+
+二、护甲形制批（v15）：486 件 → 21 张形制卡，461 → 482
+   躯干 11 / 披风 4 / 盾 4 / 腿手 2，覆盖全部、剔 4 件 dummy。
+   每卡一个「形制类」，文案三层（rumor / 通用 detail / 文化 detail）。
+   L2：21 卡、断言 41、表达 65、ref 321。
+   生成器三条硬断言（_rollout_armor_gen_20260918.py）：
+     - tag 唯一（tag 重名 ⇒ 表达 id 重复，_rollout_armor_gen_20260918.py:142 直接拼 id）
+     - 每卡必须有「不带 culture 的 detail 层」（通用 detail 层不得缺）
+     - refs 全在本卡快照内、不跨卡
+   读数：新增恰好 21 档，其余 461 档逐条不变。
+
+三、v16 定点修 7 档（内容面，482 档基线原地更新）
+   - torso-ring / shield-wicker 补通用 detail 层（此前只有 a1 rumor + a2 文化 detail）
+   - 五个 tag 改专名，消掉表达 id 重复：
+     torso-civil→studded-detail、torso-gambeson→leatherstrip-detail、
+     torso-mail→surcoat-detail、cape-mantle→pad-detail、hands→padded-detail
+   变化集合 == 预期的 7 档，其余 475 档逐条整体不变。
+
+四、v17 定点修 1 档（正文面，482 档基线原地更新）
+   shield-round 编纂口吻整改：删去「（一条写着四百三十五的，是游戏数据里的孤值）」
+   → 改为「另有一路椭圆盾，比圆盾抻长得多，归在大盾那一档」。
+   prose_qc：硬 1 软 0 → 硬 0 软 0。
+
+五、src 唯一改动（检索侧真缺陷修复）
+   WorldKnowledgeQueryService.FindLiteralCandidates 由「关键词层独占」改为「两通道并集」。
+   原注释自称两条通道「完全并列」，代码却是
+   `if (ids.Count == 0) return FindFallbackCandidates(text);`
+   ⇒ 关键词层命中即独占、兜底通道被跳过、候选集塌成一条。
+   实测：「什么人拿大圆盾扔飞斧？」hits 5→1、「哪种头盔护到腮帮子和耳朵？」5→1。
+   修后 RETRIEVAL_GATE 由 ALL 18/24 回到 19/24。
+   MatchQuality 位次（0/1/2/3 必须保持在最前）一字不动。
+
+六、两条发现（已写进 FEED 与本批留档）
+   1) 语义臂对「库里没有的东西」不弃权：字面两通道空手时，语义腿仍给最近邻，
+      余弦 ≥ MinimumScore 0.45 即升 known。5 条架空词对照（IT9 / IV31 / CS8 / IWH12 / IWA23）
+      在挂语义时由 not_found 变 known —— 与本批无关：拿 v14 包跑同一探针红的是同样 5 条，
+      不挂语义全部 not_found。根因＝09-17 a96adfd 把语义臂接进模拟器 + 门槛 0.45
+      + 探针自 09-16 起没再跑。记为待裁（口径三选一）。
+   2) assertions[].text 不进上线包、也不参与三哈希：全库搜 runtime.json 无任何断言正文，
+      玩家看得见的是 summary 与 expressions ⇒ 只改断言正文的批次不需要重新发布；
+      对拍纪律：只比 runtime.json 会漏掉这类改动（v17 第一版据此误判了自己一个假 FATAL）。
+
+七、读数（对最终在挂包）
+   RETRIEVAL_GATE PASS：A 10/13、B 9/11、ALL 19/24；negative 3/3、overmatch 2/5
+   MERGE_GATE PASS：字面 19/24、语义 20/24、合并 22/24、losses@3=0、八项判据全过
+   IDENTITY_GATE PASS：排除行 78、泄漏 0；该知道 210、真拿到 194；点名题失败 0；已知缺口 3
+   矩阵验收：不挂语义 171/171；挂语义 166/5（5 条同根因待裁）
+   本批 26 条锚句：24/26 → 26/26；旧 145 行零变化
+   双写核验：21/21 逐字节一致；跨卡重复句 0
+   名录刷新：482 行、exprs 1115、grants 6804、前缀 22（新增 armor）；交叉覆盖无一条涉及 war
+
+八、内容侧自查（三支只读探针，VERDICT PASS）
+   _l2_armor_refs_check：卡 21 / assert 41 / expr 65 / ref 321
+   _l2_armor_claims_check：护值数字回快照核、卡内区间自洽
+   _l2_armor_dupchk：双写一致 + 跨卡引文查重（句样本 295、跨卡重复 0）
+
+未决：语义臂不弃权的口径；「哪种头盔护到腮帮子和耳朵？」仍 hits=1；
+IDENTITY_GATE 16 行 partial 待分诊（召回 or 能力）。

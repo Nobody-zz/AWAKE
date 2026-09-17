@@ -1,0 +1,951 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-legs
+title:
+  zh-CN: 护腿与靴
+  en: Legwear and Boots
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 护腿
+  - 靴
+  - 皮靴
+  - 链甲护腿
+  - 夹板靴
+  - 绑腿
+  - 战靴
+  - 覆板靴
+  en:
+  - Boots
+  - Mail Chausses
+  - Plated Boots
+  - Leg Wraps
+summary:
+  zh-CN: 从软皮鞋到链甲护腿，护值一到二十六——多数人的这身东西只是鞋，只有重骑才在腿上包铁。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#southern_moccasins
+  quote_hash: 9FF03778E2AF6B0D0B39B260974479AD93292D7A3D3470EC849129E97847C85B
+  quote: 软皮鞋 | 腿 | 护 2 | 重 0.5 | 材质 布 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#wrapped_shoes
+  quote_hash: F074857017F59A55FBEB9C62379218361F9E22DCA9A2FAD026C0E394B80EB7F8
+  quote: 缠裹鞋 | 腿 | 护 4 | 重 0.8 | 材质 布 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#strapped_shoes
+  quote_hash: 06B94FE2482DB7D2FEEA907ED9C4D0CF4EF2C114D921C536E40935FA82D01A43
+  quote: 扎带鞋 | 腿 | 护 5 | 重 0.7 | 材质 布 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#leather_shoes
+  quote_hash: 2043C6A4A6B1C189C9D989316394A09B0F7B6B85521D537C365471CF8C82BD7D
+  quote: 皮鞋 | 腿 | 护 3 | 重 0.7 | 材质 皮 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#turndown_leather_boots
+  quote_hash: BAA5797BC411E81440C63758B6BB84D35D1E8B98C8D5022F96002D96917016D5
+  quote: 翻折皮靴 | 腿 | 护 9 | 重 0.9 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#leather_boots
+  quote_hash: E221769AC0D2BB39D5FCCE182D3CAB5614591A5511221C2108C2A648AA882F33
+  quote: 毛边弯靴 | 腿 | 护 4 | 重 0.8 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_woodland_boots
+  quote_hash: BA8311B72F4B42CEE6C5CF28CF25490F4FE88CFFFC533768E33C607C2C52987A
+  quote: 林地靴 | 腿 | 护 6 | 重 1.0 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#khuzait_curved_boots
+  quote_hash: E582722BD6FA951131BE74157747440C4F7225A462C6D0AC119F3E9976B0B7C5
+  quote: 弯靴 | 腿 | 护 5 | 重 0.9 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#leather_cavalier_boots
+  quote_hash: 5EC65567A9C823658106D090325A89F58C80DC274ACBD8EA8E04E5875C3D773B
+  quote: 皮制骑兵靴 | 腿 | 护 6 | 重 0.9 | 材质 皮 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#reinforced_suede_boots
+  quote_hash: 19AD26469ACF755F2F6AF35D87AC78A7B2F426962F3A2F11C4DAE41DCF003F84
+  quote: 强化绒面靴 | 腿 | 护 20 | 重 1.0 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#mail_chausses
+  quote_hash: C4BB1CB690B0A828D3ACCDD61704AC74D13EEB45CE1FC9FED17F2942B9295D10
+  quote: 链甲护腿 | 腿 | 护 22 | 重 2.9 | 材质 链甲 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#strapped_mail_chausses
+  quote_hash: 215D77F79F2CBFAB92283FE5BC73752F10FC172B3B467E11AB97FB2A34F9AA4F
+  quote: 扎带链甲护腿 | 腿 | 护 23 | 重 3.0 | 材质 链甲 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#mail_cavalier_boots
+  quote_hash: 8A17207E176990A728EE2F0A871AFAE56E318CD77C7F6A6E756346CE66D55F7D
+  quote: 链甲骑兵靴 | 腿 | 护 12 | 重 1.8 | 材质 链甲 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#plated_strip_boots
+  quote_hash: EA9AD683FACA7AECABC2A5290102EC28C968F6416CF612B7D764F4C6C09450EE
+  quote: 夹板靴 | 腿 | 护 22 | 重 2.7 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#lamellar_plate_boots
+  quote_hash: CADDA7C7D2103E61CC4083EA1047B47F3F7E0827E6F84F65F62A9A8A3E8F07D7
+  quote: 扎板靴 | 腿 | 护 19 | 重 3.5 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#northern_plated_boots
+  quote_hash: 1A088F0F6B24DD1F12EFA46F59DF94056A26B9DF14EAA7AD7B2A5E857D41BE94
+  quote: 皇家侍卫覆板靴 | 腿 | 护 18 | 重 2.9 | 材质 板 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#decorated_imperial_boots
+  quote_hash: 06415B0E0CFB05AC721F2F92645BC47649A0911BD68E43F418156CA141100C2D
+  quote: 装饰覆板靴 | 腿 | 护 20 | 重 2.3 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_warlord_boots
+  quote_hash: FB057E3758B875722E6F20A607AA9A8B3BE9CC12B8BF8B654258F262B9ADC2E1
+  quote: 鳞甲靴 | 腿 | 护 26 | 重 2.6 | 材质 板 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#highland_leg_wrappings
+  quote_hash: 0B9CC9981AA1886D157E1D77254DC1816E4986149929ACBC0F168CC3A881648A
+  quote: 林地绑腿 | 腿 | 护 8 | 重 1.0 | 材质 布 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#wrapped_leather_boots
+  quote_hash: C5219F43B2D1D18F8901145B4BE59907D07E338F12E2930FEC1D192F4774201A
+  quote: 缠裹皮靴 | 腿 | 护 7 | 重 1.0 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#strapped_leather_boots
+  quote_hash: F198056962EABD545700EF02A1D3895AC373154BD78C4EF66F970F40668B36AC
+  quote: 扎带皮靴 | 腿 | 护 5 | 重 0.9 | 材质 布 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#rough_tied_boots
+  quote_hash: B6D8E82A86556A7DC699DDD7207F8B9DC9191210EDD031403D53062C82EF290C
+  quote: 粗绑靴 | 腿 | 护 6 | 重 0.9 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#belted_leather_boots
+  quote_hash: C76180A59166CC5BAFF4546D77F8F6C95B6A85FD629E6D4C04BF74814D3A7660
+  quote: 扣带皮靴 | 腿 | 护 5 | 重 1.1 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#woven_leather_boots
+  quote_hash: A60896C7049B1FFDB6D9B7D2F18D202E83FEAD22A3518C54C1E9D16ED4A61D9A
+  quote: 编织皮靴 | 腿 | 护 5 | 重 0.7 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#eastern_leather_boots
+  quote_hash: 91619B73C482CB99BD17DD82A5677818DA9739673A1C5F02F5E7ED68C60C205B
+  quote: 皮制马靴 | 腿 | 护 6 | 重 1.1 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_leather_boots
+  quote_hash: 34BF41E4402E3767C1BE93182F1E69694AAFF81D4F0D43FFAEA489A307549763
+  quote: 名门皮靴 | 腿 | 护 5 | 重 1.0 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_fur_boots
+  quote_hash: 729A4FAF4FE62D7E88993DC79F2C2B1C4C16565719DEEC5E4D3744C53F73D9AA
+  quote: 毛皮靴 | 腿 | 护 6 | 重 1.5 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sturgia_boots_a
+  quote_hash: DFE64EF3922C53A7CDEA6F6CBE76D98E65096F3E87A31F08E61B4B7AC4382BED
+  quote: 简易皮靴 | 腿 | 护 5 | 重 1.55 | 材质 皮 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sturgia_boots_b
+  quote_hash: FCD0C5D47FAC6141EBB4C6C17B7EC3B087F00C1086D129D1638C993B33763030
+  quote: 绑缚皮靴 | 腿 | 护 6 | 重 1.8 | 材质 皮 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sturgia_boots_c
+  quote_hash: 9383CEE71C67ADDA40CB55A56471B951AB37301910E10CAB3BF3EDD3D77F52AF
+  quote: 绑缚靴 | 腿 | 护 4 | 重 1.2 | 材质 皮 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sturgia_boots_d
+  quote_hash: 5FFC229A969C785D8FA81CCA016DD27119BA27117A820E1A795245773BA58EF7
+  quote: 缠裹靴 | 腿 | 护 3 | 重 1.0 | 材质 皮 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#highland_boots
+  quote_hash: 2566229D61F305460FEE8366B84680EB9130902DFDC887B572BD0F9F44FF784F
+  quote: 森民靴 | 腿 | 护 5 | 重 1.0 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#empire_horseman_boots
+  quote_hash: F6BD228D0AE6CEFD8646A7C16BB5D6E83801E01DF6F17B55E29F59801724773A
+  quote: 骑手靴 | 腿 | 护 5 | 重 0.8 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#fine_town_boots
+  quote_hash: 37A3A81F3422B3D0C6584C341AB2CE16A72E81122059B2494E9B75893A10743E
+  quote: 优质市民靴 | 腿 | 护 4 | 重 0.5 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#folded_town_boots
+  quote_hash: 8DC96C0EEC1E7AC0E707882B734901B56C75D8F06B22F3E60673C728B73C0298
+  quote: 翻折城镇靴 | 腿 | 护 4 | 重 1.0 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#steppe_leather_boots
+  quote_hash: 24B3DF81BCDBA7AE74026C397E4B81B4874AE2F70307310DFA2555BAB535B124
+  quote: 结实的皮靴 | 腿 | 护 4 | 重 0.8 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#ragged_boots
+  quote_hash: 493FA875F15E5F739DE8C5087F58CC92000E78F2FEA9AF03B02F4178F0804495
+  quote: 破旧靴 | 腿 | 护 5 | 重 0.8 | 材质 布 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#assassin_boot
+  quote_hash: 869F233358303B955EABBF72295E63491A2F9F017B00FAAF5D63FC993F4FF2DA
+  quote: 黑靴 | 腿 | 护 5 | 重 1 | 材质 皮 | 属 nord
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#ladys_shoe
+  quote_hash: 5580CF13B161A07AA003BDDCE14A357277F6EA1A83015DC60B5718AABB29A201
+  quote: 女士鞋 | 腿 | 护 1 | 重 0.6 | 材质 布 | 属 neutral_culture
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-legs-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 护腿与靴是穿戴里最容易被忘掉的一段，护值从一到二十六，跨度极大。绝大多数是鞋：软皮鞋、缠裹鞋、翻折皮靴、马靴，护值三到九，管的是走路。往上是靴筒加高的骑兵靴，护值十到十几；再往上才有真正的护腿：链甲护腿用链子包住小腿，护值二十二三；夹板靴与扎板靴把铁片夹进靴面，护值十九到二十六。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#southern_moccasins
+    quote_hash: 9FF03778E2AF6B0D0B39B260974479AD93292D7A3D3470EC849129E97847C85B
+    quote: 软皮鞋 | 腿 | 护 2 | 重 0.5 | 材质 布 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#wrapped_shoes
+    quote_hash: F074857017F59A55FBEB9C62379218361F9E22DCA9A2FAD026C0E394B80EB7F8
+    quote: 缠裹鞋 | 腿 | 护 4 | 重 0.8 | 材质 布 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#strapped_shoes
+    quote_hash: 06B94FE2482DB7D2FEEA907ED9C4D0CF4EF2C114D921C536E40935FA82D01A43
+    quote: 扎带鞋 | 腿 | 护 5 | 重 0.7 | 材质 布 | 属 neutral_culture
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#leather_shoes
+    quote_hash: 2043C6A4A6B1C189C9D989316394A09B0F7B6B85521D537C365471CF8C82BD7D
+    quote: 皮鞋 | 腿 | 护 3 | 重 0.7 | 材质 皮 | 属 neutral_culture
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#turndown_leather_boots
+    quote_hash: BAA5797BC411E81440C63758B6BB84D35D1E8B98C8D5022F96002D96917016D5
+    quote: 翻折皮靴 | 腿 | 护 9 | 重 0.9 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#leather_boots
+    quote_hash: E221769AC0D2BB39D5FCCE182D3CAB5614591A5511221C2108C2A648AA882F33
+    quote: 毛边弯靴 | 腿 | 护 4 | 重 0.8 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_woodland_boots
+    quote_hash: BA8311B72F4B42CEE6C5CF28CF25490F4FE88CFFFC533768E33C607C2C52987A
+    quote: 林地靴 | 腿 | 护 6 | 重 1.0 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#khuzait_curved_boots
+    quote_hash: E582722BD6FA951131BE74157747440C4F7225A462C6D0AC119F3E9976B0B7C5
+    quote: 弯靴 | 腿 | 护 5 | 重 0.9 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#leather_cavalier_boots
+    quote_hash: 5EC65567A9C823658106D090325A89F58C80DC274ACBD8EA8E04E5875C3D773B
+    quote: 皮制骑兵靴 | 腿 | 护 6 | 重 0.9 | 材质 皮 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#reinforced_suede_boots
+    quote_hash: 19AD26469ACF755F2F6AF35D87AC78A7B2F426962F3A2F11C4DAE41DCF003F84
+    quote: 强化绒面靴 | 腿 | 护 20 | 重 1.0 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#mail_chausses
+    quote_hash: C4BB1CB690B0A828D3ACCDD61704AC74D13EEB45CE1FC9FED17F2942B9295D10
+    quote: 链甲护腿 | 腿 | 护 22 | 重 2.9 | 材质 链甲 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#strapped_mail_chausses
+    quote_hash: 215D77F79F2CBFAB92283FE5BC73752F10FC172B3B467E11AB97FB2A34F9AA4F
+    quote: 扎带链甲护腿 | 腿 | 护 23 | 重 3.0 | 材质 链甲 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#mail_cavalier_boots
+    quote_hash: 8A17207E176990A728EE2F0A871AFAE56E318CD77C7F6A6E756346CE66D55F7D
+    quote: 链甲骑兵靴 | 腿 | 护 12 | 重 1.8 | 材质 链甲 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#plated_strip_boots
+    quote_hash: EA9AD683FACA7AECABC2A5290102EC28C968F6416CF612B7D764F4C6C09450EE
+    quote: 夹板靴 | 腿 | 护 22 | 重 2.7 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#lamellar_plate_boots
+    quote_hash: CADDA7C7D2103E61CC4083EA1047B47F3F7E0827E6F84F65F62A9A8A3E8F07D7
+    quote: 扎板靴 | 腿 | 护 19 | 重 3.5 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#northern_plated_boots
+    quote_hash: 1A088F0F6B24DD1F12EFA46F59DF94056A26B9DF14EAA7AD7B2A5E857D41BE94
+    quote: 皇家侍卫覆板靴 | 腿 | 护 18 | 重 2.9 | 材质 板 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#decorated_imperial_boots
+    quote_hash: 06415B0E0CFB05AC721F2F92645BC47649A0911BD68E43F418156CA141100C2D
+    quote: 装饰覆板靴 | 腿 | 护 20 | 重 2.3 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_warlord_boots
+    quote_hash: FB057E3758B875722E6F20A607AA9A8B3BE9CC12B8BF8B654258F262B9ADC2E1
+    quote: 鳞甲靴 | 腿 | 护 26 | 重 2.6 | 材质 板 | 属 battania
+  expressions:
+  - id: expr.weapon-armor-legs-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 鞋是走路的，不是打仗的。可走路走多了，脚底磨穿了什么都干不了。靴筒高一点，草籽和雪就进不去；底下钉两层皮，能让多走两天路。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#southern_moccasins
+      quote_hash: 9FF03778E2AF6B0D0B39B260974479AD93292D7A3D3470EC849129E97847C85B
+      quote: 软皮鞋 | 腿 | 护 2 | 重 0.5 | 材质 布 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#wrapped_shoes
+      quote_hash: F074857017F59A55FBEB9C62379218361F9E22DCA9A2FAD026C0E394B80EB7F8
+      quote: 缠裹鞋 | 腿 | 护 4 | 重 0.8 | 材质 布 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#strapped_shoes
+      quote_hash: 06B94FE2482DB7D2FEEA907ED9C4D0CF4EF2C114D921C536E40935FA82D01A43
+      quote: 扎带鞋 | 腿 | 护 5 | 重 0.7 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_shoes
+      quote_hash: 2043C6A4A6B1C189C9D989316394A09B0F7B6B85521D537C365471CF8C82BD7D
+      quote: 皮鞋 | 腿 | 护 3 | 重 0.7 | 材质 皮 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#turndown_leather_boots
+      quote_hash: BAA5797BC411E81440C63758B6BB84D35D1E8B98C8D5022F96002D96917016D5
+      quote: 翻折皮靴 | 腿 | 护 9 | 重 0.9 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_boots
+      quote_hash: E221769AC0D2BB39D5FCCE182D3CAB5614591A5511221C2108C2A648AA882F33
+      quote: 毛边弯靴 | 腿 | 护 4 | 重 0.8 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_woodland_boots
+      quote_hash: BA8311B72F4B42CEE6C5CF28CF25490F4FE88CFFFC533768E33C607C2C52987A
+      quote: 林地靴 | 腿 | 护 6 | 重 1.0 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#khuzait_curved_boots
+      quote_hash: E582722BD6FA951131BE74157747440C4F7225A462C6D0AC119F3E9976B0B7C5
+      quote: 弯靴 | 腿 | 护 5 | 重 0.9 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_cavalier_boots
+      quote_hash: 5EC65567A9C823658106D090325A89F58C80DC274ACBD8EA8E04E5875C3D773B
+      quote: 皮制骑兵靴 | 腿 | 护 6 | 重 0.9 | 材质 皮 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#reinforced_suede_boots
+      quote_hash: 19AD26469ACF755F2F6AF35D87AC78A7B2F426962F3A2F11C4DAE41DCF003F84
+      quote: 强化绒面靴 | 腿 | 护 20 | 重 1.0 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#mail_chausses
+      quote_hash: C4BB1CB690B0A828D3ACCDD61704AC74D13EEB45CE1FC9FED17F2942B9295D10
+      quote: 链甲护腿 | 腿 | 护 22 | 重 2.9 | 材质 链甲 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#strapped_mail_chausses
+      quote_hash: 215D77F79F2CBFAB92283FE5BC73752F10FC172B3B467E11AB97FB2A34F9AA4F
+      quote: 扎带链甲护腿 | 腿 | 护 23 | 重 3.0 | 材质 链甲 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#mail_cavalier_boots
+      quote_hash: 8A17207E176990A728EE2F0A871AFAE56E318CD77C7F6A6E756346CE66D55F7D
+      quote: 链甲骑兵靴 | 腿 | 护 12 | 重 1.8 | 材质 链甲 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#plated_strip_boots
+      quote_hash: EA9AD683FACA7AECABC2A5290102EC28C968F6416CF612B7D764F4C6C09450EE
+      quote: 夹板靴 | 腿 | 护 22 | 重 2.7 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#lamellar_plate_boots
+      quote_hash: CADDA7C7D2103E61CC4083EA1047B47F3F7E0827E6F84F65F62A9A8A3E8F07D7
+      quote: 扎板靴 | 腿 | 护 19 | 重 3.5 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_plated_boots
+      quote_hash: 1A088F0F6B24DD1F12EFA46F59DF94056A26B9DF14EAA7AD7B2A5E857D41BE94
+      quote: 皇家侍卫覆板靴 | 腿 | 护 18 | 重 2.9 | 材质 板 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#decorated_imperial_boots
+      quote_hash: 06415B0E0CFB05AC721F2F92645BC47649A0911BD68E43F418156CA141100C2D
+      quote: 装饰覆板靴 | 腿 | 护 20 | 重 2.3 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_warlord_boots
+      quote_hash: FB057E3758B875722E6F20A607AA9A8B3BE9CC12B8BF8B654258F262B9ADC2E1
+      quote: 鳞甲靴 | 腿 | 护 26 | 重 2.6 | 材质 板 | 属 battania
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-legs-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 靴子看底与筒：底要厚、要能换，筒要贴小腿，不然走三里就要掉。护值差得远——软皮鞋一，链甲护腿二十三，夹板靴二十六。真正包铁的那几款都很重，走一天下来脚腕会酸，所以只有骑马的人常穿。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#southern_moccasins
+      quote_hash: 9FF03778E2AF6B0D0B39B260974479AD93292D7A3D3470EC849129E97847C85B
+      quote: 软皮鞋 | 腿 | 护 2 | 重 0.5 | 材质 布 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#wrapped_shoes
+      quote_hash: F074857017F59A55FBEB9C62379218361F9E22DCA9A2FAD026C0E394B80EB7F8
+      quote: 缠裹鞋 | 腿 | 护 4 | 重 0.8 | 材质 布 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#strapped_shoes
+      quote_hash: 06B94FE2482DB7D2FEEA907ED9C4D0CF4EF2C114D921C536E40935FA82D01A43
+      quote: 扎带鞋 | 腿 | 护 5 | 重 0.7 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_shoes
+      quote_hash: 2043C6A4A6B1C189C9D989316394A09B0F7B6B85521D537C365471CF8C82BD7D
+      quote: 皮鞋 | 腿 | 护 3 | 重 0.7 | 材质 皮 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#turndown_leather_boots
+      quote_hash: BAA5797BC411E81440C63758B6BB84D35D1E8B98C8D5022F96002D96917016D5
+      quote: 翻折皮靴 | 腿 | 护 9 | 重 0.9 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_boots
+      quote_hash: E221769AC0D2BB39D5FCCE182D3CAB5614591A5511221C2108C2A648AA882F33
+      quote: 毛边弯靴 | 腿 | 护 4 | 重 0.8 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_woodland_boots
+      quote_hash: BA8311B72F4B42CEE6C5CF28CF25490F4FE88CFFFC533768E33C607C2C52987A
+      quote: 林地靴 | 腿 | 护 6 | 重 1.0 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#khuzait_curved_boots
+      quote_hash: E582722BD6FA951131BE74157747440C4F7225A462C6D0AC119F3E9976B0B7C5
+      quote: 弯靴 | 腿 | 护 5 | 重 0.9 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_cavalier_boots
+      quote_hash: 5EC65567A9C823658106D090325A89F58C80DC274ACBD8EA8E04E5875C3D773B
+      quote: 皮制骑兵靴 | 腿 | 护 6 | 重 0.9 | 材质 皮 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#reinforced_suede_boots
+      quote_hash: 19AD26469ACF755F2F6AF35D87AC78A7B2F426962F3A2F11C4DAE41DCF003F84
+      quote: 强化绒面靴 | 腿 | 护 20 | 重 1.0 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#mail_chausses
+      quote_hash: C4BB1CB690B0A828D3ACCDD61704AC74D13EEB45CE1FC9FED17F2942B9295D10
+      quote: 链甲护腿 | 腿 | 护 22 | 重 2.9 | 材质 链甲 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#strapped_mail_chausses
+      quote_hash: 215D77F79F2CBFAB92283FE5BC73752F10FC172B3B467E11AB97FB2A34F9AA4F
+      quote: 扎带链甲护腿 | 腿 | 护 23 | 重 3.0 | 材质 链甲 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#mail_cavalier_boots
+      quote_hash: 8A17207E176990A728EE2F0A871AFAE56E318CD77C7F6A6E756346CE66D55F7D
+      quote: 链甲骑兵靴 | 腿 | 护 12 | 重 1.8 | 材质 链甲 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#plated_strip_boots
+      quote_hash: EA9AD683FACA7AECABC2A5290102EC28C968F6416CF612B7D764F4C6C09450EE
+      quote: 夹板靴 | 腿 | 护 22 | 重 2.7 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#lamellar_plate_boots
+      quote_hash: CADDA7C7D2103E61CC4083EA1047B47F3F7E0827E6F84F65F62A9A8A3E8F07D7
+      quote: 扎板靴 | 腿 | 护 19 | 重 3.5 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_plated_boots
+      quote_hash: 1A088F0F6B24DD1F12EFA46F59DF94056A26B9DF14EAA7AD7B2A5E857D41BE94
+      quote: 皇家侍卫覆板靴 | 腿 | 护 18 | 重 2.9 | 材质 板 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#decorated_imperial_boots
+      quote_hash: 06415B0E0CFB05AC721F2F92645BC47649A0911BD68E43F418156CA141100C2D
+      quote: 装饰覆板靴 | 腿 | 护 20 | 重 2.3 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_warlord_boots
+      quote_hash: FB057E3758B875722E6F20A607AA9A8B3BE9CC12B8BF8B654258F262B9ADC2E1
+      quote: 鳞甲靴 | 腿 | 护 26 | 重 2.6 | 材质 板 | 属 battania
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-legs-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 绑腿是另一路：拿布条或皮带把小腿缠紧，护值八，看着寒酸，可在山里比靴子管用——缠紧了血不上头，走长路腿不肿。巴旦尼亚的林地绑腿就是这么用的。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#highland_leg_wrappings
+    quote_hash: 0B9CC9981AA1886D157E1D77254DC1816E4986149929ACBC0F168CC3A881648A
+    quote: 林地绑腿 | 腿 | 护 8 | 重 1.0 | 材质 布 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#wrapped_leather_boots
+    quote_hash: C5219F43B2D1D18F8901145B4BE59907D07E338F12E2930FEC1D192F4774201A
+    quote: 缠裹皮靴 | 腿 | 护 7 | 重 1.0 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#strapped_leather_boots
+    quote_hash: F198056962EABD545700EF02A1D3895AC373154BD78C4EF66F970F40668B36AC
+    quote: 扎带皮靴 | 腿 | 护 5 | 重 0.9 | 材质 布 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#rough_tied_boots
+    quote_hash: B6D8E82A86556A7DC699DDD7207F8B9DC9191210EDD031403D53062C82EF290C
+    quote: 粗绑靴 | 腿 | 护 6 | 重 0.9 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#belted_leather_boots
+    quote_hash: C76180A59166CC5BAFF4546D77F8F6C95B6A85FD629E6D4C04BF74814D3A7660
+    quote: 扣带皮靴 | 腿 | 护 5 | 重 1.1 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#woven_leather_boots
+    quote_hash: A60896C7049B1FFDB6D9B7D2F18D202E83FEAD22A3518C54C1E9D16ED4A61D9A
+    quote: 编织皮靴 | 腿 | 护 5 | 重 0.7 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#eastern_leather_boots
+    quote_hash: 91619B73C482CB99BD17DD82A5677818DA9739673A1C5F02F5E7ED68C60C205B
+    quote: 皮制马靴 | 腿 | 护 6 | 重 1.1 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_leather_boots
+    quote_hash: 34BF41E4402E3767C1BE93182F1E69694AAFF81D4F0D43FFAEA489A307549763
+    quote: 名门皮靴 | 腿 | 护 5 | 重 1.0 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_fur_boots
+    quote_hash: 729A4FAF4FE62D7E88993DC79F2C2B1C4C16565719DEEC5E4D3744C53F73D9AA
+    quote: 毛皮靴 | 腿 | 护 6 | 重 1.5 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sturgia_boots_a
+    quote_hash: DFE64EF3922C53A7CDEA6F6CBE76D98E65096F3E87A31F08E61B4B7AC4382BED
+    quote: 简易皮靴 | 腿 | 护 5 | 重 1.55 | 材质 皮 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sturgia_boots_b
+    quote_hash: FCD0C5D47FAC6141EBB4C6C17B7EC3B087F00C1086D129D1638C993B33763030
+    quote: 绑缚皮靴 | 腿 | 护 6 | 重 1.8 | 材质 皮 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sturgia_boots_c
+    quote_hash: 9383CEE71C67ADDA40CB55A56471B951AB37301910E10CAB3BF3EDD3D77F52AF
+    quote: 绑缚靴 | 腿 | 护 4 | 重 1.2 | 材质 皮 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sturgia_boots_d
+    quote_hash: 5FFC229A969C785D8FA81CCA016DD27119BA27117A820E1A795245773BA58EF7
+    quote: 缠裹靴 | 腿 | 护 3 | 重 1.0 | 材质 皮 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#highland_boots
+    quote_hash: 2566229D61F305460FEE8366B84680EB9130902DFDC887B572BD0F9F44FF784F
+    quote: 森民靴 | 腿 | 护 5 | 重 1.0 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#empire_horseman_boots
+    quote_hash: F6BD228D0AE6CEFD8646A7C16BB5D6E83801E01DF6F17B55E29F59801724773A
+    quote: 骑手靴 | 腿 | 护 5 | 重 0.8 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#fine_town_boots
+    quote_hash: 37A3A81F3422B3D0C6584C341AB2CE16A72E81122059B2494E9B75893A10743E
+    quote: 优质市民靴 | 腿 | 护 4 | 重 0.5 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#folded_town_boots
+    quote_hash: 8DC96C0EEC1E7AC0E707882B734901B56C75D8F06B22F3E60673C728B73C0298
+    quote: 翻折城镇靴 | 腿 | 护 4 | 重 1.0 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#steppe_leather_boots
+    quote_hash: 24B3DF81BCDBA7AE74026C397E4B81B4874AE2F70307310DFA2555BAB535B124
+    quote: 结实的皮靴 | 腿 | 护 4 | 重 0.8 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#ragged_boots
+    quote_hash: 493FA875F15E5F739DE8C5087F58CC92000E78F2FEA9AF03B02F4178F0804495
+    quote: 破旧靴 | 腿 | 护 5 | 重 0.8 | 材质 布 | 属 neutral_culture
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#assassin_boot
+    quote_hash: 869F233358303B955EABBF72295E63491A2F9F017B00FAAF5D63FC993F4FF2DA
+    quote: 黑靴 | 腿 | 护 5 | 重 1 | 材质 皮 | 属 nord
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#ladys_shoe
+    quote_hash: 5580CF13B161A07AA003BDDCE14A357277F6EA1A83015DC60B5718AABB29A201
+    quote: 女士鞋 | 腿 | 护 1 | 重 0.6 | 材质 布 | 属 neutral_culture
+  expressions:
+  - id: expr.weapon-armor-legs-battania-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 山里人不爱穿高筒靴——上坡下坡，筒子磨小腿。我们缠绑腿：一条布从脚踝缠到膝下，缠得紧，走一天腿不沉。冻了再套一层毛皮的，也是缠的，不讲样式。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#highland_leg_wrappings
+      quote_hash: 0B9CC9981AA1886D157E1D77254DC1816E4986149929ACBC0F168CC3A881648A
+      quote: 林地绑腿 | 腿 | 护 8 | 重 1.0 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#wrapped_leather_boots
+      quote_hash: C5219F43B2D1D18F8901145B4BE59907D07E338F12E2930FEC1D192F4774201A
+      quote: 缠裹皮靴 | 腿 | 护 7 | 重 1.0 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#strapped_leather_boots
+      quote_hash: F198056962EABD545700EF02A1D3895AC373154BD78C4EF66F970F40668B36AC
+      quote: 扎带皮靴 | 腿 | 护 5 | 重 0.9 | 材质 布 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#rough_tied_boots
+      quote_hash: B6D8E82A86556A7DC699DDD7207F8B9DC9191210EDD031403D53062C82EF290C
+      quote: 粗绑靴 | 腿 | 护 6 | 重 0.9 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#belted_leather_boots
+      quote_hash: C76180A59166CC5BAFF4546D77F8F6C95B6A85FD629E6D4C04BF74814D3A7660
+      quote: 扣带皮靴 | 腿 | 护 5 | 重 1.1 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#woven_leather_boots
+      quote_hash: A60896C7049B1FFDB6D9B7D2F18D202E83FEAD22A3518C54C1E9D16ED4A61D9A
+      quote: 编织皮靴 | 腿 | 护 5 | 重 0.7 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_leather_boots
+      quote_hash: 91619B73C482CB99BD17DD82A5677818DA9739673A1C5F02F5E7ED68C60C205B
+      quote: 皮制马靴 | 腿 | 护 6 | 重 1.1 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_leather_boots
+      quote_hash: 34BF41E4402E3767C1BE93182F1E69694AAFF81D4F0D43FFAEA489A307549763
+      quote: 名门皮靴 | 腿 | 护 5 | 重 1.0 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_fur_boots
+      quote_hash: 729A4FAF4FE62D7E88993DC79F2C2B1C4C16565719DEEC5E4D3744C53F73D9AA
+      quote: 毛皮靴 | 腿 | 护 6 | 重 1.5 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_boots_a
+      quote_hash: DFE64EF3922C53A7CDEA6F6CBE76D98E65096F3E87A31F08E61B4B7AC4382BED
+      quote: 简易皮靴 | 腿 | 护 5 | 重 1.55 | 材质 皮 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_boots_b
+      quote_hash: FCD0C5D47FAC6141EBB4C6C17B7EC3B087F00C1086D129D1638C993B33763030
+      quote: 绑缚皮靴 | 腿 | 护 6 | 重 1.8 | 材质 皮 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_boots_c
+      quote_hash: 9383CEE71C67ADDA40CB55A56471B951AB37301910E10CAB3BF3EDD3D77F52AF
+      quote: 绑缚靴 | 腿 | 护 4 | 重 1.2 | 材质 皮 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_boots_d
+      quote_hash: 5FFC229A969C785D8FA81CCA016DD27119BA27117A820E1A795245773BA58EF7
+      quote: 缠裹靴 | 腿 | 护 3 | 重 1.0 | 材质 皮 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#highland_boots
+      quote_hash: 2566229D61F305460FEE8366B84680EB9130902DFDC887B572BD0F9F44FF784F
+      quote: 森民靴 | 腿 | 护 5 | 重 1.0 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#empire_horseman_boots
+      quote_hash: F6BD228D0AE6CEFD8646A7C16BB5D6E83801E01DF6F17B55E29F59801724773A
+      quote: 骑手靴 | 腿 | 护 5 | 重 0.8 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#fine_town_boots
+      quote_hash: 37A3A81F3422B3D0C6584C341AB2CE16A72E81122059B2494E9B75893A10743E
+      quote: 优质市民靴 | 腿 | 护 4 | 重 0.5 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#folded_town_boots
+      quote_hash: 8DC96C0EEC1E7AC0E707882B734901B56C75D8F06B22F3E60673C728B73C0298
+      quote: 翻折城镇靴 | 腿 | 护 4 | 重 1.0 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#steppe_leather_boots
+      quote_hash: 24B3DF81BCDBA7AE74026C397E4B81B4874AE2F70307310DFA2555BAB535B124
+      quote: 结实的皮靴 | 腿 | 护 4 | 重 0.8 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#ragged_boots
+      quote_hash: 493FA875F15E5F739DE8C5087F58CC92000E78F2FEA9AF03B02F4178F0804495
+      quote: 破旧靴 | 腿 | 护 5 | 重 0.8 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#assassin_boot
+      quote_hash: 869F233358303B955EABBF72295E63491A2F9F017B00FAAF5D63FC993F4FF2DA
+      quote: 黑靴 | 腿 | 护 5 | 重 1 | 材质 皮 | 属 nord
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#ladys_shoe
+      quote_hash: 5580CF13B161A07AA003BDDCE14A357277F6EA1A83015DC60B5718AABB29A201
+      quote: 女士鞋 | 腿 | 护 1 | 重 0.6 | 材质 布 | 属 neutral_culture
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.battania
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.battania
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.battania
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.battania
+    denies: []

@@ -1,0 +1,558 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-shield-kite
+title:
+  zh-CN: 筝形盾
+  en: Kite Shield
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 筝形盾
+  - 骑兵筝形盾
+  - 强化筝形盾
+  - 皮革包边筝形盾
+  - 叶尖筝形盾
+  - 骑士盾
+  en:
+  - Kite Shield
+  - Horseman's Kite Shield
+  - Tear-drop Shield
+summary:
+  zh-CN: 上圆下尖、长可及膝的一面木盾——护住左半身，也护住那条腿。骑手与步卒都拿，是这地上最常见的一面盾。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#old_kite_shield
+  quote_hash: 8833D2A373FF61E3BC84204A7AA267B1795FB7AA14EF4946D927C00402EC3609
+  quote: 粗制筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 170 | 耐久 200 | 重 2.8 | 属 -
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#worn_kite_shield
+  quote_hash: E09534EC2AFD8C4EB86AEA6ECC7F16A171C7A89432F786F568CD60ADE220CC47
+  quote: 破旧筝形盾 | Shield | 盾类 大盾 | 护 3 | 长 128 | 耐久 230 | 重 2.8 | 属 -
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#leather_bound_kite_shield
+  quote_hash: 1836AAC00500172427A5C89F0A0C070C5E753FBCA7CE7744BD2E5D3D53E6CCB2
+  quote: 皮革包边筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 128 | 耐久 305 | 重 3.4 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#reinforced_kite_shield
+  quote_hash: 1B101209D739D4ABC34095FB43485EFAFC40CAAB8FF5FBBC26C42214284E2CDE
+  quote: 强化筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 128 | 耐久 500 | 重 6.2 | 属 -
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#stronger_reinforced_kite_shield
+  quote_hash: F12545C7B527A0D8E2572A7E855F513687C2519A4B02036F4BD78629DB089365
+  quote: 强化橡木筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 128 | 耐久 530 | 重 6.8 | 属 -
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#old_horsemans_kite_shield
+  quote_hash: 7B47C2BC4EECB27E24679D9479D397CE42BBE9AC884277A4BA18C1588FF063FE
+  quote: 木制筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 78 | 耐久 170 | 重 1.7 | 属 -
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#bound_horsemans_kite_shield
+  quote_hash: E0BBEE1BFB002F8EAF091A2780B6D2937A65BFBDFD19EB655193D9DACAEEEBB7
+  quote: 骑兵筝形盾 | Shield | 盾类 大盾 | 护 8 | 长 78 | 耐久 280 | 重 3.0 | 属 -
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sturgia_infantry_shield_a
+  quote_hash: 825A9981E3C330902A41AF76CDEC65BED34A400F7AB3258ABD83F2844DABF657
+  quote: 叶尖筝形盾 | Shield | 盾类 大盾 | 护 7 | 长 133 | 耐久 520 | 重 6.0 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sturgia_infantry_shield_b
+  quote_hash: C71684C7689C0DD0362A0540CC26FEA1291DC0DCAC55C3E2CD0938396DAFC9CF
+  quote: 强化叶尖筝形盾 | Shield | 盾类 大盾 | 护 7 | 长 133 | 耐久 600 | 重 6.8 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#vlandia_infantry_shield_a
+  quote_hash: CAD6D480ECF93CE7300085C154E929FA5B879E888ED8FE7CB87C2477FCDFCC22
+  quote: 棱角筝形盾 | Shield | 盾类 大盾 | 护 5 | 长 133 | 耐久 490 | 重 4.9 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#western_riders_kite_shield
+  quote_hash: 3396D343945814829874F12527AC7A85C9A76825677335F732400636C7A43E53
+  quote: 骑手筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 85 | 耐久 270 | 重 2.8 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#ironrim_riders_kite_shield
+  quote_hash: 880B347C2D8F1789973E70EA28E2C39E0C2190E587C6259A09FE5B396B1F7457
+  quote: 强化铁边筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 85 | 耐久 320 | 重 3.2 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#chivalric_kite_shield
+  quote_hash: 8BBD7B9BCD92913BF09D24F5DBE00690D52F55F00560FEC595EFD338743D7624
+  quote: 骑士筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 110 | 耐久 430 | 重 4.2 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#western_kite_shield
+  quote_hash: E352CB2D3C0BD27B221E35F27418267AF7DE3EE7345641C664520048B13F5014
+  quote: 筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 110 | 耐久 340 | 重 4.0 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#ironrim_kite_shield
+  quote_hash: 8DBADE44566D5571911E0BDFEAFE0FB4F9ABE526BB6246E7A68C210AF8DC5259
+  quote: 铁边筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 110 | 耐久 360 | 重 4.2 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#steel_druzhinnik_kite_shield
+  quote_hash: 8530FC3CC38D49914C8DE828AE35F3E048A29110CB622DA369CCFFAE4DDC909D
+  quote: 亲卫骑兵筝形盾 | Shield | 盾类 大盾 | 护 5 | 长 133 | 耐久 610 | 重 5.4 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#northern_scouts_shield
+  quote_hash: F8F2333AE520047DCCC06408FCC87CED0C0BF15539E6B2A272D6FF97737829F4
+  quote: 结实的骑兵筝形盾 | Shield | 盾类 大盾 | 护 6 | 长 78 | 耐久 260 | 重 2.2 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#northern_horsemans_shield
+  quote_hash: 70DCE0EAF68A999388C5AC53ACF281DBAF12E9E500BCB8282529AFEEE1A110A2
+  quote: 强化骑兵盾 | Shield | 盾类 大盾 | 护 1 | 长 78 | 耐久 380 | 重 3.8 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#fortified_kite_shield
+  quote_hash: 2833C637700E680E87600549949B598686119570ED79272E1978F85D668F75B6
+  quote: 加固筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 110 | 耐久 400 | 重 3.8 | 属 -
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#studded_bound_kite_shield
+  quote_hash: 6C825F12183172EEAB6B4CCE48B64769320B3102ABB3E8AABE00E584E330D76A
+  quote: 镶钉包边筝形盾 | Shield | 盾类 大盾 | 护 9 | 长 110 | 耐久 315 | 重 3.6 | 属 -
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-shield-kite-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 筝形盾上端圆、下端收成尖，竖着拿能从小臂一直护到小腿。它是一块木胎，外头包皮或包铁圈；长短分两路——步卒的做到一百二十八到一百七十，骑兵的只有七十八，短到不碍驾马。这一路三十件，差别全在包边上：粗制的、破旧的耐久只有一百几，包铁圈、上橡木的能做到六百。护值一到九，多数只有一——靠的不是它硬，是它把刀挡在外面。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#old_kite_shield
+    quote_hash: 8833D2A373FF61E3BC84204A7AA267B1795FB7AA14EF4946D927C00402EC3609
+    quote: 粗制筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 170 | 耐久 200 | 重 2.8 | 属 -
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#worn_kite_shield
+    quote_hash: E09534EC2AFD8C4EB86AEA6ECC7F16A171C7A89432F786F568CD60ADE220CC47
+    quote: 破旧筝形盾 | Shield | 盾类 大盾 | 护 3 | 长 128 | 耐久 230 | 重 2.8 | 属 -
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#leather_bound_kite_shield
+    quote_hash: 1836AAC00500172427A5C89F0A0C070C5E753FBCA7CE7744BD2E5D3D53E6CCB2
+    quote: 皮革包边筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 128 | 耐久 305 | 重 3.4 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#reinforced_kite_shield
+    quote_hash: 1B101209D739D4ABC34095FB43485EFAFC40CAAB8FF5FBBC26C42214284E2CDE
+    quote: 强化筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 128 | 耐久 500 | 重 6.2 | 属 -
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#stronger_reinforced_kite_shield
+    quote_hash: F12545C7B527A0D8E2572A7E855F513687C2519A4B02036F4BD78629DB089365
+    quote: 强化橡木筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 128 | 耐久 530 | 重 6.8 | 属 -
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#old_horsemans_kite_shield
+    quote_hash: 7B47C2BC4EECB27E24679D9479D397CE42BBE9AC884277A4BA18C1588FF063FE
+    quote: 木制筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 78 | 耐久 170 | 重 1.7 | 属 -
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#bound_horsemans_kite_shield
+    quote_hash: E0BBEE1BFB002F8EAF091A2780B6D2937A65BFBDFD19EB655193D9DACAEEEBB7
+    quote: 骑兵筝形盾 | Shield | 盾类 大盾 | 护 8 | 长 78 | 耐久 280 | 重 3.0 | 属 -
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sturgia_infantry_shield_a
+    quote_hash: 825A9981E3C330902A41AF76CDEC65BED34A400F7AB3258ABD83F2844DABF657
+    quote: 叶尖筝形盾 | Shield | 盾类 大盾 | 护 7 | 长 133 | 耐久 520 | 重 6.0 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sturgia_infantry_shield_b
+    quote_hash: C71684C7689C0DD0362A0540CC26FEA1291DC0DCAC55C3E2CD0938396DAFC9CF
+    quote: 强化叶尖筝形盾 | Shield | 盾类 大盾 | 护 7 | 长 133 | 耐久 600 | 重 6.8 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#vlandia_infantry_shield_a
+    quote_hash: CAD6D480ECF93CE7300085C154E929FA5B879E888ED8FE7CB87C2477FCDFCC22
+    quote: 棱角筝形盾 | Shield | 盾类 大盾 | 护 5 | 长 133 | 耐久 490 | 重 4.9 | 属 vlandia
+  expressions:
+  - id: expr.weapon-armor-shield-kite-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 这面盾是拿命换的——旧的那面挨了三箭，裂了。这面是镇上新打的，包了铁边。拎着比旧的沉，可心里踏实。底下尖的那头刚好护住膝盖，蹲下射箭也不离手。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#old_kite_shield
+      quote_hash: 8833D2A373FF61E3BC84204A7AA267B1795FB7AA14EF4946D927C00402EC3609
+      quote: 粗制筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 170 | 耐久 200 | 重 2.8 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#worn_kite_shield
+      quote_hash: E09534EC2AFD8C4EB86AEA6ECC7F16A171C7A89432F786F568CD60ADE220CC47
+      quote: 破旧筝形盾 | Shield | 盾类 大盾 | 护 3 | 长 128 | 耐久 230 | 重 2.8 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_bound_kite_shield
+      quote_hash: 1836AAC00500172427A5C89F0A0C070C5E753FBCA7CE7744BD2E5D3D53E6CCB2
+      quote: 皮革包边筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 128 | 耐久 305 | 重 3.4 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#reinforced_kite_shield
+      quote_hash: 1B101209D739D4ABC34095FB43485EFAFC40CAAB8FF5FBBC26C42214284E2CDE
+      quote: 强化筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 128 | 耐久 500 | 重 6.2 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#stronger_reinforced_kite_shield
+      quote_hash: F12545C7B527A0D8E2572A7E855F513687C2519A4B02036F4BD78629DB089365
+      quote: 强化橡木筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 128 | 耐久 530 | 重 6.8 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#old_horsemans_kite_shield
+      quote_hash: 7B47C2BC4EECB27E24679D9479D397CE42BBE9AC884277A4BA18C1588FF063FE
+      quote: 木制筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 78 | 耐久 170 | 重 1.7 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#bound_horsemans_kite_shield
+      quote_hash: E0BBEE1BFB002F8EAF091A2780B6D2937A65BFBDFD19EB655193D9DACAEEEBB7
+      quote: 骑兵筝形盾 | Shield | 盾类 大盾 | 护 8 | 长 78 | 耐久 280 | 重 3.0 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_infantry_shield_a
+      quote_hash: 825A9981E3C330902A41AF76CDEC65BED34A400F7AB3258ABD83F2844DABF657
+      quote: 叶尖筝形盾 | Shield | 盾类 大盾 | 护 7 | 长 133 | 耐久 520 | 重 6.0 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_infantry_shield_b
+      quote_hash: C71684C7689C0DD0362A0540CC26FEA1291DC0DCAC55C3E2CD0938396DAFC9CF
+      quote: 强化叶尖筝形盾 | Shield | 盾类 大盾 | 护 7 | 长 133 | 耐久 600 | 重 6.8 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#vlandia_infantry_shield_a
+      quote_hash: CAD6D480ECF93CE7300085C154E929FA5B879E888ED8FE7CB87C2477FCDFCC22
+      quote: 棱角筝形盾 | Shield | 盾类 大盾 | 护 5 | 长 133 | 耐久 490 | 重 4.9 | 属 vlandia
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-shield-kite-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 筝形盾的讲究在边上：木胎是底子，边上一圈包什么才决定价钱。不包的砍两下就豁口，包皮革的耐些，包铁圈的能用好几年。耐久从一百四十五到六百一十，最贵的那种木胎外面还蒙一层皮、再钉铁边，一副顶三副。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#old_kite_shield
+      quote_hash: 8833D2A373FF61E3BC84204A7AA267B1795FB7AA14EF4946D927C00402EC3609
+      quote: 粗制筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 170 | 耐久 200 | 重 2.8 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#worn_kite_shield
+      quote_hash: E09534EC2AFD8C4EB86AEA6ECC7F16A171C7A89432F786F568CD60ADE220CC47
+      quote: 破旧筝形盾 | Shield | 盾类 大盾 | 护 3 | 长 128 | 耐久 230 | 重 2.8 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_bound_kite_shield
+      quote_hash: 1836AAC00500172427A5C89F0A0C070C5E753FBCA7CE7744BD2E5D3D53E6CCB2
+      quote: 皮革包边筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 128 | 耐久 305 | 重 3.4 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#reinforced_kite_shield
+      quote_hash: 1B101209D739D4ABC34095FB43485EFAFC40CAAB8FF5FBBC26C42214284E2CDE
+      quote: 强化筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 128 | 耐久 500 | 重 6.2 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#stronger_reinforced_kite_shield
+      quote_hash: F12545C7B527A0D8E2572A7E855F513687C2519A4B02036F4BD78629DB089365
+      quote: 强化橡木筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 128 | 耐久 530 | 重 6.8 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#old_horsemans_kite_shield
+      quote_hash: 7B47C2BC4EECB27E24679D9479D397CE42BBE9AC884277A4BA18C1588FF063FE
+      quote: 木制筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 78 | 耐久 170 | 重 1.7 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#bound_horsemans_kite_shield
+      quote_hash: E0BBEE1BFB002F8EAF091A2780B6D2937A65BFBDFD19EB655193D9DACAEEEBB7
+      quote: 骑兵筝形盾 | Shield | 盾类 大盾 | 护 8 | 长 78 | 耐久 280 | 重 3.0 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_infantry_shield_a
+      quote_hash: 825A9981E3C330902A41AF76CDEC65BED34A400F7AB3258ABD83F2844DABF657
+      quote: 叶尖筝形盾 | Shield | 盾类 大盾 | 护 7 | 长 133 | 耐久 520 | 重 6.0 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_infantry_shield_b
+      quote_hash: C71684C7689C0DD0362A0540CC26FEA1291DC0DCAC55C3E2CD0938396DAFC9CF
+      quote: 强化叶尖筝形盾 | Shield | 盾类 大盾 | 护 7 | 长 133 | 耐久 600 | 重 6.8 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#vlandia_infantry_shield_a
+      quote_hash: CAD6D480ECF93CE7300085C154E929FA5B879E888ED8FE7CB87C2477FCDFCC22
+      quote: 棱角筝形盾 | Shield | 盾类 大盾 | 护 5 | 长 133 | 耐久 490 | 重 4.9 | 属 vlandia
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-shield-kite-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 瓦兰迪亚与斯特吉亚的步兵筝形盾另有一路做法：盾面更窄更长、下缘做成棱角，排成盾墙时两盾能叠住；其中斯特吉亚的叶尖款最长，一百三十三，耐久到六百。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#western_riders_kite_shield
+    quote_hash: 3396D343945814829874F12527AC7A85C9A76825677335F732400636C7A43E53
+    quote: 骑手筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 85 | 耐久 270 | 重 2.8 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#ironrim_riders_kite_shield
+    quote_hash: 880B347C2D8F1789973E70EA28E2C39E0C2190E587C6259A09FE5B396B1F7457
+    quote: 强化铁边筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 85 | 耐久 320 | 重 3.2 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#chivalric_kite_shield
+    quote_hash: 8BBD7B9BCD92913BF09D24F5DBE00690D52F55F00560FEC595EFD338743D7624
+    quote: 骑士筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 110 | 耐久 430 | 重 4.2 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#western_kite_shield
+    quote_hash: E352CB2D3C0BD27B221E35F27418267AF7DE3EE7345641C664520048B13F5014
+    quote: 筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 110 | 耐久 340 | 重 4.0 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#ironrim_kite_shield
+    quote_hash: 8DBADE44566D5571911E0BDFEAFE0FB4F9ABE526BB6246E7A68C210AF8DC5259
+    quote: 铁边筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 110 | 耐久 360 | 重 4.2 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#steel_druzhinnik_kite_shield
+    quote_hash: 8530FC3CC38D49914C8DE828AE35F3E048A29110CB622DA369CCFFAE4DDC909D
+    quote: 亲卫骑兵筝形盾 | Shield | 盾类 大盾 | 护 5 | 长 133 | 耐久 610 | 重 5.4 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#northern_scouts_shield
+    quote_hash: F8F2333AE520047DCCC06408FCC87CED0C0BF15539E6B2A272D6FF97737829F4
+    quote: 结实的骑兵筝形盾 | Shield | 盾类 大盾 | 护 6 | 长 78 | 耐久 260 | 重 2.2 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#northern_horsemans_shield
+    quote_hash: 70DCE0EAF68A999388C5AC53ACF281DBAF12E9E500BCB8282529AFEEE1A110A2
+    quote: 强化骑兵盾 | Shield | 盾类 大盾 | 护 1 | 长 78 | 耐久 380 | 重 3.8 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#fortified_kite_shield
+    quote_hash: 2833C637700E680E87600549949B598686119570ED79272E1978F85D668F75B6
+    quote: 加固筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 110 | 耐久 400 | 重 3.8 | 属 -
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#studded_bound_kite_shield
+    quote_hash: 6C825F12183172EEAB6B4CCE48B64769320B3102ABB3E8AABE00E584E330D76A
+    quote: 镶钉包边筝形盾 | Shield | 盾类 大盾 | 护 9 | 长 110 | 耐久 315 | 重 3.6 | 属 -
+  expressions:
+  - id: expr.weapon-armor-shield-kite-vlandia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我们的筝形盾比南方的窄，边上包铁圈，排阵的时候一面压一面，缝就没了。骑士用的那种还带纹章——自己的记号漆在盾面正中，为的是混战里认得出自己的人。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#western_riders_kite_shield
+      quote_hash: 3396D343945814829874F12527AC7A85C9A76825677335F732400636C7A43E53
+      quote: 骑手筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 85 | 耐久 270 | 重 2.8 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#ironrim_riders_kite_shield
+      quote_hash: 880B347C2D8F1789973E70EA28E2C39E0C2190E587C6259A09FE5B396B1F7457
+      quote: 强化铁边筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 85 | 耐久 320 | 重 3.2 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#chivalric_kite_shield
+      quote_hash: 8BBD7B9BCD92913BF09D24F5DBE00690D52F55F00560FEC595EFD338743D7624
+      quote: 骑士筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 110 | 耐久 430 | 重 4.2 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#western_kite_shield
+      quote_hash: E352CB2D3C0BD27B221E35F27418267AF7DE3EE7345641C664520048B13F5014
+      quote: 筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 110 | 耐久 340 | 重 4.0 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#ironrim_kite_shield
+      quote_hash: 8DBADE44566D5571911E0BDFEAFE0FB4F9ABE526BB6246E7A68C210AF8DC5259
+      quote: 铁边筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 110 | 耐久 360 | 重 4.2 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#steel_druzhinnik_kite_shield
+      quote_hash: 8530FC3CC38D49914C8DE828AE35F3E048A29110CB622DA369CCFFAE4DDC909D
+      quote: 亲卫骑兵筝形盾 | Shield | 盾类 大盾 | 护 5 | 长 133 | 耐久 610 | 重 5.4 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_scouts_shield
+      quote_hash: F8F2333AE520047DCCC06408FCC87CED0C0BF15539E6B2A272D6FF97737829F4
+      quote: 结实的骑兵筝形盾 | Shield | 盾类 大盾 | 护 6 | 长 78 | 耐久 260 | 重 2.2 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_horsemans_shield
+      quote_hash: 70DCE0EAF68A999388C5AC53ACF281DBAF12E9E500BCB8282529AFEEE1A110A2
+      quote: 强化骑兵盾 | Shield | 盾类 大盾 | 护 1 | 长 78 | 耐久 380 | 重 3.8 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#fortified_kite_shield
+      quote_hash: 2833C637700E680E87600549949B598686119570ED79272E1978F85D668F75B6
+      quote: 加固筝形盾 | Shield | 盾类 大盾 | 护 1 | 长 110 | 耐久 400 | 重 3.8 | 属 -
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#studded_bound_kite_shield
+      quote_hash: 6C825F12183172EEAB6B4CCE48B64769320B3102ABB3E8AABE00E584E330D76A
+      quote: 镶钉包边筝形盾 | Shield | 盾类 大盾 | 护 9 | 长 110 | 耐久 315 | 重 3.6 | 属 -
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []

@@ -1,0 +1,143 @@
+总行数 171；状态变化 6 行；状态同但命中集/模式变化 154 行
+
+== 状态发生变化（挂 / 不挂）==
+[A4-R1b-村民-秘密账不默认public(回归)] not_found (keyword ) -> partial   (hybrid  )
+    原文: 科尔坦家的账
+    挂后 top3: ['awake:entry:geography.villages-takor']
+[CS8-子虚堡-商人(不存在对照)] not_found (identity) -> known     (semantic)
+    原文: 子虚堡
+    挂后 top3: ['awake:entry:geography.castles-atrion-castle', 'awake:entry:geography.castles-garontor-castle', 'awake:entry:geography.castles-oristocorys-castle']
+[IT9-钢剑-商人(不存在对照)] not_found (identity) -> known     (semantic)
+    原文: 钢剑
+    挂后 top3: ['awake:entry:war.troops-royal-guard', 'awake:entry:economy.items-crossbow_c', 'awake:entry:war.weapons-armor-torso-mail']
+[IV31-子虚村-商人(不存在对照)] not_found (identity) -> known     (semantic)
+    原文: 子虚村
+    挂后 top3: ['awake:entry:geography.castles-ov-castle', 'awake:entry:geography.villages-ferkh']
+[IWA23-钢鳞胸铠-商人(不存在对照)] not_found (identity) -> known     (semantic)
+    原文: 钢鳞胸铠
+    挂后 top3: ['awake:entry:war.weapons-armor-torso-scale', 'awake:entry:economy.items-scale_shoulder_armor']
+[IWH12-角冠铁胄-商人(不存在对照)] not_found (identity) -> known     (semantic)
+    原文: 角冠铁胄
+    挂后 top3: ['awake:entry:war.weapons-head-crown', 'awake:entry:economy.items-battania_mercenary_armor', 'awake:entry:war.weapons-armor-torso-brigandine']
+
+== 状态未变，但命中集或匹配模式变化（前 40 行）==
+[A1-R1-沙拉斯本地村民-城与港(回归)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-charas']
+    挂后 ['awake:entry:geography.towns-charas', 'awake:entry:geography.settlement-types-town', 'awake:entry:politics.throne-saneopa']
+[A10-B4-南帝国市民-石山要塞南帝国版(回归)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-lycaron']
+    挂后 ['awake:entry:geography.towns-lycaron']
+[A2-R2-外地村民-城与港(回归)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-charas']
+    挂后 ['awake:entry:geography.towns-charas', 'awake:entry:geography.settlement-types-town', 'awake:entry:politics.throne-saneopa']
+[A3-R5a-酒馆老板-鬼点子(回归)] mode keyword -> hybrid
+    挂前 ['awake:entry:culture.tales-husn-fulq']
+    挂后 ['awake:entry:culture.tales-husn-fulq']
+[A5-R8a-贵族50-秘密账(回归golden2)] mode keyword -> hybrid
+    挂前 ['awake:entry:politics.clans-charas-cortain-secret', 'awake:entry:politics.territories-charas-reign']
+    挂后 ['awake:entry:politics.clans-charas-cortain-secret', 'awake:entry:politics.territories-charas-reign', 'awake:entry:geography.villages-takor']
+[A6-R8b-贵族30-秘密账只见公开面(回归)] mode keyword -> hybrid
+    挂前 ['awake:entry:politics.clans-charas-cortain-secret', 'awake:entry:politics.territories-charas-reign']
+    挂后 ['awake:entry:politics.clans-charas-cortain-secret', 'awake:entry:politics.territories-charas-reign', 'awake:entry:geography.villages-takor']
+[A7-R10a-仅Role-soldier-归属(回归回退链)] mode keyword -> hybrid
+    挂前 ['awake:entry:politics.territories-charas-reign', 'awake:entry:politics.clans-charas-cortain-secret', 'awake:entry:politics.territories-dawn-stewardship']
+    挂后 ['awake:entry:politics.territories-charas-reign', 'awake:entry:politics.clans-charas-cortain-secret', 'awake:entry:politics.territories-dawn-stewardship']
+[A8-B1-帝国平民-城与港帝国版(回归)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-charas']
+    挂后 ['awake:entry:geography.towns-charas', 'awake:entry:geography.settlement-types-town']
+[A9-B2-巴旦尼亚村民-三易其手巴旦版(回归)] mode keyword -> hybrid
+    挂前 ['awake:entry:politics.territories-varcheg-swap']
+    挂后 ['awake:entry:politics.territories-varcheg-swap']
+[CS1-突比力斯堡-商人detail] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.castles-tubilis-castle', 'awake:entry:geography.villages-tubilis']
+    挂后 ['awake:entry:geography.castles-tubilis-castle', 'awake:entry:geography.villages-tubilis', 'awake:entry:geography.castles-tirby-castle']
+[CS2-法纳卜-商人detail(下辖村名反查堡)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.villages-fanab', 'awake:entry:geography.castles-tubilis-castle']
+    挂后 ['awake:entry:geography.villages-fanab', 'awake:entry:geography.castles-tubilis-castle', 'awake:entry:geography.villages-hunab']
+[CS3-瓦拉戈斯堡-贵族detail] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.castles-varagos-castle', 'awake:entry:geography.villages-varagos', 'awake:entry:geography.castles-gersegos-castle']
+    挂后 ['awake:entry:geography.castles-varagos-castle', 'awake:entry:geography.villages-varagos', 'awake:entry:geography.castles-gersegos-castle']
+[CS4-乌斯托科堡-村民rumor] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.castles-ustokol-castle', 'awake:entry:geography.villages-ustokol', 'awake:entry:geography.castles-oristocorys-castle']
+    挂后 ['awake:entry:geography.castles-ustokol-castle', 'awake:entry:geography.villages-ustokol', 'awake:entry:geography.castles-oristocorys-castle']
+[CS5-于桑克堡-商人detail(单村堡)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.castles-usanc-castle', 'awake:entry:geography.villages-usanc']
+    挂后 ['awake:entry:geography.castles-usanc-castle', 'awake:entry:geography.villages-usanc', 'awake:entry:geography.castles-verecsand-castle']
+[CS6-阿布·科梅尔堡-商人detail(巴旦尼亚)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.castles-ab-comer-castle', 'awake:entry:geography.villages-ab-comer', 'awake:entry:geography.castles-akiser-castle']
+    挂后 ['awake:entry:geography.castles-ab-comer-castle', 'awake:entry:geography.villages-ab-comer', 'awake:entry:geography.castles-akiser-castle']
+[CS7-哈坤堡-商人detail(库赛特)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.castles-hakkun-castle', 'awake:entry:geography.villages-hakkun']
+    挂后 ['awake:entry:geography.castles-hakkun-castle', 'awake:entry:geography.villages-hakkun', 'awake:entry:geography.castles-rhesos-castle']
+[D1-德律亚山-村民rumor(帕拉话)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.mountains-dryatic', 'awake:entry:geography.castles-ataconia-castle', 'awake:entry:geography.castles-rhesos-castle']
+    挂后 ['awake:entry:geography.mountains-dryatic', 'awake:entry:geography.castles-ataconia-castle', 'awake:entry:geography.villages-vathea']
+[D2-德律亚山-士兵detail(屏障)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.mountains-dryatic', 'awake:entry:geography.castles-ataconia-castle', 'awake:entry:geography.castles-rhesos-castle']
+    挂后 ['awake:entry:geography.mountains-dryatic', 'awake:entry:geography.castles-ataconia-castle', 'awake:entry:geography.villages-vathea']
+[D3-德律亚山-头人detail(大地之眼)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.mountains-dryatic', 'awake:entry:geography.castles-ataconia-castle', 'awake:entry:geography.castles-rhesos-castle']
+    挂后 ['awake:entry:geography.mountains-dryatic', 'awake:entry:geography.castles-ataconia-castle', 'awake:entry:geography.villages-vathea']
+[D4-德律亚山-市民summary(山形或粮仓)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.mountains-dryatic', 'awake:entry:geography.castles-ataconia-castle', 'awake:entry:geography.castles-rhesos-castle']
+    挂后 ['awake:entry:geography.mountains-dryatic', 'awake:entry:geography.castles-ataconia-castle', 'awake:entry:geography.villages-vathea']
+[E1-德夫赛格-库赛特村民rumor(游牧版)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.plateaus-devseg', 'awake:entry:geography.castles-khimli-castle', 'awake:entry:geography.castles-simira-castle']
+    挂后 ['awake:entry:geography.plateaus-devseg', 'awake:entry:geography.castles-khimli-castle', 'awake:entry:geography.castles-usek-castle']
+[E2-德夫赛格-巴旦村民rumor(无门兜底)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.plateaus-devseg', 'awake:entry:geography.castles-khimli-castle', 'awake:entry:geography.castles-simira-castle']
+    挂后 ['awake:entry:geography.plateaus-devseg', 'awake:entry:geography.castles-khimli-castle', 'awake:entry:geography.castles-usek-castle']
+[E3-德夫赛格-头人detail(奥多赫)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.plateaus-devseg', 'awake:entry:geography.castles-khimli-castle', 'awake:entry:geography.castles-simira-castle']
+    挂后 ['awake:entry:geography.plateaus-devseg', 'awake:entry:geography.castles-khimli-castle', 'awake:entry:geography.castles-usek-castle']
+[E4-德夫赛格-贵族30detail(黎明山脉)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.plateaus-devseg', 'awake:entry:geography.castles-khimli-castle', 'awake:entry:geography.castles-simira-castle']
+    挂后 ['awake:entry:geography.plateaus-devseg', 'awake:entry:geography.castles-khimli-castle', 'awake:entry:geography.castles-usek-castle']
+[I1-帕拉汶德-瓦兰迪亚村民rumor(瓦兰迪亚版)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-pravend', 'awake:entry:politics.throne-paravenos', 'awake:entry:geography.villages-fregian']
+    挂后 ['awake:entry:geography.towns-pravend', 'awake:entry:politics.throne-paravenos', 'awake:entry:geography.villages-larnac']
+[I2-帕拉汶德-巴旦村民rumor(巴旦版)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-pravend', 'awake:entry:politics.throne-paravenos', 'awake:entry:geography.villages-fregian']
+    挂后 ['awake:entry:geography.towns-pravend', 'awake:entry:politics.throne-paravenos', 'awake:entry:geography.villages-larnac']
+[I3-帕拉汶德-帝国村民rumor(帝国版说书传说)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-pravend', 'awake:entry:politics.throne-paravenos', 'awake:entry:geography.villages-fregian']
+    挂后 ['awake:entry:geography.towns-pravend', 'awake:entry:politics.throne-paravenos', 'awake:entry:geography.villages-larnac']
+[I4-帕拉汶德-贵族50索secret(得detail封顶)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-pravend', 'awake:entry:politics.throne-paravenos', 'awake:entry:geography.villages-fregian']
+    挂后 ['awake:entry:geography.towns-pravend', 'awake:entry:politics.throne-paravenos', 'awake:entry:geography.villages-larnac']
+[I5-帕拉汶德-士兵summary(献城)] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-pravend', 'awake:entry:politics.throne-paravenos', 'awake:entry:geography.villages-fregian']
+    挂后 ['awake:entry:geography.towns-pravend', 'awake:entry:politics.throne-paravenos', 'awake:entry:geography.villages-larnac']
+[IS1-古亚兹-村民rumor] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-quyaz']
+    挂后 ['awake:entry:geography.towns-quyaz', 'awake:entry:geography.towns-iyakis', 'awake:entry:geography.villages-bunqaz']
+[IS10-席隆尼亚-市民rumor] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-syronea', 'awake:entry:geography.lakes-tanaesis']
+    挂后 ['awake:entry:geography.towns-syronea', 'awake:entry:geography.lakes-tanaesis', 'awake:entry:geography.towns-car-banseth']
+[IS2-撒纳拉-商人detail] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-sanala']
+    挂后 ['awake:entry:geography.towns-sanala', 'awake:entry:geography.villages-mijayit', 'awake:entry:geography.deserts-nahasa']
+[IS3-马凯布-士兵detail] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-makeb']
+    挂后 ['awake:entry:geography.towns-makeb']
+[IS4-肖农-贵族detail] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-seonon']
+    挂后 ['awake:entry:geography.towns-seonon', 'awake:entry:geography.villages-seordas']
+[IS5-帕拉汶德-头人detail] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-pravend', 'awake:entry:geography.villages-fregian', 'awake:entry:geography.villages-larnac']
+    挂后 ['awake:entry:geography.towns-pravend', 'awake:entry:geography.villages-larnac', 'awake:entry:geography.villages-fregian']
+[IS6-巴尔塔罕-村民rumor] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-baltakhand']
+    挂后 ['awake:entry:geography.towns-baltakhand', 'awake:entry:geography.villages-remental', 'awake:entry:geography.villages-takor']
+[IS7-泽翁尼卡-商人detail] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-zeonica']
+    挂后 ['awake:entry:geography.towns-zeonica', 'awake:entry:geography.towns-phycaon', 'awake:entry:geography.villages-onica']
+[IS8-奥多赫-头人detail] mode keyword -> hybrid
+    挂前 ['awake:entry:geography.towns-odokh', 'awake:entry:geography.plateaus-devseg']
+    挂后 ['awake:entry:geography.towns-odokh', 'awake:entry:geography.plateaus-devseg', 'awake:entry:geography.castles-ov-castle']
+[IT3-天鹅绒-贵族detail] mode keyword -> hybrid
+    挂前 ['awake:entry:economy.goods-velvet', 'awake:entry:economy.goods-fur']
+    挂后 ['awake:entry:economy.goods-velvet', 'awake:entry:economy.goods-fur']
+[IT4-旅行马-士兵detail] mode keyword -> hybrid
+    挂前 ['awake:entry:economy.items-saddle_horse']
+    挂后 ['awake:entry:economy.items-saddle_horse', 'awake:entry:geography.villages-savinth', 'awake:entry:geography.villages-karahan']

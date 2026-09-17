@@ -1,0 +1,57 @@
+RETRIEVAL_CASE HIT group=A h1=1 hits=2 top3=[geography.villages-lamesa,geography.castles-shibal-zumr-castle] identity=awake:identity:commoner q=拉迈萨那地方养什么？
+RETRIEVAL_CASE HIT group=A h1=1 hits=3 top3=[geography.castles-simira-castle,geography.villages-simira,geography.settlement-types-castle] identity=awake:identity:commoner q=西米拉堡是谁的城堡？
+RETRIEVAL_CASE HIT group=A h1=1 hits=1 top3=[geography.villages-chornobas] identity=awake:identity:commoner q=乔诺巴斯在哪儿？
+RETRIEVAL_CASE HIT group=A h1=1 hits=1 top3=[culture.tales-husn-fulq] identity=awake:identity:headman q=富勒格是谁？
+RETRIEVAL_CASE HIT group=A h1=1 hits=4 top3=[culture.tales-kachar-rulership,geography.peninsulas-kachar,geography.towns-varcheg] identity=awake:identity:notable q=卡恰尔半岛归谁？
+RETRIEVAL_CASE HIT group=A h1=0 hits=2 top3=[geography.towns-saneopa,politics.throne-saneopa] identity=awake:identity:headman q=萨涅俄帕是什么地方？
+RETRIEVAL_CASE MISS group=A h1=0 hits=5 top3=[geography.villages-geunat-nal,geography.villages-pendraic,war.weapons-head-closed] identity=awake:identity:headman q=斯特吉亚的军队怎么打仗？
+RETRIEVAL_CASE MISS group=A h1=0 hits=5 top3=[economy.items-steppe_war_bow,geography.castles-akiser-castle,geography.castles-dinar-castle] identity=awake:identity:merchant q=库赛特靠什么打仗？
+RETRIEVAL_CASE HIT group=A h1=1 hits=1 top3=[war.troops-royal-guard] identity=awake:identity:merchant q=皇家侍卫是什么兵？
+RETRIEVAL_CASE HIT group=A h1=1 hits=2 top3=[economy.goods-fur,economy.goods-deriat] identity=awake:identity:commoner q=毛皮值钱吗？
+RETRIEVAL_CASE HIT group=A h1=1 hits=1 top3=[economy.goods-salt] identity=awake:identity:commoner q=盐是从哪儿来的？
+RETRIEVAL_CASE HIT group=A h1=1 hits=1 top3=[economy.items-western_plated_helmet] identity=awake:identity:commoner q=侧护覆板盔谁在用？
+RETRIEVAL_CASE MISS group=A h1=0 hits=5 top3=[geography.towns-varcheg,culture.tales-kachar-rulership,geography.peninsulas-kachar] identity=awake:identity:headman q=瓦尔切格怎么会换主人？
+RETRIEVAL_OBSERVE MISS group=B h1=0 hits=5 top3=[geography.castles-hongard-castle,geography.villages-akiser,geography.villages-andurn] q=这一带有好马吗？
+RETRIEVAL_CASE HIT group=B h1=0 hits=4 top3=[geography.castles-mecalovea-castle,geography.towns-makeb,geography.villages-chornobas] identity=awake:identity:commoner q=有大瀑布的村子是哪个？
+RETRIEVAL_CASE HIT group=B h1=1 hits=5 top3=[culture.tales-husn-fulq,economy.items-cow,economy.items-mule] identity=awake:identity:headman q=集市上说书人讲的那个鬼点子是谁的？
+RETRIEVAL_CASE HIT group=B h1=1 hits=5 top3=[culture.tales-kachar-rulership,geography.castles-tirby-castle,geography.castles-ustokol-castle] identity=awake:identity:notable q=有个半岛被三家抢过，谁说了算？
+RETRIEVAL_CASE MISS group=B h1=0 hits=5 top3=[geography.castles-veron-castle,geography.villages-hamoshawat,geography.villages-rhemtoil] identity=awake:identity:notable q=山里有不让进的地方吗？
+RETRIEVAL_CASE HIT group=B h1=0 hits=5 top3=[geography.villages-ataconia,politics.throne-saneopa,geography.towns-galend] identity=awake:identity:headman q=隘口上那个商埠，哪个家族在那儿定过都？
+RETRIEVAL_CASE MISS group=B h1=0 hits=1 top3=[war.weapons-armor-shield-round] identity=awake:identity:merchant q=什么人拿大圆盾扔飞斧？
+RETRIEVAL_CASE HIT group=B h1=1 hits=5 top3=[war.military-khuzait,geography.castles-mecalovea-castle,geography.towns-tyal] identity=awake:identity:merchant q=游牧的人怎么用骑马射手打仗？
+RETRIEVAL_CASE HIT group=B h1=1 hits=4 top3=[war.military-sturgia,economy.goods-velvet,economy.items-cow] identity=awake:identity:headman q=盾墙加飞斧是哪个国家的打法？
+RETRIEVAL_CASE HIT group=B h1=1 hits=3 top3=[economy.goods-fur,economy.goods-velvet,geography.castles-kaysar-castle] identity=awake:identity:commoner q=北方有什么又暖又贵的皮货？
+RETRIEVAL_CASE HIT group=B h1=1 hits=5 top3=[economy.goods-salt,war.weapons-armor-torso-civil,geography.villages-ethemisa] identity=awake:identity:commoner q=桌上少不了、产地又集中的日用品是什么？
+RETRIEVAL_CASE MISS group=B h1=0 hits=1 top3=[war.weapons-head-cheekguard] identity=awake:identity:commoner q=哪种头盔护到腮帮子和耳朵？
+RETRIEVAL_NEGATIVE candidates=3 q=今天午饭吃什么
+RETRIEVAL_NEGATIVE candidates=0 q=帮我写一段排序代码
+RETRIEVAL_NEGATIVE candidates=0 q=火车时刻表在哪儿查
+RETRIEVAL_NEGATIVE_WORST candidates=3 max=3 OK
+RETRIEVAL_OVERMATCH candidates=2 q=村民的一亩地归谁
+RETRIEVAL_OVERMATCH candidates=0 q=帝国的一座城
+RETRIEVAL_OVERMATCH_WORST candidates=2 max=5 OK
+RETRIEVAL_OVERMATCH_REPORT candidates=1 q=说说这座城堡坐落于哪儿
+KEYWORDGUARD_REAL 真语料里被这道闸挡下的关键词=0（期望 0：防复发的空转闸，数据已由 A 项清过）
+KEYWORDGUARD 该剔 德里亚特·村庄 -> 剔 OK
+KEYWORDGUARD 该剔 厄尔凡尼亚·村庄 -> 剔 OK
+KEYWORDGUARD 该剔 某某城市 -> 剔 OK
+KEYWORDGUARD 该留 拉文尼亚 -> 留 OK
+KEYWORDGUARD 该留 塔奈西斯湖 -> 留 OK
+KEYWORDGUARD 该留 帝国之湖 -> 留 OK
+KEYWORDGUARD 该留 Mecalovea Castle -> 留 OK
+KEYWORDGUARD 该留 村庄 -> 留 OK
+KEYWORDGUARD 该留 城堡 -> 留 OK
+KEYWORDGUARD 该留 城镇 -> 留 OK
+KEYWORDGUARD_VARIANT 变异检验反例=0（期望 0）｜ 真语料命中=0（期望 0）
+RETRIEVAL_SUMMARY A_hit1=9/13 A_hit3=10/13 B_hit1=6/11 B_hit3=8/11 ALL_hit1=15/24 ALL_hit3=18/24 observed_only=1（不进分子分母，见题集 JSON 的 countInGate）
+RETRIEVAL_ACCEPTANCE hit@3（**门禁口径**，甲方 09-17 拍板：进前 3 就算过） A=10/13 B=8/11 ALL=18/24 ｜ hit@1 供对照（**不再是门禁**）：15/24
+RETRIEVAL_MISS A awake:entry:war.military-sturgia :: 斯特吉亚的军队怎么打仗？
+RETRIEVAL_MISS A awake:entry:war.military-khuzait :: 库赛特靠什么打仗？
+RETRIEVAL_MISS A awake:entry:politics.territories-varcheg-swap :: 瓦尔切格怎么会换主人？
+RETRIEVAL_MISS B awake:entry:culture.tales-dawn-taboo :: 山里有不让进的地方吗？
+RETRIEVAL_MISS B awake:entry:war.troops-royal-guard :: 什么人拿大圆盾扔飞斧？
+RETRIEVAL_MISS B awake:entry:economy.items-western_plated_helmet :: 哪种头盔护到腮帮子和耳朵？
+RETRIEVAL_GATE FAIL need A_hit3>=10 B_hit3>=9 ALL_hit3>=19 negative<=3 overmatch<=5
+Unhandled exception. System.InvalidOperationException: 检索门禁未过: A_hit1=9/13 B_hit1=6/11 ALL_hit1=15/24 negativeWorst=3/3 overmatchWorst=2/5 —— 明细见上面的 RETRIEVAL_MISS / RETRIEVAL_NEGATIVE / RETRIEVAL_OVERMATCH 行
+   at RetrievalProbeCases.Run(String worldbookRoot, String repositoryRoot) in D:\AWAKE-Dev\AWAKE\tools\worldbook-runtime-smoke\RetrievalProbeCases.cs:line 216
+   at Program.<Main>$(String[] args) in D:\AWAKE-Dev\AWAKE\tools\worldbook-runtime-smoke\Program.cs:line 105

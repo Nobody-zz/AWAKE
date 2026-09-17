@@ -1,0 +1,362 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-torso-plate
+title:
+  zh-CN: 板甲
+  en: Plate Armor
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 板甲
+  - 护胸板
+  - 铜护胸板
+  - 覆板衣
+  - 板甲衣
+  - 黄铜板链甲衫
+  - 夹板甲
+  en:
+  - Plate Armor
+  - Cuirass
+  - Brass Plate Armor
+  - Plated Coat
+summary:
+  zh-CN: 整块铁板敲出胸腹的弧度——护值十九到四十二。这块地上真正的全身板甲还没有，所以多是板加链。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#aserai_brass_plate_a
+  quote_hash: 84C9529EA5BF744DD5BE9F6D73241F105D37B60255AA05B5684F629ECDA09B8B
+  quote: 南方黄铜板链甲衫 | 躯干 | 护 34 | 重 18.0 | 材质 链甲 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#aserai_brass_plate_b
+  quote_hash: 714A714C603B142E0E347F057AC3866D366230D73102879FD408F77091B859C1
+  quote: 无袖南方黄铜板链甲衫 | 躯干 | 护 34 | 重 15.0 | 材质 链甲 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#aserai_chain_plate_armor_a
+  quote_hash: 1461A6FB7996D062241FAC84E7F09289739F58BAE563482F752C8FAD5E364732
+  quote: 南方强化链甲 | 躯干 | 护 31 | 重 22.0 | 材质 链甲 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#aserai_chain_plate_armor_c
+  quote_hash: 1DC00F0812A0DDF0C3256CE64ABF794B76BFBDD55B06F73848C0A4F5A65A7D68
+  quote: 南方强化链甲背心 | 躯干 | 护 28 | 重 15.0 | 材质 链甲 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_brass_plate_armor
+  quote_hash: DDD46AC72DA844434F88841D0AE8ECADD54C06663036C16993739F7231CC28D0
+  quote: 铜护胸板 | 躯干 | 护 42 | 重 10 | 材质 板 | 属 battania | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#leather_and_iron_plate_armor
+  quote_hash: E4853C851EC2CA33F0CEA5EB5812C6E3124A025097E39F299E518975860E72D9
+  quote: 铁板皮甲 | 躯干 | 护 22 | 重 9.6 | 材质 板 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#belted_leather_cuirass
+  quote_hash: 8E4F8D7B39DCD73C66617FAFE9518A6C1F460717EBE56D5FEDD4C93639A69D91
+  quote: 扣带皮胸甲 | 躯干 | 护 19 | 重 1.9 | 材质 皮 | 属 khuzait | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#empire_plate_vest_armor
+  quote_hash: CD3B087CD9B59F5D8DFEB0361F210B77D5E08BB4C29E9BC2993F14EA9CF6E1B0
+  quote: 华丽鳞甲 | 躯干 | 护 39 | 重 16.0 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#aserai_chain_plate_armor_b
+  quote_hash: 666BF308F7B5E0DF56E4B924D371EB94C06D990DDD2B21E39C457F920874DF65
+  quote: 南方强化无袖链甲 | 躯干 | 护 31 | 重 19.0 | 材质 链甲 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#aserai_chain_plate_armor_d
+  quote_hash: A09A0D663F75E612BB95FCA519729DB1C4380CE3CE14A6229E530BCA4E1DC43F
+  quote: 南方强化短摆链甲 | 躯干 | 护 31 | 重 18.0 | 材质 链甲 | 属 aserai
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-torso-plate-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 这一档讲的是以整片铁板护住躯干的做法，护值十九到四十二。卡拉迪亚没有全身板甲，所谓板甲多是护胸板、覆板衣这类局部整片：把一块敲出弧度的板护在心口或前襟，其余部分仍靠链甲或布衬。南方的黄铜板链甲衫在链甲衫外面再缀黄铜板，护值四十二。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#aserai_brass_plate_a
+    quote_hash: 84C9529EA5BF744DD5BE9F6D73241F105D37B60255AA05B5684F629ECDA09B8B
+    quote: 南方黄铜板链甲衫 | 躯干 | 护 34 | 重 18.0 | 材质 链甲 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#aserai_brass_plate_b
+    quote_hash: 714A714C603B142E0E347F057AC3866D366230D73102879FD408F77091B859C1
+    quote: 无袖南方黄铜板链甲衫 | 躯干 | 护 34 | 重 15.0 | 材质 链甲 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#aserai_chain_plate_armor_a
+    quote_hash: 1461A6FB7996D062241FAC84E7F09289739F58BAE563482F752C8FAD5E364732
+    quote: 南方强化链甲 | 躯干 | 护 31 | 重 22.0 | 材质 链甲 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#aserai_chain_plate_armor_c
+    quote_hash: 1DC00F0812A0DDF0C3256CE64ABF794B76BFBDD55B06F73848C0A4F5A65A7D68
+    quote: 南方强化链甲背心 | 躯干 | 护 28 | 重 15.0 | 材质 链甲 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_brass_plate_armor
+    quote_hash: DDD46AC72DA844434F88841D0AE8ECADD54C06663036C16993739F7231CC28D0
+    quote: 铜护胸板 | 躯干 | 护 42 | 重 10 | 材质 板 | 属 battania | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#leather_and_iron_plate_armor
+    quote_hash: E4853C851EC2CA33F0CEA5EB5812C6E3124A025097E39F299E518975860E72D9
+    quote: 铁板皮甲 | 躯干 | 护 22 | 重 9.6 | 材质 板 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#belted_leather_cuirass
+    quote_hash: 8E4F8D7B39DCD73C66617FAFE9518A6C1F460717EBE56D5FEDD4C93639A69D91
+    quote: 扣带皮胸甲 | 躯干 | 护 19 | 重 1.9 | 材质 皮 | 属 khuzait | 分男女
+  expressions:
+  - id: expr.weapon-armor-torso-plate-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 胸口那块板是整块铁敲出来的，敲的时候得垫着皮，不然就裂。挨上一矛，链甲会被捅穿，这块板不会——它把矛头滑开。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_brass_plate_a
+      quote_hash: 84C9529EA5BF744DD5BE9F6D73241F105D37B60255AA05B5684F629ECDA09B8B
+      quote: 南方黄铜板链甲衫 | 躯干 | 护 34 | 重 18.0 | 材质 链甲 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_brass_plate_b
+      quote_hash: 714A714C603B142E0E347F057AC3866D366230D73102879FD408F77091B859C1
+      quote: 无袖南方黄铜板链甲衫 | 躯干 | 护 34 | 重 15.0 | 材质 链甲 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_chain_plate_armor_a
+      quote_hash: 1461A6FB7996D062241FAC84E7F09289739F58BAE563482F752C8FAD5E364732
+      quote: 南方强化链甲 | 躯干 | 护 31 | 重 22.0 | 材质 链甲 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_chain_plate_armor_c
+      quote_hash: 1DC00F0812A0DDF0C3256CE64ABF794B76BFBDD55B06F73848C0A4F5A65A7D68
+      quote: 南方强化链甲背心 | 躯干 | 护 28 | 重 15.0 | 材质 链甲 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_brass_plate_armor
+      quote_hash: DDD46AC72DA844434F88841D0AE8ECADD54C06663036C16993739F7231CC28D0
+      quote: 铜护胸板 | 躯干 | 护 42 | 重 10 | 材质 板 | 属 battania | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_and_iron_plate_armor
+      quote_hash: E4853C851EC2CA33F0CEA5EB5812C6E3124A025097E39F299E518975860E72D9
+      quote: 铁板皮甲 | 躯干 | 护 22 | 重 9.6 | 材质 板 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#belted_leather_cuirass
+      quote_hash: 8E4F8D7B39DCD73C66617FAFE9518A6C1F460717EBE56D5FEDD4C93639A69D91
+      quote: 扣带皮胸甲 | 躯干 | 护 19 | 重 1.9 | 材质 皮 | 属 khuzait | 分男女
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-torso-plate-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 板甲的难点在弧度：平面板受力全落在一点，敲出弧来才能把力道分到边上。铜护胸板是巴旦尼亚的手艺，整块铜板箍住前襟，护值到四十二；在链甲外面再加板的两层做法便宜些，价钱比纯链甲贵三成。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_brass_plate_a
+      quote_hash: 84C9529EA5BF744DD5BE9F6D73241F105D37B60255AA05B5684F629ECDA09B8B
+      quote: 南方黄铜板链甲衫 | 躯干 | 护 34 | 重 18.0 | 材质 链甲 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_brass_plate_b
+      quote_hash: 714A714C603B142E0E347F057AC3866D366230D73102879FD408F77091B859C1
+      quote: 无袖南方黄铜板链甲衫 | 躯干 | 护 34 | 重 15.0 | 材质 链甲 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_chain_plate_armor_a
+      quote_hash: 1461A6FB7996D062241FAC84E7F09289739F58BAE563482F752C8FAD5E364732
+      quote: 南方强化链甲 | 躯干 | 护 31 | 重 22.0 | 材质 链甲 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_chain_plate_armor_c
+      quote_hash: 1DC00F0812A0DDF0C3256CE64ABF794B76BFBDD55B06F73848C0A4F5A65A7D68
+      quote: 南方强化链甲背心 | 躯干 | 护 28 | 重 15.0 | 材质 链甲 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_brass_plate_armor
+      quote_hash: DDD46AC72DA844434F88841D0AE8ECADD54C06663036C16993739F7231CC28D0
+      quote: 铜护胸板 | 躯干 | 护 42 | 重 10 | 材质 板 | 属 battania | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_and_iron_plate_armor
+      quote_hash: E4853C851EC2CA33F0CEA5EB5812C6E3124A025097E39F299E518975860E72D9
+      quote: 铁板皮甲 | 躯干 | 护 22 | 重 9.6 | 材质 板 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#belted_leather_cuirass
+      quote_hash: 8E4F8D7B39DCD73C66617FAFE9518A6C1F460717EBE56D5FEDD4C93639A69D91
+      quote: 扣带皮胸甲 | 躯干 | 护 19 | 重 1.9 | 材质 皮 | 属 khuzait | 分男女
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-torso-plate-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 这块地上更常见的是在里衣外面缀几块铁板：扣带皮胸甲十九、铁板皮甲二十二、华丽鳞甲三十九。它比整片板省铁，也比整片板好修，帝国的步卒与南方弓手都用。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#empire_plate_vest_armor
+    quote_hash: CD3B087CD9B59F5D8DFEB0361F210B77D5E08BB4C29E9BC2993F14EA9CF6E1B0
+    quote: 华丽鳞甲 | 躯干 | 护 39 | 重 16.0 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#aserai_chain_plate_armor_b
+    quote_hash: 666BF308F7B5E0DF56E4B924D371EB94C06D990DDD2B21E39C457F920874DF65
+    quote: 南方强化无袖链甲 | 躯干 | 护 31 | 重 19.0 | 材质 链甲 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#aserai_chain_plate_armor_d
+    quote_hash: A09A0D663F75E612BB95FCA519729DB1C4380CE3CE14A6229E530BCA4E1DC43F
+    quote: 南方强化短摆链甲 | 躯干 | 护 31 | 重 18.0 | 材质 链甲 | 属 aserai
+  expressions:
+  - id: expr.weapon-armor-torso-plate-empire-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我们的做法是在链甲衫外面再缀几块板。胸一块、背一块、两肩各一块，用皮绳系住，坏了换上就行。整片板甲打不出来，也没必要——板只要护住要害，其他地方有链甲兜着。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#empire_plate_vest_armor
+      quote_hash: CD3B087CD9B59F5D8DFEB0361F210B77D5E08BB4C29E9BC2993F14EA9CF6E1B0
+      quote: 华丽鳞甲 | 躯干 | 护 39 | 重 16.0 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_chain_plate_armor_b
+      quote_hash: 666BF308F7B5E0DF56E4B924D371EB94C06D990DDD2B21E39C457F920874DF65
+      quote: 南方强化无袖链甲 | 躯干 | 护 31 | 重 19.0 | 材质 链甲 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_chain_plate_armor_d
+      quote_hash: A09A0D663F75E612BB95FCA519729DB1C4380CE3CE14A6229E530BCA4E1DC43F
+      quote: 南方强化短摆链甲 | 躯干 | 护 31 | 重 18.0 | 材质 链甲 | 属 aserai
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []

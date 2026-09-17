@@ -1,0 +1,280 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-head-mail-coif
+title:
+  zh-CN: 链甲围帽
+  en: Mail Coif
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 链甲围帽
+  - 链甲头盔
+  - 开面链甲围帽
+  - 缠裹盔配链甲围帽
+  - 带链甲马穆鲁克盔
+  - 铁环帽
+  - 链甲护头
+  en:
+  - Mail Coif
+  - Chainmail Coif
+  - Open Mail Coif
+  - Mamluke Helmet with Mail
+summary:
+  zh-CN: 一顶铁环编的软帽，单戴护头十九、二十，更能垫在盔下补上颈侧与后脑——卡拉迪亚最典型的那层「第二层」。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#imperial_mail_coif
+  quote_hash: E55735D398A92A18CEE0AFAC87923AD8BEAAAE69EA5D30117D498D10F06F161C
+  quote: 链甲围帽 | HeadArmor | 护头 19 | 重 1.7 | 材质 链甲 | 属 empire | 遮发 全 | 遮须 型二 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#imperial_open_mail_coif
+  quote_hash: 8033213B6A22A4DFE67927DDF3FF915AFBC26E73B851B5B9C247BB5DCCEFF481
+  quote: 开面链甲围帽 | HeadArmor | 护头 20 | 重 1.5 | 材质 链甲 | 属 empire | 遮发 全 | 遮须 型三 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#open_mail_coif
+  quote_hash: 64D4C0415FF9E8DAE400A71F111AB2D931890FBE6B145F2A9642F4CCD844B48E
+  quote: 开面链甲围帽 | HeadArmor | 护头 18 | 重 1.6 | 材质 链甲 | 属 empire | 遮发 全 | 遮须 型二 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#desert_mail_coif
+  quote_hash: 891C765B9E659017BB78708BB3B91CAE3C7B161CFBF135885DD5473CC998A40A
+  quote: 缠裹盔配链甲围帽 | HeadArmor | 护头 46 | 重 3.0 | 材质 链甲 | 属 aserai | 遮发 全 | 遮须 型四 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#desert_helmet_with_mail
+  quote_hash: 684957D608EB90D8C71A913667FCB5B3D86FD5C00CA9C4B78892993D64FEE52E
+  quote: 带链甲马穆鲁克盔 | HeadArmor | 护头 45 | 重 2.9 | 材质 板 | 属 aserai | 遮发 全 | 认队色
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-head-mail-coif-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 链甲围帽是一顶铁环编成的软帽，包住头顶、耳根与后颈，能随头形贴合。单戴时护头只有十九与二十，重量在一点五到一点七公斤之间，比同防护的铁壳轻；但它真正的用处是当第二层——垫在锅盔、护鼻盔或头盖盔底下，把壳子护不到的颈侧与后脑补上，两层的护头加起来能翻一倍还不止。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#imperial_mail_coif
+    quote_hash: E55735D398A92A18CEE0AFAC87923AD8BEAAAE69EA5D30117D498D10F06F161C
+    quote: 链甲围帽 | HeadArmor | 护头 19 | 重 1.7 | 材质 链甲 | 属 empire | 遮发 全 | 遮须 型二 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#imperial_open_mail_coif
+    quote_hash: 8033213B6A22A4DFE67927DDF3FF915AFBC26E73B851B5B9C247BB5DCCEFF481
+    quote: 开面链甲围帽 | HeadArmor | 护头 20 | 重 1.5 | 材质 链甲 | 属 empire | 遮发 全 | 遮须 型三 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#open_mail_coif
+    quote_hash: 64D4C0415FF9E8DAE400A71F111AB2D931890FBE6B145F2A9642F4CCD844B48E
+    quote: 开面链甲围帽 | HeadArmor | 护头 18 | 重 1.6 | 材质 链甲 | 属 empire | 遮发 全 | 遮须 型二 | 认队色
+  expressions:
+  - id: expr.weapon-head-mail-coif-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 单戴那顶铁环帽走在路上，风一吹满头响。老兵笑我，说这玩意儿不是这么用的——得塞到铁帽子底下，脖子后头那一片才有人管。他说挨箭最多的地方不是头顶，是颈子。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#imperial_mail_coif
+      quote_hash: E55735D398A92A18CEE0AFAC87923AD8BEAAAE69EA5D30117D498D10F06F161C
+      quote: 链甲围帽 | HeadArmor | 护头 19 | 重 1.7 | 材质 链甲 | 属 empire | 遮发 全 | 遮须 型二 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#imperial_open_mail_coif
+      quote_hash: 8033213B6A22A4DFE67927DDF3FF915AFBC26E73B851B5B9C247BB5DCCEFF481
+      quote: 开面链甲围帽 | HeadArmor | 护头 20 | 重 1.5 | 材质 链甲 | 属 empire | 遮发 全 | 遮须 型三 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#open_mail_coif
+      quote_hash: 64D4C0415FF9E8DAE400A71F111AB2D931890FBE6B145F2A9642F4CCD844B48E
+      quote: 开面链甲围帽 | HeadArmor | 护头 18 | 重 1.6 | 材质 链甲 | 属 empire | 遮发 全 | 遮须 型二 | 认队色
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-head-mail-coif-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 链甲围帽单戴护头十九至二十，重量一点五到一点七公斤；开面款式让出面部、只包头顶与后颈，比全包款透气。行家买它不为单戴——它是最省的一步加护：一顶链甲围帽的价钱，远低于再造一顶更厚的壳子。铁环破了还能自己接，剪一段环串回去就是，这是铁壳比不了的地方。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#imperial_mail_coif
+      quote_hash: E55735D398A92A18CEE0AFAC87923AD8BEAAAE69EA5D30117D498D10F06F161C
+      quote: 链甲围帽 | HeadArmor | 护头 19 | 重 1.7 | 材质 链甲 | 属 empire | 遮发 全 | 遮须 型二 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#imperial_open_mail_coif
+      quote_hash: 8033213B6A22A4DFE67927DDF3FF915AFBC26E73B851B5B9C247BB5DCCEFF481
+      quote: 开面链甲围帽 | HeadArmor | 护头 20 | 重 1.5 | 材质 链甲 | 属 empire | 遮发 全 | 遮须 型三 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#open_mail_coif
+      quote_hash: 64D4C0415FF9E8DAE400A71F111AB2D931890FBE6B145F2A9642F4CCD844B48E
+      quote: 开面链甲围帽 | HeadArmor | 护头 18 | 重 1.6 | 材质 链甲 | 属 empire | 遮发 全 | 遮须 型二 | 认队色
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-head-mail-coif-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 链甲围帽的用法南北不同。南方把它缠进头巾：缠裹盔配链甲围帽把链甲、缠布与外盔合为一件，护头四十六；带链甲马穆鲁克盔同走此路，护头四十五——头巾在外挡沙挡日头，铁环在内接刀。北方则把它垫进盔壳，那单戴只有二十点的护头加在壳子底下，正好补上后颈与耳根那两处空当。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#desert_mail_coif
+    quote_hash: 891C765B9E659017BB78708BB3B91CAE3C7B161CFBF135885DD5473CC998A40A
+    quote: 缠裹盔配链甲围帽 | HeadArmor | 护头 46 | 重 3.0 | 材质 链甲 | 属 aserai | 遮发 全 | 遮须 型四 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#desert_helmet_with_mail
+    quote_hash: 684957D608EB90D8C71A913667FCB5B3D86FD5C00CA9C4B78892993D64FEE52E
+    quote: 带链甲马穆鲁克盔 | HeadArmor | 护头 45 | 重 2.9 | 材质 板 | 属 aserai | 遮发 全 | 认队色
+  expressions:
+  - id: expr.weapon-head-mail-coif-aserai-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿塞莱的做法是把链甲围帽缠进头巾里：缠布在外、铁环在内，外盔再扣上，三样合成一件。风沙大的日子缠布放下来盖住口鼻，近了身也不怕刀——这一路的东西，南边的人从小就会绑。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#desert_mail_coif
+      quote_hash: 891C765B9E659017BB78708BB3B91CAE3C7B161CFBF135885DD5473CC998A40A
+      quote: 缠裹盔配链甲围帽 | HeadArmor | 护头 46 | 重 3.0 | 材质 链甲 | 属 aserai | 遮发 全 | 遮须 型四 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#desert_helmet_with_mail
+      quote_hash: 684957D608EB90D8C71A913667FCB5B3D86FD5C00CA9C4B78892993D64FEE52E
+      quote: 带链甲马穆鲁克盔 | HeadArmor | 护头 45 | 重 2.9 | 材质 板 | 属 aserai | 遮发 全 | 认队色
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    denies: []
+  - id: expr.weapon-head-mail-coif-north-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 北方拿它当垫层用：单戴的护头只有二十上下，垫进壳子底下却能挡开一串箭矢——铁环把箭簇咬住，箭头进不去。缺点是分量：加上一顶链甲围帽，整头的重量要多出一公斤半，站一整天脖子先受不了。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#desert_mail_coif
+      quote_hash: 891C765B9E659017BB78708BB3B91CAE3C7B161CFBF135885DD5473CC998A40A
+      quote: 缠裹盔配链甲围帽 | HeadArmor | 护头 46 | 重 3.0 | 材质 链甲 | 属 aserai | 遮发 全 | 遮须 型四 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#desert_helmet_with_mail
+      quote_hash: 684957D608EB90D8C71A913667FCB5B3D86FD5C00CA9C4B78892993D64FEE52E
+      quote: 带链甲马穆鲁克盔 | HeadArmor | 护头 45 | 重 2.9 | 材质 板 | 属 aserai | 遮发 全 | 认队色
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,376 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-torso-civil
+title:
+  zh-CN: 平民便服
+  en: Commoner's Clothing
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 平民便服
+  - 束腰衣
+  - 长衫
+  - 连衣裙
+  - 村民束腰皮衣
+  - 镇民外套
+  - 围裙
+  - 褴褛衣衫
+  - 粗麻马甲
+  en:
+  - Civilian Clothing
+  - Commoner Outfit
+  - Tunic
+  - Dress
+  - Apron
+  - Peasant Costume
+summary:
+  zh-CN: 护值零到十四之间的日常穿着——挡不了刀，是穿来干活、赶集、见人的。卡拉迪亚多数人一辈子只有这一身。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#peasant_costume
+  quote_hash: E38A1C57D723518FD26BCA427CFFB80A6EC2E2C1A28CF831F7856B523C3571D5
+  quote: 平民布衣 | 躯干 | 护 4 | 重 0.5 | 材质 布 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_civil_b
+  quote_hash: 447081FAA7A02FE58D6C41ECB4C95E20636CD962227AD3C7E33023FFCE153F93
+  quote: 村民束腰皮衣 | 躯干 | 护 10 | 重 0.4 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#aserai_civil_a
+  quote_hash: 15AEC26C67D524549B1E8CE17E148F4D6EEC93661D453E6AC4D08EFD40683921
+  quote: 奢华长衫配束腰带 | 躯干 | 护 8 | 重 0.8 | 材质 布 | 属 aserai | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_civil_c
+  quote_hash: 2ED7AFE96AC37A7B66A154D66673EA7897CFEC8488EE2741328513B8C150DD51
+  quote: 镇民奢华外套 | 躯干 | 护 8 | 重 0.6 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#cloth_apron
+  quote_hash: F56ACC6F8DA38D408864D162AB79F29FA2FE8284005824309E3BEF7A7ED105E6
+  quote: 布围裙 | 躯干 | 护 8 | 重 0.8 | 材质 布 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#tattered_rags
+  quote_hash: A0D056560D8E38B0E1AA25FFBD21CC49D53D5C2CA3AE8C0A4CB1F9D120A2881C
+  quote: 褴褛衣衫 | 躯干 | 护 3 | 重 0.3 | 材质 布 | 属 looters | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#burlap_waistcoat
+  quote_hash: 0F5AC76CFFEBCDA552767A883AB8B8B86A6473E0BBF7906534A42820FC9174DA
+  quote: 粗麻马甲 | 躯干 | 护 3 | 重 0.4 | 材质 布 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#studded_leather_waistcoat
+  quote_hash: 3816916ECAC6EEA940E471F2AA07030EE42A58BF1519CEC6E7CB720890526634
+  quote: 镶钉皮马甲 | 躯干 | 护 8 | 重 0.7 | 材质 皮 | 属 khuzait | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_woodland_outfit
+  quote_hash: 298AC6EE00E1AD1A692BF453016E0E40820B95D0088DA1EBEE1D749373CE2FA5
+  quote: 林地服 | 躯干 | 护 14 | 重 1.2 | 材质 皮 | 属 battania | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#nordic_sloven
+  quote_hash: E40A37434F763C7B0A2169366D1BE2CF625242BC318A16CBE2979B2D31986C6A
+  quote: 皮甲衬重磅布衣 | 躯干 | 护 11 | 重 1.8 | 材质 皮 | 属 sturgia | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_light_armor_c
+  quote_hash: 2D0AA77DA78C76FE584CFF55996C193FB2E28797ECA821D72C61847E1C5627B6
+  quote: 加长高地格子呢 | 躯干 | 护 7 | 重 2.4 | 材质 链甲 | 属 battania | 分男女
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-torso-civil-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 平民便服是卡拉迪亚最普遍的穿着：束腰衣、长衫、连衣裙、外套、围裙，护值位于零到十四之间，材质多为布，少数为皮。它谈不上防护，作用是遮体、耐磨、经洗——束腰衣用腰带束紧便于弯腰干活，长衫垂到膝下，围裙护住前襟。南北款式不同：阿塞莱的宽袍袖长而松，斯特吉亚的束腰衣厚而紧，巴旦尼亚的格纹布料染得最艳。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#peasant_costume
+    quote_hash: E38A1C57D723518FD26BCA427CFFB80A6EC2E2C1A28CF831F7856B523C3571D5
+    quote: 平民布衣 | 躯干 | 护 4 | 重 0.5 | 材质 布 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_civil_b
+    quote_hash: 447081FAA7A02FE58D6C41ECB4C95E20636CD962227AD3C7E33023FFCE153F93
+    quote: 村民束腰皮衣 | 躯干 | 护 10 | 重 0.4 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#aserai_civil_a
+    quote_hash: 15AEC26C67D524549B1E8CE17E148F4D6EEC93661D453E6AC4D08EFD40683921
+    quote: 奢华长衫配束腰带 | 躯干 | 护 8 | 重 0.8 | 材质 布 | 属 aserai | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_civil_c
+    quote_hash: 2ED7AFE96AC37A7B66A154D66673EA7897CFEC8488EE2741328513B8C150DD51
+    quote: 镇民奢华外套 | 躯干 | 护 8 | 重 0.6 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#cloth_apron
+    quote_hash: F56ACC6F8DA38D408864D162AB79F29FA2FE8284005824309E3BEF7A7ED105E6
+    quote: 布围裙 | 躯干 | 护 8 | 重 0.8 | 材质 布 | 属 neutral_culture
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#tattered_rags
+    quote_hash: A0D056560D8E38B0E1AA25FFBD21CC49D53D5C2CA3AE8C0A4CB1F9D120A2881C
+    quote: 褴褛衣衫 | 躯干 | 护 3 | 重 0.3 | 材质 布 | 属 looters | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#burlap_waistcoat
+    quote_hash: 0F5AC76CFFEBCDA552767A883AB8B8B86A6473E0BBF7906534A42820FC9174DA
+    quote: 粗麻马甲 | 躯干 | 护 3 | 重 0.4 | 材质 布 | 属 battania
+  expressions:
+  - id: expr.weapon-armor-torso-civil-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 一身就这一身。干活、赶集、去庙里，都是它。破了就补，补到看不出原来什么色。家里还压着一件好衣裳，只有婚丧嫁娶才拿出来。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#peasant_costume
+      quote_hash: E38A1C57D723518FD26BCA427CFFB80A6EC2E2C1A28CF831F7856B523C3571D5
+      quote: 平民布衣 | 躯干 | 护 4 | 重 0.5 | 材质 布 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_civil_b
+      quote_hash: 447081FAA7A02FE58D6C41ECB4C95E20636CD962227AD3C7E33023FFCE153F93
+      quote: 村民束腰皮衣 | 躯干 | 护 10 | 重 0.4 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_civil_a
+      quote_hash: 15AEC26C67D524549B1E8CE17E148F4D6EEC93661D453E6AC4D08EFD40683921
+      quote: 奢华长衫配束腰带 | 躯干 | 护 8 | 重 0.8 | 材质 布 | 属 aserai | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_civil_c
+      quote_hash: 2ED7AFE96AC37A7B66A154D66673EA7897CFEC8488EE2741328513B8C150DD51
+      quote: 镇民奢华外套 | 躯干 | 护 8 | 重 0.6 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#cloth_apron
+      quote_hash: F56ACC6F8DA38D408864D162AB79F29FA2FE8284005824309E3BEF7A7ED105E6
+      quote: 布围裙 | 躯干 | 护 8 | 重 0.8 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#tattered_rags
+      quote_hash: A0D056560D8E38B0E1AA25FFBD21CC49D53D5C2CA3AE8C0A4CB1F9D120A2881C
+      quote: 褴褛衣衫 | 躯干 | 护 3 | 重 0.3 | 材质 布 | 属 looters | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#burlap_waistcoat
+      quote_hash: 0F5AC76CFFEBCDA552767A883AB8B8B86A6473E0BBF7906534A42820FC9174DA
+      quote: 粗麻马甲 | 躯干 | 护 3 | 重 0.4 | 材质 布 | 属 battania
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-torso-civil-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 便服按布料与染工论价。素色麻布最贱，一件换几斗粮；染过两遍的格纹布贵一倍；阿塞莱的丝绸长衫是有钱人的东西，一匹料够一户人家吃一冬。护值都在十四以下——穿它是为了体面，不是为了挨刀。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#peasant_costume
+      quote_hash: E38A1C57D723518FD26BCA427CFFB80A6EC2E2C1A28CF831F7856B523C3571D5
+      quote: 平民布衣 | 躯干 | 护 4 | 重 0.5 | 材质 布 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_civil_b
+      quote_hash: 447081FAA7A02FE58D6C41ECB4C95E20636CD962227AD3C7E33023FFCE153F93
+      quote: 村民束腰皮衣 | 躯干 | 护 10 | 重 0.4 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_civil_a
+      quote_hash: 15AEC26C67D524549B1E8CE17E148F4D6EEC93661D453E6AC4D08EFD40683921
+      quote: 奢华长衫配束腰带 | 躯干 | 护 8 | 重 0.8 | 材质 布 | 属 aserai | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_civil_c
+      quote_hash: 2ED7AFE96AC37A7B66A154D66673EA7897CFEC8488EE2741328513B8C150DD51
+      quote: 镇民奢华外套 | 躯干 | 护 8 | 重 0.6 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#cloth_apron
+      quote_hash: F56ACC6F8DA38D408864D162AB79F29FA2FE8284005824309E3BEF7A7ED105E6
+      quote: 布围裙 | 躯干 | 护 8 | 重 0.8 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#tattered_rags
+      quote_hash: A0D056560D8E38B0E1AA25FFBD21CC49D53D5C2CA3AE8C0A4CB1F9D120A2881C
+      quote: 褴褛衣衫 | 躯干 | 护 3 | 重 0.3 | 材质 布 | 属 looters | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#burlap_waistcoat
+      quote_hash: 0F5AC76CFFEBCDA552767A883AB8B8B86A6473E0BBF7906534A42820FC9174DA
+      quote: 粗麻马甲 | 躯干 | 护 3 | 重 0.4 | 材质 布 | 属 battania
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-torso-civil-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 有几款便服是能带着走的：镶钉皮马甲以皮革拼缝、缀上铜钉，护值八；林地服用整块软皮裁成，护值十四，是林地猎人上山的常服。它们仍算常服，只是比别的款更经得住荆棘与石棱。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#studded_leather_waistcoat
+    quote_hash: 3816916ECAC6EEA940E471F2AA07030EE42A58BF1519CEC6E7CB720890526634
+    quote: 镶钉皮马甲 | 躯干 | 护 8 | 重 0.7 | 材质 皮 | 属 khuzait | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_woodland_outfit
+    quote_hash: 298AC6EE00E1AD1A692BF453016E0E40820B95D0088DA1EBEE1D749373CE2FA5
+    quote: 林地服 | 躯干 | 护 14 | 重 1.2 | 材质 皮 | 属 battania | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#nordic_sloven
+    quote_hash: E40A37434F763C7B0A2169366D1BE2CF625242BC318A16CBE2979B2D31986C6A
+    quote: 皮甲衬重磅布衣 | 躯干 | 护 11 | 重 1.8 | 材质 皮 | 属 sturgia | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_light_armor_c
+    quote_hash: 2D0AA77DA78C76FE584CFF55996C193FB2E28797ECA821D72C61847E1C5627B6
+    quote: 加长高地格子呢 | 躯干 | 护 7 | 重 2.4 | 材质 链甲 | 属 battania | 分男女
+  expressions:
+  - id: expr.weapon-armor-torso-civil-studded-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 镶钉皮马甲是库赛特与巴旦尼亚的常见打扮：皮片拼缝、铜钉压边，护值八，比布衣强，比甲轻得多。林地服更厚，护值十四，用整块软皮裁成，上了山不必另加护具。林子里的旧货摊上，一件这样的皮马甲能换两把镰刀。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#studded_leather_waistcoat
+      quote_hash: 3816916ECAC6EEA940E471F2AA07030EE42A58BF1519CEC6E7CB720890526634
+      quote: 镶钉皮马甲 | 躯干 | 护 8 | 重 0.7 | 材质 皮 | 属 khuzait | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_woodland_outfit
+      quote_hash: 298AC6EE00E1AD1A692BF453016E0E40820B95D0088DA1EBEE1D749373CE2FA5
+      quote: 林地服 | 躯干 | 护 14 | 重 1.2 | 材质 皮 | 属 battania | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#nordic_sloven
+      quote_hash: E40A37434F763C7B0A2169366D1BE2CF625242BC318A16CBE2979B2D31986C6A
+      quote: 皮甲衬重磅布衣 | 躯干 | 护 11 | 重 1.8 | 材质 皮 | 属 sturgia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_light_armor_c
+      quote_hash: 2D0AA77DA78C76FE584CFF55996C193FB2E28797ECA821D72C61847E1C5627B6
+      quote: 加长高地格子呢 | 躯干 | 护 7 | 重 2.4 | 材质 链甲 | 属 battania | 分男女
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

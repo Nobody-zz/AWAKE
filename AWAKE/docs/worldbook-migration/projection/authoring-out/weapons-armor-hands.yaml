@@ -1,0 +1,829 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-hands
+title:
+  zh-CN: 护手与臂铠
+  en: Gloves and Bracers
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 护手
+  - 护臂
+  - 臂铠
+  - 护腕
+  - 连指手套
+  - 夹板护臂
+  - 扎板臂铠
+  - 绑臂
+  en:
+  - Bracers
+  - Gauntlets
+  - Mail Mittens
+  - Arm Wraps
+summary:
+  zh-CN: 护住手腕到肘的这些东西，护值三到二十五——挨刀的时候，多数人挡的那一下正落在左小臂上。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#armwraps
+  quote_hash: 341C4409C535B129D399B547F4946F3349C45D34559184A310C7FAD8209D24DF
+  quote: 绑臂 | 手 | 护 3 | 重 0.2 | 材质 布 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#ragged_armwraps
+  quote_hash: 220BC1E5A70D5DA25032338BC78B52A61EE2CE51FC6DBF4DABA057C9B7F41506
+  quote: 破旧绑臂 | 手 | 护 3 | 重 0.4 | 材质 布 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#guarded_armwraps
+  quote_hash: A1F9AB652D0A8484388D582CF2E2E427327BA4B2185CDA2872EF97690F10EF17
+  quote: 护板绑臂 | 手 | 护 7 | 重 0.4 | 材质 布 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#eastern_wrapped_armguards
+  quote_hash: E9AAD1B10032A21C62B4F815138709FA9542CBC2682137EDBE54AD09A23EEC9D
+  quote: 缠裹护臂 | 手 | 护 3 | 重 0.3 | 材质 布 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#leather_gloves
+  quote_hash: C53DC7EA645E37D3B02C7DF970FED030787761B65265A2A0826FC57A4209F891
+  quote: 皮手套 | 手 | 护 4 | 重 0.4 | 材质 皮 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#highland_gloves
+  quote_hash: 0181769A7B4E9F0BFF8B52180B96F9738ADB88AA740C9CDEED49C55AD78EC7C1
+  quote: 毛边皮手套 | 手 | 护 8 | 重 0.8 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_noble_bracers
+  quote_hash: 385D744DBA3CEBC411A5D30C9C5462AC2DAFD28F2FE939A60801E058FAEC453F
+  quote: 费奥纳护腕 | 手 | 护 18 | 重 0.6 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#woven_leather_bracers
+  quote_hash: EC30E27A859B125DF439DE0F2225D3E935AD3712C87475E54D3D33DF9E733552
+  quote: 编织皮护腕 | 手 | 护 6 | 重 0.8 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#strapped_leather_bracers
+  quote_hash: 169A78FE53AE75263FA34558F44C8E274622F53F85B1F791A52CF159CC5936D9
+  quote: 扎带皮护腕 | 手 | 护 5 | 重 0.5 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#buttoned_leather_bracers
+  quote_hash: 8317A15CD6115CA44078F555636D16D8BFB28ECA5E4117351D71E1AD981D9229
+  quote: 纽扣皮护腕 | 手 | 护 4 | 重 0.5 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#studded_leather_vambraces
+  quote_hash: D2CA71D5D855CA0096B97676217D48D7EF7A273B2B1BE69A2DFD0D2B3F8716B6
+  quote: 镶钉皮护臂 | 手 | 护 11 | 重 0.9 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#reinforced_leather_vambraces
+  quote_hash: E3C3F2513B80004C6780C5416F7239F6C317803715469C0BD1D726A7D426AA3D
+  quote: 夹板护臂 | 手 | 护 20 | 重 1.0 | 材质 板 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#steppe_leather_vambraces
+  quote_hash: 40A74FBCA80088E1CCE58F0EBE563B6A5843C6FE66284D9A1F1177DC6B9368BF
+  quote: 皮护臂 | 手 | 护 12 | 重 0.5 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#eastern_plated_leather_vambraces
+  quote_hash: C63CDAF179583EC71E872ACACA0F0886D2B99F96E03D42B27A3B8D8EC21BBCC2
+  quote: 夹板皮护臂 | 手 | 护 24 | 重 1.7 | 材质 板 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#lamellar_plate_gauntlets
+  quote_hash: AA512C9A5355643612E4037D3B0793436A2A9C39CEECD34135FCD9A52E46F795
+  quote: 扎板臂铠 | 手 | 护 23 | 重 1.8 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#plated_strip_gauntlets
+  quote_hash: 49DBC8B0ED4E8977ED6FEE10B17B8F2C7D37BA38266FEC2732E165810E686463
+  quote: 板条护臂 | 手 | 护 22 | 重 1.4 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#khuzait_heavy_armor_bracer
+  quote_hash: 0D5433D5D17967A059BAA021CAB7F8574AB31BEB4301C2A82413361FC4312484
+  quote: 可汗夹板护腕 | 手 | 护 23 | 重 2.2 | 材质 板 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#northern_brass_bracers
+  quote_hash: 8B3FE983FBE2BBB499462C039F1106AC069EF5AF1EEFBA18A7CC8393AFF519D8
+  quote: 铜护腕 | 手 | 护 22 | 重 1.3 | 材质 板 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#decorated_imperial_gauntlets
+  quote_hash: A6D16598B5A49F47D2F54C94CCAF65E56D5E4E02131F15CFFAF8AC6E1007723B
+  quote: 装饰帝国臂铠 | 手 | 护 20 | 重 1.5 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_warlord_bracers
+  quote_hash: 2C5C58548F86C24C5805BDB78793A146842BD77B5E7E6832B123EF6E7BDC95DD
+  quote: 鳞甲军阀护腕 | 手 | 护 25 | 重 1.5 | 材质 板 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#lordly_mail_mitten
+  quote_hash: 34B4CA0FE045DECCE29FEBE73631E133FCE36320D495A30F11861BE9C5F72A0D
+  quote: 重型链甲连指手套 | 手 | 护 24 | 重 1.7 | 材质 链甲 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#reinforced_mail_mitten
+  quote_hash: 6CA945598783FAE0752F1B477B8B374B882100CABDEFE6B41DA4FFF1676B7EDA
+  quote: 强化链甲连指手套 | 手 | 护 23 | 重 1.6 | 材质 链甲 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#mail_mitten
+  quote_hash: 471D99D26568913A7CB672263DBD5359D8B56E682C8F217F51EDB2627E30C9F3
+  quote: 链甲连指手套 | 手 | 护 20 | 重 1.4 | 材质 链甲 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#padded_mitten
+  quote_hash: BCB1A59F060714E81B31CB07CCF548EF8670527D697E824D31A87CD08CF42E4D
+  quote: 填充连指手套 | 手 | 护 9 | 重 0.6 | 材质 布 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#padded_vambrace
+  quote_hash: 1EC5036E233295A252D96B0DF976B7E3CB0EBF82DB95DD0D17A32FE74010C88F
+  quote: 填充护臂 | 手 | 护 7 | 重 0.1 | 材质 布 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#guarded_padded_vambrace
+  quote_hash: 2AAFCD96609DA0088992F2198FAF6A22483C63B6DD72DCC73C2C09BBCD7B40BC
+  quote: 护式填充护臂 | 手 | 护 9 | 重 0.6 | 材质 布 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#lordly_padded_mitten
+  quote_hash: 074DCD7C5A136E8A691943D7FF964392339CB7F55C8E592F27F1F46DDCC1E43D
+  quote: 领主填充连指手套 | 手 | 护 18 | 重 1.3 | 材质 布 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#reinforced_padded_mitten
+  quote_hash: C8E2E5FF16D77E0E471F1F5BAEEE75840A6E31EE0CA0C4F95FB227DF0BE03351
+  quote: 强化填充连指手套 | 手 | 护 18 | 重 0.9 | 材质 布 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#rough_tied_bracers
+  quote_hash: 276BA273F6A5FF2C2CF982B6D50795388537A8E30B1F9136DFEE5976373B1F5D
+  quote: 粗绑护腕 | 手 | 护 9 | 重 0.6 | 材质 布 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#roughtied_leather_bracers
+  quote_hash: 897146352714B740B3E5A4FF24136BE30B4D08123C1F1D97BDA24A732CB3AB83
+  quote: 粗绑皮护腕 | 手 | 护 3 | 重 0.5 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#studded_vambraces
+  quote_hash: 1D4DA9AE7238A11D28A35DE2EA1771CD00AA89681D49CDB4B12EE82941322A90
+  quote: 镶钉护臂 | 手 | 护 5 | 重 0.7 | 材质 皮 | 属 khuzait
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-hands-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 护手与臂铠护的是手腕到肘这一段，护值三到二十五，跨了整条手臂的档次。最常见的是缠布或缠皮的绑臂，护值三到七，本意是防磨；往上是皮护臂，护值八到二十；再往上是夹板护臂与扎板臂铠，把铁片夹进皮里，护值二十二到二十四；最重的一档是链甲连指手套，链子包住整只手连指头，护值二十四。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#armwraps
+    quote_hash: 341C4409C535B129D399B547F4946F3349C45D34559184A310C7FAD8209D24DF
+    quote: 绑臂 | 手 | 护 3 | 重 0.2 | 材质 布 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#ragged_armwraps
+    quote_hash: 220BC1E5A70D5DA25032338BC78B52A61EE2CE51FC6DBF4DABA057C9B7F41506
+    quote: 破旧绑臂 | 手 | 护 3 | 重 0.4 | 材质 布 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#guarded_armwraps
+    quote_hash: A1F9AB652D0A8484388D582CF2E2E427327BA4B2185CDA2872EF97690F10EF17
+    quote: 护板绑臂 | 手 | 护 7 | 重 0.4 | 材质 布 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#eastern_wrapped_armguards
+    quote_hash: E9AAD1B10032A21C62B4F815138709FA9542CBC2682137EDBE54AD09A23EEC9D
+    quote: 缠裹护臂 | 手 | 护 3 | 重 0.3 | 材质 布 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#leather_gloves
+    quote_hash: C53DC7EA645E37D3B02C7DF970FED030787761B65265A2A0826FC57A4209F891
+    quote: 皮手套 | 手 | 护 4 | 重 0.4 | 材质 皮 | 属 neutral_culture
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#highland_gloves
+    quote_hash: 0181769A7B4E9F0BFF8B52180B96F9738ADB88AA740C9CDEED49C55AD78EC7C1
+    quote: 毛边皮手套 | 手 | 护 8 | 重 0.8 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_noble_bracers
+    quote_hash: 385D744DBA3CEBC411A5D30C9C5462AC2DAFD28F2FE939A60801E058FAEC453F
+    quote: 费奥纳护腕 | 手 | 护 18 | 重 0.6 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#woven_leather_bracers
+    quote_hash: EC30E27A859B125DF439DE0F2225D3E935AD3712C87475E54D3D33DF9E733552
+    quote: 编织皮护腕 | 手 | 护 6 | 重 0.8 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#strapped_leather_bracers
+    quote_hash: 169A78FE53AE75263FA34558F44C8E274622F53F85B1F791A52CF159CC5936D9
+    quote: 扎带皮护腕 | 手 | 护 5 | 重 0.5 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#buttoned_leather_bracers
+    quote_hash: 8317A15CD6115CA44078F555636D16D8BFB28ECA5E4117351D71E1AD981D9229
+    quote: 纽扣皮护腕 | 手 | 护 4 | 重 0.5 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#studded_leather_vambraces
+    quote_hash: D2CA71D5D855CA0096B97676217D48D7EF7A273B2B1BE69A2DFD0D2B3F8716B6
+    quote: 镶钉皮护臂 | 手 | 护 11 | 重 0.9 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#reinforced_leather_vambraces
+    quote_hash: E3C3F2513B80004C6780C5416F7239F6C317803715469C0BD1D726A7D426AA3D
+    quote: 夹板护臂 | 手 | 护 20 | 重 1.0 | 材质 板 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#steppe_leather_vambraces
+    quote_hash: 40A74FBCA80088E1CCE58F0EBE563B6A5843C6FE66284D9A1F1177DC6B9368BF
+    quote: 皮护臂 | 手 | 护 12 | 重 0.5 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#eastern_plated_leather_vambraces
+    quote_hash: C63CDAF179583EC71E872ACACA0F0886D2B99F96E03D42B27A3B8D8EC21BBCC2
+    quote: 夹板皮护臂 | 手 | 护 24 | 重 1.7 | 材质 板 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#lamellar_plate_gauntlets
+    quote_hash: AA512C9A5355643612E4037D3B0793436A2A9C39CEECD34135FCD9A52E46F795
+    quote: 扎板臂铠 | 手 | 护 23 | 重 1.8 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#plated_strip_gauntlets
+    quote_hash: 49DBC8B0ED4E8977ED6FEE10B17B8F2C7D37BA38266FEC2732E165810E686463
+    quote: 板条护臂 | 手 | 护 22 | 重 1.4 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#khuzait_heavy_armor_bracer
+    quote_hash: 0D5433D5D17967A059BAA021CAB7F8574AB31BEB4301C2A82413361FC4312484
+    quote: 可汗夹板护腕 | 手 | 护 23 | 重 2.2 | 材质 板 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#northern_brass_bracers
+    quote_hash: 8B3FE983FBE2BBB499462C039F1106AC069EF5AF1EEFBA18A7CC8393AFF519D8
+    quote: 铜护腕 | 手 | 护 22 | 重 1.3 | 材质 板 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#decorated_imperial_gauntlets
+    quote_hash: A6D16598B5A49F47D2F54C94CCAF65E56D5E4E02131F15CFFAF8AC6E1007723B
+    quote: 装饰帝国臂铠 | 手 | 护 20 | 重 1.5 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_warlord_bracers
+    quote_hash: 2C5C58548F86C24C5805BDB78793A146842BD77B5E7E6832B123EF6E7BDC95DD
+    quote: 鳞甲军阀护腕 | 手 | 护 25 | 重 1.5 | 材质 板 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#lordly_mail_mitten
+    quote_hash: 34B4CA0FE045DECCE29FEBE73631E133FCE36320D495A30F11861BE9C5F72A0D
+    quote: 重型链甲连指手套 | 手 | 护 24 | 重 1.7 | 材质 链甲 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#reinforced_mail_mitten
+    quote_hash: 6CA945598783FAE0752F1B477B8B374B882100CABDEFE6B41DA4FFF1676B7EDA
+    quote: 强化链甲连指手套 | 手 | 护 23 | 重 1.6 | 材质 链甲 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#mail_mitten
+    quote_hash: 471D99D26568913A7CB672263DBD5359D8B56E682C8F217F51EDB2627E30C9F3
+    quote: 链甲连指手套 | 手 | 护 20 | 重 1.4 | 材质 链甲 | 属 vlandia
+  expressions:
+  - id: expr.weapon-armor-hands-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 左手小臂上那道疤，就是没戴护腕的时候留的。对面一矛捅过来，我拿左臂去架，矛头从骨头边上划过去。后来那副夹板护臂就没脱过手。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#armwraps
+      quote_hash: 341C4409C535B129D399B547F4946F3349C45D34559184A310C7FAD8209D24DF
+      quote: 绑臂 | 手 | 护 3 | 重 0.2 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#ragged_armwraps
+      quote_hash: 220BC1E5A70D5DA25032338BC78B52A61EE2CE51FC6DBF4DABA057C9B7F41506
+      quote: 破旧绑臂 | 手 | 护 3 | 重 0.4 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#guarded_armwraps
+      quote_hash: A1F9AB652D0A8484388D582CF2E2E427327BA4B2185CDA2872EF97690F10EF17
+      quote: 护板绑臂 | 手 | 护 7 | 重 0.4 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_wrapped_armguards
+      quote_hash: E9AAD1B10032A21C62B4F815138709FA9542CBC2682137EDBE54AD09A23EEC9D
+      quote: 缠裹护臂 | 手 | 护 3 | 重 0.3 | 材质 布 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_gloves
+      quote_hash: C53DC7EA645E37D3B02C7DF970FED030787761B65265A2A0826FC57A4209F891
+      quote: 皮手套 | 手 | 护 4 | 重 0.4 | 材质 皮 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#highland_gloves
+      quote_hash: 0181769A7B4E9F0BFF8B52180B96F9738ADB88AA740C9CDEED49C55AD78EC7C1
+      quote: 毛边皮手套 | 手 | 护 8 | 重 0.8 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_noble_bracers
+      quote_hash: 385D744DBA3CEBC411A5D30C9C5462AC2DAFD28F2FE939A60801E058FAEC453F
+      quote: 费奥纳护腕 | 手 | 护 18 | 重 0.6 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#woven_leather_bracers
+      quote_hash: EC30E27A859B125DF439DE0F2225D3E935AD3712C87475E54D3D33DF9E733552
+      quote: 编织皮护腕 | 手 | 护 6 | 重 0.8 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#strapped_leather_bracers
+      quote_hash: 169A78FE53AE75263FA34558F44C8E274622F53F85B1F791A52CF159CC5936D9
+      quote: 扎带皮护腕 | 手 | 护 5 | 重 0.5 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#buttoned_leather_bracers
+      quote_hash: 8317A15CD6115CA44078F555636D16D8BFB28ECA5E4117351D71E1AD981D9229
+      quote: 纽扣皮护腕 | 手 | 护 4 | 重 0.5 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#studded_leather_vambraces
+      quote_hash: D2CA71D5D855CA0096B97676217D48D7EF7A273B2B1BE69A2DFD0D2B3F8716B6
+      quote: 镶钉皮护臂 | 手 | 护 11 | 重 0.9 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#reinforced_leather_vambraces
+      quote_hash: E3C3F2513B80004C6780C5416F7239F6C317803715469C0BD1D726A7D426AA3D
+      quote: 夹板护臂 | 手 | 护 20 | 重 1.0 | 材质 板 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#steppe_leather_vambraces
+      quote_hash: 40A74FBCA80088E1CCE58F0EBE563B6A5843C6FE66284D9A1F1177DC6B9368BF
+      quote: 皮护臂 | 手 | 护 12 | 重 0.5 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_plated_leather_vambraces
+      quote_hash: C63CDAF179583EC71E872ACACA0F0886D2B99F96E03D42B27A3B8D8EC21BBCC2
+      quote: 夹板皮护臂 | 手 | 护 24 | 重 1.7 | 材质 板 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#lamellar_plate_gauntlets
+      quote_hash: AA512C9A5355643612E4037D3B0793436A2A9C39CEECD34135FCD9A52E46F795
+      quote: 扎板臂铠 | 手 | 护 23 | 重 1.8 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#plated_strip_gauntlets
+      quote_hash: 49DBC8B0ED4E8977ED6FEE10B17B8F2C7D37BA38266FEC2732E165810E686463
+      quote: 板条护臂 | 手 | 护 22 | 重 1.4 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#khuzait_heavy_armor_bracer
+      quote_hash: 0D5433D5D17967A059BAA021CAB7F8574AB31BEB4301C2A82413361FC4312484
+      quote: 可汗夹板护腕 | 手 | 护 23 | 重 2.2 | 材质 板 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_brass_bracers
+      quote_hash: 8B3FE983FBE2BBB499462C039F1106AC069EF5AF1EEFBA18A7CC8393AFF519D8
+      quote: 铜护腕 | 手 | 护 22 | 重 1.3 | 材质 板 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#decorated_imperial_gauntlets
+      quote_hash: A6D16598B5A49F47D2F54C94CCAF65E56D5E4E02131F15CFFAF8AC6E1007723B
+      quote: 装饰帝国臂铠 | 手 | 护 20 | 重 1.5 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_warlord_bracers
+      quote_hash: 2C5C58548F86C24C5805BDB78793A146842BD77B5E7E6832B123EF6E7BDC95DD
+      quote: 鳞甲军阀护腕 | 手 | 护 25 | 重 1.5 | 材质 板 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#lordly_mail_mitten
+      quote_hash: 34B4CA0FE045DECCE29FEBE73631E133FCE36320D495A30F11861BE9C5F72A0D
+      quote: 重型链甲连指手套 | 手 | 护 24 | 重 1.7 | 材质 链甲 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#reinforced_mail_mitten
+      quote_hash: 6CA945598783FAE0752F1B477B8B374B882100CABDEFE6B41DA4FFF1676B7EDA
+      quote: 强化链甲连指手套 | 手 | 护 23 | 重 1.6 | 材质 链甲 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#mail_mitten
+      quote_hash: 471D99D26568913A7CB672263DBD5359D8B56E682C8F217F51EDB2627E30C9F3
+      quote: 链甲连指手套 | 手 | 护 20 | 重 1.4 | 材质 链甲 | 属 vlandia
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-hands-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 臂铠分带不带指：带指的能护住手背，可射箭、拿筷子都不方便；不带指的是一块板绑在小臂上，干别的不用摘。数着重——链甲连指手套二十四，扎板臂铠二十三，最轻的缠布护腕只有三。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#armwraps
+      quote_hash: 341C4409C535B129D399B547F4946F3349C45D34559184A310C7FAD8209D24DF
+      quote: 绑臂 | 手 | 护 3 | 重 0.2 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#ragged_armwraps
+      quote_hash: 220BC1E5A70D5DA25032338BC78B52A61EE2CE51FC6DBF4DABA057C9B7F41506
+      quote: 破旧绑臂 | 手 | 护 3 | 重 0.4 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#guarded_armwraps
+      quote_hash: A1F9AB652D0A8484388D582CF2E2E427327BA4B2185CDA2872EF97690F10EF17
+      quote: 护板绑臂 | 手 | 护 7 | 重 0.4 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_wrapped_armguards
+      quote_hash: E9AAD1B10032A21C62B4F815138709FA9542CBC2682137EDBE54AD09A23EEC9D
+      quote: 缠裹护臂 | 手 | 护 3 | 重 0.3 | 材质 布 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_gloves
+      quote_hash: C53DC7EA645E37D3B02C7DF970FED030787761B65265A2A0826FC57A4209F891
+      quote: 皮手套 | 手 | 护 4 | 重 0.4 | 材质 皮 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#highland_gloves
+      quote_hash: 0181769A7B4E9F0BFF8B52180B96F9738ADB88AA740C9CDEED49C55AD78EC7C1
+      quote: 毛边皮手套 | 手 | 护 8 | 重 0.8 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_noble_bracers
+      quote_hash: 385D744DBA3CEBC411A5D30C9C5462AC2DAFD28F2FE939A60801E058FAEC453F
+      quote: 费奥纳护腕 | 手 | 护 18 | 重 0.6 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#woven_leather_bracers
+      quote_hash: EC30E27A859B125DF439DE0F2225D3E935AD3712C87475E54D3D33DF9E733552
+      quote: 编织皮护腕 | 手 | 护 6 | 重 0.8 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#strapped_leather_bracers
+      quote_hash: 169A78FE53AE75263FA34558F44C8E274622F53F85B1F791A52CF159CC5936D9
+      quote: 扎带皮护腕 | 手 | 护 5 | 重 0.5 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#buttoned_leather_bracers
+      quote_hash: 8317A15CD6115CA44078F555636D16D8BFB28ECA5E4117351D71E1AD981D9229
+      quote: 纽扣皮护腕 | 手 | 护 4 | 重 0.5 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#studded_leather_vambraces
+      quote_hash: D2CA71D5D855CA0096B97676217D48D7EF7A273B2B1BE69A2DFD0D2B3F8716B6
+      quote: 镶钉皮护臂 | 手 | 护 11 | 重 0.9 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#reinforced_leather_vambraces
+      quote_hash: E3C3F2513B80004C6780C5416F7239F6C317803715469C0BD1D726A7D426AA3D
+      quote: 夹板护臂 | 手 | 护 20 | 重 1.0 | 材质 板 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#steppe_leather_vambraces
+      quote_hash: 40A74FBCA80088E1CCE58F0EBE563B6A5843C6FE66284D9A1F1177DC6B9368BF
+      quote: 皮护臂 | 手 | 护 12 | 重 0.5 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_plated_leather_vambraces
+      quote_hash: C63CDAF179583EC71E872ACACA0F0886D2B99F96E03D42B27A3B8D8EC21BBCC2
+      quote: 夹板皮护臂 | 手 | 护 24 | 重 1.7 | 材质 板 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#lamellar_plate_gauntlets
+      quote_hash: AA512C9A5355643612E4037D3B0793436A2A9C39CEECD34135FCD9A52E46F795
+      quote: 扎板臂铠 | 手 | 护 23 | 重 1.8 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#plated_strip_gauntlets
+      quote_hash: 49DBC8B0ED4E8977ED6FEE10B17B8F2C7D37BA38266FEC2732E165810E686463
+      quote: 板条护臂 | 手 | 护 22 | 重 1.4 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#khuzait_heavy_armor_bracer
+      quote_hash: 0D5433D5D17967A059BAA021CAB7F8574AB31BEB4301C2A82413361FC4312484
+      quote: 可汗夹板护腕 | 手 | 护 23 | 重 2.2 | 材质 板 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_brass_bracers
+      quote_hash: 8B3FE983FBE2BBB499462C039F1106AC069EF5AF1EEFBA18A7CC8393AFF519D8
+      quote: 铜护腕 | 手 | 护 22 | 重 1.3 | 材质 板 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#decorated_imperial_gauntlets
+      quote_hash: A6D16598B5A49F47D2F54C94CCAF65E56D5E4E02131F15CFFAF8AC6E1007723B
+      quote: 装饰帝国臂铠 | 手 | 护 20 | 重 1.5 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_warlord_bracers
+      quote_hash: 2C5C58548F86C24C5805BDB78793A146842BD77B5E7E6832B123EF6E7BDC95DD
+      quote: 鳞甲军阀护腕 | 手 | 护 25 | 重 1.5 | 材质 板 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#lordly_mail_mitten
+      quote_hash: 34B4CA0FE045DECCE29FEBE73631E133FCE36320D495A30F11861BE9C5F72A0D
+      quote: 重型链甲连指手套 | 手 | 护 24 | 重 1.7 | 材质 链甲 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#reinforced_mail_mitten
+      quote_hash: 6CA945598783FAE0752F1B477B8B374B882100CABDEFE6B41DA4FFF1676B7EDA
+      quote: 强化链甲连指手套 | 手 | 护 23 | 重 1.6 | 材质 链甲 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#mail_mitten
+      quote_hash: 471D99D26568913A7CB672263DBD5359D8B56E682C8F217F51EDB2627E30C9F3
+      quote: 链甲连指手套 | 手 | 护 20 | 重 1.4 | 材质 链甲 | 属 vlandia
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-hands-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 填充护手是另一路：拿纳缝的厚布做成连指手套或护臂，护值七到十八，比皮轻、比布厚，是弓手与辅兵最常配的一档。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#padded_mitten
+    quote_hash: BCB1A59F060714E81B31CB07CCF548EF8670527D697E824D31A87CD08CF42E4D
+    quote: 填充连指手套 | 手 | 护 9 | 重 0.6 | 材质 布 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#padded_vambrace
+    quote_hash: 1EC5036E233295A252D96B0DF976B7E3CB0EBF82DB95DD0D17A32FE74010C88F
+    quote: 填充护臂 | 手 | 护 7 | 重 0.1 | 材质 布 | 属 neutral_culture
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#guarded_padded_vambrace
+    quote_hash: 2AAFCD96609DA0088992F2198FAF6A22483C63B6DD72DCC73C2C09BBCD7B40BC
+    quote: 护式填充护臂 | 手 | 护 9 | 重 0.6 | 材质 布 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#lordly_padded_mitten
+    quote_hash: 074DCD7C5A136E8A691943D7FF964392339CB7F55C8E592F27F1F46DDCC1E43D
+    quote: 领主填充连指手套 | 手 | 护 18 | 重 1.3 | 材质 布 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#reinforced_padded_mitten
+    quote_hash: C8E2E5FF16D77E0E471F1F5BAEEE75840A6E31EE0CA0C4F95FB227DF0BE03351
+    quote: 强化填充连指手套 | 手 | 护 18 | 重 0.9 | 材质 布 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#rough_tied_bracers
+    quote_hash: 276BA273F6A5FF2C2CF982B6D50795388537A8E30B1F9136DFEE5976373B1F5D
+    quote: 粗绑护腕 | 手 | 护 9 | 重 0.6 | 材质 布 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#roughtied_leather_bracers
+    quote_hash: 897146352714B740B3E5A4FF24136BE30B4D08123C1F1D97BDA24A732CB3AB83
+    quote: 粗绑皮护腕 | 手 | 护 3 | 重 0.5 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#studded_vambraces
+    quote_hash: 1D4DA9AE7238A11D28A35DE2EA1771CD00AA89681D49CDB4B12EE82941322A90
+    quote: 镶钉护臂 | 手 | 护 5 | 重 0.7 | 材质 皮 | 属 khuzait
+  expressions:
+  - id: expr.weapon-armor-hands-padded-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 填充护手是给弓手预备的：拉弦的那只手要护住小臂——弦回弹刮一道，破皮就是三天拉不开弓。厚布纳缝，轻，不硌弦。辅兵也常配这个，便宜，脏了直接洗。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#padded_mitten
+      quote_hash: BCB1A59F060714E81B31CB07CCF548EF8670527D697E824D31A87CD08CF42E4D
+      quote: 填充连指手套 | 手 | 护 9 | 重 0.6 | 材质 布 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#padded_vambrace
+      quote_hash: 1EC5036E233295A252D96B0DF976B7E3CB0EBF82DB95DD0D17A32FE74010C88F
+      quote: 填充护臂 | 手 | 护 7 | 重 0.1 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#guarded_padded_vambrace
+      quote_hash: 2AAFCD96609DA0088992F2198FAF6A22483C63B6DD72DCC73C2C09BBCD7B40BC
+      quote: 护式填充护臂 | 手 | 护 9 | 重 0.6 | 材质 布 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#lordly_padded_mitten
+      quote_hash: 074DCD7C5A136E8A691943D7FF964392339CB7F55C8E592F27F1F46DDCC1E43D
+      quote: 领主填充连指手套 | 手 | 护 18 | 重 1.3 | 材质 布 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#reinforced_padded_mitten
+      quote_hash: C8E2E5FF16D77E0E471F1F5BAEEE75840A6E31EE0CA0C4F95FB227DF0BE03351
+      quote: 强化填充连指手套 | 手 | 护 18 | 重 0.9 | 材质 布 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#rough_tied_bracers
+      quote_hash: 276BA273F6A5FF2C2CF982B6D50795388537A8E30B1F9136DFEE5976373B1F5D
+      quote: 粗绑护腕 | 手 | 护 9 | 重 0.6 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#roughtied_leather_bracers
+      quote_hash: 897146352714B740B3E5A4FF24136BE30B4D08123C1F1D97BDA24A732CB3AB83
+      quote: 粗绑皮护腕 | 手 | 护 3 | 重 0.5 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#studded_vambraces
+      quote_hash: 1D4DA9AE7238A11D28A35DE2EA1771CD00AA89681D49CDB4B12EE82941322A90
+      quote: 镶钉护臂 | 手 | 护 5 | 重 0.7 | 材质 皮 | 属 khuzait
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

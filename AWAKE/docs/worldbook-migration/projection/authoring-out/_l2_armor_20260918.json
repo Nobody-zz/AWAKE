@@ -1,0 +1,1510 @@
+{
+ "cards": [
+  {
+   "slug": "torso-civil",
+   "zh": "平民便服",
+   "en": "Commoner's Clothing",
+   "al_zh": [
+    "平民便服",
+    "束腰衣",
+    "长衫",
+    "连衣裙",
+    "村民束腰皮衣",
+    "镇民外套",
+    "围裙",
+    "褴褛衣衫",
+    "粗麻马甲"
+   ],
+   "al_en": [
+    "Civilian Clothing",
+    "Commoner Outfit",
+    "Tunic",
+    "Dress",
+    "Apron",
+    "Peasant Costume"
+   ],
+   "summary": "护值零到十四之间的日常穿着——挡不了刀，是穿来干活、赶集、见人的。卡拉迪亚多数人一辈子只有这一身。",
+   "asserts": [
+    {
+     "text": "平民便服是卡拉迪亚最普遍的穿着：束腰衣、长衫、连衣裙、外套、围裙，护值位于零到十四之间，材质多为布，少数为皮。它谈不上防护，作用是遮体、耐磨、经洗——束腰衣用腰带束紧便于弯腰干活，长衫垂到膝下，围裙护住前襟。南北款式不同：阿塞莱的宽袍袖长而松，斯特吉亚的束腰衣厚而紧，巴旦尼亚的格纹布料染得最艳。",
+     "refs": [
+      "peasant_costume",
+      "battania_civil_b",
+      "aserai_civil_a",
+      "battania_civil_c",
+      "cloth_apron",
+      "tattered_rags",
+      "burlap_waistcoat"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "一身就这一身。干活、赶集、去庙里，都是它。破了就补，补到看不出原来什么色。家里还压着一件好衣裳，只有婚丧嫁娶才拿出来。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "便服按布料与染工论价。素色麻布最贱，一件换几斗粮；染过两遍的格纹布贵一倍；阿塞莱的丝绸长衫是有钱人的东西，一匹料够一户人家吃一冬。护值都在十四以下——穿它是为了体面，不是为了挨刀。"
+      }
+     ]
+    },
+    {
+     "text": "有几款便服是能带着走的：镶钉皮马甲以皮革拼缝、缀上铜钉，护值八；林地服用整块软皮裁成，护值十四，是林地猎人上山的常服。它们仍算常服，只是比别的款更经得住荆棘与石棱。",
+     "refs": [
+      "studded_leather_waistcoat",
+      "battania_woodland_outfit",
+      "nordic_sloven",
+      "battania_light_armor_c"
+     ],
+     "exprs": [
+      {
+       "tag": "studded-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "镶钉皮马甲是库赛特与巴旦尼亚的常见打扮：皮片拼缝、铜钉压边，护值八，比布衣强，比甲轻得多。林地服更厚，护值十四，用整块软皮裁成，上了山不必另加护具。林子里的旧货摊上，一件这样的皮马甲能换两把镰刀。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "torso-cloth",
+   "zh": "布袍与束腰衣",
+   "en": "Cloth Robes and Tunics",
+   "al_zh": [
+    "布袍",
+    "束腰衣",
+    "托加",
+    "重磅束腰衣",
+    "裹身连衣裙",
+    "格子连衣裙",
+    "流苏袍",
+    "丝绸长衫"
+   ],
+   "al_en": [
+    "Cloth Robe",
+    "Tunic",
+    "Toga",
+    "Dress",
+    "Sleeved Robe"
+   ],
+   "summary": "织出来的袍子，护值二到二十五。布本身挡不住什么，但织得够密、层数够多，也能卸掉一点力道。",
+   "asserts": [
+    {
+     "text": "布袍与束腰衣占了卡拉迪亚衣物的大半：托加、连衣裙、长衫、束腰衣，护值二到二十五，材质几乎全是布。厚薄是唯一的差别——重磅束腰衣用粗线密织，护值七；帝国托加是整幅布裹出来的，护值八。它们与平民便服的区别不在形制，而在穿的人与场合：这套更常出现在城里、席上和队列里。",
+     "refs": [
+      "imperial_robes",
+      "heavy_nordic_tunic",
+      "empire_dress",
+      "khuzait_dress_b",
+      "steppe_dress",
+      "highland_cloth",
+      "tassled_southern_robes"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "好布和赖布差在手上。好布贴身不扎，洗十遍也不起球；赖布第一水就散边。买的时候用指甲刮一下，起毛的就别要了。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "袍服按布幅与织法分档。粗纺一件几枚银币，重磅密织的要三倍；帝国的托加讲究垂感，用整幅布裹、不打剪，一块布就是一件衣。护值多在二到九之间，最厚的一档不过二十五——布再密也是布。"
+      }
+     ]
+    },
+    {
+     "text": "只有一个例外：袍子底下衬链甲的，护值二十五。这是把链甲缝进袍里当里子，外面看仍是件布袍。南方与草原惯用这一手——穿得不显眼，走夜路踏实。",
+     "refs": [
+      "aserai_robe_c_chain",
+      "eastern_silk_clothing",
+      "layered_robe",
+      "desert_robe"
+     ],
+     "exprs": [
+      {
+       "tag": "aserai-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "aserai",
+       "text": "阿塞莱的做法是把链甲缝进袍子里。外面是丝绸或细布，里子是锁甲，走起来不响，看着还是一身常服。赶长路的人爱穿这个——商道上不显富，也不怕碰见人。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "torso-gambeson",
+   "zh": "填充衣",
+   "en": "Gambeson",
+   "al_zh": [
+    "填充衣",
+    "武装衣",
+    "填充外套",
+    "填充甲",
+    "软甲",
+    "辅兵甲",
+    "填充袍",
+    "纳缝甲"
+   ],
+   "al_en": [
+    "Gambeson",
+    "Padded Coat",
+    "Padded Armor",
+    "Aketon",
+    "Padded Robe"
+   ],
+   "summary": "十几层布纳缝在一起，护值七到三十六——最便宜的甲，也是最管用的甲。征召兵穿它，骑士也在它外面再穿铁。",
+   "asserts": [
+    {
+     "text": "填充衣是把十几层粗布摞起来、用线纳成菱格缝死的厚衣，护值七到三十六，材质多为布，少数夹一层皮。它便宜、家里就能做，是卡拉迪亚数量最大的甲——征召兵拿到的第一件护具就是它。重磅武装衣护值十八，无袖填充外套也是十八，帝国的辅兵甲十七。",
+     "refs": [
+      "gambeson_b",
+      "sleeveless_padded_coat",
+      "empire_warrior_padded_armor_f",
+      "padded_coat",
+      "padded_leather_shirt",
+      "aketon",
+      "bandit_gambeson"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "这东西看着像被子，真挨一刀就知道好了。村妇都会做，家里的旧布拆出来纳上两天就成一件。新兵发下来的头一件就是它，穿上又热又沉，可没人敢不穿。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "填充衣按纳缝的层数与行距分档。行距越密越硬挺，护值从七到十八不等；纳得稀的软塌塌，穿久了絮往一处跑，护值就散了。市上一件成品五到十枚银币，自己做的只算布钱。"
+      }
+     ]
+    },
+    {
+     "text": "这一路的上限是护值三十六：在填充袍外面再箍一圈竖排皮条的款式。它挡刀靠皮条、吃震靠填充，两样都不贵，做出来却顶得上一副旧札甲。",
+     "refs": [
+      "leather_strips_over_padded_robe",
+      "desert_padded_cloth",
+      "imperial_padded_cloth",
+      "northern_padded_gambeson",
+      "padded_cloth_with_strips"
+     ],
+     "exprs": [
+      {
+       "tag": "leatherstrip-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "最重的一档是皮革条甲衬填充袍：里子是厚填充袍，外面用皮条竖着一道道箍住，护值三十六。皮条挡刀、填充吃震，做出来比不上正经甲好看，可比它便宜得多。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "torso-leather",
+   "zh": "皮甲",
+   "en": "Leather Armor",
+   "al_zh": [
+    "皮甲",
+    "硬皮外套",
+    "皮罩袍",
+    "镶钉硬皮甲",
+    "绒面甲",
+    "护心镜皮甲",
+    "野猪皮外套"
+   ],
+   "al_en": [
+    "Leather Armor",
+    "Hardened Leather Coat",
+    "Studded Leather",
+    "Leather Tabard"
+   ],
+   "summary": "硝过的硬皮，护值八到三十四——比布强，比铁轻。草原与帝国最常见的护身，也是自备战具的人最先买得起的那一档。",
+   "asserts": [
+    {
+     "text": "皮甲用硝过的硬皮裁成，护值八到三十四，材质一律为皮。它介于填充衣与铁甲之间：比布衣挡得住刀，比锁甲轻得多，价钱也在两者中间。缝制硬皮外套护值二十，镶钉硬皮甲在皮面上再缀铜钉，护值十八——钉子是防刀口打滑的。",
+     "refs": [
+      "basic_imperial_leather_armor",
+      "eastern_stitched_leather_coat",
+      "eastern_studded_leather",
+      "northern_leather_tabard",
+      "woven_leather_coat",
+      "leather_coat",
+      "studded_leather_coat"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "硝皮子那味儿，晾半个月才散。可穿上它赶路，心里踏实——劫道的刀砍不透，马鞭抽上去也不疼。我那件穿了六年，边角换过三回。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "皮甲看两样：皮的厚薄与硝的功夫。生皮硬而易裂，硝透了才软而不烂。护值从八到三十四，差的是层数与拼法；缝制硬皮外套用整块皮裁，拼缝少、价钱高，镶钉的便宜些，一枚钉一个铜板。"
+      }
+     ]
+    },
+    {
+     "text": "草原一路把皮和铁合着做：护心镜皮甲在皮面正心缀一块铁镜，护值十五；厚布面铁甲背心则在皮背心上再罩一层布面铁，护值三十四，是这条路做得最重的一件。",
+     "refs": [
+      "khuzait_sturdy_armor",
+      "khuzait_leather_stitched",
+      "reinforced_suede_armor",
+      "studded_steppe_leather",
+      "khuzait_belt_leather"
+     ],
+     "exprs": [
+      {
+       "tag": "khuzait-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "khuzait",
+       "text": "草原上铁贵、皮贱。我们的做法是皮打底、铁补心——护心镜那块圆铁正好护住心口，其余地方靠皮。护心镜皮甲十五，最厚的做到三十四，穿上骑马也不碍事。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "torso-mail",
+   "zh": "锁甲",
+   "en": "Mail Armor",
+   "al_zh": [
+    "锁甲",
+    "链甲",
+    "链铠",
+    "链甲衫",
+    "罩袍衬链甲",
+    "军团链甲",
+    "游侠链甲",
+    "锁子甲"
+   ],
+   "al_en": [
+    "Mail Armor",
+    "Chainmail",
+    "Hauberk",
+    "Chain Shirt",
+    "Mail Coat"
+   ],
+   "summary": "几千个铁环互相咬着扣成一件——护值二十到四十八，全库最贵的一档。砍不透，但挡不住砸。",
+   "asserts": [
+    {
+     "text": "锁甲由上千个铁环手工扣成，护值二十到四十八，材质一律为链甲。它的好处是软——能随身体弯折，刀剑滑过去而不断；坏处是重，钝器砸下来力道照样透过去。重型链铠护值三十五，帝国军团链甲三十四，巴旦尼亚名门链甲四十八，是这一路做得最密的一件。",
+     "refs": [
+      "vlandia_chainmail",
+      "legionary_mail",
+      "ranger_mail",
+      "sturgian_chainmale_longsleeve",
+      "battania_noble_armor",
+      "hauberk",
+      "mail_shirt"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "一件链甲要几千个环，一个一个扣，一个人得做小半年，所以贵。挨过刀的人都说好——刀锋滑过去只留一道白痕。就是怕锤子，砸一下骨头照样断。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "锁甲的价钱全在环上：环越小、扣得越密、越费工。普通链甲衫护值二十几，军团链甲三十四，名门链甲到四十八，一副壳子顶得上一匹战马。保养也麻烦，一场雨不擦就生锈，锈了得用沙袋滚。"
+      }
+     ]
+    },
+    {
+     "text": "锁甲很少裸穿：外面罩一件布袍，或者把链甲缝进皮衣里当里子。罩袍衬链甲护值三十四，用途是挡日头、防锈、认队伍；缝进皮里的护值三十六，图的是不显眼。",
+     "refs": [
+      "white_coat_over_mail",
+      "red_coat_over_mail",
+      "stitched_leather_over_mail",
+      "battanian_chainmail_armor_c",
+      "battania_woodland_chainmail",
+      "imperial_mail_vest",
+      "desert_robe_over_mail"
+     ],
+     "exprs": [
+      {
+       "tag": "surcoat-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "罩袍衬链甲是瓦兰迪亚的常法：链铠外面罩一件染色的布袍，护值三十四，多花一层布的钱，换来链子不磨肩、雨淋不透，打起来还能认番号。缝进皮的那一路走的是另一个心思——外面看着是件皮衣，不招眼。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "torso-ring",
+   "zh": "环甲与软甲",
+   "en": "Ring Armor",
+   "al_zh": [
+    "环甲",
+    "重型环甲",
+    "软甲",
+    "环甲护肩",
+    "软甲衬链甲"
+   ],
+   "al_en": [
+    "Ring Armor",
+    "Ringed Armor",
+    "Ring Mail"
+   ],
+   "summary": "把铁环钉在皮底或布底上——护值十三到二十，落在锁甲与皮甲之间那条缝里。阿塞莱的骑手爱用。",
+   "asserts": [
+    {
+     "text": "环甲是把一个个铁环缝在皮或厚布底子上，环与环之间靠底衬连着，不像锁甲那样环环相扣。护值十三到二十，同重之下比锁甲低，胜在做起来快、破一个补一个。这条路几乎只见于阿塞莱：环甲护值十三，底衬加厚的重型环甲护值二十。",
+     "refs": [
+      "ringed_desert_armor",
+      "aserai_horseman_armor"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "环甲是我们这边的手艺。皮底子上缝铁环，缝密了就顶事，破一个补一个，不像链甲那样一断就得整片拆。太阳底下晒久了皮底发硬，得抹油。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "环甲按底衬与铁环的密度分档：布底轻，皮底耐，环缝得越密越顶事。护值落在十三到二十——同重之下比锁甲低一档，赢在做起来快、破一个补一个，不必像链甲那样一断就整片拆。养护上正好反过来：皮底怕晒，晒久了发硬要上油，比链甲费心；可修起来比链甲省事。"
+      },
+      {
+       "tag": "aserai-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "aserai",
+       "text": "阿塞莱骑手多半穿环甲：十三的护值、轻，跑长途不累；重型环甲底衬加厚，护值二十，一件顶两件，穿去冲阵也不亏。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "torso-lamellar",
+   "zh": "札甲",
+   "en": "Lamellar Armor",
+   "al_zh": [
+    "札甲",
+    "扎甲",
+    "骑兵扎甲",
+    "具装骑兵扎甲",
+    "扎甲配鳞甲裙",
+    "铜扎甲",
+    "重型扎甲",
+    "枪骑兵扎甲"
+   ],
+   "al_en": [
+    "Lamellar Armor",
+    "Lamellar Coat",
+    "Lamellar with Scale Skirt"
+   ],
+   "summary": "一片片铁札用皮绳穿起来——护值二十四到五十二。能修能补，是草原与北地的重甲。",
+   "asserts": [
+    {
+     "text": "札甲把长方形铁片一片压一片，用皮绳穿在底衬上，护值二十四到五十二。它比锁甲省铁、比板甲好修——断一根绳只散几片，自己重穿就是。轻型扎甲护值四十八，具装骑兵扎甲同为四十八，骑兵扎甲四十六，帝国与南方的扎甲配鳞甲裙做到五十二。",
+     "refs": [
+      "desert_lamellar",
+      "imperial_lamellar",
+      "sturgia_cavalry_armor",
+      "sturgian_lamellar_base",
+      "lamellar_with_scale_skirt",
+      "eastern_lamellar_armor",
+      "nordic_lamellar_armor"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "扎甲好养活。断了绳，自己拿皮条重穿一遍就行，不用找铁匠。我那件穿了十年，铁片换过一半，底衬还是原来那块。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "札甲按铁片的大小与层数分档。片小、层多、穿得密，护值就高：铜扎甲衬链甲四十六，重型扎甲衬链甲五十一。它还特别适合往上加东西——底下垫链甲、腰上挂鳞甲裙、肩上再加护肩，都能续。"
+      }
+     ]
+    },
+    {
+     "text": "札甲最常和链甲叠着穿：札甲底下垫一件链甲衫，护值加到五十一；铜的扎甲衬链甲同理，护值四十六；底下垫软甲的那款做到三十七。北地铁匠的看家本事，就在这两层之间调配重。",
+     "refs": [
+      "northern_brass_lamellar_over_mail",
+      "brass_lamellar_over_mail",
+      "southern_lamellar_armor",
+      "sturgian_lamellar_gambeson_heavy",
+      "khuzait_lamellar_strapped"
+     ],
+     "exprs": [
+      {
+       "tag": "sturgia-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "sturgia",
+       "text": "我们这边的重甲一层压一层：里子是链甲，外头套扎甲，肩上再加护肩。最重的一件五十一，分量能到二十三公斤，穿上得有人帮着扣。可站在盾墙里，这身就是命。"
+      },
+      {
+       "tag": "khuzait-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "khuzait",
+       "text": "铜的扎甲衬链甲四十六，是这一路里最重的一件。铁片镀铜，不锈——草原上雨雪多，这一点最省事。底下垫一层链甲，冲阵时挨一下不至于见血。骑兵多是先穿轻的枪骑兵扎甲三十九，攒下钱再换重的。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "torso-scale",
+   "zh": "鳞甲",
+   "en": "Scale Armor",
+   "al_zh": [
+    "鳞甲",
+    "鳞铠",
+    "重型鳞甲衬链铠",
+    "南方鳞甲",
+    "军阀鳞甲",
+    "高地鳞甲",
+    "鳞甲衫"
+   ],
+   "al_en": [
+    "Scale Armor",
+    "Scale Mail",
+    "Scale Coat"
+   ],
+   "summary": "一片片铁鳞叠瓦式缀在底衬上——护值十六到五十七，全库最重的几件里有它。",
+   "asserts": [
+    {
+     "text": "鳞甲把一片片小铁鳞像鱼鳞那样叠着缀在皮底或布底上，一片压一片，护值十六到五十七。它与札甲的区别在片形与穿法：札甲是长条片用绳穿，鳞甲是圆鳞用钉或线缀，缀得更密，也更重。重型鳞甲衬链铠护值五十七，是卡拉迪亚分量最重的一件甲。",
+     "refs": [
+      "imperial_scale_armor",
+      "aserai_full_scale_armor_on_chain",
+      "aserai_scale_armor_on_chain",
+      "scale_armor",
+      "western_scale_mail",
+      "leather_scale_armor"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "那件穿上去跟背着个人似的。鳞片一层压一层，光是穿就得半个时辰，还得好天气——雨天里边的皮底会返潮。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "鳞甲贵在缀工：一片一片打出来、再一片一片缀上，一件得几千片，所以多半只在贵人与重骑身上见。南方鳞甲衬锁子铠护值五十一，用的是师匠级的缀法，鳞片薄而匀，价钱按片数算。"
+      }
+     ]
+    },
+    {
+     "text": "鳞甲也是各地拿来显身份的：巴旦尼亚军阀鳞甲护值三十七，是部落头领的标配；高地鳞甲把鳞片缀在格子呢上，衬链甲的四十二、衬布衣的三十一，底色露在鳞缝里。",
+     "refs": [
+      "battania_warlord_armor",
+      "battanian_scale_armor_a",
+      "battanian_scale_armor_b",
+      "desert_scale_armor",
+      "aserai_scale_armor_on_cloth"
+     ],
+     "exprs": [
+      {
+       "tag": "battania-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "battania",
+       "text": "军阀那身鳞甲不是买来的，是打出来的——一片片缀，缀完还要在上面錾花。谁身上的鳞片密、亮，谁在部里说话就响。底下照例垫一层链甲。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "torso-plate",
+   "zh": "板甲",
+   "en": "Plate Armor",
+   "al_zh": [
+    "板甲",
+    "护胸板",
+    "铜护胸板",
+    "覆板衣",
+    "板甲衣",
+    "黄铜板链甲衫",
+    "夹板甲"
+   ],
+   "al_en": [
+    "Plate Armor",
+    "Cuirass",
+    "Brass Plate Armor",
+    "Plated Coat"
+   ],
+   "summary": "整块铁板敲出胸腹的弧度——护值十九到四十二。这块地上真正的全身板甲还没有，所以多是板加链。",
+   "asserts": [
+    {
+     "text": "这一档讲的是以整片铁板护住躯干的做法，护值十九到四十二。卡拉迪亚没有全身板甲，所谓板甲多是护胸板、覆板衣这类局部整片：把一块敲出弧度的板护在心口或前襟，其余部分仍靠链甲或布衬。南方的黄铜板链甲衫在链甲衫外面再缀黄铜板，护值四十二。",
+     "refs": [
+      "aserai_brass_plate_a",
+      "aserai_brass_plate_b",
+      "aserai_chain_plate_armor_a",
+      "aserai_chain_plate_armor_c",
+      "battania_brass_plate_armor",
+      "leather_and_iron_plate_armor",
+      "belted_leather_cuirass"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "胸口那块板是整块铁敲出来的，敲的时候得垫着皮，不然就裂。挨上一矛，链甲会被捅穿，这块板不会——它把矛头滑开。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "板甲的难点在弧度：平面板受力全落在一点，敲出弧来才能把力道分到边上。铜护胸板是巴旦尼亚的手艺，整块铜板箍住前襟，护值到四十二；在链甲外面再加板的两层做法便宜些，价钱比纯链甲贵三成。"
+      }
+     ]
+    },
+    {
+     "text": "这块地上更常见的是在里衣外面缀几块铁板：扣带皮胸甲十九、铁板皮甲二十二、华丽鳞甲三十九。它比整片板省铁，也比整片板好修，帝国的步卒与南方弓手都用。",
+     "refs": [
+      "empire_plate_vest_armor",
+      "aserai_chain_plate_armor_b",
+      "aserai_chain_plate_armor_d"
+     ],
+     "exprs": [
+      {
+       "tag": "empire-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "empire",
+       "text": "我们的做法是在链甲衫外面再缀几块板。胸一块、背一块、两肩各一块，用皮绳系住，坏了换上就行。整片板甲打不出来，也没必要——板只要护住要害，其他地方有链甲兜着。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "torso-brigandine",
+   "zh": "布面铁甲",
+   "en": "Coat of Plates",
+   "al_zh": [
+    "布面铁甲",
+    "布面铁甲衬链铠",
+    "板甲衣衬链甲",
+    "覆板衣",
+    "铆接皮甲",
+    "可汗布面铁甲",
+    "钉板衣"
+   ],
+   "al_en": [
+    "Coat of Plates",
+    "Brigandine",
+    "Plated Leather Coat",
+    "Studded Plate Coat"
+   ],
+   "summary": "把铁片铆在布面或皮面底下，外面只看得出一个个铆钉头——护值十五到五十三，防得住刀，也经得起改。",
+   "asserts": [
+    {
+     "text": "布面铁甲是把一片片铁板铆在厚布或皮革的里侧，外面只露出铆钉头，护值十五到五十三。它比整片板便宜、比纯链甲挺括，而且好改——胖了瘦了，拆下几片重铆就是。北地与草原都用它：布面铁甲衬链铠护值五十一，可汗布面铁甲四十六。",
+     "refs": [
+      "battania_mercenary_armor",
+      "sturgian_fortified_armor",
+      "coat_of_plates_over_mail",
+      "khuzait_heavy_armor",
+      "northern_coat_of_plates",
+      "sturgian_lamellar_fortified"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "看着是件厚布衣，一拎起来沉得吓人——铁都铆在里子上了。挨一刀，外面那层布先卸了劲，里头的铁板才接住。破了也好办，拆两片再铆上。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "布面铁甲的价钱看铁片的块数与铆工：片越大越省工、也越硬；片小则软一点、穿着活络。护值十五到五十三，跨度全在铁的分量上。市上的成衣多半分大中小三号，不合身再自己改。"
+      }
+     ]
+    },
+    {
+     "text": "巴旦尼亚与库赛特各有各的加法：巴旦尼亚的布面铁甲在格子呢外面缀铁片，护值五十三，是这一路最重的一件；库赛特贵族的则做轻薄些，护值四十六，为的是骑马时腰能弯得下。",
+     "refs": [
+      "battania_light_armor_a",
+      "khuzait_fortified_armor",
+      "plated_leather_coat",
+      "eastern_plated_leather",
+      "eastern_plated_leather_vest",
+      "kilt_over_plated_leather"
+     ],
+     "exprs": [
+      {
+       "tag": "battania-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "battania",
+       "text": "我们把这活儿做在格子呢上：呢子厚、吃得住铆钉，铁片缀上去贴身不晃。最重的一件五十三，穿上走山路比锁甲省力气——铁是不均匀分布的，该厚的地方厚。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "torso-fur",
+   "zh": "毛皮甲",
+   "en": "Fur Armor",
+   "al_zh": [
+    "毛皮甲",
+    "粗毛皮甲",
+    "扎带毛皮甲",
+    "长摆毛皮外套",
+    "毛皮衬链甲",
+    "兽皮背心"
+   ],
+   "al_en": [
+    "Fur Armor",
+    "Rough Fur Armor",
+    "Fur Coat Armor"
+   ],
+   "summary": "拿整张兽皮做的护身衣，护值二到三十六——原本是御寒的，后来发现厚毛皮也能卸掉几分刀势。",
+   "asserts": [
+    {
+     "text": "毛皮甲的原身是御寒衣：整张兽皮去毛与否都可能，缝成背心或长外套，护值二到三十六。它挡刀靠的是毛与皮的厚度，比布衣强不了多少，胜在天冷时离不了。巴旦尼亚与北地最多，劫掠者身上也常见——毛皮好弄，不用钱买。",
+     "refs": [
+      "fur_armor",
+      "rough_fur_armor",
+      "fur_armor_with_strap",
+      "long_fur_coat",
+      "bandit_fur_a",
+      "bandit_fur_b",
+      "sleeveless_fur_coat"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "山里过冬离不了它。毛朝里穿暖，毛朝外穿挡风。真打起来也能应个急——刀砍上去，毛先陷进去，皮再兜住，比光穿布衣强。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "毛皮甲按兽皮种类与毛长分档：羊皮最贱、狼皮次之、熊皮最贵。护值从二到二十不等，多数只是御寒的东西，谈不上装备。穿久了毛会打结，得拿梳子理。"
+      }
+     ]
+    },
+    {
+     "text": "毛皮与铁合着做的款式把护值提到了三十六：整张粗毛皮外面再罩一层链甲，毛衬在里头吸震，铁在明面上挡刀。这一档已经不是御寒衣，是正经的北地重甲。",
+     "refs": [
+      "rough_fur_over_chain",
+      "sleeveless_studded_fur_armor",
+      "studded_fur_armor",
+      "fur_coat_over_tunic",
+      "merchants_fur_coat",
+      "fur_trimmed_tunic"
+     ],
+     "exprs": [
+      {
+       "tag": "sturgia-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "sturgia",
+       "text": "北边的做法是毛皮衬里、链甲罩面：里头那层毛吃得住钝击的震，外头的链子挡刀。这样一件能到三十六，比单穿链甲暖得多——我们这边最冷的时候，铁贴着皮是受不住的。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "cape-mantle",
+   "zh": "披风与围巾",
+   "en": "Cloaks and Scarves",
+   "al_zh": [
+    "披风",
+    "斗篷",
+    "围巾",
+    "风帽",
+    "格纹披风",
+    "林地披风",
+    "重磅斗篷",
+    "穗饰披风"
+   ],
+   "al_en": [
+    "Cloak",
+    "Cape",
+    "Scarf",
+    "Hood",
+    "Shawl"
+   ],
+   "summary": "披在肩上的一块布，护值二到九——挡雨、挡风、挡目光。战场上它还是认队伍的东西。",
+   "asserts": [
+    {
+     "text": "披风与围巾是披挂类里最轻的一档，护值二到九，材质以布为主，少数为薄皮。它们不护身，用处是遮风挡雨、遮脸挡沙，以及在队列里认人——染了什么色、绣了什么边，一眼就分得出是哪家的。格纹披风是最常见的巴旦尼亚款，重磅斗篷走的是帝国一路，绿风帽与羊毛风帽则什么人都有。",
+     "refs": [
+      "battania_cloak",
+      "battania_civil_cloak",
+      "battania_scarf_a",
+      "empire_cape_a",
+      "green_hood",
+      "hood",
+      "scarf",
+      "female_scarf",
+      "wrapped_scarf",
+      "southern_shawl"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "出门裹一件，风就往边上走了。下雨顶在头上，能顶一阵；沙起来把脸一蒙，谁也认不出谁。染料的钱比布还贵，所以颜色越正越体面。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "披风按布幅与染工分档，护值都在九以下——它是外披，不是护具。格纹是巴旦尼亚的织法，一格一格对得上才叫好；帝国的重磅斗篷讲究垂，一披下去到脚踝。市上一条素色围巾换两斗粮，染过的要翻倍。"
+      }
+     ]
+    },
+    {
+     "text": "有一路披风是当护具做的：皮护肩与编织垫肩把布换成薄皮或厚毡，护值三四，垫在肩甲底下不硌肉；军团填充扎带一类更是把披挂和填充衣缝在一起。",
+     "refs": [
+      "padded_leather_shoulders",
+      "empire_warrior_padded_armor_shoulder",
+      "desert_leather_shoulderpad",
+      "desert_fabric_shoulderpad",
+      "battania_shoulder_strap_cloak",
+      "battania_woodland_cloak"
+     ],
+     "exprs": [
+      {
+       "tag": "pad-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "垫肩的用处不在挡刀，在垫——肩甲直接压在锁骨上，走上一天就磨破皮；垫一层皮或毡，分量就摊开了。这种小件不值钱，可列装的兵没有不配的。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "cape-fur",
+   "zh": "兽皮披挂",
+   "en": "Fur Cloaks",
+   "al_zh": [
+    "熊皮",
+    "狼皮披风",
+    "豹皮",
+    "毛皮斗篷",
+    "粗糙熊皮",
+    "扣链毛皮斗篷",
+    "配甲熊皮"
+   ],
+   "al_en": [
+    "Bearskin",
+    "Wolf Pelt",
+    "Leopard Pelt",
+    "Fur Cloak"
+   ],
+   "summary": "整张兽皮披在肩上，护值五到十四——北地的暖，也是北地的脸面。谁披什么，就说明他打到了什么。",
+   "asserts": [
+    {
+     "text": "兽皮披挂是整张兽皮不裁不剪、直接披在肩上，护值五到十四，材质一律为皮。它比布披风暖得多，也比布披风贵——一张熊皮要一个人拿命去换。巴旦尼亚人几乎人手一件：熊皮、狼皮、豹皮，各有各的场合；毛皮大斗篷配圆板则在斗篷背后缀一块圆铁板，护值十四，算是这一路里最像护具的。",
+     "refs": [
+      "bearskin",
+      "rough_bearskin",
+      "wolf_shoulder",
+      "leopard_pelt",
+      "fur_cloak_a",
+      "fur_cloak_c",
+      "battania_cloak_furr",
+      "battania_shoulder_furr"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "这熊是我一个人撂倒的。剥下来没舍得裁，整张披着。狼皮是打的次数多了才敢披——头一回披出去，村口那几个老的全站起来看我。"
+      },
+      {
+       "tag": "battania-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "battania",
+       "text": "我们这边看披什么认人：狼皮是猎手，熊皮是敢跟熊对着干的，豹皮是南方来的东西，多半是换的。披兽皮不单为暖，是给别人看的——部里议事的场合，谁披着什么，话就重几分。"
+      }
+     ]
+    },
+    {
+     "text": "有一款把兽皮和铁接上了：配甲熊皮在熊皮里侧加一副铁肩，护值十二，看着仍是张兽皮。",
+     "refs": [
+      "armored_bearskin",
+      "fur_cloak_b"
+     ],
+     "exprs": [
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "配甲熊皮是折中的做法：毛面照旧，里头衬铁肩，护值十二。披着不比别的兽皮重多少，可挨刀的时候，铁把那一下接住了。做的人说，这是给不想穿甲又要上阵的人预备的。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "cape-pauldron",
+   "zh": "金属肩甲",
+   "en": "Metal Pauldrons",
+   "al_zh": [
+    "肩甲",
+    "护肩",
+    "华丽肩甲",
+    "鳞甲护肩",
+    "铜鳞护肩",
+    "军阀肩甲",
+    "板肩甲",
+    "护颈肩甲"
+   ],
+   "al_en": [
+    "Pauldron",
+    "Shoulder Armor",
+    "Metal Shoulder Guard",
+    "Scale Pauldron"
+   ],
+   "summary": "扣在肩上的铁片，护值一到十六——护的值不高，可它是重甲身上最显眼的一块。",
+   "asserts": [
+    {
+     "text": "金属肩甲是扣在两肩的独立护具，护值一到十六，材质几乎全是板或铜。数值不高，因为肩本来就难被正面砍到；它的用处是接住从斜上方来的一刀，以及让穿戴的人看着更宽、更沉。南方阿塞莱一路把肩甲做成鳞片叠缀的铜肩，护值十六；帝国与瓦兰迪亚的华丽肩甲则在铁面上再做錾花，配披风或围巾一起穿。",
+     "refs": [
+      "aserai_scale_shoulder_b",
+      "scale_shoulder_armor",
+      "a_aserai_scale_b_shoulder_a",
+      "desert_scale_shoulders",
+      "noble_pauldron",
+      "noble_pauldron_with_scarf",
+      "noble_pauldron_with_cape",
+      "battania_warlord_pauldrons"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "那一对肩甲比看起来沉。穿上肩是宽的，站队里显得壮，其实护不了多少——真打起来，谁往肩上砍？可要是没有，一身甲看着就塌了。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "肩甲分两路：一路是整块的铁片，一路是鳞片叠缀。整块的护值低但硬，鳞缀的软、跟着胳膊动。价钱差在錾花上——素面五枚银币，錾花的能到二十枚，一样的护值。"
+      }
+     ]
+    },
+    {
+     "text": "肩甲最常和别的东西配成一套：配披风的、配围巾的、配护颈的。其中护颈肩甲在肩甲上加一圈立起的铁片，把脖子后侧也护住，是帝国军团的做法。",
+     "refs": [
+      "studded_imperial_neckguard",
+      "pauldron_cape_a",
+      "pauldron_with_cape",
+      "imperial_lamellar_shoulders",
+      "lamellar_shoulders",
+      "brass_lamellar_shoulder",
+      "brass_scale_shoulders",
+      "a_pauldron_cape_b",
+      "a_empire_plated_shoulder_a",
+      "khuzait_leather_pauldron"
+     ],
+     "exprs": [
+      {
+       "tag": "empire-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "empire",
+       "text": "军团的做法是肩甲连护颈一起做：肩上一片板，脖子后头再立起一圈小铁片。后面来的刀先撞上那圈，滑到肩甲上，再落到链甲。三样凑起来，后背就没那么怕了。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "cape-shoulders",
+   "zh": "软甲护肩与背带",
+   "en": "Mail and Leather Shoulder Guards",
+   "al_zh": [
+    "皮护肩",
+    "链甲护肩",
+    "镶钉护肩",
+    "皮革背带",
+    "装饰背带",
+    "肩带",
+    "软甲护肩"
+   ],
+   "al_en": [
+    "Leather Shoulder Guard",
+    "Mail Shoulders",
+    "Shoulder Strap",
+    "Studded Shoulders"
+   ],
+   "summary": "皮的、链的、缀钉的护肩与背带，护值一到十五——真正的重甲底下，垫着的都是这些东西。",
+   "asserts": [
+    {
+     "text": "软甲护肩与背带是披挂位里真正干活的那些：皮护肩、链甲护肩、缀钉护肩，以及在胸前交叉的皮革背带，护值一到十五。它们不像金属肩甲那样显眼，却是重甲穿戴的基础——链甲贴肉会磨破，靠背带把分量匀到肩上；帝国瓦兰吉式的装饰背带更在皮带上缀鳞片或环甲，护值十四。",
+     "refs": [
+      "varangian_bra_scale",
+      "varangian_bra_mail",
+      "varangian_bra_padded",
+      "varangian_bra_royal",
+      "varangian_bra_basic",
+      "eastern_studded_shoulders",
+      "chainmail_shoulder_armor",
+      "mail_shoulders",
+      "battanian_chainmail_shoulder_b",
+      "bolted_leather_strips"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "链甲直接搭在肩上，走上半天就磨出血。老兵的肩上都有一对厚背带，皮的，或是缀了钉的。这玩意儿不显眼，可少了它一身甲穿不住。"
+      },
+      {
+       "tag": "empire-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "empire",
+       "text": "帝国那边有一种装饰背带，皮带上缀甲片，从两肩交叉到腰后。原本是给外来卫队用的，后来讲究起来——边上缀鳞片还是缀环甲，成了分身份的东西。护值十四，可没人真指望它挡刀。"
+      }
+     ]
+    },
+    {
+     "text": "这一路的另一种做法：不单独做肩，而是把护肩嵌进背带里——皮革肩衬上缀一层鳞片或短环，护值十一到十五，穿着比成套肩甲活络。",
+     "refs": [
+      "leather_lamellar_shoulders",
+      "imperial_studded_strip_shoulders",
+      "stitched_leather_shoulders",
+      "woven_leather_shoulders",
+      "steppe_leather_shoulders",
+      "reinforced_suede_shoulders",
+      "aserai_horseman_shoulder",
+      "battania_shoulder_strap",
+      "battanian_leather_shoulder_a",
+      "assassin_shoulder"
+     ],
+     "exprs": [
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "把护肩嵌进背带是省料的办法：一条皮带从肩到腰，肩那一段加厚、缀上甲片。一副这样的背带重不到一公斤，护值能到十五，比单买肩甲便宜一半。骑兵多半用它——转身、举矛都不碍事。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "shield-kite",
+   "zh": "筝形盾",
+   "en": "Kite Shield",
+   "al_zh": [
+    "筝形盾",
+    "骑兵筝形盾",
+    "强化筝形盾",
+    "皮革包边筝形盾",
+    "叶尖筝形盾",
+    "骑士盾"
+   ],
+   "al_en": [
+    "Kite Shield",
+    "Horseman's Kite Shield",
+    "Tear-drop Shield"
+   ],
+   "summary": "上圆下尖、长可及膝的一面木盾——护住左半身，也护住那条腿。骑手与步卒都拿，是这地上最常见的一面盾。",
+   "asserts": [
+    {
+     "text": "筝形盾上端圆、下端收成尖，竖着拿能从小臂一直护到小腿。它是一块木胎，外头包皮或包铁圈；长短分两路——步卒的做到一百二十八到一百七十，骑兵的只有七十八，短到不碍驾马。这一路三十件，差别全在包边上：粗制的、破旧的耐久只有一百几，包铁圈、上橡木的能做到六百。护值一到九，多数只有一——靠的不是它硬，是它把刀挡在外面。",
+     "refs": [
+      "old_kite_shield",
+      "worn_kite_shield",
+      "leather_bound_kite_shield",
+      "reinforced_kite_shield",
+      "stronger_reinforced_kite_shield",
+      "old_horsemans_kite_shield",
+      "bound_horsemans_kite_shield",
+      "sturgia_infantry_shield_a",
+      "sturgia_infantry_shield_b",
+      "vlandia_infantry_shield_a"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "这面盾是拿命换的——旧的那面挨了三箭，裂了。这面是镇上新打的，包了铁边。拎着比旧的沉，可心里踏实。底下尖的那头刚好护住膝盖，蹲下射箭也不离手。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "筝形盾的讲究在边上：木胎是底子，边上一圈包什么才决定价钱。不包的砍两下就豁口，包皮革的耐些，包铁圈的能用好几年。耐久从一百四十五到六百一十，最贵的那种木胎外面还蒙一层皮、再钉铁边，一副顶三副。"
+      }
+     ]
+    },
+    {
+     "text": "瓦兰迪亚与斯特吉亚的步兵筝形盾另有一路做法：盾面更窄更长、下缘做成棱角，排成盾墙时两盾能叠住；其中斯特吉亚的叶尖款最长，一百三十三，耐久到六百。",
+     "refs": [
+      "western_riders_kite_shield",
+      "ironrim_riders_kite_shield",
+      "chivalric_kite_shield",
+      "western_kite_shield",
+      "ironrim_kite_shield",
+      "steel_druzhinnik_kite_shield",
+      "northern_scouts_shield",
+      "northern_horsemans_shield",
+      "fortified_kite_shield",
+      "studded_bound_kite_shield"
+     ],
+     "exprs": [
+      {
+       "tag": "vlandia-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "vlandia",
+       "text": "我们的筝形盾比南方的窄，边上包铁圈，排阵的时候一面压一面，缝就没了。骑士用的那种还带纹章——自己的记号漆在盾面正中，为的是混战里认得出自己的人。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "shield-round",
+   "zh": "圆盾",
+   "en": "Round Shield",
+   "al_zh": [
+    "圆盾",
+    "大圆盾",
+    "重型圆盾",
+    "椭圆盾",
+    "沙漠圆盾",
+    "高地圆盾",
+    "草原圆盾",
+    "小圆盾"
+   ],
+   "al_en": [
+    "Round Shield",
+    "Large Round Shield",
+    "Oval Shield",
+    "Target Shield"
+   ],
+   "summary": "一整块木头旋出来的圆盘，中间加一块铁凸——最好做的一面盾，草原、北地、沙漠各有各的做法。",
+   "asserts": [
+    {
+     "text": "圆盾是一整块木头旋成形、再在中心加一块铁凸。它比筝形盾好做、也比筝形盾便宜：一整块料旋出来，中间加铁凸就是全部工序。直径多在六十到一百三十之间；另有一路椭圆盾，比圆盾抻长得多，归在大盾那一档。这一路二十八件，耐久二百一十五到五百四十，护值零到九——多数是零或一，重型圆盾与大圆盾那几只到九。",
+     "refs": [
+      "heavy_round_shield",
+      "leather_round_shield",
+      "strapped_round_shield",
+      "sturgia_old_shield_a",
+      "sturgia_old_shield_b",
+      "oval_shield",
+      "desert_round_shield",
+      "curved_round_shield",
+      "studded_round_shield",
+      "steel_round_shield",
+      "viking_round_shield",
+      "northern_round_shield",
+      "southern_oval_shield",
+      "tribal_steppe_shield",
+      "decorated_steppe_shield",
+      "noyans_shield",
+      "steppe_guardian_shield"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "村里自己的匠人就能做。找块好木，旋圆了，中间那枚铁凸是买的。便宜、拿得住，坏了再做一个。就是不比外头的盾好看。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "圆盾的价钱在木料和中心铁凸上：软木旋得快但不经砸，硬木沉、要慢慢掏。中心铁凸是护住握把的那一块——没有它，一矛捅进来先断的就是手。耐久从二百一十五到五百四十：钢制圆盾最经打，靶标盾最不济。"
+      }
+     ]
+    },
+    {
+     "text": "圆盾里有一路是专给巴旦尼亚人做的：靶标盾与高地盾，直径七十上下，配短矛与投石用，腰间一挂就走；做得讲究的在盾面缀铜、缀铁，耐久到四百三十。",
+     "refs": [
+      "battania_targe_b",
+      "battania_shield_targe_a",
+      "battania_large_shield_a",
+      "battania_large_shield_b",
+      "highland_scouts_shield",
+      "highland_riders_shield"
+     ],
+     "exprs": [
+      {
+       "tag": "battania-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "battania",
+       "text": "我们的小圆盾不挡阵，是配着短矛用的——一只手举着，另一只手照样能投石。直径不到一臂，挂在腰上走山路不碍事。大的那些是部里凑阵用的，边上一圈包铜，是拿战利品化的。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "shield-heater",
+   "zh": "扇形盾",
+   "en": "Heater Shield",
+   "al_zh": [
+    "扇形盾",
+    "扇形小盾",
+    "刻印扇形盾",
+    "平面扇形盾",
+    "宽扇形盾",
+    "加固扇形盾",
+    "巨盾"
+   ],
+   "al_en": [
+    "Heater Shield",
+    "Kite-shaped Shield",
+    "Pavise"
+   ],
+   "summary": "上宽下尖、形如熨斗的一面盾——瓦兰迪亚骑兵的手艺，也是纹章漆得最多的那一种。",
+   "asserts": [
+    {
+     "text": "扇形盾上宽下收、边线平直，是瓦兰迪亚一路的形制。它比筝形盾短，护住躯干到腰就止；好处是轻、是平——凹面的盾挨打会扭手，平的看着薄，接刀反而稳。长六十五到一百一十八，耐久二百零五到七百五十，护值一到十七：多数只有一，重型扇形盾到十七、扇形长盾到十三、平面扇形盾到十。刻印的那一款把边角削去一块，用来搁长矛。",
+     "refs": [
+      "small_heater_shield",
+      "flat_heater_shield",
+      "heater_shield_with_cutout",
+      "heavy_heater_shield",
+      "wide_heater_shield",
+      "bracketed_heater_shield",
+      "tall_heater_shield",
+      "horsemans_heater_shield",
+      "small_flat_heater_shield",
+      "jousting_shield"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "面平的这种，挡刀不如凹面的好看，可手稳——凹面的吃一下劲儿会扭，手腕受不了。骑兵用得多，因为我们不用它挡阵，只要那一瞬间。"
+      },
+      {
+       "tag": "vlandia-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "vlandia",
+       "text": "扇形盾是骑士的体面：盾面正中漆家徽，边上一圈颜色分长幼。比武用的那种更厚，重型扇形盾到十七；实战的反倒轻，因为要一手持矛——比武用的那种到二点四公斤就已算重了。刻口的那一款是专门为长矛留的，举矛时盾不挡视线。"
+      }
+     ]
+    },
+    {
+     "text": "这一路里最大的一面叫巨盾：高过人肩、下缘带支脚，立在地上就是一面活动墙，耐久七百五十，是全场最经打的一件，用来给攻城的弓手遮身。",
+     "refs": [
+      "pavise_shield"
+     ],
+     "exprs": [
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "巨盾不是拿着打的，是立着的：底下两支脚钉进土里，人蹲在后头装弩。正面蒙一层厚皮、或者干脆两面包铁，一般的箭射不穿。缺点是重——一个人扛不动，得用小车推。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "shield-wicker",
+   "zh": "柳条盾与杏形盾",
+   "en": "Wicker and Adarga Shields",
+   "al_zh": [
+    "柳条盾",
+    "柳条方盾",
+    "杏形盾",
+    "杏形大盾",
+    "镶钉杏形盾",
+    "华丽杏形盾",
+    "强化柳条盾"
+   ],
+   "al_en": [
+    "Wicker Shield",
+    "Adarga",
+    "Studded Adarga",
+    "Ornate Adarga"
+   ],
+   "summary": "藤条编的、皮子绷的——轻得不像盾。可它挡的是箭，不是刀。",
+   "asserts": [
+    {
+     "text": "柳条盾用藤条或木条编成、外面蒙一层皮，长九十到九十五，耐久一百六十到五百一十，护值一到五。它是卡拉迪亚最轻的两路盾之一：挡不住刀砍——藤条一劈就断——可它吃得住箭，箭镞扎进编层里，抽不出来，也不容易穿透。草原与南方的弓手、沙漠里的轻骑都爱拿它，因为轻，跑起来不累手。",
+     "refs": [
+      "eastern_wicker_shield",
+      "stronger_eastern_wicker_shield",
+      "footmans_wicker_shield",
+      "stronger_footmans_wicker_shield",
+      "eastern_wicker_sparring_shield"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "这盾挡不了刀，挡箭的。箭扎进去就拔不出来了，编层一层一层卡着。轻得很，跑一天手也不酸。真让人近身，赶紧扔了跑。"
+      },
+      {
+       "tag": "khuzait-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "khuzait",
+       "text": "草原上用它配骑射：一手持弓不方便拿重盾，柳条的轻，挂在臂上不碍事。蒙皮那层是为了防潮——编层一泡水就软，软了就不挡箭了。强化过的那种耐久到五百一十，能用一整场仗。"
+      }
+     ]
+    },
+    {
+     "text": "另一路是杏形盾：整张硬皮绷在骨架上，形如杏核，中间鼓起一道脊。这是沙漠与南方的打法——皮面吃刀不豁，中间的脊让箭滑向两侧。尺寸都做得小，长六十，好挂好收。",
+     "refs": [
+      "adarga",
+      "bound_adarga",
+      "large_adarga",
+      "studded_adarga",
+      "ornate_adarga",
+      "bound_desert_round_sparring_shield",
+      "battania_targe_b_sparring",
+      "northern_round_sparring_shield"
+     ],
+     "exprs": [
+      {
+       "tag": "aserai-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "aserai",
+       "text": "杏形盾是沙漠里的手艺。整张硬皮蒙在骨架上，中间那道脊是关键——刀砍在脊上会滑到边上，箭扎上去也往两边偏。华丽的那几款在皮面上压花、镶铜钉，是给头面人用的，护值其实一样。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "柳条盾按编层用料与蒙皮分档：藤条轻、木条经打，外面蒙的那层皮是为防潮。长度一律在九十到九十五之间，护值一到五——它从头到尾不算护具，是给弓手挡箭用的。耐久差得最远，从一百六十到五百一十，三倍还多。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "legs",
+   "zh": "护腿与靴",
+   "en": "Legwear and Boots",
+   "al_zh": [
+    "护腿",
+    "靴",
+    "皮靴",
+    "链甲护腿",
+    "夹板靴",
+    "绑腿",
+    "战靴",
+    "覆板靴"
+   ],
+   "al_en": [
+    "Boots",
+    "Mail Chausses",
+    "Plated Boots",
+    "Leg Wraps"
+   ],
+   "summary": "从软皮鞋到链甲护腿，护值一到二十六——多数人的这身东西只是鞋，只有重骑才在腿上包铁。",
+   "asserts": [
+    {
+     "text": "护腿与靴是穿戴里最容易被忘掉的一段，护值从一到二十六，跨度极大。绝大多数是鞋：软皮鞋、缠裹鞋、翻折皮靴、马靴，护值三到九，管的是走路。往上是靴筒加高的骑兵靴，护值十到十几；再往上才有真正的护腿：链甲护腿用链子包住小腿，护值二十二三；夹板靴与扎板靴把铁片夹进靴面，护值十九到二十六。",
+     "refs": [
+      "southern_moccasins",
+      "wrapped_shoes",
+      "strapped_shoes",
+      "leather_shoes",
+      "turndown_leather_boots",
+      "leather_boots",
+      "battania_woodland_boots",
+      "khuzait_curved_boots",
+      "leather_cavalier_boots",
+      "reinforced_suede_boots",
+      "mail_chausses",
+      "strapped_mail_chausses",
+      "mail_cavalier_boots",
+      "plated_strip_boots",
+      "lamellar_plate_boots",
+      "northern_plated_boots",
+      "decorated_imperial_boots",
+      "battania_warlord_boots"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "鞋是走路的，不是打仗的。可走路走多了，脚底磨穿了什么都干不了。靴筒高一点，草籽和雪就进不去；底下钉两层皮，能让多走两天路。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "靴子看底与筒：底要厚、要能换，筒要贴小腿，不然走三里就要掉。护值差得远——软皮鞋一，链甲护腿二十三，夹板靴二十六。真正包铁的那几款都很重，走一天下来脚腕会酸，所以只有骑马的人常穿。"
+      }
+     ]
+    },
+    {
+     "text": "绑腿是另一路：拿布条或皮带把小腿缠紧，护值八，看着寒酸，可在山里比靴子管用——缠紧了血不上头，走长路腿不肿。巴旦尼亚的林地绑腿就是这么用的。",
+     "refs": [
+      "highland_leg_wrappings",
+      "wrapped_leather_boots",
+      "strapped_leather_boots",
+      "rough_tied_boots",
+      "belted_leather_boots",
+      "woven_leather_boots",
+      "eastern_leather_boots",
+      "battania_leather_boots",
+      "battania_fur_boots",
+      "sturgia_boots_a",
+      "sturgia_boots_b",
+      "sturgia_boots_c",
+      "sturgia_boots_d",
+      "highland_boots",
+      "empire_horseman_boots",
+      "fine_town_boots",
+      "folded_town_boots",
+      "steppe_leather_boots",
+      "ragged_boots",
+      "assassin_boot",
+      "ladys_shoe"
+     ],
+     "exprs": [
+      {
+       "tag": "battania-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "culture": "battania",
+       "text": "山里人不爱穿高筒靴——上坡下坡，筒子磨小腿。我们缠绑腿：一条布从脚踝缠到膝下，缠得紧，走一天腿不沉。冻了再套一层毛皮的，也是缠的，不讲样式。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "hands",
+   "zh": "护手与臂铠",
+   "en": "Gloves and Bracers",
+   "al_zh": [
+    "护手",
+    "护臂",
+    "臂铠",
+    "护腕",
+    "连指手套",
+    "夹板护臂",
+    "扎板臂铠",
+    "绑臂"
+   ],
+   "al_en": [
+    "Bracers",
+    "Gauntlets",
+    "Mail Mittens",
+    "Arm Wraps"
+   ],
+   "summary": "护住手腕到肘的这些东西，护值三到二十五——挨刀的时候，多数人挡的那一下正落在左小臂上。",
+   "asserts": [
+    {
+     "text": "护手与臂铠护的是手腕到肘这一段，护值三到二十五，跨了整条手臂的档次。最常见的是缠布或缠皮的绑臂，护值三到七，本意是防磨；往上是皮护臂，护值八到二十；再往上是夹板护臂与扎板臂铠，把铁片夹进皮里，护值二十二到二十四；最重的一档是链甲连指手套，链子包住整只手连指头，护值二十四。",
+     "refs": [
+      "armwraps",
+      "ragged_armwraps",
+      "guarded_armwraps",
+      "eastern_wrapped_armguards",
+      "leather_gloves",
+      "highland_gloves",
+      "battania_noble_bracers",
+      "woven_leather_bracers",
+      "strapped_leather_bracers",
+      "buttoned_leather_bracers",
+      "studded_leather_vambraces",
+      "reinforced_leather_vambraces",
+      "steppe_leather_vambraces",
+      "eastern_plated_leather_vambraces",
+      "lamellar_plate_gauntlets",
+      "plated_strip_gauntlets",
+      "khuzait_heavy_armor_bracer",
+      "northern_brass_bracers",
+      "decorated_imperial_gauntlets",
+      "battania_warlord_bracers",
+      "lordly_mail_mitten",
+      "reinforced_mail_mitten",
+      "mail_mitten"
+     ],
+     "exprs": [
+      {
+       "tag": "rumor",
+       "layer": "rumor",
+       "grants": "rumor",
+       "text": "左手小臂上那道疤，就是没戴护腕的时候留的。对面一矛捅过来，我拿左臂去架，矛头从骨头边上划过去。后来那副夹板护臂就没脱过手。"
+      },
+      {
+       "tag": "detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "臂铠分带不带指：带指的能护住手背，可射箭、拿筷子都不方便；不带指的是一块板绑在小臂上，干别的不用摘。数着重——链甲连指手套二十四，扎板臂铠二十三，最轻的缠布护腕只有三。"
+      }
+     ]
+    },
+    {
+     "text": "填充护手是另一路：拿纳缝的厚布做成连指手套或护臂，护值七到十八，比皮轻、比布厚，是弓手与辅兵最常配的一档。",
+     "refs": [
+      "padded_mitten",
+      "padded_vambrace",
+      "guarded_padded_vambrace",
+      "lordly_padded_mitten",
+      "reinforced_padded_mitten",
+      "rough_tied_bracers",
+      "roughtied_leather_bracers",
+      "studded_vambraces"
+     ],
+     "exprs": [
+      {
+       "tag": "padded-detail",
+       "layer": "detail",
+       "grants": "detail",
+       "text": "填充护手是给弓手预备的：拉弦的那只手要护住小臂——弦回弹刮一道，破皮就是三天拉不开弓。厚布纳缝，轻，不硌弦。辅兵也常配这个，便宜，脏了直接洗。"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

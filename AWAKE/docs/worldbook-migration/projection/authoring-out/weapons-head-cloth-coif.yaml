@@ -1,0 +1,391 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-head-cloth-coif
+title:
+  zh-CN: 布制围帽与头巾
+  en: Cloth Coifs and Head Wraps
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 布制围帽与头巾
+  - 围帽
+  - 头巾
+  - 布制围帽
+  - 缠裹包头巾
+  - 希贾布头巾
+  - 库菲耶头巾
+  - 朝圣风帽
+  - 布制风帽
+  - 头饰
+  en:
+  - Cloth Coif
+  - Head Wrap
+  - Headcloth
+  - Hijab
+  - Keffiyeh
+  - Cloth Hood
+  - Headwear
+summary:
+  zh-CN: 护头值只在一到九之间的布制头饰，挡不了刀锋，却挡得住日头、风沙与旁人的眼光——卡拉迪亚最普遍的一件东西，也是唯一一件人人都有、人人不同的东西。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#woven_turban
+  quote_hash: CC29FAF81DE38BCFF4695F45D9C29F77FFF0DBD2261169A083FA544279DC8714
+  quote: 编织头巾 | HeadArmor | 护头 6 | 重 0.8 | 材质 布 | 属 aserai | 遮发 全 | 遮须 型四 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#wrapped_headcloth
+  quote_hash: 100A4A3E35F6B19F3EA85A1841793715855FC1D780EF889F5809BD883773FC87
+  quote: 缠裹包头巾 | HeadArmor | 护头 5 | 重 0.2 | 材质 布 | 属 battania | 遮发 全 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#imperial_cloth_coif
+  quote_hash: BE87B0C2989D043A66933CCEDFBA5D9E3119EB29397F130D74F71261788167DC
+  quote: 布制围帽 | HeadArmor | 护头 2 | 重 0.2 | 材质 布 | 属 empire | 遮发 全 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#laced_cloth_coif
+  quote_hash: 5C7169CDC76C01D006F4697735967558E7DE1510EF210A9D99D16A92D81D8B77
+  quote: 系带布制围帽 | HeadArmor | 护头 6 | 重 0.4 | 材质 布 | 属 empire | 遮发 全 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#arming_coif
+  quote_hash: 4AB448E604932F5F0F91BD27F1947D6DBCE0DB9B086456C7C983E3C213F43C5D
+  quote: 皮制围帽 | HeadArmor | 护头 9 | 重 0.3 | 材质 布 | 属 vlandia | 遮发 型三 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#arming_cap
+  quote_hash: 025132B1D51DAA420A14EB9EEB332EED0A501BFED1C9FE2B2BABFAD139BD76CC
+  quote: 填充围帽 | HeadArmor | 护头 18 | 重 0.4 | 材质 布 | 属 vlandia | 遮发 全 | 遮须 型三 | 潜行 5
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#headscarf_d
+  quote_hash: A2DDB3C2156D4A38F13904CD70A3920B08E7A18DDED9AEF543DE7A53C197CCCD
+  quote: 希贾布头巾 | HeadArmor | 护头 3 | 重 0.5 | 材质 布 | 属 aserai | 遮发 全 | 遮须 型三 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#aserai_civil_c_head
+  quote_hash: BF36B4789ACC64D51A3260ED727728E7EB45B451A6B8B211E2A808E9D5C9C906
+  quote: 丝带库菲耶头巾 | HeadArmor | 护头 4 | 重 0.2 | 材质 布 | 属 aserai | 遮发 型二 | 认队色 | 分男女
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#pilgrim_hood
+  quote_hash: BD67C242E0CE373FF41A2362459CFEF51138105F341A09EFB5629C106B1D9957
+  quote: 朝圣风帽 | HeadArmor | 护头 3 | 重 0.2 | 材质 布 | 属 empire | 遮发 全 | 遮须 型三 | 潜行 10 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#battania_civil_hood
+  quote_hash: BE955D8B1B0359B38D96F5F5F8E482212A8445C82956BF91DEC33784A2BE1218
+  quote: 布制风帽 | HeadArmor | 护头 6 | 重 0.3 | 材质 布 | 属 battania | 遮发 型三 | 潜行 5 | 认队色
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-head-cloth-coif-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 布制围帽与头巾是卡拉迪亚最普遍的护头物，却几乎谈不上防护：护头值位于一到九之间，挡不住劈砍，用处是遮阳、挡沙、束住头发，兼作身份与风俗的标记。形制分南北两路——北方诸国用一圈厚布裹住头顶与耳根（布制围帽、皮制围帽、系带布制围帽），南方阿塞莱一带用宽幅布绕过颅顶、只留面部在外（编织头巾、希贾布头巾、丝带库菲耶头巾）；妇人的款式更宽更长，山民的包头巾则缠得极紧。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#woven_turban
+    quote_hash: CC29FAF81DE38BCFF4695F45D9C29F77FFF0DBD2261169A083FA544279DC8714
+    quote: 编织头巾 | HeadArmor | 护头 6 | 重 0.8 | 材质 布 | 属 aserai | 遮发 全 | 遮须 型四 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#wrapped_headcloth
+    quote_hash: 100A4A3E35F6B19F3EA85A1841793715855FC1D780EF889F5809BD883773FC87
+    quote: 缠裹包头巾 | HeadArmor | 护头 5 | 重 0.2 | 材质 布 | 属 battania | 遮发 全 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#imperial_cloth_coif
+    quote_hash: BE87B0C2989D043A66933CCEDFBA5D9E3119EB29397F130D74F71261788167DC
+    quote: 布制围帽 | HeadArmor | 护头 2 | 重 0.2 | 材质 布 | 属 empire | 遮发 全 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#laced_cloth_coif
+    quote_hash: 5C7169CDC76C01D006F4697735967558E7DE1510EF210A9D99D16A92D81D8B77
+    quote: 系带布制围帽 | HeadArmor | 护头 6 | 重 0.4 | 材质 布 | 属 empire | 遮发 全 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#arming_coif
+    quote_hash: 4AB448E604932F5F0F91BD27F1947D6DBCE0DB9B086456C7C983E3C213F43C5D
+    quote: 皮制围帽 | HeadArmor | 护头 9 | 重 0.3 | 材质 布 | 属 vlandia | 遮发 型三 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#arming_cap
+    quote_hash: 025132B1D51DAA420A14EB9EEB332EED0A501BFED1C9FE2B2BABFAD139BD76CC
+    quote: 填充围帽 | HeadArmor | 护头 18 | 重 0.4 | 材质 布 | 属 vlandia | 遮发 全 | 遮须 型三 | 潜行 5
+  expressions:
+  - id: expr.weapon-head-cloth-coif-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 一块布而已，能挡什么。可地里干活离不了它——太阳毒的时候把脖子后头也盖上，起风了往脸上一拉，沙子进不了眼。我们这儿的规矩是婚前裹得紧，婚后裹得松。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#woven_turban
+      quote_hash: CC29FAF81DE38BCFF4695F45D9C29F77FFF0DBD2261169A083FA544279DC8714
+      quote: 编织头巾 | HeadArmor | 护头 6 | 重 0.8 | 材质 布 | 属 aserai | 遮发 全 | 遮须 型四 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#wrapped_headcloth
+      quote_hash: 100A4A3E35F6B19F3EA85A1841793715855FC1D780EF889F5809BD883773FC87
+      quote: 缠裹包头巾 | HeadArmor | 护头 5 | 重 0.2 | 材质 布 | 属 battania | 遮发 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#imperial_cloth_coif
+      quote_hash: BE87B0C2989D043A66933CCEDFBA5D9E3119EB29397F130D74F71261788167DC
+      quote: 布制围帽 | HeadArmor | 护头 2 | 重 0.2 | 材质 布 | 属 empire | 遮发 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#laced_cloth_coif
+      quote_hash: 5C7169CDC76C01D006F4697735967558E7DE1510EF210A9D99D16A92D81D8B77
+      quote: 系带布制围帽 | HeadArmor | 护头 6 | 重 0.4 | 材质 布 | 属 empire | 遮发 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#arming_coif
+      quote_hash: 4AB448E604932F5F0F91BD27F1947D6DBCE0DB9B086456C7C983E3C213F43C5D
+      quote: 皮制围帽 | HeadArmor | 护头 9 | 重 0.3 | 材质 布 | 属 vlandia | 遮发 型三 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#arming_cap
+      quote_hash: 025132B1D51DAA420A14EB9EEB332EED0A501BFED1C9FE2B2BABFAD139BD76CC
+      quote: 填充围帽 | HeadArmor | 护头 18 | 重 0.4 | 材质 布 | 属 vlandia | 遮发 全 | 遮须 型三 | 潜行 5
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-head-cloth-coif-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 布制围帽与头巾按护头值一到九分档，重量多在零点二到零点八之间，材质一律为布；其中填充款例外——填充围帽以厚布纳缝，护头可到十八，是这块地上唯一能当轻甲使的布头饰。市上按布料的幅宽与染工论价，素色最贱，织入金线的专供节庆。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#woven_turban
+      quote_hash: CC29FAF81DE38BCFF4695F45D9C29F77FFF0DBD2261169A083FA544279DC8714
+      quote: 编织头巾 | HeadArmor | 护头 6 | 重 0.8 | 材质 布 | 属 aserai | 遮发 全 | 遮须 型四 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#wrapped_headcloth
+      quote_hash: 100A4A3E35F6B19F3EA85A1841793715855FC1D780EF889F5809BD883773FC87
+      quote: 缠裹包头巾 | HeadArmor | 护头 5 | 重 0.2 | 材质 布 | 属 battania | 遮发 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#imperial_cloth_coif
+      quote_hash: BE87B0C2989D043A66933CCEDFBA5D9E3119EB29397F130D74F71261788167DC
+      quote: 布制围帽 | HeadArmor | 护头 2 | 重 0.2 | 材质 布 | 属 empire | 遮发 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#laced_cloth_coif
+      quote_hash: 5C7169CDC76C01D006F4697735967558E7DE1510EF210A9D99D16A92D81D8B77
+      quote: 系带布制围帽 | HeadArmor | 护头 6 | 重 0.4 | 材质 布 | 属 empire | 遮发 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#arming_coif
+      quote_hash: 4AB448E604932F5F0F91BD27F1947D6DBCE0DB9B086456C7C983E3C213F43C5D
+      quote: 皮制围帽 | HeadArmor | 护头 9 | 重 0.3 | 材质 布 | 属 vlandia | 遮发 型三 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#arming_cap
+      quote_hash: 025132B1D51DAA420A14EB9EEB332EED0A501BFED1C9FE2B2BABFAD139BD76CC
+      quote: 填充围帽 | HeadArmor | 护头 18 | 重 0.4 | 材质 布 | 属 vlandia | 遮发 全 | 遮须 型三 | 潜行 5
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-head-cloth-coif-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 南方的头巾另有讲究：彩色希贾布头巾与希贾布头巾以宽幅布绕过颅顶数次、只留面部，风沙大的日子可以一整幅拉下来蒙住口鼻；丝带库菲耶头巾束得更严实。北方的朝圣风帽与布制风帽则留出肩颈，是行路人与僧侣的常服。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#headscarf_d
+    quote_hash: A2DDB3C2156D4A38F13904CD70A3920B08E7A18DDED9AEF543DE7A53C197CCCD
+    quote: 希贾布头巾 | HeadArmor | 护头 3 | 重 0.5 | 材质 布 | 属 aserai | 遮发 全 | 遮须 型三 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#aserai_civil_c_head
+    quote_hash: BF36B4789ACC64D51A3260ED727728E7EB45B451A6B8B211E2A808E9D5C9C906
+    quote: 丝带库菲耶头巾 | HeadArmor | 护头 4 | 重 0.2 | 材质 布 | 属 aserai | 遮发 型二 | 认队色 | 分男女
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#pilgrim_hood
+    quote_hash: BD67C242E0CE373FF41A2362459CFEF51138105F341A09EFB5629C106B1D9957
+    quote: 朝圣风帽 | HeadArmor | 护头 3 | 重 0.2 | 材质 布 | 属 empire | 遮发 全 | 遮须 型三 | 潜行 10 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#battania_civil_hood
+    quote_hash: BE955D8B1B0359B38D96F5F5F8E482212A8445C82956BF91DEC33784A2BE1218
+    quote: 布制风帽 | HeadArmor | 护头 6 | 重 0.3 | 材质 布 | 属 battania | 遮发 型三 | 潜行 5 | 认队色
+  expressions:
+  - id: expr.weapon-head-cloth-coif-aserai-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 出门不裹头，就跟没穿衣服一样。沙一起来，一整幅布往脸上一盖，只留两只眼睛；到了人跟前再放下来。我这条是出嫁那年织的，边上的彩线是娘家染的。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#headscarf_d
+      quote_hash: A2DDB3C2156D4A38F13904CD70A3920B08E7A18DDED9AEF543DE7A53C197CCCD
+      quote: 希贾布头巾 | HeadArmor | 护头 3 | 重 0.5 | 材质 布 | 属 aserai | 遮发 全 | 遮须 型三 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#aserai_civil_c_head
+      quote_hash: BF36B4789ACC64D51A3260ED727728E7EB45B451A6B8B211E2A808E9D5C9C906
+      quote: 丝带库菲耶头巾 | HeadArmor | 护头 4 | 重 0.2 | 材质 布 | 属 aserai | 遮发 型二 | 认队色 | 分男女
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#pilgrim_hood
+      quote_hash: BD67C242E0CE373FF41A2362459CFEF51138105F341A09EFB5629C106B1D9957
+      quote: 朝圣风帽 | HeadArmor | 护头 3 | 重 0.2 | 材质 布 | 属 empire | 遮发 全 | 遮须 型三 | 潜行 10 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#battania_civil_hood
+      quote_hash: BE955D8B1B0359B38D96F5F5F8E482212A8445C82956BF91DEC33784A2BE1218
+      quote: 布制风帽 | HeadArmor | 护头 6 | 重 0.3 | 材质 布 | 属 battania | 遮发 型三 | 潜行 5 | 认队色
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.aserai
+    denies: []
+  - id: expr.weapon-head-cloth-coif-pilgrim-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 朝圣风帽与布制风帽留出肩颈，属于行路人与僧侣的常服；两者护头值都只有二三，胜在透气耐洗。朝圣风帽的垂幅更长，走长途时盖住后颈防日晒，雨季又能临时遮头。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#headscarf_d
+      quote_hash: A2DDB3C2156D4A38F13904CD70A3920B08E7A18DDED9AEF543DE7A53C197CCCD
+      quote: 希贾布头巾 | HeadArmor | 护头 3 | 重 0.5 | 材质 布 | 属 aserai | 遮发 全 | 遮须 型三 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#aserai_civil_c_head
+      quote_hash: BF36B4789ACC64D51A3260ED727728E7EB45B451A6B8B211E2A808E9D5C9C906
+      quote: 丝带库菲耶头巾 | HeadArmor | 护头 4 | 重 0.2 | 材质 布 | 属 aserai | 遮发 型二 | 认队色 | 分男女
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#pilgrim_hood
+      quote_hash: BD67C242E0CE373FF41A2362459CFEF51138105F341A09EFB5629C106B1D9957
+      quote: 朝圣风帽 | HeadArmor | 护头 3 | 重 0.2 | 材质 布 | 属 empire | 遮发 全 | 遮须 型三 | 潜行 10 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#battania_civil_hood
+      quote_hash: BE955D8B1B0359B38D96F5F5F8E482212A8445C82956BF91DEC33784A2BE1218
+      quote: 布制风帽 | HeadArmor | 护头 6 | 重 0.3 | 材质 布 | 属 battania | 遮发 型三 | 潜行 5 | 认队色
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -359,9 +359,10 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
             if (text.IndexOf(pair.Key, StringComparison.OrdinalIgnoreCase) < 0 && pair.Key.IndexOf(text, StringComparison.OrdinalIgnoreCase) < 0) continue;
             foreach (string id in pair.Value) ids.Add(id);
         }
-        // 关键词层一无所获时，才走标题/综述 term 兜底通道。既有位次 0/1/2/3 的语义与排序**一个字不动**。
         if (ids.Count == 0) return FindFallbackCandidates(text);
-        return ids.Select(id => _snapshot.Entries.TryGetValue(id, out WorldKnowledgeEntry entry) ? entry : null)
+
+        List<WorldKnowledgeEntry> keywordLayer = ids
+                  .Select(id => _snapshot.Entries.TryGetValue(id, out WorldKnowledgeEntry entry) ? entry : null)
                   .Where(x => x != null)
                   .Select(x => (Entry: x, Quality: MatchQuality(x, text)))
                   .OrderBy(x => x.Quality.Rank)
@@ -369,6 +370,28 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
                   .ThenBy(x => x.Entry.Id, StringComparer.Ordinal)
                   .Select(x => x.Entry)
                   .ToList();
+
+        // 兜底通道**并列补齐**，而不是被关键词层关在门外（2026-09-18 修）。
+        //
+        // 旧写法是 `if (ids.Count == 0) return FindFallbackCandidates(text);` —— 只要句子里
+        // 出现任意一个被索引的词，兜底通道就整个不跑。后果不是"少几条"，是**候选集被压成一条**：
+        //   · `什么人拿大圆盾扔飞斧？`：加护甲形制卡之前 `hits=5`，正确条目 `war.troops-royal-guard`
+        //     在 top3 内（RETRIEVAL_GATE B 组命中）；加卡之后 `hits=1`，只剩新卡的 `圆盾`
+        //     —— 因为"大圆盾"成了那张卡的别名/关键词 ⇒ 关键词层命中 ⇒ 兜底通道被跳过。
+        //   · 同一个形态在头盔批已出现一次：`哪种头盔护到腮帮子和耳朵？` 5→1，只剩 `护颊盔`。
+        // 也就是说：**句子越长、越像人话，越容易因一个词碰巧撞上某条目而被独自接管**——
+        // 这与"用 AI 模拟真实对话"的初衷正好相反。本方法的注释早就写着两条通道"完全并列"，
+        // 代码却是"关键词层优先独占" ⇒ 这里把它改成字面意义上的并列。
+        //
+        // 排序不变：关键词层仍按 `MatchQuality` 的位次 0/1/2/3 排在前面，兜底候选只补在后面
+        // （按 id 去重）。**既有位次与排序一个字不动**，只是不再丢候选。
+        List<WorldKnowledgeEntry> layer = keywordLayer;
+        var seen = new HashSet<string>(layer.Select(x => x.Id), StringComparer.Ordinal);
+        foreach (WorldKnowledgeEntry entry in FindFallbackCandidates(text))
+        {
+            if (seen.Add(entry.Id)) layer.Add(entry);
+        }
+        return layer;
     }
 
     // 兜底通道（2026-09-16）：只读 `FallbackTermIndex`，与关键词路径**完全并列**。

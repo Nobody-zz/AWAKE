@@ -1,0 +1,61 @@
+C:\Program Files\dotnet\sdk\10.0.301\Microsoft.Common.CurrentVersion.targets(1891,5): warning NU1702: 已使用“.NETFramework,Version=v4.7.2”而不是项目目标框架“.NETCoreApp,Version=v10.0”解析 ProjectReference“D:\AWAKE-Dev\AWAKE\framework\MarcusAwakeFramework\MarcusAwakeFramework.csproj”。此项目可能与你的项目不完全兼容。 [D:\AWAKE-Dev\AWAKE\tools\worldbook-runtime-sim\WorldbookRuntimeSim.csproj]
+identity-gate: package=awake:worldbook.calradia entries=482 semantic=True
+=== 语义臂 ===
+[semantic] 世界书先到（host 未就位）⇒ HasSemanticIndex=False，问过 host 20 次
+[semantic] 会话就绪后重试 ⇒ HasSemanticIndex=True（条目 482 条）
+
+=== 阴性扫描：题集 24 条（不含只观察的）× 包内 12 个身份 ===
+  拉迈萨那地方养什么？                 villages-lamesa                  排除  1 个身份，泄漏 0
+  西米拉堡是谁的城堡？                 castles-simira-castle            排除  1 个身份，泄漏 0
+  乔诺巴斯在哪儿？                   villages-chornobas               排除  1 个身份，泄漏 0
+  富勒格是谁？                     tales-husn-fulq                  排除  2 个身份，泄漏 0
+  卡恰尔半岛归谁？                   tales-kachar-rulership           排除  8 个身份，泄漏 0
+  萨涅俄帕是什么地方？                 throne-saneopa                   排除  3 个身份，泄漏 0
+  斯特吉亚的军队怎么打仗？               military-sturgia                 排除  4 个身份，泄漏 0
+  库赛特靠什么打仗？                  military-khuzait                 排除  6 个身份，泄漏 0
+  皇家侍卫是什么兵？                  troops-royal-guard               排除  5 个身份，泄漏 0
+  毛皮值钱吗？                     goods-fur                        排除  1 个身份，泄漏 0
+  盐是从哪儿来的？                   goods-salt                       排除  1 个身份，泄漏 0
+  侧护覆板盔谁在用？                  items-western_plated_helmet      排除  1 个身份，泄漏 0
+  瓦尔切格怎么会换主人？                territories-varcheg-swap         排除  5 个身份，泄漏 0
+  有大瀑布的村子是哪个？                villages-chornobas               排除  1 个身份，泄漏 0
+  集市上说书人讲的那个鬼点子是谁的？          tales-husn-fulq                  排除  2 个身份，泄漏 0
+  有个半岛被三家抢过，谁说了算？            tales-kachar-rulership           排除  8 个身份，泄漏 0
+  山里有不让进的地方吗？                tales-dawn-taboo                 排除  7 个身份，泄漏 0
+  隘口上那个商埠，哪个家族在那儿定过都？        throne-saneopa                   排除  3 个身份，泄漏 0
+  什么人拿大圆盾扔飞斧？                troops-royal-guard               排除  5 个身份，泄漏 0
+  游牧的人怎么用骑马射手打仗？             military-khuzait                 排除  6 个身份，泄漏 0
+  盾墙加飞斧是哪个国家的打法？             military-sturgia                 排除  4 个身份，泄漏 0
+  北方有什么又暖又贵的皮货？              goods-fur                        排除  1 个身份，泄漏 0
+  桌上少不了、产地又集中的日用品是什么？        goods-salt                       排除  1 个身份，泄漏 0
+  哪种头盔护到腮帮子和耳朵？              items-western_plated_helmet      排除  1 个身份，泄漏 0
+
+=== 点名题：他不该知道（5 条，每条都带阳性对照）===
+  [OK] 毛皮值钱吗？   → goods-fur
+      阳性对照 awake:identity:noble           拿到=True 该细档真能出现=True state=partial
+      受限一方 awake:identity:commoner        应可见=True 可见性符合=True 漏细档=False 糙版本到位=True state=partial
+  [OK] 盐是从哪儿来的？   → goods-salt
+      阳性对照 awake:identity:noble           拿到=True 该细档真能出现=True state=partial
+      受限一方 awake:identity:commoner        应可见=True 可见性符合=True 漏细档=False 糙版本到位=True state=partial
+  [OK] 戴·科尔坦家靠什么发财？   → clans-charas-cortain-secret
+      阳性对照 awake:identity:noble           拿到=True 该细档真能出现=True state=known
+      受限一方 awake:identity:commoner        应可见=False 可见性符合=True 漏细档=False state=partial
+  [OK] 戴·科尔坦家靠什么发财？   → clans-charas-cortain-secret
+      阳性对照 awake:identity:noble           拿到=True 该细档真能出现=True state=known
+      受限一方 awake:identity:merchant        应可见=True 可见性符合=True 漏细档=False 糙版本到位=True state=partial
+  [OK] 林·莫德里斯是什么湖？   → lakes-llyn-modris
+      阳性对照 awake:identity:villager        拿到=True 该细档真能出现=True state=partial
+      受限一方 awake:identity:commoner        应可见=False 可见性符合=True 漏细档=False state=partial
+
+扫描：被排除行 78（泄漏 0）；该知道行 210（真拿到 194）；点名题失败 0
+⚠️ 该知道却没拿到 16 行（只报不判，待分诊：召回 or 能力）——前 8 行：
+    山里有不让进的地方吗？ × awake:identity:headman  state=partial
+    山里有不让进的地方吗？ × awake:identity:noble  state=partial
+    山里有不让进的地方吗？ × awake:identity:noble_high_steward  state=partial
+    山里有不让进的地方吗？ × awake:identity:notable  state=partial
+    山里有不让进的地方吗？ × awake:identity:villager  state=partial
+    哪种头盔护到腮帮子和耳朵？ × awake:identity:commoner  state=partial
+    哪种头盔护到腮帮子和耳朵？ × awake:identity:headman  state=partial
+    哪种头盔护到腮帮子和耳朵？ × awake:identity:merchant  state=partial
+IDENTITY_GATE PASS need leaks=0 deniedFail=0 且非空转（deniedRows>0 且 shouldKnowHit>0）
+报告已导出: C:\Users\26811\AppData\Local\Temp\awake-sim-identity-gate.json

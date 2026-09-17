@@ -1,0 +1,312 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-head-nasal
+title:
+  zh-CN: 护鼻盔
+  en: Nasal Helmet
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 护鼻盔
+  - 护鼻钢帽
+  - 军团盔
+  - 鼻护盔
+  - 重型鼻护盔
+  - 链甲护鼻盔
+  - 阔顶盔
+  en:
+  - Nasal Helmet
+  - Nasalhelm
+  - Legionary Helm
+  - Spangenhelm
+summary:
+  zh-CN: 顶上垂一根铁条到鼻梁——砍向面门的刀先撞上它。圆顶、后沿遮颈，帝国的正统形制；斯特吉亚把它做厚，并惯于在底下垫皮革、填充帽或链甲。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#imperial_nasal_helm
+  quote_hash: D1C3C2E80B7BC1CDA18926F830159EAAB2024072A09019D4980FE18B8DA4FC54
+  quote: 军团盔 | HeadArmor | 护头 36 | 重 3.2 | 材质 板 | 属 empire | 遮发 全 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#sturgian_helmet_base
+  quote_hash: 6824DC05AA245B027B7CDA5917078E9D210D6851592B5BD0E9C42F66A3E1608D
+  quote: 护鼻钢帽 | HeadArmor | 护头 35 | 重 2.4 | 材质 板 | 属 sturgia | 遮发 型三 | 遮须 不遮
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#heavy_nasalhelm_over_imperial_leather
+  quote_hash: 00D22B8C486AAFC22E049A106BC2D4D49F40E0984C4075B72A4BD484C71700EF
+  quote: 重型鼻护盔衬皮革 | HeadArmor | 护头 48 | 重 3.4 | 材质 板 | 属 empire | 遮发 全 | 遮须 不遮 | 认队色 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#heavy_nasalhelm_over_imperial_padding
+  quote_hash: 4CD6AFC6C53DD3E0B3CB6798C49224F45032E3698646F6049C46234ED71B1E56
+  quote: 重型鼻护盔衬填充帽 | HeadArmor | 护头 48 | 重 3 | 材质 板 | 属 empire | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#heavy_nasalhelm_over_imperial_mail
+  quote_hash: C2FBCCB846212A7BC100E2EC9C8F84F4B18A527B5A481903A25FA8350751BB12
+  quote: 重型鼻护盔衬链甲 | HeadArmor | 护头 51 | 重 3.6 | 材质 板 | 属 empire | 遮发 全 | 认队色 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#sturgian_helmet_open
+  quote_hash: 628E81E8395107CDB623166575B007DD5F5E83308FC56F2231A20F86CE13907D
+  quote: 链甲护鼻盔 | HeadArmor | 护头 49 | 重 3.15 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 型二
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-head-nasal-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 护鼻盔的本体是一顶圆顶或微尖的帽壳，后沿向下包住颈项，正面垂一根铁条压到鼻梁——砍向面门的刀会先撞上这根铁条。护头值从十八一路做到五十一，取决于壳厚与垫层。帝国的军团盔是这一路的正统：壳薄、铁条细、重量轻，配给军团步卒；斯特吉亚的护鼻钢帽壳更厚，还惯于在底下垫皮革、填充帽或链甲。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#imperial_nasal_helm
+    quote_hash: D1C3C2E80B7BC1CDA18926F830159EAAB2024072A09019D4980FE18B8DA4FC54
+    quote: 军团盔 | HeadArmor | 护头 36 | 重 3.2 | 材质 板 | 属 empire | 遮发 全 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#sturgian_helmet_base
+    quote_hash: 6824DC05AA245B027B7CDA5917078E9D210D6851592B5BD0E9C42F66A3E1608D
+    quote: 护鼻钢帽 | HeadArmor | 护头 35 | 重 2.4 | 材质 板 | 属 sturgia | 遮发 型三 | 遮须 不遮
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#heavy_nasalhelm_over_imperial_leather
+    quote_hash: 00D22B8C486AAFC22E049A106BC2D4D49F40E0984C4075B72A4BD484C71700EF
+    quote: 重型鼻护盔衬皮革 | HeadArmor | 护头 48 | 重 3.4 | 材质 板 | 属 empire | 遮发 全 | 遮须 不遮 | 认队色 | 叠穿
+  expressions:
+  - id: expr.weapon-head-nasal-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 鼻梁上那道铁条看着碍事，真挨过一刀的人才知道好。对面从上头劈下来，铁条一挡，刀就偏到腮上去了；要是没这道条子，那一下就落在门牙上。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#imperial_nasal_helm
+      quote_hash: D1C3C2E80B7BC1CDA18926F830159EAAB2024072A09019D4980FE18B8DA4FC54
+      quote: 军团盔 | HeadArmor | 护头 36 | 重 3.2 | 材质 板 | 属 empire | 遮发 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#sturgian_helmet_base
+      quote_hash: 6824DC05AA245B027B7CDA5917078E9D210D6851592B5BD0E9C42F66A3E1608D
+      quote: 护鼻钢帽 | HeadArmor | 护头 35 | 重 2.4 | 材质 板 | 属 sturgia | 遮发 型三 | 遮须 不遮
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#heavy_nasalhelm_over_imperial_leather
+      quote_hash: 00D22B8C486AAFC22E049A106BC2D4D49F40E0984C4075B72A4BD484C71700EF
+      quote: 重型鼻护盔衬皮革 | HeadArmor | 护头 48 | 重 3.4 | 材质 板 | 属 empire | 遮发 全 | 遮须 不遮 | 认队色 | 叠穿
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-head-nasal-empire-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 军团盔是帝国军械的定式：圆顶、后沿遮颈、前额一根铁条，护头三十六，重量不到两公斤，步卒列阵时整队都戴它。它不是最厚的，胜在制式统一——同一套模具打出来的壳子，坏了换一顶就是，不必量身改。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#imperial_nasal_helm
+      quote_hash: D1C3C2E80B7BC1CDA18926F830159EAAB2024072A09019D4980FE18B8DA4FC54
+      quote: 军团盔 | HeadArmor | 护头 36 | 重 3.2 | 材质 板 | 属 empire | 遮发 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#sturgian_helmet_base
+      quote_hash: 6824DC05AA245B027B7CDA5917078E9D210D6851592B5BD0E9C42F66A3E1608D
+      quote: 护鼻钢帽 | HeadArmor | 护头 35 | 重 2.4 | 材质 板 | 属 sturgia | 遮发 型三 | 遮须 不遮
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#heavy_nasalhelm_over_imperial_leather
+      quote_hash: 00D22B8C486AAFC22E049A106BC2D4D49F40E0984C4075B72A4BD484C71700EF
+      quote: 重型鼻护盔衬皮革 | HeadArmor | 护头 48 | 重 3.4 | 材质 板 | 属 empire | 遮发 全 | 遮须 不遮 | 认队色 | 叠穿
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+  - id: expr.weapon-head-nasal-sturgia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 斯特吉亚的做法是把这一路加厚再往下垫。护鼻钢帽护头三十五；重型鼻护盔外面再裹一层，垫皮革与垫填充帽都是四十八，垫链甲则到五十一。同一顶壳子靠垫层分出三档价钱，这是北地铁匠的看家本事。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#imperial_nasal_helm
+      quote_hash: D1C3C2E80B7BC1CDA18926F830159EAAB2024072A09019D4980FE18B8DA4FC54
+      quote: 军团盔 | HeadArmor | 护头 36 | 重 3.2 | 材质 板 | 属 empire | 遮发 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#sturgian_helmet_base
+      quote_hash: 6824DC05AA245B027B7CDA5917078E9D210D6851592B5BD0E9C42F66A3E1608D
+      quote: 护鼻钢帽 | HeadArmor | 护头 35 | 重 2.4 | 材质 板 | 属 sturgia | 遮发 型三 | 遮须 不遮
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#heavy_nasalhelm_over_imperial_leather
+      quote_hash: 00D22B8C486AAFC22E049A106BC2D4D49F40E0984C4075B72A4BD484C71700EF
+      quote: 重型鼻护盔衬皮革 | HeadArmor | 护头 48 | 重 3.4 | 材质 板 | 属 empire | 遮发 全 | 遮须 不遮 | 认队色 | 叠穿
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []
+- id: assertion.weapon-head-nasal-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 护鼻盔与叠穿的关系最紧：同一款帽壳，单戴是护头十八到三十几，垫上皮革或填充帽升到四十八，垫链甲到五十一。链甲护鼻盔一类更是把两者缝成一件，护头做到四十九。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#heavy_nasalhelm_over_imperial_padding
+    quote_hash: 4CD6AFC6C53DD3E0B3CB6798C49224F45032E3698646F6049C46234ED71B1E56
+    quote: 重型鼻护盔衬填充帽 | HeadArmor | 护头 48 | 重 3 | 材质 板 | 属 empire | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#heavy_nasalhelm_over_imperial_mail
+    quote_hash: C2FBCCB846212A7BC100E2EC9C8F84F4B18A527B5A481903A25FA8350751BB12
+    quote: 重型鼻护盔衬链甲 | HeadArmor | 护头 51 | 重 3.6 | 材质 板 | 属 empire | 遮发 全 | 认队色 | 叠穿
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#sturgian_helmet_open
+    quote_hash: 628E81E8395107CDB623166575B007DD5F5E83308FC56F2231A20F86CE13907D
+    quote: 链甲护鼻盔 | HeadArmor | 护头 49 | 重 3.15 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 型二
+  expressions:
+  - id: expr.weapon-head-nasal-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 买护鼻盔的人先问壳子有多厚，行家先问底下垫不垫。单戴的轻型款式护头不到二十五，垫满的一件能过五十——差的那二十几点全在垫层上。市上因此常拆开卖：壳子归壳子，围帽与链甲另算。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#heavy_nasalhelm_over_imperial_padding
+      quote_hash: 4CD6AFC6C53DD3E0B3CB6798C49224F45032E3698646F6049C46234ED71B1E56
+      quote: 重型鼻护盔衬填充帽 | HeadArmor | 护头 48 | 重 3 | 材质 板 | 属 empire | 遮发 全 | 遮须 型三 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#heavy_nasalhelm_over_imperial_mail
+      quote_hash: C2FBCCB846212A7BC100E2EC9C8F84F4B18A527B5A481903A25FA8350751BB12
+      quote: 重型鼻护盔衬链甲 | HeadArmor | 护头 51 | 重 3.6 | 材质 板 | 属 empire | 遮发 全 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#sturgian_helmet_open
+      quote_hash: 628E81E8395107CDB623166575B007DD5F5E83308FC56F2231A20F86CE13907D
+      quote: 链甲护鼻盔 | HeadArmor | 护头 49 | 重 3.15 | 材质 板 | 属 sturgia | 遮发 全 | 遮须 型二
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

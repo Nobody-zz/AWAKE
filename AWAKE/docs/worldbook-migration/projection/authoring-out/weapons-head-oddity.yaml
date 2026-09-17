@@ -1,0 +1,316 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-head-oddity
+title:
+  zh-CN: 兽首与面具盔
+  en: Beast Heads and Masked Helmets
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 兽首盔
+  - 狼首
+  - 熊首
+  - 兽首与面具盔
+  - 面具尖刺盔
+  - 尖刺盔
+  - 粗鳞盔
+  en:
+  - Beast Head Helmet
+  - Wolf Head
+  - Bear Head
+  - Facemask Helmet
+  - Spiked Helmet
+  - Roughscale Helmet
+summary:
+  zh-CN: 整只兽头套在脑袋上，或者盔顶钉尖刺、面门挂面具——说不上是盔，但撞见它的人先怕的正是那副模样。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#wolfhead
+  quote_hash: 41C8C56713FA70C4B55ED8D9874AEE9E5C61CDF400754DDC1850BF273EB7808E
+  quote: 狼首 | HeadArmor | 护头 16 | 重 1.3 | 材质 皮 | 属 battania | 遮发 全 | 潜行 10
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#bearhead
+  quote_hash: BB471803555F380933DECB6FF6A421F76C6FE8CBCC21537E78ED9DF79E00FE33
+  quote: 熊首 | HeadArmor | 护头 24 | 重 1.4 | 材质 皮 | 属 battania | 遮发 全
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#spiked_helmet
+  quote_hash: 69F5E63E2B053547C06C434F48DF987F4EBE75175AC551F708917F4347A63FB5
+  quote: 尖刺盔 | HeadArmor | 护头 48 | 重 3.5 | 材质 板 | 属 khuzait | 遮发 全 | 遮须 型二 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#spiked_helmet_with_facemask
+  quote_hash: A8317B787C3E8DCD2A6F04076F349C499708A8FDD2F6CADA7BF7D9709B26CA0B
+  quote: 面具尖刺盔 | HeadArmor | 护头 51 | 重 4.5 | 材质 板 | 属 khuzait | 遮发 全 | 遮须 全 | 认队色
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#spiked_kettle_over_imperial_mail
+  quote_hash: 2411F6C13FF26D65D5A9759D1833B3E7511123650D9C8C9CC304574F03E2CA16
+  quote: 尖刺锅盔衬链甲 | HeadArmor | 护头 27 | 重 3.1 | 材质 板 | 属 empire | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+- source_id: source.calradia.game.items-head
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+  locator: bannerlord.items.xml#roughscale_helmet
+  quote_hash: 9FF9A0C80AA41FA2CF2BE41FD9543229E461021A479FFCB72C3AE519EC564596
+  quote: 粗鳞盔 | HeadArmor | 护头 26 | 重 2.2 | 材质 板 | 属 battania | 遮发 全
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-head-oddity-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 卡拉迪亚有几件说不上是「盔」的护头物。北方有整只兽头做成的头帽——狼首与熊首，套在头上只从兽口处露出脸，护头十六到二十四；它挡刀有限，真正的用处是那副模样本身：对面的人在交手之前就得先看清这是不是个人。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#wolfhead
+    quote_hash: 41C8C56713FA70C4B55ED8D9874AEE9E5C61CDF400754DDC1850BF273EB7808E
+    quote: 狼首 | HeadArmor | 护头 16 | 重 1.3 | 材质 皮 | 属 battania | 遮发 全 | 潜行 10
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#bearhead
+    quote_hash: BB471803555F380933DECB6FF6A421F76C6FE8CBCC21537E78ED9DF79E00FE33
+    quote: 熊首 | HeadArmor | 护头 24 | 重 1.4 | 材质 皮 | 属 battania | 遮发 全
+  expressions:
+  - id: expr.weapon-head-oddity-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 林子里碰见过一个套着熊脑袋的。我一开始以为是头畜生站起来——等看清是个人，手里的矛都抖了一下。他就等那一下。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#wolfhead
+      quote_hash: 41C8C56713FA70C4B55ED8D9874AEE9E5C61CDF400754DDC1850BF273EB7808E
+      quote: 狼首 | HeadArmor | 护头 16 | 重 1.3 | 材质 皮 | 属 battania | 遮发 全 | 潜行 10
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#bearhead
+      quote_hash: BB471803555F380933DECB6FF6A421F76C6FE8CBCC21537E78ED9DF79E00FE33
+      quote: 熊首 | HeadArmor | 护头 24 | 重 1.4 | 材质 皮 | 属 battania | 遮发 全
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-head-oddity-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 兽首头帽以整张兽皮连头骨做壳，狼首护头十六、熊首护头二十四，重量都不轻——壳厚在口鼻处最要功夫，得留出视孔又不能让它塌。会做这个的皮匠不多，多半是猎户自家传的。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#wolfhead
+      quote_hash: 41C8C56713FA70C4B55ED8D9874AEE9E5C61CDF400754DDC1850BF273EB7808E
+      quote: 狼首 | HeadArmor | 护头 16 | 重 1.3 | 材质 皮 | 属 battania | 遮发 全 | 潜行 10
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#bearhead
+      quote_hash: BB471803555F380933DECB6FF6A421F76C6FE8CBCC21537E78ED9DF79E00FE33
+      quote: 熊首 | HeadArmor | 护头 24 | 重 1.4 | 材质 皮 | 属 battania | 遮发 全
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-head-oddity-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 另一路是在盔顶钉尖刺、在面门上挂面具：尖刺盔护头四十八、面具尖刺盔护头五十一、尖刺锅盔衬链甲护头二十七。冲阵时先惊马，近身时刺棱能挡开斜劈。粗鳞盔则属另一类怪工——以铁鳞拼成壳，护头二十六，是巴旦尼亚山地的粗作。
+  sources:
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#spiked_helmet
+    quote_hash: 69F5E63E2B053547C06C434F48DF987F4EBE75175AC551F708917F4347A63FB5
+    quote: 尖刺盔 | HeadArmor | 护头 48 | 重 3.5 | 材质 板 | 属 khuzait | 遮发 全 | 遮须 型二 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#spiked_helmet_with_facemask
+    quote_hash: A8317B787C3E8DCD2A6F04076F349C499708A8FDD2F6CADA7BF7D9709B26CA0B
+    quote: 面具尖刺盔 | HeadArmor | 护头 51 | 重 4.5 | 材质 板 | 属 khuzait | 遮发 全 | 遮须 全 | 认队色
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#spiked_kettle_over_imperial_mail
+    quote_hash: 2411F6C13FF26D65D5A9759D1833B3E7511123650D9C8C9CC304574F03E2CA16
+    quote: 尖刺锅盔衬链甲 | HeadArmor | 护头 27 | 重 3.1 | 材质 板 | 属 empire | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+  - source_id: source.calradia.game.items-head
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+    locator: bannerlord.items.xml#roughscale_helmet
+    quote_hash: 9FF9A0C80AA41FA2CF2BE41FD9543229E461021A479FFCB72C3AE519EC564596
+    quote: 粗鳞盔 | HeadArmor | 护头 26 | 重 2.2 | 材质 板 | 属 battania | 遮发 全
+  expressions:
+  - id: expr.weapon-head-oddity-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 顶上几个尖刺，远远看着像头上长了角。马先受惊，人也得先掂量一下那几根铁会不会戳进自己眼睛里。打起来未必占便宜，站那儿吓人是真的。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#spiked_helmet
+      quote_hash: 69F5E63E2B053547C06C434F48DF987F4EBE75175AC551F708917F4347A63FB5
+      quote: 尖刺盔 | HeadArmor | 护头 48 | 重 3.5 | 材质 板 | 属 khuzait | 遮发 全 | 遮须 型二 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#spiked_helmet_with_facemask
+      quote_hash: A8317B787C3E8DCD2A6F04076F349C499708A8FDD2F6CADA7BF7D9709B26CA0B
+      quote: 面具尖刺盔 | HeadArmor | 护头 51 | 重 4.5 | 材质 板 | 属 khuzait | 遮发 全 | 遮须 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#spiked_kettle_over_imperial_mail
+      quote_hash: 2411F6C13FF26D65D5A9759D1833B3E7511123650D9C8C9CC304574F03E2CA16
+      quote: 尖刺锅盔衬链甲 | HeadArmor | 护头 27 | 重 3.1 | 材质 板 | 属 empire | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#roughscale_helmet
+      quote_hash: 9FF9A0C80AA41FA2CF2BE41FD9543229E461021A479FFCB72C3AE519EC564596
+      quote: 粗鳞盔 | HeadArmor | 护头 26 | 重 2.2 | 材质 板 | 属 battania | 遮发 全
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-head-oddity-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 尖刺款的做法是把三到五根铁锥焊在壳顶，面门上再挂一片铁面具，护头因此比同厚度的素壳高出一截——面具尖刺盔到五十一。粗鳞盔走的是粗工一路，铁鳞一片片叠上去，护头二十六，胜在好修：掉一片补一片，不必整顶重打。
+    sources:
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#spiked_helmet
+      quote_hash: 69F5E63E2B053547C06C434F48DF987F4EBE75175AC551F708917F4347A63FB5
+      quote: 尖刺盔 | HeadArmor | 护头 48 | 重 3.5 | 材质 板 | 属 khuzait | 遮发 全 | 遮须 型二 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#spiked_helmet_with_facemask
+      quote_hash: A8317B787C3E8DCD2A6F04076F349C499708A8FDD2F6CADA7BF7D9709B26CA0B
+      quote: 面具尖刺盔 | HeadArmor | 护头 51 | 重 4.5 | 材质 板 | 属 khuzait | 遮发 全 | 遮须 全 | 认队色
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#spiked_kettle_over_imperial_mail
+      quote_hash: 2411F6C13FF26D65D5A9759D1833B3E7511123650D9C8C9CC304574F03E2CA16
+      quote: 尖刺锅盔衬链甲 | HeadArmor | 护头 27 | 重 3.1 | 材质 板 | 属 empire | 遮发 全 | 遮须 型二 | 认队色 | 叠穿
+    - source_id: source.calradia.game.items-head
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 45887F4A4963E921A9C498B871009749C5B0BD65E1FE8D7B3885E660FDDE0A7F
+      locator: bannerlord.items.xml#roughscale_helmet
+      quote_hash: 9FF9A0C80AA41FA2CF2BE41FD9543229E461021A479FFCB72C3AE519EC564596
+      quote: 粗鳞盔 | HeadArmor | 护头 26 | 重 2.2 | 材质 板 | 属 battania | 遮发 全
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

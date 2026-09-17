@@ -1,0 +1,456 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-torso-lamellar
+title:
+  zh-CN: 札甲
+  en: Lamellar Armor
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 札甲
+  - 扎甲
+  - 骑兵扎甲
+  - 具装骑兵扎甲
+  - 扎甲配鳞甲裙
+  - 铜扎甲
+  - 重型扎甲
+  - 枪骑兵扎甲
+  en:
+  - Lamellar Armor
+  - Lamellar Coat
+  - Lamellar with Scale Skirt
+summary:
+  zh-CN: 一片片铁札用皮绳穿起来——护值二十四到五十二。能修能补，是草原与北地的重甲。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#desert_lamellar
+  quote_hash: A40B46E1EA1E9944BDDC1A0FA4541EB9DDDA9654D717CC9E3B086B3E127B2D84
+  quote: 轻型扎甲 | 躯干 | 护 48 | 重 16.5 | 材质 板 | 属 aserai | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#imperial_lamellar
+  quote_hash: 3E3F76D8D17BDAE113FC61FFD24F6E08005AB56B77B09810C9FDF7F929E746CB
+  quote: 具装骑兵扎甲 | 躯干 | 护 48 | 重 22.1 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sturgia_cavalry_armor
+  quote_hash: DDEAEF4C8980D259D2858424769E7EEDB496EF1631B8153FCF6AA74D359E7AFF
+  quote: 骑兵扎甲 | 躯干 | 护 46 | 重 18 | 材质 板 | 属 aserai | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sturgian_lamellar_base
+  quote_hash: 2412834C4EF4E3E3904DE03396CDB43DEDF0C0200E525B3945E370A23AEEC92D
+  quote: 重型扎甲衬链甲 | 躯干 | 护 50 | 重 24 | 材质 板 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#lamellar_with_scale_skirt
+  quote_hash: AEC97AB6E61A7BA5009968E0C00D269D51F78389C381944A4ADCC507AEF7C16F
+  quote: 扎甲配鳞甲裙 | 躯干 | 护 52 | 重 24.10 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#eastern_lamellar_armor
+  quote_hash: FC33218B99ED8EA8E2DD9D32FF308EA4BFF6EA4D15828A69463E4523F7043210
+  quote: 枪骑兵扎甲 | 躯干 | 护 39 | 重 13 | 材质 板 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#nordic_lamellar_armor
+  quote_hash: 017D5DA67A6200967890D4A611C283468CD98A98779F93A4BC4DEA2BEEF47B48
+  quote: 铜鳞背心衬软甲 | 躯干 | 护 28 | 重 15 | 材质 板 | 属 sturgia | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#northern_brass_lamellar_over_mail
+  quote_hash: 3073E2F3DA3C8E8CAC0397922DDA3497DD4FFACF77AB1EFC1A362B7A09602FFA
+  quote: 重型扎甲衬链甲 | 躯干 | 护 51 | 重 23.6 | 材质 板 | 属 sturgia | 叠穿
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#brass_lamellar_over_mail
+  quote_hash: A8D59CF669437666FFAFD6E04D78CA64AE28CDE94A2C2E0A003E9846FB60D4BD
+  quote: 铜扎甲衬链甲 | 躯干 | 护 46 | 重 22 | 材质 链甲 | 属 khuzait | 叠穿
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#southern_lamellar_armor
+  quote_hash: F0F47DB7E2EFD3EEAA60E2ABF860ACB6B5E73739C62E5301690AEF6924CB010D
+  quote: 铜扎甲背心衬软甲 | 躯干 | 护 37 | 重 9.5 | 材质 板 | 属 aserai | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sturgian_lamellar_gambeson_heavy
+  quote_hash: 3E41828B8E7C186C10AC3CE4BC29A980CE8019AEF906E42A7546F683075BD4E1
+  quote: 重型扎甲背心 | 躯干 | 护 35 | 重 8.3 | 材质 板 | 属 sturgia | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#khuzait_lamellar_strapped
+  quote_hash: 31072C024ACABCFFEF9324A7EC6F46A83BA09FBD45A7CBCF969C2EC54658AD4A
+  quote: 强化皮甲 | 躯干 | 护 24 | 重 11.1 | 材质 板 | 属 khuzait
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-torso-lamellar-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 札甲把长方形铁片一片压一片，用皮绳穿在底衬上，护值二十四到五十二。它比锁甲省铁、比板甲好修——断一根绳只散几片，自己重穿就是。轻型扎甲护值四十八，具装骑兵扎甲同为四十八，骑兵扎甲四十六，帝国与南方的扎甲配鳞甲裙做到五十二。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#desert_lamellar
+    quote_hash: A40B46E1EA1E9944BDDC1A0FA4541EB9DDDA9654D717CC9E3B086B3E127B2D84
+    quote: 轻型扎甲 | 躯干 | 护 48 | 重 16.5 | 材质 板 | 属 aserai | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#imperial_lamellar
+    quote_hash: 3E3F76D8D17BDAE113FC61FFD24F6E08005AB56B77B09810C9FDF7F929E746CB
+    quote: 具装骑兵扎甲 | 躯干 | 护 48 | 重 22.1 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sturgia_cavalry_armor
+    quote_hash: DDEAEF4C8980D259D2858424769E7EEDB496EF1631B8153FCF6AA74D359E7AFF
+    quote: 骑兵扎甲 | 躯干 | 护 46 | 重 18 | 材质 板 | 属 aserai | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sturgian_lamellar_base
+    quote_hash: 2412834C4EF4E3E3904DE03396CDB43DEDF0C0200E525B3945E370A23AEEC92D
+    quote: 重型扎甲衬链甲 | 躯干 | 护 50 | 重 24 | 材质 板 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#lamellar_with_scale_skirt
+    quote_hash: AEC97AB6E61A7BA5009968E0C00D269D51F78389C381944A4ADCC507AEF7C16F
+    quote: 扎甲配鳞甲裙 | 躯干 | 护 52 | 重 24.10 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#eastern_lamellar_armor
+    quote_hash: FC33218B99ED8EA8E2DD9D32FF308EA4BFF6EA4D15828A69463E4523F7043210
+    quote: 枪骑兵扎甲 | 躯干 | 护 39 | 重 13 | 材质 板 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#nordic_lamellar_armor
+    quote_hash: 017D5DA67A6200967890D4A611C283468CD98A98779F93A4BC4DEA2BEEF47B48
+    quote: 铜鳞背心衬软甲 | 躯干 | 护 28 | 重 15 | 材质 板 | 属 sturgia | 分男女
+  expressions:
+  - id: expr.weapon-armor-torso-lamellar-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 扎甲好养活。断了绳，自己拿皮条重穿一遍就行，不用找铁匠。我那件穿了十年，铁片换过一半，底衬还是原来那块。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#desert_lamellar
+      quote_hash: A40B46E1EA1E9944BDDC1A0FA4541EB9DDDA9654D717CC9E3B086B3E127B2D84
+      quote: 轻型扎甲 | 躯干 | 护 48 | 重 16.5 | 材质 板 | 属 aserai | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#imperial_lamellar
+      quote_hash: 3E3F76D8D17BDAE113FC61FFD24F6E08005AB56B77B09810C9FDF7F929E746CB
+      quote: 具装骑兵扎甲 | 躯干 | 护 48 | 重 22.1 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_cavalry_armor
+      quote_hash: DDEAEF4C8980D259D2858424769E7EEDB496EF1631B8153FCF6AA74D359E7AFF
+      quote: 骑兵扎甲 | 躯干 | 护 46 | 重 18 | 材质 板 | 属 aserai | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgian_lamellar_base
+      quote_hash: 2412834C4EF4E3E3904DE03396CDB43DEDF0C0200E525B3945E370A23AEEC92D
+      quote: 重型扎甲衬链甲 | 躯干 | 护 50 | 重 24 | 材质 板 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#lamellar_with_scale_skirt
+      quote_hash: AEC97AB6E61A7BA5009968E0C00D269D51F78389C381944A4ADCC507AEF7C16F
+      quote: 扎甲配鳞甲裙 | 躯干 | 护 52 | 重 24.10 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_lamellar_armor
+      quote_hash: FC33218B99ED8EA8E2DD9D32FF308EA4BFF6EA4D15828A69463E4523F7043210
+      quote: 枪骑兵扎甲 | 躯干 | 护 39 | 重 13 | 材质 板 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#nordic_lamellar_armor
+      quote_hash: 017D5DA67A6200967890D4A611C283468CD98A98779F93A4BC4DEA2BEEF47B48
+      quote: 铜鳞背心衬软甲 | 躯干 | 护 28 | 重 15 | 材质 板 | 属 sturgia | 分男女
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-torso-lamellar-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 札甲按铁片的大小与层数分档。片小、层多、穿得密，护值就高：铜扎甲衬链甲四十六，重型扎甲衬链甲五十一。它还特别适合往上加东西——底下垫链甲、腰上挂鳞甲裙、肩上再加护肩，都能续。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#desert_lamellar
+      quote_hash: A40B46E1EA1E9944BDDC1A0FA4541EB9DDDA9654D717CC9E3B086B3E127B2D84
+      quote: 轻型扎甲 | 躯干 | 护 48 | 重 16.5 | 材质 板 | 属 aserai | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#imperial_lamellar
+      quote_hash: 3E3F76D8D17BDAE113FC61FFD24F6E08005AB56B77B09810C9FDF7F929E746CB
+      quote: 具装骑兵扎甲 | 躯干 | 护 48 | 重 22.1 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgia_cavalry_armor
+      quote_hash: DDEAEF4C8980D259D2858424769E7EEDB496EF1631B8153FCF6AA74D359E7AFF
+      quote: 骑兵扎甲 | 躯干 | 护 46 | 重 18 | 材质 板 | 属 aserai | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgian_lamellar_base
+      quote_hash: 2412834C4EF4E3E3904DE03396CDB43DEDF0C0200E525B3945E370A23AEEC92D
+      quote: 重型扎甲衬链甲 | 躯干 | 护 50 | 重 24 | 材质 板 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#lamellar_with_scale_skirt
+      quote_hash: AEC97AB6E61A7BA5009968E0C00D269D51F78389C381944A4ADCC507AEF7C16F
+      quote: 扎甲配鳞甲裙 | 躯干 | 护 52 | 重 24.10 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_lamellar_armor
+      quote_hash: FC33218B99ED8EA8E2DD9D32FF308EA4BFF6EA4D15828A69463E4523F7043210
+      quote: 枪骑兵扎甲 | 躯干 | 护 39 | 重 13 | 材质 板 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#nordic_lamellar_armor
+      quote_hash: 017D5DA67A6200967890D4A611C283468CD98A98779F93A4BC4DEA2BEEF47B48
+      quote: 铜鳞背心衬软甲 | 躯干 | 护 28 | 重 15 | 材质 板 | 属 sturgia | 分男女
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-torso-lamellar-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 札甲最常和链甲叠着穿：札甲底下垫一件链甲衫，护值加到五十一；铜的扎甲衬链甲同理，护值四十六；底下垫软甲的那款做到三十七。北地铁匠的看家本事，就在这两层之间调配重。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#northern_brass_lamellar_over_mail
+    quote_hash: 3073E2F3DA3C8E8CAC0397922DDA3497DD4FFACF77AB1EFC1A362B7A09602FFA
+    quote: 重型扎甲衬链甲 | 躯干 | 护 51 | 重 23.6 | 材质 板 | 属 sturgia | 叠穿
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#brass_lamellar_over_mail
+    quote_hash: A8D59CF669437666FFAFD6E04D78CA64AE28CDE94A2C2E0A003E9846FB60D4BD
+    quote: 铜扎甲衬链甲 | 躯干 | 护 46 | 重 22 | 材质 链甲 | 属 khuzait | 叠穿
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#southern_lamellar_armor
+    quote_hash: F0F47DB7E2EFD3EEAA60E2ABF860ACB6B5E73739C62E5301690AEF6924CB010D
+    quote: 铜扎甲背心衬软甲 | 躯干 | 护 37 | 重 9.5 | 材质 板 | 属 aserai | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sturgian_lamellar_gambeson_heavy
+    quote_hash: 3E41828B8E7C186C10AC3CE4BC29A980CE8019AEF906E42A7546F683075BD4E1
+    quote: 重型扎甲背心 | 躯干 | 护 35 | 重 8.3 | 材质 板 | 属 sturgia | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#khuzait_lamellar_strapped
+    quote_hash: 31072C024ACABCFFEF9324A7EC6F46A83BA09FBD45A7CBCF969C2EC54658AD4A
+    quote: 强化皮甲 | 躯干 | 护 24 | 重 11.1 | 材质 板 | 属 khuzait
+  expressions:
+  - id: expr.weapon-armor-torso-lamellar-sturgia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我们这边的重甲一层压一层：里子是链甲，外头套扎甲，肩上再加护肩。最重的一件五十一，分量能到二十三公斤，穿上得有人帮着扣。可站在盾墙里，这身就是命。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_brass_lamellar_over_mail
+      quote_hash: 3073E2F3DA3C8E8CAC0397922DDA3497DD4FFACF77AB1EFC1A362B7A09602FFA
+      quote: 重型扎甲衬链甲 | 躯干 | 护 51 | 重 23.6 | 材质 板 | 属 sturgia | 叠穿
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#brass_lamellar_over_mail
+      quote_hash: A8D59CF669437666FFAFD6E04D78CA64AE28CDE94A2C2E0A003E9846FB60D4BD
+      quote: 铜扎甲衬链甲 | 躯干 | 护 46 | 重 22 | 材质 链甲 | 属 khuzait | 叠穿
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#southern_lamellar_armor
+      quote_hash: F0F47DB7E2EFD3EEAA60E2ABF860ACB6B5E73739C62E5301690AEF6924CB010D
+      quote: 铜扎甲背心衬软甲 | 躯干 | 护 37 | 重 9.5 | 材质 板 | 属 aserai | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgian_lamellar_gambeson_heavy
+      quote_hash: 3E41828B8E7C186C10AC3CE4BC29A980CE8019AEF906E42A7546F683075BD4E1
+      quote: 重型扎甲背心 | 躯干 | 护 35 | 重 8.3 | 材质 板 | 属 sturgia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#khuzait_lamellar_strapped
+      quote_hash: 31072C024ACABCFFEF9324A7EC6F46A83BA09FBD45A7CBCF969C2EC54658AD4A
+      quote: 强化皮甲 | 躯干 | 护 24 | 重 11.1 | 材质 板 | 属 khuzait
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []
+  - id: expr.weapon-armor-torso-lamellar-khuzait-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 铜的扎甲衬链甲四十六，是这一路里最重的一件。铁片镀铜，不锈——草原上雨雪多，这一点最省事。底下垫一层链甲，冲阵时挨一下不至于见血。骑兵多是先穿轻的枪骑兵扎甲三十九，攒下钱再换重的。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_brass_lamellar_over_mail
+      quote_hash: 3073E2F3DA3C8E8CAC0397922DDA3497DD4FFACF77AB1EFC1A362B7A09602FFA
+      quote: 重型扎甲衬链甲 | 躯干 | 护 51 | 重 23.6 | 材质 板 | 属 sturgia | 叠穿
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#brass_lamellar_over_mail
+      quote_hash: A8D59CF669437666FFAFD6E04D78CA64AE28CDE94A2C2E0A003E9846FB60D4BD
+      quote: 铜扎甲衬链甲 | 躯干 | 护 46 | 重 22 | 材质 链甲 | 属 khuzait | 叠穿
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#southern_lamellar_armor
+      quote_hash: F0F47DB7E2EFD3EEAA60E2ABF860ACB6B5E73739C62E5301690AEF6924CB010D
+      quote: 铜扎甲背心衬软甲 | 躯干 | 护 37 | 重 9.5 | 材质 板 | 属 aserai | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgian_lamellar_gambeson_heavy
+      quote_hash: 3E41828B8E7C186C10AC3CE4BC29A980CE8019AEF906E42A7546F683075BD4E1
+      quote: 重型扎甲背心 | 躯干 | 护 35 | 重 8.3 | 材质 板 | 属 sturgia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#khuzait_lamellar_strapped
+      quote_hash: 31072C024ACABCFFEF9324A7EC6F46A83BA09FBD45A7CBCF969C2EC54658AD4A
+      quote: 强化皮甲 | 躯干 | 护 24 | 重 11.1 | 材质 板 | 属 khuzait
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    denies: []

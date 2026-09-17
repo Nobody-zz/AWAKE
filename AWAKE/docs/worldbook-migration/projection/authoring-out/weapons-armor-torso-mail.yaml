@@ -1,0 +1,428 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-torso-mail
+title:
+  zh-CN: 锁甲
+  en: Mail Armor
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 锁甲
+  - 链甲
+  - 链铠
+  - 链甲衫
+  - 罩袍衬链甲
+  - 军团链甲
+  - 游侠链甲
+  - 锁子甲
+  en:
+  - Mail Armor
+  - Chainmail
+  - Hauberk
+  - Chain Shirt
+  - Mail Coat
+summary:
+  zh-CN: 几千个铁环互相咬着扣成一件——护值二十到四十八，全库最贵的一档。砍不透，但挡不住砸。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#vlandia_chainmail
+  quote_hash: 99605199ECD1AF6A4D87E80BD0C7FE6BC737955490CA5171A8D04237053D13A2
+  quote: 重型链铠 | 躯干 | 护 35 | 重 12 | 材质 链甲 | 属 vlandia | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#legionary_mail
+  quote_hash: E47BBF5D32BF9587B168469E467D5FB2BE4D591792A867B55D91A85FEA05F716
+  quote: 军团链甲 | 躯干 | 护 34 | 重 19 | 材质 链甲 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#ranger_mail
+  quote_hash: F29BC010CB6A383E5958D6F3E0F033C48F3D4145AC3AD8F771F93FEAF7225FB6
+  quote: 游侠链甲 | 躯干 | 护 32 | 重 12.0 | 材质 链甲 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#sturgian_chainmale_longsleeve
+  quote_hash: A64A96A9D7122A6B8A44BAAF355B163E2C8F97196A3CE5D9B810659FF838F85C
+  quote: 装饰链铠 | 躯干 | 护 32 | 重 14.5 | 材质 链甲 | 属 sturgia | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_noble_armor
+  quote_hash: 9AB4CCCDDA4EE64E976C543E773998E44CEE912244AD988B05937B457C09CC66
+  quote: 名门链甲 | 躯干 | 护 48 | 重 23.00 | 材质 链甲 | 属 battania | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#hauberk
+  quote_hash: 3600057F4530A411E2A345AD142337F40D7E92CC5F8E5CBE40DABFD904FDA927
+  quote: 重型链甲衫 | 躯干 | 护 27 | 重 9.5 | 材质 链甲 | 属 vlandia | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#mail_shirt
+  quote_hash: 0AA3F2D3174F80485A75197136EC89C0D76C313CCBE04936F76ED0E3FE5F9BDD
+  quote: 链甲衫 | 躯干 | 护 25 | 重 7.5 | 材质 链甲 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#white_coat_over_mail
+  quote_hash: 6FBEF85EFB85F99C700974011CB7CFD9B8B92369A4B5777C6CAB4A5FAEF83CF6
+  quote: 白罩袍衬链铠 | 躯干 | 护 34 | 重 15 | 材质 链甲 | 属 vlandia | 分男女 | 叠穿
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#red_coat_over_mail
+  quote_hash: CFA50FAC164C1C0A624959B555A05B5DC34FC802A1FD47D582EFFB425ABBD447
+  quote: 红罩袍衬链铠 | 躯干 | 护 34 | 重 15 | 材质 链甲 | 属 vlandia | 分男女 | 叠穿
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#stitched_leather_over_mail
+  quote_hash: 55EAF85F49F634C11C0E6E8BED5B3F21C2E60C0818AADB360D4C16F8E6F2E555
+  quote: 缝制皮甲衬链甲 | 躯干 | 护 36 | 重 15.1 | 材质 链甲 | 属 aserai | 叠穿
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battanian_chainmail_armor_c
+  quote_hash: 8F03C7A0A0BA5EC32A69F10AF836A1EDF75F749986FC5F864B58296B8F679668
+  quote: 高地强化链甲衬格子呢 | 躯干 | 护 32 | 重 14.7 | 材质 链甲 | 属 battania | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_woodland_chainmail
+  quote_hash: 2D314E43F9188650AD1752EF59FB6A94D20E2C4490E1BF023544DCE86985B752
+  quote: 重型链甲衫配宽腰带 | 躯干 | 护 31 | 重 14 | 材质 链甲 | 属 battania | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#imperial_mail_vest
+  quote_hash: E0C7BC3AF5FC3621A736F65D0B76AE823111BC00EE3FD6DC75C3F37EA5A9739A
+  quote: 步兵链甲背心 | 躯干 | 护 26 | 重 9.8 | 材质 链甲 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#desert_robe_over_mail
+  quote_hash: C273F1A234084DDB2EAD344DDF77D422AAE65E91705110E21DF367D07E838B42
+  quote: 袍衬链铠 | 躯干 | 护 25 | 重 8.9 | 材质 链甲 | 属 aserai | 叠穿
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-torso-mail-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 锁甲由上千个铁环手工扣成，护值二十到四十八，材质一律为链甲。它的好处是软——能随身体弯折，刀剑滑过去而不断；坏处是重，钝器砸下来力道照样透过去。重型链铠护值三十五，帝国军团链甲三十四，巴旦尼亚名门链甲四十八，是这一路做得最密的一件。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#vlandia_chainmail
+    quote_hash: 99605199ECD1AF6A4D87E80BD0C7FE6BC737955490CA5171A8D04237053D13A2
+    quote: 重型链铠 | 躯干 | 护 35 | 重 12 | 材质 链甲 | 属 vlandia | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#legionary_mail
+    quote_hash: E47BBF5D32BF9587B168469E467D5FB2BE4D591792A867B55D91A85FEA05F716
+    quote: 军团链甲 | 躯干 | 护 34 | 重 19 | 材质 链甲 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#ranger_mail
+    quote_hash: F29BC010CB6A383E5958D6F3E0F033C48F3D4145AC3AD8F771F93FEAF7225FB6
+    quote: 游侠链甲 | 躯干 | 护 32 | 重 12.0 | 材质 链甲 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#sturgian_chainmale_longsleeve
+    quote_hash: A64A96A9D7122A6B8A44BAAF355B163E2C8F97196A3CE5D9B810659FF838F85C
+    quote: 装饰链铠 | 躯干 | 护 32 | 重 14.5 | 材质 链甲 | 属 sturgia | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_noble_armor
+    quote_hash: 9AB4CCCDDA4EE64E976C543E773998E44CEE912244AD988B05937B457C09CC66
+    quote: 名门链甲 | 躯干 | 护 48 | 重 23.00 | 材质 链甲 | 属 battania | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#hauberk
+    quote_hash: 3600057F4530A411E2A345AD142337F40D7E92CC5F8E5CBE40DABFD904FDA927
+    quote: 重型链甲衫 | 躯干 | 护 27 | 重 9.5 | 材质 链甲 | 属 vlandia | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#mail_shirt
+    quote_hash: 0AA3F2D3174F80485A75197136EC89C0D76C313CCBE04936F76ED0E3FE5F9BDD
+    quote: 链甲衫 | 躯干 | 护 25 | 重 7.5 | 材质 链甲 | 属 vlandia
+  expressions:
+  - id: expr.weapon-armor-torso-mail-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 一件链甲要几千个环，一个一个扣，一个人得做小半年，所以贵。挨过刀的人都说好——刀锋滑过去只留一道白痕。就是怕锤子，砸一下骨头照样断。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#vlandia_chainmail
+      quote_hash: 99605199ECD1AF6A4D87E80BD0C7FE6BC737955490CA5171A8D04237053D13A2
+      quote: 重型链铠 | 躯干 | 护 35 | 重 12 | 材质 链甲 | 属 vlandia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#legionary_mail
+      quote_hash: E47BBF5D32BF9587B168469E467D5FB2BE4D591792A867B55D91A85FEA05F716
+      quote: 军团链甲 | 躯干 | 护 34 | 重 19 | 材质 链甲 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#ranger_mail
+      quote_hash: F29BC010CB6A383E5958D6F3E0F033C48F3D4145AC3AD8F771F93FEAF7225FB6
+      quote: 游侠链甲 | 躯干 | 护 32 | 重 12.0 | 材质 链甲 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgian_chainmale_longsleeve
+      quote_hash: A64A96A9D7122A6B8A44BAAF355B163E2C8F97196A3CE5D9B810659FF838F85C
+      quote: 装饰链铠 | 躯干 | 护 32 | 重 14.5 | 材质 链甲 | 属 sturgia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_noble_armor
+      quote_hash: 9AB4CCCDDA4EE64E976C543E773998E44CEE912244AD988B05937B457C09CC66
+      quote: 名门链甲 | 躯干 | 护 48 | 重 23.00 | 材质 链甲 | 属 battania | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#hauberk
+      quote_hash: 3600057F4530A411E2A345AD142337F40D7E92CC5F8E5CBE40DABFD904FDA927
+      quote: 重型链甲衫 | 躯干 | 护 27 | 重 9.5 | 材质 链甲 | 属 vlandia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#mail_shirt
+      quote_hash: 0AA3F2D3174F80485A75197136EC89C0D76C313CCBE04936F76ED0E3FE5F9BDD
+      quote: 链甲衫 | 躯干 | 护 25 | 重 7.5 | 材质 链甲 | 属 vlandia
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-torso-mail-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 锁甲的价钱全在环上：环越小、扣得越密、越费工。普通链甲衫护值二十几，军团链甲三十四，名门链甲到四十八，一副壳子顶得上一匹战马。保养也麻烦，一场雨不擦就生锈，锈了得用沙袋滚。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#vlandia_chainmail
+      quote_hash: 99605199ECD1AF6A4D87E80BD0C7FE6BC737955490CA5171A8D04237053D13A2
+      quote: 重型链铠 | 躯干 | 护 35 | 重 12 | 材质 链甲 | 属 vlandia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#legionary_mail
+      quote_hash: E47BBF5D32BF9587B168469E467D5FB2BE4D591792A867B55D91A85FEA05F716
+      quote: 军团链甲 | 躯干 | 护 34 | 重 19 | 材质 链甲 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#ranger_mail
+      quote_hash: F29BC010CB6A383E5958D6F3E0F033C48F3D4145AC3AD8F771F93FEAF7225FB6
+      quote: 游侠链甲 | 躯干 | 护 32 | 重 12.0 | 材质 链甲 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#sturgian_chainmale_longsleeve
+      quote_hash: A64A96A9D7122A6B8A44BAAF355B163E2C8F97196A3CE5D9B810659FF838F85C
+      quote: 装饰链铠 | 躯干 | 护 32 | 重 14.5 | 材质 链甲 | 属 sturgia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_noble_armor
+      quote_hash: 9AB4CCCDDA4EE64E976C543E773998E44CEE912244AD988B05937B457C09CC66
+      quote: 名门链甲 | 躯干 | 护 48 | 重 23.00 | 材质 链甲 | 属 battania | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#hauberk
+      quote_hash: 3600057F4530A411E2A345AD142337F40D7E92CC5F8E5CBE40DABFD904FDA927
+      quote: 重型链甲衫 | 躯干 | 护 27 | 重 9.5 | 材质 链甲 | 属 vlandia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#mail_shirt
+      quote_hash: 0AA3F2D3174F80485A75197136EC89C0D76C313CCBE04936F76ED0E3FE5F9BDD
+      quote: 链甲衫 | 躯干 | 护 25 | 重 7.5 | 材质 链甲 | 属 vlandia
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-torso-mail-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 锁甲很少裸穿：外面罩一件布袍，或者把链甲缝进皮衣里当里子。罩袍衬链甲护值三十四，用途是挡日头、防锈、认队伍；缝进皮里的护值三十六，图的是不显眼。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#white_coat_over_mail
+    quote_hash: 6FBEF85EFB85F99C700974011CB7CFD9B8B92369A4B5777C6CAB4A5FAEF83CF6
+    quote: 白罩袍衬链铠 | 躯干 | 护 34 | 重 15 | 材质 链甲 | 属 vlandia | 分男女 | 叠穿
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#red_coat_over_mail
+    quote_hash: CFA50FAC164C1C0A624959B555A05B5DC34FC802A1FD47D582EFFB425ABBD447
+    quote: 红罩袍衬链铠 | 躯干 | 护 34 | 重 15 | 材质 链甲 | 属 vlandia | 分男女 | 叠穿
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#stitched_leather_over_mail
+    quote_hash: 55EAF85F49F634C11C0E6E8BED5B3F21C2E60C0818AADB360D4C16F8E6F2E555
+    quote: 缝制皮甲衬链甲 | 躯干 | 护 36 | 重 15.1 | 材质 链甲 | 属 aserai | 叠穿
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battanian_chainmail_armor_c
+    quote_hash: 8F03C7A0A0BA5EC32A69F10AF836A1EDF75F749986FC5F864B58296B8F679668
+    quote: 高地强化链甲衬格子呢 | 躯干 | 护 32 | 重 14.7 | 材质 链甲 | 属 battania | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_woodland_chainmail
+    quote_hash: 2D314E43F9188650AD1752EF59FB6A94D20E2C4490E1BF023544DCE86985B752
+    quote: 重型链甲衫配宽腰带 | 躯干 | 护 31 | 重 14 | 材质 链甲 | 属 battania | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#imperial_mail_vest
+    quote_hash: E0C7BC3AF5FC3621A736F65D0B76AE823111BC00EE3FD6DC75C3F37EA5A9739A
+    quote: 步兵链甲背心 | 躯干 | 护 26 | 重 9.8 | 材质 链甲 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#desert_robe_over_mail
+    quote_hash: C273F1A234084DDB2EAD344DDF77D422AAE65E91705110E21DF367D07E838B42
+    quote: 袍衬链铠 | 躯干 | 护 25 | 重 8.9 | 材质 链甲 | 属 aserai | 叠穿
+  expressions:
+  - id: expr.weapon-armor-torso-mail-surcoat-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 罩袍衬链甲是瓦兰迪亚的常法：链铠外面罩一件染色的布袍，护值三十四，多花一层布的钱，换来链子不磨肩、雨淋不透，打起来还能认番号。缝进皮的那一路走的是另一个心思——外面看着是件皮衣，不招眼。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#white_coat_over_mail
+      quote_hash: 6FBEF85EFB85F99C700974011CB7CFD9B8B92369A4B5777C6CAB4A5FAEF83CF6
+      quote: 白罩袍衬链铠 | 躯干 | 护 34 | 重 15 | 材质 链甲 | 属 vlandia | 分男女 | 叠穿
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#red_coat_over_mail
+      quote_hash: CFA50FAC164C1C0A624959B555A05B5DC34FC802A1FD47D582EFFB425ABBD447
+      quote: 红罩袍衬链铠 | 躯干 | 护 34 | 重 15 | 材质 链甲 | 属 vlandia | 分男女 | 叠穿
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#stitched_leather_over_mail
+      quote_hash: 55EAF85F49F634C11C0E6E8BED5B3F21C2E60C0818AADB360D4C16F8E6F2E555
+      quote: 缝制皮甲衬链甲 | 躯干 | 护 36 | 重 15.1 | 材质 链甲 | 属 aserai | 叠穿
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battanian_chainmail_armor_c
+      quote_hash: 8F03C7A0A0BA5EC32A69F10AF836A1EDF75F749986FC5F864B58296B8F679668
+      quote: 高地强化链甲衬格子呢 | 躯干 | 护 32 | 重 14.7 | 材质 链甲 | 属 battania | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_woodland_chainmail
+      quote_hash: 2D314E43F9188650AD1752EF59FB6A94D20E2C4490E1BF023544DCE86985B752
+      quote: 重型链甲衫配宽腰带 | 躯干 | 护 31 | 重 14 | 材质 链甲 | 属 battania | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#imperial_mail_vest
+      quote_hash: E0C7BC3AF5FC3621A736F65D0B76AE823111BC00EE3FD6DC75C3F37EA5A9739A
+      quote: 步兵链甲背心 | 躯干 | 护 26 | 重 9.8 | 材质 链甲 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#desert_robe_over_mail
+      quote_hash: C273F1A234084DDB2EAD344DDF77D422AAE65E91705110E21DF367D07E838B42
+      quote: 袍衬链铠 | 躯干 | 护 25 | 重 8.9 | 材质 链甲 | 属 aserai | 叠穿
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

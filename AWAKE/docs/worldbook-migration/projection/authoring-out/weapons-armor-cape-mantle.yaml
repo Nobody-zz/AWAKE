@@ -1,0 +1,482 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-cape-mantle
+title:
+  zh-CN: 披风与围巾
+  en: Cloaks and Scarves
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 披风
+  - 斗篷
+  - 围巾
+  - 风帽
+  - 格纹披风
+  - 林地披风
+  - 重磅斗篷
+  - 穗饰披风
+  en:
+  - Cloak
+  - Cape
+  - Scarf
+  - Hood
+  - Shawl
+summary:
+  zh-CN: 披在肩上的一块布，护值二到九——挡雨、挡风、挡目光。战场上它还是认队伍的东西。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_cloak
+  quote_hash: 7694377EB5C130DAD2DB252DEBA85090E119D7060D40C48B9B3FCD700BC2637E
+  quote: 格纹斗篷 | 披风 | 护 2 | 重 0.25 | 材质 布 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_civil_cloak
+  quote_hash: 772FEA6B700EE187FA6431755CD47DDDE718B20B75038B05085A6D0B2BE6E521
+  quote: 穗饰披风 | 披风 | 护 2 | 重 0.25 | 材质 布 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_scarf_a
+  quote_hash: 46C236CFD4CC8F5E2C56C470C1063675B3B1FF6CC4A2631B57F0563A559FC8F3
+  quote: 重磅格纹围巾 | 披风 | 护 3 | 重 0.55 | 材质 布 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#empire_cape_a
+  quote_hash: A470F3F4C70D00B60D4622937D6C3C723E6AC7FDDFEB075538AE7BC6481B321E
+  quote: 重磅斗篷 | 披风 | 护 3 | 重 0.5 | 材质 布 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#green_hood
+  quote_hash: 196E975BAC820D0531D7AA6257EF7AF268DED48F93CF04BB6DFE053E8CAF289C
+  quote: 绿色风帽 | 披风 | 护 3 | 重 0.35 | 材质 布 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#hood
+  quote_hash: BB61426C85A19D12C829D5A4C0B1FAD4A64D5273B96B3832FD882FEADBA95F26
+  quote: 风帽 | 披风 | 护 3 | 重 0.35 | 材质 布 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#scarf
+  quote_hash: 12FB1A483B23B42B66B10B4B70ADFFF03BD65606AD9A75E35C789A2002394928
+  quote: 围巾 | 披风 | 护 3 | 重 0.3 | 材质 布 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#female_scarf
+  quote_hash: 501512AA4FB4524A9C88689931BB8581F68C03B4AB16920E58846DC24BDA6A2E
+  quote: 厚围巾 | 披风 | 护 3 | 重 0.3 | 材质 布 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#wrapped_scarf
+  quote_hash: D34F9CB8C20634F65F2DB17C639A983B8ACB27E668165C479D64005ABE6990FD
+  quote: 披肩 | 披风 | 护 2 | 重 0.2 | 材质 布 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#southern_shawl
+  quote_hash: F2A1C88B0D958A2905E7E98217AEEBB939014B5171781B3DC0F5129CDC1D4CF0
+  quote: 短斗篷 | 披风 | 护 2 | 重 0.2 | 材质 布 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#padded_leather_shoulders
+  quote_hash: E4E767E3DBA2D70F93D6CD739B1F1D78720E8115640553837DF08DCF1B098645
+  quote: 填充皮护肩 | 披风 | 护 9 | 重 2.4 | 材质 布 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#empire_warrior_padded_armor_shoulder
+  quote_hash: DA67A5F98DD08A5C20219E1E9541274BDC474AFEFF9BEFEE6D4117CE9AA649CD
+  quote: 军团填充扎带 | 披风 | 护 6 | 重 3.2 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#desert_leather_shoulderpad
+  quote_hash: 191EACE7BC9FB70C827AF13836788FC898C3DCE7F46757283EE4933D3C62FF4A
+  quote: 皮护肩 | 披风 | 护 4 | 重 0.6 | 材质 皮 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#desert_fabric_shoulderpad
+  quote_hash: DED8D9BD3F04EE1F6957B7280C1968CC050CE65DB16F51E422AF6AD11A0A6F24
+  quote: 编织垫肩 | 披风 | 护 3 | 重 0.3 | 材质 布 | 属 neutral_culture
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_shoulder_strap_cloak
+  quote_hash: E1BE4B2FD52BBBD499B58144DC3E42E3676135A79C58008105EE7BE44B76B65D
+  quote: 格纹肩带 | 披风 | 护 3 | 重 1.3 | 材质 皮 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_woodland_cloak
+  quote_hash: 61B54E5D34CE2A8ACF8C00DF785D368E59453F07E33ADDCDE5E651A90DFAA03D
+  quote: 林地披风 | 披风 | 护 5 | 重 0.85 | 材质 皮 | 属 battania
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-cape-mantle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 披风与围巾是披挂类里最轻的一档，护值二到九，材质以布为主，少数为薄皮。它们不护身，用处是遮风挡雨、遮脸挡沙，以及在队列里认人——染了什么色、绣了什么边，一眼就分得出是哪家的。格纹披风是最常见的巴旦尼亚款，重磅斗篷走的是帝国一路，绿风帽与羊毛风帽则什么人都有。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_cloak
+    quote_hash: 7694377EB5C130DAD2DB252DEBA85090E119D7060D40C48B9B3FCD700BC2637E
+    quote: 格纹斗篷 | 披风 | 护 2 | 重 0.25 | 材质 布 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_civil_cloak
+    quote_hash: 772FEA6B700EE187FA6431755CD47DDDE718B20B75038B05085A6D0B2BE6E521
+    quote: 穗饰披风 | 披风 | 护 2 | 重 0.25 | 材质 布 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_scarf_a
+    quote_hash: 46C236CFD4CC8F5E2C56C470C1063675B3B1FF6CC4A2631B57F0563A559FC8F3
+    quote: 重磅格纹围巾 | 披风 | 护 3 | 重 0.55 | 材质 布 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#empire_cape_a
+    quote_hash: A470F3F4C70D00B60D4622937D6C3C723E6AC7FDDFEB075538AE7BC6481B321E
+    quote: 重磅斗篷 | 披风 | 护 3 | 重 0.5 | 材质 布 | 属 neutral_culture
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#green_hood
+    quote_hash: 196E975BAC820D0531D7AA6257EF7AF268DED48F93CF04BB6DFE053E8CAF289C
+    quote: 绿色风帽 | 披风 | 护 3 | 重 0.35 | 材质 布 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#hood
+    quote_hash: BB61426C85A19D12C829D5A4C0B1FAD4A64D5273B96B3832FD882FEADBA95F26
+    quote: 风帽 | 披风 | 护 3 | 重 0.35 | 材质 布 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#scarf
+    quote_hash: 12FB1A483B23B42B66B10B4B70ADFFF03BD65606AD9A75E35C789A2002394928
+    quote: 围巾 | 披风 | 护 3 | 重 0.3 | 材质 布 | 属 neutral_culture
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#female_scarf
+    quote_hash: 501512AA4FB4524A9C88689931BB8581F68C03B4AB16920E58846DC24BDA6A2E
+    quote: 厚围巾 | 披风 | 护 3 | 重 0.3 | 材质 布 | 属 neutral_culture
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#wrapped_scarf
+    quote_hash: D34F9CB8C20634F65F2DB17C639A983B8ACB27E668165C479D64005ABE6990FD
+    quote: 披肩 | 披风 | 护 2 | 重 0.2 | 材质 布 | 属 neutral_culture
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#southern_shawl
+    quote_hash: F2A1C88B0D958A2905E7E98217AEEBB939014B5171781B3DC0F5129CDC1D4CF0
+    quote: 短斗篷 | 披风 | 护 2 | 重 0.2 | 材质 布 | 属 neutral_culture
+  expressions:
+  - id: expr.weapon-armor-cape-mantle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 出门裹一件，风就往边上走了。下雨顶在头上，能顶一阵；沙起来把脸一蒙，谁也认不出谁。染料的钱比布还贵，所以颜色越正越体面。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_cloak
+      quote_hash: 7694377EB5C130DAD2DB252DEBA85090E119D7060D40C48B9B3FCD700BC2637E
+      quote: 格纹斗篷 | 披风 | 护 2 | 重 0.25 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_civil_cloak
+      quote_hash: 772FEA6B700EE187FA6431755CD47DDDE718B20B75038B05085A6D0B2BE6E521
+      quote: 穗饰披风 | 披风 | 护 2 | 重 0.25 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_scarf_a
+      quote_hash: 46C236CFD4CC8F5E2C56C470C1063675B3B1FF6CC4A2631B57F0563A559FC8F3
+      quote: 重磅格纹围巾 | 披风 | 护 3 | 重 0.55 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#empire_cape_a
+      quote_hash: A470F3F4C70D00B60D4622937D6C3C723E6AC7FDDFEB075538AE7BC6481B321E
+      quote: 重磅斗篷 | 披风 | 护 3 | 重 0.5 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#green_hood
+      quote_hash: 196E975BAC820D0531D7AA6257EF7AF268DED48F93CF04BB6DFE053E8CAF289C
+      quote: 绿色风帽 | 披风 | 护 3 | 重 0.35 | 材质 布 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#hood
+      quote_hash: BB61426C85A19D12C829D5A4C0B1FAD4A64D5273B96B3832FD882FEADBA95F26
+      quote: 风帽 | 披风 | 护 3 | 重 0.35 | 材质 布 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#scarf
+      quote_hash: 12FB1A483B23B42B66B10B4B70ADFFF03BD65606AD9A75E35C789A2002394928
+      quote: 围巾 | 披风 | 护 3 | 重 0.3 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#female_scarf
+      quote_hash: 501512AA4FB4524A9C88689931BB8581F68C03B4AB16920E58846DC24BDA6A2E
+      quote: 厚围巾 | 披风 | 护 3 | 重 0.3 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#wrapped_scarf
+      quote_hash: D34F9CB8C20634F65F2DB17C639A983B8ACB27E668165C479D64005ABE6990FD
+      quote: 披肩 | 披风 | 护 2 | 重 0.2 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#southern_shawl
+      quote_hash: F2A1C88B0D958A2905E7E98217AEEBB939014B5171781B3DC0F5129CDC1D4CF0
+      quote: 短斗篷 | 披风 | 护 2 | 重 0.2 | 材质 布 | 属 neutral_culture
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-cape-mantle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 披风按布幅与染工分档，护值都在九以下——它是外披，不是护具。格纹是巴旦尼亚的织法，一格一格对得上才叫好；帝国的重磅斗篷讲究垂，一披下去到脚踝。市上一条素色围巾换两斗粮，染过的要翻倍。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_cloak
+      quote_hash: 7694377EB5C130DAD2DB252DEBA85090E119D7060D40C48B9B3FCD700BC2637E
+      quote: 格纹斗篷 | 披风 | 护 2 | 重 0.25 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_civil_cloak
+      quote_hash: 772FEA6B700EE187FA6431755CD47DDDE718B20B75038B05085A6D0B2BE6E521
+      quote: 穗饰披风 | 披风 | 护 2 | 重 0.25 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_scarf_a
+      quote_hash: 46C236CFD4CC8F5E2C56C470C1063675B3B1FF6CC4A2631B57F0563A559FC8F3
+      quote: 重磅格纹围巾 | 披风 | 护 3 | 重 0.55 | 材质 布 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#empire_cape_a
+      quote_hash: A470F3F4C70D00B60D4622937D6C3C723E6AC7FDDFEB075538AE7BC6481B321E
+      quote: 重磅斗篷 | 披风 | 护 3 | 重 0.5 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#green_hood
+      quote_hash: 196E975BAC820D0531D7AA6257EF7AF268DED48F93CF04BB6DFE053E8CAF289C
+      quote: 绿色风帽 | 披风 | 护 3 | 重 0.35 | 材质 布 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#hood
+      quote_hash: BB61426C85A19D12C829D5A4C0B1FAD4A64D5273B96B3832FD882FEADBA95F26
+      quote: 风帽 | 披风 | 护 3 | 重 0.35 | 材质 布 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#scarf
+      quote_hash: 12FB1A483B23B42B66B10B4B70ADFFF03BD65606AD9A75E35C789A2002394928
+      quote: 围巾 | 披风 | 护 3 | 重 0.3 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#female_scarf
+      quote_hash: 501512AA4FB4524A9C88689931BB8581F68C03B4AB16920E58846DC24BDA6A2E
+      quote: 厚围巾 | 披风 | 护 3 | 重 0.3 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#wrapped_scarf
+      quote_hash: D34F9CB8C20634F65F2DB17C639A983B8ACB27E668165C479D64005ABE6990FD
+      quote: 披肩 | 披风 | 护 2 | 重 0.2 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#southern_shawl
+      quote_hash: F2A1C88B0D958A2905E7E98217AEEBB939014B5171781B3DC0F5129CDC1D4CF0
+      quote: 短斗篷 | 披风 | 护 2 | 重 0.2 | 材质 布 | 属 neutral_culture
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-cape-mantle-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 有一路披风是当护具做的：皮护肩与编织垫肩把布换成薄皮或厚毡，护值三四，垫在肩甲底下不硌肉；军团填充扎带一类更是把披挂和填充衣缝在一起。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#padded_leather_shoulders
+    quote_hash: E4E767E3DBA2D70F93D6CD739B1F1D78720E8115640553837DF08DCF1B098645
+    quote: 填充皮护肩 | 披风 | 护 9 | 重 2.4 | 材质 布 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#empire_warrior_padded_armor_shoulder
+    quote_hash: DA67A5F98DD08A5C20219E1E9541274BDC474AFEFF9BEFEE6D4117CE9AA649CD
+    quote: 军团填充扎带 | 披风 | 护 6 | 重 3.2 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#desert_leather_shoulderpad
+    quote_hash: 191EACE7BC9FB70C827AF13836788FC898C3DCE7F46757283EE4933D3C62FF4A
+    quote: 皮护肩 | 披风 | 护 4 | 重 0.6 | 材质 皮 | 属 neutral_culture
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#desert_fabric_shoulderpad
+    quote_hash: DED8D9BD3F04EE1F6957B7280C1968CC050CE65DB16F51E422AF6AD11A0A6F24
+    quote: 编织垫肩 | 披风 | 护 3 | 重 0.3 | 材质 布 | 属 neutral_culture
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_shoulder_strap_cloak
+    quote_hash: E1BE4B2FD52BBBD499B58144DC3E42E3676135A79C58008105EE7BE44B76B65D
+    quote: 格纹肩带 | 披风 | 护 3 | 重 1.3 | 材质 皮 | 属 battania
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_woodland_cloak
+    quote_hash: 61B54E5D34CE2A8ACF8C00DF785D368E59453F07E33ADDCDE5E651A90DFAA03D
+    quote: 林地披风 | 披风 | 护 5 | 重 0.85 | 材质 皮 | 属 battania
+  expressions:
+  - id: expr.weapon-armor-cape-mantle-pad-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 垫肩的用处不在挡刀，在垫——肩甲直接压在锁骨上，走上一天就磨破皮；垫一层皮或毡，分量就摊开了。这种小件不值钱，可列装的兵没有不配的。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#padded_leather_shoulders
+      quote_hash: E4E767E3DBA2D70F93D6CD739B1F1D78720E8115640553837DF08DCF1B098645
+      quote: 填充皮护肩 | 披风 | 护 9 | 重 2.4 | 材质 布 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#empire_warrior_padded_armor_shoulder
+      quote_hash: DA67A5F98DD08A5C20219E1E9541274BDC474AFEFF9BEFEE6D4117CE9AA649CD
+      quote: 军团填充扎带 | 披风 | 护 6 | 重 3.2 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#desert_leather_shoulderpad
+      quote_hash: 191EACE7BC9FB70C827AF13836788FC898C3DCE7F46757283EE4933D3C62FF4A
+      quote: 皮护肩 | 披风 | 护 4 | 重 0.6 | 材质 皮 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#desert_fabric_shoulderpad
+      quote_hash: DED8D9BD3F04EE1F6957B7280C1968CC050CE65DB16F51E422AF6AD11A0A6F24
+      quote: 编织垫肩 | 披风 | 护 3 | 重 0.3 | 材质 布 | 属 neutral_culture
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_shoulder_strap_cloak
+      quote_hash: E1BE4B2FD52BBBD499B58144DC3E42E3676135A79C58008105EE7BE44B76B65D
+      quote: 格纹肩带 | 披风 | 护 3 | 重 1.3 | 材质 皮 | 属 battania
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_woodland_cloak
+      quote_hash: 61B54E5D34CE2A8ACF8C00DF785D368E59453F07E33ADDCDE5E651A90DFAA03D
+      quote: 林地披风 | 披风 | 护 5 | 重 0.85 | 材质 皮 | 属 battania
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

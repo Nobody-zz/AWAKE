@@ -1,0 +1,513 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-cape-pauldron
+title:
+  zh-CN: 金属肩甲
+  en: Metal Pauldrons
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 肩甲
+  - 护肩
+  - 华丽肩甲
+  - 鳞甲护肩
+  - 铜鳞护肩
+  - 军阀肩甲
+  - 板肩甲
+  - 护颈肩甲
+  en:
+  - Pauldron
+  - Shoulder Armor
+  - Metal Shoulder Guard
+  - Scale Pauldron
+summary:
+  zh-CN: 扣在肩上的铁片，护值一到十六——护的值不高，可它是重甲身上最显眼的一块。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#aserai_scale_shoulder_b
+  quote_hash: 5E6C81DF024D519CF6A1CE1FCDC125CF3CC0D16D29DC7CC9B3870DB49E2130EB
+  quote: 长袖铜鳞护肩 | 披风 | 护 16 | 重 2.2 | 材质 板 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#scale_shoulder_armor
+  quote_hash: 5B0E937CA272C24DAB528D34A9E829FA2C9085A5FA50ACEB497A4BE211CF4727
+  quote: 鳞甲护肩 | 披风 | 护 16 | 重 1.7 | 材质 板 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#a_aserai_scale_b_shoulder_a
+  quote_hash: 08182A727E02E2693FD5F792247DADAF964AD59A7678816F3F58383B1D30C71C
+  quote: 鳞甲护肩 | 披风 | 护 15 | 重 5 | 材质 板 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#desert_scale_shoulders
+  quote_hash: 2C4F61991894CAF2DD53D744C53BC689BC1D154D9C94512353C1A7B6EA9D04D6
+  quote: 强化鳞肩甲 | 披风 | 护 14 | 重 8.2 | 材质 板 | 属 aserai
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#noble_pauldron
+  quote_hash: FC199D7612F4FD4310CB421434C728C8ABD5B002233F7D8AEA81E7554EB2FF4D
+  quote: 华丽肩甲 | 披风 | 护 10 | 重 2.2 | 材质 板 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#noble_pauldron_with_scarf
+  quote_hash: 7094E4F7D402E427E42640BCF3D0EB86551E8892F81464AAF288341FF52704FF
+  quote: 强化华丽肩甲 | 披风 | 护 13 | 重 6.4 | 材质 板 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#noble_pauldron_with_cape
+  quote_hash: E6801184D1575D76965E5BF3EFA4AA646E10C3F91C361E843DCB788D06D35766
+  quote: 华丽肩甲配披风 | 披风 | 护 11 | 重 4.4 | 材质 板 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#battania_warlord_pauldrons
+  quote_hash: 21FB06600B63CD853CB1D45BF8676947FE40AB9AC88A181C99FFCD0D5A01979A
+  quote: 重型军阀肩甲 | 披风 | 护 10 | 重 8.0 | 材质 板 | 属 battania
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#studded_imperial_neckguard
+  quote_hash: EE915D0BFFCA23A42308DA8CF831BFC2E687659FB3AB88D2DAEE25961B13512C
+  quote: 护颈配铜板肩甲 | 披风 | 护 8 | 重 7.8 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#pauldron_cape_a
+  quote_hash: E568C74D74EC97D8AC181D401D0750DEF4362B6D354A8F708F0A7BD00ADC4D00
+  quote: 军团披风 | 披风 | 护 7 | 重 6.9 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#pauldron_with_cape
+  quote_hash: F12568DD8545733DD11A457FBE2E3E56BCDEFA7EA3FFFF8C0E49F65114511669
+  quote: 肩甲配披风 | 披风 | 护 4 | 重 5.6 | 材质 板 | 属 vlandia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#imperial_lamellar_shoulders
+  quote_hash: 1437207904D86AF75E9A7DAD11A8D469A511D0752A8A728C0B214BFB3AE75056
+  quote: 重型扎甲肩甲 | 披风 | 护 7 | 重 3.5 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#lamellar_shoulders
+  quote_hash: D5E5E6E482C124692B047DBB7B17ED3AECB11B1063FEC4A6A3DFD7F54B114545
+  quote: 扎甲肩衬 | 披风 | 护 12 | 重 9.0 | 材质 板 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#brass_lamellar_shoulder
+  quote_hash: 8A7864A3C91F5016FEC6F399A861E175221D58A5AE15EA2FF7608BDC18FFA698
+  quote: 铜扎甲肩衬 | 披风 | 护 5 | 重 5 | 材质 板 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#brass_scale_shoulders
+  quote_hash: 15E0660950C79092371F948F7711F82A1EA11B023B714F9CA4E2B7C76E87C849
+  quote: 装饰鳞甲护肩 | 披风 | 护 4 | 重 4.2 | 材质 板 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#a_pauldron_cape_b
+  quote_hash: D91D52899927AC9C81DC2DEF17882E5462E173A877B9025FE81CD064B13604C1
+  quote: 铜肩甲配护颈 | 披风 | 护 5 | 重 6.5 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#a_empire_plated_shoulder_a
+  quote_hash: 31B4A1F3B957D7ADFE66D1E15F49FB37939025196C775E95511267EE45B6FEB4
+  quote: 军团镶钉背带 | 披风 | 护 5 | 重 2.8 | 材质 板 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#khuzait_leather_pauldron
+  quote_hash: 5CD6CA111B7CD3A2E8FFD84C8EBD2594C8F332DC4208948842E593FAED1C7BC9
+  quote: 强化皮肩甲 | 披风 | 护 2 | 重 3.5 | 材质 皮 | 属 khuzait
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-cape-pauldron-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 金属肩甲是扣在两肩的独立护具，护值一到十六，材质几乎全是板或铜。数值不高，因为肩本来就难被正面砍到；它的用处是接住从斜上方来的一刀，以及让穿戴的人看着更宽、更沉。南方阿塞莱一路把肩甲做成鳞片叠缀的铜肩，护值十六；帝国与瓦兰迪亚的华丽肩甲则在铁面上再做錾花，配披风或围巾一起穿。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#aserai_scale_shoulder_b
+    quote_hash: 5E6C81DF024D519CF6A1CE1FCDC125CF3CC0D16D29DC7CC9B3870DB49E2130EB
+    quote: 长袖铜鳞护肩 | 披风 | 护 16 | 重 2.2 | 材质 板 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#scale_shoulder_armor
+    quote_hash: 5B0E937CA272C24DAB528D34A9E829FA2C9085A5FA50ACEB497A4BE211CF4727
+    quote: 鳞甲护肩 | 披风 | 护 16 | 重 1.7 | 材质 板 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#a_aserai_scale_b_shoulder_a
+    quote_hash: 08182A727E02E2693FD5F792247DADAF964AD59A7678816F3F58383B1D30C71C
+    quote: 鳞甲护肩 | 披风 | 护 15 | 重 5 | 材质 板 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#desert_scale_shoulders
+    quote_hash: 2C4F61991894CAF2DD53D744C53BC689BC1D154D9C94512353C1A7B6EA9D04D6
+    quote: 强化鳞肩甲 | 披风 | 护 14 | 重 8.2 | 材质 板 | 属 aserai
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#noble_pauldron
+    quote_hash: FC199D7612F4FD4310CB421434C728C8ABD5B002233F7D8AEA81E7554EB2FF4D
+    quote: 华丽肩甲 | 披风 | 护 10 | 重 2.2 | 材质 板 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#noble_pauldron_with_scarf
+    quote_hash: 7094E4F7D402E427E42640BCF3D0EB86551E8892F81464AAF288341FF52704FF
+    quote: 强化华丽肩甲 | 披风 | 护 13 | 重 6.4 | 材质 板 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#noble_pauldron_with_cape
+    quote_hash: E6801184D1575D76965E5BF3EFA4AA646E10C3F91C361E843DCB788D06D35766
+    quote: 华丽肩甲配披风 | 披风 | 护 11 | 重 4.4 | 材质 板 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#battania_warlord_pauldrons
+    quote_hash: 21FB06600B63CD853CB1D45BF8676947FE40AB9AC88A181C99FFCD0D5A01979A
+    quote: 重型军阀肩甲 | 披风 | 护 10 | 重 8.0 | 材质 板 | 属 battania
+  expressions:
+  - id: expr.weapon-armor-cape-pauldron-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 那一对肩甲比看起来沉。穿上肩是宽的，站队里显得壮，其实护不了多少——真打起来，谁往肩上砍？可要是没有，一身甲看着就塌了。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_scale_shoulder_b
+      quote_hash: 5E6C81DF024D519CF6A1CE1FCDC125CF3CC0D16D29DC7CC9B3870DB49E2130EB
+      quote: 长袖铜鳞护肩 | 披风 | 护 16 | 重 2.2 | 材质 板 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#scale_shoulder_armor
+      quote_hash: 5B0E937CA272C24DAB528D34A9E829FA2C9085A5FA50ACEB497A4BE211CF4727
+      quote: 鳞甲护肩 | 披风 | 护 16 | 重 1.7 | 材质 板 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#a_aserai_scale_b_shoulder_a
+      quote_hash: 08182A727E02E2693FD5F792247DADAF964AD59A7678816F3F58383B1D30C71C
+      quote: 鳞甲护肩 | 披风 | 护 15 | 重 5 | 材质 板 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#desert_scale_shoulders
+      quote_hash: 2C4F61991894CAF2DD53D744C53BC689BC1D154D9C94512353C1A7B6EA9D04D6
+      quote: 强化鳞肩甲 | 披风 | 护 14 | 重 8.2 | 材质 板 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#noble_pauldron
+      quote_hash: FC199D7612F4FD4310CB421434C728C8ABD5B002233F7D8AEA81E7554EB2FF4D
+      quote: 华丽肩甲 | 披风 | 护 10 | 重 2.2 | 材质 板 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#noble_pauldron_with_scarf
+      quote_hash: 7094E4F7D402E427E42640BCF3D0EB86551E8892F81464AAF288341FF52704FF
+      quote: 强化华丽肩甲 | 披风 | 护 13 | 重 6.4 | 材质 板 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#noble_pauldron_with_cape
+      quote_hash: E6801184D1575D76965E5BF3EFA4AA646E10C3F91C361E843DCB788D06D35766
+      quote: 华丽肩甲配披风 | 披风 | 护 11 | 重 4.4 | 材质 板 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_warlord_pauldrons
+      quote_hash: 21FB06600B63CD853CB1D45BF8676947FE40AB9AC88A181C99FFCD0D5A01979A
+      quote: 重型军阀肩甲 | 披风 | 护 10 | 重 8.0 | 材质 板 | 属 battania
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-cape-pauldron-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 肩甲分两路：一路是整块的铁片，一路是鳞片叠缀。整块的护值低但硬，鳞缀的软、跟着胳膊动。价钱差在錾花上——素面五枚银币，錾花的能到二十枚，一样的护值。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#aserai_scale_shoulder_b
+      quote_hash: 5E6C81DF024D519CF6A1CE1FCDC125CF3CC0D16D29DC7CC9B3870DB49E2130EB
+      quote: 长袖铜鳞护肩 | 披风 | 护 16 | 重 2.2 | 材质 板 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#scale_shoulder_armor
+      quote_hash: 5B0E937CA272C24DAB528D34A9E829FA2C9085A5FA50ACEB497A4BE211CF4727
+      quote: 鳞甲护肩 | 披风 | 护 16 | 重 1.7 | 材质 板 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#a_aserai_scale_b_shoulder_a
+      quote_hash: 08182A727E02E2693FD5F792247DADAF964AD59A7678816F3F58383B1D30C71C
+      quote: 鳞甲护肩 | 披风 | 护 15 | 重 5 | 材质 板 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#desert_scale_shoulders
+      quote_hash: 2C4F61991894CAF2DD53D744C53BC689BC1D154D9C94512353C1A7B6EA9D04D6
+      quote: 强化鳞肩甲 | 披风 | 护 14 | 重 8.2 | 材质 板 | 属 aserai
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#noble_pauldron
+      quote_hash: FC199D7612F4FD4310CB421434C728C8ABD5B002233F7D8AEA81E7554EB2FF4D
+      quote: 华丽肩甲 | 披风 | 护 10 | 重 2.2 | 材质 板 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#noble_pauldron_with_scarf
+      quote_hash: 7094E4F7D402E427E42640BCF3D0EB86551E8892F81464AAF288341FF52704FF
+      quote: 强化华丽肩甲 | 披风 | 护 13 | 重 6.4 | 材质 板 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#noble_pauldron_with_cape
+      quote_hash: E6801184D1575D76965E5BF3EFA4AA646E10C3F91C361E843DCB788D06D35766
+      quote: 华丽肩甲配披风 | 披风 | 护 11 | 重 4.4 | 材质 板 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#battania_warlord_pauldrons
+      quote_hash: 21FB06600B63CD853CB1D45BF8676947FE40AB9AC88A181C99FFCD0D5A01979A
+      quote: 重型军阀肩甲 | 披风 | 护 10 | 重 8.0 | 材质 板 | 属 battania
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-cape-pauldron-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 肩甲最常和别的东西配成一套：配披风的、配围巾的、配护颈的。其中护颈肩甲在肩甲上加一圈立起的铁片，把脖子后侧也护住，是帝国军团的做法。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#studded_imperial_neckguard
+    quote_hash: EE915D0BFFCA23A42308DA8CF831BFC2E687659FB3AB88D2DAEE25961B13512C
+    quote: 护颈配铜板肩甲 | 披风 | 护 8 | 重 7.8 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#pauldron_cape_a
+    quote_hash: E568C74D74EC97D8AC181D401D0750DEF4362B6D354A8F708F0A7BD00ADC4D00
+    quote: 军团披风 | 披风 | 护 7 | 重 6.9 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#pauldron_with_cape
+    quote_hash: F12568DD8545733DD11A457FBE2E3E56BCDEFA7EA3FFFF8C0E49F65114511669
+    quote: 肩甲配披风 | 披风 | 护 4 | 重 5.6 | 材质 板 | 属 vlandia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#imperial_lamellar_shoulders
+    quote_hash: 1437207904D86AF75E9A7DAD11A8D469A511D0752A8A728C0B214BFB3AE75056
+    quote: 重型扎甲肩甲 | 披风 | 护 7 | 重 3.5 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#lamellar_shoulders
+    quote_hash: D5E5E6E482C124692B047DBB7B17ED3AECB11B1063FEC4A6A3DFD7F54B114545
+    quote: 扎甲肩衬 | 披风 | 护 12 | 重 9.0 | 材质 板 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#brass_lamellar_shoulder
+    quote_hash: 8A7864A3C91F5016FEC6F399A861E175221D58A5AE15EA2FF7608BDC18FFA698
+    quote: 铜扎甲肩衬 | 披风 | 护 5 | 重 5 | 材质 板 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#brass_scale_shoulders
+    quote_hash: 15E0660950C79092371F948F7711F82A1EA11B023B714F9CA4E2B7C76E87C849
+    quote: 装饰鳞甲护肩 | 披风 | 护 4 | 重 4.2 | 材质 板 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#a_pauldron_cape_b
+    quote_hash: D91D52899927AC9C81DC2DEF17882E5462E173A877B9025FE81CD064B13604C1
+    quote: 铜肩甲配护颈 | 披风 | 护 5 | 重 6.5 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#a_empire_plated_shoulder_a
+    quote_hash: 31B4A1F3B957D7ADFE66D1E15F49FB37939025196C775E95511267EE45B6FEB4
+    quote: 军团镶钉背带 | 披风 | 护 5 | 重 2.8 | 材质 板 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#khuzait_leather_pauldron
+    quote_hash: 5CD6CA111B7CD3A2E8FFD84C8EBD2594C8F332DC4208948842E593FAED1C7BC9
+    quote: 强化皮肩甲 | 披风 | 护 2 | 重 3.5 | 材质 皮 | 属 khuzait
+  expressions:
+  - id: expr.weapon-armor-cape-pauldron-empire-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 军团的做法是肩甲连护颈一起做：肩上一片板，脖子后头再立起一圈小铁片。后面来的刀先撞上那圈，滑到肩甲上，再落到链甲。三样凑起来，后背就没那么怕了。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#studded_imperial_neckguard
+      quote_hash: EE915D0BFFCA23A42308DA8CF831BFC2E687659FB3AB88D2DAEE25961B13512C
+      quote: 护颈配铜板肩甲 | 披风 | 护 8 | 重 7.8 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#pauldron_cape_a
+      quote_hash: E568C74D74EC97D8AC181D401D0750DEF4362B6D354A8F708F0A7BD00ADC4D00
+      quote: 军团披风 | 披风 | 护 7 | 重 6.9 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#pauldron_with_cape
+      quote_hash: F12568DD8545733DD11A457FBE2E3E56BCDEFA7EA3FFFF8C0E49F65114511669
+      quote: 肩甲配披风 | 披风 | 护 4 | 重 5.6 | 材质 板 | 属 vlandia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#imperial_lamellar_shoulders
+      quote_hash: 1437207904D86AF75E9A7DAD11A8D469A511D0752A8A728C0B214BFB3AE75056
+      quote: 重型扎甲肩甲 | 披风 | 护 7 | 重 3.5 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#lamellar_shoulders
+      quote_hash: D5E5E6E482C124692B047DBB7B17ED3AECB11B1063FEC4A6A3DFD7F54B114545
+      quote: 扎甲肩衬 | 披风 | 护 12 | 重 9.0 | 材质 板 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#brass_lamellar_shoulder
+      quote_hash: 8A7864A3C91F5016FEC6F399A861E175221D58A5AE15EA2FF7608BDC18FFA698
+      quote: 铜扎甲肩衬 | 披风 | 护 5 | 重 5 | 材质 板 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#brass_scale_shoulders
+      quote_hash: 15E0660950C79092371F948F7711F82A1EA11B023B714F9CA4E2B7C76E87C849
+      quote: 装饰鳞甲护肩 | 披风 | 护 4 | 重 4.2 | 材质 板 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#a_pauldron_cape_b
+      quote_hash: D91D52899927AC9C81DC2DEF17882E5462E173A877B9025FE81CD064B13604C1
+      quote: 铜肩甲配护颈 | 披风 | 护 5 | 重 6.5 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#a_empire_plated_shoulder_a
+      quote_hash: 31B4A1F3B957D7ADFE66D1E15F49FB37939025196C775E95511267EE45B6FEB4
+      quote: 军团镶钉背带 | 披风 | 护 5 | 重 2.8 | 材质 板 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#khuzait_leather_pauldron
+      quote_hash: 5CD6CA111B7CD3A2E8FFD84C8EBD2594C8F332DC4208948842E593FAED1C7BC9
+      quote: 强化皮肩甲 | 披风 | 护 2 | 重 3.5 | 材质 皮 | 属 khuzait
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []

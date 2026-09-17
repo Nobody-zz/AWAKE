@@ -1,0 +1,398 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-armor-torso-leather
+title:
+  zh-CN: 皮甲
+  en: Leather Armor
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 皮甲
+  - 硬皮外套
+  - 皮罩袍
+  - 镶钉硬皮甲
+  - 绒面甲
+  - 护心镜皮甲
+  - 野猪皮外套
+  en:
+  - Leather Armor
+  - Hardened Leather Coat
+  - Studded Leather
+  - Leather Tabard
+summary:
+  zh-CN: 硝过的硬皮，护值八到三十四——比布强，比铁轻。草原与帝国最常见的护身，也是自备战具的人最先买得起的那一档。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#basic_imperial_leather_armor
+  quote_hash: D636CA863A6AA31897D48EDF9951625BBD06B98E9D8A9B6FB79245F1F5B679B1
+  quote: 皮甲 | 躯干 | 护 22 | 重 3.1 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#eastern_stitched_leather_coat
+  quote_hash: 0A687D8FA224F331475583CA340B86305C8534B74C729A09240897F77EAACE66
+  quote: 缝制硬皮外套 | 躯干 | 护 20 | 重 8.4 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#eastern_studded_leather
+  quote_hash: C2F0DF7FF9790CF7EB0F1EE2D57F8A98F0418234130E265102B5C6F846EF6F10
+  quote: 镶钉硬皮甲 | 躯干 | 护 18 | 重 3.0 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#northern_leather_tabard
+  quote_hash: 9AC774675F52382B85862CE758329AF8B40BA46852B92AD1A4FEBE028AA3E2A6
+  quote: 皮罩袍 | 躯干 | 护 18 | 重 4.4 | 材质 皮 | 属 sturgia
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#woven_leather_coat
+  quote_hash: E53CA9C57C62CE8747A0FB9EA92E25FF4334CBDB6F1AF91E92915CA34E427376
+  quote: 野猪皮外套 | 躯干 | 护 14 | 重 5.1 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#leather_coat
+  quote_hash: A146B6A9A2EA9D7DB8C93E83D6AA45C0D7D04122C389D6D397B722D74E5F9C4A
+  quote: 束腰皮衣 | 躯干 | 护 10 | 重 2.3 | 材质 皮 | 属 vlandia | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#studded_leather_coat
+  quote_hash: 635D89EC2B337A63B64BCEEF31BD6029BBAD5F917E3F419CAB8DFFB2F86107F2
+  quote: 镶钉皮外套 | 躯干 | 护 10 | 重 1.6 | 材质 皮 | 属 aserai | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#khuzait_sturdy_armor
+  quote_hash: 67B8EE27C460872BA35E9FA1928C5A51F30B6430C7AF6D66E58B3BACE26C327A
+  quote: 护心镜皮甲 | 躯干 | 护 15 | 重 2.4 | 材质 皮 | 属 khuzait | 分男女
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#khuzait_leather_stitched
+  quote_hash: 68E43E2F11AE359A24026C635699152D1DAE4955848062F29BA056CA9C4D519E
+  quote: 厚布面铁甲背心 | 躯干 | 护 34 | 重 4.5 | 材质 皮 | 属 empire
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#reinforced_suede_armor
+  quote_hash: F28734B52FCDCA9D6137CE53AA420DFE053F4851DBAC974DFCC9BCBDD1735111
+  quote: 强化绒面甲 | 躯干 | 护 16 | 重 2.3 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#studded_steppe_leather
+  quote_hash: DFA18518A6AA48C76CE0A13AEB364F0BCD1749B22AE4FEA7A49F827B80B0F05A
+  quote: 镶钉皮甲 | 躯干 | 护 14 | 重 2.4 | 材质 皮 | 属 khuzait
+- source_id: source.calradia.game.items-armor
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+  locator: bannerlord.items.xml#khuzait_belt_leather
+  quote_hash: B45E8B8A42EDDEA21141C434C00F94BAB12355DB3288A34EE5E05674B52B4444
+  quote: 护镜腰带外套 | 躯干 | 护 8 | 重 2.4 | 材质 皮 | 属 khuzait | 分男女
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-armor-torso-leather-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 皮甲用硝过的硬皮裁成，护值八到三十四，材质一律为皮。它介于填充衣与铁甲之间：比布衣挡得住刀，比锁甲轻得多，价钱也在两者中间。缝制硬皮外套护值二十，镶钉硬皮甲在皮面上再缀铜钉，护值十八——钉子是防刀口打滑的。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#basic_imperial_leather_armor
+    quote_hash: D636CA863A6AA31897D48EDF9951625BBD06B98E9D8A9B6FB79245F1F5B679B1
+    quote: 皮甲 | 躯干 | 护 22 | 重 3.1 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#eastern_stitched_leather_coat
+    quote_hash: 0A687D8FA224F331475583CA340B86305C8534B74C729A09240897F77EAACE66
+    quote: 缝制硬皮外套 | 躯干 | 护 20 | 重 8.4 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#eastern_studded_leather
+    quote_hash: C2F0DF7FF9790CF7EB0F1EE2D57F8A98F0418234130E265102B5C6F846EF6F10
+    quote: 镶钉硬皮甲 | 躯干 | 护 18 | 重 3.0 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#northern_leather_tabard
+    quote_hash: 9AC774675F52382B85862CE758329AF8B40BA46852B92AD1A4FEBE028AA3E2A6
+    quote: 皮罩袍 | 躯干 | 护 18 | 重 4.4 | 材质 皮 | 属 sturgia
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#woven_leather_coat
+    quote_hash: E53CA9C57C62CE8747A0FB9EA92E25FF4334CBDB6F1AF91E92915CA34E427376
+    quote: 野猪皮外套 | 躯干 | 护 14 | 重 5.1 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#leather_coat
+    quote_hash: A146B6A9A2EA9D7DB8C93E83D6AA45C0D7D04122C389D6D397B722D74E5F9C4A
+    quote: 束腰皮衣 | 躯干 | 护 10 | 重 2.3 | 材质 皮 | 属 vlandia | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#studded_leather_coat
+    quote_hash: 635D89EC2B337A63B64BCEEF31BD6029BBAD5F917E3F419CAB8DFFB2F86107F2
+    quote: 镶钉皮外套 | 躯干 | 护 10 | 重 1.6 | 材质 皮 | 属 aserai | 分男女
+  expressions:
+  - id: expr.weapon-armor-torso-leather-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 硝皮子那味儿，晾半个月才散。可穿上它赶路，心里踏实——劫道的刀砍不透，马鞭抽上去也不疼。我那件穿了六年，边角换过三回。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#basic_imperial_leather_armor
+      quote_hash: D636CA863A6AA31897D48EDF9951625BBD06B98E9D8A9B6FB79245F1F5B679B1
+      quote: 皮甲 | 躯干 | 护 22 | 重 3.1 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_stitched_leather_coat
+      quote_hash: 0A687D8FA224F331475583CA340B86305C8534B74C729A09240897F77EAACE66
+      quote: 缝制硬皮外套 | 躯干 | 护 20 | 重 8.4 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_studded_leather
+      quote_hash: C2F0DF7FF9790CF7EB0F1EE2D57F8A98F0418234130E265102B5C6F846EF6F10
+      quote: 镶钉硬皮甲 | 躯干 | 护 18 | 重 3.0 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_leather_tabard
+      quote_hash: 9AC774675F52382B85862CE758329AF8B40BA46852B92AD1A4FEBE028AA3E2A6
+      quote: 皮罩袍 | 躯干 | 护 18 | 重 4.4 | 材质 皮 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#woven_leather_coat
+      quote_hash: E53CA9C57C62CE8747A0FB9EA92E25FF4334CBDB6F1AF91E92915CA34E427376
+      quote: 野猪皮外套 | 躯干 | 护 14 | 重 5.1 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_coat
+      quote_hash: A146B6A9A2EA9D7DB8C93E83D6AA45C0D7D04122C389D6D397B722D74E5F9C4A
+      quote: 束腰皮衣 | 躯干 | 护 10 | 重 2.3 | 材质 皮 | 属 vlandia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#studded_leather_coat
+      quote_hash: 635D89EC2B337A63B64BCEEF31BD6029BBAD5F917E3F419CAB8DFFB2F86107F2
+      quote: 镶钉皮外套 | 躯干 | 护 10 | 重 1.6 | 材质 皮 | 属 aserai | 分男女
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.weapon-armor-torso-leather-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 皮甲看两样：皮的厚薄与硝的功夫。生皮硬而易裂，硝透了才软而不烂。护值从八到三十四，差的是层数与拼法；缝制硬皮外套用整块皮裁，拼缝少、价钱高，镶钉的便宜些，一枚钉一个铜板。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#basic_imperial_leather_armor
+      quote_hash: D636CA863A6AA31897D48EDF9951625BBD06B98E9D8A9B6FB79245F1F5B679B1
+      quote: 皮甲 | 躯干 | 护 22 | 重 3.1 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_stitched_leather_coat
+      quote_hash: 0A687D8FA224F331475583CA340B86305C8534B74C729A09240897F77EAACE66
+      quote: 缝制硬皮外套 | 躯干 | 护 20 | 重 8.4 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#eastern_studded_leather
+      quote_hash: C2F0DF7FF9790CF7EB0F1EE2D57F8A98F0418234130E265102B5C6F846EF6F10
+      quote: 镶钉硬皮甲 | 躯干 | 护 18 | 重 3.0 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#northern_leather_tabard
+      quote_hash: 9AC774675F52382B85862CE758329AF8B40BA46852B92AD1A4FEBE028AA3E2A6
+      quote: 皮罩袍 | 躯干 | 护 18 | 重 4.4 | 材质 皮 | 属 sturgia
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#woven_leather_coat
+      quote_hash: E53CA9C57C62CE8747A0FB9EA92E25FF4334CBDB6F1AF91E92915CA34E427376
+      quote: 野猪皮外套 | 躯干 | 护 14 | 重 5.1 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#leather_coat
+      quote_hash: A146B6A9A2EA9D7DB8C93E83D6AA45C0D7D04122C389D6D397B722D74E5F9C4A
+      quote: 束腰皮衣 | 躯干 | 护 10 | 重 2.3 | 材质 皮 | 属 vlandia | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#studded_leather_coat
+      quote_hash: 635D89EC2B337A63B64BCEEF31BD6029BBAD5F917E3F419CAB8DFFB2F86107F2
+      quote: 镶钉皮外套 | 躯干 | 护 10 | 重 1.6 | 材质 皮 | 属 aserai | 分男女
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.weapon-armor-torso-leather-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 草原一路把皮和铁合着做：护心镜皮甲在皮面正心缀一块铁镜，护值十五；厚布面铁甲背心则在皮背心上再罩一层布面铁，护值三十四，是这条路做得最重的一件。
+  sources:
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#khuzait_sturdy_armor
+    quote_hash: 67B8EE27C460872BA35E9FA1928C5A51F30B6430C7AF6D66E58B3BACE26C327A
+    quote: 护心镜皮甲 | 躯干 | 护 15 | 重 2.4 | 材质 皮 | 属 khuzait | 分男女
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#khuzait_leather_stitched
+    quote_hash: 68E43E2F11AE359A24026C635699152D1DAE4955848062F29BA056CA9C4D519E
+    quote: 厚布面铁甲背心 | 躯干 | 护 34 | 重 4.5 | 材质 皮 | 属 empire
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#reinforced_suede_armor
+    quote_hash: F28734B52FCDCA9D6137CE53AA420DFE053F4851DBAC974DFCC9BCBDD1735111
+    quote: 强化绒面甲 | 躯干 | 护 16 | 重 2.3 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#studded_steppe_leather
+    quote_hash: DFA18518A6AA48C76CE0A13AEB364F0BCD1749B22AE4FEA7A49F827B80B0F05A
+    quote: 镶钉皮甲 | 躯干 | 护 14 | 重 2.4 | 材质 皮 | 属 khuzait
+  - source_id: source.calradia.game.items-armor
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+    locator: bannerlord.items.xml#khuzait_belt_leather
+    quote_hash: B45E8B8A42EDDEA21141C434C00F94BAB12355DB3288A34EE5E05674B52B4444
+    quote: 护镜腰带外套 | 躯干 | 护 8 | 重 2.4 | 材质 皮 | 属 khuzait | 分男女
+  expressions:
+  - id: expr.weapon-armor-torso-leather-khuzait-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 草原上铁贵、皮贱。我们的做法是皮打底、铁补心——护心镜那块圆铁正好护住心口，其余地方靠皮。护心镜皮甲十五，最厚的做到三十四，穿上骑马也不碍事。
+    sources:
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#khuzait_sturdy_armor
+      quote_hash: 67B8EE27C460872BA35E9FA1928C5A51F30B6430C7AF6D66E58B3BACE26C327A
+      quote: 护心镜皮甲 | 躯干 | 护 15 | 重 2.4 | 材质 皮 | 属 khuzait | 分男女
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#khuzait_leather_stitched
+      quote_hash: 68E43E2F11AE359A24026C635699152D1DAE4955848062F29BA056CA9C4D519E
+      quote: 厚布面铁甲背心 | 躯干 | 护 34 | 重 4.5 | 材质 皮 | 属 empire
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#reinforced_suede_armor
+      quote_hash: F28734B52FCDCA9D6137CE53AA420DFE053F4851DBAC974DFCC9BCBDD1735111
+      quote: 强化绒面甲 | 躯干 | 护 16 | 重 2.3 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#studded_steppe_leather
+      quote_hash: DFA18518A6AA48C76CE0A13AEB364F0BCD1749B22AE4FEA7A49F827B80B0F05A
+      quote: 镶钉皮甲 | 躯干 | 护 14 | 重 2.4 | 材质 皮 | 属 khuzait
+    - source_id: source.calradia.game.items-armor
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: CA7CB3A2B99E1002CA99608F18008918849B6EFACBE7A8B495198B5668E022F2
+      locator: bannerlord.items.xml#khuzait_belt_leather
+      quote_hash: B45E8B8A42EDDEA21141C434C00F94BAB12355DB3288A34EE5E05674B52B4444
+      quote: 护镜腰带外套 | 躯干 | 护 8 | 重 2.4 | 材质 皮 | 属 khuzait | 分男女
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    denies: []

@@ -1,0 +1,284 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-crossbow
+title:
+  zh-CN: 弩
+  en: Crossbow
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 弩
+  - 劲弩
+  - 征召弩手
+  en:
+  - Crossbow
+  - Arbalest
+summary:
+  zh-CN: 弩：卡拉德弩砲的手持版本——威力大、上手快，庄稼汉训练数日即可上阵；瓦兰迪亚凭列装弩与系统训练建立海量征召弩手，南瓦兰迪亚劲弩手名满大陆；帝国限量引进，草原与林中民族各有取舍。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: f6ee4a2afa309b794f12fddbb3c185c94500071365f74cd7655aede539ed3b56
+  locator: bannerlord.db#localization.5WMHiC9P
+  quote_hash: 51EC0B75103E9433E1D2A6A1E0393B7BF7828A1F156A38D1F55B24F22730621E
+  quote: 瓦兰迪亚的军阀们发现，虽然征召农民是不得已而为之的恶行，但通过弩的列装和系统训练，还是能够让他们发挥作用。这种武器本质上是一种可怕的卡拉德弩砲的手持版本，凭借它，瓦兰迪亚劲弩手在如今最重型的盔甲上也能打出一个洞来。
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_弩__弩.json#/Variants/1/Content
+  quote_hash: C30954C885AA9B55C4366BB19CBFB3E926A639A4BFCFB1E5C88AE3159D4333B5
+  quote: 别的国家养弓箭手得从小练，我们养弩手几周就够。这就是为什么瓦兰迪亚的弩手比谁家都多——我们不是靠武艺，是靠工艺
+- source_id: source.calradia.game.lore.war1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: f6ee4a2afa309b794f12fddbb3c185c94500071365f74cd7655aede539ed3b56
+  locator: bannerlord.db#localization.qzsjGcEz
+  quote_hash: EFF9C068531647302AB170C1672B8E7E32B61EEF69920AE7AC38689CB94B0FFB
+  quote: 南瓦兰迪亚是个风景如画的田园天堂，当地有一项传统，那就是培养全卡拉迪亚最优秀的劲弩手。无论是作为雇佣兵，还是作为训练全瓦兰迪亚弩手的教官，他们都炙手可热。这些人技艺精湛，无论是全速冲锋而来的骑士，还是躲在城垛后放箭的长弓手，他们都能冷静应对。
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_弩__弩.json#/Variants/2/Content
+  quote_hash: 86B6532F2B333D7252DDF0A8F22BB99C87FED69C89C898D2E96E4B49ABB30715
+  quote: 我家里就有一把，轻弩，挂在灶台边上的墙上，下雨天拿出来擦擦。村里发下来的，说是战时征召用的
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_弩__弩.json#/Variants/4/Content
+  quote_hash: 969F93CB36F2C5E1720523A293AFE01EAD4F5CF4323E759006C9DF86E2EBEEFA
+  quote: 一个奴隶拿弩能射死一个贵族，这种事在帝国有先例，元老院的老爷爷们不喜欢
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_弩__弩.json#/Variants/11/Content
+  quote_hash: 187BBF6A262A5C0C727C4C8934E0E0C41FC53DA385A503235C48DDC5B4C34F23
+  quote: 长老拎起来翻了个面，说这东西没有灵魂，弓有弓灵，弩没有
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_弩__弩.json#/Variants/12/Content
+  quote_hash: 6E329943F00E9305392287204FB8993724CE1724F0FBBB4142DC80D896C21BED
+  quote: 但库赛特战士不拿弩。弩装填太慢
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_弩__弩.json#/Variants/0/Content
+  quote_hash: 709ABF118B4C969094F68546BE8F6D337A5A412EB798C4DA27CE6D7ACF1F9DC5
+  quote: 什么是弩？不知道
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.weapon-crossbow-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 弩本质上是一种可怕的卡拉德弩砲的手持版本：瓦兰迪亚军阀发现，征召农民虽是不得已，但通过弩的列装和系统训练能让农兵发挥作用——劲弩手在最重的盔甲上也能击穿；南瓦兰迪亚有培养全卡拉迪亚最优秀劲弩手的传统，无论受雇为佣兵还是担任教官都炙手可热；「劲弩」为卡拉迪亚最强弩，弓臂加强、有效射程提高。
+  sources:
+  - source_id: source.calradia.game.lore.war1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: f6ee4a2afa309b794f12fddbb3c185c94500071365f74cd7655aede539ed3b56
+    locator: bannerlord.db#localization.5WMHiC9P
+    quote_hash: 51EC0B75103E9433E1D2A6A1E0393B7BF7828A1F156A38D1F55B24F22730621E
+    quote: 瓦兰迪亚的军阀们发现，虽然征召农民是不得已而为之的恶行，但通过弩的列装和系统训练，还是能够让他们发挥作用。这种武器本质上是一种可怕的卡拉德弩砲的手持版本，凭借它，瓦兰迪亚劲弩手在如今最重型的盔甲上也能打出一个洞来。
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_弩__弩.json#/Variants/1/Content
+    quote_hash: C30954C885AA9B55C4366BB19CBFB3E926A639A4BFCFB1E5C88AE3159D4333B5
+    quote: 别的国家养弓箭手得从小练，我们养弩手几周就够。这就是为什么瓦兰迪亚的弩手比谁家都多——我们不是靠武艺，是靠工艺
+  - source_id: source.calradia.game.lore.war1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: f6ee4a2afa309b794f12fddbb3c185c94500071365f74cd7655aede539ed3b56
+    locator: bannerlord.db#localization.qzsjGcEz
+    quote_hash: EFF9C068531647302AB170C1672B8E7E32B61EEF69920AE7AC38689CB94B0FFB
+    quote: 南瓦兰迪亚是个风景如画的田园天堂，当地有一项传统，那就是培养全卡拉迪亚最优秀的劲弩手。无论是作为雇佣兵，还是作为训练全瓦兰迪亚弩手的教官，他们都炙手可热。这些人技艺精湛，无论是全速冲锋而来的骑士，还是躲在城垛后放箭的长弓手，他们都能冷静应对。
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_弩__弩.json#/Variants/2/Content
+    quote_hash: 86B6532F2B333D7252DDF0A8F22BB99C87FED69C89C898D2E96E4B49ABB30715
+    quote: 我家里就有一把，轻弩，挂在灶台边上的墙上，下雨天拿出来擦擦。村里发下来的，说是战时征召用的
+  expressions:
+  - id: expr.weapon-crossbow-essence-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 弩就是拿在手上的小弩砲。瓦兰迪亚人把它发给征召来的庄稼汉，练几天就能上阵——甲再厚也扛不住它抵近一箭。
+    sources:
+    - source_id: source.calradia.game.lore.war1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: f6ee4a2afa309b794f12fddbb3c185c94500071365f74cd7655aede539ed3b56
+      locator: bannerlord.db#localization.5WMHiC9P
+      quote_hash: 51EC0B75103E9433E1D2A6A1E0393B7BF7828A1F156A38D1F55B24F22730621E
+      quote: 瓦兰迪亚的军阀们发现，虽然征召农民是不得已而为之的恶行，但通过弩的列装和系统训练，还是能够让他们发挥作用。这种武器本质上是一种可怕的卡拉德弩砲的手持版本，凭借它，瓦兰迪亚劲弩手在如今最重型的盔甲上也能打出一个洞来。
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    denies: []
+  - id: expr.weapon-crossbow-vlandia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 弩最大的好处不是威力，是省心：上个月还在晒麦子的小伙，这个月就能在阵地上扣扳机。别国养弓手得从小练，我们养弩手几周就够——瓦兰迪亚弩手比谁家都多，不是靠武艺，是靠工艺。南边那几个谷地更出了名：全卡拉迪亚最好的劲弩手都从那儿出来，佣兵也好教官也好，抢着请。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_弩__弩.json#/Variants/1/Content
+      quote_hash: C30954C885AA9B55C4366BB19CBFB3E926A639A4BFCFB1E5C88AE3159D4333B5
+      quote: 别的国家养弓箭手得从小练，我们养弩手几周就够。这就是为什么瓦兰迪亚的弩手比谁家都多——我们不是靠武艺，是靠工艺
+    - source_id: source.calradia.game.lore.war1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: f6ee4a2afa309b794f12fddbb3c185c94500071365f74cd7655aede539ed3b56
+      locator: bannerlord.db#localization.qzsjGcEz
+      quote_hash: EFF9C068531647302AB170C1672B8E7E32B61EEF69920AE7AC38689CB94B0FFB
+      quote: 南瓦兰迪亚是个风景如画的田园天堂，当地有一项传统，那就是培养全卡拉迪亚最优秀的劲弩手。无论是作为雇佣兵，还是作为训练全瓦兰迪亚弩手的教官，他们都炙手可热。这些人技艺精湛，无论是全速冲锋而来的骑士，还是躲在城垛后放箭的长弓手，他们都能冷静应对。
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+  - id: expr.weapon-crossbow-levy-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 村里发的弩就挂在灶台边上，下雨天擦擦。农闲练两天，对着草靶子瞄——不讲天分，手指头扣得动就行。真打起来，咱庄稼汉拿弩也能顶个人头。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_弩__弩.json#/Variants/2/Content
+      quote_hash: 86B6532F2B333D7252DDF0A8F22BB99C87FED69C89C898D2E96E4B49ABB30715
+      quote: 我家里就有一把，轻弩，挂在灶台边上的墙上，下雨天拿出来擦擦。村里发下来的，说是战时征召用的
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+- id: assertion.weapon-crossbow-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 各方对弩的态度迥异：帝国经阿雷尼科斯皇帝推荐引进但元老院决议不全面换装——忌惮「奴隶拿弩能射死贵族」的先例，只给辅助部队配；巴旦尼亚视弩为无灵魂的不祥之物，缴获必砸碎；库赛特承认弩射固定目标很准但马背上使不上劲，仅辎重营配备；达西人则根本不知道弩为何物。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_弩__弩.json#/Variants/4/Content
+    quote_hash: 969F93CB36F2C5E1720523A293AFE01EAD4F5CF4323E759006C9DF86E2EBEEFA
+    quote: 一个奴隶拿弩能射死一个贵族，这种事在帝国有先例，元老院的老爷爷们不喜欢
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_弩__弩.json#/Variants/11/Content
+    quote_hash: 187BBF6A262A5C0C727C4C8934E0E0C41FC53DA385A503235C48DDC5B4C34F23
+    quote: 长老拎起来翻了个面，说这东西没有灵魂，弓有弓灵，弩没有
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_弩__弩.json#/Variants/12/Content
+    quote_hash: 6E329943F00E9305392287204FB8993724CE1724F0FBBB4142DC80D896C21BED
+    quote: 但库赛特战士不拿弩。弩装填太慢
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_弩__弩.json#/Variants/0/Content
+    quote_hash: 709ABF118B4C969094F68546BE8F6D337A5A412EB798C4DA27CE6D7ACF1F9DC5
+    quote: 什么是弩？不知道
+  expressions:
+  - id: expr.weapon-crossbow-empire-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帝国引进了弩，但没全学。元老院当年议过全面换装，阿雷尼科斯皇帝拍板：不要。毛病不在弩，在军制——军团靠重步兵立国，更麻烦的是弩太容易让普通人变强：奴隶拿弩能射死贵族，有先例。所以只用不敢扬，配给辅助部队。前线指挥官私下都认好用，就是数量不够。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_弩__弩.json#/Variants/4/Content
+      quote_hash: 969F93CB36F2C5E1720523A293AFE01EAD4F5CF4323E759006C9DF86E2EBEEFA
+      quote: 一个奴隶拿弩能射死一个贵族，这种事在帝国有先例，元老院的老爷爷们不喜欢
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+  - id: expr.weapon-crossbow-battania-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 弩是瓦兰迪亚人的东西，咱不碰。长老说那玩意儿没有灵魂——射箭不费力就是不诚心，山神不收。缴来的弩当场砸碎，铁件埋寨子外头，埋的人还得洗三遍手。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_弩__弩.json#/Variants/11/Content
+      quote_hash: 187BBF6A262A5C0C727C4C8934E0E0C41FC53DA385A503235C48DDC5B4C34F23
+      quote: 长老拎起来翻了个面，说这东西没有灵魂，弓有弓灵，弩没有
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.battania
+    denies: []
+  - id: expr.weapon-crossbow-khuzait-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 弩不是草原的东西——装填得站地上踩住拉弦，马背上使不上劲。守营门、盯哨位倒能用，可库赛特战士不拿它。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_弩__弩.json#/Variants/12/Content
+      quote_hash: 6E329943F00E9305392287204FB8993724CE1724F0FBBB4142DC80D896C21BED
+      quote: 但库赛特战士不拿弩。弩装填太慢
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.khuzait
+    denies: []
+  - id: expr.weapon-crossbow-darshi-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 弩？那是什么？没听说过。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_弩__弩.json#/Variants/0/Content
+      quote_hash: 709ABF118B4C969094F68546BE8F6D337A5A412EB798C4DA27CE6D7ACF1F9DC5
+      quote: 什么是弩？不知道
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.darshi
+    denies: []

@@ -1,0 +1,152 @@
+{
+ "cards": [
+  {
+   "slug": "head-cloth-coif",
+   "zh": "布制围帽与头巾",
+   "en": "Cloth Coifs and Head Wraps",
+   "al_zh": ["布制围帽与头巾", "围帽", "头巾", "布制围帽", "缠裹包头巾", "希贾布头巾", "库菲耶头巾", "朝圣风帽", "布制风帽", "头饰"],
+   "al_en": ["Cloth Coif", "Head Wrap", "Headcloth", "Hijab", "Keffiyeh", "Cloth Hood", "Headwear"],
+   "summary": "护头值只在一到九之间的布制头饰，挡不了刀锋，却挡得住日头、风沙与旁人的眼光——卡拉迪亚最普遍的一件东西，也是唯一一件人人都有、人人不同的东西。",
+   "asserts": [
+    {
+     "text": "布制围帽与头巾是卡拉迪亚最普遍的护头物，却几乎谈不上防护：护头值位于一到九之间，挡不住劈砍，用处是遮阳、挡沙、束住头发，兼作身份与风俗的标记。形制分南北两路——北方诸国用一圈厚布裹住头顶与耳根（布制围帽、皮制围帽、系带布制围帽），南方阿塞莱一带用宽幅布绕过颅顶、只留面部在外（编织头巾、希贾布头巾、丝带库菲耶头巾）；妇人的款式更宽更长，山民的包头巾则缠得极紧。",
+     "refs": ["woven_turban", "wrapped_headcloth", "imperial_cloth_coif", "laced_cloth_coif", "arming_coif", "arming_cap"],
+     "exprs": [
+      {"tag": "rumor", "layer": "rumor", "grants": "rumor",
+       "text": "一块布而已，能挡什么。可地里干活离不了它——太阳毒的时候把脖子后头也盖上，起风了往脸上一拉，沙子进不了眼。我们这儿的规矩是婚前裹得紧，婚后裹得松。"},
+      {"tag": "detail", "layer": "detail", "grants": "detail",
+       "text": "布制围帽与头巾按护头值一到九分档，重量多在零点二到零点八之间，材质一律为布；其中填充款例外——填充围帽以厚布纳缝，护头可到十八，是这块地上唯一能当轻甲使的布头饰。市上按布料的幅宽与染工论价，素色最贱，织入金线的专供节庆。"}
+     ]
+    },
+    {
+     "text": "南方的头巾另有讲究：彩色希贾布头巾与希贾布头巾以宽幅布绕过颅顶数次、只留面部，风沙大的日子可以一整幅拉下来蒙住口鼻；丝带库菲耶头巾束得更严实。北方的朝圣风帽与布制风帽则留出肩颈，是行路人与僧侣的常服。",
+     "refs": ["headscarf_d", "aserai_civil_c_head", "pilgrim_hood", "battania_civil_hood"],
+     "exprs": [
+      {"tag": "aserai-rumor", "layer": "rumor", "grants": "rumor", "culture": "aserai",
+       "text": "出门不裹头，就跟没穿衣服一样。沙一起来，一整幅布往脸上一盖，只留两只眼睛；到了人跟前再放下来。我这条是出嫁那年织的，边上的彩线是娘家染的。"},
+      {"tag": "pilgrim-detail", "layer": "detail", "grants": "detail",
+       "text": "朝圣风帽与布制风帽留出肩颈，属于行路人与僧侣的常服；两者护头值都只有二三，胜在透气耐洗。朝圣风帽的垂幅更长，走长途时盖住后颈防日晒，雨季又能临时遮头。"}
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "head-fur-cap",
+   "zh": "毛皮帽",
+   "en": "Fur Caps",
+   "al_zh": ["毛皮帽", "毛帽", "兽皮帽", "游牧毛皮帽", "遮耳毛皮帽", "毛边帽", "翻边毛皮帽", "粗兽皮帽", "厚毛皮风帽", "防寒帽"],
+   "al_en": ["Fur Cap", "Fur Hat", "Fur Hood", "Fur Rimmed Cap", "Roughhide Cap", "Winter Headgear"],
+   "summary": "整张兽皮缝成的帽子，护头七到十三——抵不住刀，抵得住冻。斯特吉亚的款式垂耳片，库赛特的镶一圈兽毛，巴旦尼亚的干脆缝进盔里。",
+   "asserts": [
+    {
+     "text": "毛皮帽是北方与草原的头等防寒物：以整张兽皮或厚呢包缝而成，护头值位于七到十三之间，材质多为皮，少数为布。它挡不住刀锋，用处是在风雪里保住耳朵与后脑——斯特吉亚的款式在两侧垂下耳片（遮耳毛皮帽、毛边帽、翻边毛皮帽），库赛特的叫游牧毛皮帽，口沿镶一圈兽毛；越往南越少见，阿塞莱与帝国腹地几乎没有。",
+     "refs": ["nordic_leather_cap", "northern_fur_cap", "upturned_fur_cap", "fur_hat", "nordic_fur_cap"],
+     "exprs": [
+      {"tag": "sturgia-rumor", "layer": "rumor", "grants": "rumor", "culture": "sturgia",
+       "text": "真冻人的不是雪，是风。帽子两边的耳片翻下来把耳朵压住，脖子后头再盖一层，人才走得动路。这顶是我爹那张狼皮剩的一块，我娘缝的。"},
+      {"tag": "khuzait-rumor", "layer": "rumor", "grants": "rumor", "culture": "khuzait",
+       "text": "草原上风从四面来，帽沿一圈毛才顶事。骑马的时候毛压住额头，眼睛不至于被风刮得流泪。到了夏天就收进箱子里，等第一场雪再拿出来。"},
+      {"tag": "detail", "layer": "detail", "grants": "detail",
+       "text": "毛皮帽的护头值集中在七到十，重量仅零点三到零点六，属全库最轻的一档——轻到可以整天戴着不摘。用料决定价钱：羊皮最普通，翻边毛皮帽用整条毛边包口，厚毛皮风帽与翻檐毛皮风帽连肩颈一起盖住，价高一等。"}
+     ]
+    },
+    {
+     "text": "毛皮与铁并不冲突，越往北越是合着用。巴旦尼亚的帽配毛皮围帽把一层毛皮缝进帽壳，护头提到了二十；库赛特贵族的毛檐贵族枪骑兵盔则在钢盔上镶一圈毛檐，护头四十五，兼顾冻地与阵仗。",
+     "refs": ["battania_fur_helmet", "khuzait_noble_helmet_with_fur", "plumed_fur_lined_helmet"],
+     "exprs": [
+      {"tag": "battania-detail", "layer": "detail", "grants": "detail", "culture": "battania",
+       "text": "帽配毛皮围帽是本族里最常见的折中做法：外壳仍是布帽，里头衬一层毛皮，护头提到二十，比单戴布帽强一倍不止；缨饰毛皮衬里盔则在外壳上再插缨。冬天的山头一套下来，风从哪儿来都不怕。"}
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "head-kettle",
+   "zh": "锅盔",
+   "en": "Kettle Helmet",
+   "al_zh": ["锅盔", "圆顶锅盔", "带皮革锅盔", "锅盔衬填充帽", "锅盔衬链甲围帽", "宽檐盔", "铁帽"],
+   "al_en": ["Kettle Helmet", "Roundkettle", "Iron Hat", "Wide-Brim Helmet"],
+   "summary": "一只倒扣的铁锅，宽檐把从头顶劈下来的刀顺出去。护头二十二到四十二，看底下垫了什么而定；瓦兰迪亚与帝国的低门槛铁盔。",
+   "asserts": [
+    {
+     "text": "锅盔是一只倒扣的圆锅，宽帽檐自带垂下的角度，把从上方劈落的刀顺势滑开——代价是帘檐撑得开，挡不住正面的直刺。护头值位于二十二到四十二之间，落差全在底下垫的东西上。它是卡拉迪亚门槛最低的铁盔：用铁少、锻打简单，镇上铁匠就能打，因而成了征召兵与守军的常见装备，主要产地是瓦兰迪亚与帝国。",
+     "refs": ["kettle_helmet_with_leather", "leatherlame_roundkettle", "kettle_helmet_over_padded_cap", "guards_kettle_over_padded_coif"],
+     "exprs": [
+      {"tag": "rumor", "layer": "rumor", "grants": "rumor",
+       "text": "村里征兵发下来的就是这口锅。扣上往下一拉，雨不淋头，上头的刀也顺着边滑走——就是别让人从正面捅你。老铁匠说这玩意儿是堡里退下来的，边上还磕过。"},
+      {"tag": "vlandia-detail", "layer": "detail", "grants": "detail", "culture": "vlandia",
+       "text": "瓦兰迪亚的锅盔分两路：一路是带皮革锅盔，帽壳下缝一层皮革，护头三十三；一路是衬款，帽壳底下再垫填充帽、填充布或系带围帽，护头同样是三十三，靠的是垫层的厚薄。圆顶锅盔走的是另一条形制，顶更圆、檐更窄，护头三十六，多给守城的人用。"}
+     ]
+    },
+    {
+     "text": "锅盔最见功夫的地方在'衬'：同一只帽壳，底下垫填充帽得护头三十三，垫链甲围帽就能到三十八。它因此成为本作叠穿做法最常用的外壳——铁帽负责滑开刀锋，底下的布或铁环负责接住剩下的力道。",
+     "refs": ["kettle_helmet_over_padded_cloth", "guards_kettle_over_laced_coif", "guards_kettle_over_mail_coif", "roundkettle_over_imperial_mail"],
+     "exprs": [
+      {"tag": "empire-detail", "layer": "detail", "grants": "detail", "culture": "empire",
+       "text": "帝国沿用了锅盔的形制，改法是往下垫：圆顶锅盔衬链甲把帽壳扣在链甲围帽上，护头三十四；再重一档的锅盔衬链甲围帽做到三十八。守堡的兵多半这么戴——上头滑刀、下头挡矢，两层的分量加起来还不到三公斤。"}
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "head-nasal",
+   "zh": "护鼻盔",
+   "en": "Nasal Helmet",
+   "al_zh": ["护鼻盔", "护鼻钢帽", "军团盔", "鼻护盔", "重型鼻护盔", "链甲护鼻盔", "阔顶盔"],
+   "al_en": ["Nasal Helmet", "Nasalhelm", "Legionary Helm", "Spangenhelm"],
+   "summary": "顶上垂一根铁条到鼻梁——砍向面门的刀先撞上它。圆顶、后沿遮颈，帝国的正统形制；斯特吉亚把它做厚，并惯于在底下垫皮革、填充帽或链甲。",
+   "asserts": [
+    {
+     "text": "护鼻盔的本体是一顶圆顶或微尖的帽壳，后沿向下包住颈项，正面垂一根铁条压到鼻梁——砍向面门的刀会先撞上这根铁条。护头值从十八一路做到五十一，取决于壳厚与垫层。帝国的军团盔是这一路的正统：壳薄、铁条细、重量轻，配给军团步卒；斯特吉亚的护鼻钢帽壳更厚，还惯于在底下垫皮革、填充帽或链甲。",
+     "refs": ["imperial_nasal_helm", "sturgian_helmet_base", "heavy_nasalhelm_over_imperial_leather"],
+     "exprs": [
+      {"tag": "rumor", "layer": "rumor", "grants": "rumor",
+       "text": "鼻梁上那道铁条看着碍事，真挨过一刀的人才知道好。对面从上头劈下来，铁条一挡，刀就偏到腮上去了；要是没这道条子，那一下就落在门牙上。"},
+      {"tag": "empire-detail", "layer": "detail", "grants": "detail", "culture": "empire",
+       "text": "军团盔是帝国军械的定式：圆顶、后沿遮颈、前额一根铁条，护头三十六，重量不到两公斤，步卒列阵时整队都戴它。它不是最厚的，胜在制式统一——同一套模具打出来的壳子，坏了换一顶就是，不必量身改。"},
+      {"tag": "sturgia-detail", "layer": "detail", "grants": "detail", "culture": "sturgia",
+       "text": "斯特吉亚的做法是把这一路加厚再往下垫。护鼻钢帽护头三十五；重型鼻护盔外面再裹一层，垫皮革与垫填充帽都是四十八，垫链甲则到五十一。同一顶壳子靠垫层分出三档价钱，这是北地铁匠的看家本事。"}
+     ]
+    },
+    {
+     "text": "护鼻盔与叠穿的关系最紧：同一款帽壳，单戴是护头十八到三十几，垫上皮革或填充帽升到四十八，垫链甲到五十一。链甲护鼻盔一类更是把两者缝成一件，护头做到四十九。",
+     "refs": ["heavy_nasalhelm_over_imperial_padding", "heavy_nasalhelm_over_imperial_mail", "sturgian_helmet_open"],
+     "exprs": [
+      {"tag": "detail", "layer": "detail", "grants": "detail",
+       "text": "买护鼻盔的人先问壳子有多厚，行家先问底下垫不垫。单戴的轻型款式护头不到二十五，垫满的一件能过五十——差的那二十几点全在垫层上。市上因此常拆开卖：壳子归壳子，围帽与链甲另算。"}
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "head-closed",
+   "zh": "全覆面盔",
+   "en": "Closed Helmet",
+   "al_zh": ["全覆面盔", "闭面盔", "眼眶盔", "全覆盔", "覆面盔", "闭面军阀盔", "闭面骑士盔", "护面盔"],
+   "al_en": ["Closed Helmet", "Goggled Helmet", "Full Helm", "Visored Helmet", "Faceguard Helmet"],
+   "summary": "整张脸罩住，只留视缝与呼吸孔——护头能到五十三、五十四，是全库顶格；代价是视野与呼吸。斯特吉亚的卫士与瓦兰迪亚的骑士用它。",
+   "asserts": [
+    {
+     "text": "全覆面盔把整张脸罩住，只在眼位留视缝、在口鼻处留孔——护头值因此做到全库顶格的五十三与五十四，远超任何开面款式。代价同样明确：视野收窄成两条缝，呼吸闷在里面，戴久了耳朵也听不清阵列外的动静。以斯特吉亚的头领与卫士用得最多，瓦兰迪亚的骑士款式则带可翻起的护面板，行军时掀开透气。",
+     "refs": ["sturgian_helmet_closed", "sturgian_helmet_b_close", "vlandian_faceguard_helmet_a"],
+     "exprs": [
+      {"tag": "rumor", "layer": "rumor", "grants": "rumor",
+       "text": "那种盔连脸都不露，只留两条缝看人。站到跟前你都不知道他在看谁。听老兵说戴着它冲阵最稳，就是喘不上气——打完一场得赶紧掀开。"},
+      {"tag": "sturgia-rumor", "layer": "rumor", "grants": "rumor", "culture": "sturgia",
+       "text": "头领的盔整张脸都盖住，风吹不进来。北边的人认这个——脸不露，血不沾，站在盾墙前头才像话。新兵第一回戴多半要晕。"}
+     ]
+    },
+    {
+     "text": "全覆面盔另有一条支流叫眼眶盔：不封整张脸，而是在眼位上做两个凸起的圆罩，形如一对眼眶——视缝比全闭款式宽，防护只在眼周加厚，护头四十九到五十一。它多与链甲同用，闭面链甲眼眶盔即把圆罩、链甲与护鼻合成一件。护面盔是这条路最轻的一档，只护住面门与下颌，护头二十五。",
+     "refs": ["nordic_helmet", "sturgian_helmet_b_close", "helmet_with_faceguard", "decorated_goggled_helmet"],
+     "exprs": [
+      {"tag": "vlandia-detail", "layer": "detail", "grants": "detail", "culture": "vlandia",
+       "text": "骑士用的款式护面板能翻起来。行军和扎营时掀开，见人说话不必摘盔；列阵前落下去扣死，从鼻梁一直护到下巴，护头四十五。做这件的铁匠说，翻轴是最费工的地方——打歪一点就卡。"},
+      {"tag": "detail", "layer": "detail", "grants": "detail",
+       "text": "全覆面盔里最重的一档是闭面装饰眼眶盔，护头五十四，重量三点几公斤，顶上还缀饰条。这类盔多为赏赐或头领自购，极少成批列装——一副壳子的铁，够打三顶圆顶锅盔。"}
+     ]
+    }
+   ]
+  }
+ ]
+}
