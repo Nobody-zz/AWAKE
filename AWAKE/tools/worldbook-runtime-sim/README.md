@@ -96,6 +96,24 @@ AWAKE_GATE_MUTATE_ASSUME_ALLOWED=1 dotnet run -c Release -- identity-gate
 实测（2026-09-17，448 条真包）：不挂语义臂 78 排除行 / 0 泄漏、该知道 180/210；挂上语义臂 **0 泄漏、205/210**
 ⇒ **召回涨 25 行，权限与档位一格没动**。变异检验：泄漏 0→60、点名题失败 0→5、FAIL；去掉开关回绿。
 
+### probe 两档跑法 ＋ 两处仪器修正（2026-09-17）
+
+`probe` 也支持挂语义臂，用来做**同批样本、两档对照**（不挂＝改动前 / 挂＝上线形态）：
+
+```bash
+dotnet run -c Release -- probe <manifest.json> <spec.json> <out-off.json>
+AWAKE_SIM_SEMANTIC=1 dotnet run -c Release -- probe <manifest.json> <spec.json> <out-on.json>
+# 要了却没挂上会直接 PROBE-FAIL 退出，不会静默给你一份「语义臂缺席」的假结果
+```
+
+⚠️ **`probe` 里那两张手抄的「身份 → scope/detail」表已删**（顶层 `CAP` 与 `CapabilityOf`）。
+它们与真件分叉：平表把 `profile.noble` 封在 `detail`，而真件 `WorldbookIdentityCapabilityRules.ResolveNoble`
+对 **45 岁以上贵族给 `secret`** ⇒ 全包唯一一条 secret 档正文永远取不到，「档位闸」整根空转。
+现在**一律走 `CapOf` → 真件**；spec 里显式给 `scope`/`detail` 才是覆盖。**别再往这儿加映射表。**
+
+输出每条新增 **`player_text`**＝本条入参原话（`text` 仍是返回正文）。原先只回正文，
+下游报告只能倒着去抄 spec，**抄错也看不出来**。
+
 ### C 层：接本地模型
 
 ```bash

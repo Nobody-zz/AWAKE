@@ -131,27 +131,31 @@ foreach (var kv in snapshot.Entries)
 }
 Console.WriteLine("  identities: " + string.Join(", ", snapshot.Identities.Keys));
 
-// 身份能力表：取自 src/WorldbookIdentityCapabilityRules.cs（Resolve）
+// 身份能力（scope / detail 上限）：**一律走真件** `WorldbookIdentityCapabilityRules.Resolve`。
 // scope = 该身份的圈层上限（不是地理范围），detail = 该身份的详细度上限。
 // 作者写 grant 时，scope / min_detail 不能超过对应身份的上限，否则该身份永远拿不到。
-var CAP = new Dictionary<string, (string Scope, string Detail)>(StringComparer.OrdinalIgnoreCase)
+//
+// ⚠️ 2026-09-17 红测：这里原先是一张手抄平表，与真件分叉 —— 手抄表把 `profile.noble`
+// 封在 `detail`，而真件 `ResolveNoble` 对 45 岁以上贵族给的是 `secret`，两者都拿 `elite`。
+// 后果：全包唯一一条 secret 档正文（`politics.clans-charas-cortain-secret`）
+// 在验台里永远取不到，「细档有没有漏给低档身份」那根闸整根空转。
+// 手抄表就是平行实现 —— 删掉，只留这一条同源出口。
+(string Scope, string Detail) CapOf(string identity, string role = null, int? age = null, int? management = null)
 {
-    ["profile.commoner"] = ("local", "rumor"),
-    ["profile.villager"] = ("local", "rumor"),
-    ["profile.townsfolk"] = ("regional", "summary"),
-    ["profile.notable"] = ("regional", "detail"),
-    ["profile.headman"] = ("national", "detail"),
-    ["profile.merchant"] = ("faction", "detail"),
-    ["profile.tavernkeeper"] = ("faction", "detail"),
-    ["profile.ransom_broker"] = ("faction", "detail"),
-    ["profile.soldier"] = ("national", "detail"),
-    ["profile.noble"] = ("elite", "detail"),
-    ["profile.noble_high_steward"] = ("elite", "detail"),
-    ["profile.anonymous"] = ("", ""),
-};
-
-(string Scope, string Detail) CapOf(string identity) =>
-    CAP.TryGetValue(identity, out var c) ? c : ("local", "rumor");
+    string tail = identity ?? string.Empty;
+    int cut = tail.LastIndexOf(':');
+    if (cut >= 0 && cut + 1 < tail.Length) tail = tail.Substring(cut + 1);
+    if (tail.StartsWith("profile.", StringComparison.OrdinalIgnoreCase))
+        tail = tail.Substring("profile.".Length);
+    if (!string.IsNullOrWhiteSpace(role)) tail = role;
+    bool noble = StringComparer.Ordinal.Equals(tail, "noble")
+              || StringComparer.Ordinal.Equals(tail, "lord")
+              || StringComparer.Ordinal.Equals(tail, "noble_high_steward")
+              || StringComparer.Ordinal.Equals(tail, "noble_mature");
+    // 缺 age 时给「成年」默认值：贵族 50（稳落 secret 档，这是红测要刺的方向），其余 30。
+    var profile = WorldbookIdentityCapabilityRules.Resolve(tail, noble, age ?? (noble ? 50 : 30), management ?? 0);
+    return (profile.KnowledgeScope, profile.EffectiveDetail);
+}
 
 // requestedDetail = 询问者索要的详细度上限；默认给到 secret（最宽）
 WorldKnowledgeQueryResult Ask(string identity, string requestedDetail, string playerText)
@@ -579,12 +583,20 @@ int RunProbeMode(string[] a)
     var service = new WorldKnowledgeQueryService(snapshot);
     Console.WriteLine($"probe: package={snapshot.PackageId} entries={snapshot.Entries.Count}");
 
+    // 红测两档：不挂语义（＝改动前的现状）／挂上语义（＝今天上线的合并形态）。与 identity-gate 共用同一个挂载函数。
+    if (Environment.GetEnvironmentVariable("AWAKE_SIM_SEMANTIC") == "1")
+    {
+        AttachSemanticArm(service, snapshot);
+        if (!service.HasSemanticIndex) { Console.WriteLine("PROBE-FAIL 语义臂没挂上（要了却没生效）"); return 1; }
+    }
+
     var results = new JArray();
     foreach (var q in spec["queries"] ?? new JArray())
     {
         string identity = q.Value<string>("identity") ?? "";
         string role = q.Value<string>("role") ?? "";
-        (string scope, string detail) = CapabilityOf(identity);
+        // 身份能力走真件；spec 里显式给了 scope/detail 才覆盖（覆盖是刻意的，不是兜底）。
+        (string scope, string detail) = CapOf(identity, role, q.Value<int?>("age"), q["management"] == null ? (int?)null : q.Value<int>("management"));
         if (q["scope"] != null) scope = q.Value<string>("scope");
         if (q["detail"] != null) detail = q.Value<string>("detail");
         var wbq = new WorldbookQuery
@@ -623,6 +635,9 @@ int RunProbeMode(string[] a)
             ["requested_detail"] = wbq.RequestedDetail,
             ["state"] = r.State,
             ["hits"] = new JArray(r.HitIds),
+            // `player_text` = 本条的入参原话（红测报告要能自证"这一条测的是什么"，此前没回显，
+            // 报告只能倒着去抄 spec，抄错也看不出来）。`text` 仍是返回正文，语义不变。
+            ["player_text"] = wbq.PlayerText,
             ["text"] = text
         });
     }
@@ -632,25 +647,7 @@ int RunProbeMode(string[] a)
     return 0;
 }
 
-static (string Scope, string Detail) CapabilityOf(string identity)
-{
-    var cap = identity.Trim().ToLowerInvariant() switch
-    {
-        "profile.commoner" => ("local", "rumor"),
-        "profile.villager" => ("local", "rumor"),
-        "profile.townsfolk" => ("regional", "summary"),
-        "profile.notable" => ("regional", "detail"),
-        "profile.headman" => ("national", "detail"),
-        "profile.merchant" => ("faction", "detail"),
-        "profile.tavernkeeper" => ("faction", "detail"),
-        "profile.ransom_broker" => ("faction", "detail"),
-        "profile.soldier" => ("national", "detail"),
-        "profile.noble" => ("elite", "detail"),
-        "profile.noble_high_steward" => ("elite", "detail"),
-        _ => ("", "")
-    };
-    return cap;
-}
+// （原先这里还有一个手抄的 `CapabilityOf` 平表，2026-09-17 与 `CapOf` 一起收敛成真件出口。）
 
 static string Trunc(string s, int n) => s.Length <= n ? s : s.Substring(0, n) + "...";
 

@@ -1,0 +1,3684 @@
+{
+  "spec": {
+    "targets": "448 条包 ModuleData/Worldbook/packages/calradia",
+    "engine": "NpcDialogueService → WorldKnowledgeQueryService.FindCandidates",
+    "probe": "worldbook-runtime-sim probe（真代码零替身）",
+    "samples": 69
+  },
+  "summaryOff": {
+    "total": 69,
+    "harnessMiss": 0,
+    "graded": 69,
+    "red": 32,
+    "ok": 37,
+    "missRisk": 42,
+    "missRed": 12,
+    "overRisk": 27,
+    "overRed": 20,
+    "byGroup": {
+      "错别字": "2/5",
+      "同音": "1/2",
+      "繁体": "2/4",
+      "空格": "1/4",
+      "标点": "1/7",
+      "简写": "3/6",
+      "大小写": "0/4",
+      "全半角": "1/1",
+      "整句": "0/5",
+      "过匹配": "17/18",
+      "边界": "3/5",
+      "权限档位": "1/8"
+    }
+  },
+  "summaryOn": {
+    "total": 69,
+    "harnessMiss": 0,
+    "graded": 69,
+    "red": 25,
+    "ok": 44,
+    "missRisk": 42,
+    "missRed": 4,
+    "overRisk": 27,
+    "overRed": 21,
+    "byGroup": {
+      "错别字": "1/5",
+      "同音": "0/2",
+      "繁体": "1/4",
+      "空格": "0/4",
+      "标点": "0/7",
+      "简写": "1/6",
+      "大小写": "0/4",
+      "全半角": "1/1",
+      "整句": "0/5",
+      "过匹配": "18/18",
+      "边界": "3/5",
+      "权限档位": "0/8"
+    }
+  },
+  "flips": {
+    "up": [
+      {
+        "no": "KWA4",
+        "group": "错别字",
+        "text": "毛匹",
+        "off": "RED",
+        "on": "OK",
+        "offKind": "漏报",
+        "onKind": ""
+      },
+      {
+        "no": "KWB2",
+        "group": "同音",
+        "text": "拉买萨",
+        "off": "RED",
+        "on": "OK",
+        "offKind": "漏报",
+        "onKind": ""
+      },
+      {
+        "no": "KWC1",
+        "group": "繁体",
+        "text": "閉面軍閥盔",
+        "off": "RED",
+        "on": "OK",
+        "offKind": "漏报",
+        "onKind": ""
+      },
+      {
+        "no": "KWD4",
+        "group": "空格",
+        "text": "拉 迈 萨",
+        "off": "RED",
+        "on": "OK",
+        "offKind": "漏报",
+        "onKind": ""
+      },
+      {
+        "no": "KWE4",
+        "group": "标点",
+        "text": "毛，皮",
+        "off": "RED",
+        "on": "OK",
+        "offKind": "漏报",
+        "onKind": ""
+      },
+      {
+        "no": "KWF2",
+        "group": "简写",
+        "text": "盔阀军面闭",
+        "off": "RED",
+        "on": "OK",
+        "offKind": "漏报",
+        "onKind": ""
+      },
+      {
+        "no": "KWF5",
+        "group": "简写",
+        "text": "皮子",
+        "off": "RED",
+        "on": "OK",
+        "offKind": "漏报",
+        "onKind": ""
+      },
+      {
+        "no": "KWK3",
+        "group": "权限档位",
+        "text": "科尔坦家的帳",
+        "off": "RED",
+        "on": "OK",
+        "offKind": "命中错条目",
+        "onKind": ""
+      }
+    ],
+    "down": []
+  },
+  "tierGatesOff": [
+    {
+      "needle": "毛皮基准价 400",
+      "tier": "detail",
+      "entry": "economy.goods-fur",
+      "appearedAt": [
+        {
+          "no": "KWC4",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWE7",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWG4",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWH2",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWH4",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWI10",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWI12",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWI16",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWJ1",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWJ2",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWJ5",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        }
+      ],
+      "leakedToLow": [],
+      "lowControls": [
+        {
+          "no": "KWK8",
+          "identity": "profile.commoner",
+          "detail": "rumor",
+          "hits": 2,
+          "state": "partial"
+        }
+      ],
+      "vacuous": false
+    },
+    {
+      "needle": "操办科尔坦家的图谋",
+      "tier": "secret",
+      "entry": "politics.clans-charas-cortain-secret",
+      "appearedAt": [
+        {
+          "no": "KWI6",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "secret"
+        },
+        {
+          "no": "KWK1",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "secret"
+        },
+        {
+          "no": "KWK2",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "secret"
+        }
+      ],
+      "leakedToLow": [],
+      "lowControls": [
+        {
+          "no": "KWK4",
+          "identity": "profile.commoner",
+          "detail": "rumor",
+          "hits": 0,
+          "state": "not_found"
+        },
+        {
+          "no": "KWK5",
+          "identity": "profile.commoner",
+          "detail": "rumor",
+          "hits": 0,
+          "state": "not_found"
+        },
+        {
+          "no": "KWK6",
+          "identity": "profile.commoner",
+          "detail": "rumor",
+          "hits": 0,
+          "state": "not_found"
+        },
+        {
+          "no": "KWK7",
+          "identity": "profile.commoner",
+          "detail": "rumor",
+          "hits": 2,
+          "state": "partial"
+        }
+      ],
+      "vacuous": false
+    }
+  ],
+  "tierGatesOn": [
+    {
+      "needle": "毛皮基准价 400",
+      "tier": "detail",
+      "entry": "economy.goods-fur",
+      "appearedAt": [
+        {
+          "no": "KWA4",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWC4",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWE4",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWE7",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWF5",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWG4",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWH2",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWH4",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWI10",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWI12",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWI16",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWJ1",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWJ2",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        },
+        {
+          "no": "KWJ5",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "detail"
+        }
+      ],
+      "leakedToLow": [],
+      "lowControls": [
+        {
+          "no": "KWK8",
+          "identity": "profile.commoner",
+          "detail": "rumor",
+          "hits": 3,
+          "state": "partial"
+        }
+      ],
+      "vacuous": false
+    },
+    {
+      "needle": "操办科尔坦家的图谋",
+      "tier": "secret",
+      "entry": "politics.clans-charas-cortain-secret",
+      "appearedAt": [
+        {
+          "no": "KWI6",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "secret"
+        },
+        {
+          "no": "KWK1",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "secret"
+        },
+        {
+          "no": "KWK2",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "secret"
+        },
+        {
+          "no": "KWK3",
+          "identity": "profile.noble",
+          "detail": "secret",
+          "tier": "secret"
+        }
+      ],
+      "leakedToLow": [],
+      "lowControls": [
+        {
+          "no": "KWK4",
+          "identity": "profile.commoner",
+          "detail": "rumor",
+          "hits": 1,
+          "state": "partial"
+        },
+        {
+          "no": "KWK5",
+          "identity": "profile.commoner",
+          "detail": "rumor",
+          "hits": 0,
+          "state": "not_found"
+        },
+        {
+          "no": "KWK6",
+          "identity": "profile.commoner",
+          "detail": "rumor",
+          "hits": 1,
+          "state": "partial"
+        },
+        {
+          "no": "KWK7",
+          "identity": "profile.commoner",
+          "detail": "rumor",
+          "hits": 2,
+          "state": "partial"
+        }
+      ],
+      "vacuous": false
+    }
+  ],
+  "rowsOff": [
+    {
+      "no": "KWA1",
+      "group": "错别字",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "伐/阀 同音",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "state": "partial",
+      "playerText": "闭面军伐盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWA2",
+      "group": "错别字",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "魁/盔 形近",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:geography.lakes-llyn-modris",
+        "awake:entry:geography.towns-ocs-hall"
+      ],
+      "state": "partial",
+      "playerText": "闭面军阀魁",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWA3",
+      "group": "错别字",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "莎/萨 同音",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.castles-shibal-zumr-castle",
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "state": "partial",
+      "playerText": "拉迈莎",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWA4",
+      "group": "错别字",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "匹/皮 同音",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "漏报",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "毛匹",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWA5",
+      "group": "错别字",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:war.military-sturgia"
+      ],
+      "note": "基/吉 同音",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "命中错条目",
+      "hits": [
+        "awake:entry:culture.tales-kachar-rulership",
+        "awake:entry:economy.items-heavy_round_shield",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:geography.castles-aster-castle",
+        "awake:entry:geography.castles-corenia-castle"
+      ],
+      "state": "partial",
+      "playerText": "斯特基亚",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWB1",
+      "group": "同音",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "亏/盔 同音 kuī",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:geography.lakes-llyn-modris",
+        "awake:entry:geography.towns-ocs-hall"
+      ],
+      "state": "partial",
+      "playerText": "闭面军阀亏",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWB2",
+      "group": "同音",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "买/迈 同音",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "漏报",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "拉买萨",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWC1",
+      "group": "繁体",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "繁体",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "漏报",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "閉面軍閥盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWC2",
+      "group": "繁体",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "繁体",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "漏报",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "拉邁薩",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWC3",
+      "group": "繁体",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:war.military-sturgia"
+      ],
+      "note": "繁体",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:war.military-sturgia",
+        "awake:entry:culture.tales-kachar-rulership",
+        "awake:entry:economy.items-heavy_round_shield",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:geography.castles-kranirog-castle"
+      ],
+      "state": "partial",
+      "playerText": "斯特吉亞軍事力量",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWC4",
+      "group": "繁体",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "简体对照（该词繁简同形）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-deriat"
+      ],
+      "state": "partial",
+      "playerText": "毛皮",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWD1",
+      "group": "空格",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "词中空格",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:geography.lakes-llyn-modris",
+        "awake:entry:geography.towns-ocs-hall"
+      ],
+      "state": "partial",
+      "playerText": "闭面 军阀盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWD2",
+      "group": "空格",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "多处空格",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "state": "partial",
+      "playerText": "闭 面军 阀盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWD3",
+      "group": "空格",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "词中 TAB",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:geography.lakes-llyn-modris",
+        "awake:entry:geography.towns-ocs-hall"
+      ],
+      "state": "partial",
+      "playerText": "闭面\t军阀盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWD4",
+      "group": "空格",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "逐字空格",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "漏报",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "拉 迈 萨",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE1",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "词中逗号",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:geography.lakes-llyn-modris",
+        "awake:entry:geography.towns-ocs-hall"
+      ],
+      "state": "partial",
+      "playerText": "闭面，军阀盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE2",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "词中连字符",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:geography.lakes-llyn-modris",
+        "awake:entry:geography.towns-ocs-hall"
+      ],
+      "state": "partial",
+      "playerText": "闭面-军阀盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE3",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "词中逗号",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.castles-shibal-zumr-castle",
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "state": "partial",
+      "playerText": "拉，迈萨",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE4",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "词中逗号",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "漏报",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "毛，皮",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE5",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "词后句号（阳性对照）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "state": "partial",
+      "playerText": "闭面军阀盔。",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE6",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "词前逗号（阳性对照）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.villages-lamesa",
+        "awake:entry:geography.castles-shibal-zumr-castle"
+      ],
+      "state": "partial",
+      "playerText": "，拉迈萨",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE7",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "词后疑问+叹（阳性对照）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-deriat"
+      ],
+      "state": "partial",
+      "playerText": "毛皮？！",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWF1",
+      "group": "简写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "截断前二字",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "state": "partial",
+      "playerText": "闭面",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWF2",
+      "group": "简写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "倒装",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "漏报",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "盔阀军面闭",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWF3",
+      "group": "简写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "拼音首字母",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "漏报",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "bmjfk",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWF4",
+      "group": "简写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "截断",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.villages-lamesa",
+        "awake:entry:geography.castles-shibal-zumr-castle"
+      ],
+      "state": "partial",
+      "playerText": "拉迈",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWF5",
+      "group": "简写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "别称",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "漏报",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "皮子",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWF6",
+      "group": "简写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:war.military-sturgia"
+      ],
+      "note": "势力名截断",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:war.military-sturgia"
+      ],
+      "state": "partial",
+      "playerText": "斯特吉亚",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWG1",
+      "group": "大小写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "全小写",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "state": "partial",
+      "playerText": "closed warlord helmet",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWG2",
+      "group": "大小写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "全大写",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "state": "partial",
+      "playerText": "CLOSED WARLORD HELMET",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWG3",
+      "group": "大小写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "全小写",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.castles-shibal-zumr-castle",
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "state": "partial",
+      "playerText": "lamesa",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWG4",
+      "group": "大小写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "全大写",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:geography.villages-etirfurd",
+        "awake:entry:geography.villages-furbec"
+      ],
+      "state": "partial",
+      "playerText": "FUR",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWG5",
+      "group": "全半角",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "全角字母",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "漏报",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "Ｃｌｏｓｅｄ Ｗａｒｌｏｒｄ Ｈｅｌｍｅｔ",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWH1",
+      "group": "整句",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "带名字的整句",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "state": "partial",
+      "playerText": "闭面军阀盔是啥玩意？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWH2",
+      "group": "整句",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "不带名字的描述型",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:geography.castles-kaysar-castle",
+        "awake:entry:geography.castles-uqba-castle"
+      ],
+      "state": "partial",
+      "playerText": "北方头领戴的那种连脸都罩住的盔是啥？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWH3",
+      "group": "整句",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "不带名字的描述型",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.villages-lamesa",
+        "awake:entry:geography.castles-barihal-castle",
+        "awake:entry:geography.castles-sahel-castle",
+        "awake:entry:geography.villages-hamoshawat",
+        "awake:entry:economy.items-desert_lamellar"
+      ],
+      "state": "partial",
+      "playerText": "阿塞莱最好的马在哪儿吃草？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWH4",
+      "group": "整句",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "＝今天题集里的真题",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-velvet",
+        "awake:entry:geography.castles-kaysar-castle"
+      ],
+      "state": "partial",
+      "playerText": "北方有什么又暖又贵的皮货？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWH5",
+      "group": "整句",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:war.military-sturgia"
+      ],
+      "note": "＝今天题集里的真题",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:war.military-sturgia",
+        "awake:entry:war.troops-royal-guard",
+        "awake:entry:economy.goods-velvet",
+        "awake:entry:economy.items-cow",
+        "awake:entry:economy.items-desert_lamellar"
+      ],
+      "state": "partial",
+      "playerText": "盾墙加飞斧是哪个国家的打法？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI1",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet"
+      ],
+      "state": "partial",
+      "playerText": "盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI2",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "state": "partial",
+      "playerText": "军阀",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI3",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet"
+      ],
+      "state": "partial",
+      "playerText": "head",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI4",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet"
+      ],
+      "state": "partial",
+      "playerText": "HeadArmor",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI5",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:war.military-sturgia"
+      ],
+      "state": "partial",
+      "playerText": "sturgian",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI6",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-battania_mercenary_armor",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:politics.territories-dawn-stewardship",
+        "awake:entry:politics.territories-kachar-ownership",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:geography.castles-oristocorys-castle",
+        "awake:entry:geography.castles-shibal-zumr-castle",
+        "awake:entry:politics.clans-charas-cortain-secret",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:geography.castles-llanoc-hen-castle",
+        "awake:entry:geography.castles-thractorae-castle",
+        "awake:entry:economy.items-scale_shoulder_armor",
+        "awake:entry:geography.castles-ain-baliq-castle",
+        "awake:entry:geography.castles-chanopsis-castle",
+        "awake:entry:geography.castles-mecalovea-castle",
+        "awake:entry:geography.castles-ormanfard-castle",
+        "awake:entry:geography.castles-sestadaim-castle",
+        "awake:entry:geography.castles-urikskala-castle",
+        "awake:entry:geography.castles-verecsand-castle",
+        "awake:entry:geography.castles-ab-comer-castle",
+        "awake:entry:geography.castles-ataconia-castle",
+        "awake:entry:geography.castles-druimmor-castle"
+      ],
+      "state": "known",
+      "playerText": "doc",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI7",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:geography.villages-deriat",
+        "awake:entry:geography.villages-ab-comer",
+        "awake:entry:geography.villages-abba",
+        "awake:entry:geography.villages-abghan",
+        "awake:entry:geography.villages-abu-khih",
+        "awake:entry:geography.villages-aegosca",
+        "awake:entry:geography.villages-aeoria",
+        "awake:entry:geography.villages-agalmon",
+        "awake:entry:geography.villages-ain-baliq",
+        "awake:entry:geography.villages-akiser",
+        "awake:entry:geography.villages-alantas",
+        "awake:entry:geography.villages-alatys",
+        "awake:entry:geography.villages-alebat",
+        "awake:entry:geography.villages-alision",
+        "awake:entry:geography.villages-alorstan",
+        "awake:entry:geography.villages-alosea",
+        "awake:entry:geography.villages-alov",
+        "awake:entry:geography.villages-alsasos",
+        "awake:entry:geography.villages-amycon",
+        "awake:entry:geography.villages-andurn",
+        "awake:entry:geography.villages-arpotis",
+        "awake:entry:geography.villages-arromanc",
+        "awake:entry:geography.villages-asalig",
+        "awake:entry:geography.villages-asmait",
+        "awake:entry:geography.villages-aster",
+        "awake:entry:geography.villages-ataconia"
+      ],
+      "state": "partial",
+      "playerText": "村",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI8",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:geography.villages-ab-comer",
+        "awake:entry:geography.villages-abba",
+        "awake:entry:geography.villages-abghan",
+        "awake:entry:geography.villages-abu-khih",
+        "awake:entry:geography.villages-aegosca",
+        "awake:entry:geography.villages-aeoria",
+        "awake:entry:geography.villages-agalmon",
+        "awake:entry:geography.villages-ain-baliq",
+        "awake:entry:geography.villages-akiser",
+        "awake:entry:geography.villages-alantas",
+        "awake:entry:geography.villages-alatys",
+        "awake:entry:geography.villages-alebat",
+        "awake:entry:geography.villages-alision",
+        "awake:entry:geography.villages-alorstan",
+        "awake:entry:geography.villages-alosea",
+        "awake:entry:geography.villages-alov",
+        "awake:entry:geography.villages-alsasos",
+        "awake:entry:geography.villages-amycon",
+        "awake:entry:geography.villages-andurn",
+        "awake:entry:geography.villages-arpotis",
+        "awake:entry:geography.villages-arromanc",
+        "awake:entry:geography.villages-asalig",
+        "awake:entry:geography.villages-asmait",
+        "awake:entry:geography.villages-aster",
+        "awake:entry:geography.villages-ataconia",
+        "awake:entry:geography.villages-ath-cafal"
+      ],
+      "state": "partial",
+      "playerText": "村庄",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI9",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:geography.villages-aeoria",
+        "awake:entry:geography.villages-agalmon",
+        "awake:entry:geography.villages-amycon",
+        "awake:entry:geography.villages-ataconia",
+        "awake:entry:geography.villages-atphynia",
+        "awake:entry:geography.villages-atrion",
+        "awake:entry:geography.villages-bergum",
+        "awake:entry:geography.villages-caira",
+        "awake:entry:geography.villages-chanopsis",
+        "awake:entry:geography.villages-corenia",
+        "awake:entry:geography.villages-dyopalis",
+        "awake:entry:geography.villages-elvania",
+        "awake:entry:geography.villages-epinosa",
+        "awake:entry:geography.villages-ethemisa",
+        "awake:entry:geography.villages-eunalica",
+        "awake:entry:geography.villages-gamardan",
+        "awake:entry:geography.villages-gaos",
+        "awake:entry:geography.villages-garontor",
+        "awake:entry:geography.villages-gersegos",
+        "awake:entry:geography.villages-goleryn",
+        "awake:entry:geography.villages-hertogea",
+        "awake:entry:geography.villages-jogurys",
+        "awake:entry:geography.villages-lavenia",
+        "awake:entry:geography.villages-lochana",
+        "awake:entry:geography.villages-lysia",
+        "awake:entry:geography.villages-masangara",
+        "awake:entry:geography.villages-mecalovea",
+        "awake:entry:geography.villages-melion",
+        "awake:entry:geography.villages-metachia"
+      ],
+      "state": "partial",
+      "playerText": "castle_village",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI10",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.goods-deriat",
+        "awake:entry:economy.goods-fur"
+      ],
+      "state": "partial",
+      "playerText": "皮",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI11",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "货",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI12",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-salt",
+        "awake:entry:economy.goods-silver",
+        "awake:entry:economy.goods-spice",
+        "awake:entry:economy.goods-velvet",
+        "awake:entry:economy.goods-deriat"
+      ],
+      "state": "partial",
+      "playerText": "Goods",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI13",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:war.military-sturgia",
+        "awake:entry:war.military-vlandia",
+        "awake:entry:war.military-khuzait",
+        "awake:entry:war.troops-mamluk"
+      ],
+      "state": "partial",
+      "playerText": "军事",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI14",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:war.military-sturgia",
+        "awake:entry:war.military-vlandia",
+        "awake:entry:war.military-khuzait"
+      ],
+      "state": "partial",
+      "playerText": "力量",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI15",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:politics.territories-dawn-stewardship",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-steppe_war_bow",
+        "awake:entry:war.troops-royal-guard",
+        "awake:entry:war.military-khuzait",
+        "awake:entry:war.military-sturgia",
+        "awake:entry:war.military-vlandia",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:war.troops-mamluk"
+      ],
+      "state": "partial",
+      "playerText": "war",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI16",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-battania_mercenary_armor",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:economy.items-scale_shoulder_armor",
+        "awake:entry:economy.items-heavy_round_shield",
+        "awake:entry:economy.items-desert_lamellar",
+        "awake:entry:economy.items-steppe_war_bow",
+        "awake:entry:economy.items-saddle_horse",
+        "awake:entry:economy.items-crossbow_c",
+        "awake:entry:economy.items-pack_camel",
+        "awake:entry:economy.goods-deriat",
+        "awake:entry:economy.goods-silver",
+        "awake:entry:economy.goods-velvet",
+        "awake:entry:economy.goods-spice",
+        "awake:entry:economy.items-sheep",
+        "awake:entry:economy.goods-salt",
+        "awake:entry:economy.items-mule",
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.items-cow"
+      ],
+      "state": "partial",
+      "playerText": "economy",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI17",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:geography.castles-oristocorys-castle",
+        "awake:entry:geography.castles-shibal-zumr-castle",
+        "awake:entry:geography.castles-llanoc-hen-castle",
+        "awake:entry:geography.castles-thractorae-castle",
+        "awake:entry:geography.castles-ain-baliq-castle",
+        "awake:entry:geography.castles-chanopsis-castle",
+        "awake:entry:geography.castles-mecalovea-castle",
+        "awake:entry:geography.castles-ormanfard-castle",
+        "awake:entry:geography.castles-sestadaim-castle",
+        "awake:entry:geography.castles-urikskala-castle",
+        "awake:entry:geography.castles-verecsand-castle",
+        "awake:entry:geography.castles-ab-comer-castle",
+        "awake:entry:geography.castles-ataconia-castle",
+        "awake:entry:geography.castles-druimmor-castle",
+        "awake:entry:geography.castles-flintolg-castle",
+        "awake:entry:geography.castles-garontor-castle",
+        "awake:entry:geography.castles-gersegos-castle",
+        "awake:entry:geography.castles-hertogea-castle",
+        "awake:entry:geography.castles-kranirog-castle",
+        "awake:entry:geography.castles-mazhadan-castle"
+      ],
+      "state": "partial",
+      "playerText": "geography",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI18",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:politics.throne-paravenos"
+      ],
+      "state": "partial",
+      "playerText": "entry",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWJ1",
+      "group": "边界",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "空串",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:culture.tales-charas-origins",
+        "awake:entry:culture.tales-dawn-taboo",
+        "awake:entry:culture.tales-husn-fulq",
+        "awake:entry:culture.tales-kachar-rulership",
+        "awake:entry:culture.tales-lakonis-red-water",
+        "awake:entry:economy.goods-deriat",
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-salt",
+        "awake:entry:economy.goods-silver",
+        "awake:entry:economy.goods-spice",
+        "awake:entry:economy.goods-velvet",
+        "awake:entry:economy.items-battania_mercenary_armor",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:economy.items-cow",
+        "awake:entry:economy.items-crossbow_c",
+        "awake:entry:economy.items-desert_lamellar",
+        "awake:entry:economy.items-heavy_round_shield",
+        "awake:entry:economy.items-mule",
+        "awake:entry:economy.items-pack_camel",
+        "awake:entry:economy.items-saddle_horse",
+        "awake:entry:economy.items-scale_shoulder_armor",
+        "awake:entry:economy.items-sheep",
+        "awake:entry:economy.items-steppe_war_bow",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:geography.bays-charas",
+        "awake:entry:geography.castles-ab-comer-castle"
+      ],
+      "state": "partial",
+      "playerText": "",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWJ2",
+      "group": "边界",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "纯空格",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:culture.tales-charas-origins",
+        "awake:entry:culture.tales-dawn-taboo",
+        "awake:entry:culture.tales-husn-fulq",
+        "awake:entry:culture.tales-kachar-rulership",
+        "awake:entry:culture.tales-lakonis-red-water",
+        "awake:entry:economy.goods-deriat",
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-salt",
+        "awake:entry:economy.goods-silver",
+        "awake:entry:economy.goods-spice",
+        "awake:entry:economy.goods-velvet",
+        "awake:entry:economy.items-battania_mercenary_armor",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:economy.items-cow",
+        "awake:entry:economy.items-crossbow_c",
+        "awake:entry:economy.items-desert_lamellar",
+        "awake:entry:economy.items-heavy_round_shield",
+        "awake:entry:economy.items-mule",
+        "awake:entry:economy.items-pack_camel",
+        "awake:entry:economy.items-saddle_horse",
+        "awake:entry:economy.items-scale_shoulder_armor",
+        "awake:entry:economy.items-sheep",
+        "awake:entry:economy.items-steppe_war_bow",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:geography.bays-charas",
+        "awake:entry:geography.castles-ab-comer-castle"
+      ],
+      "state": "partial",
+      "playerText": "   ",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWJ3",
+      "group": "边界",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "纯标点",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "？？？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWJ4",
+      "group": "边界",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "拉丁乱码",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "zzzzzz",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWJ5",
+      "group": "边界",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "内部文档 id 直问",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-salt",
+        "awake:entry:economy.goods-silver",
+        "awake:entry:economy.goods-spice",
+        "awake:entry:economy.goods-velvet"
+      ],
+      "state": "partial",
+      "playerText": "doc.economy.goods-fur",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWK1",
+      "group": "权限档位",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "干净问法（阳性对照）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:politics.clans-charas-cortain-secret",
+        "awake:entry:politics.territories-charas-reign"
+      ],
+      "state": "known",
+      "playerText": "科尔坦家的账",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWK2",
+      "group": "权限档位",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "真题问法（阳性对照）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:politics.clans-charas-cortain-secret",
+        "awake:entry:politics.territories-charas-reign"
+      ],
+      "state": "known",
+      "playerText": "戴·科尔坦家靠什么发财？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWK3",
+      "group": "权限档位",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "繁体＋贵族（脏输入阳性对照）",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "命中错条目",
+      "hits": [
+        "awake:entry:politics.territories-charas-reign"
+      ],
+      "state": "partial",
+      "playerText": "科尔坦家的帳",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWK4",
+      "group": "权限档位",
+      "cat": "OVER-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "★ 平民问同一句：整条不该出现",
+      "identity": "profile.commoner",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "科尔坦家的账",
+      "detail": "rumor",
+      "scope": "local",
+      "harness": false
+    },
+    {
+      "no": "KWK5",
+      "group": "权限档位",
+      "cat": "OVER-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "★ 平民＋繁体",
+      "identity": "profile.commoner",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "科尔坦家的帳",
+      "detail": "rumor",
+      "scope": "local",
+      "harness": false
+    },
+    {
+      "no": "KWK6",
+      "group": "权限档位",
+      "cat": "OVER-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "★ 平民＋真题问法",
+      "identity": "profile.commoner",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "戴·科尔坦家靠什么发财？",
+      "detail": "rumor",
+      "scope": "local",
+      "harness": false
+    },
+    {
+      "no": "KWK7",
+      "group": "权限档位",
+      "cat": "OVER-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "★ 平民＋泛词（过匹配 × 权限）",
+      "identity": "profile.commoner",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.towns-charas",
+        "awake:entry:geography.bays-charas"
+      ],
+      "state": "partial",
+      "playerText": "沙拉斯",
+      "detail": "rumor",
+      "scope": "local",
+      "harness": false
+    },
+    {
+      "no": "KWK8",
+      "group": "权限档位",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "平民该拿到 rumor 档",
+      "identity": "profile.commoner",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-deriat"
+      ],
+      "state": "partial",
+      "playerText": "毛皮值钱吗？",
+      "detail": "rumor",
+      "scope": "local",
+      "harness": false
+    }
+  ],
+  "rowsOn": [
+    {
+      "no": "KWA1",
+      "group": "错别字",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "伐/阀 同音",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet"
+      ],
+      "state": "partial",
+      "playerText": "闭面军伐盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWA2",
+      "group": "错别字",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "魁/盔 形近",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:geography.lakes-llyn-modris",
+        "awake:entry:geography.towns-ocs-hall"
+      ],
+      "state": "partial",
+      "playerText": "闭面军阀魁",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWA3",
+      "group": "错别字",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "莎/萨 同音",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.villages-lamesa",
+        "awake:entry:geography.castles-shibal-zumr-castle",
+        "awake:entry:geography.castles-medeni-castle"
+      ],
+      "state": "partial",
+      "playerText": "拉迈莎",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWA4",
+      "group": "错别字",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "匹/皮 同音",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "state": "partial",
+      "playerText": "毛匹",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWA5",
+      "group": "错别字",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:war.military-sturgia"
+      ],
+      "note": "基/吉 同音",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "命中错条目",
+      "hits": [
+        "awake:entry:culture.tales-kachar-rulership",
+        "awake:entry:geography.towns-iyakis",
+        "awake:entry:economy.items-heavy_round_shield",
+        "awake:entry:geography.castles-ustokol-castle",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:geography.towns-diathma",
+        "awake:entry:geography.castles-aster-castle",
+        "awake:entry:geography.castles-corenia-castle"
+      ],
+      "state": "partial",
+      "playerText": "斯特基亚",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWB1",
+      "group": "同音",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "亏/盔 同音 kuī",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:geography.lakes-llyn-modris",
+        "awake:entry:geography.towns-ocs-hall"
+      ],
+      "state": "partial",
+      "playerText": "闭面军阀亏",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWB2",
+      "group": "同音",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "买/迈 同音",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.villages-lamesa",
+        "awake:entry:geography.villages-sagora",
+        "awake:entry:geography.villages-lavenia"
+      ],
+      "state": "partial",
+      "playerText": "拉买萨",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWC1",
+      "group": "繁体",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "繁体",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:economy.items-battania_mercenary_armor"
+      ],
+      "state": "partial",
+      "playerText": "閉面軍閥盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWC2",
+      "group": "繁体",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "繁体",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "命中错条目",
+      "hits": [
+        "awake:entry:geography.villages-lavenia",
+        "awake:entry:geography.villages-drapand",
+        "awake:entry:geography.castles-lavenia-castle"
+      ],
+      "state": "partial",
+      "playerText": "拉邁薩",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWC3",
+      "group": "繁体",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:war.military-sturgia"
+      ],
+      "note": "繁体",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:war.military-sturgia",
+        "awake:entry:culture.tales-kachar-rulership",
+        "awake:entry:war.military-khuzait",
+        "awake:entry:economy.items-heavy_round_shield",
+        "awake:entry:war.military-vlandia",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:geography.castles-kranirog-castle"
+      ],
+      "state": "partial",
+      "playerText": "斯特吉亞軍事力量",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWC4",
+      "group": "繁体",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "简体对照（该词繁简同形）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-deriat"
+      ],
+      "state": "partial",
+      "playerText": "毛皮",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWD1",
+      "group": "空格",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "词中空格",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:geography.lakes-llyn-modris",
+        "awake:entry:geography.towns-ocs-hall"
+      ],
+      "state": "partial",
+      "playerText": "闭面 军阀盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWD2",
+      "group": "空格",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "多处空格",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:economy.items-battania_warlord_bracers"
+      ],
+      "state": "partial",
+      "playerText": "闭 面军 阀盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWD3",
+      "group": "空格",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "词中 TAB",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:geography.lakes-llyn-modris",
+        "awake:entry:geography.towns-ocs-hall"
+      ],
+      "state": "partial",
+      "playerText": "闭面\t军阀盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWD4",
+      "group": "空格",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "逐字空格",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.villages-lamesa",
+        "awake:entry:geography.villages-drapand",
+        "awake:entry:geography.towns-saneopa"
+      ],
+      "state": "partial",
+      "playerText": "拉 迈 萨",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE1",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "词中逗号",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:geography.lakes-llyn-modris",
+        "awake:entry:geography.towns-ocs-hall"
+      ],
+      "state": "partial",
+      "playerText": "闭面，军阀盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE2",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "词中连字符",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:geography.lakes-llyn-modris",
+        "awake:entry:geography.towns-ocs-hall"
+      ],
+      "state": "partial",
+      "playerText": "闭面-军阀盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE3",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "词中逗号",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.villages-lamesa",
+        "awake:entry:geography.castles-shibal-zumr-castle",
+        "awake:entry:geography.villages-drapand",
+        "awake:entry:geography.villages-lavenia"
+      ],
+      "state": "partial",
+      "playerText": "拉，迈萨",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE4",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "词中逗号",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-deriat",
+        "awake:entry:economy.goods-velvet"
+      ],
+      "state": "partial",
+      "playerText": "毛，皮",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE5",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "词后句号（阳性对照）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:economy.items-battania_warlord_bracers"
+      ],
+      "state": "partial",
+      "playerText": "闭面军阀盔。",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE6",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "词前逗号（阳性对照）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.villages-lamesa",
+        "awake:entry:geography.castles-shibal-zumr-castle",
+        "awake:entry:geography.towns-saneopa",
+        "awake:entry:geography.villages-drapand"
+      ],
+      "state": "partial",
+      "playerText": "，拉迈萨",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWE7",
+      "group": "标点",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "词后疑问+叹（阳性对照）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-deriat"
+      ],
+      "state": "partial",
+      "playerText": "毛皮？！",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWF1",
+      "group": "简写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "截断前二字",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "state": "partial",
+      "playerText": "闭面",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWF2",
+      "group": "简写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "倒装",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:economy.items-battania_warlord_bracers"
+      ],
+      "state": "partial",
+      "playerText": "盔阀军面闭",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWF3",
+      "group": "简写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "拼音首字母",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "漏报",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "bmjfk",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWF4",
+      "group": "简写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "截断",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.villages-lamesa",
+        "awake:entry:geography.castles-shibal-zumr-castle",
+        "awake:entry:geography.towns-sanala",
+        "awake:entry:geography.villages-llanoc-hen"
+      ],
+      "state": "partial",
+      "playerText": "拉迈",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWF5",
+      "group": "简写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "别称",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "state": "partial",
+      "playerText": "皮子",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWF6",
+      "group": "简写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:war.military-sturgia"
+      ],
+      "note": "势力名截断",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:war.military-sturgia",
+        "awake:entry:geography.towns-tyal",
+        "awake:entry:geography.towns-iyakis"
+      ],
+      "state": "partial",
+      "playerText": "斯特吉亚",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWG1",
+      "group": "大小写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "全小写",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "state": "partial",
+      "playerText": "closed warlord helmet",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWG2",
+      "group": "大小写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "全大写",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "state": "partial",
+      "playerText": "CLOSED WARLORD HELMET",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWG3",
+      "group": "大小写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "全小写",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.castles-shibal-zumr-castle",
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "state": "partial",
+      "playerText": "lamesa",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWG4",
+      "group": "大小写",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "全大写",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:geography.villages-etirfurd",
+        "awake:entry:geography.villages-furbec"
+      ],
+      "state": "partial",
+      "playerText": "FUR",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWG5",
+      "group": "全半角",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "全角字母",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "漏报",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "Ｃｌｏｓｅｄ Ｗａｒｌｏｒｄ Ｈｅｌｍｅｔ",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWH1",
+      "group": "整句",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "带名字的整句",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:economy.items-battania_warlord_bracers"
+      ],
+      "state": "partial",
+      "playerText": "闭面军阀盔是啥玩意？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWH2",
+      "group": "整句",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.items-sturgian_helmet_closed"
+      ],
+      "note": "不带名字的描述型",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:geography.castles-kaysar-castle",
+        "awake:entry:geography.castles-uqba-castle"
+      ],
+      "state": "partial",
+      "playerText": "北方头领戴的那种连脸都罩住的盔是啥？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWH3",
+      "group": "整句",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:geography.villages-lamesa"
+      ],
+      "note": "不带名字的描述型",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.villages-lamesa",
+        "awake:entry:geography.castles-barihal-castle",
+        "awake:entry:geography.villages-hoqqa",
+        "awake:entry:geography.castles-sahel-castle",
+        "awake:entry:geography.villages-hamoshawat",
+        "awake:entry:economy.items-desert_lamellar"
+      ],
+      "state": "partial",
+      "playerText": "阿塞莱最好的马在哪儿吃草？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWH4",
+      "group": "整句",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "＝今天题集里的真题",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-velvet",
+        "awake:entry:geography.castles-kaysar-castle",
+        "awake:entry:geography.villages-karahalli"
+      ],
+      "state": "partial",
+      "playerText": "北方有什么又暖又贵的皮货？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWH5",
+      "group": "整句",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:war.military-sturgia"
+      ],
+      "note": "＝今天题集里的真题",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:war.military-sturgia",
+        "awake:entry:war.troops-royal-guard",
+        "awake:entry:economy.items-heavy_round_shield",
+        "awake:entry:economy.goods-velvet",
+        "awake:entry:economy.items-cow",
+        "awake:entry:economy.items-desert_lamellar"
+      ],
+      "state": "partial",
+      "playerText": "盾墙加飞斧是哪个国家的打法？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI1",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:economy.items-scale_shoulder_armor"
+      ],
+      "state": "partial",
+      "playerText": "盔",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI2",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:war.military-sturgia"
+      ],
+      "state": "partial",
+      "playerText": "军阀",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI3",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet"
+      ],
+      "state": "partial",
+      "playerText": "head",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI4",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet"
+      ],
+      "state": "partial",
+      "playerText": "HeadArmor",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI5",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:war.military-sturgia"
+      ],
+      "state": "partial",
+      "playerText": "sturgian",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI6",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-battania_mercenary_armor",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:politics.territories-dawn-stewardship",
+        "awake:entry:politics.territories-kachar-ownership",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:geography.castles-oristocorys-castle",
+        "awake:entry:geography.castles-shibal-zumr-castle",
+        "awake:entry:politics.clans-charas-cortain-secret",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:geography.castles-llanoc-hen-castle",
+        "awake:entry:geography.castles-thractorae-castle",
+        "awake:entry:economy.items-scale_shoulder_armor",
+        "awake:entry:geography.castles-ain-baliq-castle",
+        "awake:entry:geography.castles-chanopsis-castle",
+        "awake:entry:geography.castles-mecalovea-castle",
+        "awake:entry:geography.castles-ormanfard-castle",
+        "awake:entry:geography.castles-sestadaim-castle",
+        "awake:entry:geography.castles-urikskala-castle",
+        "awake:entry:geography.castles-verecsand-castle",
+        "awake:entry:geography.castles-ab-comer-castle",
+        "awake:entry:geography.castles-ataconia-castle",
+        "awake:entry:geography.castles-druimmor-castle"
+      ],
+      "state": "known",
+      "playerText": "doc",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI7",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:geography.villages-hunab",
+        "awake:entry:geography.villages-neocorys",
+        "awake:entry:geography.villages-ov",
+        "awake:entry:geography.villages-deriat",
+        "awake:entry:geography.villages-ab-comer",
+        "awake:entry:geography.villages-abba",
+        "awake:entry:geography.villages-abghan",
+        "awake:entry:geography.villages-abu-khih",
+        "awake:entry:geography.villages-aegosca",
+        "awake:entry:geography.villages-aeoria",
+        "awake:entry:geography.villages-agalmon",
+        "awake:entry:geography.villages-ain-baliq",
+        "awake:entry:geography.villages-akiser",
+        "awake:entry:geography.villages-alantas",
+        "awake:entry:geography.villages-alatys",
+        "awake:entry:geography.villages-alebat",
+        "awake:entry:geography.villages-alision",
+        "awake:entry:geography.villages-alorstan",
+        "awake:entry:geography.villages-alosea",
+        "awake:entry:geography.villages-alov",
+        "awake:entry:geography.villages-alsasos",
+        "awake:entry:geography.villages-amycon",
+        "awake:entry:geography.villages-andurn",
+        "awake:entry:geography.villages-arpotis",
+        "awake:entry:geography.villages-arromanc",
+        "awake:entry:geography.villages-asalig"
+      ],
+      "state": "partial",
+      "playerText": "村",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI8",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:geography.villages-kvol",
+        "awake:entry:geography.villages-larnac",
+        "awake:entry:geography.villages-neocorys",
+        "awake:entry:geography.villages-ab-comer",
+        "awake:entry:geography.villages-abba",
+        "awake:entry:geography.villages-abghan",
+        "awake:entry:geography.villages-abu-khih",
+        "awake:entry:geography.villages-aegosca",
+        "awake:entry:geography.villages-aeoria",
+        "awake:entry:geography.villages-agalmon",
+        "awake:entry:geography.villages-ain-baliq",
+        "awake:entry:geography.villages-akiser",
+        "awake:entry:geography.villages-alantas",
+        "awake:entry:geography.villages-alatys",
+        "awake:entry:geography.villages-alebat",
+        "awake:entry:geography.villages-alision",
+        "awake:entry:geography.villages-alorstan",
+        "awake:entry:geography.villages-alosea",
+        "awake:entry:geography.villages-alov",
+        "awake:entry:geography.villages-alsasos",
+        "awake:entry:geography.villages-amycon",
+        "awake:entry:geography.villages-andurn",
+        "awake:entry:geography.villages-arpotis",
+        "awake:entry:geography.villages-arromanc",
+        "awake:entry:geography.villages-asalig",
+        "awake:entry:geography.villages-asmait"
+      ],
+      "state": "partial",
+      "playerText": "村庄",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI9",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:geography.villages-aeoria",
+        "awake:entry:geography.villages-agalmon",
+        "awake:entry:geography.villages-amycon",
+        "awake:entry:geography.villages-ataconia",
+        "awake:entry:geography.villages-atphynia",
+        "awake:entry:geography.villages-atrion",
+        "awake:entry:geography.villages-bergum",
+        "awake:entry:geography.villages-caira",
+        "awake:entry:geography.villages-chanopsis",
+        "awake:entry:geography.villages-corenia",
+        "awake:entry:geography.villages-dyopalis",
+        "awake:entry:geography.villages-elvania",
+        "awake:entry:geography.villages-epinosa",
+        "awake:entry:geography.villages-ethemisa",
+        "awake:entry:geography.villages-eunalica",
+        "awake:entry:geography.villages-gamardan",
+        "awake:entry:geography.villages-gaos",
+        "awake:entry:geography.villages-garontor",
+        "awake:entry:geography.villages-gersegos",
+        "awake:entry:geography.villages-goleryn",
+        "awake:entry:geography.villages-hertogea",
+        "awake:entry:geography.villages-jogurys",
+        "awake:entry:geography.villages-lavenia",
+        "awake:entry:geography.villages-lochana",
+        "awake:entry:geography.villages-lysia",
+        "awake:entry:geography.villages-masangara",
+        "awake:entry:geography.villages-mecalovea",
+        "awake:entry:geography.villages-melion",
+        "awake:entry:geography.villages-metachia"
+      ],
+      "state": "partial",
+      "playerText": "castle_village",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI10",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.goods-deriat",
+        "awake:entry:economy.goods-fur"
+      ],
+      "state": "partial",
+      "playerText": "皮",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI11",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-mule"
+      ],
+      "state": "partial",
+      "playerText": "货",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI12",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-salt",
+        "awake:entry:economy.goods-silver",
+        "awake:entry:economy.goods-spice",
+        "awake:entry:economy.goods-velvet",
+        "awake:entry:economy.goods-deriat"
+      ],
+      "state": "partial",
+      "playerText": "Goods",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI13",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:war.military-sturgia",
+        "awake:entry:war.military-vlandia",
+        "awake:entry:war.military-khuzait",
+        "awake:entry:war.troops-mamluk"
+      ],
+      "state": "partial",
+      "playerText": "军事",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI14",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:war.military-sturgia",
+        "awake:entry:war.military-khuzait",
+        "awake:entry:war.military-vlandia"
+      ],
+      "state": "partial",
+      "playerText": "力量",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI15",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:war.military-sturgia",
+        "awake:entry:war.military-khuzait",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:politics.territories-dawn-stewardship",
+        "awake:entry:geography.towns-amitatys",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-steppe_war_bow",
+        "awake:entry:war.troops-royal-guard",
+        "awake:entry:war.military-vlandia",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:war.troops-mamluk"
+      ],
+      "state": "partial",
+      "playerText": "war",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI16",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.items-battania_mercenary_armor",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:economy.items-scale_shoulder_armor",
+        "awake:entry:economy.items-heavy_round_shield",
+        "awake:entry:economy.items-desert_lamellar",
+        "awake:entry:economy.items-steppe_war_bow",
+        "awake:entry:economy.items-saddle_horse",
+        "awake:entry:economy.items-crossbow_c",
+        "awake:entry:economy.items-pack_camel",
+        "awake:entry:economy.goods-deriat",
+        "awake:entry:economy.goods-silver",
+        "awake:entry:economy.goods-velvet",
+        "awake:entry:economy.goods-spice",
+        "awake:entry:economy.items-sheep",
+        "awake:entry:economy.goods-salt",
+        "awake:entry:economy.items-mule",
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.items-cow"
+      ],
+      "state": "partial",
+      "playerText": "economy",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI17",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:geography.castles-oristocorys-castle",
+        "awake:entry:geography.castles-shibal-zumr-castle",
+        "awake:entry:geography.castles-llanoc-hen-castle",
+        "awake:entry:geography.castles-thractorae-castle",
+        "awake:entry:geography.castles-ain-baliq-castle",
+        "awake:entry:geography.castles-chanopsis-castle",
+        "awake:entry:geography.castles-mecalovea-castle",
+        "awake:entry:geography.castles-ormanfard-castle",
+        "awake:entry:geography.castles-sestadaim-castle",
+        "awake:entry:geography.castles-urikskala-castle",
+        "awake:entry:geography.castles-verecsand-castle",
+        "awake:entry:geography.castles-ab-comer-castle",
+        "awake:entry:geography.castles-ataconia-castle",
+        "awake:entry:geography.castles-druimmor-castle",
+        "awake:entry:geography.castles-flintolg-castle",
+        "awake:entry:geography.castles-garontor-castle",
+        "awake:entry:geography.castles-gersegos-castle",
+        "awake:entry:geography.castles-hertogea-castle",
+        "awake:entry:geography.castles-kranirog-castle",
+        "awake:entry:geography.castles-mazhadan-castle"
+      ],
+      "state": "partial",
+      "playerText": "geography",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWI18",
+      "group": "过匹配",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "短词/泛词/内部 id",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:politics.throne-paravenos"
+      ],
+      "state": "partial",
+      "playerText": "entry",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWJ1",
+      "group": "边界",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "空串",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:culture.tales-charas-origins",
+        "awake:entry:culture.tales-dawn-taboo",
+        "awake:entry:culture.tales-husn-fulq",
+        "awake:entry:culture.tales-kachar-rulership",
+        "awake:entry:culture.tales-lakonis-red-water",
+        "awake:entry:economy.goods-deriat",
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-salt",
+        "awake:entry:economy.goods-silver",
+        "awake:entry:economy.goods-spice",
+        "awake:entry:economy.goods-velvet",
+        "awake:entry:economy.items-battania_mercenary_armor",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:economy.items-cow",
+        "awake:entry:economy.items-crossbow_c",
+        "awake:entry:economy.items-desert_lamellar",
+        "awake:entry:economy.items-heavy_round_shield",
+        "awake:entry:economy.items-mule",
+        "awake:entry:economy.items-pack_camel",
+        "awake:entry:economy.items-saddle_horse",
+        "awake:entry:economy.items-scale_shoulder_armor",
+        "awake:entry:economy.items-sheep",
+        "awake:entry:economy.items-steppe_war_bow",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:geography.bays-charas",
+        "awake:entry:geography.castles-ab-comer-castle"
+      ],
+      "state": "partial",
+      "playerText": "",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWJ2",
+      "group": "边界",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "纯空格",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:culture.tales-charas-origins",
+        "awake:entry:culture.tales-dawn-taboo",
+        "awake:entry:culture.tales-husn-fulq",
+        "awake:entry:culture.tales-kachar-rulership",
+        "awake:entry:culture.tales-lakonis-red-water",
+        "awake:entry:economy.goods-deriat",
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-salt",
+        "awake:entry:economy.goods-silver",
+        "awake:entry:economy.goods-spice",
+        "awake:entry:economy.goods-velvet",
+        "awake:entry:economy.items-battania_mercenary_armor",
+        "awake:entry:economy.items-battania_warlord_boots",
+        "awake:entry:economy.items-battania_warlord_bracers",
+        "awake:entry:economy.items-cow",
+        "awake:entry:economy.items-crossbow_c",
+        "awake:entry:economy.items-desert_lamellar",
+        "awake:entry:economy.items-heavy_round_shield",
+        "awake:entry:economy.items-mule",
+        "awake:entry:economy.items-pack_camel",
+        "awake:entry:economy.items-saddle_horse",
+        "awake:entry:economy.items-scale_shoulder_armor",
+        "awake:entry:economy.items-sheep",
+        "awake:entry:economy.items-steppe_war_bow",
+        "awake:entry:economy.items-sturgian_helmet_closed",
+        "awake:entry:economy.items-western_plated_helmet",
+        "awake:entry:geography.bays-charas",
+        "awake:entry:geography.castles-ab-comer-castle"
+      ],
+      "state": "partial",
+      "playerText": "   ",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWJ3",
+      "group": "边界",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "纯标点",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "？？？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWJ4",
+      "group": "边界",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "拉丁乱码",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "zzzzzz",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWJ5",
+      "group": "边界",
+      "cat": "OVER-RISK",
+      "targets": [],
+      "note": "内部文档 id 直问",
+      "identity": "profile.noble",
+      "verdict": "RED",
+      "kind": "过匹配",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-salt",
+        "awake:entry:economy.goods-silver",
+        "awake:entry:economy.goods-spice",
+        "awake:entry:economy.goods-velvet"
+      ],
+      "state": "partial",
+      "playerText": "doc.economy.goods-fur",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWK1",
+      "group": "权限档位",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "干净问法（阳性对照）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:politics.clans-charas-cortain-secret",
+        "awake:entry:politics.territories-charas-reign",
+        "awake:entry:geography.villages-takor"
+      ],
+      "state": "known",
+      "playerText": "科尔坦家的账",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWK2",
+      "group": "权限档位",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "真题问法（阳性对照）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:politics.clans-charas-cortain-secret",
+        "awake:entry:politics.territories-charas-reign",
+        "awake:entry:geography.villages-takor"
+      ],
+      "state": "known",
+      "playerText": "戴·科尔坦家靠什么发财？",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWK3",
+      "group": "权限档位",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "繁体＋贵族（脏输入阳性对照）",
+      "identity": "profile.noble",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:politics.territories-charas-reign",
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "state": "known",
+      "playerText": "科尔坦家的帳",
+      "detail": "secret",
+      "scope": "elite",
+      "harness": false
+    },
+    {
+      "no": "KWK4",
+      "group": "权限档位",
+      "cat": "OVER-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "★ 平民问同一句：整条不该出现",
+      "identity": "profile.commoner",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.villages-takor"
+      ],
+      "state": "partial",
+      "playerText": "科尔坦家的账",
+      "detail": "rumor",
+      "scope": "local",
+      "harness": false
+    },
+    {
+      "no": "KWK5",
+      "group": "权限档位",
+      "cat": "OVER-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "★ 平民＋繁体",
+      "identity": "profile.commoner",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [],
+      "state": "not_found",
+      "playerText": "科尔坦家的帳",
+      "detail": "rumor",
+      "scope": "local",
+      "harness": false
+    },
+    {
+      "no": "KWK6",
+      "group": "权限档位",
+      "cat": "OVER-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "★ 平民＋真题问法",
+      "identity": "profile.commoner",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.villages-takor"
+      ],
+      "state": "partial",
+      "playerText": "戴·科尔坦家靠什么发财？",
+      "detail": "rumor",
+      "scope": "local",
+      "harness": false
+    },
+    {
+      "no": "KWK7",
+      "group": "权限档位",
+      "cat": "OVER-RISK",
+      "targets": [
+        "awake:entry:politics.clans-charas-cortain-secret"
+      ],
+      "note": "★ 平民＋泛词（过匹配 × 权限）",
+      "identity": "profile.commoner",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:geography.towns-charas",
+        "awake:entry:geography.bays-charas"
+      ],
+      "state": "partial",
+      "playerText": "沙拉斯",
+      "detail": "rumor",
+      "scope": "local",
+      "harness": false
+    },
+    {
+      "no": "KWK8",
+      "group": "权限档位",
+      "cat": "MISS-RISK",
+      "targets": [
+        "awake:entry:economy.goods-fur"
+      ],
+      "note": "平民该拿到 rumor 档",
+      "identity": "profile.commoner",
+      "verdict": "OK",
+      "kind": "",
+      "hits": [
+        "awake:entry:economy.goods-fur",
+        "awake:entry:economy.goods-deriat",
+        "awake:entry:economy.goods-velvet"
+      ],
+      "state": "partial",
+      "playerText": "毛皮值钱吗？",
+      "detail": "rumor",
+      "scope": "local",
+      "harness": false
+    }
+  ]
+}

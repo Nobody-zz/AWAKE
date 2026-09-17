@@ -1,0 +1,47 @@
+test(redtest): 链路缺口红测（两档 69 条）＋ 修两处验台仪器分叉
+
+甲方「红测一遍链路缺口」。靶＝今天的对话链路（448 条包，
+NpcDialogueService → WorldKnowledgeQueryService.FindCandidates），
+探针 worldbook-runtime-sim probe 真代码零替身。
+两档：不挂语义臂（＝改动前）／挂（AWAKE_SIM_SEMANTIC=1，＝今天上线形态）。
+
+总账：不挂 RED 32/69（MISS 12/42，OVER 20/27）
+  → 挂上 RED 25/69（MISS 4/42，OVER 21/27）；红→绿 8，绿→红 0。
+收益 8 条：毛匹／拉买萨／閉面軍閥盔／拉 迈 萨／毛，皮／盔阀军面闭／皮子／科尔坦家的帳。
+代价 1 条：过匹配 20→21 —— `货` 由 not_found 变命中 items-mule（向量近邻误召回）。
+收益与代价连着报。
+
+仍漏 4 条：斯特基亚（→形近错条目）／拉邁薩（→villages-lavenia 等）／
+bmjfk（拼音首字母）／Ｃｌｏｓｅｄ Ｗａｒｌｏｒｄ Ｈｅｌｍｅｔ（全角英文）。
+
+缺口 5 条：
+  1 空查询兜底全库且 matchMode 从不报「兜底」（WorldKnowledgeQueryService.cs:272 / :69）—— 静默
+  2 缺全角→半角折叠
+  3 形近词命中错条目（给错比不给更坏）
+  4 语义臂新增误召回
+  5 内部标识符可当查询词（doc/economy/geography/entry/war/Goods/HeadArmor/sturgian/castle_village）
+正面结论：权限档位组 0/8 红、两条档位闸零泄漏
+  ⇒ 变形输入能骗过「找哪条」，骗不过「给谁看」。
+
+★ 仪器修了两处（都不是产品，但首版数字因此是假的）：
+  1 判定脚本正则 KW([A-Z]\d+) 只取出 A1 而期望是 KWA1 ⇒ 69 条全落「没跑到」，
+    首跑报 69/69 全红、两档零翻转。形状即警报：两档只差一层开关，
+    真故障不可能让两档塌成同一个数。已加硬护栏：harnessMiss 单独计数、不计入产品结论，
+    且「有没跑到」或「两档同 100% 红且零翻转」时非零退出＋打警告。
+  2 探针里两张手抄的「身份 → scope/detail」表（顶层 CAP 与 CapabilityOf）与真件分叉：
+    平表把 profile.noble 封在 detail，真件对 45 岁以上贵族给 secret
+    ⇒ 全包唯一一条 secret 档正文永远取不到，档位闸整根空转。
+    已删表、统一走 CapOf → WorldbookIdentityCapabilityRules.Resolve；
+    并补 player_text 入参回显（原输出只回正文，下游报告只能倒抄 spec，抄错看不出）。
+
+档位闸（修好后）：毛皮基准价 400（detail）与 操办科尔坦家的图谋（secret）
+  都只出现在 profile.noble；低档对照属强对照
+  （KWK8×commoner 拿到 3 条却无 detail 正文）⇒ 证明闸是「挡住细档」而非「整个条目没给」。
+
+回归：identity-gate 不挂 78/210/180/30、挂上 78/210/205/5，
+  逐字与改动前一致（该门禁本就走真件）；默认矩阵 SIM-OK。
+
+报告入档 docs/worldbook-migration/REDTEST-CHAIN-20260917.{md,json}
+（与 09-16 那两份同目录；docs/evidence/ 在 .gitignore:59 里，放那儿不入档）。
+技能 worldbook-retrieval-redtest 已同步：修 §4 那条错正则（技能里原本写的就是坑）、
+新增 §4b 仪器自检、§7b 身份/档位维三条判据、§2 期望列改实测口径、环境节加报告落点。
