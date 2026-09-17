@@ -1,0 +1,73 @@
+枚举红测：5 处 P0 全是「把有写成没有」
+
+甲方：「红测你刚刚的枚举」。被测 = `docs/DESIGN-20260917-检索之前的判断层.md` 附录 A（八段 39 点）。
+做法同上一份：抽可核验断言逐条证伪；因为附录里绝大多数是 `[材: …]` 标注，**这轮专打那些"没有"**。
+
+结论：**5 处 P0，全部是同一类错 —— 把「有」写成了「没有」。** 外加 3 处 P1、1 处 P2。
+⇒ 教训一句话：**写"有"只要举一个例；写"没有"漏查一处就假。**
+
+P0-① 入口清洗早就有了（而且今天刚加的）
+---------------------------------------
+原稿写「**没有统一的入口清洗**」。反证：`WorldKnowledgeQueryService.cs:62`
+`query.PlayerText = NormalizeQueryText(query.PlayerText);` —— 注释就写在那一行上方，做了四件事：
+① `FormKC` 全角→半角（连字/罗马数字也归一）；② 去零宽与不可见字符（`U+200B~200D`/`U+FEFF`）；
+③ 两端去空白（**词中空白与标点不动**，注释明写 09-16 量过动它会再造空串）；
+④ **繁→简**走系统 `LCMapStringEx`、不造表。还带"归一化之后必须再判一次空"。
+⇒ **文件里、注释里、当天加的，我没查就写了"没有"。**
+已改：拆成 #4（已有＋两条"明确不碰"）与 #4b（错别字/同音确实是另一条线）。
+
+P0-② 「说多少」有雏形
+--------------------
+原稿写"没有"。反证：详细度档位已在做这件事 —— `Detail`/`MinDetail`
+（`WorldKnowledgeModels.cs:51/62`，取值 `rumor/summary/detail/secret`）、`DetailRank`
+（`WorldbookIdentityEvaluator.cs:202`）、`EffectiveDetail`；检索层按 `DetailRank` 降档并标 `partial`
+（`WorldKnowledgeQueryService.cs:96`）。缺的是"**主动**选择说多少"，不是没机制。
+
+P0-③ 「立场」有阵营归属
+----------------------
+原稿写"没有"。反证：`_clanName`/`_kingdomName`/`_heroKingdomId`（`NpcDialogueService.cs:47/48/53`）
+都进了 `ContextSnapshot`，查询里也有 `KingdomId` 并参与身份闸。
+（`Allegiance`/`Loyalty` 全仓零命中 ⇒ "态度性立场"确实没有，但不能写成"立场没有"。）
+
+P0-④ 用「传闻」当缺失项，撞了本仓同名词
+--------------------------------------
+原稿写「要不要连"别人对他的评价／传闻"一起查｜没有」。反证：`rumor` 在本仓**是详细度档位**
+（`WorldEventContracts.cs:774` 把它列进 `{ "rumor","summary","detail","secret" }`），
+不是内容类型。写成"缺失项"会把后续读者带歪。已正名为「**别人的评价**（声誉）」。
+
+P0-⑤ 「整段缺席」与表里「已有」自相矛盾
+--------------------------------------
+原稿 A.1 写"入口段与回写段**整段缺席**"，而同表里第〇段 #1/#2 与第五段 #31 自己标着"**已有**"。
+（这条不用 grep，通读就能看见。）已改成"**几乎没有**"并列明那三项。
+
+P1（3 处）
+----------
+· #16「域」：`Domain` 在检索层**一次都没出现**（grep 空），但**投影时已塞进 keywords**
+  （`WorldKnowledgeProjectionService.cs:226`）⇒ 不是"要造域过滤"，是"**按已有的域收窄**"。
+· 第一段 #8「时间线/周报**有数据**」是推断：只证了**记录机制在跑**
+  （`WorldEventLedger.QueueFact` ← `AwakeWorldFactCollectorBehavior.cs:68`），"有数据"要以真机为准。
+· #4 的举例松：`NameLikeMinSharedTerms` 的用途是「名字形状查询要共享 2 个 term」（防一个错别字捞一片），
+  与"入口清洗"是两回事。
+
+P2（1 处）
+----------
+· #27：`ContextSnapshot.Relation` 要说准 —— 字段在（`PersonaModels.cs:292`/`:314`），
+  **但两处都只是自拷贝**，没有任何地方赋过真实关系值。
+
+阴性结果（核过是对的）
+----------------------
+`SendAsync:222-228`、`_isSceneShout`、`GetNearbyHeroes/GetNearbyTargets` `:351`/`:111`（三处消费方在用、
+`NpcDialogueService` 不调用）、`CapturePlayerToCurrentNpc` 全仓零调用（含 Tests/tools）、
+`NpcProactiveService` 不碰检索、`npc_dialogue_knowledge_decision` `:1114`、`ReportId` 死字段、
+身份闸/详细度降档/referral ✓。**#12「玩家传授／撒谎 —— 没有」是核过的**：
+`RefreshPlayerKnownAsync`（`:613`）取的是**玩家自己的身份**（名字/氏族/王国），不是"玩家教的知识"。
+**没核**：一切"真机上会怎样"的问题（离线证不了，本次也没声称证过）。
+
+本次改动
+--------
+A AWAKE/docs/AUDIT-20260917-判断层枚举红测.md       红测报告（P0/P1/P2 ＋ 阴性结果 ＋ 教训）
+M AWAKE/docs/DESIGN-20260917-检索之前的判断层.md     附录 A 逐条改正（#4 拆 4/4b、#8/#16/#19/#25/#27/#29 改写、
+                                                    A.1 第 1 条改写）＋ 新增 **A.3 红测记录**
+A AWAKE/tools/_commit-msg-20260917x.txt             本提交信息
+
+（无代码改动 ⇒ 未跑门禁。）
