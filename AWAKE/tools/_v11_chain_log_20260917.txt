@@ -1,0 +1,23 @@
+[16:37:13] ==== v11 摘要台账清理重编：基线选择 selection.c64bdf0dfa164daf9c43f49a3079d060，档数=448 ====
+[16:37:13] [0/6] 上线包 md5 与 geo1-v6 是否一致：True
+[16:37:13]       上线包条目数=448，'doc.' 出现 1344 次
+[16:37:13]       上线包里 doc.geography.mines-lycaron 的 summary = 吕卡隆银矿与兵祸的由来（沿革断言系银矿因果链的一环，承 IMPL §3.1 留痕：economy 档承载一条政治沿革）。
+[16:37:13]       上线包里 doc.politics.throne-saneopa 的 summary = 萨涅俄帕：隘口之上的内陆商埠与涅雷采斯家的京城；旧都岁月与迁都后的迁回之争。定都史为 D 级裁定（Max 09-12，登记于研究稿）。
+[16:37:13] [1/6] 需重登记=2 ['doc.geography.mines-lycaron', 'doc.politics.throne-saneopa']；缺档=0 []
+[16:37:21] [2/6] register 2 档完成
+[16:37:29] [3/6] select -> selection.f853371f128f47b3a4b8dfaf7e81da17 itemCount=448
+[16:37:37] [4/6] approve -> approval.9ad235ad29814780b74d868761b09817
+[16:37:53] [5/6] proof -> compile.4141baaa67164405a3fd1338b5af48c5
+[16:38:26] [6/6] compile OK manifest_hash=1bacbd82ea22446bd92ca35964c239af9343a1545529970876deffcc2d13c65f result_hash=9324B8B62ABCFE94B5B95E96EC05BC527DB7721608667DBD313CF1B1C3856E80
+[16:38:26]       validation total=21 error=0
+[16:38:26] READBACK entries=448（基线 448）
+[16:38:26] READBACK id 集合与基线相同：True
+[16:38:26] READBACK doc.geography.mines-lycaron summary=吕卡隆银矿与兵祸的由来。
+[16:38:26]          → 台账串残留=无，与期望逐字相同=True
+[16:38:26] READBACK doc.politics.throne-saneopa summary=萨涅俄帕：隘口之上的内陆商埠与涅雷采斯家的京城；旧都岁月与迁都后的迁回之争。
+[16:38:26]          → 台账串残留=无，与期望逐字相同=True
+[16:38:26] DIFF vs 上线包：summary 变 2 条 ['awake:entry:geography.mines-lycaron', 'awake:entry:politics.throne-saneopa']；keywords 变 448 条；expressions 变 0 条；其它 0 []
+[16:38:26] DIFF vs geo1-v10-kwclean（同为 K1 之后编的）：summary 变 2 条 ['awake:entry:geography.mines-lycaron', 'awake:entry:politics.throne-saneopa']；keywords 变 0 条；expressions 变 0 条；其它 0 []
+[16:38:26] READBACK 'doc.' 出现 448 次（期望 448 = 每条 extensions.sourceDocumentId 一处）
+[16:38:26] VERDICT PASS
+[16:38:26] ==== v11 完成，总用时 1.2 分钟；产物 tools/worldbook-studio/workspace/full-geo1/compiled/geo1-v11-summaryfix ====

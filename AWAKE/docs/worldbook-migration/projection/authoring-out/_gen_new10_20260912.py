@@ -304,7 +304,7 @@ t92 = "吕卡隆周边银矿丰富，内战中任何觊觎皇位的人都盯着�
 doc("doc.economy.lycaron-mines", "吕卡隆·银矿", "economy", "land_production",
     ["entity.settlement.town_es4"],
     {"zh-CN": ["吕卡隆", "银矿", "帕拉部落", "革图"], "en": ["Lycaron", "silver mines"]},
-    "吕卡隆银矿与兵祸的由来（沿革断言系银矿因果链的一环，承 IMPL §3.1 留痕：economy 档承载一条政治沿革）。",
+    "吕卡隆银矿与兵祸的由来。",
     [
      asrt("assertion.lycaron-mines-1", "fact", t91, [A("town_ES4", q91)], [
         expr("expr.lycaron-mines-1-summary", "summary", t91, [A("town_ES4", q91)], T2()),

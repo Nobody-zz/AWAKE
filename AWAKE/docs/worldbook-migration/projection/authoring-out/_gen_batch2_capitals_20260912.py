@@ -171,7 +171,7 @@ def doc(did, zh, en, domain, sub, aliases, summary, assertions):
 SL = "saneopa"
 saneopa = doc("doc.politics." + SL, "萨涅俄帕", "Saneopa", "politics", "throne",
     (["萨涅俄帕", "萨涅俄帕城"], ["Saneopa"]),
-    "萨涅俄帕：隘口之上的内陆商埠与涅雷采斯家的京城；旧都岁月与迁都后的迁回之争。定都史为 D 级裁定（Max 09-12，登记于研究稿）。",
+    "萨涅俄帕：隘口之上的内陆商埠与涅雷采斯家的京城；旧都岁月与迁都后的迁回之争。",
     [
         A(SL, "1", "萨涅俄帕坐落在涅维斯谷通往俄佛堤斯湖的低矮隘口上；帕拉人视湖泊为神圣之地，而城本身人声嘈杂、百业兴旺，是卡拉迪亚内陆重要的贸易中心。", "fact",
           [

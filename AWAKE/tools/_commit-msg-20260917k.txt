@@ -1,0 +1,86 @@
+fix(worldbook): 清掉词条摘要里的作者台账（2 档）＋ 重编上线
+
+甲方 09-17 拍板「1不动 2修掉」的第 2 件。第 1 件（语义腿加置信分/动框架）按「不动」处理，未改。
+
+## 为什么要改
+
+上线包 448 档里 2 档的 entry 级 `summary` 混进了「写给自己看的工程台账」。
+这个字段**不是内部字段**：`WorldKnowledgeQueryService.FormatEntry`（非 partial 时带表头）把它拼成
+
+    【标题】
+    <summary>
+    <该档正文>
+
+一起进 `RetrievedText`，而 `RetrievedText` 被当「知识正文」喂给模型
+（`WorldKnowledgeModels.BuildPromptBlock`）⇒ **模型会念**。它同时还进 term 索引
+（`WorldKnowledgeLoader.EnumerateTerms(entry.Summary)`）与向量
+（`WorldKnowledgeSemantic.JoinParts(Title, keywords, Summary, firstExpression)`）
+⇒ `economy` 能翻出 `geography.mines-lycaron`，根子就在那半句。
+
+## 改了什么
+
+两个源目录同步（与 09-14 那次同规）；只删状态括号里那截台账，正文/断言/来源五元组/grants 未动：
+
+| 档 | 原值 -> 新值 |
+|---|---|
+| `doc.geography.mines-lycaron` | `吕卡隆银矿与兵祸的由来（沿革断言系银矿因果链的一环，承 IMPL §3.1 留痕：economy 档承载一条政治沿革）。` -> `吕卡隆银矿与兵祸的由来。` |
+| `doc.politics.throne-saneopa` | `…旧都岁月与迁都后的迁回之争。定都史为 D 级裁定（Max 09-12，登记于研究稿）。` -> `…旧都岁月与迁都后的迁回之争。` |
+
+留痕（原值逐字 ＋ 出处指针）：`docs/worldbook-migration/corrections_20260917/SUMMARY-AUTHORING-LEDGER-20260917.md`
+生成器防复发：`_gen_new10_20260912.py`、`_gen_batch2_capitals_20260912.py`（那两句本来就是它们写出来的）
+
+## 普查：第一版筛子太窄，报了假"孤例"
+
+第一版筛子只查 `IMPL／§／留痕／档承载／TODO／半角文件名` ⇒ 报"孤例 1 档"。
+但那只证明**这几类**是孤例 —— 随后肉眼撞见 `throne-saneopa` 的「D 级裁定（Max 09-12，登记于研究稿）」，
+「人名＋日期＋研究稿」这种形状第一版一个字也抓不到。**筛子窄 ≠ 目标不存在。**
+第二版按类扫（含作者名/日期串/裁定级别/复核标记等），覆盖两目录各 458 份源档与上线包 448 档的
+模型可见文字（title ＋ summary ＋ expressions[].text）：
+
+- 硬案例 **2 档**（本次已清）
+- 软案例 **1 档** `clans-charas-cortain-secret`（括号内是作者视角定性、末句「分层分档」是结构语）——**未改，待裁决**
+- 假阳性 1 处 `villages-tememos`「木材按树种**分档**走湖运」——正文真词，不是台账 ⇒ 筛子必须人工过一遍
+
+## 重编与归因（单因可证）
+
+`_v11_summaryfix_chain_20260917.py`：同基线选择（`selection.c64bdf0df…`，448 档，与 09-16 `_v2j_kwclean` 同），
+只重登记这 2 档后走 select/approve/proof/compile。日志 `tools/_v11_chain_log_20260917.txt`：
+
+    [6/6] compile OK manifest_hash=1bacbd82… result_hash=9324B8B6… validation 21 error=0
+    DIFF vs 上线包(geo1-v6)：summary 变 2 条；keywords 变 448 条；expressions 0；其它 0
+    DIFF vs geo1-v10-kwclean（同为 K1 之后编的）：summary 变 2 条；keywords 变 0 条；expressions 0；其它 0
+    VERDICT PASS
+
+⇒ 相对同为 K1 之后的 v10，**差异只有这 2 条摘要**；相对上线包另含 K1（`doc.` 不再进 keywords，
+那是 09-16 已进物理 DLL 的行为、非本次引入；运行时另有 R3 拦截 ⇒ 对线上行为净零）。
+
+## 上线
+
+- 仓库侧 `ModuleData/Worldbook/packages/calradia/*` 已换为 v11，注册表三个哈希已同步
+  （`contentHash F04CB23D…→DADE0019…`、`packageHash 3BA62B05…→0067E83A…`、`manifestHash` 不变）。
+  脚本 `tools/_publish_v11_to_repo_20260917.py`；备份 `artifacts/repo-package-before-v11-20260917-163950`。
+- 真机（Steam AWAKE 模块）已用 `deploy_worldbook_to_game.ps1 -ConfirmDeploy` 部署（部署前确认游戏未运行），
+  `DEPLOY_OK`，日志 `tools/_deploy_worldbook_log.txt`；备份 `artifacts/game-dir-deploy-20260917-164436`。
+- 真机包经真加载器校验通过（探针 `PROBE-OK`），与仓库侧四件 md5 全同；
+  真机包内 `IMPL／留痕／研究稿／Max` 计数均为 **0**。
+
+## 复测（同批 68 条 × 清理前/后上线形态）
+
+    清理前·挂语义腿  RED 17/68（MISS 1/41，OVER 16/27）
+    清理后·挂语义腿  RED 16/68（MISS 1/41，OVER 15/27）   ← 现上线形态
+    **变坏 0 条；变好 1 条**：KWI16「economy」过匹配 -> OK
+    ⇒ 缺口 ⑤ 由 4/5 补到 **5/5**
+
+门禁换包后重跑仍逐字全绿：`RETRIEVAL_GATE PASS`（A=10/13 B=9/11 ALL=19/24）、
+`MERGE_GATE PASS`（5 条子判据全 PASS）、`IDENTITY_GATE PASS`（不挂 78/180/0/0，挂上 78/205/0/0）。
+
+⚠️ 期间踩过一次仪器坑并记账：先用了 `bin/Release` 里 11:33 的**陈旧 exe** 跑探针（早于本次 src 改动），
+两档塌成同一个数、13 条"变坏"全是假的；改走 `dotnet run` 重编后复测才为真。
+**两档塌成同一个数 ⇒ 先怀疑仪器。**
+
+## 一条仓库事实（写进留痕文档）
+
+`AWAKE/tools/worldbook-studio/workspace/` 整棵被 `.gitignore:54` 排除 ⇒
+authoring 源档、注册表、选择/审批/证明、编译产物、链条脚本**全在版本库外**；
+`docs/worldbook-migration/projection/authoring-out/` 也从未 `git add`（本次只 add 被改的那 2 份镜像）。
+⇒ 复查源档读的是工作区，不是 git。
