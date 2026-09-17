@@ -1,0 +1,22 @@
+第六轮续红测：换靶打 DECISION-20260917（设计初衷）—— 全绿，无 P0/P1
+
+靶子：docs/DECISION-20260917-设计初衷-知识传播与对话.md
+
+核过且全部成立（择要）
+- 两条否定断言：RecordEventFactAsync（:334）全仓零调用方；ConsolidateDailyForNearbyHeroesAsync（:367）
+  确为遍历 AliveHeroes、limit>=8 break、无距离筛选。
+- 签名/常量：WorldbookIdentityCapabilityRules.Resolve(role,isNoble,age,management)（:17）；
+  CourierMapUnitsPerHour = 8d（AwakeLetterService.cs:35）；BaseSpeed=4 注释（:23）；scope/detail 取值。
+- 状态机与字段：CreateInboundAsync(:172)/AdvanceAsync(:346)/sent→delivered 注释(:169)；
+  WorldFact 字段；MemoryReservation 字段（WorldStateStore.cs:50-63）。
+- 数字依据：AwakeLetterService.cs:31 注释逐字含"8=192/天；中位城际 270 ⇒ 34 小时；横穿大陆 ≈3.5 天"。
+- 外部文档行号 11 处逐行对上（AI-Retrieval-Memory-Principles :282/:143/:70、Awake-Roadmap :116、
+  Version-Roadmap :204/:297/:304、FEATURE-FEASIBILITY-RANKING :201、GENEALOGY-FULL :178/:277、3PHASE :118）；
+  章节引用 NumericRules §5.1、两条通道怎么合 §7.10、RetrievalProbeCases:27"身份过滤空操作" 均对。
+
+结论：这份经得起打，因为它写的时候是逐条读代码、当场记行号；与上一轮 CHAIN 形成对照
+——同一支笔，两种结果，差别只在"写的时候有没有回去读"。
+
+附带确认：DECISION §七 那三条缺口全部成立（传播轴确"缺一根轴"），但属第三阶段，本线不排期。
+
+改动：AUDIT 报告新增 §十一（第六轮），原 §十一 出处 → §十二。
