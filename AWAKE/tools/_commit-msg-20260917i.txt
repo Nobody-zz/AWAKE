@@ -1,0 +1,26 @@
+feat(verify): 新增第三条门禁 identity-gate「谁知道」+ 题集补第三类题 deniedCases
+
+甲方 09-17「补啊」—— 承接上一份核验（docs/AUDIT-20260917-照设计初衷核验语义链.md）：
+现有 24 条题在"谁知道"这一维上是盲的（门禁验台 PickIdentity 从目标条目自己的 grants 里挑身份）。
+
+① tools/worldbook-runtime-sim 新增子命令 identity-gate，三条判据：
+   - 阴性扫描（硬）：题集 24 条 x 包内全部 12 个身份；目标条目的 grants 点不到该身份
+     （沿 parents 上溯闭包）⇒ 该 id 不得出现在 HitIds。
+     只读 grants + parents 两份清单，不含 scope/detail 数学 ⇒ 与运行时实现不重叠，不是自证。
+   - 点名题（硬）：题集 deniedCases 每条自带阳性对照（被禁那一档必须在够格身份那里
+     真能出现过）；受限一方必须拿到低一档、且漏不出细档。
+     受限一方"该不该看见"由授权数据判、不由题面写死（第一版写死 ⇒ 5 条冤枉 4 条）。
+   - 空转护栏：各类行数为 0 或 deniedCases 读不到即判红（恒 True＝没测）。
+   另把语义臂挂载抽成 AttachSemanticArm，默认矩阵与该门禁共用（平行实现必须同源）。
+
+② 题集新增 deniedCases（5 条，同一问法只换问的人）：毛皮/盐（详细度分层）、
+   科尔坦家的账（整条不可见 / 公开面vs秘密面）、林·莫德里斯（villager 有、commoner 无＝地域）。
+   不动原 24 条、不动任何门禁常量。
+
+实测（448 条真包）：
+   不挂语义臂  78 排除行/泄漏 0，该知道 180/210，点名题失败 0，IDENTITY_GATE PASS
+   挂语义臂    78 排除行/泄漏 0，该知道 205/210，点名题失败 0，IDENTITY_GATE PASS
+   ⇒ 语义臂把召回抬 25 行，权限闸与分层闸一格没动（细档一个字没漏）。
+变异检验：AWAKE_GATE_MUTATE_ASSUME_ALLOWED=1 ⇒ 泄漏 0→60、点名题失败 0→5、FAIL；去掉回绿。
+
+回归：RETRIEVAL_GATE PASS（A=10/13 B=9/11 ALL=19/24，逐字未变）、MERGE_GATE PASS（5 条子判据全 PASS）。

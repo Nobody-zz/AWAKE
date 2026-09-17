@@ -63,6 +63,39 @@ dotnet run -c Release -- ^
 - **范围梯度**：改 `scope`
 - 导出 `%TEMP%\awake-sim-retrieval.json` 给 C 层用
 
+### identity-gate：第三条门禁「谁知道」（2026-09-17 新增）
+
+设计初衷的第一层是「**谁知道**（身份·阶层·专业·地域·亲历·时代·关系）」，但检索门禁量的是命中率 ——
+**这一维此前没有任何判据**（旧门禁 `worldbook-runtime-smoke` 的 `PickIdentity` 会从目标条目自己的 grants 里
+挑一个身份去问，等于不许身份成为失败原因）。这个子命令把那一维做成会判红的判据：
+
+```bash
+dotnet run -c Release -- identity-gate [manifest.json] [cases.json] [out.json]
+# 带语义臂跑（证明召回涨了、权限闸没被冲掉）：
+AWAKE_SIM_SEMANTIC=1 dotnet run -c Release -- identity-gate
+# 变异检验（把被排除身份的查询冒充成够得着的身份 ⇒ 阴性判据必须判红）：
+AWAKE_GATE_MUTATE_ASSUME_ALLOWED=1 dotnet run -c Release -- identity-gate
+```
+
+三条判据，最后一行为 `IDENTITY_GATE PASS|FAIL`：
+
+1. **阴性扫描**：题集每条 × 包内**每个**身份。目标条目的 `grants` **点不到**该身份
+   （沿 `parents` **上溯**闭包；包里 `noble→notable→commoner`，所以"给 commoner 的授权"人人可拿、反过来不成立）
+   ⇒ 该条目 id 不得出现在 `HitIds`。
+   ⚠️ 这一条**只读包里的 grants 与 parents 两份清单**，不含 scope/detail 数学 ⇒ 与运行时实现不重叠，**不是自证**。
+2. **点名题**：题集 `deniedCases`（同一个问法只换问的人）。每条自带**阳性对照**：
+   够格身份必须拿到、被禁那一档必须在够格身份那里**真能出现**；受限一方必须拿到**低一档**（`requiredText`）
+   且**漏不出细档**（`forbiddenText`）。受限一方"该不该看见"**由授权数据判，不由题面写死** ——
+   写死会把"平民该拿到 rumor 档"冤枉成违规。
+3. **空转护栏**：被排除行、该知道行、"该知道真拿到"行都不许为 0；`deniedCases` 一条读不到即判红。
+   （「恒 True＝没测」。）
+
+输出里另有一列 **`shouldKnowMisses`（该知道却没拿到）**，**只报不判**：它混着"召回没找到"与"能力不够"两种成因，
+要分诊，**别拿它当门禁**。
+
+实测（2026-09-17，448 条真包）：不挂语义臂 78 排除行 / 0 泄漏、该知道 180/210；挂上语义臂 **0 泄漏、205/210**
+⇒ **召回涨 25 行，权限与档位一格没动**。变异检验：泄漏 0→60、点名题失败 0→5、FAIL；去掉开关回绿。
+
 ### C 层：接本地模型
 
 ```bash

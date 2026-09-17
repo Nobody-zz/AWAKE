@@ -1,0 +1,621 @@
+{
+  "package": "awake:worldbook.calradia",
+  "semantic": false,
+  "mutate": true,
+  "identityCount": 12,
+  "sweepDeniedRows": 78,
+  "sweepLeaks": 60,
+  "shouldKnowRows": 210,
+  "shouldKnowHit": 180,
+  "deniedCasesFail": 5,
+  "cases": [
+    {
+      "target": "awake:entry:geography.villages-lamesa",
+      "query": "拉迈萨那地方养什么？",
+      "namedByAuthoring": [
+        "awake:identity:commoner",
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:notable",
+        "awake:identity:ransom_broker",
+        "awake:identity:soldier",
+        "awake:identity:tavernkeeper",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 1,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:geography.castles-simira-castle",
+      "query": "西米拉堡是谁的城堡？",
+      "namedByAuthoring": [
+        "awake:identity:commoner",
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:notable",
+        "awake:identity:ransom_broker",
+        "awake:identity:soldier",
+        "awake:identity:tavernkeeper",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 1,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:geography.villages-chornobas",
+      "query": "乔诺巴斯在哪儿？",
+      "namedByAuthoring": [
+        "awake:identity:commoner",
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:notable",
+        "awake:identity:ransom_broker",
+        "awake:identity:soldier",
+        "awake:identity:tavernkeeper",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 1,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:culture.tales-husn-fulq",
+      "query": "富勒格是谁？",
+      "namedByAuthoring": [
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:notable",
+        "awake:identity:soldier",
+        "awake:identity:tavernkeeper",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 2,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:culture.tales-kachar-rulership",
+      "query": "卡恰尔半岛归谁？",
+      "namedByAuthoring": [
+        "awake:identity:notable"
+      ],
+      "deniedRows": 8,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:politics.throne-saneopa",
+      "query": "萨涅俄帕是什么地方？",
+      "namedByAuthoring": [
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:soldier",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 3,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:war.military-sturgia",
+      "query": "斯特吉亚的军队怎么打仗？",
+      "namedByAuthoring": [
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:soldier",
+        "awake:identity:townsfolk"
+      ],
+      "deniedRows": 4,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:war.military-khuzait",
+      "query": "库赛特靠什么打仗？",
+      "namedByAuthoring": [
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:soldier",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 6,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:war.troops-royal-guard",
+      "query": "皇家侍卫是什么兵？",
+      "namedByAuthoring": [
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:soldier",
+        "awake:identity:townsfolk"
+      ],
+      "deniedRows": 5,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:economy.goods-fur",
+      "query": "毛皮值钱吗？",
+      "namedByAuthoring": [
+        "awake:identity:commoner",
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:notable",
+        "awake:identity:ransom_broker",
+        "awake:identity:soldier",
+        "awake:identity:tavernkeeper",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 1,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:economy.goods-salt",
+      "query": "盐是从哪儿来的？",
+      "namedByAuthoring": [
+        "awake:identity:commoner",
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:notable",
+        "awake:identity:ransom_broker",
+        "awake:identity:soldier",
+        "awake:identity:tavernkeeper",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 1,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "query": "侧护覆板盔谁在用？",
+      "namedByAuthoring": [
+        "awake:identity:commoner",
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:notable",
+        "awake:identity:ransom_broker",
+        "awake:identity:soldier",
+        "awake:identity:tavernkeeper",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 1,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:politics.territories-varcheg-swap",
+      "query": "瓦尔切格怎么会换主人？",
+      "namedByAuthoring": [
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:notable",
+        "awake:identity:soldier"
+      ],
+      "deniedRows": 5,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:geography.villages-chornobas",
+      "query": "有大瀑布的村子是哪个？",
+      "namedByAuthoring": [
+        "awake:identity:commoner",
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:notable",
+        "awake:identity:ransom_broker",
+        "awake:identity:soldier",
+        "awake:identity:tavernkeeper",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 1,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:culture.tales-husn-fulq",
+      "query": "集市上说书人讲的那个鬼点子是谁的？",
+      "namedByAuthoring": [
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:notable",
+        "awake:identity:soldier",
+        "awake:identity:tavernkeeper",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 2,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:culture.tales-kachar-rulership",
+      "query": "有个半岛被三家抢过，谁说了算？",
+      "namedByAuthoring": [
+        "awake:identity:notable"
+      ],
+      "deniedRows": 8,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:culture.tales-dawn-taboo",
+      "query": "山里有不让进的地方吗？",
+      "namedByAuthoring": [
+        "awake:identity:notable",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 7,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:politics.throne-saneopa",
+      "query": "隘口上那个商埠，哪个家族在那儿定过都？",
+      "namedByAuthoring": [
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:soldier",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 3,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:war.troops-royal-guard",
+      "query": "什么人拿大圆盾扔飞斧？",
+      "namedByAuthoring": [
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:soldier",
+        "awake:identity:townsfolk"
+      ],
+      "deniedRows": 5,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:war.military-khuzait",
+      "query": "游牧的人怎么用骑马射手打仗？",
+      "namedByAuthoring": [
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:soldier",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 6,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:war.military-sturgia",
+      "query": "盾墙加飞斧是哪个国家的打法？",
+      "namedByAuthoring": [
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:soldier",
+        "awake:identity:townsfolk"
+      ],
+      "deniedRows": 4,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:economy.goods-fur",
+      "query": "北方有什么又暖又贵的皮货？",
+      "namedByAuthoring": [
+        "awake:identity:commoner",
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:notable",
+        "awake:identity:ransom_broker",
+        "awake:identity:soldier",
+        "awake:identity:tavernkeeper",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 1,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:economy.goods-salt",
+      "query": "桌上少不了、产地又集中的日用品是什么？",
+      "namedByAuthoring": [
+        "awake:identity:commoner",
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:notable",
+        "awake:identity:ransom_broker",
+        "awake:identity:soldier",
+        "awake:identity:tavernkeeper",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 1,
+      "leaks": []
+    },
+    {
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "query": "哪种头盔护到腮帮子和耳朵？",
+      "namedByAuthoring": [
+        "awake:identity:commoner",
+        "awake:identity:headman",
+        "awake:identity:merchant",
+        "awake:identity:noble",
+        "awake:identity:notable",
+        "awake:identity:ransom_broker",
+        "awake:identity:soldier",
+        "awake:identity:tavernkeeper",
+        "awake:identity:townsfolk",
+        "awake:identity:villager"
+      ],
+      "deniedRows": 1,
+      "leaks": []
+    }
+  ],
+  "shouldKnowMisses": [
+    {
+      "query": "斯特吉亚的军队怎么打仗？",
+      "target": "awake:entry:war.military-sturgia",
+      "identity": "awake:identity:headman",
+      "state": "partial"
+    },
+    {
+      "query": "斯特吉亚的军队怎么打仗？",
+      "target": "awake:entry:war.military-sturgia",
+      "identity": "awake:identity:merchant",
+      "state": "partial"
+    },
+    {
+      "query": "斯特吉亚的军队怎么打仗？",
+      "target": "awake:entry:war.military-sturgia",
+      "identity": "awake:identity:noble",
+      "state": "partial"
+    },
+    {
+      "query": "斯特吉亚的军队怎么打仗？",
+      "target": "awake:entry:war.military-sturgia",
+      "identity": "awake:identity:noble_high_steward",
+      "state": "partial"
+    },
+    {
+      "query": "斯特吉亚的军队怎么打仗？",
+      "target": "awake:entry:war.military-sturgia",
+      "identity": "awake:identity:ransom_broker",
+      "state": "partial"
+    },
+    {
+      "query": "斯特吉亚的军队怎么打仗？",
+      "target": "awake:entry:war.military-sturgia",
+      "identity": "awake:identity:soldier",
+      "state": "partial"
+    },
+    {
+      "query": "斯特吉亚的军队怎么打仗？",
+      "target": "awake:entry:war.military-sturgia",
+      "identity": "awake:identity:tavernkeeper",
+      "state": "partial"
+    },
+    {
+      "query": "斯特吉亚的军队怎么打仗？",
+      "target": "awake:entry:war.military-sturgia",
+      "identity": "awake:identity:townsfolk",
+      "state": "partial"
+    },
+    {
+      "query": "库赛特靠什么打仗？",
+      "target": "awake:entry:war.military-khuzait",
+      "identity": "awake:identity:merchant",
+      "state": "partial"
+    },
+    {
+      "query": "库赛特靠什么打仗？",
+      "target": "awake:entry:war.military-khuzait",
+      "identity": "awake:identity:noble",
+      "state": "partial"
+    },
+    {
+      "query": "库赛特靠什么打仗？",
+      "target": "awake:entry:war.military-khuzait",
+      "identity": "awake:identity:noble_high_steward",
+      "state": "partial"
+    },
+    {
+      "query": "库赛特靠什么打仗？",
+      "target": "awake:entry:war.military-khuzait",
+      "identity": "awake:identity:ransom_broker",
+      "state": "partial"
+    },
+    {
+      "query": "库赛特靠什么打仗？",
+      "target": "awake:entry:war.military-khuzait",
+      "identity": "awake:identity:soldier",
+      "state": "partial"
+    },
+    {
+      "query": "库赛特靠什么打仗？",
+      "target": "awake:entry:war.military-khuzait",
+      "identity": "awake:identity:villager",
+      "state": "partial"
+    },
+    {
+      "query": "山里有不让进的地方吗？",
+      "target": "awake:entry:culture.tales-dawn-taboo",
+      "identity": "awake:identity:headman",
+      "state": "partial"
+    },
+    {
+      "query": "山里有不让进的地方吗？",
+      "target": "awake:entry:culture.tales-dawn-taboo",
+      "identity": "awake:identity:noble",
+      "state": "partial"
+    },
+    {
+      "query": "山里有不让进的地方吗？",
+      "target": "awake:entry:culture.tales-dawn-taboo",
+      "identity": "awake:identity:noble_high_steward",
+      "state": "partial"
+    },
+    {
+      "query": "山里有不让进的地方吗？",
+      "target": "awake:entry:culture.tales-dawn-taboo",
+      "identity": "awake:identity:notable",
+      "state": "partial"
+    },
+    {
+      "query": "山里有不让进的地方吗？",
+      "target": "awake:entry:culture.tales-dawn-taboo",
+      "identity": "awake:identity:villager",
+      "state": "partial"
+    },
+    {
+      "query": "哪种头盔护到腮帮子和耳朵？",
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "identity": "awake:identity:commoner",
+      "state": "not_found"
+    },
+    {
+      "query": "哪种头盔护到腮帮子和耳朵？",
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "identity": "awake:identity:headman",
+      "state": "not_found"
+    },
+    {
+      "query": "哪种头盔护到腮帮子和耳朵？",
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "identity": "awake:identity:merchant",
+      "state": "not_found"
+    },
+    {
+      "query": "哪种头盔护到腮帮子和耳朵？",
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "identity": "awake:identity:noble",
+      "state": "not_found"
+    },
+    {
+      "query": "哪种头盔护到腮帮子和耳朵？",
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "identity": "awake:identity:noble_high_steward",
+      "state": "not_found"
+    },
+    {
+      "query": "哪种头盔护到腮帮子和耳朵？",
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "identity": "awake:identity:notable",
+      "state": "not_found"
+    },
+    {
+      "query": "哪种头盔护到腮帮子和耳朵？",
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "identity": "awake:identity:ransom_broker",
+      "state": "not_found"
+    },
+    {
+      "query": "哪种头盔护到腮帮子和耳朵？",
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "identity": "awake:identity:soldier",
+      "state": "not_found"
+    },
+    {
+      "query": "哪种头盔护到腮帮子和耳朵？",
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "identity": "awake:identity:tavernkeeper",
+      "state": "not_found"
+    },
+    {
+      "query": "哪种头盔护到腮帮子和耳朵？",
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "identity": "awake:identity:townsfolk",
+      "state": "not_found"
+    },
+    {
+      "query": "哪种头盔护到腮帮子和耳朵？",
+      "target": "awake:entry:economy.items-western_plated_helmet",
+      "identity": "awake:identity:villager",
+      "state": "not_found"
+    }
+  ],
+  "deniedCases": [
+    {
+      "query": "毛皮值钱吗？",
+      "target": "awake:entry:economy.goods-fur",
+      "allowedIdentity": "awake:identity:noble",
+      "deniedIdentity": "awake:identity:commoner",
+      "expectVisible": true,
+      "allowedHit": true,
+      "forbiddenReachable": true,
+      "deniedHit": true,
+      "visibilityOk": true,
+      "forbiddenLeaked": true,
+      "requiredMissing": true,
+      "note": "同一问句：贵族拿 detail 档（有基准价与南北价差），平民只配 rumor 档（只有「一张好皮子顶半个月嚼谷」）。查的是「他知道的是哪一档」，不只是「知不知道」。"
+    },
+    {
+      "query": "盐是从哪儿来的？",
+      "target": "awake:entry:economy.goods-salt",
+      "allowedIdentity": "awake:identity:noble",
+      "deniedIdentity": "awake:identity:commoner",
+      "expectVisible": true,
+      "allowedHit": true,
+      "forbiddenReachable": true,
+      "deniedHit": true,
+      "visibilityOk": true,
+      "forbiddenLeaked": true,
+      "requiredMissing": true,
+      "note": "同 D1 的形状，换一条（防单点）。平民知道「盐贵、产地集中在海边盐湖」，不该知道「基准价 40、翻倍卖」这种行市话。"
+    },
+    {
+      "query": "戴·科尔坦家靠什么发财？",
+      "target": "awake:entry:politics.clans-charas-cortain-secret",
+      "allowedIdentity": "awake:identity:noble",
+      "deniedIdentity": "awake:identity:commoner",
+      "expectVisible": false,
+      "allowedHit": true,
+      "forbiddenReachable": true,
+      "deniedHit": true,
+      "visibilityOk": false,
+      "forbiddenLeaked": true,
+      "requiredMissing": false,
+      "note": "这条条目**没有任何给平民的授权**（grant 只到 townsfolk/merchant/headman/soldier/noble/notable/tavernkeeper）⇒ 平民应当整条拿不到，不是拿个糙版本。"
+    },
+    {
+      "query": "戴·科尔坦家靠什么发财？",
+      "target": "awake:entry:politics.clans-charas-cortain-secret",
+      "allowedIdentity": "awake:identity:noble",
+      "deniedIdentity": "awake:identity:merchant",
+      "expectVisible": true,
+      "allowedHit": true,
+      "forbiddenReachable": true,
+      "deniedHit": true,
+      "visibilityOk": true,
+      "forbiddenLeaked": true,
+      "requiredMissing": false,
+      "note": "同一条、同一问句：商人拿 summary 档（「沙拉斯的海务财富尽归戴·科尔坦家族」＝账面是公开的），secret 档（「这些财富正被拿来操办图谋」）只给贵族。这正是初衷说的「等级管后果、公开程度管能不能出门」。"
+    },
+    {
+      "query": "林·莫德里斯是什么湖？",
+      "target": "awake:entry:geography.lakes-llyn-modris",
+      "allowedIdentity": "awake:identity:villager",
+      "deniedIdentity": "awake:identity:commoner",
+      "expectVisible": false,
+      "allowedHit": true,
+      "forbiddenReachable": true,
+      "deniedHit": true,
+      "visibilityOk": false,
+      "forbiddenLeaked": false,
+      "requiredMissing": false,
+      "note": "★ 这条最尖：`villager`（村民，local/rumor）**拿得到**，而 `commoner`（无地缘的平民）**整条拿不到** —— 同一条条目、同一问句。⇒ 证明「谁知道」是按身份 id 与它的父链判的，不是按「地位高低」排的。同时它带三档对照：villager=rumor（巨人踩出来的脚印）／townsfolk=summary（火山口湖）／commoner=无。⚠️ 因为 commoner 是整条不可见，所以这条**不设 requiredText**（设了＝题写反了，判据会当场判红）。"
+    }
+  ]
+}
