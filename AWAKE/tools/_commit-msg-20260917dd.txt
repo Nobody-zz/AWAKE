@@ -1,0 +1,22 @@
+第七轮续红测：打 PLAN-20260917 —— 它自身全绿，但照出我第五轮在 CHAIN 里写错的一句
+
+靶子：docs/PLAN-20260917-识别体系下一步.md
+
+P0（1 条，来源是我自己第五轮的增补）
+- CHAIN §三 里我加了"能力已在产品侧挂好，但游戏进程里还没有人调它"—— 错。
+  反证：WorldbookRuntime.cs:191 AwakeSemanticArmBootstrap.Schedule(...)；
+        ProbeExtension.cs:316 AwakeSemanticArmBootstrap.RetryCurrent()。
+  真机没跑通的真因是"游戏目录里那份服务还是 09-14 旧构建 + 模型四件没打包"，不是"没人调"。
+  错误来源：只 grep 了 AttachSemanticIndex 一个符号名，没顺着 Schedule/RetryCurrent 往上查调用链。
+- CHAIN §三 已改写，并把这处二次更正记在文内。
+
+阴性（PLAN 自身经得起打）
+- §一 表格四数：_dual_channel_20260917.txt 末尾汇总 = 主路池 11/24、兜底池 18/24、并集 20/24、BLOCKED 0/24。
+- §一 挂载点行号 WorldbookRuntime.cs:191 / ProbeExtension.cs:316（行号精确）。
+- §二 引 两条通道怎么合.md 第 405 行 = "挂进游戏，开始攒真实问法"那张表。
+- §三 判据串格式 status=attached entries=… of=… fingerprint=… session=…（AwakeSemanticArmBootstrap.cs:206-209）。
+- §四 三数：FIT :184 含「·」52 个、:185 263/448（59%）、:182 373 个不在正文里。
+
+方法结论：改过的文档会成为下一轮的靶子 —— "改"完必须进红测队列，不能默认"我改的就是对的"。
+
+改动：CHAIN §三 改写；AUDIT 报告新增 §十二（第七轮），原 §十二 出处 → §十三。
