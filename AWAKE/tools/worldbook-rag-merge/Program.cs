@@ -576,7 +576,12 @@ internal static class Program
                 bool answered = decision.AllowsAi;
                 string top1 = decision.HitIds.Count > 0 ? decision.HitIds[0].Split(':').Last() : "-";
                 rows.Add("    " + identity.Split(':').Last() + "=" + decision.State
-                    + (answered ? "/喂模型" : "/空手") + " top1=" + top1 + " 条数=" + decision.HitIds.Count);
+                    + (answered ? "/喂模型" : "/空手")
+                    + " 通路=" + result.MatchMode
+                    + " top1=" + top1 + " 条数=" + decision.HitIds.Count);
+                // 把**答出来的那句话**印出来。只给条目名会让人以为"是不是只搭上了一点边"，
+                // 给原话才看得出这就是拿它当答案（2026-09-17 甲方追问后加）。
+                rows.Add("      它答的是：" + Shorten(decision.RetrievedText, 90));
 
                 bool pass = isConcept
                     ? answered && allow.Contains(decision.HitIds.FirstOrDefault())
