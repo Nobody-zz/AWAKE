@@ -125,6 +125,10 @@ internal static class Program
 			("prompt-render-boundary", () => { RunPromptRenderBoundarySmoke(); return Task.CompletedTask; }),
 			("prompt-template-contract", () => { RunPromptTemplateContractSmoke(); return Task.CompletedTask; }),
 			("prompt-render-source-parity", () => { RunPromptRenderSourceParitySmoke(); return Task.CompletedTask; }),
+			// 知识门 × 提示词模板的接缝（2026-09-18 加，随「拆开知道与开口」）：
+			// 真策略 + 真模板 + 真渲染，把 not_found 轮次的提示词整段拼出来，看它到底长什么样。
+			// 既有两条都够不到这里 —— 策略层只看"喂不喂知识"，模板层只看"变量名对不对"。
+			("knowledge-gate-prompt", () => { RunKnowledgeGatePromptSmoke(); return Task.CompletedTask; }),
 			// 本用例会重置 UI 调度线程绑定；放在最后，避免影响前面的用例。
 			("dialogue-chain-redtest", () =>
 			{
@@ -4308,6 +4312,101 @@ private static void RunMessengerHistorySmoke()
 			throw new InvalidOperationException("the NPC contract must expose the optional command property.");
 
 		Console.WriteLine("PASS prompt template contract smoke");
+	}
+
+	/// <summary>
+	/// 知识门与提示词模板的接缝（2026-09-18 加，随「拆开知道与开口」一起）。
+	/// 此前没有一条判据走过这个缝：策略层（worldbook-rag-merge 的判据 E）量的是「喂不喂知识」，
+	/// 模板层（prompt-template-contract）量的是「变量名对不对」，**没人验过拼出来的那段到底长什么样**。
+	/// 这里用真策略 + 真模板 + 真渲染，把 not_found 轮次的提示词整段拼出来，断言三件事：
+	///   ① 该轮**可以开口**（AllowsAi=true，这是本次改动要的行为）；
+	///   ② 知识那一格**是空的**（BuildPromptBlock 返回空串）；
+	///   ③ 除知识以外的材料**照常在**（人格／记忆／状态／身份／玩家情报／场景／本轮言语都在）。
+	/// 第 ③ 条是关键：改之前那些材料全被那道门挡在装配之外，NPC 连自己是谁都没带上就回了句死台词。
+	/// </summary>
+	private static void RunKnowledgeGatePromptSmoke()
+	{
+		WorldbookQuery query = new WorldbookQuery
+		{
+			IdentityId = "profile.commoner",
+			KnowledgeScope = "local",
+			KnowledgeScopeAvailable = true,
+			EffectiveDetail = "rumor",
+			EffectiveDetailAvailable = true,
+			RequestedDetail = "rumor",
+			PlayerText = "今年收成怎么样？"
+		};
+		WorldKnowledgeQueryResult empty = new WorldKnowledgeQueryResult
+		{
+			State = WorldKnowledgeDecisionPolicy.NotFound
+		};
+		WorldKnowledgeDecision decision = WorldKnowledgeDecisionPolicy.Create(query, empty, "corr-notfound");
+
+		if (!decision.AllowsAi)
+			throw new InvalidOperationException("since 2026-09-18 a not_found turn must still be allowed to speak.");
+		string block = WorldKnowledgeDecisionPolicy.BuildPromptBlock(decision);
+		if (!string.IsNullOrWhiteSpace(block))
+			throw new InvalidOperationException("a not_found turn must not feed any knowledge block.");
+
+		Dictionary<string, string> variables = new Dictionary<string, string>(StringComparer.Ordinal)
+		{
+			["retrieved_knowledge"] = block,
+			["persona_dsl"] = "（判据标记：人格材料）",
+			["npc_memory"] = "（判据标记：记忆材料）",
+			["npc_state"] = "（判据标记：状态材料）",
+			["npc_commitments"] = "当前没有已记录的未决承诺。",
+			["npc_identity"] = "（判据标记：身份材料）",
+			["player_known"] = "（判据标记：玩家情报）",
+			["scene"] = "（判据标记：场景）",
+			["opening_hint"] = "",
+			["player_turn"] = "今年收成怎么样？",
+			["npc_id"] = "hero_sim_001",
+			["dialogue_action_mode"] = "chat：本轮只进行普通交谈；不得输出 command。"
+		};
+		NpcPromptBoundedResult bounded = NpcDialoguePromptPipeline.BuildBounded(
+			variables,
+			new List<NpcDialogueChatEntry>(),
+			NpcPromptTemplate.TemplateText,
+			NpcDialogueConstants.MaxPromptUtf8Bytes);
+		if (bounded.IsDirectOnly)
+			throw new InvalidOperationException("a not_found turn must not fall back to direct-only rendering.");
+		string prompt = NpcDialoguePromptPipeline.RenderTemplate(
+			NpcPromptTemplate.TemplateText, bounded.BoundedVariables);
+
+		if (prompt.IndexOf("知识状态：", StringComparison.Ordinal) >= 0)
+			throw new InvalidOperationException("a not_found prompt must not carry a knowledge block.");
+		foreach (string key in new[]
+		{
+			"retrieved_knowledge", "persona_dsl", "npc_memory", "npc_state", "npc_commitments",
+			"npc_identity", "player_known", "scene", "player_turn", "npc_id", "dialogue_action_mode"
+		})
+		{
+			if (prompt.IndexOf("{{" + key + "}}", StringComparison.Ordinal) >= 0)
+				throw new InvalidOperationException("placeholder left unreplaced in a not_found prompt: " + key);
+		}
+		foreach (string marker in new[]
+		{
+			"（判据标记：人格材料）", "（判据标记：记忆材料）", "（判据标记：状态材料）",
+			"（判据标记：身份材料）", "（判据标记：玩家情报）", "（判据标记：场景）", "今年收成怎么样？"
+		})
+		{
+			if (prompt.IndexOf(marker, StringComparison.Ordinal) < 0)
+				throw new InvalidOperationException("a not_found turn must still carry the non-knowledge materials: " + marker);
+		}
+
+		int tag = prompt.IndexOf("【检索到的知识】", StringComparison.Ordinal);
+		if (tag < 0)
+			throw new InvalidOperationException("the knowledge section label must still be present in the template.");
+		int tail = Math.Min(80, prompt.Length - tag);
+		Console.WriteLine("PROBE not_found 轮次的知识格实际样子 -> "
+			+ prompt.Substring(tag, tail).Replace("\n", " ⏎ "));
+		Console.WriteLine("PROBE 提示词长度=" + prompt.Length + " 字符；可开口=True；知识块=空；其余材料齐");
+		// 落盘给本机模型探针用（tools/_ollama_knowledge_gap_probe_20260918.py）。
+		// 走 %TEMP%，与 worldbook-runtime-sim 导出检索结果同一个去处，不污染工程目录。
+		string dumpPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "awake-knowledge-gate-prompt.txt");
+		System.IO.File.WriteAllText(dumpPath, prompt);
+		Console.WriteLine("PROBE 已落盘 -> " + dumpPath);
+		Console.WriteLine("PASS knowledge gate prompt smoke");
 	}
 
 	private static void RunSingleTemplateContract(string template, string[] required, string label)

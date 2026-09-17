@@ -1127,7 +1127,8 @@ internal sealed class NpcDialogueService : IDisposable
             + " correlation=" + knowledgeDecision.CorrelationId);
         // 走到这里还 AllowsAi=false 的只剩两种情况：blocked（世界书不可用/权限/内容门，该拦）
         // 与 referral（本版保持现状）。2026-09-18 起 not_found 不再在此短路 ——
-        // 它允许开口，只是 BuildPromptBlock 不给知识，靠模板里「这段为空意味着什么」兜。
+        // 它允许开口，只是 BuildPromptBlock 不给知识，靠模板里那句"这段为空意味着什么"兜。
+        // ⚠️ 那句今天还没写（【检索到的知识】仍是裸格子），与"内置提示词怎么完善"一起规划。
         if (!knowledgeDecision.AllowsAi)
         {
             return new NpcKnowledgePromptBuildResult(knowledgeDecision, string.Empty);

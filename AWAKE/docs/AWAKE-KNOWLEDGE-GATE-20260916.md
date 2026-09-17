@@ -8,7 +8,10 @@
 > - **一手证据复核过、逐字对上**：`docs/evidence/ai-chain-sim-fix-20260914/result.json` 两个用例
 >   `noble:领主` → `aiCalled=true`／`replySource=ollama`，`noble:收成` → `aiCalled=false`／
 >   `replySource=knowledge_direct_fallback` —— **正是 §一 那张表的两行**。该文件自己也写明"不启动 Bannerlord"（§六 的免责一致）。
-> - **行为今天仍在**：`AllowsAi` 仍只认 `known/partial`、`:1125` 仍提前 return、`:278` 仍走 `CompleteDirectKnowledgeTurn`。
+> - ~~**行为今天仍在**：`AllowsAi` 仍只认 `known/partial`、`:1125` 仍提前 return、`:278` 仍走 `CompleteDirectKnowledgeTurn`。~~
+>   🚩 **09-18 00:10 起这句不成立了**：`AllowsAi`（现 `WorldKnowledgeModels.cs:151`）改成"只有 `blocked`／`referral` 闭嘴"，
+>   `not_found` 放行 ⇒ `:278` 不再走 `CompleteDirectKnowledgeTurn`（该函数现只服务 `blocked`／`referral`）。
+>   **这句原本是在说 09-17 那天的态**，别当现状读。落地记录见 §七 与 `docs/DONE-20260918-拆开知道与开口.md`。
 > - **但本文所有行号是 `de2b9a0` 那版的**，09-17 同一批文件都改过 ⇒ 实际位置已整体后移（`QueryService` 那组偏约 +122）。
 >   常用几个的对照：本文 `WorldKnowledgeQueryService.cs:206-223 FindCandidates` ⇒ 现 **`:328`**；
 >   `WorldKnowledgeModels.cs:121 默认值` ⇒ 现 **`:125`**；`:137 AllowsAi` ⇒ 现 **`:141`**；
@@ -39,6 +42,12 @@
 ---
 
 ## 二、这条链的完整形状（逐环出处）
+
+> 🚩 **本节描述的是 09-17 23:40 裁决之前的形状，不再是现状。** 09-18 00:10 落地后，下面
+> **第 53-59 行那三环（`AllowsAi` → `:1125` → `:278` → `BuildDirectReply`）已经改了**：
+> `AllowsAi` 对 `not_found` 返 true、知识格由 `BuildPromptBlock` 单独决定给不给、`:278` 不再短路。
+> 本节的**上半段（玩家原话 → 检索 → 候选为空 → 默认 not_found）仍然逐字成立**，只有出口变了。
+> 新的出口形状见 `docs/DONE-20260918-拆开知道与开口.md`。**保留原文是为了留改动前的证据，不要照它读现状。**
 
 ```
 玩家原话
@@ -90,6 +99,10 @@
 3. **`NpcDialogueService.cs:278` 拿 `ShouldCallAi` 做判据** ⇒ 照样 `CompleteDirectKnowledgeTurn`。
 
 ⇒ 两道锁各自独立、都指向"不命中就不说话" ⇒ **这个意图是被刻意强化过的**（不能记成"当初没意识到"，见 §三）。
+
+> 🚩 **09-18 00:10 落地结果**：**第一道锁根本没动**（`:1125` 的提前 return 保留），**只改第二道（`AllowsAi` 的定义）**。
+> 原以为"两处必须同时改"，实测下来落点选在 `AllowsAi` 上就自动成立 —— 详见 §七 末尾的实测修正。
+> 保留下来的那道 return 现在只拦 `blocked`／`referral`，反而省掉一遍白装配。**"两道锁"这个描述已经过时，现状是一道半。**
 
 ### 附 · 完整链路全景（一轮对话从头到尾）
 
@@ -289,6 +302,14 @@
   **知识层照旧给空**（`BuildPromptBlock` 在 `not_found` 时返回空串），**说明句补在提示词模板里**。
   这样做还有个附带好处：`dialogue_context.knowledge` 才能如实记 `absent`；若在知识层塞文案，它会一律变成 `present`，观测点当场作废。
   模板那句**还没补**（甲方指定与"内置提示词怎么完善"一起规划），见 DONE 文档 §七。
+  🚩 **09-18 实测把这个切法也否了 —— 但"回到对话层"这个大方向仍然对，换的是落点。**
+  六种写法（空串／告知句／禁令句／放开字数下限／结构化状态行／状态行＋短指令）**27 次采样 27 次编造**，
+  一种都没拦住；阳性对照 6/6 精确照说 ⇒ 不是探针太钝。⇒ **"在【检索到的知识】那一格上做文章"这条路已关掉。**
+  另有一条结构限制：`RenderTemplate`（`NpcDialoguePromptPipeline.cs:122-132`）**没有条件分支** ⇒
+  写进模板的句子在 `known` 轮次也会出现，那时格子有正文、旁边一句"这格空着"就自相矛盾 ⇒
+  **"只在空着时说"在模板层做不到。**
+  病灶在**产出侧**（模板逼它给"具体、有画面感、80-180 字"的答案，"我不知道"八个字无处安放）。
+  详见 `docs/PROBE-20260918-空知识格实测-未知态该在哪一层表达.md`。
 
 **优先级建议**：排在「修数据（`doc.` 关键词污染）」之后、「上检索算法（向量/编辑距离）」之前。
 理由：修数据能把漏报从 62% 压下来，但**压不到 0**；只要还留着"没命中就不说话"，残余漏报每一条都仍是零信息输出。**先拆绑，再提准。**

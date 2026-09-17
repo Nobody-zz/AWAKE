@@ -253,10 +253,17 @@ internal static class WorldKnowledgeDecisionPolicy
 
     /// <summary>
     /// 送给模型的「知识」那一格（2026-09-18 改）。
-    /// **只管给不给知识，不管开不开口**：not_found／referral／blocked 一律返回空串，
-    /// 模型靠模板里「这一段为空意味着什么」的就地说明来理解（见 <c>src/Prompts/NpcPromptTemplate.cs</c>）。
+    /// **只管给不给知识，不管开不开口**：not_found／referral／blocked 一律返回空串。
+    /// 模型要理解"这一段为什么是空的"，靠的是模板里那句就地说明 ——
+    /// ⚠️ **那句目前还没写**（模板 <c>src/Prompts/NpcPromptTemplate.cs</c> 的【检索到的知识】段今天仍是裸格子，
+    /// 渲染出来是字面的 <c>""</c>），与"内置提示词怎么完善"一起规划。别把这条注释读成"已经写了"。
     /// ⚠️ **不要在这里塞一段"我不清楚"的文案**：那样 <c>NpcDialogueContextDiagnostics</c> 的
     /// <c>dialogue_context.knowledge</c> 会一律变成 present，"这一轮到底有没有世界书事实"就没法读了。
+    /// 🚩 **09-18 离线实测（27 次采样）——"在这一格上做文章"整条路走不通，别再试第七种写法。**
+    /// 空串／告知句／禁令句／放开字数下限／结构化状态行／状态行＋短指令，**六种写法全部 27/27 编造**；
+    /// 同一探针的阳性对照（知识格填真知识）6/6 精确照说 ⇒ 不是探针太钝。详见
+    /// <c>tools/_ollama_knowledge_gap_probe_20260918.py</c> 与 <c>tools/_probe_result_20260918.txt</c>。
+    /// **病灶在产出侧**：模板逼它给"具体、有画面感、80-180 字"的答案，而"我不知道"八个字无处安放。
     /// </summary>
     internal static string BuildPromptBlock(WorldKnowledgeDecision decision)
     {
