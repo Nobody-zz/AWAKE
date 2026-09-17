@@ -1,0 +1,9 @@
+补落：DESIGN §2.2 的「来源／溯源整族无下游」表（1 P0 之外的新发现之二）
+
+首笔 24d8a8a 里已在 §2.2 写了 ReportId 是死字段，但"整族"那张表当时没落盘；
+AUDIT 报告已声明"已补 DESIGN §2.2"，故补这一笔让它名副其实。
+
+- DESIGN §2.2 增表：entry.SourceKind / SourceEventIds / SourceFactIds、
+  decision.SourceIds / ReportIds —— 定义/写入/现行链路读取三栏，读取一栏全"无"。
+- 证据：日志 npc_dialogue_knowledge_decision 与 BuildPromptBlock 的字段清单（都不含它们）。
+- 并标：口径限现行链路；entry.Expressions 不是死字段（检索在读），别误伤。
