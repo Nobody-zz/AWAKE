@@ -1,0 +1,22 @@
+第八轮续红测：打 AUDIT-照设计初衷核验语义链 —— 近全绿（1 处 P2），另记我自己一次误判
+
+靶子：docs/AUDIT-20260917-照设计初衷核验语义链.md
+
+P2（1，口径）
+- §1.3「题集里 identity 出现 0 次」是"补之前"的读数；09-17 晚复核 grep -c identity = 16
+  （当晚补了 allowedIdentity/deniedIdentity，对应 §四.2 的 5 条 deniedCases）。文档已声明"§一~§三 保留不改"，
+  不算错，已补一行时点注。
+
+阴性（核过为真）
+- §1.1 QueryService :63-68 语义臂在锁外跑（QuerySemanticIds）、:76-100 逐条 HasMatchingDeny→SelectExpression。
+- §1.3 PickIdentity 存在（RetrievalProbeCases.cs 定义 :310、调用 :108）。
+- §1.3 RunQuery 固定低权限身份：RetrievalProbeCases.cs:229 逐字 "awake:identity:commoner"。
+- §四 identity-gate 落在 worldbook-runtime-sim/Program.cs:75；_identity_gate_off/on/mutate 的 txt+json 都在；
+  变异数字（泄漏 0→60、点名题失败 0→5）与留档一致。
+
+★ 我自己的一次误判（反面教材）
+先只 grep 了 worldbook-runtime-smoke/*.cs 的 IdentityId 且加了 head -5，只看到 Program.cs 的
+"profile.commoner"，差点判它引错身份串；重查后 RetrievalProbeCases.cs:229 就是 "awake:identity:commoner"
+—— 它对、我错。⇒ 被 head/tail 截断的输出不能支撑"没有/只剩/只在"。
+
+改动：AUDIT-照设计初衷 §1.3 加时点注；AUDIT-判断层续红测 新增 §十三（第八轮），原 §十三 出处 → §十四。
