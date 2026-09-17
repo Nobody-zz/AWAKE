@@ -1,0 +1,15 @@
+包 = awake:worldbook.calradia@1.0.0，条目 448 条
+模型目录 = D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AnimusForge\ONNX
+词表     = D:\AWAKE-Dev\AWAKE\tools\_af_tokenizer_20260916\vocab.txt
+
+CHECK PASS 1 阳性对照（嵌入器活着） :: 维度 512，不同向量 5/5，自比 1.000000
+每轮入库 = 28 批（批量 16 条）
+
+CHECK PASS 2 世界书先到（host 未就位不挂） :: HasSemanticIndex=False，入库次数=0，问过 host 1 次
+CHECK PASS 3 战役内接上（挂载器真的挂了） :: HasSemanticIndex=True，入库调用=28（一轮 28 批），attach 键=
+CHECK PASS 4 端到端变好（挂上以后 hit@3） :: 字面 19/24 → 挂上 23/24（对照线 19 → 23）
+CHECK FAIL 5 同一会话不重复入库 :: 入库调用仍为 56（第二次只是 already_attached，一批都没重灌）
+CHECK FAIL 6 换战役重新入库 :: HasSemanticIndex=True，入库调用=84（应为两轮 56），attach 键=
+CHECK PASS 7 失败回落（不挂也不炸） :: HasSemanticIndex=False，同一服务仍能回答 19/24（字面值）
+
+RESULT FAIL failed=2

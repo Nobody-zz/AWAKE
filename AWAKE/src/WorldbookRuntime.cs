@@ -186,6 +186,9 @@ internal static class WorldbookRuntime
             _knowledge = candidateKnowledge;
             _persona = candidatePersona;
             WorldEventServices.BindKnowledge(snapshot, candidateKnowledge);
+            // 语义臂：**只登记 + 起后台线程**（世界书发布早于战役会话，这里等不到 host 也照常返回，
+            // 真正的等待与入库都在后台；战役就绪后 `ProbeExtension` 还会再试一次）。
+            AwakeSemanticArmBootstrap.Schedule(candidateKnowledge, snapshot);
             AwakeLog.Write("worldbook_runtime_initialized schema=awake.worldbook.v2 build_id=" + AwakeVersion.BuildId
                 + " package=" + (_activation?.PackageId ?? string.Empty)
                 + " manifest_sha256=" + AwakeBuildIdentity.TryComputeFileSha256(manifestPath)

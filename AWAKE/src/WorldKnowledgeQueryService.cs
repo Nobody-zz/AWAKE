@@ -20,7 +20,30 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
     private readonly object _gate = new object();
     private readonly HashSet<string> _dynamicEntryIds = new HashSet<string>(StringComparer.Ordinal);
     private int _dynamicRevision;
+
+    // 语义召回这一路。**可空**且**可后挂**：没挂上时整个类与从前一字不差（融合退化回原序，
+    // 见 `WorldKnowledgeRankFusion`）。挂载点见 `AwakeWorldKnowledgeSemanticIndex`。
+    private IWorldKnowledgeSemanticIndex _semantic;
+
+    /// <summary>语义臂一次最多收几条。为什么是 3：融合只用名次，进池的条数直接决定
+    /// 「笼统话炸出一片」的风险；实测 26 条里语义臂能排到第 1 的，目标也都在它的前 3 里。</summary>
+    private const int SemanticCandidateLimit = 3;
+
     internal WorldKnowledgeQueryService(WorldKnowledgeSnapshot snapshot) { _snapshot = snapshot; }
+
+    internal WorldKnowledgeQueryService(WorldKnowledgeSnapshot snapshot, IWorldKnowledgeSemanticIndex semantic) : this(snapshot)
+    {
+        _semantic = semantic;
+    }
+
+    /// <summary>挂上/摘掉语义通道（传 null 即摘掉）。世界书重载后要用新的语料重新挂。</summary>
+    internal void AttachSemanticIndex(IWorldKnowledgeSemanticIndex semantic)
+    {
+        lock (_gate) _semantic = semantic;
+    }
+
+    internal bool HasSemanticIndex { get { lock (_gate) return _semantic != null; } }
+
     internal int EntryCount { get { lock (_gate) return _snapshot.Entries.Count; } }
     internal int IdentityCount { get { lock (_gate) return _snapshot.Identities.Count; } }
     internal int ReferralCount { get { lock (_gate) return _snapshot.Referrals.Count; } }
@@ -31,6 +54,9 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
     public WorldKnowledgeQueryResult Query(WorldbookQuery query)
     {
         query = query ?? new WorldbookQuery();
+        // 语义召回在锁**外**跑：它要走一次 IPC 加一次编码（几十毫秒），而 `_gate` 后面还站着
+        // Overlay / 动态条目的写者。锁里只做「把两臂合起来」这件纯内存的事。
+        IReadOnlyList<string> semanticIds = QuerySemanticIds(query.PlayerText);
         lock (_gate)
         {
             var result = new WorldKnowledgeQueryResult
@@ -39,8 +65,8 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
                 SourceVersion = _snapshot.PackageId + "@" + _snapshot.Version + "+dynamic=" + _dynamicRevision
             };
             if (!ContentGateAllows(query, result)) return result;
-            var candidates = FindCandidates(query.PlayerText);
-            result.MatchMode = candidates.Count == 0 ? "identity" : "keyword";
+            var candidates = FindCandidates(query.PlayerText, semanticIds, out string matchMode);
+            result.MatchMode = candidates.Count == 0 ? "identity" : matchMode;
             WorldKnowledgeIdentityEvaluation evaluation = WorldbookIdentityEvaluator.Evaluate(query, _snapshot);
             var builder = new StringBuilder();
             bool sawKnown = false;
@@ -203,7 +229,45 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
         }
     }
 
-    private List<WorldKnowledgeEntry> FindCandidates(string text)
+    /// <summary>
+    /// 走一次语义召回。**任何失败都当"这一路没说话"**（返回空表），绝不向外抛 ——
+    /// 语义是加分项，字面链才是底线；模型缺失、服务没起、超时，都不该让玩家问不成话。
+    /// </summary>
+    private IReadOnlyList<string> QuerySemanticIds(string playerText)
+    {
+        IWorldKnowledgeSemanticIndex index = _semantic;
+        if (index == null || string.IsNullOrWhiteSpace(playerText)) return Array.Empty<string>();
+        try
+        {
+            return index.Search(playerText, SemanticCandidateLimit) ?? (IReadOnlyList<string>)Array.Empty<string>();
+        }
+        catch
+        {
+            return Array.Empty<string>();
+        }
+    }
+
+    private List<WorldKnowledgeEntry> FindCandidates(string text, IReadOnlyList<string> semanticIds, out string matchMode)
+    {
+        List<WorldKnowledgeEntry> literal = FindLiteralCandidates(text);
+        matchMode = "keyword";
+        if (semanticIds == null || semanticIds.Count == 0) return literal;
+
+        // 两臂**合并**，而不是「字面空手才问语义」。这一条是实测改过来的：语义单独救回来的 6 条里，
+        // 5 条的字面侧并非空手，而是「返回了 5 条、全错」（见 docs/FEED-20260917 §2.4）。
+        // ⇒ 触发线必须是无条件的，合并规则见 `WorldKnowledgeRankFusion`（对称 RRF，k=60）。
+        matchMode = literal.Count == 0 ? "semantic" : "hybrid";
+        var literalIds = literal.Select(x => x.Id).ToList();
+        List<string> fused = WorldKnowledgeRankFusion.Merge(literalIds, semanticIds, literalIds.Count + semanticIds.Count);
+        var candidates = new List<WorldKnowledgeEntry>(fused.Count);
+        foreach (string id in fused)
+        {
+            if (_snapshot.Entries.TryGetValue(id, out WorldKnowledgeEntry entry)) candidates.Add(entry);
+        }
+        return candidates;
+    }
+
+    private List<WorldKnowledgeEntry> FindLiteralCandidates(string text)
     {
         if (string.IsNullOrWhiteSpace(text)) return _snapshot.Entries.Values.OrderBy(x => x.Id, StringComparer.Ordinal).ToList();
         var ids = new HashSet<string>(StringComparer.Ordinal);

@@ -311,6 +311,9 @@ internal sealed class AwakeExtension : IFrameworkExtension
                     KnowledgeRuntime.ShutdownCurrent();
                     WorldbookRuntime.ShutdownCurrent();
                     WorldbookRuntime.EnsureCreated();
+                    // 语义臂第二次机会：世界书是**在战役之前**加载的，那一次多半等不到 host
+                    // （RAG 数据面要战役内的 session lease）。这里战役会话已经就绪，再来一次。
+                    AwakeSemanticArmBootstrap.RetryCurrent();
                     AwakeRuleRegistry.EnsureLoaded();
                     NpcProactiveService.SetCurrent(new NpcProactiveService());
                     break;

@@ -1,0 +1,31 @@
+src+tools(09-17): 语义臂接上生产路径 —— 挂载器 + 端到端验台 + 记录
+
+起因：甲方「语义臂接上去吧，可以吗」。此前状态是「零件全齐，但没通电」——
+AttachSemanticIndex / TryIngest 全仓只有离线验台（tools/worldbook-rag-merge）在调，
+等于技能里那类「死方法」：代码在、没人调、静默无效。
+
+内容：
+- src/AwakeSemanticArmBootstrap.cs（新，237 行）——挂载器：
+  登记 → 后台等 host → 建 context → 28 批入库 → 挂上；失败一律静默回落。
+  幂等键 = 语料指纹 + 会话（换档必须重灌，拿「挂过没挂过」当键会静默空转）
+- src/WorldbookRuntime.cs:191 —— 世界书发布后 Schedule(...)：只登记 + 起后台线程，不阻塞加载
+- src/ProbeExtension.cs:316 —— CampaignSessionReady 时 RetryCurrent()：第二次机会
+  （世界书加载早于战役会话，而 RAG 数据面要战役内 session lease）
+- src/WorldKnowledgeSemantic.cs、src/AwakeWorldKnowledgeSemanticIndex.cs（新）：
+  可空契约（拼法 D + 对称 RRF k=60）+ IPC 适配器（1500ms 超时 / 失败返空表）
+- src/WorldKnowledgeQueryService.cs —— 可空委托挂载点
+- tools/semantic-arm-bootstrap-smoke/（新）——7 条判据、零替身验台，RESULT PASS failed=0
+  ★ 判据 4 是这份验台的眼：挂上以后 24 条题 hit@3 由 19/24 → 23/24（行为证据，不是状态证据）
+- tools/worldbook-runtime-smoke/{SmokeStubs.cs,WorldbookRuntimeSmoke.csproj}：
+  AwakeRuntime 改 partial + 编译清单同步（含 WorldKnowledgeSemantic.cs）
+- docs/DONE-20260917-语义臂接上生产路径.md（新）；docs/PLAN-20260917-语义层接在哪怎么接.md（加「§二 已过期」横幅）
+
+变异检验两向都跑过（全绿不算证据）：
+- 摘掉 service.AttachSemanticIndex ⇒ 判据 3/4/6 红，判据 4 退回 19/24
+- 假装「没挂过」⇒ 判据 5/6 红，入库 28 → 56 → 84（每轮重灌）
+接线后复核：模组 0 警 0 错；RETRIEVAL_GATE PASS（hit@3 A>=10 B>=9 ALL>=19）；
+MERGE_GATE PASS losses@3=0。
+
+⚠️ 接上了，但还没通电：模型四件 + 词表 + ORT 原生库未进
+Modules/AWAKE/bin/Win64_Shipping_Client/Runtime/models/，服务仍是 09-14 旧构建，真机零次。
+判读口径见 docs/DONE-20260917-语义臂接上生产路径.md 第五节。

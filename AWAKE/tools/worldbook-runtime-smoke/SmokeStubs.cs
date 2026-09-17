@@ -36,7 +36,7 @@ internal sealed class WorldbookMappingContext
 {
 }
 
-internal static class AwakeRuntime
+internal static partial class AwakeRuntime
 {
     internal static WorldStateStore WorldStateStore { get; set; }
     internal static bool SessionEnded { get; set; }
