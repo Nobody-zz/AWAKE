@@ -5,7 +5,7 @@
 [A] 维度 512，不同向量 5/5，自比 1.000000  => PASS
 [入库] 拼法 feed-D-v1，示例：沙拉斯湾·三种来历。沙拉斯湾·三种来历、沙拉斯湾、帝国摇篮、卡拉德登陆。帝国“摇篮”史称、先祖登陆传说（未经确证）与船人…
 [入库] 语料指纹 = awake:worldbook.calradia@1.0.0#feed-D-v1
-[入库] OK，写入 451 条，用时 7803 ms
+[入库] OK，写入 451 条，用时 7693 ms
 
 ──────────────────────────────────────────────────────────────────────────────
 组  问法                            目标                                  字面  语义  合并  上限  池  涨
@@ -115,6 +115,70 @@ NOANSWER OK expect=concept q=城镇
     commoner=partial/喂模型 通路=hybrid top1=geography.settlement-types-town 条数=2
       它答的是：进城是件大事。车上的东西卖完、该买的买到，才算没白跑一趟。
 萨哥特这名字是外来语，意思是营寨。城底下压着一座更老的城，是谁毁的，各人说法不一。
+
+── 诊断：跟命中条目『共享几个 term』能不能把病题和真问题分开 ──
+  [本题集] 领主 ⇒ 命中 0 条，问句切出 1 个 term
+  [本题集] 那谁 ⇒ 命中 0 条，问句切出 1 个 term
+  [本题集] 这边的人怎么样 ⇒ 命中 7 条，问句切出 7 个 term
+      geography.castles-dinar-castle 共享 1 个：边的
+      geography.settlement-types-town 共享 0 个：（无）
+      geography.castles-epinosa-castle 共享 1 个：边的
+  [本题集] 附近有什么好东西 ⇒ 命中 5 条，问句切出 8 个 term
+      geography.villages-lamesa 共享 2 个：附近、近有
+      geography.villages-lartusys 共享 2 个：附近、近有
+      economy.goods-silver 共享 1 个：附近
+  [本题集] 他们都怎么说 ⇒ 命中 0 条，问句切出 6 个 term
+  [本题集] 你说的谁啊 ⇒ 命中 0 条，问句切出 5 个 term
+  [本题集] 村庄 ⇒ 命中 3 条，问句切出 1 个 term
+      geography.settlement-types-village 共享 1 个：村庄
+      geography.settlement-types-town 共享 0 个：（无）
+      geography.villages-kvol 共享 0 个：（无）
+  [本题集] 城堡 ⇒ 命中 3 条，问句切出 1 个 term
+      geography.settlement-types-castle 共享 1 个：城堡
+      geography.castles-takor-castle 共享 1 个：城堡
+      geography.castles-garontor-castle 共享 1 个：城堡
+  [本题集] 城镇 ⇒ 命中 2 条，问句切出 1 个 term
+      geography.settlement-types-town 共享 1 个：城镇
+      geography.towns-sargot 共享 1 个：城镇
+  [真问题] 这一带有好马吗？ ⇒ 命中 8 条，问句切出 7 个 term
+      geography.castles-hongard-castle 共享 2 个：这一、一带
+      economy.items-saddle_horse 共享 0 个：（无）
+      geography.villages-akiser 共享 2 个：这一、一带
+  [真问题] 山里有不让进的地方吗？ ⇒ 命中 6 条，问句切出 10 个 term
+      geography.castles-veron-castle 共享 2 个：的地、地方
+      geography.villages-baq 共享 0 个：（无）
+      geography.villages-hamoshawat 共享 2 个：的地、地方
+  [真问题] 什么人拿大圆盾扔飞斧？ ⇒ 命中 1 条，问句切出 10 个 term
+      economy.items-heavy_round_shield 共享 1 个：圆盾
+
+── 诊断：若加出口规则「命中条目与问句没有任何 keyword 共享 ⇒ 只算相关、不算知道」，代价多少 ──
+   有入口词 共享[拉迈萨]  拉迈萨那地方养什么？
+   有入口词 共享[西米拉堡、西米拉]  西米拉堡是谁的城堡？
+   有入口词 共享[乔诺巴斯]  乔诺巴斯在哪儿？
+   有入口词 共享[富勒格]  富勒格是谁？
+   有入口词 共享[卡恰尔半岛]  卡恰尔半岛归谁？
+   有入口词 共享[萨涅俄帕]  萨涅俄帕是什么地方？
+   ★没有入口词 共享[]  斯特吉亚的军队怎么打仗？
+   ★没有入口词 共享[]  库赛特靠什么打仗？
+   有入口词 共享[皇家侍卫]  皇家侍卫是什么兵？
+   有入口词 共享[毛皮]  毛皮值钱吗？
+   有入口词 共享[盐]  盐是从哪儿来的？
+   有入口词 共享[侧护覆板盔]  侧护覆板盔谁在用？
+   有入口词 共享[瓦尔切格]  瓦尔切格怎么会换主人？
+   ★没有入口词 共享[]  有大瀑布的村子是哪个？
+   ★没有入口词 共享[]  集市上说书人讲的那个鬼点子是谁的？
+   ★没有入口词 共享[]  有个半岛被三家抢过，谁说了算？
+   ★没有入口词 共享[]  山里有不让进的地方吗？
+   ★没有入口词 共享[]  隘口上那个商埠，哪个家族在那儿定过都？
+   ★没有入口词 共享[]  什么人拿大圆盾扔飞斧？
+   ★没有入口词 共享[]  游牧的人怎么用骑马射手打仗？
+   ★没有入口词 共享[]  盾墙加飞斧是哪个国家的打法？
+   ★没有入口词 共享[]  北方有什么又暖又贵的皮货？
+   ★没有入口词 共享[]  桌上少不了、产地又集中的日用品是什么？
+   ★没有入口词 共享[]  哪种头盔护到腮帮子和耳朵？
+   小计：目标条目的入口词出现在问句里 11 条，**没有** 13 条（另有 1 条不计入）
+   ⇒ 「没有入口词」那 13 条，一旦上了这条出口规则就会被判成『不算知道』；它们现在是命中还是没命中，决定这条规则能不能上。
+   ★没有入口词的题目：斯特吉亚的军队怎么打仗？ / 库赛特靠什么打仗？ / 有大瀑布的村子是哪个？ / 集市上说书人讲的那个鬼点子是谁的？ / 有个半岛被三家抢过，谁说了算？ / 山里有不让进的地方吗？ / 隘口上那个商埠，哪个家族在那儿定过都？ / 什么人拿大圆盾扔飞斧？ / 游牧的人怎么用骑马射手打仗？ / 盾墙加飞斧是哪个国家的打法？ / 北方有什么又暖又贵的皮货？ / 桌上少不了、产地又集中的日用品是什么？ / 哪种头盔护到腮帮子和耳朵？
 NOANSWER_RULER offenders=0/0 concept_offenders=0/0 known_gaps=3/3 OK
 
 JUDGE positive_control=PASS literal_unchanged=PASS merged_improves=PASS negative_clean=PASS overmatch_bounded=PASS no_answer_clean=PASS concept_clean=PASS known_gaps_bounded=PASS

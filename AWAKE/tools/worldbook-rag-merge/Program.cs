@@ -84,6 +84,18 @@ internal static class Program
     //    ⇒ 能不能分开，靠的不是分数，是**这句话有没有确定所指**，那是内容侧规则的事。
     private const int KnownGapMax = 3;
 
+    // 诊断用对照（**不参与判据**，只在 AWAKE_NOANSWER_DIAG=1 时打印）：
+    // 这几条是**真问题**里"同样整句、同样不带实体名"的那一类（24 题集的 B 组）。
+    // 用途只有一个：看「跟命中条目共享几个 term、共享的是哪几个」这件事，
+    // 能不能把病题（领主／这边的人怎么样／附近有什么好东西）和它们分开。
+    // 分不开 ⇒ 就别再在检索层里找修法了，那不是信号的问题。
+    private static readonly string[] NoAnswerContrastProbes =
+    {
+        "这一带有好马吗？",
+        "山里有不让进的地方吗？",
+        "什么人拿大圆盾扔飞斧？"
+    };
+
     internal static int Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
@@ -462,7 +474,7 @@ internal static class Program
 
             // ── E 该空手时空手（★ 09-17 新增，见上方常量注释）────────────────────────
             int noAnswerOffenders, conceptOffenders, knownGapHits;
-            bool rulerCasesLoaded = RunNoAnswerRuler(merged, repositoryRoot,
+            bool rulerCasesLoaded = RunNoAnswerRuler(merged, snapshot, repositoryRoot,
                 out noAnswerOffenders, out conceptOffenders, out knownGapHits);
             if (!rulerCasesLoaded) failures++;
             bool noAnswerClean = noAnswerOffenders <= NoAnswerMaxOffenders;
@@ -532,8 +544,8 @@ internal static class Program
     // 为什么身份要逐个查：同一句话，换个身份能看到的东西就不一样，「只有某个身份会答错」是真事
     //   —— 09-17 的「领主」就是 soldier/noble/merchant 三种身份答错、别的没中。
     // 返回 false ＝ 题集缺失或为空。一条从不执行的判据，"没报警"什么也证明不了，必须当场报红。
-    internal static bool RunNoAnswerRuler(WorldKnowledgeQueryService merged, string repositoryRoot,
-        out int offenders, out int conceptOffenders, out int knownGaps)
+    internal static bool RunNoAnswerRuler(WorldKnowledgeQueryService merged, WorldKnowledgeSnapshot snapshot,
+        string repositoryRoot, out int offenders, out int conceptOffenders, out int knownGaps)
     {
         offenders = 0;
         conceptOffenders = 0;
@@ -604,7 +616,73 @@ internal static class Program
             else offenders++;
         }
 
+        RunNoAnswerDiagnostic(merged, snapshot, list, repositoryRoot);
         return true;
+    }
+
+    // 诊断（默认不打印，AWAKE_NOANSWER_DIAG=1 才打）：
+    // ① 共享 term 能不能把病题和真问题分开（结论：分不开）；
+    // ② 如果加一条出口规则「与问句没有任何**入口词**（keyword）共享的命中，只算相关、不算知道」，
+    //    代价是多少 —— 逐个真问题量：它的目标条目有没有一个 keyword 出现在问句里。
+    private static void RunNoAnswerDiagnostic(WorldKnowledgeQueryService merged, WorldKnowledgeSnapshot snapshot,
+        JArray list, string repositoryRoot)
+    {
+        if (Environment.GetEnvironmentVariable("AWAKE_NOANSWER_DIAG") != "1") return;
+        Console.WriteLine();
+        Console.WriteLine("── 诊断：跟命中条目『共享几个 term』能不能把病题和真问题分开 ──");
+        var queries = new List<string>();
+        foreach (JToken token in list) queries.Add((string)token["query"]);
+        queries.AddRange(NoAnswerContrastProbes);
+        foreach (string q in queries)
+        {
+            bool contrast = Array.IndexOf(NoAnswerContrastProbes, q) >= 0;
+            WorldKnowledgeQueryResult result = merged.Query(BuildQuery(q, "awake:identity:commoner"));
+            HashSet<string> queryTerms = WorldbookTermIndex.TermSet(q);
+            Console.WriteLine("  " + (contrast ? "[真问题]" : "[本题集]") + " " + q
+                + " ⇒ 命中 " + result.HitIds.Count + " 条，问句切出 " + queryTerms.Count + " 个 term");
+            foreach (string id in result.HitIds.Take(3))
+            {
+                WorldKnowledgeEntry entry;
+                if (!snapshot.Entries.TryGetValue(id, out entry)) continue;
+                var entryTerms = new HashSet<string>(WorldbookTermIndex.TermSet(entry.Title), StringComparer.OrdinalIgnoreCase);
+                foreach (string term in WorldbookTermIndex.TermSet(entry.Summary)) entryTerms.Add(term);
+                List<string> shared = queryTerms.Where(t => entryTerms.Contains(t))
+                    .OrderByDescending(t => t.Length).ToList();
+                Console.WriteLine("      " + id.Split(':').Last() + " 共享 " + shared.Count + " 个："
+                    + (shared.Count == 0 ? "（无）" : string.Join("、", shared.Take(8))));
+            }
+        }
+
+        // ② 出口规则的代价：24 题真问题里，目标条目有没有**入口词**（keyword）出现在问句里。
+        string casesPath = Path.Combine(repositoryRoot, "tools", "_retrieval_cases_20260916.json");
+        if (!File.Exists(casesPath)) return;
+        JArray real = JObject.Parse(File.ReadAllText(casesPath))["cases"] as JArray;
+        if (real == null) return;
+        Console.WriteLine();
+        Console.WriteLine("── 诊断：若加出口规则「命中条目与问句没有任何 keyword 共享 ⇒ 只算相关、不算知道」，代价多少 ──");
+        int withEntryWord = 0, withoutEntryWord = 0, skipped = 0;
+        var noEntryWord = new List<string>();
+        foreach (JToken token in real)
+        {
+            if (token["countInGate"] != null && !(bool)token["countInGate"]) { skipped++; continue; }
+            string target = (string)token["target"];
+            string text = (string)token["query"];
+            WorldKnowledgeEntry entry;
+            if (!snapshot.Entries.TryGetValue(target, out entry)) { skipped++; continue; }
+            List<string> hit = entry.Keywords
+                .Where(k => !string.IsNullOrWhiteSpace(k)
+                    && text.IndexOf(k, StringComparison.OrdinalIgnoreCase) >= 0)
+                .ToList();
+            if (hit.Count > 0) withEntryWord++;
+            else { withoutEntryWord++; noEntryWord.Add(text); }
+            Console.WriteLine("   " + (hit.Count > 0 ? "有入口词" : "★没有入口词")
+                + " 共享[" + string.Join("、", hit.Take(4)) + "]  " + text);
+        }
+        Console.WriteLine("   小计：目标条目的入口词出现在问句里 " + withEntryWord + " 条，"
+            + "**没有** " + withoutEntryWord + " 条（另有 " + skipped + " 条不计入）");
+        Console.WriteLine("   ⇒ 「没有入口词」那 " + withoutEntryWord + " 条，一旦上了这条出口规则就会被判成『不算知道』；"
+            + "它们现在是命中还是没命中，决定这条规则能不能上。");
+        if (noEntryWord.Count > 0) Console.WriteLine("   ★没有入口词的题目：" + Join(noEntryWord));
     }
 
     // 与门禁验台 `RetrievalProbeCases.PickIdentity` 同源：身份取目标条目自己授权里的第一个，
