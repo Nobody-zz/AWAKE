@@ -1,0 +1,23 @@
+第四轮续红测：靶子换成刚交出去的报告本身 —— 1 P1（引被测文档的行号被自己的修正挤走）+ 1 P2
+
+靶子：本轮新写的 AUDIT-判断层续红测.md ＋ 刚改过的 SPEC/DESIGN 三处。
+
+P1（已改）
+- 报告初稿引"DESIGN §五 :171"与"SPEC :247-249"。其中 DESIGN 那处**被本轮自己的修正动作挤走**：
+  §2.2 插入那张表（+14 行）把 KnownGapMax 那句从 :171 推到 :189。
+- ⇒ 报告里凡引**被测文档**一律改成 §节名/特征串，不写死行号；开头加"行号口径"声明。
+- 通用形式：引"会被改动的文档"时行号天然不可靠；要引就引不动的锚点（节名/函数名/特征串）。
+- 附带：我原以为"在 SPEC §六 拆行会让后面 +1"，实测**没有**（那段原本就是两行）⇒ 漂没漂要核，不能推。
+
+P2（已改）
+- §6.1 与 DESIGN #40 把 NpcDialogueOutput.cs:104/140 说成"校验 command"；
+  实际是**解析**（读 root["command"]）与**构造**（NpcDialogueCommandProposal，受 allowCommand 开关约束），
+  不是格式校验。三处同步改宽：AUDIT 报告 / DESIGN 附录 A #40 / 当日记忆。
+
+阴性（核过为真）
+- BuildMemorySummaryHint 调用点确在 Dispose()（:398 声明、:419 调用）
+- NpcPromptTemplate.cs:109 占位符列表正好 13 个
+- NpcDialogueService.cs:1194/1196 就是 BuildBounded(rawVariables, history, …)
+- d1403de 确实改过 DESIGN 的"两条出口"句（git show 可查）
+
+结构：AUDIT 报告新增 §九（第四轮：对本报告自身的复检），原 §九 出处 → §十。
