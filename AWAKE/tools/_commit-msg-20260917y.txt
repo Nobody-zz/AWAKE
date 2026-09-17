@@ -1,0 +1,32 @@
+判断层续红测：打在 SPEC 全篇与 DESIGN 主体 —— 1 P0、3 P1、2 条新发现
+
+靶子换成前两轮没打过的：SPEC 全篇 + DESIGN §一~§七（上一轮只打附录 A）。
+
+P0（1）
+- SPEC §六把两条对话历史出口混成一句："_history 上限 12 轮、最近 4 轮已截成 400 字喂给模型"。
+  实际进模型的是 SerializeHistory（12 轮、每轮截 400 字 → dialogue_history）；
+  "最近 4 轮/400 字"那个是 BuildMemorySummaryHint，只写记忆、不喂模型。
+  ⇒ 机制描述与代码相反（结论"两条都没进检索"不变）。SPEC 已按两条出口重写。
+
+P1（3）
+- AttachSemanticIndex 行号 140 → 191：判据 E 那次提交往同一 Program.cs 加代码，把该行挤后。
+  同一错在 SPEC / MEMORY.md / TOPIC-CODE.md / 2026-09-17.md 四处，全改。
+- SettlementId 赋值行 1051 → 798：1051 只是消费点（填进 WorldbookQuery），填它的是 798。
+  SPEC §六 与 DESIGN §2.1 同改。
+- KnownGapMax 降到几：SPEC 写 3→0、DESIGN 写 3→1 —— 条件不同（SPEC 含内容侧补领主条）。
+  SPEC 补"本线→1、内容线→0"两句，并互指。
+
+P2（已撤回）
+- 初稿写"SPEC §七 常量块是示意、没注释"，复核后 SPEC 原文本就带注释、与 Program.cs:73 逐字一致
+  ⇒ 当场撤回。教训：报告自身也会犯"没查就写"，断言必须与核验同一次做完。
+
+新发现（补枚举）
+- 提示词模板在用"指令"替判断：NpcPromptTemplate.cs 模板正文写着"承认不知道""不得把人格倾向
+  说成已发生的事实""chat 只做普通交谈"，command 由模型输出、NpcDialogueOutput.cs:104/140 校验
+  ⇒ 判断层有一截不在代码里，没有门禁能守。补入 DESIGN 附录 A 第七段 #40。
+- "来源/溯源"一族字段在现行链路无下游：entry.SourceKind / SourceEventIds / SourceFactIds、
+  decision.SourceIds / ReportIds（连 npc_dialogue_knowledge_decision 日志都不写它们）。
+  与设计初衷「信不信（来源与证据）」是同一件事。补入 DESIGN §2.2 与 A.1 第 5 条。
+  同族 entry.Expressions 不是死字段（检索在读），已标注别误伤。
+
+新增：docs/AUDIT-20260917-判断层续红测.md（九节，含 14 条阴性表：核过为真、不必重打）。
