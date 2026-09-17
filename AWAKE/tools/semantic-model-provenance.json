@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "note": "游戏运行时用的本地语义模型：来源、版本、逐件 sha256。改这份之前先跑 tools/verify_semantic_model.py。",
+  "updated": "2026-09-17",
+  "source": {
+    "repo": "Xenova/bge-small-zh-v1.5",
+    "commit": "75c43b069aac4d136ba6bc1122f995fedcfd2781",
+    "lastModified": "2025-07-22T16:45:56Z",
+    "library": "transformers.js",
+    "upstream_author": "BAAI/bge-small-zh-v1.5",
+    "upstream_note": "BAAI 原仓库只有 model.safetensors / pytorch_model.bin，没有 ONNX。ONNX 图由 Xenova 用 transformers.js 转出，是社区事实上的标准 ONNX 分发。两个仓库的 vocab.txt 逐字节相同。",
+    "mirror": "https://hf-mirror.com",
+    "mirror_note": "本机 huggingface.co 不可达（502 Bad Gateway），走镜像。镜像上的 LFS oid 与官方一致。"
+  },
+  "target_directory": "<游戏目录>/Modules/AWAKE/bin/Win64_Shipping_Client/Runtime/models/bge-small-zh-v1.5",
+  "runtime_reads": [
+    "model.onnx",
+    "vocab.txt"
+  ],
+  "files": [
+    {
+      "name": "model.onnx",
+      "size": 94851877,
+      "sha256": "69a0b846f4f116b5e6aabf9546ea6754d02264f3211a13a1bd69b31b8040749a",
+      "required": true,
+      "note": "单文件，权重内嵌。sha256 与仓库 onnx/model.onnx 的 LFS oid 逐字节一致。"
+    },
+    {
+      "name": "vocab.txt",
+      "size": 109540,
+      "sha256": "45bbac6b341c319adc98a532532882e91a9cefc0329aa57bac9ae761c27b291c",
+      "required": true,
+      "note": "运行时唯一读的分词文件。与 BAAI 原仓库、Xenova 仓库、以及本项目自己导出的 tools/_af_tokenizer_20260916/vocab.txt 四者同哈希。"
+    },
+    {
+      "name": "config.json",
+      "size": 716,
+      "sha256": "d4193ead3a810fd694fa8a31d7fc72fbaebc0668b603e398734bf2f6538ff42f",
+      "required": false,
+      "note": "运行时（截至 2026-09-17）不读，留存仅为出处可查。"
+    },
+    {
+      "name": "tokenizer.json",
+      "size": 439125,
+      "sha256": "48cea5d44424912a6fd1ea647bf4fe50b55ab8b1e5879c3275f80e339e8fae26",
+      "required": false,
+      "note": "运行时读不了（BertTokenizer 只吃 vocab.txt）。离线探针另有副本，不走这里。"
+    },
+    {
+      "name": "tokenizer_config.json",
+      "size": 367,
+      "sha256": "e6f3b96db926a37d4039995fbf5ad17de158dfb8f6343d607e4dbaad18d75f5a",
+      "required": false,
+      "note": "分词开关已在 OnnxSentenceEmbedder.cs:121-131 逐个抄死；此件与旧件只在 backend / is_local 两个运行期噪声字段上不同。"
+    }
+  ],
+  "obsolete": [
+    {
+      "name": "model.onnx_data",
+      "note": "外置权重分片。单文件版已内嵌权重，并排放着是 90 MB 冗余。2026-09-17 从游戏目录移出（备份在 .workbuddy/tmp/game-model-backup-20260917/）。"
+    }
+  ],
+  "replaced": {
+    "date": "2026-09-17",
+    "previous_origin": "本机第三方模组 Modules/AnimusForge/ONNX/ 的安装目录",
+    "previous_origin_problem": "无版本、无公开校验依据、换台机器就没有。",
+    "equivalence_evidence": "两套在 6 条探针句上的 36 个两两余弦值到小数点后 3 位全同；载荷字节数完全相同（94,765,056 B）。"
+  }
+}

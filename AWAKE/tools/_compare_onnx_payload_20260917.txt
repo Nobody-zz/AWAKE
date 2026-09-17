@@ -1,0 +1,40 @@
+====================================================================================================
+一、哈希全表
+====================================================================================================
+[现有 / 取自 AnimusForge]  D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AWAKE\bin\Win64_Shipping_Client\Runtime\models\bge-small-zh-v1.5
+  config.json                                             904  34fa1ea6278c257de3cc8ce7e9bdc48647b802145a9da0fc32e95db620efd04f
+  tokenizer.json                                       362603  3d09c84ebd10306706a79a8276b3ab736a40d8ec03251c7639f4e52c3a1a4f8e
+  tokenizer_config.json                                   414  7e3bd6113f18c20975eaa8e8cc03c95b727fd83d6357f8e171e22b3736bf706d
+  vocab.txt                                            109540  45bbac6b341c319adc98a532532882e91a9cefc0329aa57bac9ae761c27b291c
+  model.onnx                                            41689  69b353bb2aa2d09ab606ddbbc35437b03c843615a6bff28216a37fee7309c2aa
+  model.onnx_data                                    94765056  e72da961b03613124aa11317470c995ca197651a9d7f6be2b0e90aad92f71df0
+
+[官方下载 / Xenova]  D:\AWAKE-Dev\.workbuddy\tmp\hf-official\xenova
+  config.json                                             716  d4193ead3a810fd694fa8a31d7fc72fbaebc0668b603e398734bf2f6538ff42f
+  tokenizer.json                                       439125  48cea5d44424912a6fd1ea647bf4fe50b55ab8b1e5879c3275f80e339e8fae26
+  tokenizer_config.json                                   367  e6f3b96db926a37d4039995fbf5ad17de158dfb8f6343d607e4dbaad18d75f5a
+  vocab.txt                                            109540  45bbac6b341c319adc98a532532882e91a9cefc0329aa57bac9ae761c27b291c
+  model.onnx                                         94851877  69a0b846f4f116b5e6aabf9546ea6754d02264f3211a13a1bd69b31b8040749a
+  model.onnx_data                                (缺失)
+
+====================================================================================================
+二、权重同源判定：model.onnx_data 是否为单文件 model.onnx 的连续片段
+====================================================================================================
+外置权重 blob 大小 = 94765056
+单文件总大小       = 94851877
+protobuf 开销差    = 86821
+
+  偏移          0  ->  命中于单文件偏移 83407
+  偏移   17543541  ->  命中于单文件偏移 17626948
+  偏移   23691264  ->  命中于单文件偏移 23774671
+  偏移   34927855  ->  命中于单文件偏移 35011262
+  偏移   41665288  ->  命中于单文件偏移 41748695
+  偏移   47382528  ->  命中于单文件偏移 47574872
+  偏移   71073792  ->  命中于单文件偏移 71213270
+  偏移   82766815  ->  命中于单文件偏移 82879843
+  偏移   87896381  ->  命中于单文件偏移 87997259
+  偏移   94760960  ->  **未命中**
+
+采样 10 块，命中 9 块
+
+整段 model.onnx_data 在单文件中的起点 = 未整段命中
