@@ -165,7 +165,7 @@ t31 = "这些财富正被拿来操办科尔坦家的图谋：港税、渔市、�
 doc("doc.politics.charas-cortain-secret", "沙拉斯·科尔坦家的账", "politics", "clans",
     ["entity.settlement.town_v7"],
     {"zh-CN": ["科尔坦家的账", "戴·科尔坦"], "en": ["dey Cortain"]},
-    "科尔坦家财富的公开面（所有权事实）与秘密面（政治解读），分层分档。",
+    "戴·科尔坦家与沙拉斯港的海务财富。",
     [
      asrt("assertion.cortain-secret-1", "fact", t30, [A("town_V7", q21), A("town_V7", q22), b30], [
         expr("expr.cortain-secret-1-public", "summary", t30, [A("town_V7", q21)], PUB(), DENY_TAV),

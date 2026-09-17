@@ -1,0 +1,75 @@
+fix(worldbook): 科尔坦家条目摘要改正文口吻（1 档）＋ 重编上线
+
+甲方 09-17「1改」—— 上一轮抛出的三件待裁决里的第 1 件。第 2 件（萨涅俄帕裁定的正本）已按「无正本、属合理创作」了结，不改内容。
+
+## 为什么要改
+
+`doc.politics.clans-charas-cortain-secret` 的 entry 级 `summary` 写的是
+「科尔坦家财富的公开面（所有权事实）与秘密面（政治解读），分层分档。」——
+**「公开面／秘密面」是本档自己的两层、「分层分档」是机制名** ⇒ 整句在说"这份条目是怎么组织的"，
+是**元描述**，不是在说科尔坦家。与同批提要式（`towns-charas`、`mines-lycaron`）不同调。
+
+★ **本轮追出来的要紧一条：摘要不单独门控。**
+`FormatEntry`（`WorldKnowledgeQueryService.cs:509`）把 `summary` 拼在**「该身份能看的那一层正文」前面**
+⇒ 谁读到哪一层，摘要就跟着那一层出门。**把 secret 层的事写进摘要＝对所有人越权透露**，
+比"用词像编者按"严重得多。⇒ 新值只保留公开面：
+**不写**「港税／渔市／地租／养其势」（那些在 secret 层）。
+
+## 改了什么
+
+| 档 | 字段 | 原值（逐字） | 新值 |
+|---|---|---|---|
+| `doc.politics.clans-charas-cortain-secret` | `summary.zh-CN` | `科尔坦家财富的公开面（所有权事实）与秘密面（政治解读），分层分档。` | `戴·科尔坦家与沙拉斯港的海务财富。` |
+
+两个源目录同步（与 09-14 同规）；生成器防复发：`_gen_new10_20260912.py`。
+留痕（原值逐字）：`docs/worldbook-migration/corrections_20260917/SUMMARY-AUTHORING-LEDGER-20260917.md`（新增「第二批」一节）。
+
+## ⚠️ 同类共 9 档，只改这 1 档（判据＝"两说"是世界里的还是文件里的）
+
+全库扫"收尾一句结构语"，共 9 档：`rivers-sethys`「两说如实分挂」／`tales-charas-origins`「三种口径分层记录」／
+`tales-lakonis-red-water`「两种来由说法并置」／`tales-lycaron-vultures`「只陈述'传言'本身」／
+`territories-varcheg-swap`「（斯特吉亚说法与巴旦尼亚说法并录）」／`throne-paravenos`「观感分层」／
+`towns-charas`「帝国与瓦兰迪亚两说并录」／`towns-lycaron`「本地老兵与南帝国说法并录」。
+⇒ 那 8 档的"两说"是**游戏世界里并存的诸说**（正当既有写法），**不动**；
+只有本档的"两说"是**文档自己的层** ⇒ 只改这一档。
+
+## 重编与归因（单因可证）
+
+`_v12_cortainsum_20260917.py` → `compiled/geo1-v12-cortain-summary`；日志 `tools/_v12_chain_log_20260917.txt`：
+
+    [6/6] compile OK manifest_hash=a60241e1… result_hash=4455838D… validation 21 error=0
+    DIFF vs 上线包（v11）：summary 变 1 条；keywords 变 0 条；expressions 变 0 条；其它 0
+    DIFF vs geo1-v11-summaryfix：summary 变 1 条；keywords 变 0 条；expressions 变 0 条；其它 0
+    READBACK 新包全文里「公开面」「秘密面」「分层」「分档」各 0 次
+    VERDICT PASS
+
+## 上线
+
+- 仓库侧换包＋注册表三哈希同步：`manifestHash` 不变（包身份未变）、
+  `contentHash DADE0019…→AA3795AD…`、`packageHash 0067E83A…→7223029D…`；
+  脚本 `tools/_publish_v12_to_repo_20260917.py`，备份 `artifacts/repo-package-before-v12-20260917-170521`。
+- 真机 `deploy_worldbook_to_game.ps1 -ConfirmDeploy` → `DEPLOY_OK`，备份 `artifacts/game-dir-deploy-20260917-170732`；
+  日志 `tools/_deploy_worldbook_log_v12.txt`。
+- 真机与仓库侧**四件 md5 全同**；真机包内「公开面／秘密面／分层／分档／IMPL／留痕／研究稿／Max」**各 0**、
+  `entries=448`；上一版清的两条摘要**仍在**（回归检查逐字相同）。
+
+## 复测
+
+`_redtest_chain_verify_v12_20260917.py`（同批 68 条 × 上一版/本版 × 不挂/挂语义腿）：
+
+    上一版(v11)·不挂   RED 24/68      本版(v12)·不挂   RED 24/68
+    上一版(v11)·挂     RED 16/68      本版(v12)·挂     RED 16/68   ← 现上线形态
+    **变坏 0 条；变好 0 条；命中集合被挪动 0 条**
+    缺口 ⑤ 仍 5/5
+
+⚠️ 摘要进语义向量，改一句本可能挪动语义腿近邻 —— 实测**零挪动**，说明这次改动不外溢。
+三根门禁均 PASS：`RETRIEVAL_GATE`（A_hit3≥10 B_hit3≥9 ALL_hit3≥19）、
+`MERGE_GATE`（hit@3 literal A≥10 B≥9 ALL≥19，losses@3=0）、
+`IDENTITY_GATE`（leaks=0 deniedFail=0 且非空转）。日志 `tools/_gates_v12_20260917.txt`。
+
+## ⚠️ 一条守住没踩的纪律
+
+重编前后**都没碰 studio CLI 的 DLL**：工作区里有别的 agent 在途的
+`RuntimePackageCompiler.cs`，**一编就会把它的半成品编进产物、毁掉本次归因**。
+沿用与 v11 同源的 DLL，行为才可复现。
+⇒ **该重编的（红测探针）必须重编，不该重编的（共享编译器）绝不动。**

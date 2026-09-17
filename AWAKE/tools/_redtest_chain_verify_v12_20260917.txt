@@ -1,0 +1,36 @@
+=== 四档小计 ===
+上一版(v11)·不挂语义腿                   RED 24/68（MISS 9/41，OVER 15/27，仪器没跑到 0）
+上一版(v11)·挂语义腿                    RED 16/68（MISS 1/41，OVER 15/27，仪器没跑到 0）
+本版(v12)·不挂语义腿                    RED 24/68（MISS 9/41，OVER 15/27，仪器没跑到 0）
+本版(v12)·挂语义腿（现上线形态）              RED 16/68（MISS 1/41，OVER 15/27，仪器没跑到 0）
+
+① 回归检查（v11·挂 -> v12·挂，即两版上线形态）
+   变好 0 条
+   **变坏 0 条（必须为 0）**
+
+② 命中集合被挪动（判定未变）的条目
+   共 0 条
+
+③ 关注项逐条（v11·挂 -> v12·挂）
+     `KWI16` 「economy」      OK -> OK ｜ 命中 — -> —
+     `KWJ5` 「doc.economy.」 RED -> RED ｜ 命中 goods-fur、goods-salt、goods-silver -> goods-fur、goods-salt、goods-silver
+     `KWI6` 「doc」          OK -> OK ｜ 命中 — -> —
+     `KWI17` 「geography」    OK -> OK ｜ 命中 — -> —
+     `KWI9` 「castle_villa」 OK -> OK ｜ 命中 — -> —
+     `KWI18` 「entry」        OK -> OK ｜ 命中 — -> —
+     `KWA5` 「斯特基亚」         RED -> RED ｜ 命中 towns-iyakis、castles-ustokol-castle、towns-diathma -> towns-iyakis、castles-ustokol-castle、towns-diathma
+     `KWC2` 「拉迈萨」          OK -> OK ｜ 命中 villages-lamesa、castles-shibal-zumr-castle、villages-drapand -> villages-lamesa、castles-shibal-zumr-castle、villages-drapand
+
+④ 缺口 ⑤（内部标识/兜底词不进索引）在**本版上线形态**下的 5 条
+     `KWI6` 「doc」✅ ｜ 命中 —
+     `KWI17` 「geography」✅ ｜ 命中 —
+     `KWI9` 「castle_village」✅ ｜ 命中 —
+     `KWI18` 「entry」✅ ｜ 命中 —
+     `KWI16` 「economy」✅ ｜ 命中 —
+     小计 5/5
+
+⑤ 命中里含 cortain 条目的 case
+     v11·挂 : ['KWK1', 'KWK2', 'KWK3']
+     v12·挂 : ['KWK1', 'KWK2', 'KWK3']
+
+VERDICT PASS

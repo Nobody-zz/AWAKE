@@ -1,0 +1,12 @@
+﻿DEPLOY_SOURCE root=D:\AWAKE-Dev\AWAKE\ModuleData\Worldbook registry=awake:registry:installed packages=1
+DEPLOY_PACKAGE awake:worldbook.calradia -> packages\calradia files=manifest.json,runtime.json,index.json
+DEPLOY_BACKUP manifest.json.before sha=33ec02f4a07e63e7
+DEPLOY_COPY manifest.json sha=7642e43163cf2a46
+DEPLOY_COPY packages\calradia files=index.json,manifest.json,runtime.json
+DEPLOY_UNTOUCHED root_files=runtime.json,index.json,migration_report.json
+DEPLOY_UNTOUCHED v1_dirs=rules,personality_background,unnamed_persona,voice_mapping,event_data,debt,dialogue_history,compressed_memory files=755 (read by nothing under src/)
+DEPLOY_UNTOUCHED persona_definitions definitions=1 (deployed by the persona line, not by this script)
+DEPLOY_ENTRYPOINT D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AWAKE\ModuleData\Worldbook\manifest.json
+DEPLOY_BACKUP_ROOT D:\AWAKE-Dev\AWAKE\tools\worldbook-studio\artifacts\game-dir-deploy-20260917-170732
+DEPLOY_OK root=D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AWAKE\ModuleData\Worldbook packages=1
+exit=

@@ -1,0 +1,6 @@
+=== RETRIEVAL_GATE (worldbook-runtime-smoke) ===
+RETRIEVAL_GATE PASS need A_hit3>=10 B_hit3>=9 ALL_hit3>=19 negative<=3 overmatch<=5
+=== MERGE_GATE (worldbook-rag-merge) ===
+MERGE_GATE PASS need **hit@3** literal A>=10 B>=9 ALL>=19 merged A>=10 ALL>(literal) losses@3=0 negative<=3 overmatch<=8
+=== IDENTITY_GATE (runtime-sim, 挂语义腿) ===
+IDENTITY_GATE PASS need leaks=0 deniedFail=0 且非空转（deniedRows>0 且 shouldKnowHit>0）
