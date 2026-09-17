@@ -1,0 +1,73 @@
+fix(retrieval): 补掉链路红测的五条缺口 + 样本按甲方口径去拼音首字母
+
+甲方 09-17 两句：「拼音首字母别测，这个本来也不合理」「五条缺口补上」。
+承接上一版红测（commit 66649c5，报告 docs/worldbook-migration/REDTEST-CHAIN-20260917.md）。
+
+① 样本去拼音首字母（KWF3 `bmjfk`）
+   链路上没有拼音通道，玩家也不会这么打字 ⇒ 拿它判红量到的是「设计如此」，不是缺口。
+   样本 69 → 68 条（MISS-RISK 41 / OVER-RISK 27）。
+
+② 缺口 1 · 空查询不再冒充「命中」（`WorldKnowledgeQueryService.FindCandidates`）
+   归一化后仍为空 ⇒ 走「整库按 id 兜底」那条路，但那是兜底不是检索命中。
+   以前 matchMode 报 `keyword`（挂语义腿时报 `hybrid`），读起来都像"找到了"，
+   上游与日志分不清「检索命中」和「兜底给了整库」。现在占一个独立值 `blank`。
+   注：**兜底返回整库照旧**（上一版报告自己写了「兜底本身可以是有意的」），本笔只补后半截。
+
+③ 缺口 2 · 全角→半角折叠（新增 `NormalizeQueryText`）
+   FormKC（标准库，零表）+ 去零宽 U+200B~200D/U+FEFF + 两端 Trim + 繁→简。
+   繁→简走系统 `LCMapStringEx`（LCMAP_SIMPLIFIED_CHINESE），**不造表**：
+   仓里没有可信对照表，09-16 那版 `TRAD` 只有 12 个字、照样本选的，进产品即过拟合。
+   调用失败/异常一律退回原文（降级，不让可选功能成为新的失败点）。
+   ⚠️ 归一化之后**再判一次空**：`？？？` 归一化前非空、后为空，不判就会掉进兜底。
+   （曾试图用 PowerShell Add-Type 探该 API，被安全策略拦 ⇒ 直接写进产品、用红测当判据。）
+
+④ 缺口 3 · 形近词不再抢走错条目（两处）
+   4a `WorldbookTermIndex.EnumerateTerms`：**西文段不切 2-gram**。那张 term 表是为
+      「中文没有空格」建的，从 `geography` 切出 `ge/og/gr/...` 全是噪声。代价实测为 0。
+   4b 兜底通道门限按**查询的形状**收紧，不按 term 个数：
+      `LooksLikeSingleShortToken(text, 6)` ⇒ 要求共享 ≥2 个 term。
+      第一版按 term 数（≥3 就要共享 2）把整句问法一起打死：RETRIEVAL_GATE B 组 hit3 9/11→7/11。
+      整句该宽松——句子里有效信号本就稀疏，共享 1 个长词就是强证据。
+
+⑤ 缺口 4 · 单字查询不给语义腿（`MinSemanticQueryLength = 2`）
+   单字「货」字面侧 not_found（对），挂语义腿后命中 items-mule —— 一个字的向量近乎均匀，
+   「最近邻」其实是任意的。短到不构成一次查询的输入，不给语义腿。
+
+⑥ 缺口 5 · 内部标识/兜底词不进索引（新增 `WorldbookKeywordIndex`）
+   检索是**双向子串**（text 含 kw 或 kw 含 text）⇒ 覆盖上百条的关键词就是万能钥匙。
+   三条剔除规则（只剔出索引，**包里的 keywords 一个字不改**）：
+     R1 覆盖 > 40 条（零表判据，同 WorldbookTermIndex.MaxTermDocumentFrequency 同理）
+     R2 纯 ASCII 且含下划线（`castle_village_EN1_2` / `heavy_round_shield`）
+     R3 `doc.` 前缀（编译器 09-16 已决定不写进包，但那份改动只在工作区、出厂包仍是旧编译器编的
+        ⇒ 运行时也拦一道）
+   剔前/剔后：`doc` 448→0、`geography` 408→0、`castle_village` 131→0、`economy` 21→0、`村` 273→1。
+   刻意放过 `Goods`/`HeadArmor`/`Husn Fulq`：无可信数据说它们是内部 id，名字本身可读。
+
+⑦ 验台两处仪器修正（`tools/worldbook-runtime-sim/Program.cs`）
+   7a **删掉手抄的「身份→scope/detail」平表**（与真件 `WorldbookIdentityCapabilityRules` 分叉：
+      手抄表把 profile.noble 封在 detail，真件对 ≥45 岁贵族给 secret）⇒ 全包唯一一条 secret 档正文
+      在验台里永远取不到，档位闸整根空转。改走 `CapOf()` → 真件 Resolve。
+   7b probe 补入参回显 `player_text`，新增 `LiteralAttribution` 逐条归因
+      （match_mode / literal_keyword_hits / literal_term_hits）。
+
+实测（448 条真包，同一批 68 条 × 改动前/后 × 不挂/挂语义腿）：
+   改动前·不挂 RED 31/68（MISS 11/41，OVER 20/27）
+   改动前·挂   RED 24/68（MISS  3/41，OVER 21/27）
+   改动后·不挂 RED 25/68（MISS  9/41，OVER 16/27）
+   改动后·挂   RED 17/68（MISS  1/41，OVER 16/27）   ← 上线形态
+   红转绿 7、绿转红 0。
+   缺口验收：①✅ ②✅ ④✅；③ 1/2（KWC2 拉邁薩 已修，KWA5 斯特基亚 残留走语义腿）；
+             ⑤ 4/5（KWI16 economy 残留来自综述正文里的内部记账文字，属数据问题）。
+   两条残留的成因都写进报告 §一「没关掉的那几条」，不写成「待办」两字糊过去。
+
+门禁回归（逐字未变）：
+   RETRIEVAL_GATE PASS A_hit3=10/13 B_hit3=9/11 ALL_hit3=19/24（hit@1 对照 16/24）
+   MERGE_GATE PASS（阳性对照 / literal_unchanged / merged_improves / negative_clean / overmatch_bounded 全 PASS）
+   IDENTITY_GATE PASS 不挂 78 排除/180 该知道/0 泄漏/0 点名失败；挂上 78/205/0/0
+
+新增过程脚本（留档）：
+   tools/_redtest_chain_judge2_20260917.py      三档判定 + 缺口逐 case 验收
+   tools/_redtest_chain_recover_prefix_20260917.py  从 66649c5 还原"改动前"两档
+   tools/_redtest_chain_attrib_20260917.py      关键词归因（含/去兜底词命中差）
+   tools/_keyword_surface_survey_20260917.py    关键词覆盖面普查
+   tools/_keyword_drop_preview_20260917.py      三条剔除规则剔前/剔后预览

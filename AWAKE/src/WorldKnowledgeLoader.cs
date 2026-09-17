@@ -159,14 +159,7 @@ internal static class WorldKnowledgeLoader
 
     private static void BuildKeywordIndex(WorldKnowledgeSnapshot snapshot)
     {
-        foreach (WorldKnowledgeEntry entry in snapshot.Entries.Values)
-        {
-            foreach (string keyword in entry.Keywords)
-            {
-                if (!snapshot.KeywordIndex.TryGetValue(keyword, out List<string> ids)) snapshot.KeywordIndex[keyword] = ids = new List<string>();
-                if (!ids.Any(x => StringComparer.Ordinal.Equals(x, entry.Id))) ids.Add(entry.Id);
-            }
-        }
+        WorldbookKeywordIndex.Build(snapshot);
         WorldbookTermIndex.Build(snapshot);
     }
 
@@ -201,6 +194,75 @@ internal static class WorldKnowledgeLoader
     private static bool? NullableBool(JObject value, string name) => value?[name]?.Type == JTokenType.Boolean ? value[name].Value<bool>() : (bool?)null;
     private static int? NullableInt(JObject value, string name) => value?[name]?.Type == JTokenType.Integer ? value[name].Value<int>() : (int?)null;
     private static string Localized(JObject value) => value?["zh-CN"]?.Value<string>() ?? value?["zh"]?.Value<string>() ?? value?["en"]?.Value<string>() ?? value?.Properties().FirstOrDefault()?.Value?.Value<string>() ?? string.Empty;
+}
+
+// 关键词索引的**唯一**建法（2026-09-17）。
+// ⚠️ 与 term 索引同一个理由放在这里：`WorldKnowledgeLoader.BuildKeywordIndex`（加载时）与
+//    `WorldKnowledgeQueryService.RebuildKeywordIndex`（动态条目/Overlay 时）是**两处平行实现**，
+//    纪律「平行实现必须同源」⇒ 两边都只调用 `Build`，不各写一遍循环。
+//
+// 为什么建索引时要**剔掉**一部分关键词（红测 2026-09-17，见
+// `docs/worldbook-migration/REDTEST-CHAIN-20260917.md` §5.5）：
+//   检索是「双向子串」——`text` 含 `kw` 或 `kw` 含 `text` 都算命中。于是一个**覆盖上百条**的关键词
+//   就是一把万能钥匙：输 `doc` 命中 448、`geography` 命中 408、`castle_village` 命中 131、`村` 命中 273。
+//   这不是匹配规则的毛病，是**索引里有哪些键**的毛病。三条剔除规则：
+//     ① 覆盖条目数超过 `MaxKeywordDocumentFrequency` —— 能被这么多条目共用的键，按定义不具区分度。
+//        与 `WorldbookTermIndex.MaxTermDocumentFrequency` 同一条道理（那张表早就剔了 `城堡/村庄`）。
+//     ② 前缀 `doc.` —— 内部文档 id。编译器 09-16 已决定不再写进包（`RuntimePackageCompiler.cs` 的 K1 修正），
+//        但**出厂包还是旧编译器编的**，所以这层在运行时也拦一道。取用请走 `entry.Id`，不经过检索。
+//     ③ 形状像内部标识（纯 ASCII 且含下划线，如 `castle_village_EN1_2` / `heavy_round_shield`）——
+//        这是实体锚点的**原始 id**，不是 K1 说的「可读名称」，真人不会这么念。
+// ⚠️ 剔除**不是**删数据：包里的 `keywords` 一个字不改，只是不进检索索引。要查一个键为什么没生效，
+//    来这里；要改数据，去编译器的 K1。
+internal static class WorldbookKeywordIndex
+{
+    // 覆盖条目数超过这个值的关键词不进索引（按数调，见验台 RETRIEVAL_* 行）。
+    // 与 `WorldbookTermIndex.MaxTermDocumentFrequency` 取同一个值、同一个理由；改一个要问另一个。
+    internal const int MaxKeywordDocumentFrequency = 40;
+
+    internal static void Build(WorldKnowledgeSnapshot snapshot)
+    {
+        snapshot.KeywordIndex.Clear();
+        var documentFrequency = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        foreach (WorldKnowledgeEntry entry in snapshot.Entries.Values)
+            foreach (string keyword in DistinctKeywords(entry))
+                documentFrequency[keyword] = documentFrequency.TryGetValue(keyword, out int count) ? count + 1 : 1;
+
+        foreach (WorldKnowledgeEntry entry in snapshot.Entries.Values)
+            foreach (string keyword in DistinctKeywords(entry))
+            {
+                if (IsExcluded(keyword, documentFrequency[keyword])) continue;
+                if (!snapshot.KeywordIndex.TryGetValue(keyword, out List<string> ids)) snapshot.KeywordIndex[keyword] = ids = new List<string>();
+                if (!ids.Any(x => StringComparer.Ordinal.Equals(x, entry.Id))) ids.Add(entry.Id);
+            }
+    }
+
+    private static IEnumerable<string> DistinctKeywords(WorldKnowledgeEntry entry)
+    {
+        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (string keyword in entry.Keywords)
+            if (!string.IsNullOrWhiteSpace(keyword) && seen.Add(keyword.Trim()))
+                yield return keyword.Trim();
+    }
+
+    private static bool IsExcluded(string keyword, int documentFrequency)
+    {
+        if (documentFrequency > MaxKeywordDocumentFrequency) return true;
+        if (keyword.StartsWith("doc.", StringComparison.OrdinalIgnoreCase)) return true;
+        return LooksLikeInternalIdentifier(keyword);
+    }
+
+    // 纯 ASCII ＋ 含下划线 ⇒ 原始 id 形状。判据窄到只打这一类，避免碰「Goods」「Husn Fulq」这些真可读名。
+    private static bool LooksLikeInternalIdentifier(string keyword)
+    {
+        bool hasUnderscore = false;
+        foreach (char ch in keyword)
+        {
+            if (ch == '_') { hasUnderscore = true; continue; }
+            if (ch > 0x7E || ch < 0x20) return false;
+        }
+        return hasUnderscore;
+    }
 }
 
 // 兜底 term 索引的**唯一**建法与切词法（2026-09-16）。
@@ -246,14 +308,41 @@ internal static class WorldbookTermIndex
         return set;
     }
 
+    // "这看起来像一个名字，而不是一句话"（2026-09-17）。
+    // 判据＝**切成一段**且不超过 `maxLength` 个字。`斯特基亚`（4 字一段）算，
+    // `有个半岛被三家抢过，谁说了算？`（两段）不算。
+    // 用途见 `WorldKnowledgeQueryService.FindFallbackCandidates` 的 `requiredShared`：
+    // 名字形状的查询必须共享 ≥2 个 term，否则一个错别字会捞回一批"碰巧含这两个字"的条目。
+    internal static bool LooksLikeSingleShortToken(string text, int maxLength)
+    {
+        string only = null;
+        foreach (string segment in SplitSegments(text ?? string.Empty))
+        {
+            if (only != null) return false;
+            only = segment;
+        }
+        return only != null && only.Length <= maxLength;
+    }
+
     internal static IEnumerable<string> EnumerateTerms(string text)
     {
         if (string.IsNullOrWhiteSpace(text)) yield break;
         foreach (string segment in SplitSegments(text))
         {
             if (segment.Length >= 2) yield return segment;
+            // ⚠️ 2-gram **只对中文段切**（2026-09-17）。
+            // 这张表存在的原因是「中文没有空格」；西文本来就按空格分词，再从 `geography` 里切出
+            // `ge/og/gr/ra/…` 全是噪声 —— 红测里 `geography`/`economy`/`war`/`entry`/`Goods`/`HeadArmor`
+            // 这些输入字面侧关键词通道明明已经零命中，却从这条腿又漏回来（报告 §五 缺口 5 的残留）。
+            if (IsAsciiOnly(segment)) continue;
             for (int i = 0; i + 2 <= segment.Length; i++) yield return segment.Substring(i, 2);
         }
+    }
+
+    private static bool IsAsciiOnly(string segment)
+    {
+        foreach (char ch in segment) if (ch > 0x7F) return false;
+        return true;
     }
 
     private static void Add(WorldKnowledgeSnapshot snapshot, string term, string id)

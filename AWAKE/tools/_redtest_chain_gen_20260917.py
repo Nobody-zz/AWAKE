@@ -57,10 +57,11 @@ add("KWE4", "标点", "MISS-RISK", "毛，皮", [T_FUR], "词中逗号")
 add("KWE5", "标点", "MISS-RISK", "闭面军阀盔。", [T_HELMET], "词后句号（阳性对照）")
 add("KWE6", "标点", "MISS-RISK", "，拉迈萨", [T_LAMESA], "词前逗号（阳性对照）")
 add("KWE7", "标点", "MISS-RISK", "毛皮？！", [T_FUR], "词后疑问+叹（阳性对照）")
-# ── F 简写（截断/倒装/首字母/单字）──
+# ── F 简写（截断/倒装/单字）──
+# ⚠️ 2026-09-17 甲方：**拼音首字母不测**（`bmjfk` 这类）。链路上没有拼音通道，而玩家也不会这么打字
+#    —— 拿一条本来就不合理的输入去判红，量到的是"设计如此"，不是缺口。
 add("KWF1", "简写", "MISS-RISK", "闭面", [T_HELMET], "截断前二字")
 add("KWF2", "简写", "MISS-RISK", "盔阀军面闭", [T_HELMET], "倒装")
-add("KWF3", "简写", "MISS-RISK", "bmjfk", [T_HELMET], "拼音首字母")
 add("KWF4", "简写", "MISS-RISK", "拉迈", [T_LAMESA], "截断")
 add("KWF5", "简写", "MISS-RISK", "皮子", [T_FUR], "别称")
 add("KWF6", "简写", "MISS-RISK", "斯特吉亚", [T_STURGIA], "势力名截断")

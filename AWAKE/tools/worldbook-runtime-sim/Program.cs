@@ -590,6 +590,22 @@ int RunProbeMode(string[] a)
         if (!service.HasSemanticIndex) { Console.WriteLine("PROBE-FAIL 语义臂没挂上（要了却没生效）"); return 1; }
     }
 
+    // 字面侧归因：先按**同源**的入口归一化（直接调产品那个函数，不在这儿再写一遍），
+    // 再分别问两张**真索引**。返回的 -1 表示"归一化后为空" ⇒ 走的是整库兜底那条路，不属任何一条腿。
+    (int Keyword, int Term) LiteralAttribution(WorldKnowledgeSnapshot snap, string raw)
+    {
+        string norm = WorldKnowledgeQueryService.NormalizeQueryText(raw ?? "");
+        if (string.IsNullOrWhiteSpace(norm)) return (-1, -1);
+        int keyword = 0;
+        foreach (var pair in snap.KeywordIndex)
+            if (norm.IndexOf(pair.Key, StringComparison.OrdinalIgnoreCase) >= 0
+                || pair.Key.IndexOf(norm, StringComparison.OrdinalIgnoreCase) >= 0) keyword++;
+        int term = 0;
+        foreach (string t in WorldbookTermIndex.TermSet(norm))
+            if (snap.FallbackTermIndex.ContainsKey(t)) term++;
+        return (keyword, term);
+    }
+
     var results = new JArray();
     foreach (var q in spec["queries"] ?? new JArray())
     {
@@ -620,7 +636,12 @@ int RunProbeMode(string[] a)
         if (mgmt != null) wbq.Skills["management"] = mgmt.Value<int>();
         var r = service.Query(wbq);
         string text = (r.RetrievedText ?? "").Trim().Replace("\r", " ").Replace("\n", " ");
-        Console.WriteLine($"  [{q.Value<string>("name")}] identity={identity} role={role} age={wbq.Age} scope={scope} detail={detail} -> state={r.State} text={Trunc(text, 70)}");
+        // 归因三列（2026-09-17）：光看 `hits` 只知道"中了哪几条"，不知道**为什么中**。
+        // 这三列把「走的是哪个通道」摊开：`match_mode` 说结论，两个计数说字面侧是哪条腿捞到的。
+        // 用的是**真索引**（`snapshot.KeywordIndex` / `FallbackTermIndex`）＋**真切词器**（`WorldbookTermIndex.TermSet`），
+        // 只把匹配那一圈重写了一遍 —— 所以它是"读数"，不是"另写一个引擎"。
+        (int keywordHits, int termHits) = LiteralAttribution(snapshot, wbq.PlayerText);
+        Console.WriteLine($"  [{q.Value<string>("name")}] identity={identity} role={role} age={wbq.Age} scope={scope} detail={detail} -> state={r.State} mode={r.MatchMode} kw={keywordHits} term={termHits} text={Trunc(text, 70)}");
         results.Add(new JObject
         {
             ["name"] = q.Value<string>("name"),
@@ -634,6 +655,9 @@ int RunProbeMode(string[] a)
             ["detail"] = detail,
             ["requested_detail"] = wbq.RequestedDetail,
             ["state"] = r.State,
+            ["match_mode"] = r.MatchMode,
+            ["literal_keyword_hits"] = keywordHits,
+            ["literal_term_hits"] = termHits,
             ["hits"] = new JArray(r.HitIds),
             // `player_text` = 本条的入参原话（红测报告要能自证"这一条测的是什么"，此前没回显，
             // 报告只能倒着去抄 spec，抄错也看不出来）。`text` 仍是返回正文，语义不变。

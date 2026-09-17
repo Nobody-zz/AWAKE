@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using Newtonsoft.Json.Linq;
 
@@ -54,6 +55,11 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
     public WorldKnowledgeQueryResult Query(WorldbookQuery query)
     {
         query = query ?? new WorldbookQuery();
+        // 入口归一化（2026-09-17）：全角→半角等走**标准 Unicode NFKC**，不自己造表。
+        // 红测：`Ｃｌｏｓｅｄ Ｗａｒｌｏｒｄ Ｈｅｌｍｅｔ` 两档都 not_found，而半角写法命中
+        // ⇒ 差的不是检索能力，是这一层。**归一化之后必须再判一次空**：`？？？` 这类整串都是标点时
+        // 归一化前非空、归一化后为空，不判就会一路走到「空查询」那条兜底上去（见 `FindCandidates`）。
+        query.PlayerText = NormalizeQueryText(query.PlayerText);
         // 语义召回在锁**外**跑：它要走一次 IPC 加一次编码（几十毫秒），而 `_gate` 后面还站着
         // Overlay / 动态条目的写者。锁里只做「把两臂合起来」这件纯内存的事。
         IReadOnlyList<string> semanticIds = QuerySemanticIds(query.PlayerText);
@@ -230,16 +236,88 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
     }
 
     /// <summary>
+    /// 查询侧归一化（2026-09-17）。**只做"同一个字的另一种写法"，不做"另一个字"**：
+    /// 错别字/同音要编辑距离或拼音通道（那是另一条线），这里不碰。
+    ///
+    /// ① `FormKC` ＝ 兼容分解再合成：全角字母/数字/空格→半角、连字与罗马数字归一。**标准库，零表**。
+    /// ② 去零宽与不可见字符：复制粘贴常带 `U+200B~200D` / `U+FEFF`，肉眼看不见但会让子串匹配失败。
+    /// ③ 两端去空白。**中间的空白与标点不动** —— 动了就是另一套规则（09-16 量过它会再造出新的空串）。
+    /// ④ 繁→简：走系统 `LCMapStringEx`，**不造表**。
+    /// 为什么不用表：仓里没有可信的对照表来源；09-16 那版 `_redtest_claim2_20260916.py` 的 `TRAD`
+    /// 只有 12 个字、是照着样本选的，拿它进产品就是对样本过拟合（纪律：手工造表＝循环论证）。
+    /// 系统 API 是同一份对照的权威来源，且本作只跑 Windows。
+    /// ⚠️ 调用失败就**原样返回**，不让它成为新的失败点（见 `TryFoldToSimplified`）。
+    /// 索引侧不做同样处理：包里 keywords 本来都是半角简体；真要出现别的写法，那是数据问题。
+    /// </summary>
+    internal static string NormalizeQueryText(string text)
+    {
+        if (string.IsNullOrEmpty(text)) return string.Empty;
+        string normalized;
+        try { normalized = text.Normalize(NormalizationForm.FormKC); }
+        catch (ArgumentException) { normalized = text; }
+        var builder = new StringBuilder(normalized.Length);
+        foreach (char ch in normalized)
+        {
+            if (ch == '\u200B' || ch == '\u200C' || ch == '\u200D' || ch == '\uFEFF') continue;
+            builder.Append(ch);
+        }
+        string compact = builder.ToString().Trim();
+        return TryFoldToSimplified(compact, out string folded) ? folded : compact;
+    }
+
+    // LCMAP_SIMPLIFIED_CHINESE：把繁体映射成简体（已是简体的字符原样返回）。
+    // 只在**含非 ASCII 字符**时才调 —— 纯西文不可能有繁简之分，省掉这次系统调用。
+    private const uint LCMAP_SIMPLIFIED_CHINESE = 0x02000000;
+    private const string Kernel32 = "kernel32.dll";
+
+    [DllImport(Kernel32, CharSet = CharSet.Unicode, SetLastError = true)]
+    private static extern int LCMapStringEx(string localeName, uint dwMapFlags, string lpSrcStr, int cchSrc,
+                                            StringBuilder lpDestStr, int cchDest, IntPtr lpVersionInformation,
+                                            IntPtr lpReserved, IntPtr sortHandle);
+
+    private static bool TryFoldToSimplified(string text, out string folded)
+    {
+        folded = text;
+        if (string.IsNullOrEmpty(text)) return false;
+        bool hasNonAscii = false;
+        foreach (char ch in text) { if (ch > 0x7F) { hasNonAscii = true; break; } }
+        if (!hasNonAscii) return false;
+        try
+        {
+            var buffer = new StringBuilder(text.Length + 8);
+            int written = LCMapStringEx(null, LCMAP_SIMPLIFIED_CHINESE, text, text.Length,
+                                        buffer, buffer.Capacity, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+            if (written <= 0) return false;
+            folded = buffer.ToString(0, written);
+            return true;
+        }
+        catch (Exception)
+        {
+            // 拿不到系统映射就退回原文。**降级不是失败**：最多是繁体问法照旧查不到，
+            // 不能让一个可选的语言折叠把整条检索带崩。
+            return false;
+        }
+    }
+
+    // 语义腿的最短查询长度（2026-09-17）。红测：单字「货」在字面侧 `not_found`（对），
+    // 挂上语义腿后命中 `items-mule`（骡子）—— 一个字的向量近乎均匀，取回的"最近邻"其实是任意的。
+    // ⇒ 短到不构成一次查询的输入，不给语义腿。**这是代价换代价**：单字查询确实也救不回来，
+    //    见 `docs/worldbook-migration/REDTEST-CHAIN-20260917.md` §5.4。
+    private const int MinSemanticQueryLength = 2;
+
+    /// <summary>
     /// 走一次语义召回。**任何失败都当"这一路没说话"**（返回空表），绝不向外抛 ——
     /// 语义是加分项，字面链才是底线；模型缺失、服务没起、超时，都不该让玩家问不成话。
     /// </summary>
     private IReadOnlyList<string> QuerySemanticIds(string playerText)
     {
         IWorldKnowledgeSemanticIndex index = _semantic;
-        if (index == null || string.IsNullOrWhiteSpace(playerText)) return Array.Empty<string>();
+        if (index == null) return Array.Empty<string>();
+        string text = playerText ?? string.Empty;
+        if (text.Trim().Length < MinSemanticQueryLength) return Array.Empty<string>();
         try
         {
-            return index.Search(playerText, SemanticCandidateLimit) ?? (IReadOnlyList<string>)Array.Empty<string>();
+            return index.Search(text, SemanticCandidateLimit) ?? (IReadOnlyList<string>)Array.Empty<string>();
         }
         catch
         {
@@ -250,6 +328,11 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
     private List<WorldKnowledgeEntry> FindCandidates(string text, IReadOnlyList<string> semanticIds, out string matchMode)
     {
         List<WorldKnowledgeEntry> literal = FindLiteralCandidates(text);
+        // 空查询（归一化之后仍为空）走的是"整库按 id 兜底"那条路（见 `FindLiteralCandidates`）。
+        // 那不是检索命中，必须自己占一个 `matchMode`：红测发现它以前报 `keyword`（挂语义腿时报 `hybrid`），
+        // 读起来都像"找到了" ⇒ 上游与日志**分不清**「检索命中」和「兜底给了整库」，
+        // 上游一旦因 bug 传进空串，就会**静默**拿到一批看着像答案的条目。
+        if (string.IsNullOrWhiteSpace(text)) { matchMode = "blank"; return literal; }
         matchMode = "keyword";
         if (semanticIds == null || semanticIds.Count == 0) return literal;
 
@@ -298,10 +381,23 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
     private const int FallbackMinSharedTerms = 1;
     private const int FallbackMaxCandidates = 5;
 
+    // "看起来像**一个名字**而不是一句话"时，兜底通道要求**至少共享 2 个 term**（2026-09-17）。
+    // 红测：`斯特基亚`（4 字一段）只与错误条目共享一个碎片（`特基` 或 `基亚`）⇒ 共享 1 就够的话，
+    // 一个错别字会把一批「碰巧含这两个字」的条目全捞上来。收紧后它变成 `not_found`
+    // —— 按设计初衷，「答不出」比「答错条目」好。
+    //
+    // ⚠️ 判据是**查询的形状**（单段且 ≤6 字），不是 term 个数。第一版按 term 个数（≥3 就要 2 个共享）
+    // 会把整句问法一起打死：`RETRIEVAL_GATE` 的 B 组就是整句，实测 hit3 从 9/11 掉到 7/11。
+    //    整句为什么该宽松：句子里的有效信号本来就稀疏，共享 1 个长词就是强证据。
+    private const int NameLikeQueryMaxLength = 6;
+    private const int NameLikeMinSharedTerms = 2;
+
     private List<WorldKnowledgeEntry> FindFallbackCandidates(string text)
     {
         HashSet<string> queryTerms = WorldbookTermIndex.TermSet(text);
         if (queryTerms.Count == 0) return new List<WorldKnowledgeEntry>();
+        int requiredShared = WorldbookTermIndex.LooksLikeSingleShortToken(text, NameLikeQueryMaxLength)
+            ? NameLikeMinSharedTerms : FallbackMinSharedTerms;
         var shared = new Dictionary<string, int>(StringComparer.Ordinal);
         var longest = new Dictionary<string, int>(StringComparer.Ordinal);
         foreach (string term in queryTerms)
@@ -313,7 +409,7 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
                 longest[id] = Math.Max(longest.TryGetValue(id, out int len) ? len : 0, term.Length);
             }
         }
-        return shared.Where(x => x.Value >= FallbackMinSharedTerms)
+        return shared.Where(x => x.Value >= requiredShared)
                      .OrderByDescending(x => x.Value)
                      .ThenByDescending(x => longest[x.Key])
                      .ThenBy(x => x.Key, StringComparer.Ordinal)
@@ -453,13 +549,9 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
 
     private void RebuildKeywordIndex()
     {
-        _snapshot.KeywordIndex.Clear();
-        foreach (WorldKnowledgeEntry entry in _snapshot.Entries.Values)
-            foreach (string keyword in entry.Keywords)
-            {
-                if (!_snapshot.KeywordIndex.TryGetValue(keyword, out List<string> ids)) _snapshot.KeywordIndex[keyword] = ids = new List<string>();
-                if (!ids.Contains(entry.Id)) ids.Add(entry.Id);
-            }
+        // 与加载期同源（`WorldKnowledgeLoader.BuildKeywordIndex` 调的是同一个 build），
+        // 别再在这儿写第二遍循环 —— 剔除规则一改就会两边不一致。
+        WorldbookKeywordIndex.Build(_snapshot);
         WorldbookTermIndex.Build(_snapshot);
     }
 }
