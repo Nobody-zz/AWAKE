@@ -1,0 +1,356 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.settlement-types-village
+title:
+  zh-CN: "村庄"
+  en: "Village"
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - "村庄"
+  en:
+  - "Village"
+  - "Villages"
+summary:
+  zh-CN: "卡拉迪亚最平常的聚落：几十户人家种地养牲口，收成按年往上缴。说话算数的是几位要人。"
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+sources:
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#3GsZXXOi
+  quote_hash: 86B7FEA68093C6550744ABD0191BBBA0A9B95A463E2E7C16C9E2BE5509B24D4D
+  quote: "城堡的附属村庄产出+10%。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#2qZ14G9p
+  quote_hash: 38DA68C20ECD7D4688E5AAD275A8A5D16D91F9770E2291998121AC59489D0816
+  quote: "基于附属村庄户数提供收入"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#7TbVhbT9
+  quote_hash: 1AABA97054E48B15DF0E180B3B0F18AB246F4EE1A6313B80DB7FCC5D0FFF83F0
+  quote: "村庄户数影响。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#5BabRyaa
+  quote_hash: DC1874C9EFD598A4D8000DB682C3201E4342CA854E8DEBC557155B75AD6E9986
+  quote: "村庄谷物产量+10%。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#1bxTLLAk
+  quote_hash: 50CCF51F3B6A23ED6AC1C9FE1FE051DB947D1B342B05117F820D324B1F4E3533
+  quote: "你掠夺了我的村庄{SETTLEMENT_NAME}。你觉得我很弱？你以为自己能不付出血的代价，就顺走我村庄里的东西？"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#8cY08v3s
+  quote_hash: 5727FCDA087AB8B765EB75D2A9D139D179339D70C4C0F45E98C2F6A5CBF6DDFC
+  quote: "这个村庄的经济程度一般，人们和牲口看上去都健康强壮，村民们都忙于农活。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#25pNV9E3
+  quote_hash: 4B014F00AED9F2BE359B93EED1201D1672EDA68362CDA4D64F337B49A7947B6C
+  quote: "村庄中心"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#2Af5HRJU
+  quote_hash: 8FAB6D0F67750592237A12FBFD9F9D403AECFC6A2FB505EA3360F52A743F108E
+  quote: "村庄要人"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#4bkLDxIU
+  quote_hash: 1B514015349BAE214F86BAC3B241FE15A5E10B4686E34E9CE3D93231FC8F0A35
+  quote: "我们对那座村庄所做的事……我没做。我不想参与其中。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#5HsJkbZz
+  quote_hash: 86F1343CB140A94D7DCBAD2CA10C3DAEABA665BC8710DF8D32EF40F89D59B7D7
+  quote: "你把你的人带到了他们的村庄，你必须承担责任。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#7zaMwF08
+  quote_hash: 62CDF4D52378C434069B04B139EB939DE327A2442B5D9517205AF3DAE0B3583E
+  quote: "当你掠夺{SETTLEMENT}时，{PARTY}前来救援村庄。你决定……"
+assertions:
+- id: assertion.settlement-form-village-1
+  revision: 1
+  kind: relation
+  text:
+    zh-CN: "村庄不归自己管。它算在最近那座城堡或城镇底下，那座堡、那座城的主人收它的粮、抽它的人；村子的户数越多，交得上来的、抽得出来的就越多。"
+  sources:
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#3GsZXXOi
+    quote_hash: 86B7FEA68093C6550744ABD0191BBBA0A9B95A463E2E7C16C9E2BE5509B24D4D
+    quote: "城堡的附属村庄产出+10%。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#2qZ14G9p
+    quote_hash: 38DA68C20ECD7D4688E5AAD275A8A5D16D91F9770E2291998121AC59489D0816
+    quote: "基于附属村庄户数提供收入"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#7TbVhbT9
+    quote_hash: 1AABA97054E48B15DF0E180B3B0F18AB246F4EE1A6313B80DB7FCC5D0FFF83F0
+    quote: "村庄户数影响。"
+  expressions:
+  - id: expr.settlement-form-village-1-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: "村里的事就那几样：下地、喂牲口、交粮。老爷的人来收，就交；来征人，就出人。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#2qZ14G9p
+      quote_hash: 38DA68C20ECD7D4688E5AAD275A8A5D16D91F9770E2291998121AC59489D0816
+      quote: "基于附属村庄户数提供收入"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#5BabRyaa
+      quote_hash: DC1874C9EFD598A4D8000DB682C3201E4342CA854E8DEBC557155B75AD6E9986
+      quote: "村庄谷物产量+10%。"
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    denies: []
+  - id: expr.settlement-form-village-1-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: "村子是领主的进项：产出归他，人也归他征。反过来说，谁动了别人的村子，这笔账是记在他头上的。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#2qZ14G9p
+      quote_hash: 38DA68C20ECD7D4688E5AAD275A8A5D16D91F9770E2291998121AC59489D0816
+      quote: "基于附属村庄户数提供收入"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#1bxTLLAk
+      quote_hash: 50CCF51F3B6A23ED6AC1C9FE1FE051DB947D1B342B05117F820D324B1F4E3533
+      quote: "你掠夺了我的村庄{SETTLEMENT_NAME}。你觉得我很弱？你以为自己能不付出血的代价，就顺走我村庄里的东西？"
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.settlement-form-village-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: "村子就是种地和养牲口的地方。人畜都靠在土里刨食，好年景里人壮牲口也壮，差年景一眼就看得出来。村里说话算数的是那几位要人。"
+  sources:
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#8cY08v3s
+    quote_hash: 5727FCDA087AB8B765EB75D2A9D139D179339D70C4C0F45E98C2F6A5CBF6DDFC
+    quote: "这个村庄的经济程度一般，人们和牲口看上去都健康强壮，村民们都忙于农活。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#5BabRyaa
+    quote_hash: DC1874C9EFD598A4D8000DB682C3201E4342CA854E8DEBC557155B75AD6E9986
+    quote: "村庄谷物产量+10%。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#25pNV9E3
+    quote_hash: 4B014F00AED9F2BE359B93EED1201D1672EDA68362CDA4D64F337B49A7947B6C
+    quote: "村庄中心"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#2Af5HRJU
+    quote_hash: 8FAB6D0F67750592237A12FBFD9F9D403AECFC6A2FB505EA3360F52A743F108E
+    quote: "村庄要人"
+  expressions:
+  - id: expr.settlement-form-village-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: "村里的事就那几样：下地、喂牲口、交粮。谁家的地好、谁家的牛壮，村里人都清楚。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#8cY08v3s
+      quote_hash: 5727FCDA087AB8B765EB75D2A9D139D179339D70C4C0F45E98C2F6A5CBF6DDFC
+      quote: "这个村庄的经济程度一般，人们和牲口看上去都健康强壮，村民们都忙于农活。"
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    denies: []
+  - id: expr.settlement-form-village-2-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: "看一个村子好不好，数它的户数就够了。户数多的村子，粮出得多、人也出得起，自己也扛得住荒年。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#7TbVhbT9
+      quote_hash: 1AABA97054E48B15DF0E180B3B0F18AB246F4EE1A6313B80DB7FCC5D0FFF83F0
+      quote: "村庄户数影响。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#8cY08v3s
+      quote_hash: 5727FCDA087AB8B765EB75D2A9D139D179339D70C4C0F45E98C2F6A5CBF6DDFC
+      quote: "这个村庄的经济程度一般，人们和牲口看上去都健康强壮，村民们都忙于农活。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#2qZ14G9p
+      quote_hash: 38DA68C20ECD7D4688E5AAD275A8A5D16D91F9770E2291998121AC59489D0816
+      quote: "基于附属村庄户数提供收入"
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+- id: assertion.settlement-form-village-3
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: "同一座村子，说法差得远：赶路的人看见的是几间农舍、几头牲口；挨过抢的人只记得是谁动的手。"
+  sources:
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#8cY08v3s
+    quote_hash: 5727FCDA087AB8B765EB75D2A9D139D179339D70C4C0F45E98C2F6A5CBF6DDFC
+    quote: "这个村庄的经济程度一般，人们和牲口看上去都健康强壮，村民们都忙于农活。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#1bxTLLAk
+    quote_hash: 50CCF51F3B6A23ED6AC1C9FE1FE051DB947D1B342B05117F820D324B1F4E3533
+    quote: "你掠夺了我的村庄{SETTLEMENT_NAME}。你觉得我很弱？你以为自己能不付出血的代价，就顺走我村庄里的东西？"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#4bkLDxIU
+    quote_hash: 1B514015349BAE214F86BAC3B241FE15A5E10B4686E34E9CE3D93231FC8F0A35
+    quote: "我们对那座村庄所做的事……我没做。我不想参与其中。"
+  expressions:
+  - id: expr.settlement-form-village-3-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: "路过村子，看见的就是几间土房、几头牛，人在坡上忙着。你不问，他们也不搭理你。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#8cY08v3s
+      quote_hash: 5727FCDA087AB8B765EB75D2A9D139D179339D70C4C0F45E98C2F6A5CBF6DDFC
+      quote: "这个村庄的经济程度一般，人们和牲口看上去都健康强壮，村民们都忙于农活。"
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    denies: []
+  - id: expr.settlement-form-village-3-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: "村子没了，粮和人都没了。所以谁动了我的村子，我记着这笔账——他也得担着。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#1bxTLLAk
+      quote_hash: 50CCF51F3B6A23ED6AC1C9FE1FE051DB947D1B342B05117F820D324B1F4E3533
+      quote: "你掠夺了我的村庄{SETTLEMENT_NAME}。你觉得我很弱？你以为自己能不付出血的代价，就顺走我村庄里的东西？"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#5HsJkbZz
+      quote_hash: 86F1343CB140A94D7DCBAD2CA10C3DAEABA665BC8710DF8D32EF40F89D59B7D7
+      quote: "你把你的人带到了他们的村庄，你必须承担责任。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#7zaMwF08
+      quote_hash: 62CDF4D52378C434069B04B139EB939DE327A2442B5D9517205AF3DAE0B3583E
+      quote: "当你掠夺{SETTLEMENT}时，{PARTY}前来救援村庄。你决定……"
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    denies: []

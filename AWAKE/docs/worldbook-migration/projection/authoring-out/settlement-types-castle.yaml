@@ -1,0 +1,353 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.settlement-types-castle
+title:
+  zh-CN: "城堡"
+  en: "Castle"
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - "城堡"
+  en:
+  - "Castle"
+  - "Castles"
+summary:
+  zh-CN: "厚墙厚门、常年驻兵：自己人打输了往这儿退，敌人想拿，就得围着把守军的士气耗光。"
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+sources:
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#1FPpHasQ
+  quote_hash: 14173D2012F3AB255781FB6195104E8A0252142B4DC2CC031FA384D47023369B
+  quote: "督管的城堡中的驻军薪酬{VALUE}%。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#2AhTA1ba
+  quote_hash: 041E73C54603C2D047A32611C6F883C317D429A0E6844225A4E431AADA86E5C3
+  quote: "我方士兵正后撤到城堡。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#T8w5VRAy
+  quote_hash: 5A4BC87A72DE8524E08B3AD1F1DD04D552DB432207B49D7C2EA03AE0F5DA5A85
+  quote: "敌方士兵正后撤到城堡。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#PiLml6Nl
+  quote_hash: D16BD4DE9F75E1BD3BD2A78E7AB2C0C13A96483D1389889ABE246A49982F7D73
+  quote: "进攻方在士气或时间耗尽前控制主楼旗帜90秒。夺取旗帜会提升士气。{newline}防守方保卫城堡直至敌方士气耗尽。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#3GsZXXOi
+  quote_hash: 86B7FEA68093C6550744ABD0191BBBA0A9B95A463E2E7C16C9E2BE5509B24D4D
+  quote: "城堡的附属村庄产出+10%。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#665JbYIC
+  quote_hash: 3BFC23C483F19B7EEA3BDF37B725E84A8B7EE2B5DB0EFD3BB1A5F7D6D7107A19
+  quote: "督管的定居点的附属村庄生产速度{VALUE}%。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#7zaMwF08
+  quote_hash: 62CDF4D52378C434069B04B139EB939DE327A2442B5D9517205AF3DAE0B3583E
+  quote: "当你掠夺{SETTLEMENT}时，{PARTY}前来救援村庄。你决定……"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#QpQQJjD6
+  quote_hash: 828180C60DB3E51F332E3A0CD653B8B5F453F0CC1E19A13A9EFEAA6E60604620
+  quote: "这座城堡的领主禁止你进入城墙内，守卫军士通知你，如果你胆敢再靠近，他的人就会放箭。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#3lxq5fvI
+  quote_hash: AB132649ACA8D1E71ED3AD9256A06159652C934A8201AA942066B893D0E74109
+  quote: "贿赂{AMOUNT}{GOLD_ICON}以进入城堡。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#5HsJkbZz
+  quote_hash: 86F1343CB140A94D7DCBAD2CA10C3DAEABA665BC8710DF8D32EF40F89D59B7D7
+  quote: "你把你的人带到了他们的村庄，你必须承担责任。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#8oaVYIlk
+  quote_hash: 6BEA1BC1BCF5F822EEBA0AC3D5A6B7FEC718199D146088DB068F417DDDD5FF06
+  quote: "你在{SETTLEMENT_NAME}外。你无法进入，因为这是敌人的城堡。"
+assertions:
+- id: assertion.settlement-form-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: "城堡是打仗用的。墙厚门少，里面常年驻着兵；自己人打输了往这儿退，敌人想拿下就得围着打，一直把守方的士气耗光。"
+  sources:
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#1FPpHasQ
+    quote_hash: 14173D2012F3AB255781FB6195104E8A0252142B4DC2CC031FA384D47023369B
+    quote: "督管的城堡中的驻军薪酬{VALUE}%。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#2AhTA1ba
+    quote_hash: 041E73C54603C2D047A32611C6F883C317D429A0E6844225A4E431AADA86E5C3
+    quote: "我方士兵正后撤到城堡。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#T8w5VRAy
+    quote_hash: 5A4BC87A72DE8524E08B3AD1F1DD04D552DB432207B49D7C2EA03AE0F5DA5A85
+    quote: "敌方士兵正后撤到城堡。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#PiLml6Nl
+    quote_hash: D16BD4DE9F75E1BD3BD2A78E7AB2C0C13A96483D1389889ABE246A49982F7D73
+    quote: "进攻方在士气或时间耗尽前控制主楼旗帜90秒。夺取旗帜会提升士气。{newline}防守方保卫城堡直至敌方士气耗尽。"
+  expressions:
+  - id: expr.settlement-form-castle-1-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: "守堡就那几件事：看墙、轮值、数粮。真打起来先护主楼那面旗——旗在，这个堡就还在。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#PiLml6Nl
+      quote_hash: D16BD4DE9F75E1BD3BD2A78E7AB2C0C13A96483D1389889ABE246A49982F7D73
+      quote: "进攻方在士气或时间耗尽前控制主楼旗帜90秒。夺取旗帜会提升士气。{newline}防守方保卫城堡直至敌方士气耗尽。"
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []
+  - id: expr.settlement-form-castle-1-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: "堡里的兵不是白养的。一支队伍打散了，往堡里一收，过些日子还能再拉出来。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#2AhTA1ba
+      quote_hash: 041E73C54603C2D047A32611C6F883C317D429A0E6844225A4E431AADA86E5C3
+      quote: "我方士兵正后撤到城堡。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#T8w5VRAy
+      quote_hash: 5A4BC87A72DE8524E08B3AD1F1DD04D552DB432207B49D7C2EA03AE0F5DA5A85
+      quote: "敌方士兵正后撤到城堡。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#1FPpHasQ
+      quote_hash: 14173D2012F3AB255781FB6195104E8A0252142B4DC2CC031FA384D47023369B
+      quote: "督管的城堡中的驻军薪酬{VALUE}%。"
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+- id: assertion.settlement-form-castle-2
+  revision: 1
+  kind: relation
+  text:
+    zh-CN: "一座堡底下挂着几个村子。村子的产出供着这座堡，堡里的人守着这些村子；村子挨了抢，堡里的人要出来救。"
+  sources:
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#3GsZXXOi
+    quote_hash: 86B7FEA68093C6550744ABD0191BBBA0A9B95A463E2E7C16C9E2BE5509B24D4D
+    quote: "城堡的附属村庄产出+10%。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#665JbYIC
+    quote_hash: 3BFC23C483F19B7EEA3BDF37B725E84A8B7EE2B5DB0EFD3BB1A5F7D6D7107A19
+    quote: "督管的定居点的附属村庄生产速度{VALUE}%。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#7zaMwF08
+    quote_hash: 62CDF4D52378C434069B04B139EB939DE327A2442B5D9517205AF3DAE0B3583E
+    quote: "当你掠夺{SETTLEMENT}时，{PARTY}前来救援村庄。你决定……"
+  expressions:
+  - id: expr.settlement-form-castle-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: "堡里的兵认得我们的脸，可不认我们的人。没有老爷发话，门上的军士连话都懒得同你说。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#QpQQJjD6
+      quote_hash: 828180C60DB3E51F332E3A0CD653B8B5F453F0CC1E19A13A9EFEAA6E60604620
+      quote: "这座城堡的领主禁止你进入城墙内，守卫军士通知你，如果你胆敢再靠近，他的人就会放箭。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#3lxq5fvI
+      quote_hash: AB132649ACA8D1E71ED3AD9256A06159652C934A8201AA942066B893D0E74109
+      quote: "贿赂{AMOUNT}{GOLD_ICON}以进入城堡。"
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    denies: []
+  - id: expr.settlement-form-castle-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: "堡是我的，麻烦也是我的。驻军的薪饷我出，墙塌了我修；底下那几个村子被人动了，我还得带人去看。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#1FPpHasQ
+      quote_hash: 14173D2012F3AB255781FB6195104E8A0252142B4DC2CC031FA384D47023369B
+      quote: "督管的城堡中的驻军薪酬{VALUE}%。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#7zaMwF08
+      quote_hash: 62CDF4D52378C434069B04B139EB939DE327A2442B5D9517205AF3DAE0B3583E
+      quote: "当你掠夺{SETTLEMENT}时，{PARTY}前来救援村庄。你决定……"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#5HsJkbZz
+      quote_hash: 86F1343CB140A94D7DCBAD2CA10C3DAEABA665BC8710DF8D32EF40F89D59B7D7
+      quote: "你把你的人带到了他们的村庄，你必须承担责任。"
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.settlement-form-castle-3
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: "城堡对守军是退路，对旁人是一道墙。墙里是领主的规矩，墙外的人想进去，要么有交情，要么掏钱。"
+  sources:
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#QpQQJjD6
+    quote_hash: 828180C60DB3E51F332E3A0CD653B8B5F453F0CC1E19A13A9EFEAA6E60604620
+    quote: "这座城堡的领主禁止你进入城墙内，守卫军士通知你，如果你胆敢再靠近，他的人就会放箭。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#3lxq5fvI
+    quote_hash: AB132649ACA8D1E71ED3AD9256A06159652C934A8201AA942066B893D0E74109
+    quote: "贿赂{AMOUNT}{GOLD_ICON}以进入城堡。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#8oaVYIlk
+    quote_hash: 6BEA1BC1BCF5F822EEBA0AC3D5A6B7FEC718199D146088DB068F417DDDD5FF06
+    quote: "你在{SETTLEMENT_NAME}外。你无法进入，因为这是敌人的城堡。"
+  expressions:
+  - id: expr.settlement-form-castle-3-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: "想过堡门，先看门上军士认不认你。认你就进；不认，就得使钱。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#3lxq5fvI
+      quote_hash: AB132649ACA8D1E71ED3AD9256A06159652C934A8201AA942066B893D0E74109
+      quote: "贿赂{AMOUNT}{GOLD_ICON}以进入城堡。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#QpQQJjD6
+      quote_hash: 828180C60DB3E51F332E3A0CD653B8B5F453F0CC1E19A13A9EFEAA6E60604620
+      quote: "这座城堡的领主禁止你进入城墙内，守卫军士通知你，如果你胆敢再靠近，他的人就会放箭。"
+    grants:
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    denies: []
+  - id: expr.settlement-form-castle-3-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: "不是自己的堡，门就是墙；是自己的堡，也得看门上的规矩。这条规矩比城墙硬。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#8oaVYIlk
+      quote_hash: 6BEA1BC1BCF5F822EEBA0AC3D5A6B7FEC718199D146088DB068F417DDDD5FF06
+      quote: "你在{SETTLEMENT_NAME}外。你无法进入，因为这是敌人的城堡。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#QpQQJjD6
+      quote_hash: 828180C60DB3E51F332E3A0CD653B8B5F453F0CC1E19A13A9EFEAA6E60604620
+      quote: "这座城堡的领主禁止你进入城墙内，守卫军士通知你，如果你胆敢再靠近，他的人就会放箭。"
+    grants:
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    denies: []

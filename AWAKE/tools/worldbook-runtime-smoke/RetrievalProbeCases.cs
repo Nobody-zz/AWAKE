@@ -183,6 +183,8 @@ internal static class RetrievalProbeCases
         foreach (string text in KeywordPathOvermatchProbes)
             Console.WriteLine("RETRIEVAL_OVERMATCH_REPORT candidates=" + RunQuery(service, text).Count + " q=" + text);
 
+        RunKeywordIndexGuardProbe(snapshot);
+
         Console.WriteLine("RETRIEVAL_SUMMARY A_hit1=" + aHit1 + "/" + nA
             + " A_hit3=" + aHit3 + "/" + nA
             + " B_hit1=" + bHit1 + "/" + nB
@@ -233,6 +235,74 @@ internal static class RetrievalProbeCases
             PlayerText = text,
             MaximumBytes = 1 << 20
         }).HitIds;
+    }
+
+    // ── 关键词索引「泛问词保护」的变异检验（2026-09-17）──────────────────────────────
+    //
+    // 为什么必须单列这一步：那条规则（`WorldbookKeywordIndex.WrapsGenericCategoryWord`）在真实语料上
+    //   **当前 0 条命中**（A 项已把唯一那条 `德里亚特·村庄` 从数据里清了）。「全绿不算证据」——
+    //   一条从不执行的规则，"没报警"什么也证明不了。所以这里拿**人造样本**逼它开火一次，
+    //   同时喂它"该留"的样本，证明它不会误伤真名与英文名。
+    //
+    // 判据看的是**索引里有没有这个键**（不是检索结果），因为规则的作用面就是索引。
+    // ⚠️ 判据不许在验台里再写一遍：直接调 `WorldbookKeywordIndex.WrapsGenericCategoryWord`
+    //   与 `WorldbookKeywordIndex.Build`（本项目纪律「平行实现必须同源」）。
+    internal static void RunKeywordIndexGuardProbe(WorldKnowledgeSnapshot real)
+    {
+        int realHits = 0;
+        var examples = new List<string>();
+        foreach (WorldKnowledgeEntry entry in real.Entries.Values)
+        {
+            foreach (string keyword in entry.Keywords)
+            {
+                if (!WorldbookKeywordIndex.WrapsGenericCategoryWord(keyword)) continue;
+                realHits++;
+                if (examples.Count < 8) examples.Add(keyword);
+            }
+        }
+        Console.WriteLine("KEYWORDGUARD_REAL 真语料里被这道闸挡下的关键词=" + realHits
+            + "（期望 0：防复发的空转闸，数据已由 A 项清过）"
+            + (examples.Count > 0 ? " 例:" + string.Join("|", examples) : ""));
+
+        string[] mustExclude = { "德里亚特·村庄", "厄尔凡尼亚·村庄", "某某城市" };
+        string[] mustKeep = { "拉文尼亚", "塔奈西斯湖", "帝国之湖", "Mecalovea Castle", "村庄", "城堡", "城镇" };
+
+        var probe = new WorldKnowledgeSnapshot();
+        AddProbeEntry(probe, "probe.concept-village", "村庄", "村庄", "村庄", "村子", "Village");
+        AddProbeEntry(probe, "probe.concept-castle", "城堡", "城堡", "城堡", "城砦", "Castle");
+        AddProbeEntry(probe, "probe.concept-town", "城镇", "城镇", "城镇", "镇子", "Town");
+        AddProbeEntry(probe, "probe.offender-a", "德里亚特", "德里亚特", "德里亚特·村庄");
+        AddProbeEntry(probe, "probe.offender-b", "厄尔凡尼亚", "厄尔凡尼亚", "厄尔凡尼亚·村庄");
+        AddProbeEntry(probe, "probe.offender-c", "某某", "某某", "某某城市");
+        AddProbeEntry(probe, "probe.legit-a", "拉文尼亚", "拉文尼亚", "拉文尼亚", "塔奈西斯湖");
+        AddProbeEntry(probe, "probe.legit-b", "Mecalovea Castle", "Mecalovea Castle", "Mecalovea Castle", "帝国之湖");
+        WorldbookKeywordIndex.Build(probe);
+
+        int bad = 0;
+        foreach (string keyword in mustExclude)
+        {
+            bool excluded = !probe.KeywordIndex.ContainsKey(keyword);
+            Console.WriteLine("KEYWORDGUARD 该剔 " + keyword + " -> " + (excluded ? "剔 OK" : "留 FAIL(规则没开火)"));
+            if (!excluded) bad++;
+        }
+        foreach (string keyword in mustKeep)
+        {
+            bool kept = probe.KeywordIndex.ContainsKey(keyword);
+            Console.WriteLine("KEYWORDGUARD 该留 " + keyword + " -> " + (kept ? "留 OK" : "剔 FAIL(误伤)"));
+            if (!kept) bad++;
+        }
+        Console.WriteLine("KEYWORDGUARD_VARIANT 变异检验反例=" + bad + "（期望 0）｜ 真语料命中=" + realHits + "（期望 0）");
+        if (bad != 0)
+        {
+            throw new InvalidOperationException("关键词索引泛问词保护的变异检验未过：反例 " + bad + " 个");
+        }
+    }
+
+    private static void AddProbeEntry(WorldKnowledgeSnapshot snapshot, string id, string title, string summary, params string[] keywords)
+    {
+        var entry = new WorldKnowledgeEntry { Id = id, Title = title, Summary = summary };
+        entry.Keywords.AddRange(keywords);
+        snapshot.Entries[id] = entry;
     }
 
     // 身份取目标条目自己授权里的一个（稳定排序取第一个）：保证「目标可被吐出来」，

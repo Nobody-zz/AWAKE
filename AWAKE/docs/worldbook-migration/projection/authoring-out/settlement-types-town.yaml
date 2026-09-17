@@ -1,0 +1,329 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.settlement-types-town
+title:
+  zh-CN: "城镇"
+  en: "Town"
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - "城镇"
+  en:
+  - "Town"
+  - "Towns"
+summary:
+  zh-CN: "市场、作坊、城墙，一样不缺；钱货和消息在这儿转手，收税管事的也在这儿落脚。"
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+sources:
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#AfiEQPky
+  quote_hash: 0C4E56102071F1926A7E631422E6FE28E2B71CAD345B53AD4750A2BB8BA14573
+  quote: "每个城镇都有一些手工业者。人们每日的衣食住行需要有人供应，而绝大多数人选择自己动手。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#6Xl9F8Oa
+  quote_hash: B74555A40A4694371F3205CB418B82272F3AD117E8098592E40F0AD4053E2AFA
+  quote: "城镇商店"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#8PsaGhI8
+  quote_hash: 001D91A0BE14060A097F6EDDA9DA97535EC9972D63A3ED6E1D8296DFA9879D3F
+  quote: "城镇税收-20%。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#6kn630ka
+  quote_hash: A49254AE154CF9EC45D160329D781FD9AFF9BA640240059CC72AAAF5F30D6A4D
+  quote: "王国内每个城镇使统治者家族每日获得100第纳尔{newline}定居点的忠诚度每日-1。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#FQntPChs
+  quote_hash: 8905B27B8BC8F03C438DFF723CAA96E5BA54FA110155A1A196017054325938DE
+  quote: "你的家人曾在帝国的一座主要城市里经商。他们有时会组织商队前往附近的城镇，并在城镇议会里商讨事宜。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#8bSHlWBL
+  quote_hash: 4E3B12F12C2223AB64EEB86FDE2BB3E3DA6E072B2DDC3901D345DEB04219E7FF
+  quote: "此城镇目前未举办竞技大赛。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#Bg83jhCR
+  quote_hash: 5AD47160E6360800856ABBF9D8E1C9D85214ACC32526F97F0CFDD633BFECFB40
+  quote: "这座城镇显然处境艰难，人们看起来营养不良，房屋破败不堪。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#AVQUGwTg
+  quote_hash: 99BFFC40B198EE6EC44FC25575502882384B76F9CEB033CDBE65694DE5A2CE45
+  quote: "这座城镇的经济水平一般。"
+- source_id: source.calradia.game.settlement-type-strings
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+  locator: bannerlord.localization#8qwvZ15E
+  quote_hash: F4A9B8BC9EE4CAD05CC6AFED34E6B20666F2BD0B50F42517E78C8F52F51DFE55
+  quote: "统治者家族所有的城镇每日忠诚度和繁荣度+1{newline}非统治者家族所有的城镇每日忠诚度-0.3"
+assertions:
+- id: assertion.settlement-form-town-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: "城镇比村子大得多。市场、作坊、商店都有——吃穿用的家伙、打仗的兵器，多半是在这儿做出来、在这儿卖出去的。"
+  sources:
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#AfiEQPky
+    quote_hash: 0C4E56102071F1926A7E631422E6FE28E2B71CAD345B53AD4750A2BB8BA14573
+    quote: "每个城镇都有一些手工业者。人们每日的衣食住行需要有人供应，而绝大多数人选择自己动手。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#6Xl9F8Oa
+    quote_hash: B74555A40A4694371F3205CB418B82272F3AD117E8098592E40F0AD4053E2AFA
+    quote: "城镇商店"
+  expressions:
+  - id: expr.settlement-form-town-1-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: "镇上不用自己种粮，什么都能买。兜里有钱、铺子里有人认你，日子就过得下去。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#6Xl9F8Oa
+      quote_hash: B74555A40A4694371F3205CB418B82272F3AD117E8098592E40F0AD4053E2AFA
+      quote: "城镇商店"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#AfiEQPky
+      quote_hash: 0C4E56102071F1926A7E631422E6FE28E2B71CAD345B53AD4750A2BB8BA14573
+      quote: "每个城镇都有一些手工业者。人们每日的衣食住行需要有人供应，而绝大多数人选择自己动手。"
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    denies: []
+  - id: expr.settlement-form-town-1-rumor2
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: "进城是件大事。车上的东西卖完、该买的买到，才算没白跑一趟。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#6Xl9F8Oa
+      quote_hash: B74555A40A4694371F3205CB418B82272F3AD117E8098592E40F0AD4053E2AFA
+      quote: "城镇商店"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#AfiEQPky
+      quote_hash: 0C4E56102071F1926A7E631422E6FE28E2B71CAD345B53AD4750A2BB8BA14573
+      quote: "每个城镇都有一些手工业者。人们每日的衣食住行需要有人供应，而绝大多数人选择自己动手。"
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    denies: []
+- id: assertion.settlement-form-town-2
+  revision: 1
+  kind: relation
+  text:
+    zh-CN: "城镇收税，税收归城里说了算的那家；城里还有议会，商队、工坊、人手的事都在那儿议。哪家办得起竞技大赛，哪家就正得势。"
+  sources:
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#8PsaGhI8
+    quote_hash: 001D91A0BE14060A097F6EDDA9DA97535EC9972D63A3ED6E1D8296DFA9879D3F
+    quote: "城镇税收-20%。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#6kn630ka
+    quote_hash: A49254AE154CF9EC45D160329D781FD9AFF9BA640240059CC72AAAF5F30D6A4D
+    quote: "王国内每个城镇使统治者家族每日获得100第纳尔{newline}定居点的忠诚度每日-1。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#FQntPChs
+    quote_hash: 8905B27B8BC8F03C438DFF723CAA96E5BA54FA110155A1A196017054325938DE
+    quote: "你的家人曾在帝国的一座主要城市里经商。他们有时会组织商队前往附近的城镇，并在城镇议会里商讨事宜。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#8bSHlWBL
+    quote_hash: 4E3B12F12C2223AB64EEB86FDE2BB3E3DA6E072B2DDC3901D345DEB04219E7FF
+    quote: "此城镇目前未举办竞技大赛。"
+  expressions:
+  - id: expr.settlement-form-town-2-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: "一座镇子值不值得蹲，看它的作坊和市面。作坊多、市面稳，商队才肯常来，税也才收得上来。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#AfiEQPky
+      quote_hash: 0C4E56102071F1926A7E631422E6FE28E2B71CAD345B53AD4750A2BB8BA14573
+      quote: "每个城镇都有一些手工业者。人们每日的衣食住行需要有人供应，而绝大多数人选择自己动手。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#8PsaGhI8
+      quote_hash: 001D91A0BE14060A097F6EDDA9DA97535EC9972D63A3ED6E1D8296DFA9879D3F
+      quote: "城镇税收-20%。"
+    grants:
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    denies: []
+  - id: expr.settlement-form-town-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: "镇子是收税的地方，也是出事的地方。市面一乱，税就收不上来，账就难看了。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#6kn630ka
+      quote_hash: A49254AE154CF9EC45D160329D781FD9AFF9BA640240059CC72AAAF5F30D6A4D
+      quote: "王国内每个城镇使统治者家族每日获得100第纳尔{newline}定居点的忠诚度每日-1。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#8PsaGhI8
+      quote_hash: 001D91A0BE14060A097F6EDDA9DA97535EC9972D63A3ED6E1D8296DFA9879D3F
+      quote: "城镇税收-20%。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#Bg83jhCR
+      quote_hash: 5AD47160E6360800856ABBF9D8E1C9D85214ACC32526F97F0CFDD633BFECFB40
+      quote: "这座城镇显然处境艰难，人们看起来营养不良，房屋破败不堪。"
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.settlement-form-town-3
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: "镇子好不好，一眼看得出来：兴旺的时候满街是人、货堆到门口；糟的时候人瘦、屋子塌，谁都想往外走。"
+  sources:
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#Bg83jhCR
+    quote_hash: 5AD47160E6360800856ABBF9D8E1C9D85214ACC32526F97F0CFDD633BFECFB40
+    quote: "这座城镇显然处境艰难，人们看起来营养不良，房屋破败不堪。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#AVQUGwTg
+    quote_hash: 99BFFC40B198EE6EC44FC25575502882384B76F9CEB033CDBE65694DE5A2CE45
+    quote: "这座城镇的经济水平一般。"
+  - source_id: source.calradia.game.settlement-type-strings
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+    locator: bannerlord.localization#8qwvZ15E
+    quote_hash: F4A9B8BC9EE4CAD05CC6AFED34E6B20666F2BD0B50F42517E78C8F52F51DFE55
+    quote: "统治者家族所有的城镇每日忠诚度和繁荣度+1{newline}非统治者家族所有的城镇每日忠诚度-0.3"
+  expressions:
+  - id: expr.settlement-form-town-3-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: "街上看一眼就知道了：铺子开门、人肯在街上站着，就是好年景；铺板一关、人往城外走，那就快了。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#AVQUGwTg
+      quote_hash: 99BFFC40B198EE6EC44FC25575502882384B76F9CEB033CDBE65694DE5A2CE45
+      quote: "这座城镇的经济水平一般。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#Bg83jhCR
+      quote_hash: 5AD47160E6360800856ABBF9D8E1C9D85214ACC32526F97F0CFDD633BFECFB40
+      quote: "这座城镇显然处境艰难，人们看起来营养不良，房屋破败不堪。"
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    denies: []
+  - id: expr.settlement-form-town-3-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: "镇子的脸色是看得出来的——人有没有肉，屋子有没有人修。谁当这里是自己的，这些就先变。"
+    sources:
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#Bg83jhCR
+      quote_hash: 5AD47160E6360800856ABBF9D8E1C9D85214ACC32526F97F0CFDD633BFECFB40
+      quote: "这座城镇显然处境艰难，人们看起来营养不良，房屋破败不堪。"
+    - source_id: source.calradia.game.settlement-type-strings
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: D6E2EDDC132955EEC14FCFAF4B6D65D510613E2C6CFE457D29EB1E069BEA6EBB
+      locator: bannerlord.localization#8qwvZ15E
+      quote_hash: F4A9B8BC9EE4CAD05CC6AFED34E6B20666F2BD0B50F42517E78C8F52F51DFE55
+      quote: "统治者家族所有的城镇每日忠诚度和繁荣度+1{newline}非统治者家族所有的城镇每日忠诚度-0.3"
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []

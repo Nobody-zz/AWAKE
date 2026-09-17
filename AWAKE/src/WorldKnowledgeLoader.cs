@@ -205,13 +205,15 @@ internal static class WorldKnowledgeLoader
 // `docs/worldbook-migration/REDTEST-CHAIN-20260917.md` §5.5）：
 //   检索是「双向子串」——`text` 含 `kw` 或 `kw` 含 `text` 都算命中。于是一个**覆盖上百条**的关键词
 //   就是一把万能钥匙：输 `doc` 命中 448、`geography` 命中 408、`castle_village` 命中 131、`村` 命中 273。
-//   这不是匹配规则的毛病，是**索引里有哪些键**的毛病。三条剔除规则：
+//   这不是匹配规则的毛病，是**索引里有哪些键**的毛病。四条剔除规则：
 //     ① 覆盖条目数超过 `MaxKeywordDocumentFrequency` —— 能被这么多条目共用的键，按定义不具区分度。
 //        与 `WorldbookTermIndex.MaxTermDocumentFrequency` 同一条道理（那张表早就剔了 `城堡/村庄`）。
 //     ② 前缀 `doc.` —— 内部文档 id。编译器 09-16 已决定不再写进包（`RuntimePackageCompiler.cs` 的 K1 修正），
 //        但**出厂包还是旧编译器编的**，所以这层在运行时也拦一道。取用请走 `entry.Id`，不经过检索。
 //     ③ 形状像内部标识（纯 ASCII 且含下划线，如 `castle_village_EN1_2` / `heavy_round_shield`）——
 //        这是实体锚点的**原始 id**，不是 K1 说的「可读名称」，真人不会这么念。
+//     ④ 把整个**泛问词**裹进去的键（如 `德里亚特·村庄`，2026-09-17 加）—— 防复发，见
+//        `WrapsGenericCategoryWord` 的注释。当前全库 0 条命中 ⇒ 这是一道**空转的闸**。
 // ⚠️ 剔除**不是**删数据：包里的 `keywords` 一个字不改，只是不进检索索引。要查一个键为什么没生效，
 //    来这里；要改数据，去编译器的 K1。
 internal static class WorldbookKeywordIndex
@@ -219,6 +221,25 @@ internal static class WorldbookKeywordIndex
     // 覆盖条目数超过这个值的关键词不进索引（按数调，见验台 RETRIEVAL_* 行）。
     // 与 `WorldbookTermIndex.MaxTermDocumentFrequency` 取同一个值、同一个理由；改一个要问另一个。
     internal const int MaxKeywordDocumentFrequency = 40;
+
+    // 泛问词（＝三条聚落「概念词条」`geography.settlement-types-*` 的中文入口词）。
+    //
+    // 为什么这张表是**写死的**，而不是从语料里算出来 —— 四种统计口径都实测过，全不成立
+    // （量法见 `tools/_probe_b_generic_words_20260917.py`，包里 451 条）：
+    //   ① 语料覆盖 > 40：只捞到 `城堡`（覆盖 69）；`村庄` 覆盖 12、`城镇` 覆盖 14，够不着阈值。
+    //   ② 长度 2~3 字的 title：148 个 —— 把 `沙拉斯`/`吕卡隆`/`毛皮` 这些**真名**也算了进来，
+    //      会剔掉 45 条正当关键词（`沙拉斯湾`、`吕卡隆·石山秃鹫`、`德里亚特·毛皮生计`…）。
+    //   ③ 两者取交：只剩 `城堡`，回到 ① 的毛病。
+    // ⇒ 「哪些词是类别词、不是名字」是**编辑判断**，不是统计量。改动概念词条时同步这张表。
+    //
+    // ⚠️ 表里为什么也收着**口语同义词**（村子/村落/城砦/堡垒/镇子/城市），而概念词条自己只认领主词：
+    //    两件事的判据不同 ——
+    //      · 概念词条把口语同义词写进 `aliases` ⇒ 它们会进关键词索引 ⇒ 问「村子」时主路命中概念词条
+    //        ⇒ **兜底通道不再执行**，具体问题（`有大瀑布的村子是哪个？`）被挤掉（2026-09-17 实测）。
+    //      · 但「口语同义词也是类别词」这件事本身没变：谁要是写一条 `某某城市` 当键，那个坑照样在。
+    //    因为没有任何地方再声明这六个词，只能记在这张表里。**改一处要一起想另一处。**
+    private static readonly string[] GenericCategoryWords =
+        { "村庄", "村子", "村落", "城堡", "城砦", "堡垒", "城镇", "镇子", "城市" };
 
     internal static void Build(WorldKnowledgeSnapshot snapshot)
     {
@@ -249,7 +270,32 @@ internal static class WorldbookKeywordIndex
     {
         if (documentFrequency > MaxKeywordDocumentFrequency) return true;
         if (keyword.StartsWith("doc.", StringComparison.OrdinalIgnoreCase)) return true;
-        return LooksLikeInternalIdentifier(keyword);
+        if (LooksLikeInternalIdentifier(keyword)) return true;
+        return WrapsGenericCategoryWord(keyword);
+    }
+
+    // ④ 把整个泛问词裹进去的键 —— 2026-09-17 加，**防复发**。
+    //
+    // 为什么需要：检索是**双向子串**（`text` 含 `kw` 或 `kw` 含 `text` 都算命中）。于是一条
+    // 手写的复合键 `德里亚特·村庄` 会吃掉「村庄」这句**短问句**——`kw.IndexOf("村庄") >= 0` 就命中，
+    // 而它指向的是德里亚特，不是村庄。v12 的实测形态就是这个：272 个村庄的泛问全被这一条键劫走。
+    // （A 项已把数据里那唯一一条复合词清掉了，所以这条规则**当前空转**——它管的是下一次。）
+    //
+    // 边界：**只打"裹住整个泛问词"这一种形状**。泛问词自己照旧进索引 —— 它是概念词条的名字，
+    // 正是「村庄是什么」这句话该落的地方（`WorldbookTermIndex` 那张表里 `城堡` 仍按 df>40 剔，
+    // 两者不冲突：那张表按**覆盖度**剔，这张表按**形状**剔）。
+    // 变异检验（该剔 `德里亚特·村庄`/`厄尔凡尼亚·村庄`；该留 `拉文尼亚`/`Mecalovea Castle`/`村庄`）
+    // 跑在验台里，见 `tools/worldbook-runtime-smoke/RetrievalProbeCases.cs` 的 KEYWORDGUARD 行。
+    // `internal` 而不是 `private`：验台要直接调它去数真实语料里命中了哪些键
+    // —— 那边自己再写一遍判据就是**平行实现**（本项目纪律不许）。
+    internal static bool WrapsGenericCategoryWord(string keyword)
+    {
+        foreach (string word in GenericCategoryWords)
+        {
+            if (keyword.Length <= word.Length) continue;      // 泛问词自己放行（等长也放行）
+            if (keyword.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0) return true;
+        }
+        return false;
     }
 
     // 纯 ASCII ＋ 含下划线 ⇒ 原始 id 形状。判据窄到只打这一类，避免碰「Goods」「Husn Fulq」这些真可读名。
