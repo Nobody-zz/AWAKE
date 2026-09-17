@@ -22,7 +22,7 @@ if ([string]::IsNullOrWhiteSpace($BuildDllPath)) { $BuildDllPath = Join-Path $Pr
 if ([string]::IsNullOrWhiteSpace($ReportPath)) { $ReportPath = Join-Path $ProjectRoot ("docs\sync-reports\sync-" + $timestamp + '.json') }
 $embeddedRuntimeScript = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) 'package_embedded_runtime.ps1'
 
-$managedRootFiles = @('SubModule.xml', 'README_CN.md', 'README_EN.txt', 'BUILD_VERIFICATION.txt')
+$managedRootFiles = @('SubModule.xml', 'README_CN.md', 'README_EN.txt', 'BUILD_VERIFICATION.txt', 'THIRD-PARTY-NOTICES.txt')
 $managedGuiFiles = @(
     'GUI\Prefabs\AwakeMessenger.xml',
     'GUI\Prefabs\AwakePortraitProbe.xml',

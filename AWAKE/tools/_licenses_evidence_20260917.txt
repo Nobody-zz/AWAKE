@@ -1,0 +1,26 @@
+包                                          版本        许可(SPDX)       作者
+----------------------------------------------------------------------------------------------------------------------
+microsoft.netcore.app.runtime.win-x64      8.0.28    MIT            Microsoft
+    .NET 8 运行时（coreclr/hostfxr/System.* 那一大片）
+    https://dot.net/
+microsoft.netcore.app.host.win-x64         8.0.28    MIT            Microsoft
+    apphost（MarcusAwakeRuntimeService.exe 的宿主）
+    https://dot.net/
+microsoft.ml.onnxruntime                   1.18.0    LICENSE        Microsoft
+    onnxruntime.dll / onnxruntime_providers_shared.dll / Microsoft.ML.OnnxRuntime.dll
+    ⚠️ license type = file（不是 expression），需另找
+    https://github.com/Microsoft/onnxruntime
+microsoft.ml.tokenizers                    2.0.0     MIT            Microsoft
+    Microsoft.ML.Tokenizers.dll
+    https://dot.net/ml
+google.protobuf                            3.30.2    BSD-3-Clause   Google Inc.
+    Google.Protobuf.dll（Tokenizers 的传递依赖）
+    https://github.com/protocolbuffers/protobuf
+microsoft.data.sqlite                      8.0.21    MIT            Microsoft
+    Microsoft.Data.Sqlite.dll
+    https://docs.microsoft.com/dotnet/standard/data/sqlite/
+sqlitepclraw.batteries_v2                  2.1.10    **取不到** HTTP Error 404: The specified blob does not exist.
+sqlitepclraw.core                          2.1.10    Apache-2.0     Eric Sink
+    SQLitePCLRaw.core.dll
+sqlitepclraw.provider.e_sqlite3            2.1.10    Apache-2.0     Eric Sink
+    SQLitePCLRaw.provider.e_sqlite3.dll / e_sqlite3.dll

@@ -1,0 +1,145 @@
+{
+  "schema": 1,
+  "note": "上线件里每一件第三方组件：名称、版本、许可、出处、取证依据。改这里之后跑 tools/third_party_notices.py --render 重出声明文件。",
+  "updated": "2026-09-17",
+  "scope": {
+    "target": "bin/Win64_Shipping_Client/Runtime",
+    "note": "只覆盖自包含发布目录（DLL ＋ .NET 运行时 ＋ 模型）。模组根与 GUI/ModuleData 下的素材由各线各自负责。"
+  },
+  "components": [
+    {
+      "id": "ours",
+      "name": "AWAKE 本体（本项目自有代码）",
+      "version": "—",
+      "license": "见项目许可",
+      "author": "AWAKE 项目",
+      "files": ["MarcusAwake*"],
+      "render": false
+    },
+    {
+      "id": "generated",
+      "name": "本目录的打包元数据（打包器生成，非第三方）",
+      "version": "—",
+      "license": "—",
+      "author": "AWAKE 项目",
+      "files": ["manifest.json", "SHA256SUMS.txt"],
+      "render": false
+    },
+    {
+      "id": "dotnet-runtime",
+      "name": ".NET Runtime（自包含发布，含 System.* / Microsoft.* 基础库）",
+      "version": "8.0.28",
+      "license": "MIT",
+      "author": "Microsoft Corporation",
+      "url": "https://github.com/dotnet/runtime",
+      "license_text": "MIT.txt",
+      "evidence": "上线件 coreclr.dll / hostfxr.dll / System.Private.CoreLib.dll 的版本信息均为 8.0.28（commit 46295af5828b062bbbf93a9cef50fd8cb9fbcb09）；许可取自 NuGet 包 microsoft.netcore.app.runtime.win-x64 8.0.28 的 nuspec：<license type=\"expression\">MIT</license>；许可正文见文末（SPDX 官方文本）。",
+      "files": [
+        "coreclr.dll", "clrjit.dll", "clrgc.dll", "clretwrc.dll",
+        "mscorlib.dll", "mscorrc.dll", "mscordaccore.dll", "mscordaccore_amd64_*.dll", "mscordbi.dll",
+        "createdump.exe", "hostfxr.dll", "hostpolicy.dll", "netstandard.dll", "WindowsBase.dll",
+        "System*.dll", "Microsoft.CSharp.dll", "Microsoft.VisualBasic*.dll", "Microsoft.Win32.*.dll"
+      ]
+    },
+    {
+      "id": "msquic",
+      "name": "MsQuic（QUIC 实现，随 .NET 运行时包分发）",
+      "version": "2.4.18",
+      "license": "MIT",
+      "author": "Microsoft Corporation",
+      "url": "https://github.com/microsoft/msquic",
+      "license_text": "MIT.txt",
+      "evidence": "上线件 msquic.dll 版本信息 2.4.18.144490534-official，CompanyName=Microsoft Corporation；许可取自 msquic 仓库 LICENSE（首行 Copyright (c) Microsoft Corporation. / MIT License）。",
+      "files": ["msquic.dll"]
+    },
+    {
+      "id": "diasymreader",
+      "name": "Microsoft.DiaSymReader.Native（调试符号读取，随 .NET 运行时包分发）",
+      "version": "14.42.34436.0",
+      "license": "MIT",
+      "author": "Microsoft Corporation",
+      "url": "https://github.com/dotnet/symreader",
+      "license_text": "MIT.txt",
+      "evidence": "上线件 Microsoft.DiaSymReader.Native.amd64.dll 版本信息 14.42.34436.0，CompanyName=Microsoft Corporation；随 .NET 8 运行时包分发，许可同为 MIT。",
+      "files": ["Microsoft.DiaSymReader.Native.amd64.dll"]
+    },
+    {
+      "id": "onnxruntime",
+      "name": "ONNX Runtime（含托管封装 Microsoft.ML.OnnxRuntime 与两个原生库）",
+      "version": "1.18（原生库 1.18.20240515.2.4573740）",
+      "license": "MIT",
+      "author": "Microsoft Corporation",
+      "url": "https://github.com/microsoft/onnxruntime",
+      "license_text": "MIT.txt",
+      "evidence": "上线件 onnxruntime.dll / onnxruntime_providers_shared.dll 版本信息 1.18.20240515.2.4573740，CompanyName=Microsoft Corporation；托管件 Microsoft.ML.OnnxRuntime.dll **未打版本戳（File/Product 均为 0.0.0.0）**，与原生库同批取得。许可取自 microsoft/onnxruntime 仓库 LICENSE（首行 'MIT License' / 'Copyright (c) Microsoft Corporation'）；NuGet 包 microsoft.ml.onnxruntime 1.18.0 的 nuspec 用 <license type=\"file\"> 引用同文件。",
+      "files": ["Microsoft.ML.OnnxRuntime.dll", "onnxruntime.dll", "onnxruntime_providers_shared.dll"]
+    },
+    {
+      "id": "ml-tokenizers",
+      "name": "Microsoft.ML.Tokenizers",
+      "version": "2.0.0",
+      "license": "MIT",
+      "author": "Microsoft Corporation",
+      "url": "https://dot.net/ml",
+      "license_text": "MIT.txt",
+      "evidence": "上线件 Microsoft.ML.Tokenizers.dll 版本信息 2.0.0+efefa92f4486a43047c5b47618885a71bf7f0967；许可取自 NuGet 包 microsoft.ml.tokenizers 2.0.0 的 nuspec：<license type=\"expression\">MIT</license>。",
+      "files": ["Microsoft.ML.Tokenizers.dll"]
+    },
+    {
+      "id": "protobuf",
+      "name": "Google.Protobuf（Microsoft.ML.Tokenizers 的传递依赖）",
+      "version": "3.30.2",
+      "license": "BSD-3-Clause",
+      "author": "Google Inc.",
+      "url": "https://github.com/protocolbuffers/protobuf",
+      "license_text": "BSD-3-Clause.txt",
+      "evidence": "上线件 Google.Protobuf.dll 版本信息 3.30.2+43e1626812c1b543e56a7bec59dc09eb18248bd2，CompanyName=Google Inc.；许可取自 NuGet 包 google.protobuf 3.30.2 的 nuspec：<license type=\"expression\">BSD-3-Clause</license>；全文取自 protocolbuffers/protobuf 的 LICENSE。",
+      "files": ["Google.Protobuf.dll"]
+    },
+    {
+      "id": "data-sqlite",
+      "name": "Microsoft.Data.Sqlite",
+      "version": "8.0.21",
+      "license": "MIT",
+      "author": "Microsoft Corporation",
+      "url": "https://docs.microsoft.com/dotnet/standard/data/sqlite/",
+      "license_text": "MIT.txt",
+      "evidence": "上线件 Microsoft.Data.Sqlite.dll 版本信息 8.0.21；许可取自 NuGet 包 microsoft.data.sqlite 8.0.21 的 nuspec：<license type=\"expression\">MIT</license>。",
+      "files": ["Microsoft.Data.Sqlite.dll"]
+    },
+    {
+      "id": "sqlitepclraw",
+      "name": "SQLitePCLRaw（batteries_v2 / core / provider.e_sqlite3 三件）",
+      "version": "2.1.10",
+      "license": "Apache-2.0",
+      "author": "Eric Sink (SourceGear)",
+      "url": "https://github.com/ericsink/SQLitePCL.raw",
+      "license_text": "Apache-2.0.txt",
+      "evidence": "上线件三件版本信息均为 2.1.10，CompanyName=SourceGear；许可取自 NuGet 包 sqlitepclraw.core 2.1.10 与 sqlitepclraw.provider.e_sqlite3 2.1.10 的 nuspec：<license type=\"expression\">Apache-2.0</license>（sqlitepclraw.batteries_v2 自身的包页在 nuget flatcontainer 上取不到 nuspec，按同发行方同版本线归属）。",
+      "files": ["SQLitePCLRaw.batteries_v2.dll", "SQLitePCLRaw.core.dll", "SQLitePCLRaw.provider.e_sqlite3.dll"]
+    },
+    {
+      "id": "sqlite-native",
+      "name": "SQLite 原生库（由 SQLitePCLRaw.provider.e_sqlite3 加载）",
+      "version": "3.46.1",
+      "license": "Public Domain",
+      "author": "SQLite 项目 / D. Richard Hipp 等",
+      "url": "https://www.sqlite.org/copyright.html",
+      "license_text": null,
+      "license_note": "SQLite 源码为公有领域（public domain），无附加条款；官方声明见 https://www.sqlite.org/copyright.html。",
+      "evidence": "版本号 3.46.1 直接读自上线件 e_sqlite3.dll 二进制里的内嵌版本串（非外部来源）。",
+      "files": ["e_sqlite3.dll"]
+    },
+    {
+      "id": "model-bge-small-zh-v1.5",
+      "name": "文本嵌入模型 bge-small-zh-v1.5（ONNX 形态）",
+      "version": "BAAI/bge-small-zh-v1.5 @ 7999e1d3；ONNX 转换取自 Xenova/bge-small-zh-v1.5 @ 75c43b06",
+      "license": "MIT",
+      "author": "BAAI（北京智源人工智能研究院）；ONNX 转换：Xenova（transformers.js 管线）",
+      "url": "https://huggingface.co/BAAI/bge-small-zh-v1.5",
+      "license_text": "MIT.txt",
+      "evidence": "权重的许可取自 HuggingFace 模型 API：BAAI/bge-small-zh-v1.5 的 cardData.license == \"mit\"、tags 含 license:mit。ONNX 转换仓库 Xenova/bge-small-zh-v1.5 的 README 首行写明 base_model: BAAI/bge-small-zh-v1.5、library_name: transformers.js，属 HuggingFace 官方推荐的 ONNX 分发形态，许可随基座。逐件 sha256 与来源见 tools/semantic-model-provenance.json。",
+      "files": ["models/*", "models/**"]
+    }
+  ]
+}
