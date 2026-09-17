@@ -1,0 +1,84 @@
+判断层两份文档的红队复检：抓到 2 处 P0（含我口头讲错的一句）
+
+甲方：「把你刚刚给的两个md文件红测一下吧」。
+做法：把两份文档里**所有可核验的断言**抽出来回代码证伪 —— 行号逐条 sed 对、
+「只在…被读」「无人读」「没有」这类**否定式断言**全部 grep 反证、区间数字回 JSON 复算、
+机制描述回调用链走一遍。纯判断句（如"该先做探针"）不核，那是主张不是事实断言。
+
+P0-① 对话历史那一行，机制写错了（而且我 21:3x 口头也讲错了）
+----------------------------------------------------------
+原稿（DESIGN §2.2）：「最近 4 轮被截成 400 字做成 MemoryHint，**已经拿去喂模型了**
+（PersonaDslGenerator.cs:307）」—— **错的**，把两条出口揉成了一条：
+
+  ① 进模型的是 `SerializeHistory`（NpcDialoguePromptPipeline.cs:134）：**上限 12 轮**、
+     每轮截 400 字 → prompt 变量 `dialogue_history`（同文件 :54），调用点 NpcDialogueService.cs:1194/1196。
+  ② `BuildMemorySummaryHint()`（NpcDialogueService.cs:**723**，取**最近 4 轮**、合计 400 字）
+     **只在对话结束写记忆时用**（:419，在 Dispose() 里）—— **不喂模型**。
+     而 PersonaDslGenerator.cs:307 的 MEMORY_HINT 是**长期记忆块**（NpcMemoryService, :667），跟 _history 无关。
+
+⚠️ **同一处错误我 21:3x 已经口头告诉甲方**：「存着最近十二轮，还截了最近四轮喂给模型了」
+—— 后半句是错的（那是写记忆用的）。**结论（进模型、没进检索）没变，机制讲错了。**
+
+P0-② 本仓不能写「全仓无人读」——一 grep 就撞上旧代链路
+----------------------------------------------------
+反证：`src/WorldbookService.cs` 把这些字段**全读**，还拿它们打分 ——
+SettlementId :387/:508(**+400**)、HeroId :383/:503(+1000)、CharacterId :384/:504(+900)、
+SceneKeywords :363/:487(+200)、ContextModes :370/:491(+150)。
+这条链路是**死的**：`WorldbookRuntime.Current`（WorldbookRuntime.cs:18）全仓无消费者；
+现行入口是 `WorldbookRuntime.Knowledge`；裁定 `DECISION-20260916-旧代检索链路作废.md` §一.2/3。
+⇒ **结论（现行链路上这些字段不参与"在说哪儿"）成立，但措辞必须限定"现行链路"**。两处已加口径。
+
+P1：漏了更硬的证据 / 说法不够准
+-------------------------------
+· 更硬的证据就在**同一个方法**里：`BuildPromptInputAsync`（:1010）在 :1194/1196 把 `history` 交给 prompt，
+  却在 :1044-1063 造 `WorldbookQuery`（**不带 history**）⇒ **传进来了、没往检索那一支递**。已补 §2.4。
+· 「周报／时间线没进检索」说轻了：`entry.ReportId → result.ReportIds → decision.ReportIds`
+  （WorldKnowledgeQueryService.cs:103、WorldKnowledgeModels.cs:202-203）**链是接上的**，
+  但**末梢无消费者**，且 **runtime.json 451 条里 0 条填了 reportId** ⇒ 是**死字段**，不是"没接"。
+
+P2：小错
+--------
+· `BuildMemorySummaryHint` 在 :723，原稿写 :724。
+· §2.2「NPC 当前状态」把 `npc_memory` 也算作它的落点 —— `npc_memory` 是长期记忆块，该行只该写 `npc_state`(:1176)。
+· `SplitSceneKeywords(_sceneKeywords)` 实为 :1033，原稿没给行号。
+· `tools/worldbook-rag-merge/Program.cs` 注释「真问题命中时也就 0.476~0.580」与数据不符：
+  rank≤3 是 **0.4708–0.7951**、rank=1 是 0.4764–0.7951（0.530/0.571 是**过匹配探针**的数）。已改。
+· 同处注释「那是**内容侧规则**的事」与 09-17 追之三的结论（**该在检索之前绑一步**）矛盾，已按 DESIGN 更正。
+· SPEC §五之二 两行数字不同源（0.3067–0.3935 出自 arm_attribution；0.4708–0.7951 出自 semantic_floor），
+  已加注"别当同一次读数用"。
+
+没抓到问题的（阴性结果也报）
+----------------------------
+行号全部 sed 核对正确：:1059/:1110/:1051/:1046-1047/:29/:273/:1044-1063/:1010/:1173/:1176、
+NpcDialogueConstants.cs:16、PersonaDslGenerator.cs:307、WorldKnowledgeQueryService.cs:96/:109/:75-120/:389-391/:512-525、
+WorldbookIdentityEvaluator.cs:71、WorldbookModels.cs:104/:147。
+回原始读数复算一致：「抬到 0.60 真题只剩 12/26」、三条病题余弦 0.45052/0.47316/0.44220、
+「13 条无入口词」、「0.4732 落在 0.4708–0.7951 里面」。
+由调用路径证死但**结果未测**的一条：「每句非空输入都走一遍检索」（SendAsync:273 无条件调用，
+:222-228 只有空串与超长两个 guard）—— 文档说的是"都走一遍"（可证），没说"必然答错"（未测）。
+
+暴露的系统性毛病
+----------------
+本仓**"结论对"经常被写成"事实假"**，两种句式：
+① 否定式断言（"全仓无人读"）会被**已作废但仍在 src 的旧代链路**反证 ⇒ 一律限定"现行链路上"；
+② 把**两次不同跑的数字**写进同一句话（0.53/0.57 与 0.4708–0.7951；0.3067–0.3935 与 0.3387–0.3924）
+   ⇒ 每个数字旁写清出自哪份件。（②**上一轮刚犯过**，见 SPEC §五之三 的更正记录。）
+
+本次改动
+--------
+A AWAKE/docs/AUDIT-20260917-判断层文档红测.md          红测报告（P0/P1/P2 + 阴性结果 + 修正清单）
+M AWAKE/docs/DESIGN-20260917-检索之前的判断层.md        §一 补 :273；§2.1 加"现行链路"口径＋
+                                                        "别写全仓无人读"警示＋ContextModes 死字段；
+                                                        §2.2 对话历史按两条出口重写、npc_memory 引用改正、
+                                                        周报行改"死字段"；§2.4 补同一方法的两处证据
+M AWAKE/docs/SPEC-20260917-该空手时空手判据.md          §六 加口径＋红测指针；§五之二 两行数字加源注
+M AWAKE/tools/worldbook-rag-merge/Program.cs            注释两处更正（区间＋归属），行为未动
+M AWAKE/tools/_merge_ruler_20260917.txt                改注释后重跑
+A AWAKE/tools/_commit-msg-20260917u.txt                本提交信息
+
+读数（改注释后重跑，逐字未变）
+------------------------------
+MERGE_GATE PASS   exit=0
+NOANSWER_RULER offenders=0/0 concept_offenders=0/0 known_gaps=3/3 OK
+JUDGE 八项全 PASS
+hit@3：字面 19/24、语义 22/24、★合并 23/24（涨 4 跌 0）
