@@ -1,0 +1,33 @@
+第十七轮续红测：通读那份「疑似 P0 的裁决依据」AWAKE-KNOWLEDGE-GATE-20260916 —— 1 处 P1
+
+为什么打它：第十三轮判出一条疑似 P0（新门禁把 AllowsAi==false 当成「该空手」的正确观测，
+而这根正是 09-16 那桩「待裁决」要拆开的），判断的全部依据就在这份文档里，
+而它自己从没被通读过。判据的分量压在它身上，它自己反而没验过。
+
+结论：判断与证据仍成立，一处没歪。
+- 一手证据逐字对上：evidence/ai-chain-sim-fix-20260914/result.json 两个用例
+  noble:领主 -> aiCalled=true/replySource=ollama；noble:收成 -> aiCalled=false/knowledge_direct_fallback，
+  正是 §一 那张表的两行。
+- 行为今天仍在：AllowsAi 仍只认 known/partial（现 :141）、NpcDialogueService.cs:1125 仍提前 return、
+  :278 仍走 CompleteDirectKnowledgeTurn、ShouldCallAi 仍在（现 :301）。
+- 旁证：MaxPromptUtf8Bytes=32768（NpcDialogueConstants.cs:18）、§五 四条 AWAKE.route.* 均核过。
+=> 第十三轮那条疑似 P0 的底座是实的，不翻案。
+
+P1（1 处）：全文行号停在 de2b9a0，今天全失效（QueryService 那组整体后移约 +122）。
+这类「裁决依据」最容易被别的线照抄成引用源（同第十一轮「交接提示词被照做」）。
+修法：不改正文（那是当时那一刻的实地记录），在文首加对照格 + 时点声明。
+  对照：FindCandidates :206-223 -> :328；Models :121 -> :125；:137 AllowsAi -> :141；
+  :297 ShouldCallAi -> :301；NpcDialogueService :1125/:278/:1080/:1059/BuildDirectReply(:268) -> 没漂(末者 :272)。
+
+另记一条漏账（本轮发现并当场补上）：
+AWAKE-KNOWLEDGE-GATE-20260916.md 第十三轮就改过，但它一直未被 git 跟踪
+（3db0119 只收了 AUDIT 与四份 DECISION/SPEC，这份漏了）=> 本次首次入库。
+
+教训：判断别人对不对所依据的那份东西，自己必须先被验过。
+未打的同类靶子（都是「别处据以决策的材料」，不是参考资料）：CONFIG-20260916-*、
+FEED-20260917-*、SURVEY-20260916-重排器候选与评分。
+
+改动：
+- AUDIT-20260917-判断层续红测.md：新增 §二十一（第十七轮）；原 §二十一 出处 -> §二十二 并补靶子清单；
+  §十五「收敛判定」追注改成「已被推翻六次」并补第十七轮；§十五 没测清单里该条标已补打。
+- AWAKE-KNOWLEDGE-GATE-20260916.md：文首加「09-17 晚通读复核」格（首次入库）。
