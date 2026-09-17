@@ -43,9 +43,14 @@
 
 ## 三、门禁读数
 
+**三根门禁都跑了**（改的是产品代码 `src/WorldKnowledgeLoader.cs`，按纪律必须同批复跑）：
+
 ```
 RETRIEVAL_GATE PASS need A_hit3>=10 B_hit3>=9 ALL_hit3>=19 negative<=3 overmatch<=5
 RETRIEVAL_SUMMARY A_hit3=10/13  B_hit3=9/11  ALL_hit3=19/24   （＝v12 基线，一条不差）
+MERGE_GATE     PASS need literal A>=10 B>=9 ALL>=19 merged A>=10 losses@3=0 …
+IDENTITY_GATE  PASS need leaks=0 deniedFail=0 且非空转
+               扫描：被排除行 78（泄漏 0）；该知道行 210（真拿到 205）；点名题失败 0
 KEYWORDGUARD_VARIANT 变异检验反例=0 ｜ 真语料命中=0
 ```
 
@@ -112,7 +117,8 @@ v13 给概念词条塞了口语同义词（村子/村落）当关键词 ⇒ 主�
 | `tools/_probe_fallback_order_20260917.py` | 复算兜底排序，定位 §四② 的机理 |
 | `tools/_inventory_quarantine_20260917.py` | 事故面清点（只读） |
 | `tools/_make_corrections_removed_keywords_20260917.py` | 生成 A 项删除原值留痕 |
-| `tools/_smoke_v13f_20260917.txt` | 最终门禁读数 |
+| `tools/_smoke_v13f_20260917.txt` | 最终门禁读数（`RETRIEVAL_GATE`） |
+| `tools/_merge_gate_v13f_20260917.txt`／`_identity_gate_v13f_20260917.txt` | 另两根门禁读数 |
 | `tools/_baseline/geo1-v12-runtime.json` | v12 冻结对拍基线（sha256 `6f796dfe…`）|
 
 > 链日志 `_v13b_chain_log.txt` 里 **18:38 那一段的抬头仍写着 v13e**（脚本抬头字符串忘了跟着

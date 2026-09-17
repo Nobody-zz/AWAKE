@@ -1,0 +1,40 @@
+feat(worldbook): 聚落概念词条（村庄/城堡/城镇）+ 泛问词治理（B+A）
+
+甲方 2026-09-17：「B+A，另外把村庄、城堡、城镇对应的概念也做成词条。
+而不是让他成为不明不白的泛用关键词」
+
+A 清数据 —— 389 条聚落档各去掉一个裸类别词（村庄 272 / 城堡 67 / 城镇 49 /
+德里亚特的手写复合词 1），逐条删除原值留痕见 corrections_20260917/。
+
+B 索引侧治本 —— WorldbookKeywordIndex 新增第 ④ 条剔除规则
+WrapsGenericCategoryWord：把整个泛问词裹进去的键（如 `德里亚特·村庄`）不进索引。
+检索是双向子串，问「村庄」时 kw.IndexOf(text) >= 0 也命中 ⇒ 这类键会劫走整个泛问。
+当前全库 0 条命中（防复发的空转闸）；变异检验跑在验台里、直接调真代码：
+该剔 3/3、该留 7/7。泛问词表是**显式的编辑判断**，不是统计量——四种统计口径
+都实测否掉了（tools/_probe_b_generic_words_20260917.py）。
+
+概念词条 —— 三条新档 authoring/settlement-types-{village,castle,town}，
+来源为 bannerlord.db 官方中文串（源文件 sha256 D6E2EDDC…），分 rumor/summary/detail 三层授权。
+不写 entity_ids（概念条目无游戏锚定实体；entity.lore.* 在现行编译器下不可编译）。
+镜像落点 docs/worldbook-migration/projection/authoring-out/。
+
+上线件 —— ModuleData/Worldbook/（451 条 = 448 + 3）；三哈希已同步。
+该目录未被版本管理（历史上 "Remove legacy v1 worldbook from the public repo"），
+故本提交不含包本体，只有镜像档与文档。
+
+门禁 —— RETRIEVAL_GATE PASS：
+  A_hit3=10/13 B_hit3=9/11 ALL_hit3=19/24 negative=0/3 overmatch=2/5
+  逐用例 top3 与 v12 基线一致（除 1 条仍是 HIT、只是第 3 位换了条目）；
+  RETRIEVAL_MISS 清单与 v12 逐条相同。
+
+修回归的两处机理（各修掉一次，见报告 §四）：
+  ① 主路命中会"堵死"兜底通道 —— 概念词条的中文别名收窄为只留主词
+     （口语同义词改由语义腿与综述 term 兜底承担）。
+  ② 兜底按 2-gram 共享数排序、共享数打平后按 id 排 —— 概念词条综述措辞改掉
+     （不出现口语同义词，也不出现「的/在/个＋类别词」这类谁都能撞上的 2-gram）。
+     检查器 _probe_concept_collision_20260917.py 已挂进重编链当门禁。
+
+事故留痕 —— 我用通配移走 52 个 op 记录，触发 studio 孤儿回收：
+  43 个产物目录 + 4724 个报告目录被隔离到 compiled/quarantine/orphans/，53 个 op
+  被标 quarantined + WB-AUTHORITY-RECOVERY-409。内容未删；已清点、未批量还原；
+  v12 对拍基线已取出冻结在 tools/_baseline/。详见 corrections_20260917/。
