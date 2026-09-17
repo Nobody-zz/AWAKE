@@ -1,0 +1,39 @@
+第十四轮续红测：打自动注入的记忆 —— 零发现
+第十五轮续红测：打 AWAKE-ROADMAP「现状」节（唯一权威状态）—— 1 处 P1
+
+第十四轮：靶子 = .workbuddy/memory 的记忆（同时注入全部五条线，杠杆最高）
+- 结果：零发现。代码锚点、数字、两条否定式断言逐条核过，全对：
+  PlayerText :1059 / 调用点 :273；SettlementId :798 / :1051；WorldbookIdentityEvaluator:71；
+  状态推导 :75-120；AwakeFileStorageService:143 的 Succeeded("")；HistoryCapacity=12 +
+  每轮截 400；BuildMemorySummaryHint :723 / 调用点 :419 取末 4 条；五状态 :155-159、默认档 :104；
+  门禁常量 :42-44 / :45 / :61（SemanticArmLimit=3 ⇒ MergedOvermatchMax=8）；判据 E 常量
+  :70/:71/:91；AttachSemanticIndex 在 rag-merge :191；smoke 不挂语义臂（grep 零命中）；
+  QueryService 全部锚点；entry.Expressions 不是死字段（:445/:459/:544）；studio CLI 兜底在
+  Program.cs:212；旧代打分 SettlementId+400(:508)/HeroId+1000(:503)/CharacterId+900(:504)/
+  SceneKeywords+200(:489)/ContextModes+150(:493)。
+- 「CapturePlayerToCurrentNpc 全仓零调用」复核 ✔（src/tools/framework 只有定义，无调用点）。
+- 「SourceIds/ReportIds 一族在现行链路无下游」复核 ✔（除 WorldKnowledgeModels 自身拷贝外零消费方，
+  周报那族 SourceFactIds 是另一族）。
+- ★ 我又一次差点误判：核 SceneKeywords+200/ContextModes+150 时 grep "score +=" 零命中，
+  差点写成"记忆里这两个数没出处"；实际加进的是另一个累加器 context +=（:489/:493）。
+  与第十二轮"grep 串太严"、第十三轮"grep 串带逗号"是同一枚硬币的第三面 ⇒
+  否定式断言之前，先换至少两种串、两种口径再确认。
+
+第十五轮：靶子 = docs/AWAKE-ROADMAP.md 的「现状」节（项目定它是唯一权威状态）
+- P1：5 处 448 里 2 处是"验收指令"（五条线表·世界书格 + 四个断点·第 3 条），
+  而今天那份包是 451（09-17 18:39 v13f）。日志字段确实印 entries=
+  （WorldbookRuntime.cs:195 + " entries=" + snapshot.Entries.Count），但照 448 验收会把正确的
+  真机读数判成"读的是旧包"。严重性在于那不是分析文档：那格明写"只差真机确认"，看着就是待办。
+- 修法：两处改成"与你自己投的那份包一致（今天 = 451）"，并点明真正要判的是两个
+  —— package= 是两段 且 entries= 与包相符；另三处 448（形态工作记录）保留原数。
+- 顺手带出 P2（属角色卡线）：:99 写"76/76 五道门"，而该线按规范 v4 已扩到八道门禁
+  （技能 awake-persona-card-gates :188「八道门禁（W9 完成定义）」，:225 提到"编译门禁（第 5 道）"）
+  ⇒ 76/76 不是八道门下的读数。没改那个数（那是角色卡线的实测口径），只在时点格里点明。
+- 本节另加：## 现状 顶部加 ⏳ 时点格 —— 本节是 09-14 快照，09-17 识别线变了一整天
+  （语义臂/两条通道/判据 E）而本节零收录（grep 这几个词全零命中），给了今天该看哪四份。
+- ⚠️ 我自己在改动里引了 ":137"，插了 13 行后它自己漂了 ⇒ 当场改成节名/条名锚点。
+
+改动
+- AUDIT-20260917-判断层续红测.md 新增 §十九（第十四轮 + 第十五轮），原 §十九 出处 → §二十；
+  §十五 "没测清单"两条加补打指向；"收敛判定"追注改成"已被推翻四次"并如实列出仍未打的靶子。
+- AWAKE-ROADMAP.md：## 现状 顶部加时点格；两处验收读数改正；三处历史 448 保留。
