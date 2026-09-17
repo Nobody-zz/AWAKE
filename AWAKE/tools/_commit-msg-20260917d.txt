@@ -1,0 +1,21 @@
+framework(09-17): 本地语义链服务侧首次入库 —— RAG 语义档 + ONNX 嵌入器 + 随包原生库
+
+背景：本地语义通道（bge-small-zh-v1.5 + ONNX Runtime）此前只存在于工作区，
+HEAD 里没有这一整层 ⇒ 干净检出编不出能跑 RAG 的服务。
+
+内容：
+- src/Rag/{IRagEmbedder,OnnxSentenceEmbedder}.cs（新）：嵌入器接口 + ONNX 实现
+  （分词走官方 Microsoft.ML.Tokenizers + vocab.txt，词表由 tokenizer.json 导出）
+- src/SqliteStorageAndRagBackend.RagSemantic.cs（新）：rag_embeddings 表 / MinimumScore=0.45 /
+  按 ModelId 剪旧向量；向量按 campaign_guid/timeline_id 分行存
+- src/SqliteStorageAndRagBackend.cs、StorageBusinessApi.cs、StorageBusinessOperations.cs：语义档接线
+- MarcusAwakeStorage.csproj：新增 Microsoft.ML.Tokenizers；**原生库不装 NuGet 包**，
+  直接以 HintPath 引用 native/，并 CopyToOutputDirectory 随包分发
+- native/：onnxruntime 三件（与 tools/_probe_onnx_20260916 同一份，已实测可加载）
+- MarcusAwakeFramework/src/StorageAndRagWire.cs、MarcusAwakeRuntimeService/src/{RuntimeServiceHost,StorageBusinessFrameAdapter}.cs：
+  RAG 数据面的 IPC 接线
+
+编译：MarcusAwakeStorage、MarcusAwakeRuntimeService 均 0 警 0 错。
+
+注：本笔按「编译单元」归档，不表示由某一条线独立撰写。
+native/*.dll 是有意入库（csproj 以 HintPath 引用，不入库则新检出直接编不过），不是误收。
