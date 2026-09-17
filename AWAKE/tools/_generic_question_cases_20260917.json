@@ -1,0 +1,83 @@
+{
+  "schema": "awake.generic-question-cases.v1",
+  "createdAt": "2026-09-17",
+  "what": "「该空手时空手」的题集。这一类题的正确行为**不是命中某个条目，而是空手**（或恰好答到概念条）。",
+  "why": "现有两条判据（阴性 candidates<=3、过匹配 candidates<=8）量的都是『捞回来几条』，量不出『库里本就没这一条，却答得很自信』。09-17 甲方点名的那条（问「领主」吐出马穆鲁克）正是从这条缝漏过去的：候选数没超上限，答案却错了。",
+  "judge": "每条题按 identities 列出的身份**逐个各查一次**；判的是 WorldKnowledgeQueryResult 会不会被拼进给模型的上下文 —— 直接用真策略 WorldKnowledgeDecision.AllowsAi 算，不在这里另写一套判据（平行实现必须同源）。expect=empty：要求每个身份都不喂模型。expect=concept：要求喂了，且**排第一的条目在 allow 里**（不许把泛问落到某一条具体条目上）。",
+  "owner": "题面由内容侧填（骨架与判据由代码侧搭）。加题、改 expect，都要能一句话说清『为什么这题该空手／该答概念』。",
+  "identitiesNote": "不写 identities 的题默认只查 awake:identity:commoner。身份会改变能看到的条目，所以『某个身份才答错』的题要把那个身份写出来。",
+  "statusMeaning": {
+    "active": "计入 offenders；常量要求 offenders == 0，答了就是门禁红。",
+    "known_gap": "已确认是缺口、但内容侧还没修：**仍然测量、仍然逐条打印**，只受 KnownGapMax 约束（常量取实测值，只许降，不许升）。"
+  },
+  "cases": [
+    {
+      "query": "领主",
+      "expect": "empty",
+      "identities": [
+        "awake:identity:soldier",
+        "awake:identity:noble",
+        "awake:identity:merchant"
+      ],
+      "status": "known_gap",
+      "basis": "库里没有任何一条以「领主」为名的条目（在 packages/calradia/runtime.json 里搜「领主」零命中）⇒ 正确行为是空手。09-17 实测：这三种身份从 not_found 变成 partial，吐出来的是马穆鲁克（奴隶兵）—— 把一句诚实的『不知道』换成了一句自信的答非所问。出处 docs/AUDIT-20260917-照设计初衷核验语义链.md:93。"
+    },
+    {
+      "query": "那谁",
+      "expect": "empty",
+      "status": "active",
+      "basis": "真人口语里的指代不明：说话人自己都没给出指称对象。库里没有、也不该有对应条目。"
+    },
+    {
+      "query": "这边的人怎么样",
+      "expect": "empty",
+      "status": "known_gap",
+      "basis": "「这边的人」没有确定所指（哪个地方、哪一类人都不明）。要答就必须先知道玩家指的是谁——正是设计初衷里『谁知道』那一层该拦下来的。**09-17 由判据 E 第一次跑出来**（此前没人量过）：commoner 身份下 partial／喂模型，捞回 7 条，排第一的是 geography.castles-dinar-castle（迪纳尔堡）—— 问『人怎么样』答出一座堡。"
+    },
+    {
+      "query": "附近有什么好东西",
+      "expect": "empty",
+      "status": "known_gap",
+      "basis": "「好东西」是什么、『附近』是哪儿，两处都没有定指 ⇒ 没有唯一答案，正确行为是空手或反问。**09-17 由判据 E 第一次跑出来**：commoner 身份下 partial／喂模型，捞回 5 条，排第一的是 geography.villages-lamesa（拉迈萨）。"
+    },
+    {
+      "query": "他们都怎么说",
+      "expect": "empty",
+      "status": "active",
+      "basis": "承接上一句的追问，脱离上下文就没有指称对象。这类题专测『不靠上下文硬答』的倾向。"
+    },
+    {
+      "query": "你说的谁啊",
+      "expect": "empty",
+      "status": "active",
+      "basis": "纯指代追问，本身不含任何可检索内容。"
+    },
+    {
+      "query": "村庄",
+      "expect": "concept",
+      "allow": [
+        "awake:entry:geography.settlement-types-village"
+      ],
+      "status": "active",
+      "basis": "泛问词「村庄」09-17 已升格成概念词条（awake:entry:geography.settlement-types-village）⇒ 这题**该答**，但必须答到概念条上。若被某一条具体村庄（如『哲米扬』）顶到第一，就是把泛问当成了专名。"
+    },
+    {
+      "query": "城堡",
+      "expect": "concept",
+      "allow": [
+        "awake:entry:geography.settlement-types-castle"
+      ],
+      "status": "active",
+      "basis": "同上，概念条 awake:entry:geography.settlement-types-castle。⚠️ 本条**不**管『城堡』撞出一大片城堡条目（那是关键词层整串包含的既有性质，09-16 起就记着、本轮不动，见 worldbook-runtime-smoke/RetrievalProbeCases.cs 的 KeywordPathOvermatchProbes 注释）；只要求排第一的是概念条。"
+    },
+    {
+      "query": "城镇",
+      "expect": "concept",
+      "allow": [
+        "awake:entry:geography.settlement-types-town"
+      ],
+      "status": "active",
+      "basis": "同上，概念条 awake:entry:geography.settlement-types-town。"
+    }
+  ]
+}

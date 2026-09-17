@@ -1,0 +1,40 @@
+判据 E「该空手时空手」的变异检验（2026-09-17）
+================================================
+
+一条从不报红的判据等于没有。所以新判据必须证明它**真能红**，而不只是"今天全绿"。
+
+做法
+----
+把题集 tools/_generic_question_cases_20260917.json 里「附近有什么好东西」这一条的
+`status` 从 "known_gap" 翻成 "active"（其余一个字不动），重跑验台。
+
+预期：这条会从"已知缺口"掉进"硬答 offenders"，offenders 由 0 变 1，
+      `no_answer_clean` 变 FAIL，MERGE_GATE 变 FAIL，退出码 1。
+
+实测（dotnet run -c Release --project AWAKE/tools/worldbook-rag-merge）
+---------------------------------------------------------------------
+NOANSWER_RULER offenders=1/0 concept_offenders=0/0 known_gaps=2/3 HARD_ANSWER
+JUDGE positive_control=PASS literal_unchanged=PASS merged_improves=PASS negative_clean=PASS overmatch_bounded=PASS no_answer_clean=FAIL concept_clean=PASS known_gaps_bounded=PASS
+MERGE_GATE FAIL need **hit@3** literal A>=10 B>=9 ALL>=19 merged A>=10 ALL>(literal) losses@3=0 negative<=3 overmatch<=8 硬答<=0 概念错位<=0 已知缺口<=3
+exit=1
+
+⇒ 判据会红。红线落在 `offenders<=0` 上，与预期的机制一致（不是别的判据顺手变红带出来的）。
+
+翻回去之后的复核
+----------------
+把 `status` 还原成 "known_gap"，重跑：
+
+NOANSWER_RULER offenders=0/0 concept_offenders=0/0 known_gaps=3/3 OK
+JUDGE … no_answer_clean=PASS concept_clean=PASS known_gaps_bounded=PASS
+MERGE_GATE PASS
+exit=0
+
+（全量输出见 tools/_merge_ruler_20260917.txt；改前的基线见 tools/_merge_baseline_20260917.txt）
+
+没做的变异（记下来，免得下次误以为验过）
+----------------------------------------
+· 没验「题集文件缺失」「cases 为空」两条分支 —— 代码里它们返回 false 并计一次 failures，
+  但**没有实跑过**。（恒真的判据＝没测；同理，没跑过的分支＝没验。）
+· 没验 `expect=concept` 那条判据的红线：三条概念题当前全过，
+  没造过"概念题被具体条目顶到第一"的样本去逼它开火一次。
+  要补的话：临时把某条概念题的 allow 改成别的条目 id，看它会不会红。

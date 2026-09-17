@@ -1,0 +1,64 @@
+worldbook 检索：加一条「该空手时空手」的判据（甲方 09-17 点题第一条）
+
+为什么加
+--------
+现有两条判据（阴性 candidates<=3、过匹配 candidates<=8）量的是「捞回来几条」。
+甲方点的那条「问『领主』吐出马穆鲁克」候选数只有 1，远在阈值之内 —— 门禁全绿，
+玩家却拿到一句自信的答非所问。**把一句诚实的「我不知道」换成了自信的错答**，
+而全项目门禁里没有一条守这个。
+
+判据本体
+--------
+换尺子：量的是**这次结果会不会被送去调模型**，直接读产品里真在用的那个开关
+`WorldKnowledgeDecisionPolicy.Create(...).AllowsAi`
+（`NpcDialogueService.cs:1125` 就是照它决定调不调 AI 的），不在这里另写一套判据。
+· expect=empty   库里本就没这一条／问法没有确定所指  ⇒ 每个身份都必须空手
+· expect=concept 泛问词已升格成概念词条           ⇒ 该答，但排第一的必须是概念条
+身份逐个查，因为「只有某个身份会答错」是真事（领主就是 soldier/noble/merchant 三种中）。
+
+落点为什么在这台
+----------------
+不是 worldbook-runtime-smoke —— 那根**不挂语义臂**（`new WorldKnowledgeQueryService(snapshot)`
+之后没有 AttachSemanticIndex），而这类病出在语义臂，落那边是一条永远是绿的闸。
+本台（worldbook-rag-merge）是唯一挂了真语义臂的一台。
+
+首次读数（09-17）
+-----------------
+NOANSWER_RULER offenders=0/0 concept_offenders=0/0 known_gaps=3/3 OK
+概念三条全过；empty 组 3 条判为硬答：
+· 领主（soldier/noble/merchant）→ 马穆鲁克        ← 甲方已点过，有文档出处
+· 这边的人怎么样（commoner）    → 7 条，首位迪纳尔堡  ← 本判据第一次跑出来的新发现
+· 附近有什么好东西（commoner）  → 5 条，首位拉迈萨    ← 同上
+
+为什么不能靠调门槛救
+--------------------
+语义臂有门槛（MinimumScore = 0.45），但救不了这一档：这三句说的是这个世界的物事，
+余弦跟真问题**叠在同一段**（真问题命中 0.476~0.795；过匹配探针 0.530/0.571）。
+_semantic_floor_20260917.json 的 rows 表早量过：门槛抬到 0.60 才不漏，真题只剩 12/26。
+⇒ 能分开它们的是「有没有确定所指」，属内容侧规则，不是模型的事。
+
+常量与纪律
+----------
+NoAnswerMaxOffenders=0、ConceptMaxOffenders=0、KnownGapMax=3（**实测值，只许降不许升**）。
+缺口不会因为放宽常量而消失：每次跑都逐条打印 NOANSWER 行与实际读数。
+
+变异检验（证明它真能红）
+------------------------
+把「附近有什么好东西」的 status 由 known_gap 翻成 active ⇒
+offenders=1/0、no_answer_clean=FAIL、MERGE_GATE FAIL、exit=1；翻回去恢复全绿、exit=0。
+记录见 tools/_noanswer_ruler_mutation_20260917.txt。
+
+改前/改后两次全量读数
+---------------------
+tools/_merge_baseline_20260917.txt（改前，MERGE_GATE PASS）
+tools/_merge_ruler_20260917.txt（改后，MERGE_GATE PASS，多出 E 段）
+两份的正判据（A~D）逐字未变；hit@3 读数（字面 19/24、合并 23/24）未变。
+
+文件
+----
+M AWAKE/tools/worldbook-rag-merge/Program.cs        判据 E ＋ RunNoAnswerRuler ＋ 常量三只
+A AWAKE/tools/_generic_question_cases_20260917.json 题集骨架（题面由内容侧续填）
+A AWAKE/docs/SPEC-20260917-该空手时空手判据.md       规格：为什么这么判、落点、读数、门槛为何救不了
+A AWAKE/tools/_merge_baseline_20260917.txt           改前基线
+A AWAKE/tools/_merge_ruler_20260917.txt              改后全量读数
+A AWAKE/tools/_noanswer_ruler_mutation_20260917.txt  变异检验记录

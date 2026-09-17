@@ -60,6 +60,30 @@ internal static class Program
     private const int SemanticArmLimit = 3;      // = WorldKnowledgeQueryService.SemanticCandidateLimit
     private const int MergedOvermatchMax = 5 + SemanticArmLimit;
 
+    // ── E「该空手时空手」（2026-09-17 加，甲方点题）───────────────────────────────
+    // 上面 A~D 四条判据量的都是**候选/命中条数**，量不出「库里本就没这一条，却答得很自信」。
+    // 09-17 那条（问「领主」吐马穆鲁克）就是从这条缝漏过去的：候选数没超上限，答案错了。
+    // 这条判据换尺子：量的是**这次结果会不会被送去调模型** —— 直接读真策略
+    // `WorldKnowledgeDecisionPolicy.Create(...).AllowsAi`（`NpcDialogueService` 就是照它决定
+    // 要不要调 AI 的），不在这里另写一套判据（平行实现必须同源）。
+    // 题集：tools/_generic_question_cases_20260917.json（骨架在这，题面由内容侧填）。
+    private const int NoAnswerMaxOffenders = 0;   // expect=empty 的题：一个都不许喂模型
+    private const int ConceptMaxOffenders = 0;    // expect=concept 的题：必须喂，且排第一的是概念条
+    // 已确认缺口（题集里 status=known_gap）：**仍然测量、仍然逐条打印**，只是不当场卡红。
+    // 常量取实测值，**只许降不许升**（跟上面 GateBHit3「抬到实测值」同一条规矩）。
+    // 2026-09-17 首次跑出来是 3 条，全部记在题集 JSON 的 basis 里：
+    //   「领主」                        → commoner 之外的 soldier/noble/merchant 三种身份都答了马穆鲁克
+    //   「这边的人怎么样」              → 答了 7 条，排第一是迪纳尔堡
+    //   「附近有什么好东西」            → 答了 5 条，排第一是拉迈萨
+    // ⚠️ 这三条的根因**不是余弦门槛定低了**（门槛是 0.45，见
+    //    MarcusAwakeStorage/src/SqliteStorageAndRagBackend.RagSemantic.cs:44）：
+    //    它们说的确实是这个世界的物事（城堡／村庄／人），余弦自然够高，跟真问题**叠在同一段分数里**
+    //    ——「村民的一亩地归谁」0.530、「帝国的一座城」0.571，而真问题命中时也就 0.476~0.580。
+    //    没有空档可以放门槛：想挡住它们就得把真题一起砍（tools/_semantic_floor_20260917.json 的
+    //    rows 表已量过——门槛要抬到 0.60 才不漏，真题只剩 12/26）。
+    //    ⇒ 能不能分开，靠的不是分数，是**这句话有没有确定所指**，那是内容侧规则的事。
+    private const int KnownGapMax = 3;
+
     internal static int Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
@@ -436,6 +460,19 @@ internal static class Program
             Console.WriteLine("OVERMATCH_WORST candidates=" + overmatchWorst + " max=" + MergedOvermatchMax + " "
                 + (overmatchBounded ? "OK" : "FLOOD"));
 
+            // ── E 该空手时空手（★ 09-17 新增，见上方常量注释）────────────────────────
+            int noAnswerOffenders, conceptOffenders, knownGapHits;
+            bool rulerCasesLoaded = RunNoAnswerRuler(merged, repositoryRoot,
+                out noAnswerOffenders, out conceptOffenders, out knownGapHits);
+            if (!rulerCasesLoaded) failures++;
+            bool noAnswerClean = noAnswerOffenders <= NoAnswerMaxOffenders;
+            bool conceptClean = conceptOffenders <= ConceptMaxOffenders;
+            bool knownGapsBounded = knownGapHits <= KnownGapMax;
+            Console.WriteLine("NOANSWER_RULER offenders=" + noAnswerOffenders + "/" + NoAnswerMaxOffenders
+                + " concept_offenders=" + conceptOffenders + "/" + ConceptMaxOffenders
+                + " known_gaps=" + knownGapHits + "/" + KnownGapMax
+                + " " + (noAnswerClean && conceptClean && knownGapsBounded ? "OK" : "HARD_ANSWER"));
+
             // ── 判据汇总（★ 09-17 起全部按 **hit@3** 口径，与甲方拍板的验收线一致）────────
             bool literalUnchanged = litA3 >= GateAHit3 && litB3 >= GateBHit3 && (litA3 + litB3) >= GateAllHit3;
             bool improved = merA3 >= GateAHit3 && (merA3 + merB3) > (litA3 + litB3) && lostByMerge3 == 0;
@@ -444,12 +481,18 @@ internal static class Program
                 + " literal_unchanged=" + (literalUnchanged ? "PASS" : "FAIL")
                 + " merged_improves=" + (improved ? "PASS" : "FAIL")
                 + " negative_clean=" + (negativeClean ? "PASS" : "FAIL")
-                + " overmatch_bounded=" + (overmatchBounded ? "PASS" : "FAIL"));
-            bool gate = positiveControl && literalUnchanged && improved && negativeClean && overmatchBounded && failures == 0;
+                + " overmatch_bounded=" + (overmatchBounded ? "PASS" : "FAIL")
+                + " no_answer_clean=" + (noAnswerClean ? "PASS" : "FAIL")
+                + " concept_clean=" + (conceptClean ? "PASS" : "FAIL")
+                + " known_gaps_bounded=" + (knownGapsBounded ? "PASS" : "FAIL"));
+            bool gate = positiveControl && literalUnchanged && improved && negativeClean && overmatchBounded
+                && noAnswerClean && conceptClean && knownGapsBounded && failures == 0;
             Console.WriteLine("MERGE_GATE " + (gate ? "PASS" : "FAIL")
                 + " need **hit@3** literal A>=" + GateAHit3 + " B>=" + GateBHit3 + " ALL>=" + GateAllHit3
                 + " merged A>=" + GateAHit3 + " ALL>(literal) losses@3=0"
-                + " negative<=" + NegativeMaxCandidates + " overmatch<=" + MergedOvermatchMax);
+                + " negative<=" + NegativeMaxCandidates + " overmatch<=" + MergedOvermatchMax
+                + " 硬答<=" + NoAnswerMaxOffenders + " 概念错位<=" + ConceptMaxOffenders
+                + " 已知缺口<=" + KnownGapMax);
             return gate ? 0 : 1;
         }
         finally
@@ -460,7 +503,14 @@ internal static class Program
 
     private static List<string> RunQuery(WorldKnowledgeQueryService service, string text, string identity)
     {
-        return service.Query(new WorldbookQuery
+        return service.Query(BuildQuery(text, identity)).HitIds;
+    }
+
+    // 查询对象单点构造（09-17 抽出）：判据 E 要拿到**整个结果**（State / HitIds）去算决策，
+    // 不能只要 HitIds —— 两份各写一遍迟早走样。
+    private static WorldbookQuery BuildQuery(string text, string identity)
+    {
+        return new WorldbookQuery
         {
             IdentityId = identity,
             KnowledgeScope = "private",
@@ -470,7 +520,86 @@ internal static class Program
             RequestedDetail = "secret",
             PlayerText = text,
             MaximumBytes = 1 << 20
-        }).HitIds;
+        };
+    }
+
+    // ── 判据 E 的实现：该空手时空手（2026-09-17）──────────────────────────────────
+    //
+    // 判什么：把这句拿去查，看**这次结果会不会被送去调模型**（真策略 `WorldKnowledgeDecision.AllowsAi`）。
+    //   · expect=empty   —— 库里本就没这一条（或问法没有确定所指）⇒ 正确就是空手，喂模型即错。
+    //   · expect=concept —— 泛问词已升格成概念词条 ⇒ 该答，但**排第一的必须是概念条**；
+    //                       被某条具体条目顶到第一，就是把泛问当成了专名。
+    // 为什么身份要逐个查：同一句话，换个身份能看到的东西就不一样，「只有某个身份会答错」是真事
+    //   —— 09-17 的「领主」就是 soldier/noble/merchant 三种身份答错、别的没中。
+    // 返回 false ＝ 题集缺失或为空。一条从不执行的判据，"没报警"什么也证明不了，必须当场报红。
+    internal static bool RunNoAnswerRuler(WorldKnowledgeQueryService merged, string repositoryRoot,
+        out int offenders, out int conceptOffenders, out int knownGaps)
+    {
+        offenders = 0;
+        conceptOffenders = 0;
+        knownGaps = 0;
+
+        string casesPath = Path.Combine(repositoryRoot, "tools", "_generic_question_cases_20260917.json");
+        Console.WriteLine();
+        Console.WriteLine("── E 该空手时空手（判的是『会不会被拼给模型』，不是『捞回几条』）──");
+        if (!File.Exists(casesPath))
+        {
+            Console.WriteLine("NOANSWER_CASES_MISSING " + casesPath + "  ⇒ 没题可跑，按失败计");
+            return false;
+        }
+
+        JArray list = JObject.Parse(File.ReadAllText(casesPath))["cases"] as JArray;
+        if (list == null || list.Count == 0)
+        {
+            Console.WriteLine("NOANSWER_CASES_EMPTY ⇒ 一条题都没有，判据是空转的，按失败计");
+            return false;
+        }
+
+        foreach (JToken token in list)
+        {
+            string text = (string)token["query"];
+            string expect = ((string)token["expect"] ?? "empty").Trim();
+            bool isConcept = string.Equals(expect, "concept", StringComparison.Ordinal);
+            bool knownGap = string.Equals((string)token["status"], "known_gap", StringComparison.Ordinal);
+            List<string> allow = (token["allow"] as JArray)?.Select(x => (string)x).ToList() ?? new List<string>();
+            List<string> identities = (token["identities"] as JArray)?.Select(x => (string)x).ToList() ?? new List<string>();
+            if (identities.Count == 0) identities.Add("awake:identity:commoner");
+
+            var wrong = new List<string>();
+            var rows = new List<string>();
+            foreach (string identity in identities)
+            {
+                WorldbookQuery query = BuildQuery(text, identity);
+                WorldKnowledgeQueryResult result = merged.Query(query);
+                // 真判据：同一个策略 —— `NpcDialogueService` 就是照它决定调不调 AI 的。
+                WorldKnowledgeDecision decision = WorldKnowledgeDecisionPolicy.Create(query, result, "no-answer-ruler");
+                bool answered = decision.AllowsAi;
+                string top1 = decision.HitIds.Count > 0 ? decision.HitIds[0].Split(':').Last() : "-";
+                rows.Add("    " + identity.Split(':').Last() + "=" + decision.State
+                    + (answered ? "/喂模型" : "/空手") + " top1=" + top1 + " 条数=" + decision.HitIds.Count);
+
+                bool pass = isConcept
+                    ? answered && allow.Contains(decision.HitIds.FirstOrDefault())
+                    : !answered;
+                if (!pass) wrong.Add(identity.Split(':').Last());
+            }
+
+            string verdict = wrong.Count == 0 ? "OK"
+                : knownGap ? "KNOWN_GAP(已确认缺口，内容侧未修)"
+                : "HARD_ANSWER(错)";
+            Console.WriteLine("NOANSWER " + verdict
+                + " expect=" + expect + (knownGap ? " status=known_gap" : "")
+                + (wrong.Count == 0 ? "" : " 不对的身份[" + string.Join(",", wrong) + "]")
+                + " q=" + text);
+            foreach (string row in rows) Console.WriteLine(row);
+
+            if (wrong.Count == 0) continue;
+            if (knownGap) knownGaps++;
+            else if (isConcept) conceptOffenders++;
+            else offenders++;
+        }
+
+        return true;
     }
 
     // 与门禁验台 `RetrievalProbeCases.PickIdentity` 同源：身份取目标条目自己授权里的第一个，
