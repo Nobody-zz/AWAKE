@@ -8,7 +8,9 @@ using Newtonsoft.Json.Linq;
 
 // AWAKE 对话链路 010 —— 世界书最小 v2 试点包出包器。
 // 用与游戏完全相同的 WorldbookPackageIntegrity 计算哈希，产出 manifest.json / runtime.json / index.json，
-// 并用 WorldKnowledgeQueryService + WorldKnowledgeDecisionPolicy 断言「目标 NPC 命中条目 → AllowsAi=true」。
+// 并用 WorldKnowledgeQueryService + WorldKnowledgeDecisionPolicy 断言「目标 NPC 命中条目 → 会把知识喂给模型」。
+// 2026-09-18：断言观测点从 AllowsAi 换成 BuildPromptBlock —— 「知道」与「开口」拆开之后，
+// AllowsAi 只回答"让不让这一轮说话"，命中和没命中都是 true，区分不出正负路径。
 // 不依赖 worldbookstudio。
 
 string toolRoot = FindToolRoot();
@@ -114,7 +116,10 @@ foreach (var probe in probes)
     };
     WorldKnowledgeQueryResult result = service.Query(query);
     WorldKnowledgeDecision decision = WorldKnowledgeDecisionPolicy.Create(query, result, "pilot");
-    Require(decision.AllowsAi, "probe failed (AllowsAi=false): " + probe.Label + " state=" + decision.State + " reason=" + decision.BlockedReason);
+    // 2026-09-18：这里要验的是「命中了条目就该把知识喂给模型」，所以看知识块。
+    // 原先看的是 AllowsAi —— 它已拆成"让不让这一轮说话"，not_found 也是 true，区分不出正负路径。
+    Require(!string.IsNullOrWhiteSpace(WorldKnowledgeDecisionPolicy.BuildPromptBlock(decision)),
+        "probe failed (no knowledge block): " + probe.Label + " state=" + decision.State + " reason=" + decision.BlockedReason);
     Console.WriteLine("[OK] " + probe.Label + "  id=" + profile.ProfileId
         + "  role=" + profile.Role
         + "  state=" + decision.State
@@ -136,8 +141,13 @@ WorldbookQuery negativeQuery = new WorldbookQuery
     MaximumBytes = 4096
 };
 WorldKnowledgeDecision negativeDecision = WorldKnowledgeDecisionPolicy.Create(negativeQuery, service.Query(negativeQuery), "pilot");
-Require(!negativeDecision.AllowsAi, "negative probe should not allow AI");
-Console.WriteLine("[OK] 负路径（无关键词命中）AllowsAi=false state=" + negativeDecision.State);
+// 2026-09-18：负路径原来断言 !AllowsAi —— 那与「拆开知道与开口」直接相反，拆开后必然红。
+// 现在分开验两件事：**不喂知识**（该空手时空手），且**仍然可以开口**（这正是本次改动的行为）。
+Require(string.IsNullOrWhiteSpace(WorldKnowledgeDecisionPolicy.BuildPromptBlock(negativeDecision)),
+    "negative probe should not feed knowledge");
+Require(negativeDecision.AllowsAi,
+    "negative probe (not_found) should still be allowed to speak");
+Console.WriteLine("[OK] 负路径（无关键词命中）不喂知识 · 仍可开口 state=" + negativeDecision.State);
 Console.WriteLine();
 Console.WriteLine("PILOT-PACKAGE-OK");
 

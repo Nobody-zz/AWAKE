@@ -1113,7 +1113,10 @@ internal sealed class NpcDialogueService : IDisposable
             context?.CorrelationId);
         AwakeLog.Write("npc_dialogue_knowledge_decision hero=" + _heroId
             + " state=" + knowledgeDecision.State
-            + " ai=" + knowledgeDecision.AllowsAi
+            // 2026-09-18 拆字段：原先只有一个 ai=，把「知不知道」与「让不让说」记成了一件事。
+            // 现在 may_speak 只回答让不让说；「有没有知识喂进去」看知识块是否为空。
+            + " may_speak=" + knowledgeDecision.AllowsAi
+            + " has_knowledge=" + !string.IsNullOrWhiteSpace(WorldKnowledgeDecisionPolicy.BuildPromptBlock(knowledgeDecision))
             + " identity=" + knowledgeDecision.Identity
             + " scope=" + knowledgeDecision.Scope
             + " detail=" + knowledgeDecision.Detail
@@ -1122,6 +1125,9 @@ internal sealed class NpcDialogueService : IDisposable
             + " blocked_reason=" + knowledgeDecision.BlockedReason
             + " errors=" + string.Join(",", knowledgeDecision.Errors)
             + " correlation=" + knowledgeDecision.CorrelationId);
+        // 走到这里还 AllowsAi=false 的只剩两种情况：blocked（世界书不可用/权限/内容门，该拦）
+        // 与 referral（本版保持现状）。2026-09-18 起 not_found 不再在此短路 ——
+        // 它允许开口，只是 BuildPromptBlock 不给知识，靠模板里「这段为空意味着什么」兜。
         if (!knowledgeDecision.AllowsAi)
         {
             return new NpcKnowledgePromptBuildResult(knowledgeDecision, string.Empty);

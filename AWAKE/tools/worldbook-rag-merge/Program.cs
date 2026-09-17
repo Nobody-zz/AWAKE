@@ -63,11 +63,13 @@ internal static class Program
     // ── E「该空手时空手」（2026-09-17 加，甲方点题）───────────────────────────────
     // 上面 A~D 四条判据量的都是**候选/命中条数**，量不出「库里本就没这一条，却答得很自信」。
     // 09-17 那条（问「领主」吐马穆鲁克）就是从这条缝漏过去的：候选数没超上限，答案错了。
-    // 这条判据换尺子：量的是**这次结果会不会被送去调模型** —— 直接读真策略
-    // `WorldKnowledgeDecisionPolicy.Create(...).AllowsAi`（`NpcDialogueService` 就是照它决定
-    // 要不要调 AI 的），不在这里另写一套判据（平行实现必须同源）。
+    // 这条判据换尺子：量的是**这一轮会不会把知识喂给模型** —— 直接读真策略
+    // `WorldKnowledgeDecisionPolicy.BuildPromptBlock(...)` 是否为空（`NpcDialogueService` 就是照它
+    // 决定往提示词里塞不塞世界书事实的），不在这里另写一套判据（平行实现必须同源）。
+    // ⚠️ 2026-09-18 换的观测点：E 刚加时读的是 `Create(...).AllowsAi`；那天下午「知道」与「开口」
+    //    被拆成了两根绳子，`not_found` 也会 AllowsAi=true ⇒ 继续读它会变成恒绿的假闸。
     // 题集：tools/_generic_question_cases_20260917.json（骨架在这，题面由内容侧填）。
-    private const int NoAnswerMaxOffenders = 0;   // expect=empty 的题：一个都不许喂模型
+    private const int NoAnswerMaxOffenders = 0;   // expect=empty 的题：一个都不许喂知识
     private const int ConceptMaxOffenders = 0;    // expect=concept 的题：必须喂，且排第一的是概念条
     // 已确认缺口（题集里 status=known_gap）：**仍然测量、仍然逐条打印**，只是不当场卡红。
     // 常量取实测值，**只许降不许升**（跟上面 GateBHit3「抬到实测值」同一条规矩）。
@@ -552,10 +554,14 @@ internal static class Program
 
     // ── 判据 E 的实现：该空手时空手（2026-09-17）──────────────────────────────────
     //
-    // 判什么：把这句拿去查，看**这次结果会不会被送去调模型**（真策略 `WorldKnowledgeDecision.AllowsAi`）。
+    // 判什么：把这句拿去查，看**这一轮会不会把知识喂给模型**（观测点＝`WorldKnowledgeDecisionPolicy.BuildPromptBlock` 是否为空）。
     //   · expect=empty   —— 库里本就没这一条（或问法没有确定所指）⇒ 正确就是空手，喂模型即错。
     //   · expect=concept —— 泛问词已升格成概念词条 ⇒ 该答，但**排第一的必须是概念条**；
     //                       被某条具体条目顶到第一，就是把泛问当成了专名。
+    // ⚠️ 2026-09-18：观测点从 `AllowsAi` 换成了 `BuildPromptBlock`。拆开「知道」与「开口」之后，
+    //   `AllowsAi` 只回答"让不让这一轮说话"，`not_found` 也会是 true —— 继续拿它当判据，
+    //   这条闸会变成**恒绿（或恒红）的假闸**，看着全过、其实什么都没测。
+    //   而「知识块非空」正好等于"这一轮真的把世界书事实拼进了提示词"。
     // 为什么身份要逐个查：同一句话，换个身份能看到的东西就不一样，「只有某个身份会答错」是真事
     //   —— 09-17 的「领主」就是 soldier/noble/merchant 三种身份答错、别的没中。
     // 返回 false ＝ 题集缺失或为空。一条从不执行的判据，"没报警"什么也证明不了，必须当场报红。
@@ -598,12 +604,15 @@ internal static class Program
             {
                 WorldbookQuery query = BuildQuery(text, identity);
                 WorldKnowledgeQueryResult result = merged.Query(query);
-                // 真判据：同一个策略 —— `NpcDialogueService` 就是照它决定调不调 AI 的。
+                // 真判据：同一个策略 —— `NpcDialogueService` 就是照它决定往提示词里塞不塞知识的。
+                // 2026-09-18 换观测点：`AllowsAi` 已拆成"让不让说"，not_found 也是 true，拿它判会成假闸；
+                // 知识块非空 == 这一轮真的把世界书事实拼给了模型。
                 WorldKnowledgeDecision decision = WorldKnowledgeDecisionPolicy.Create(query, result, "no-answer-ruler");
-                bool answered = decision.AllowsAi;
+                bool answered = !string.IsNullOrWhiteSpace(WorldKnowledgeDecisionPolicy.BuildPromptBlock(decision));
                 string top1 = decision.HitIds.Count > 0 ? decision.HitIds[0].Split(':').Last() : "-";
                 rows.Add("    " + identity.Split(':').Last() + "=" + decision.State
-                    + (answered ? "/喂模型" : "/空手")
+                    + (answered ? "/喂知识" : "/空手")
+                    + " 开口=" + decision.AllowsAi
                     + " 通路=" + result.MatchMode
                     + " top1=" + top1 + " 条数=" + decision.HitIds.Count);
                 // 把**答出来的那句话**印出来。只给条目名会让人以为"是不是只搭上了一点边"，

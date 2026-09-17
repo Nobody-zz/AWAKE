@@ -1642,11 +1642,15 @@ private static void RunMessengerHistorySmoke()
 			State = WorldKnowledgeDecisionPolicy.Known
 		};
 		WorldKnowledgeDecision emptyKnown = WorldKnowledgeDecisionPolicy.Create(query, emptyKnownResult, "corr-empty");
-		if (emptyKnown.AllowsAi
+		// 2026-09-18：原断言是 !AllowsAi ——「缺什么就 fail closed 到不说话」。
+		// 拆开「知道」与「开口」之后它仍降级成 not_found，但**允许开口**；
+		// "缺什么当没有"的落点从"闭嘴"移到了"不喂知识"。两件事分开验。
+		if (!emptyKnown.AllowsAi
+			|| !string.IsNullOrWhiteSpace(WorldKnowledgeDecisionPolicy.BuildPromptBlock(emptyKnown))
 			|| emptyKnown.State != WorldKnowledgeDecisionPolicy.NotFound
 			|| emptyKnown.Errors.IndexOf("WB2-EMPTY-KNOWLEDGE-TEXT") < 0)
 		{
-			throw new InvalidOperationException("empty known result must fail closed as not_found.");
+			throw new InvalidOperationException("empty known result must fall back to not_found: no knowledge fed, but still allowed to speak.");
 		}
 
 		WorldKnowledgeDecision missing = WorldKnowledgeDecisionPolicy.Create(query, null, "corr-missing");

@@ -138,13 +138,24 @@ internal sealed class WorldKnowledgeDecision
     internal List<string> ReportIds { get; } = new List<string>();
     internal List<string> Errors { get; } = new List<string>();
 
+    /// <summary>
+    /// 这一轮要不要把玩家的话交给模型（2026-09-18 改语义）。
+    /// **旧语义是「知道才开口」**：只在 known/partial 且有正文时为 true。
+    /// **新语义是「只有故障与合规才闭嘴」**：blocked（世界书不可用／权限／内容门）拦住，
+    /// referral 本版保持现状，**not_found 放行**——它只是拿不到知识，不该因此不开口。
+    /// 依据：<c>docs/DECISION-20260916-无命中仍须正常对话.md</c>（甲方 09-17 23:40 批「可以，那就做」）
+    /// 与 <c>docs/AWAKE-KNOWLEDGE-GATE-20260916.md</c> §七。
+    /// ⚠️ 这里只管「**能不能开口**」。「**给不给知识**」是另一根绳子，在 <see cref="WorldKnowledgeDecisionPolicy.BuildPromptBlock"/> ——
+    /// 两者曾经共用这一个开关，正是那次裁决要拆开的东西。**不要再把它们合并回去。**
+    /// </summary>
     internal bool AllowsAi
     {
         get
         {
-            return (StringComparer.Ordinal.Equals(State, WorldKnowledgeDecisionPolicy.Known)
-                || StringComparer.Ordinal.Equals(State, WorldKnowledgeDecisionPolicy.Partial))
-                && !string.IsNullOrWhiteSpace(RetrievedText);
+            if (StringComparer.Ordinal.Equals(State, WorldKnowledgeDecisionPolicy.Blocked)) return false;
+            if (StringComparer.Ordinal.Equals(State, WorldKnowledgeDecisionPolicy.Referral)) return false;
+            if (StringComparer.Ordinal.Equals(State, WorldKnowledgeDecisionPolicy.NotFound)) return true;
+            return !string.IsNullOrWhiteSpace(RetrievedText);
         }
     }
 }
@@ -240,9 +251,19 @@ internal static class WorldKnowledgeDecisionPolicy
         return decision;
     }
 
+    /// <summary>
+    /// 送给模型的「知识」那一格（2026-09-18 改）。
+    /// **只管给不给知识，不管开不开口**：not_found／referral／blocked 一律返回空串，
+    /// 模型靠模板里「这一段为空意味着什么」的就地说明来理解（见 <c>src/Prompts/NpcPromptTemplate.cs</c>）。
+    /// ⚠️ **不要在这里塞一段"我不清楚"的文案**：那样 <c>NpcDialogueContextDiagnostics</c> 的
+    /// <c>dialogue_context.knowledge</c> 会一律变成 present，"这一轮到底有没有世界书事实"就没法读了。
+    /// </summary>
     internal static string BuildPromptBlock(WorldKnowledgeDecision decision)
     {
-        if (decision == null || !decision.AllowsAi) return string.Empty;
+        if (decision == null) return string.Empty;
+        if (string.IsNullOrWhiteSpace(decision.RetrievedText)) return string.Empty;
+        if (!StringComparer.Ordinal.Equals(decision.State, Known)
+            && !StringComparer.Ordinal.Equals(decision.State, Partial)) return string.Empty;
         string hits = decision.HitIds.Count == 0 ? "none" : string.Join(",", decision.HitIds);
         string source = string.IsNullOrWhiteSpace(decision.SourceVersion) ? "unknown" : decision.SourceVersion;
         return "知识状态：" + decision.State
