@@ -80,11 +80,13 @@ namespace MarcusAwakeFramework.Api
             if (request == null) return Invalid("rag.invalid_request", "A RAG search request is required.", correlationId);
             var identity = ValidateCollectionIdentity(request.CollectionId, request.CorpusFingerprint, correlationId);
             if (identity != null) return identity;
-            // The wire carries no retrieval mode and the service runs FTS5 keyword retrieval only.
-            // Rejecting here keeps a Hybrid/Semantic request from being silently answered as Keyword.
-            if (request.Mode != RetrievalMode.Keyword)
+            // Hybrid is still refused: the backend implements keyword and semantic, and answering a
+            // Hybrid request as either one would be a silent downgrade. Semantic is refused here only
+            // for wave-1 hosts that have not been rebuilt — the wire carries the mode, so the service
+            // decides whether it can serve it.
+            if (request.Mode != RetrievalMode.Keyword && request.Mode != RetrievalMode.Semantic)
             {
-                return FrameworkErrors.Create("rag.retrieval_mode_unsupported", FrameworkErrorCategory.Unsupported, "Only FTS5 keyword retrieval is available in this runtime.", correlationId);
+                return FrameworkErrors.Create("rag.retrieval_mode_unsupported", FrameworkErrorCategory.Unsupported, "Only keyword and semantic retrieval are available in this runtime.", correlationId);
             }
 
             if (string.IsNullOrEmpty(request.Query)) return Invalid("rag.query_invalid", "A RAG search request requires a query.", correlationId);
@@ -146,8 +148,30 @@ namespace MarcusAwakeFramework.Api
             builder.Append("],\"collection_id\":").Append(ProviderRuntimeWire.Quote(request.CollectionId));
             builder.Append(",\"corpus_fingerprint\":").Append(ProviderRuntimeWire.Quote(request.CorpusFingerprint));
             builder.Append(",\"maximum_results\":").Append(request.MaximumResults.ToString(CultureInfo.InvariantCulture));
+            builder.Append(",\"mode\":").Append(ProviderRuntimeWire.Quote(ModeToken(request.Mode)));
             builder.Append(",\"query\":").Append(ProviderRuntimeWire.Quote(request.Query));
             return builder.Append('}').ToString();
+        }
+
+        internal static string ModeToken(RetrievalMode mode)
+        {
+            switch (mode)
+            {
+                case RetrievalMode.Semantic: return "semantic";
+                case RetrievalMode.Hybrid: return "hybrid";
+                default: return "keyword";
+            }
+        }
+
+        internal static bool TryParseMode(string token, out RetrievalMode mode)
+        {
+            switch (token)
+            {
+                case "keyword": mode = RetrievalMode.Keyword; return true;
+                case "semantic": mode = RetrievalMode.Semantic; return true;
+                case "hybrid": mode = RetrievalMode.Hybrid; return true;
+                default: mode = RetrievalMode.Keyword; return false;
+            }
         }
 
         internal static bool TryReadIngestResult(string payload, RagIngestRequest request, out int ingested, out string error)
@@ -215,7 +239,7 @@ namespace MarcusAwakeFramework.Api
                     return false;
                 }
 
-                result.Add(new RagHit(hit.DocumentId, hit.Text, hit.SourceLocator, hit.Rank, hit.CorpusFingerprint, RetrievalMode.Keyword));
+                result.Add(new RagHit(hit.DocumentId, hit.Text, hit.SourceLocator, hit.Rank, hit.CorpusFingerprint, request.Mode));
             }
 
             hits = result.AsReadOnly();

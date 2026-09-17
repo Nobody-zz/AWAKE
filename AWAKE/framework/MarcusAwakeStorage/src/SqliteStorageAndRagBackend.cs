@@ -72,14 +72,22 @@ public sealed partial class SqliteStorageAndRagBackend : IStorageService, IRagSe
     private readonly SqliteStorageOptions options;
     private readonly string connectionString;
     private readonly SemaphoreSlim databaseGate = new SemaphoreSlim(1, 1);
+    private readonly IRagEmbedder embedder;
     private int disposed;
 
-    public SqliteStorageAndRagBackend(string databasePath, SqliteStorageOptions options = null)
+    /// <summary>
+    /// <paramref name="embedder"/> is optional on purpose. Without one this backend behaves exactly
+    /// as it always has: keyword retrieval only, and a Semantic request is refused rather than
+    /// silently downgraded. That keeps ONNX and a 90 MB model out of every host that merely needs
+    /// the storage half. When one is supplied the backend owns it and disposes it on shutdown.
+    /// </summary>
+    public SqliteStorageAndRagBackend(string databasePath, SqliteStorageOptions options = null, IRagEmbedder embedder = null)
     {
         if (string.IsNullOrWhiteSpace(databasePath)) throw new ArgumentException("A database path is required.", nameof(databasePath));
         this.databasePath = Path.GetFullPath(databasePath);
         this.options = options ?? new SqliteStorageOptions();
         this.options.Validate();
+        this.embedder = embedder;
         connectionString = new SqliteConnectionStringBuilder
         {
             DataSource = this.databasePath,
@@ -91,6 +99,10 @@ public sealed partial class SqliteStorageAndRagBackend : IStorageService, IRagSe
     }
 
     public string DatabasePath => databasePath;
+
+    /// <summary>Identity of the embedding function backing Semantic retrieval, or null when this
+    /// backend has none and only answers Keyword requests.</summary>
+    public string EmbeddingModelId => embedder == null ? null : embedder.ModelId;
 
     public Task<OperationResult<IKeyValueStore>> OpenCampaignNamespaceAsync(string namespaceId, RequestContext context, CancellationToken cancellationToken)
     {
@@ -137,7 +149,32 @@ public sealed partial class SqliteStorageAndRagBackend : IStorageService, IRagSe
                 return Task.FromResult(Failure<int>("rag.document_too_large", FrameworkErrorCategory.ResourceExhausted, "A RAG document exceeds the configured limit.", context));
             }
         }
-        return ExecuteAsync("rag", context, cancellationToken, (connection, token) => Ingest(connection, request, context, token));
+
+        // Embedding runs before the database gate is taken: it is the slow part (tens of
+        // milliseconds per passage) and holding the storage gate across it would stall every other
+        // storage caller for the whole ingest.
+        float[][] vectors = null;
+        if (embedder != null)
+        {
+            var texts = new string[request.Documents.Count];
+            for (var index = 0; index < texts.Length; index++) texts[index] = request.Documents[index].Text;
+            try
+            {
+                vectors = embedder.Encode(texts, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                // The documents are still worth storing: keyword retrieval keeps working, and the
+                // next semantic search reports the failure instead of returning an empty answer.
+                vectors = null;
+            }
+        }
+
+        return ExecuteAsync("rag", context, cancellationToken, (connection, token) => Ingest(connection, request, context, token, vectors));
     }
 
     public Task<OperationResult<IReadOnlyList<RagHit>>> SearchAsync(RagSearchRequest request, RequestContext context, CancellationToken cancellationToken)
@@ -146,9 +183,13 @@ public sealed partial class SqliteStorageAndRagBackend : IStorageService, IRagSe
         {
             return Task.FromResult(Failure<IReadOnlyList<RagHit>>("rag.invalid_request", FrameworkErrorCategory.InvalidRequest, "A RAG search request and request context are required.", context));
         }
-        if (request.Mode != RetrievalMode.Keyword)
+        if (request.Mode == RetrievalMode.Semantic && embedder == null)
         {
-            return Task.FromResult(Failure<IReadOnlyList<RagHit>>("rag.retrieval_mode_unsupported", FrameworkErrorCategory.Unsupported, "Only FTS5 keyword retrieval is available in this backend.", context));
+            return Task.FromResult(Failure<IReadOnlyList<RagHit>>("rag.retrieval_mode_unsupported", FrameworkErrorCategory.Unsupported, "Semantic retrieval is unavailable because this backend was built without an embedding model.", context));
+        }
+        if (request.Mode == RetrievalMode.Hybrid)
+        {
+            return Task.FromResult(Failure<IReadOnlyList<RagHit>>("rag.retrieval_mode_unsupported", FrameworkErrorCategory.Unsupported, "Only keyword and semantic retrieval are available in this backend.", context));
         }
         var identityValidation = ValidateSearchIdentity(request, context);
         if (identityValidation != null) return Task.FromResult(OperationResult<IReadOnlyList<RagHit>>.Failed(identityValidation));
@@ -156,7 +197,9 @@ public sealed partial class SqliteStorageAndRagBackend : IStorageService, IRagSe
         {
             return Task.FromResult(Failure<IReadOnlyList<RagHit>>("rag.query_too_large", FrameworkErrorCategory.ResourceExhausted, "The RAG query exceeds the configured limit.", context));
         }
-        return ExecuteAsync("rag", context, cancellationToken, (connection, token) => Search(connection, request, context, token));
+        return ExecuteAsync("rag", context, cancellationToken, (connection, token) => request.Mode == RetrievalMode.Semantic
+            ? SearchSemantic(connection, request, context, token)
+            : Search(connection, request, context, token));
     }
     private Task<OperationResult<IKeyValueStore>> OpenNamespaceAsync(string namespaceId, StorageScopeKind scope, RequestContext context, CancellationToken cancellationToken)
     {
@@ -248,7 +291,7 @@ public sealed partial class SqliteStorageAndRagBackend : IStorageService, IRagSe
         return OperationResult<IReadOnlyList<TimelineLedgerRecord>>.Succeeded(records.AsReadOnly());
     }
 
-    private OperationResult<int> Ingest(SqliteConnection connection, RagIngestRequest request, RequestContext context, CancellationToken cancellationToken)
+    private OperationResult<int> Ingest(SqliteConnection connection, RagIngestRequest request, RequestContext context, CancellationToken cancellationToken, float[][] vectors)
     {
         cancellationToken.ThrowIfCancellationRequested();
         using var transaction = connection.BeginTransaction();
@@ -282,6 +325,8 @@ public sealed partial class SqliteStorageAndRagBackend : IStorageService, IRagSe
             UpsertDocument(connection, transaction, request, context, document);
             RefreshFtsDocument(connection, transaction, request.CollectionId, context, document);
         }
+
+        WriteEmbeddings(connection, transaction, request, context, vectors, cancellationToken);
 
         cancellationToken.ThrowIfCancellationRequested();
         transaction.Commit();
@@ -561,6 +606,9 @@ public sealed partial class SqliteStorageAndRagBackend : IStorageService, IRagSe
         ExecuteNonQuery(connection, "CREATE TABLE IF NOT EXISTS rag_collections(owner_id TEXT NOT NULL,campaign_guid TEXT NOT NULL,timeline_id TEXT NOT NULL,collection_id TEXT NOT NULL,corpus_fingerprint TEXT NOT NULL,created_unix_ms INTEGER NOT NULL,updated_unix_ms INTEGER NOT NULL,PRIMARY KEY(owner_id,campaign_guid,timeline_id,collection_id));");
         ExecuteNonQuery(connection, "CREATE TABLE IF NOT EXISTS rag_documents(owner_id TEXT NOT NULL,campaign_guid TEXT NOT NULL,timeline_id TEXT NOT NULL,collection_id TEXT NOT NULL,document_id TEXT NOT NULL,text TEXT NOT NULL,source_locator TEXT NOT NULL,access_scope TEXT NOT NULL,source_class TEXT NOT NULL,corpus_locator TEXT NOT NULL,observed_unix_ms INTEGER NOT NULL,PRIMARY KEY(owner_id,campaign_guid,timeline_id,collection_id,document_id),FOREIGN KEY(owner_id,campaign_guid,timeline_id,collection_id) REFERENCES rag_collections(owner_id,campaign_guid,timeline_id,collection_id) ON DELETE CASCADE);");
         ExecuteNonQuery(connection, "CREATE TABLE IF NOT EXISTS business_receipts(owner_id TEXT NOT NULL,campaign_guid TEXT NOT NULL,timeline_id TEXT NOT NULL,effective_session_id TEXT NOT NULL,operation TEXT NOT NULL,idempotency_key TEXT NOT NULL,payload_sha256 TEXT NOT NULL,resource_key TEXT NOT NULL,response_schema TEXT NOT NULL,response_json TEXT NOT NULL,outcome TEXT NOT NULL,event_index INTEGER NOT NULL,created_unix_ms INTEGER NOT NULL,PRIMARY KEY(owner_id,campaign_guid,timeline_id,effective_session_id,operation,idempotency_key));");
+        // Semantic retrieval adds a table but changes no existing one, so the schema version stays
+        // put: a database written by this build still opens in a build that has no embeddings.
+        CreateSemanticSchema(connection);
         try
         {
             ExecuteNonQuery(connection, "CREATE VIRTUAL TABLE IF NOT EXISTS rag_documents_fts USING fts5(owner_id UNINDEXED,campaign_guid UNINDEXED,timeline_id UNINDEXED,collection_id UNINDEXED,document_id UNINDEXED,text,tokenize='unicode61');");
@@ -644,6 +692,10 @@ public sealed partial class SqliteStorageAndRagBackend : IStorageService, IRagSe
         await databaseGate.WaitAsync().ConfigureAwait(false);
         databaseGate.Release();
         databaseGate.Dispose();
+        // The embedder was handed over at construction and has no other owner: the ONNX session
+        // behind it holds native memory that only a dispose gives back. OnnxSentenceEmbedder guards
+        // against a double dispose, so a caller that kept its own reference stays safe.
+        try { embedder?.Dispose(); } catch { }
         GC.SuppressFinalize(this);
     }
 

@@ -35,6 +35,16 @@ internal sealed class RuntimeServiceHost
     private static readonly TimeSpan StreamReplayTtl = TimeSpan.FromMinutes(15);
     private const string BootstrapAuthDomain = "marcus-awake-runtime";
     private const string FrameAuthDomain = "marcus-awake-runtime-frame";
+    private const string ModelRootEnvironmentVariable = "MARCUS_AWAKE_MODEL_ROOT";
+    private const string EmbeddingModelNameEnvironmentVariable = "MARCUS_AWAKE_EMBEDDING_MODEL";
+    private const string DefaultEmbeddingModelName = "bge-small-zh-v1.5";
+    /// <summary>
+    /// Bump this whenever the passage text the game composes changes. It is part of the model
+    /// identity stamped on every stored vector, so a change invalidates the whole cache instead of
+    /// silently mixing vectors built from two different compositions
+    /// (see docs/FEED-20260917-怎么喂与要不要自训.md §2).
+    /// </summary>
+    private const string EmbeddingPassageRevision = "feed-D-v1";
     private const string RuntimeTestModeEnvironmentVariable = "MARCUS_AWAKE_RUNTIME_TEST_MODE";
     private const string CrashAfterCommitMessageEnvironmentVariable = "MARCUS_AWAKE_TEST_CRASH_AFTER_COMMIT_BEFORE_RESPONSE";
     private const string RuntimeTestNowEnvironmentVariable = "MARCUS_AWAKE_RUNTIME_TEST_NOW_UNIX_MS";
@@ -105,7 +115,7 @@ internal sealed class RuntimeServiceHost
         {
             descriptor = await ReadBootstrapAsync(Console.OpenStandardInput(), lifecycle.Token).ConfigureAwait(false);
             InitializeBootstrap();
-            storageBackend = new SqliteStorageAndRagBackend(ResolveStorageDatabasePath());
+            storageBackend = new SqliteStorageAndRagBackend(ResolveStorageDatabasePath(), null, CreateEmbedder());
             providerOutcomeLedger = new RuntimeProviderOutcomeLedger(ResolveProviderOutcomeLedgerPath());
             if (!providerOutcomeLedger.Load(out var ledgerLoadError))
             {
@@ -3340,6 +3350,61 @@ internal sealed class RuntimeServiceHost
     private static string ResolveProviderOutcomeLedgerPath()
     {
         return Path.ChangeExtension(ResolveStorageDatabasePath(), ".provider-ledger.json");
+    }
+
+    private static string ResolveEmbeddingModelName()
+    {
+        var name = Environment.GetEnvironmentVariable(EmbeddingModelNameEnvironmentVariable);
+        return string.IsNullOrWhiteSpace(name) ? DefaultEmbeddingModelName : name.Trim();
+    }
+
+    /// <summary>
+    /// Model directory, resolved the same way this service already resolves its data root: an
+    /// environment variable first, otherwise a directory next to the executable. The default points
+    /// at `models/&lt;name&gt;/` beside the service binary, which is exactly where the packager drops
+    /// the model, so the game side needs no configuration of its own
+    /// (docs/CONFIG-20260916 §12).
+    /// </summary>
+    private static string ResolveEmbeddingModelDirectory()
+    {
+        var root = Environment.GetEnvironmentVariable(ModelRootEnvironmentVariable);
+        if (string.IsNullOrWhiteSpace(root)) root = Path.Combine(AppContext.BaseDirectory, "models");
+        return Path.GetFullPath(Path.Combine(root, ResolveEmbeddingModelName()));
+    }
+
+    /// <summary>
+    /// Builds the semantic-retrieval encoder, or returns null to leave the backend keyword-only.
+    ///
+    /// A model that is missing or corrupt must cost the player the semantic half of retrieval and
+    /// nothing else, so nothing in here is allowed to be fatal. It must not be silent either: the
+    /// trace goes to stderr, which <see cref="RuntimeServiceLog"/> mirrors into a durable file, so
+    /// "retrieval quietly got worse" stays diagnosable (docs/CONFIG-20260916 §13).
+    ///
+    /// The session is warmed here on purpose. Building it reads the 90 MB of weights, and paying that
+    /// on the first dialogue line would be a visible stall; at startup it is ~214 ms nobody sees.
+    /// </summary>
+    private static IRagEmbedder? CreateEmbedder()
+    {
+        try
+        {
+            var directory = ResolveEmbeddingModelDirectory();
+            var embedder = new OnnxSentenceEmbedder(new OnnxEmbedderOptions
+            {
+                ModelDirectory = directory,
+                VocabularyPath = Path.Combine(directory, "vocab.txt"),
+                ModelId = ResolveEmbeddingModelName() + "|" + EmbeddingPassageRevision,
+            });
+            var dimension = embedder.Dimension;
+            Console.Error.WriteLine("rag_embedder_ready model=" + embedder.ModelId + " dimension=" + dimension + " directory=" + directory);
+            Console.Error.Flush();
+            return embedder;
+        }
+        catch (Exception exception)
+        {
+            Console.Error.WriteLine("rag_embedder_unavailable:" + exception.GetType().Name + ":" + exception.Message);
+            Console.Error.Flush();
+            return null;
+        }
     }
 
     private void InitializeProviderRuntime()

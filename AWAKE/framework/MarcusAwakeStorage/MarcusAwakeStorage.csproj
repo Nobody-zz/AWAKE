@@ -21,5 +21,17 @@
     <ProjectReference Include="..\MarcusAwakeFramework\MarcusAwakeFramework.csproj" Private="false" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.21" />
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.10" />
+    <!-- 分词：官方库只吃 vocab.txt，所以随包带的是从 tokenizer.json 导出的词表（见 docs/DESIGN-20260916 §2）。 -->
+    <PackageReference Include="Microsoft.ML.Tokenizers" Version="2.0.0" />
+  </ItemGroup>
+
+  <!-- 推理运行库：**不装 NuGet 包**，直接引用随包分发的那套（与 tools/_probe_onnx_20260916 同一份，
+       已实测可加载）。必须 Private=true，否则不写进 deps.json，运行期宿主不去探测。 -->
+  <ItemGroup>
+    <Reference Include="Microsoft.ML.OnnxRuntime">
+      <HintPath>native\Microsoft.ML.OnnxRuntime.dll</HintPath>
+    </Reference>
+    <None Include="native\onnxruntime.dll" CopyToOutputDirectory="PreserveNewest" Link="onnxruntime.dll" />
+    <None Include="native\onnxruntime_providers_shared.dll" CopyToOutputDirectory="PreserveNewest" Link="onnxruntime_providers_shared.dll" />
   </ItemGroup>
 </Project>

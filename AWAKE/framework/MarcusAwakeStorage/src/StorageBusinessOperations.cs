@@ -229,14 +229,16 @@ public sealed partial class SqliteStorageAndRagBackend
                 request.Query,
                 request.AccessScopes,
                 request.MaximumResults,
-                RetrievalMode.Keyword,
+                request.Mode,
                 context.Caller.Value,
                 context.Session.CampaignGuid,
                 context.Session.TimelineId,
                 context.Session.SessionId,
                 string.Empty,
                 Array.Empty<string>());
-            var result = Search(connection, searchRequest, context, token);
+            var result = searchRequest.Mode == RetrievalMode.Semantic
+                ? SearchSemantic(connection, searchRequest, context, token)
+                : Search(connection, searchRequest, context, token);
             if (!result.IsSuccess) return Failure<StorageBusinessResult>(result.Error.Code, result.Error.Category, result.Error.SafeFallback, context, result.Error.Retryable);
             var hits = result.Value.Select(hit => new Dictionary<string, object>
             {
@@ -439,6 +441,11 @@ public sealed partial class SqliteStorageAndRagBackend
 
     private Task<OperationResult<StorageBusinessResult>> ExecuteRagIngestAsync(StorageBusinessRequest request, RequestContext context, CancellationToken cancellationToken)
     {
+        // Embedding happens before the database gate is taken and before the receipt transaction
+        // opens: it is the slow part of an ingest, and holding either across it would stall every
+        // other storage caller. A failure is not fatal — the passages are stored regardless, so
+        // keyword retrieval keeps working and the next semantic search reports the problem.
+        var published = embedder == null ? null : TryEmbedPassages(request, cancellationToken);
         return ExecuteMutationWithReceiptAsync(request, context, cancellationToken, (connection, transaction, token) =>
         {
             token.ThrowIfCancellationRequested();
@@ -461,13 +468,16 @@ public sealed partial class SqliteStorageAndRagBackend
                 updateCollection.ExecuteNonQuery();
             }
 
+            var ingestRequest = ToRagIngestRequest(request, context);
             for (var index = 0; index < request.Documents.Count; index++)
             {
                 token.ThrowIfCancellationRequested();
                 var document = request.Documents[index];
-                UpsertDocument(connection, transaction, ToRagIngestRequest(request, context), context, document);
+                UpsertDocument(connection, transaction, ingestRequest, context, document);
                 RefreshFtsDocument(connection, transaction, request.CollectionId, context, document);
             }
+
+            WriteEmbeddings(connection, transaction, ingestRequest, context, published, token);
 
             return MutationSuccess(request, new Dictionary<string, object>
             {
@@ -476,6 +486,24 @@ public sealed partial class SqliteStorageAndRagBackend
                 ["ingested"] = request.Documents.Count
             }, 0, request.CollectionId, context);
         });
+    }
+
+    private float[][] TryEmbedPassages(StorageBusinessRequest request, CancellationToken cancellationToken)
+    {
+        var texts = new string[request.Documents.Count];
+        for (var index = 0; index < texts.Length; index++) texts[index] = request.Documents[index].Text;
+        try
+        {
+            return embedder.Encode(texts, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     private Task<OperationResult<StorageBusinessResult>> ExecuteMutationWithReceiptAsync(

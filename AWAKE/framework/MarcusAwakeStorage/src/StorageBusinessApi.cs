@@ -33,6 +33,7 @@ public sealed class StorageBusinessRequest
     public string CollectionId { get; set; } = string.Empty;
     public string CorpusFingerprint { get; set; } = string.Empty;
     public string Query { get; set; } = string.Empty;
+    public RetrievalMode Mode { get; set; } = RetrievalMode.Keyword;
     public IReadOnlyList<string> AccessScopes { get; set; } = Array.Empty<string>();
     public IReadOnlyList<RagDocument> Documents { get; set; } = Array.Empty<RagDocument>();
     public string IdempotencyKey { get; set; } = string.Empty;

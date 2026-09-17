@@ -212,21 +212,50 @@ internal static class StorageBusinessFrameAdapter
                 request.Documents = ingestDocuments;
                 return true;
             case StorageBusinessOperation.RagSearch:
-                if (!HasOnly(root, new[] { "collection_id", "corpus_fingerprint", "query", "access_scopes", "maximum_results" }, out error)) return false;
+                if (!HasOnly(root, new[] { "collection_id", "corpus_fingerprint", "query", "access_scopes", "maximum_results", "mode" }, out error)) return false;
                 if (!TryReadRequiredString(root, "collection_id", out var searchCollectionId, out error)) return false;
                 if (!TryReadRequiredString(root, "corpus_fingerprint", out var searchCorpusFingerprint, out error)) return false;
                 if (!TryReadRequiredString(root, "query", out var query, out error)) return false;
                 if (!TryReadStringArray(root, "access_scopes", out var accessScopes, out error)) return false;
                 if (!TryReadRequiredInt32(root, "maximum_results", out var maximumSearchResults, out error) || maximumSearchResults < 1 || maximumSearchResults > 64) { error = "business_read_limit_invalid"; return false; }
+                // Absent mode means an older client that only ever asked for keyword retrieval.
+                if (!TryReadOptionalString(root, "mode", out var searchModeToken, out error)) return false;
+                var searchMode = RetrievalMode.Keyword;
+                if (!string.IsNullOrEmpty(searchModeToken) && !TryParseRetrievalMode(searchModeToken, out searchMode))
+                {
+                    error = "business_retrieval_mode_invalid";
+                    return false;
+                }
+                if (searchMode == RetrievalMode.Hybrid)
+                {
+                    // The backend implements keyword and semantic; answering Hybrid as either one
+                    // would be a silent downgrade, so it stays refused here too.
+                    error = "business_retrieval_mode_unsupported";
+                    return false;
+                }
                 request.CollectionId = searchCollectionId;
                 request.CorpusFingerprint = searchCorpusFingerprint;
                 request.Query = query;
                 request.AccessScopes = accessScopes;
                 request.MaximumResults = maximumSearchResults;
+                if (!string.IsNullOrEmpty(searchModeToken)) request.Mode = searchMode;
                 return true;
             default:
                 error = "business_operation_unsupported";
                 return false;
+        }
+    }
+
+    private static bool TryParseRetrievalMode(string token, out RetrievalMode mode)
+    {
+        // Kept local: the framework's wire helper is internal to its assembly. The tokens here must
+        // stay in step with RagRuntimeWire.ModeToken — that pairing is asserted by the RAG probe.
+        switch (token)
+        {
+            case "keyword": mode = RetrievalMode.Keyword; return true;
+            case "semantic": mode = RetrievalMode.Semantic; return true;
+            case "hybrid": mode = RetrievalMode.Hybrid; return true;
+            default: mode = RetrievalMode.Keyword; return false;
         }
     }
 
