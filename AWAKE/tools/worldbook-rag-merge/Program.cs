@@ -34,11 +34,14 @@ internal static class Program
     // 门禁基线（与 `RetrievalProbeCases.cs` 里的 Gate* 同值；对不上就是字面臂被改动了）
     // ⚠️ 2026-09-17：分母 26 → 24（删掉一条题不可判的废题「哪座城堡底下管着两个村子？」，
     //    全库 67 座城堡都写「两村」无唯一答案；另有「这一带有好马吗？」标了 countInGate=false）。
-    //    **门槛值一个没动** —— 删掉的那条在两臂、合并三处都是 0，分子不动、分母缩小。
-    //    ⇒ 现在的 B 是 7/11、合计 16/24，**别拿 7/13 / 9/26 跟它比**。
-    private const int GateAHit1 = 9;
-    private const int GateBHit1 = 7;
-    private const int GateAllHit1 = 16;
+    // ★★ 2026-09-17 口径改了：**从「排第 1」改成「进前 3」**（甲方拍板「可以」）。
+    //    缘由：下游是把**前几条一起**拼给模型的，卡第 1 名会把"其实找得到"的判成找不到。
+    //    实测（24 条，hit@3）：字面 A 10/13、B 9/11、合计 19/24；合并 A 13/13、合计 23/24。
+    //    ⇒ 下面三个常量是**字面臂**的 hit@3 门槛；合并臂另有两条判据（见 `improved`）。
+    //    ⚠️ 改这些数＝改验收标准，必须同时改文档（显式决策）。
+    private const int GateAHit3 = 10;
+    private const int GateBHit3 = 9;
+    private const int GateAllHit3 = 19;
     private const int NegativeMaxCandidates = 3;
 
     // 与 `RetrievalProbeCases.cs` **逐字一致**（改一处要两处都改）
@@ -149,6 +152,10 @@ internal static class Program
             // hit@3 / hit@5（09-17 深夜加）：下游是把**前几条一起**拼给模型的（`MaximumRetrievedBlockBytes`），
             // 不是只取第 1 条 ⇒ **hit@1 会夸大问题**，必须同时看"进没进前几条"。
             int lit3 = 0, sem3 = 0, mer3 = 0, lit5 = 0, sem5 = 0, mer5 = 0;
+            // 分组 hit@3（09-17 加）：甲方 09-17 拍板把验收口径从「排第 1」改成「进前 3」，
+            // 所以**门禁要按分组看 hit@3**，不能只看合计。
+            int litA3 = 0, litB3 = 0, semA3 = 0, semB3 = 0, merA3 = 0, merB3 = 0;
+            int lostByMerge3 = 0;
             // 对照用（**不是上线规则**）：把两条臂的输出按「谁优先」简单串起来，看这两个极端各值几条。
             // 上线的是 WorldKnowledgeRankFusion（对称 RRF）。这两行只是给决策留数，别当成实现。
             int semanticFirstHit1 = 0, literalFirstHit1 = 0, semanticFirstLost = 0, literalFirstGained = 0;
@@ -202,6 +209,16 @@ internal static class Program
                     total++;
                     if (group == "A") { nA++; litA += litH1 ? 1 : 0; semA += semH1 ? 1 : 0; merA += merH1 ? 1 : 0; }
                     else { nB++; litB += litH1 ? 1 : 0; semB += semH1 ? 1 : 0; merB += merH1 ? 1 : 0; }
+                    if (group == "A")
+                    {
+                        litA3 += litH3 ? 1 : 0; semA3 += semH3 ? 1 : 0; merA3 += merH3 ? 1 : 0;
+                    }
+                    else
+                    {
+                        litB3 += litH3 ? 1 : 0; semB3 += semH3 ? 1 : 0; merB3 += merH3 ? 1 : 0;
+                    }
+                    // 合并**在 hit@3 口径下**有没有把字面能拿的挤掉（门禁要的正是这一口径）。
+                    if (!merH3 && litH3) lostByMerge3++;
                     oracle += (litH1 || semH1) ? 1 : 0;
                     if (merH1 && !litH1) { grew++; gainedByMerge.Add(text); }
                     if (!merH1 && litH1) lostByMerge.Add(text);
@@ -271,6 +288,20 @@ internal static class Program
                 "  语义臂        {0,5}   {1,5}   {2,5}", semA + semB, sem3, sem5));
             Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
                 "  ★ 合并（上线）{0,5}   {1,5}   {2,5}", merA + merB, mer3, mer5));
+            Console.WriteLine();
+            Console.WriteLine("── ★ 验收口径（甲方 09-17 拍板）：**进前 3 就算过**；下面这行才是门禁看的那一行 ──");
+            Console.WriteLine("                  hit@3 A组   hit@3 B组   hit@3 合计");
+            Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+                "  字面臂        {0,5}/{1,-4} {2,5}/{3,-4} {4,5}/{5,-4}", litA3, nA, litB3, nB, litA3 + litB3, total));
+            Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+                "  语义臂        {0,5}/{1,-4} {2,5}/{3,-4} {4,5}/{5,-4}", semA3, nA, semB3, nB, semA3 + semB3, total));
+            Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+                "  ★ 合并（上线）{0,5}/{1,-4} {2,5}/{3,-4} {4,5}/{5,-4}", merA3, nA, merB3, nB, merA3 + merB3, total));
+            Console.WriteLine("  （hit@1 同口径供对照：字面 " + (litA + litB) + "/" + total
+                + "、语义 " + (semA + semB) + "/" + total + "、合并 " + (merA + merB) + "/" + total
+                + " —— **不再是门禁口径**，只留作退化预警）");
+            Console.WriteLine("  合并 vs 字面 @hit@3：涨 " + ((merA3 + merB3) - (litA3 + litB3)) + " 条，跌 " + lostByMerge3 + " 条"
+                + "（@hit@1 口径：涨 " + gainedByMerge.Count + " 跌 " + lostByMerge.Count + "）");
 
             Console.WriteLine();
             Console.WriteLine("── 对照：两个极端规则各值多少（**都不是上线规则**）──────────────");
@@ -405,9 +436,9 @@ internal static class Program
             Console.WriteLine("OVERMATCH_WORST candidates=" + overmatchWorst + " max=" + MergedOvermatchMax + " "
                 + (overmatchBounded ? "OK" : "FLOOD"));
 
-            // ── 判据汇总 ─────────────────────────────────────────────────────────
-            bool literalUnchanged = litA >= GateAHit1 && litB >= GateBHit1 && (litA + litB) >= GateAllHit1;
-            bool improved = merA >= GateAHit1 && (merA + merB) > (litA + litB) && lostByMerge.Count == 0;
+            // ── 判据汇总（★ 09-17 起全部按 **hit@3** 口径，与甲方拍板的验收线一致）────────
+            bool literalUnchanged = litA3 >= GateAHit3 && litB3 >= GateBHit3 && (litA3 + litB3) >= GateAllHit3;
+            bool improved = merA3 >= GateAHit3 && (merA3 + merB3) > (litA3 + litB3) && lostByMerge3 == 0;
             Console.WriteLine();
             Console.WriteLine("JUDGE positive_control=" + (positiveControl ? "PASS" : "FAIL")
                 + " literal_unchanged=" + (literalUnchanged ? "PASS" : "FAIL")
@@ -416,8 +447,8 @@ internal static class Program
                 + " overmatch_bounded=" + (overmatchBounded ? "PASS" : "FAIL"));
             bool gate = positiveControl && literalUnchanged && improved && negativeClean && overmatchBounded && failures == 0;
             Console.WriteLine("MERGE_GATE " + (gate ? "PASS" : "FAIL")
-                + " need literal A>=" + GateAHit1 + " B>=" + GateBHit1 + " ALL>=" + GateAllHit1
-                + " merged A>=" + GateAHit1 + " ALL>" + GateAllHit1 + " losses=0"
+                + " need **hit@3** literal A>=" + GateAHit3 + " B>=" + GateBHit3 + " ALL>=" + GateAllHit3
+                + " merged A>=" + GateAHit3 + " ALL>(literal) losses@3=0"
                 + " negative<=" + NegativeMaxCandidates + " overmatch<=" + MergedOvermatchMax);
             return gate ? 0 : 1;
         }

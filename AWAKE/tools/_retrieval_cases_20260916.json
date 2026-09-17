@@ -41,13 +41,30 @@
   "targetAfterFix": { "B_hit1": ">=7/13", "ALL_hit1": ">=16/26", "note": "2026-09-16 上线实测（C# 验台 tools/worldbook-runtime-smoke）：A 9/13（不动）、B 0→7/13、合计 9→16/26；B_hit3 0→9/13、合计 hit3 10→19/26。原目标只写 B>=5、合计>=13（对齐 Python 的探索臂），实际超过；门禁已按实现值抬到 7/16。" },
 
   "rulings": {
-    "2026-09-17": "甲方三条裁定（原话）：「废题别留着。不让进本来就不应该成提示词，好马被多个词条占据也是正常现象」。落点：① 废题删掉、不留档；② 撤回上一轮「给词条补题面词把题喂中」的修法（不为「不让进」补 keywords）；③ 多个词条共有某个意思（好马）是正常现象，不硬定赢家。⇒ 一句话：**不拿自造题集去改语料**。"
+    "2026-09-17": "甲方三条裁定（原话）：「废题别留着。不让进本来就不应该成提示词，好马被多个词条占据也是正常现象」。落点：① 废题删掉、不留档；② 撤回上一轮「给词条补题面词把题喂中」的修法（不为「不让进」补 keywords）；③ 多个词条共有某个意思（好马）是正常现象，不硬定赢家。⇒ 一句话：**不拿自造题集去改语料**。",
+    "2026-09-17b": "甲方拍板「可以」⇒ **验收口径从「排第 1」改成「进前 3」**。缘由：下游不是只取第 1 条，而是把**前几条一起**拼给模型（`MaximumRetrievedBlockBytes`），卡第 1 名会把『其实找得到』判成找不到 —— hit@1 会夸大问题。⇒ **门禁改看 hit@3**；hit@1 仍打印，只当退化预警。"
+  },
+  "acceptance20260917": {
+    "metric": "hit@3",
+    "denominator": "24（A 13 / B 11；另 1 条 countInGate=false 只观察）",
+    "literal": { "A": "10/13", "B": "9/11", "ALL": "19/24" },
+    "semantic": { "A": "12/13", "B": "10/11", "ALL": "22/24" },
+    "merged": { "A": "13/13", "B": "10/11", "ALL": "23/24" },
+    "mergedVsLiteral": "涨 4 条、跌 0 条（hit@1 同口径：涨 3 跌 0）",
+    "hit1ForReference": { "literal": "16/24", "semantic": "20/24", "merged": "19/24" },
+    "gateConstants": "字面臂 GateAHit3=10 / GateBHit3=9 / GateAllHit3=19（两处验台同值：worldbook-runtime-smoke 与 worldbook-rag-merge）",
+    "note": "两处验台的门禁常量都已按实测值抬到 hit@3 口径；**变异检验两向都跑过**（把常量抬高 ⇒ 两处都转红，恢复 ⇒ 都回绿）。"
   },
   "changes": [
     { "date": "2026-09-17",
       "what": "删掉 B 组 `哪座城堡底下管着两个村子？`（target = castles-simira-castle）。",
       "why": "全库 67 座城堡都写「两村」（`下辖` 67 条 / `辖着` 64 条）⇒ **无唯一答案**，答哪座都不算错，题不可判。",
       "effect": "计入门禁的题 26 → 24 条（A 13 / B 11）。⚠️ 09-16 写下的基线（`baselineLexical` 的 9/13/0/13/9/26、`targetAfterFix` 的 7/13/16/26）**都是按当时的 26 条**，分母已变，**不可与新数字直接比**。",
-      "gate": "同一笔改动里改了门禁常量：`GateBHit1` 仍 7、`GateAllHit1` 仍 16（删掉的这条在两臂、合并三处**都是 0**，分子不动、分母缩小）。" }
+      "gate": "同一笔改动里改了门禁常量：`GateBHit1` 仍 7、`GateAllHit1` 仍 16（删掉的这条在两臂、合并三处**都是 0**，分子不动、分母缩小）。" },
+    { "date": "2026-09-17",
+      "what": "**验收口径从 hit@1 改为 hit@3**（甲方拍板「可以」）。",
+      "why": "下游把前几条一起拼给模型，不是只取第 1 条。",
+      "effect": "两处验台（`worldbook-runtime-smoke` 的 `RetrievalProbeCases.cs`、`worldbook-rag-merge` 的 `Program.cs`）门禁常量改成 `GateAHit3=10 / GateBHit3=9 / GateAllHit3=19`；hit@1 仍打印但不再是门禁。合并臂的 `literal_unchanged` / `merged_improves` 两条判据也一并改到 hit@3（含 `losses@3=0`）。",
+      "evidence": "`tools/_smoke_run_20260917_hit3.txt`、`tools/_rag_merge_hit3_20260917.txt`；变异检验 `tools/_mutation_smoke_20260917.txt`（A>=11 ⇒ FAIL）、`tools/_mutation_merge_20260917.txt`（ALL>=100 ⇒ literal_unchanged=FAIL）。" }
   ]
 }

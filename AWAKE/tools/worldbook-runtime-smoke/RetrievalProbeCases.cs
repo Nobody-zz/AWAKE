@@ -39,11 +39,17 @@ internal static class RetrievalProbeCases
     //     无唯一答案）—— 甲方裁定「废题别留着」；
     //   · `这一带有好马吗？` 标了 `countInGate=false`（多个村都产好马，把拉迈萨定成唯一目标是任意的，
     //     单目标命中率判不出通道好坏）—— 它**仍跑、仍打印**，只是不进分子分母。
-    //   ⇒ 门槛值（9 / 7 / 16）**一个没动**：删掉的那条在两臂都是 0，分子不动、分母缩小。
-    //     所以现在的 B 是「7/11」、合计「16/24」；**别拿 7/13 或 9/26 跟它比**。
-    private const int GateAHit1 = 9;
-    private const int GateBHit1 = 7;
-    private const int GateAllHit1 = 16;
+    //   ⇒ 现在的 B 是「/11」、合计「/24」；**别拿 /13、/26 跟它比**。
+    //
+    // ★★ 2026-09-17 验收口径改了：**从「排第 1」改成「进前 3」**（甲方拍板：「可以」）。
+    //   缘由：下游不是只取第 1 条，而是把**前几条一起**拼给模型（见 `MaximumRetrievedBlockBytes`），
+    //   所以卡第 1 名会把"其实找得到"的判成找不到 —— hit@1 会**夸大问题**。
+    //   实测（24 条）：hit@1 字面 16/24；**hit@3 字面 19/24**（A 10/13、B 9/11）。
+    //   ⇒ 门禁看下面这三个 **hit@3** 常量；hit@1 仍打印，但**只当退化预警**，不再是门禁口径。
+    //   ⚠️ 改这三个数＝改验收标准，必须同时改文档（这是一次**显式决策**，跟之前"抬到实测值"同一规矩）。
+    private const int GateAHit3 = 10;
+    private const int GateBHit3 = 9;
+    private const int GateAllHit3 = 19;
 
     // ── 三条对照（2026-09-16 加；每条都必须是「能判」的，否则就是摆设）────────────────────
     // ① 阴性对照：「无关话」应与世界书零交集。
@@ -184,12 +190,15 @@ internal static class RetrievalProbeCases
             + " ALL_hit1=" + allHit1 + "/" + total
             + " ALL_hit3=" + allHit3 + "/" + total
             + " observed_only=" + observed + "（不进分子分母，见题集 JSON 的 countInGate）");
+        Console.WriteLine("RETRIEVAL_ACCEPTANCE hit@3（**门禁口径**，甲方 09-17 拍板：进前 3 就算过）"
+            + " A=" + aHit3 + "/" + nA + " B=" + bHit3 + "/" + nB + " ALL=" + allHit3 + "/" + total
+            + " ｜ hit@1 供对照（**不再是门禁**）：" + allHit1 + "/" + total);
 
         foreach (string failure in failures) Console.WriteLine("RETRIEVAL_MISS " + failure);
 
-        bool gate = aHit1 >= GateAHit1 && bHit1 >= GateBHit1 && allHit1 >= GateAllHit1 && negativeClean && fallbackBounded;
+        bool gate = aHit3 >= GateAHit3 && bHit3 >= GateBHit3 && allHit3 >= GateAllHit3 && negativeClean && fallbackBounded;
         Console.WriteLine("RETRIEVAL_GATE " + (gate ? "PASS" : "FAIL")
-            + " need A_hit1>=" + GateAHit1 + " B_hit1>=" + GateBHit1 + " ALL_hit1>=" + GateAllHit1
+            + " need A_hit3>=" + GateAHit3 + " B_hit3>=" + GateBHit3 + " ALL_hit3>=" + GateAllHit3
             + " negative<=" + NegativeMaxCandidates + " overmatch<=" + ExpectedFallbackMaxCandidates);
 
         // 量数模式：只看数、不当门禁（做变异检验/取基线时用）。
