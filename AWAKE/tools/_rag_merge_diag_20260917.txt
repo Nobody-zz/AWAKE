@@ -1,0 +1,102 @@
+包 = awake:worldbook.calradia@1.0.0，条目 448 条
+模型目录 = D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AnimusForge\ONNX
+词表     = D:\AWAKE-Dev\AWAKE\tools\_af_tokenizer_20260916\vocab.txt
+
+[A] 维度 512，不同向量 5/5，自比 1.000000  => PASS
+[入库] 拼法 feed-D-v1，示例：沙拉斯湾·三种来历。沙拉斯湾·三种来历、沙拉斯湾、帝国摇篮、卡拉德登陆。帝国“摇篮”史称、先祖登陆传说（未经确证）与船人…
+[入库] 语料指纹 = awake:worldbook.calradia@1.0.0#feed-D-v1
+[入库] OK，写入 448 条，用时 7572 ms
+
+──────────────────────────────────────────────────────────────────────────────
+组  问法                            目标                                  字面  语义  合并  上限  池  涨
+A   拉迈萨那地方养什么？                     geography.villages-lamesa                1      1      1      1      4          
+A   西米拉堡是谁的城堡？                     geography.castles-simira-castle          1      1      1      1      68         
+A   乔诺巴斯在哪儿？                       geography.villages-chornobas             1      1      1      1      3          
+A   富勒格是谁？                         culture.tales-husn-fulq                  1      1      1      1      3          
+A   卡恰尔半岛归谁？                       culture.tales-kachar-rulership           1      1      1      1      4          
+A   萨涅俄帕是什么地方？                     politics.throne-saneopa                  0      0      0      0      4          
+A   斯特吉亚的军队怎么打仗？                   war.military-sturgia                     0      1      0      1      6          
+A   库赛特靠什么打仗？                      war.military-khuzait                     0      1      0      1      7          
+A   皇家侍卫是什么兵？                      war.troops-royal-guard                   1      1      1      1      3          
+A   毛皮值钱吗？                         economy.goods-fur                        1      1      1      1      3          
+A   盐是从哪儿来的？                       economy.goods-salt                       1      1      1      1      3          
+A   侧护覆板盔谁在用？                      economy.items-western_plated_helmet      1      1      1      1      3          
+A   瓦尔切格怎么会换主人？                    politics.territories-varcheg-swap        0      1      0      1      6          
+B   这一带有好马吗？                       geography.villages-lamesa                0      0      0      0      8          
+B   有大瀑布的村子是哪个？                    geography.villages-chornobas             0      1      1      1      5      +   
+B   集市上说书人讲的那个鬼点子是谁的？              culture.tales-husn-fulq                  1      1      1      1      5          
+B   有个半岛被三家抢过，谁说了算？                culture.tales-kachar-rulership           1      1      1      1      7          
+B   山里有不让进的地方吗？                    culture.tales-dawn-taboo                 0      0      0      0      7          
+B   隘口上那个商埠，哪个家族在那儿定过都？            politics.throne-saneopa                  0      1      1      1      6      +   
+B   什么人拿大圆盾扔飞斧？                    war.troops-royal-guard                   1      0      1      1      4          
+B   游牧的人怎么用骑马射手打仗？                 war.military-khuzait                     1      0      1      1      7          
+B   盾墙加飞斧是哪个国家的打法？                 war.military-sturgia                     1      1      1      1      5          
+B   北方有什么又暖又贵的皮货？                  economy.goods-fur                        1      1      1      1      4          
+B   桌上少不了、产地又集中的日用品是什么？            economy.goods-salt                       1      1      1      1      6          
+B   哪种头盔护到腮帮子和耳朵？                  economy.items-western_plated_helmet      0      1      1      1      3      +   
+
+字面臂（未挂语义）  A_hit1=9/13  B_hit1=7/11  合计=16/24
+语义臂（单独）      A_hit1=12/13  B_hit1=8/11  合计=20/24
+合并后（真融合）    A_hit1=9/13  B_hit1=10/11  合计=19/24
+上限（任一臂即算）  合计=22/24  ← 两条臂能力的上界，融合只能无限接近、不能超过
+
+⚠️ 分母是 24 条，不是 26 条（09-17 删掉一条题不可判的废题；另有 1 条标了不计入门禁）
+  B 这一带有好马吗？（目标 geography.villages-lamesa） ⇒ 字面0 语义0 合并0（三臂都拿不到第 1；这条不计入门禁，原因见题集 JSON 的 note）
+
+── 换一个口径：进没进「前 3 / 前 5」（下游是把前几条一起拼给模型的，不是只取第 1 条）──
+                 hit@1   hit@3   hit@5
+  字面臂           16      19      20
+  语义臂           20      22      23
+  ★ 合并（上线）   19      23      23
+
+── 对照：两个极端规则各值多少（**都不是上线规则**）──────────────
+字面优先（字面原序 + 语义补尾）        合计=17/24，较字面涨 1 跌 0
+语义优先（语义原序 + 字面补尾）        合计=20/24，较字面涨 6 跌 2（跌的就是那几条：什么人拿大圆盾扔飞斧？ / 游牧的人怎么用骑马射手打仗？）
+★ 上线：对称 RRF（k=60）          合计=19/24，较字面涨 3 跌 0
+
+只有语义能拿的 6 条：斯特吉亚的军队怎么打仗？ / 库赛特靠什么打仗？ / 瓦尔切格怎么会换主人？ / 有大瀑布的村子是哪个？ / 隘口上那个商埠，哪个家族在那儿定过都？ / 哪种头盔护到腮帮子和耳朵？
+只有字面能拿的 2 条：什么人拿大圆盾扔飞斧？ / 游牧的人怎么用骑马射手打仗？
+合并仍拿不到的 1 条：山里有不让进的地方吗？
+合并比字面多拿 3 条：有大瀑布的村子是哪个？ / 隘口上那个商埠，哪个家族在那儿定过都？ / 哪种头盔护到腮帮子和耳朵？
+合并比字面少拿 0 条：（无）
+
+── 诊断：语义臂能排第 1、合并后被挤掉的（3 条） —— 看挤上来的是同主题兄弟条目还是不相干条目
+  A 斯特吉亚的军队怎么打仗？ ⇒ 合并#1=重型圆盾(economy.items-heavy_round_shield)；字面#1=格纳特·纳尔(geography.villages-geunat-nal)；目标=斯特吉亚军事力量(war.military-sturgia)
+      字面前 8：格纳特·纳尔(geography.villages-geunat-nal) / 潘德拉克(geography.villages-pendraic) / 卡恰尔半岛·归谁所有(culture.tales-kachar-rulership) / 重型圆盾(economy.items-heavy_round_shield) / 闭面军阀盔(economy.items-sturgian_helmet_closed)
+      语义前 8：斯特吉亚军事力量(war.military-sturgia) / 重型圆盾(economy.items-heavy_round_shield) / 库赛特军事力量(war.military-khuzait) / 闭面军阀盔(economy.items-sturgian_helmet_closed) / 阿加尔蒙(geography.villages-agalmon) / 厄庇克洛忒亚(geography.towns-epicrotea) / 塔科尔堡(geography.castles-takor-castle) / 安普雷拉(geography.towns-amprela)
+  A 库赛特靠什么打仗？ ⇒ 合并#1=草原战弓(economy.items-steppe_war_bow)；字面#1=草原战弓(economy.items-steppe_war_bow)；目标=库赛特军事力量(war.military-khuzait)
+      字面前 8：草原战弓(economy.items-steppe_war_bow) / 阿契赛尔堡(geography.castles-akiser-castle) / 迪纳尔堡(geography.castles-dinar-castle) / 埃泽努尔堡(geography.castles-erzenur-castle) / 哈坤堡(geography.castles-hakkun-castle)
+      语义前 8：库赛特军事力量(war.military-khuzait) / 俄德律萨(geography.villages-odrysa) / 草原战弓(economy.items-steppe_war_bow) / 乌赛克堡(geography.castles-usek-castle) / 席隆尼亚(geography.towns-syronea) / 乌赛克(geography.villages-usek) / 德夫赛格高原(geography.plateaus-devseg) / 阿契赛尔堡(geography.castles-akiser-castle)
+  A 瓦尔切格怎么会换主人？ ⇒ 合并#1=瓦尔切格(geography.towns-varcheg)；字面#1=瓦尔切格(geography.towns-varcheg)；目标=瓦尔切格·三易其手与镇名(politics.territories-varcheg-swap)
+      字面前 8：瓦尔切格(geography.towns-varcheg) / 卡恰尔半岛·归谁所有(culture.tales-kachar-rulership) / 卡恰尔半岛·地要与用兵(geography.peninsulas-kachar) / 卡恰尔半岛·归属沿革(politics.territories-kachar-ownership) / 瓦尔切格·三易其手与镇名(politics.territories-varcheg-swap)
+      语义前 8：瓦尔切格·三易其手与镇名(politics.territories-varcheg-swap) / 瓦尔切格(geography.towns-varcheg) / 瓦尔诺瓦波尔(geography.towns-varnovapol) / 卡格雷夫(geography.villages-kargrev)
+
+── 诊断：合并也拿不到的那几条，两条臂各自排到哪儿了（1 条）
+  山里有不让进的地方吗？ ⇒ 语义前 8：巴格(geography.villages-baq) / 厄里特律斯山(geography.mountains-erithrys) / 格烈登(geography.villages-gereden) / 伊勒坦山(geography.mountains-iltan) / 银矿石(economy.goods-silver) / 安杜恩(geography.villages-andurn) / 德律亚山(geography.mountains-dryatic) / 乌伦占(geography.villages-urunjan) ｜ 字面前 8：维戎堡(geography.castles-veron-castle) / 哈穆沙瓦(geography.villages-hamoshawat) / 雷姆托伊尔(geography.villages-rhemtoil) / 塔耳库提斯(geography.villages-tarcutis) / 银矿石(economy.goods-silver) ｜ 目标=黎明山脉·禁忌与传说(culture.tales-dawn-taboo)
+
+── 诊断：问句改写探针（看语义臂前 5 名怎么变）
+  [好马·原句] 这一带有好马吗？ ⇒ 旅行马(economy.items-saddle_horse) / 喀拉卡拉特(geography.villages-karakalat) / 马赫卢勒(geography.villages-mahloul) / 巴里哈勒(geography.villages-barihal) / 骡子(economy.items-mule)
+  [好马·去实体词] 听说这里出产最好的马？ ⇒ 旅行马(economy.items-saddle_horse) / 加隆托(geography.villages-garontor) / 巴里哈勒(geography.villages-barihal) / 萨万特(geography.villages-savinth) / 拉迈萨(geography.villages-lamesa)
+  [好马·换语料词] 这一带放养着阿塞莱最好的马匹吗？ ⇒ 拉迈萨(geography.villages-lamesa) / 胡加(geography.villages-hoqqa) / 兰萨木(geography.villages-ransam) / 巴里哈勒(geography.villages-barihal) / 加隆托(geography.villages-garontor)
+  [禁地·原句] 山里有不让进的地方吗？ ⇒ 巴格(geography.villages-baq) / 厄里特律斯山(geography.mountains-erithrys) / 格烈登(geography.villages-gereden) / 伊勒坦山(geography.mountains-iltan) / 银矿石(economy.goods-silver)
+  [禁地·去实体词] 有不让进的地方吗？ ⇒ （无）
+  [禁地·换语料词] 有被当作禁地的地方吗？ ⇒ 奥斯蒂港(geography.towns-ostican) / 黎明山脉·禁忌与传说(culture.tales-dawn-taboo) / 蒂尔比堡(geography.castles-tirby-castle) / 克拉尼罗格堡(geography.castles-kranirog-castle) / 约格律斯堡(geography.castles-jogurys-castle)
+
+  全库分类：域 5 个（geography 408 / economy 21 / politics 7 / culture 6 / war 6），类型 21 个
+  分类当筛选器（24 条，语义臂前 20 为池）：
+    ★ 目标『在语义前 20 里』     ⇒ 23/24  ← **任何「重排／筛选」做法的天花板**（不在池里，重排也救不回来）
+    oracle 限定到目标的『域』     ⇒ 命中 23/24（域内前 3：23/24）
+    oracle 限定到目标的『类型』   ⇒ 命中 23/24
+    自动选域（不许偷看答案）      ⇒ 命中 13/24
+    ⚠️ 目标连前 20 都没进的（重排救不了，只能靠换说法／换编码）：山里有不让进的地方吗？
+
+阴性 候选=0 语义臂=0 q=今天午饭吃什么
+阴性 候选=0 语义臂=0 q=帮我写一段排序代码
+阴性 候选=0 语义臂=0 q=火车时刻表在哪儿查
+NEGATIVE_WORST candidates=0 max=3 OK
+笼统 候选=4 语义臂=3 q=村民的一亩地归谁
+笼统 候选=7 语义臂=3 q=帝国的一座城
+OVERMATCH_WORST candidates=7 max=8 OK
+
+JUDGE positive_control=PASS literal_unchanged=PASS merged_improves=PASS negative_clean=PASS overmatch_bounded=PASS
+MERGE_GATE PASS need literal A>=9 B>=7 ALL>=16 merged A>=9 ALL>16 losses=0 negative<=3 overmatch<=8

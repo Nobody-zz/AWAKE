@@ -33,6 +33,14 @@ internal static class RetrievalProbeCases
     //   **不是当初的愿望值**（当初只写「B≥5、合计≥13」）。故意抬到实现值：以后任何改动若把它们
     //   悄悄拉低，门禁要红。想拉低必须同时改这里 + 文档，等于强制一次显式决策。
     //   （B_hit3 实测 9/13、A_hit3 10/13、合计 hit3 19/26 —— 未入门禁，仅备查。）
+    //
+    // ⚠️ 2026-09-17 分母变了（26 → 24），看数字前先读这段：
+    //   · 删掉一条**题不可判**的废题（`哪座城堡底下管着两个村子？`：全库 67 座城堡都写「两村」，
+    //     无唯一答案）—— 甲方裁定「废题别留着」；
+    //   · `这一带有好马吗？` 标了 `countInGate=false`（多个村都产好马，把拉迈萨定成唯一目标是任意的，
+    //     单目标命中率判不出通道好坏）—— 它**仍跑、仍打印**，只是不进分子分母。
+    //   ⇒ 门槛值（9 / 7 / 16）**一个没动**：删掉的那条在两臂都是 0，分子不动、分母缩小。
+    //     所以现在的 B 是「7/11」、合计「16/24」；**别拿 7/13 或 9/26 跟它比**。
     private const int GateAHit1 = 9;
     private const int GateBHit1 = 7;
     private const int GateAllHit1 = 16;
@@ -81,6 +89,7 @@ internal static class RetrievalProbeCases
             ?? throw new InvalidOperationException("题集 JSON 里没有 cases 数组: " + casesPath);
 
         int aHit1 = 0, aHit3 = 0, bHit1 = 0, bHit3 = 0, nA = 0, nB = 0;
+        int observed = 0;
         var failures = new List<string>();
 
         foreach (JToken token in cases)
@@ -88,6 +97,8 @@ internal static class RetrievalProbeCases
             string group = (string)token["group"];
             string target = (string)token["target"];
             string text = (string)token["query"];
+            // countInGate=false 的题：仍跑、仍打印，但不进分子分母（见上方注释与题集 JSON 的 note）。
+            bool countInGate = token["countInGate"] == null || (bool)token["countInGate"];
             string identity = PickIdentity(snapshot, target);
 
             WorldKnowledgeQueryResult result = service.Query(new WorldbookQuery
@@ -105,6 +116,18 @@ internal static class RetrievalProbeCases
             List<string> hits = result.HitIds;
             bool hit1 = hits.Count > 0 && string.Equals(hits[0], target, StringComparison.Ordinal);
             bool hit3 = hits.Take(3).Any(x => string.Equals(x, target, StringComparison.Ordinal));
+
+            if (!countInGate)
+            {
+                observed++;
+                Console.WriteLine("RETRIEVAL_OBSERVE " + (hit3 ? "HIT" : "MISS")
+                    + " group=" + group
+                    + " h1=" + (hit1 ? "1" : "0")
+                    + " hits=" + hits.Count
+                    + " top3=[" + string.Join(",", hits.Take(3).Select(x => x.Split(':').Last())) + "]"
+                    + " q=" + text);
+                continue;
+            }
 
             if (string.Equals(group, "A", StringComparison.Ordinal)) { nA++; aHit1 += hit1 ? 1 : 0; aHit3 += hit3 ? 1 : 0; }
             else { nB++; bHit1 += hit1 ? 1 : 0; bHit3 += hit3 ? 1 : 0; }
@@ -159,7 +182,8 @@ internal static class RetrievalProbeCases
             + " B_hit1=" + bHit1 + "/" + nB
             + " B_hit3=" + bHit3 + "/" + nB
             + " ALL_hit1=" + allHit1 + "/" + total
-            + " ALL_hit3=" + allHit3 + "/" + total);
+            + " ALL_hit3=" + allHit3 + "/" + total
+            + " observed_only=" + observed + "（不进分子分母，见题集 JSON 的 countInGate）");
 
         foreach (string failure in failures) Console.WriteLine("RETRIEVAL_MISS " + failure);
 

@@ -1,0 +1,26 @@
+docs+tools(09-17): 设计初衷回归 —— 知识传播层裁定、新增公文通道、题集与门禁收口
+
+甲方 09-17 五条口径（原话见 docs/DECISION-20260917-设计初衷-知识传播与对话.md）：
+- 设计初衷 = 用 AI 模拟真实知识传播路径和对话；检索命中率不是成败标准，只是"取数段的健康度"。
+- 传播混着来（有名字的按人 / 无名群众按地批量）；事件为主、时间为底线。
+- 分级 = 两个轴（事件侧 S/A/B/C + 知识侧"公开程度"）。
+- 领主推动新增一条"公文"通道（不复用私人信件线）—— 公文对象是"人群"（点对多），补"从事件到人群"那一跳。
+
+文档
+- 新增 docs/DECISION-20260917-设计初衷-知识传播与对话.md
+  （在册出处表 / 我偏在哪 / 三层模型 / 三段底座盘点 / 三个已核缺口 / 速度表 / §十一 第二轮拍板）。
+- 新增 docs/DECISION-20260917-两条通道怎么合.md（顶部加必读横幅：命中率不是成败标准）。
+- AWAKE-ROADMAP.md：现状节加一条"设计裁定（不改状态、不排期）"指针。
+
+工具
+- tools/worldbook-rag-merge/（新）：合并臂验台；支持 countInGate；修掉硬编码分母 /13。
+- tools/worldbook-runtime-smoke/RetrievalProbeCases.cs：支持 countInGate（观察题打印但不计门禁）。
+- tools/_retrieval_cases_20260916.json：删掉无唯一答案的城堡题；"这一带有好马吗"改为只观察；补 rulings / changes 两段。
+- tools/_patch_*_20260917*.py 与 _*_20260917.txt：过程脚本与跑数留档。
+
+门禁（常量未动）
+- RETRIEVAL_GATE PASS need A_hit1>=9 B_hit1>=7 ALL_hit1>=16
+- MERGE_GATE PASS need literal A>=9 B>=7 ALL>=16 merged A>=9 ALL>16 losses=0
+- 分母 26 -> 24（A 13 / B 11，另 1 条只观察）。
+
+离线全绿不等于游戏内生效；本轮零真机。
