@@ -56,7 +56,7 @@ GAPS = [
           lambda r: r is not None and r.get("verdict") == "OK", None),
          ("KWA5", "至少不许再吐出无关条目",
           lambda r: r is not None and r.get("verdict") == "OK",
-          "字面两条腿已归零（kw=0 term 过滤后 0 候选），残留来自**语义腿**："
+          "字面两条腿已归零（kw=0，term 过滤后 0 候选），残留来自**语义腿**。"
           "而语义腿带不出相似度（`RagHit` 只有 `Rank`，框架协议里没有分数）⇒ 没有可卡的阈值。"
           "要关掉得先在 RAG 契约里开放相似度，属框架级改动。"),
      ]),
