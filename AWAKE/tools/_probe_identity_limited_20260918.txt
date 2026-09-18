@@ -1,0 +1,31 @@
+包：awake:worldbook.calradia ｜ 身份数 12 ｜ 语义臂 False
+扫描：被排除行 78（泄漏 0）｜ 该知道行 210（真拿到 180）｜ 点名题失败 0
+==============================================================================
+顶层键：cases, deniedCases, deniedCasesFail, deniedStates, identityCount, mutate, package, semantic, shouldKnowHit, shouldKnowMisses, shouldKnowRows, sweepDeniedRows, sweepLeaks
+【被排除行】（他不该知道、但问了）的状态分布 —— 门禁自己报的：
+   partial                    54
+   not_found                  24
+   ⤷ blocked/permission ＝「材料在、一条都不给 ⇒ 替他闭嘴、吐写死台词」，也就是要改的那一档
+------------------------------------------------------------------------------
+shouldKnowMisses 条数 = 30
+cases 条数 = 24
+首个 case 的字段：deniedRows, leaks, namedByAuthoring, query, target
+------------------------------------------------------------------------------
+全报告的 state 取值分布：
+   partial            30
+------------------------------------------------------------------------------
+【该知道却没拿到】的那些行，按 state 拆开：
+   partial            30
+------------------------------------------------------------------------------
+其中 state=blocked 的样本（A5 要改的就是它）：
+   （blocked 合计 0 条）
+------------------------------------------------------------------------------
+非 blocked 的样本（前 8 条，看它们是不是走了糙版本那条路）：
+   [partial] identity=awake:identity:headman query=斯特吉亚的军队怎么打仗？
+   [partial] identity=awake:identity:merchant query=斯特吉亚的军队怎么打仗？
+   [partial] identity=awake:identity:noble query=斯特吉亚的军队怎么打仗？
+   [partial] identity=awake:identity:noble_high_steward query=斯特吉亚的军队怎么打仗？
+   [partial] identity=awake:identity:ransom_broker query=斯特吉亚的军队怎么打仗？
+   [partial] identity=awake:identity:soldier query=斯特吉亚的军队怎么打仗？
+   [partial] identity=awake:identity:tavernkeeper query=斯特吉亚的军队怎么打仗？
+   [partial] identity=awake:identity:townsfolk query=斯特吉亚的军队怎么打仗？

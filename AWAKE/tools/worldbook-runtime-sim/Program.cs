@@ -384,6 +384,10 @@ int RunIdentityGate(string[] a)
     if (deniedCases.Count == 0) { Console.WriteLine("IDENTITY_GATE FAIL 点名题一条都没读到（deniedCases 形状不对？）"); return 1; }
 
     int sweepRows = 0, leakedRows = 0, shouldKnowRows = 0, shouldKnowHit = 0;
+    // 2026-09-18 加：被排除行（deniedRows）过去只记"有没有泄漏"，**结果里的状态被丢掉了**。
+    // 而「材料在、但一条都不给」这条出口（state=blocked / reason=permission，今天会让角色闭嘴并吐写死台词）
+    // 恰恰只可能出现在这些行里 —— 只报不判，先把它的真实发生率量出来。
+    var deniedStateCounts = new SortedDictionary<string, int>(StringComparer.Ordinal);
     var caseDetails = new JArray();
     var shouldKnowMisses = new JArray();
 
@@ -434,8 +438,16 @@ int RunIdentityGate(string[] a)
             }
             deniedRows++;
             sweepRows++;
-            bool leaked = AskAs(mutate ? highest : identity, text).HitIds.Contains(target);
+            WorldKnowledgeQueryResult deniedResult = AskAs(mutate ? highest : identity, text);
+            bool leaked = deniedResult.HitIds.Contains(target);
             if (leaked) { leakedRows++; if (!mutate) leaks.Add(identity); }
+            if (!mutate)
+            {
+                string key = string.IsNullOrWhiteSpace(deniedResult.State) ? "(empty)" : deniedResult.State;
+                if (!string.IsNullOrWhiteSpace(deniedResult.BlockedReason)) key += "/" + deniedResult.BlockedReason;
+                deniedStateCounts.TryGetValue(key, out int seen);
+                deniedStateCounts[key] = seen + 1;
+            }
         }
         caseDetails.Add(new JObject
         {
@@ -546,6 +558,7 @@ int RunIdentityGate(string[] a)
         ["shouldKnowRows"] = shouldKnowRows,
         ["shouldKnowHit"] = shouldKnowHit,
         ["deniedCasesFail"] = deniedFail,
+        ["deniedStates"] = new JObject(deniedStateCounts.Select(pair => new JProperty(pair.Key, pair.Value))),
         ["cases"] = caseDetails,
         ["shouldKnowMisses"] = shouldKnowMisses,
         ["deniedCases"] = deniedDetails
@@ -554,6 +567,12 @@ int RunIdentityGate(string[] a)
 
     Console.WriteLine();
     Console.WriteLine($"扫描：被排除行 {sweepRows}（泄漏 {leakedRows}）；该知道行 {shouldKnowRows}（真拿到 {shouldKnowHit}）；点名题失败 {deniedFail}");
+    // 只报不判：被排除行的状态分布。`blocked/permission` ＝「材料在、一条都不给 ⇒ 替他闭嘴、吐写死台词」，
+    // 这正是「把身份不够从没资料里分出来」要改的那一档；先看清它在真包上到底发生不发生。
+    Console.WriteLine("被排除行的状态分布（只报不判）："
+        + (deniedStateCounts.Count == 0
+            ? "(none)"
+            : string.Join("｜", deniedStateCounts.Select(pair => pair.Key + "=" + pair.Value))));
     if (shouldKnowMisses.Count > 0)
     {
         // **只报不判**：这一列混着"召回没找到"与"能力不够"，要分诊（见 docs/AUDIT-20260917… 与 identity-gate 报告）。
