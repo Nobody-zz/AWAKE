@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>NpcDialogue 960×720 · 控件布局设计 03（折中版）</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #07050A; color: #C8B088;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    padding: 24px 28px 60px; -webkit-font-smoothing: antialiased; }
+  h1 { font-size: 17px; font-weight: 500; color: #E2AF54; margin-bottom: 4px; }
+  .sub { font-size: 13px; color: #8A7C66; margin-bottom: 16px; line-height: 1.7; }
+  .sub b { color: #C8B088; font-weight: 500; }
+  .toolbar { margin-bottom: 14px; font-size: 13px; color: #8A7C66; }
+  .toolbar label { cursor: pointer; user-select: none; }
+  .toolbar input { vertical-align: -2px; margin-right: 6px; }
+
+  .wrap { position: relative; width: 960px; height: 720px; }
+
+  .panel { position: absolute; inset: 0; overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 50% 0%, #1E1616 0%, #181010 45%, #100B09 100%),
+      repeating-linear-gradient(115deg, rgba(255,255,255,.012) 0 2px, rgba(0,0,0,.02) 2px 5px);
+    border: 1px solid rgba(140,107,56,.45); border-radius: 8px; }
+  .cut { position: absolute; width: 14px; height: 14px; border: 1px solid rgba(140,107,56,.5); }
+  .cut.tl { left: 5px; top: 5px; border-right: 0; border-bottom: 0; }
+  .cut.tr { right: 5px; top: 5px; border-left: 0; border-bottom: 0; }
+  .cut.bl { left: 5px; bottom: 5px; border-right: 0; border-top: 0; }
+  .cut.br { right: 5px; bottom: 5px; border-left: 0; border-top: 0; }
+
+  /* 头带：不描边 */
+  .ttl { position: absolute; left: 20px; top: 10px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 20px; color: #E2AF54; letter-spacing: .06em; }
+  .meta { position: absolute; left: 20px; top: 37px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #8A7C66; }
+  .meta i { color: #5A5142; font-style: normal; padding: 0 8px; }
+
+  .divider { position: absolute; left: 0; top: 60px; width: 960px; height: 5px; }
+  .divider::before { content: ""; position: absolute; left: 0; top: 2px; width: 960px; height: 1px;
+    background: linear-gradient(90deg, rgba(140,107,56,0) 0%, rgba(140,107,56,.6) 14%, rgba(226,175,84,.7) 50%, rgba(140,107,56,.6) 86%, rgba(140,107,56,0) 100%); }
+
+  /* 关闭键 */
+  .close { position: absolute; left: 900px; top: 10px; width: 40px; height: 40px; border-radius: 50%;
+    background: radial-gradient(circle at 50% 42%, #2A1008 0%, #180808 70%);
+    border: 1px solid #8A5A28; color: #D8A850; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 17px; line-height: 1; }
+  .close::after { content: "\00D7"; font-family: serif; }
+  .close:hover { border-color: #FBC86A; color: #FBC86A; }
+
+  /* 模式行：未选中不描边 */
+  .mode { position: absolute; top: 66px; height: 35px; padding: 0 18px; border-radius: 6px;
+    display: flex; align-items: center; cursor: pointer;
+    font-family: "KaiTi","STKaiti",serif; font-size: 15px; color: #8A7C66;
+    border: 1px solid transparent; transition: color .12s, background .12s, border-color .12s; }
+  .mode:hover { color: #C8B088; background: rgba(255,255,255,.04); }
+  .mode.on { color: #E2AF54; background: rgba(72,64,48,.45); border-color: rgba(216,168,80,.55); }
+  .mode.hist { color: #6E6350; }
+
+  /* 左区：说话人 —— 不加边框，靠立绘自己成形 */
+  .portrait { position: absolute; left: 20px; top: 109px; width: 240px; height: 300px;
+    border-radius: 8px; overflow: hidden; }
+  .portrait .glow { position: absolute; inset: 0;
+    background:
+      radial-gradient(70% 56% at 50% 36%, rgba(216,168,80,.11) 0%, rgba(216,168,80,.035) 46%, rgba(0,0,0,0) 74%),
+      radial-gradient(130% 62% at 50% 106%, rgba(0,0,0,.62) 0%, rgba(0,0,0,0) 62%); }
+  .portrait svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .portrait .art { font-family: "KaiTi","STKaiti",serif; font-size: 12px; color: #4A4234;
+    position: absolute; left: 0; right: 0; top: 274px; text-align: center; letter-spacing: .2em; }
+
+  .pinfo { position: absolute; left: 20px; width: 240px; }
+  .pinfo .pn { position: absolute; left: 0; top: 421px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 19px; color: #E2AF54; letter-spacing: .06em; }
+  .pinfo .pt { position: absolute; left: 0; top: 449px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #8A7C66; }
+  .pinfo .row { position: absolute; left: 0; width: 240px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #8A7C66; line-height: 1.6; }
+  .pinfo .row b { color: #5A5142; font-weight: 400; padding-right: 8px; }
+
+  /* 右区：唯一的面 */
+  .stage { position: absolute; left: 280px; top: 109px; width: 660px; height: 491px;
+    background: rgba(0,0,0,.26); border: 1px solid rgba(140,107,56,.26); border-radius: 8px; }
+  .log { position: absolute; left: 304px; top: 133px; width: 612px; height: 430px; overflow: hidden; }
+
+  .msg { margin-bottom: 20px; padding-left: 14px; border-left: 2px solid transparent; }
+  .msg.now { border-left-color: #D8A850; }
+  .who { font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #9C7839; letter-spacing: .12em; }
+  .msg.me .who { color: #6E6350; }
+  .act { font-family: "KaiTi","STKaiti",serif; font-size: 15px; font-style: italic;
+    color: #6E6350; line-height: 1.85; margin-top: 3px; }
+  .say { font-family: "KaiTi","STKaiti",serif; font-size: 16px; color: #F2EDE4;
+    line-height: 1.9; margin-top: 3px; }
+  .msg.me .say { color: #C8B088; }
+
+  /* 在场条：一排小头像，无边框 */
+  .present { position: absolute; left: 20px; top: 606px; height: 44px;
+    display: flex; align-items: center; gap: 22px; }
+  .p { display: flex; align-items: center; gap: 9px; cursor: pointer; }
+  .p .av { width: 36px; height: 36px; border-radius: 50%; flex: 0 0 36px;
+    background: radial-gradient(circle at 40% 32%, #3A2C1E 0%, #1C1610 75%);
+    border: 1px solid rgba(140,107,56,.35); color: #9C7839;
+    font-family: "KaiTi","STKaiti",serif; font-size: 15px;
+    display: flex; align-items: center; justify-content: center; transition: border-color .12s; }
+  .p .n { font-family: "KaiTi","STKaiti",serif; font-size: 14px; color: #8A7C66; }
+  .p:hover .av { border-color: rgba(216,168,80,.7); }
+  .p.on .av { border-color: #E2AF54; box-shadow: 0 0 0 2px rgba(226,175,84,.18); color: #E2AF54; }
+  .p.on .n { color: #E2AF54; }
+  .plabel { font-family: "KaiTi","STKaiti",serif; font-size: 12px; color: #5A5142; margin-left: 4px; }
+
+  /* 输入区 */
+  .field { position: absolute; left: 20px; top: 656px; width: 680px; height: 56px; border-radius: 6px;
+    background: #0B0806; border: 1px solid rgba(140,107,56,.35);
+    font-family: "KaiTi","STKaiti",serif; font-size: 15px; color: #F2EDE4;
+    padding: 8px 12px; outline: none; resize: none; }
+  .field::placeholder { color: #5A5142; }
+  .field:focus { border-color: rgba(216,168,80,.7); }
+  .btn { position: absolute; top: 666px; height: 35px; width: 100px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    font-family: "KaiTi","STKaiti",serif; font-size: 15px;
+    background: #3A3226; border: 1px solid rgba(140,107,56,.4); color: #C8B088;
+    transition: background .12s, color .12s; }
+  .btn:hover { background: #4E4432; color: #E2AF54; }
+  .btn.send { left: 830px; width: 110px; background: #485020; border-color: rgba(140,107,56,.5); color: #F2EDE4; }
+  .btn.send:hover { background: #5C6A2A; color: #FFF3D2; }
+  .btn.send.off { background: #24221B; color: #5A5142; border-color: rgba(140,107,56,.2); cursor: default; }
+  .btn.send.off:hover { background: #24221B; color: #5A5142; }
+  .btn.end { left: 720px; }
+
+  .tag { position: absolute; display: none; font-size: 11px; line-height: 1.3; padding: 1px 5px;
+    background: #0B0806; border: 1px solid #D8A850; color: #FBC86A; border-radius: 4px;
+    white-space: nowrap; z-index: 9; font-family: "Consolas", monospace; }
+  body.dim .tag { display: block; }
+  .zone { position: absolute; border: 1px dashed rgba(216,168,80,.26); display: none; border-radius: 4px; }
+  body.dim .zone { display: block; }
+  .zone span { position: absolute; left: 0; top: -15px; font-size: 11px; color: #9C7839; white-space: nowrap; }
+
+  table { border-collapse: collapse; margin-top: 26px; font-size: 13px; }
+  th, td { border: 1px solid rgba(140,107,56,.3); padding: 6px 10px; text-align: left; vertical-align: top; }
+  th { color: #E2AF54; font-weight: 500; background: rgba(72,64,48,.35); }
+  td { color: #C8B088; font-family: "KaiTi","STKaiti",serif; }
+  td.m { font-family: "Consolas", monospace; color: #9C7839; }
+  .lg { margin-top: 18px; font-size: 13px; color: #8A7C66; line-height: 1.9; max-width: 900px; }
+  .lg b { color: #C8B088; font-weight: 500; }
+  .lg h3 { font-size: 13px; color: #E2AF54; font-weight: 500; margin: 14px 0 4px; }
+  .lg .cut-item { color: #8A7C66; }
+  .lg .take { color: #C8B088; }
+</style>
+</head>
+<body>
+
+<h1>NpcDialogue · 960×720 控件布局设计 03（折中版）</h1>
+<div class="sub">
+  取稿 01 的<b>左右分区</b>与<b>说话人立绘</b>，取稿 02 的<b>收敛手法</b>（一个面 / 一个落点 / 金克制）。<br>
+  文字内容一律占位符，与任何设定无关。
+</div>
+<div class="toolbar">
+  <label><input type="checkbox" id="dt"> 显示分区与尺寸标注</label>
+</div>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="cut tl"></div><div class="cut tr"></div><div class="cut bl"></div><div class="cut br"></div>
+
+    <div class="zone" style="left:0;top:0;width:960px;height:60px"><span>头带 960×60 · 不描边</span></div>
+    <div class="zone" style="left:0;top:60px;width:960px;height:5px"><span>金线 960×5</span></div>
+    <div class="zone" style="left:0;top:65px;width:960px;height:38px"><span>模式行 960×38</span></div>
+    <div class="zone" style="left:20px;top:109px;width:240px;height:300px"><span>立绘 240×300 · 不描边</span></div>
+    <div class="zone" style="left:20px;top:415px;width:240px;height:185px"><span>左区信息 240×185</span></div>
+    <div class="zone" style="left:280px;top:109px;width:660px;height:491px"><span>唯一的面 · 对话区 660×491</span></div>
+    <div class="zone" style="left:20px;top:606px;width:920px;height:44px"><span>在场条 920×44</span></div>
+    <div class="zone" style="left:20px;top:656px;width:920px;height:56px"><span>输入区 920×56</span></div>
+
+    <div class="ttl">场景标题</div>
+    <div class="meta">地点<i>|</i>时间<i>|</i>状态</div>
+    <div class="close"></div>
+    <div class="tag" style="left:828px;top:52px">关闭 40×40</div>
+    <div class="divider"></div>
+
+    <div class="mode on"    style="left:20px">模式一</div>
+    <div class="mode"       style="left:130px">模式二</div>
+    <div class="mode hist"  style="left:835px">历史</div>
+    <div class="tag" style="left:20px;top:104px">未选中不描边 · 选中才有框</div>
+
+    <!-- 左区：说话人立绘（占位剪影） -->
+    <div class="portrait">
+      <div class="glow"></div>
+      <svg viewBox="0 0 240 300" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+        <defs>
+          <linearGradient id="fig" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3C2F23"/>
+            <stop offset="1" stop-color="#150F0B"/>
+          </linearGradient>
+        </defs>
+        <path d="M26 300 C30 226 72 182 120 182 C168 182 210 226 214 300 Z"
+              fill="url(#fig)" stroke="rgba(216,168,80,.26)" stroke-width="1"/>
+        <ellipse cx="120" cy="104" rx="43" ry="49"
+              fill="url(#fig)" stroke="rgba(216,168,80,.26)" stroke-width="1"/>
+      </svg>
+      <div class="art">立 绘 位</div>
+    </div>
+    <div class="tag" style="left:20px;top:92px">说话人立绘 240×300 · 无边框 · 出图时底部渐隐</div>
+
+    <div class="pinfo">
+      <div class="pn">人物甲</div>
+      <div class="pt">身份 · 头衔</div>
+      <div class="row" style="top:484px"><b>关系</b>与玩家 · 简述</div>
+      <div class="row" style="top:507px"><b>状态</b>当前处境 · 简述</div>
+    </div>
+    <div class="tag" style="left:20px;top:404px">姓名 19 金 · 身份 13 灰 · 下两行 13 弱</div>
+
+    <div class="stage"></div>
+    <div class="log">
+      <div class="msg me">
+        <div class="who">你</div>
+        <div class="say">玩家输入的内容，16px 亮色；此条为普通态，不描边。</div>
+      </div>
+      <div class="msg">
+        <div class="who">人物甲</div>
+        <div class="act">动作与神态：斜体、次要色、不加引号。</div>
+        <div class="say">"引号内为台词，正文亮色。"</div>
+      </div>
+      <div class="msg me">
+        <div class="who">你</div>
+        <div class="say">又一个玩家条目。</div>
+      </div>
+      <div class="msg now">
+        <div class="who">人物甲</div>
+        <div class="act">仅"最新一条"带左侧 2px 金条 —— 这就是唯一的视觉落点。</div>
+        <div class="say">"其余条目一律不描边、不标记，避免抢戏。"</div>
+      </div>
+    </div>
+    <div class="tag" style="left:304px;top:112px">对话流 612×430 · 面内不另设说话人一行（左区已承担）</div>
+    <div class="tag" style="left:748px;top:566px">仅最新一条带金条</div>
+
+    <div class="present">
+      <div class="p on"><div class="av">甲</div><div class="n">人物甲</div></div>
+      <div class="p"><div class="av">乙</div><div class="n">人物乙</div></div>
+      <div class="p"><div class="av">丙</div><div class="n">人物丙</div></div>
+      <div class="plabel">在场 3 人 · 点选切换左区</div>
+    </div>
+    <div class="tag" style="left:20px;top:652px">头像 36 圆 · 无边框 · 选中＝金圈＋金字</div>
+
+    <textarea class="field" placeholder="输入对话；*描述动作，[推动叙事]"></textarea>
+    <div class="btn end">结束</div>
+    <div class="btn send">发送</div>
+    <div class="tag" style="left:20px;top:716px">输入框 680×56</div>
+    <div class="tag" style="left:720px;top:716px">结束 100×35 · 发送 110×35</div>
+  </div>
+</div>
+
+<table>
+  <tr><th>区</th><th>控件</th><th>位置</th><th>尺寸</th><th>状态</th><th>说明</th></tr>
+  <tr><td>头带</td><td>标题 / 元信息</td><td class="m">20 / 10 · 20 / 37</td><td class="m">—</td><td class="m">20px / 13px</td><td>不描边，靠金线断带</td></tr>
+  <tr><td>头带</td><td>关闭键</td><td class="m">900 / 10</td><td class="m">40×40</td><td class="m">默认 / 悬停</td><td>—</td></tr>
+  <tr><td>模式行</td><td>模式一 · 模式二</td><td class="m">20 · 130 / 66</td><td class="m">自适应 · 高 35</td><td class="m">默认<b>无框</b> / 悬停 / 选中</td><td>去掉常驻边框＝去掉格子感</td></tr>
+  <tr><td>模式行</td><td>历史</td><td class="m">835 / 66</td><td class="m">自适应 · 高 35</td><td class="m">更弱（弱色）</td><td>右对齐，与前两个分组</td></tr>
+  <tr><td>左区</td><td>立绘</td><td class="m">20 / 109</td><td class="m">240×300</td><td class="m">占位 / 出图后</td><td><b>无边框无底色</b>，靠图自己成形</td></tr>
+  <tr><td>左区</td><td>姓名</td><td class="m">20 / 421</td><td class="m">—</td><td class="m">19px 金</td><td>随在场条选中切换</td></tr>
+  <tr><td>左区</td><td>身份 · 头衔</td><td class="m">20 / 449</td><td class="m">—</td><td class="m">13px 灰</td><td>—</td></tr>
+  <tr><td>左区</td><td>信息 ×2（关系 / 状态）</td><td class="m">20 / 484 · 507</td><td class="m">240</td><td class="m">13px 弱</td><td>要加只加在这里，不挤对话</td></tr>
+  <tr><td>右区</td><td>对话流</td><td class="m">304 / 133</td><td class="m">612×430</td><td class="m">16px · 行距 1.9</td><td><b>全屏唯一的面</b></td></tr>
+  <tr><td>在场条</td><td>人物 ×3</td><td class="m">20 / 606</td><td class="m">头像 36 圆 + 名</td><td class="m">默认 / 悬停 / 选中</td><td>点选＝换左区的人</td></tr>
+  <tr><td>输入区</td><td>输入框</td><td class="m">20 / 656</td><td class="m">680×56</td><td class="m">空 / 聚焦 / 有字</td><td>—</td></tr>
+  <tr><td>输入区</td><td>结束</td><td class="m">720 / 666</td><td class="m">100×35</td><td class="m">默认 / 悬停</td><td>—</td></tr>
+  <tr><td>输入区</td><td>发送</td><td class="m">830 / 666</td><td class="m">110×35</td><td class="m">默认 / 悬停 / <b>禁用</b></td><td>空输入时禁用</td></tr>
+</table>
+
+<div class="lg">
+  <h3>折中取了什么</h3>
+  <span class="take">取自稿 01：</span>左右分区；说话人有独立的立绘与信息位；左区信息有名字、身份、关系、状态。<br>
+  <span class="take">取自稿 02：</span>只留一个「面」（对话区 660×491）；只留一个时间落点（最新条 2px 金条）；未选中不描边；模式键无常驻边框；在场人物压成底部一条，不占左栏；金总计 5 处。<br>
+
+  <h3>舍了什么</h3>
+  1. <span class="cut-item">左栏「在场人物 236×85 ×3」竖列表</span> —— 位置让给立绘，在场改由底部在场条承担（点选切左区）。<br>
+  2. <span class="cut-item">属性行 ×3 · 状态说明行 · 在场人物的身份/关系两行</span> —— 信息只保留「关系 / 状态」两行，且只归说话人一个人所有。<br>
+  3. <span class="cut-item">右区面内的「说话人一行」</span> —— 左区已经承担了说话人，面内再放一次就是重复信息。<br>
+  4. <span class="cut-item">立绘槽的边框与底色</span> —— 稿 01 的立绘槽是一块「空的深色重块」，那是上次显杂的元凶；本稿改为<b>无框无底、底部渐隐</b>，让图像自己成形。<br>
+
+  <h3>控件的坐标与尺寸（相对稿 02 作废了两处）</h3>
+  <b>输入区、头带、模式行一律没变</b>（关闭 40×40 / 模式 高 35 / 输入框 680×56 / 结束 100×35 / 发送 110×35）。<br>
+  <b>作废两处</b>：稿 02 的「对话区 920×491 @20」→ 本稿「660×491 @280」；稿 02 的「对话流 640 宽」→ 本稿「612 宽」。<br>
+  <b>新增</b>：立绘 240×300 @20/109；左区信息 240×185 @20/415。<br>
+
+  <h3>这一稿的关键手法</h3>
+  <b>左右分区最容易犯的病，是两块同等重量的色块并排互相打架</b>（这正是稿 01 显杂的根）。<br>
+  本稿的解法：<b>右区是「面」</b>（靠底色聚拢文字，必须有框才成形）；<b>左区是「图」</b>（图像天然成形，所以不加框、不加底）。两者重量相当但不互斥 —— 因为一个是面、一个是图，形态不同。<br>
+  左区宽 240 : 右区宽 660 ≈ 1 : 2.75，主次一眼分得开。
+</div>
+
+<script>
+  var cb = document.getElementById('dt');
+  function apply(){ document.body.classList.toggle('dim', cb.checked); }
+  cb.addEventListener('change', apply); apply();
+
+  var ps = document.querySelectorAll('.p');
+  ps.forEach(function(el){
+    el.addEventListener('click', function(){
+      ps.forEach(function(o){ o.classList.remove('on'); });
+      el.classList.add('on');
+      var name = el.querySelector('.n').textContent;
+      document.querySelector('.pn').textContent = name;
+      document.querySelector('.portrait .art').textContent = name + ' · 立 绘 位';
+    });
+  });
+
+  document.querySelectorAll('.mode').forEach(function(el){
+    el.addEventListener('click', function(){
+      if (el.classList.contains('hist')) return;
+      document.querySelectorAll('.mode').forEach(function(o){ o.classList.remove('on'); });
+      el.classList.add('on');
+    });
+  });
+
+  var field = document.querySelector('.field');
+  var sendBtn = document.querySelector('.btn.send');
+  function refresh(){ sendBtn.classList.toggle('off', !(field.value || '').trim()); }
+  field.addEventListener('input', refresh); refresh();
+
+  function send(){
+    var v = (field.value || '').trim(); if (!v) return;
+    var log = document.querySelector('.log');
+    log.querySelectorAll('.msg').forEach(function(m){ m.classList.remove('now'); });
+    var d = document.createElement('div'); d.className = 'msg me now';
+    d.innerHTML = '<div class="who">你</div>';
+    var s = document.createElement('div'); s.className = 'say'; s.textContent = v;
+    d.appendChild(s); log.appendChild(d);
+    field.value = ''; refresh();
+  }
+  sendBtn.addEventListener('click', send);
+  field.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+</script>
+</body>
+</html>

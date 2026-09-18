@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>NpcDialogue 960×720 · 控件布局设计 01</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #07050A; color: #C8B088;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    padding: 24px 28px 60px; -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: 17px; font-weight: 500; color: #E2AF54; margin-bottom: 4px; }
+  .sub { font-size: 13px; color: #8A7C66; margin-bottom: 16px; line-height: 1.7; }
+  .sub b { color: #C8B088; font-weight: 500; }
+  .toolbar { margin-bottom: 14px; font-size: 13px; color: #8A7C66; }
+  .toolbar label { cursor: pointer; user-select: none; }
+  .toolbar input { vertical-align: -2px; margin-right: 6px; }
+
+  .wrap { position: relative; width: 960px; height: 720px; }
+
+  .panel {
+    position: absolute; inset: 0; overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 50% 0%, #201818 0%, #181010 45%, #100B09 100%),
+      repeating-linear-gradient(115deg, rgba(255,255,255,.012) 0 2px, rgba(0,0,0,.02) 2px 5px);
+    border: 1px solid rgba(140,107,56,.45); border-radius: 8px;
+  }
+  .cut { position: absolute; width: 14px; height: 14px; border: 1px solid rgba(140,107,56,.5); }
+  .cut.tl { left: 5px; top: 5px; border-right: 0; border-bottom: 0; }
+  .cut.tr { right: 5px; top: 5px; border-left: 0; border-bottom: 0; }
+  .cut.bl { left: 5px; bottom: 5px; border-right: 0; border-top: 0; }
+  .cut.br { right: 5px; bottom: 5px; border-left: 0; border-top: 0; }
+
+  .header { position: absolute; left: 0; top: 0; width: 960px; height: 60px; }
+  .header .ttl {
+    position: absolute; left: 18px; top: 8px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 20px; color: #E2AF54; letter-spacing: .06em;
+  }
+  .header .meta {
+    position: absolute; left: 18px; top: 35px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #C8B088;
+  }
+  .header .meta i { color: #6E6350; font-style: normal; padding: 0 6px; }
+  .divider { position: absolute; left: 0; top: 60px; width: 960px; height: 5px; }
+  .divider::before {
+    content: ""; position: absolute; left: 0; top: 2px; width: 960px; height: 1px;
+    background: linear-gradient(90deg, rgba(140,107,56,0) 0%, rgba(140,107,56,.75) 12%, rgba(226,175,84,.75) 50%, rgba(140,107,56,.75) 88%, rgba(140,107,56,0) 100%);
+  }
+
+  .btn {
+    position: absolute; display: flex; align-items: center; justify-content: center;
+    font-family: "KaiTi","STKaiti",serif; font-size: 15px; color: #E6DCC8;
+    background: #484030; border: 1px solid rgba(140,107,56,.55); border-radius: 6px;
+    cursor: pointer; transition: background .12s, color .12s, border-color .12s;
+  }
+  .btn:hover { background: #705838; color: #FBC86A; border-color: rgba(251,200,106,.7); }
+  .btn.tab { width: 105px; height: 35px; }
+  .btn.tab.on {
+    background: #2A2116; color: #E2AF54; border-color: #D8A850;
+    box-shadow: inset 0 0 0 1px rgba(226,175,84,.25);
+  }
+  .btn.ghost { width: 105px; height: 35px; background: #2A2116; color: #C8B088; }
+  .btn.end   { width: 100px; height: 35px; background: #403028; }
+  .btn.send  { width: 110px; height: 35px; background: #485020; color: #F2EDE4; }
+  .btn.send:hover { background: #5C6A2A; color: #FFF3D2; }
+  .btn.send.off { background: #2C2A22; color: #6E6350; border-color: rgba(140,107,56,.3); cursor: default; }
+  .btn.send.off:hover { background: #2C2A22; color: #6E6350; border-color: rgba(140,107,56,.3); }
+
+  .close {
+    position: absolute; left: 910px; top: 10px; width: 40px; height: 40px; border-radius: 50%;
+    background: radial-gradient(circle at 50% 42%, #2A1008 0%, #180808 70%);
+    border: 1px solid #8A5A28; color: #D8A850; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 17px; line-height: 1;
+  }
+  .close::after { content: "\00D7"; font-family: serif; }
+  .close:hover { border-color: #FBC86A; color: #FBC86A; }
+
+  .col { position: absolute; top: 111px; height: 481px; }
+  .col.actors  { left: 12px;  width: 236px; }
+  .col.speaker { left: 258px; width: 200px; }
+  .col.convo   { left: 468px; width: 480px; }
+  .bar-title {
+    position: absolute; left: 2px; top: 2px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #8A7C66; letter-spacing: .08em;
+  }
+  .bar-count { position: absolute; right: 2px; top: 2px; font-size: 13px; color: #6E6350; }
+
+  .actor {
+    position: absolute; left: 0; width: 236px; height: 85px; border-radius: 6px;
+    background: rgba(255,255,255,.028); border: 1px solid rgba(140,107,56,.22); cursor: pointer;
+  }
+  .actor:hover { background: rgba(255,255,255,.06); border-color: rgba(140,107,56,.5); }
+  .actor.on {
+    background: rgba(72,64,48,.5); border-color: #D8A850;
+    box-shadow: inset 0 0 0 1px rgba(226,175,84,.22);
+  }
+  .actor.on::before {
+    content: ""; position: absolute; left: -1px; top: 12px; bottom: 12px; width: 2px; background: #E2AF54;
+  }
+  .actor .av {
+    position: absolute; left: 10px; top: 18px; width: 48px; height: 48px; border-radius: 6px;
+    background: radial-gradient(circle at 40% 32%, #3A2C1E 0%, #1C1610 75%);
+    border: 1px solid rgba(140,107,56,.45); color: #9C7839;
+    font-family: "KaiTi","STKaiti",serif; font-size: 19px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .actor.on .av { border-color: #D8A850; color: #E2AF54; }
+  .actor .nm {
+    position: absolute; left: 68px; top: 16px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 17px; color: #F2EDE4;
+  }
+  .actor.on .nm { color: #FBC86A; }
+  .actor .id {
+    position: absolute; left: 68px; top: 40px; width: 158px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #8A7C66; line-height: 1.35;
+  }
+  .actor .rel {
+    position: absolute; left: 68px; top: 66px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 12px; color: #6E6350;
+  }
+  .hair { position: absolute; left: 0; width: 236px; height: 1px; background: rgba(140,107,56,.3); }
+  .here-t {
+    position: absolute; left: 2px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #8A7C66; letter-spacing: .08em;
+  }
+  .here-img {
+    position: absolute; left: 0; width: 236px; height: 110px; border-radius: 6px; overflow: hidden;
+    background: linear-gradient(160deg, #2A1E14 0%, #191009 55%, #0E0906 100%);
+    border: 1px solid rgba(140,107,56,.35);
+  }
+  .here-img .glow {
+    position: absolute; left: 104px; top: 30px; width: 46px; height: 46px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(239,159,39,.36) 0%, rgba(239,159,39,0) 70%);
+  }
+  .here-img .note { position: absolute; left: 8px; bottom: 6px; font-size: 11px; color: rgba(200,176,136,.75); }
+  .here-cap {
+    position: absolute; left: 2px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #C8B088;
+  }
+
+  .portrait {
+    position: absolute; left: 0; top: 0; width: 200px; height: 320px; border-radius: 6px; overflow: hidden;
+    background: linear-gradient(165deg, #2E2117 0%, #1A1209 50%, #0D0805 100%);
+    border: 1px solid rgba(140,107,56,.45);
+  }
+  .portrait .sil {
+    position: absolute; left: 50%; top: 62px; width: 76px; height: 76px; margin-left: -38px;
+    border-radius: 50%; background: #2A1F14; border: 1px solid rgba(140,107,56,.3);
+  }
+  .portrait .sh {
+    position: absolute; left: 50%; top: 146px; width: 122px; height: 120px; margin-left: -61px;
+    border-radius: 60px 60px 6px 6px; background: #241A11; border: 1px solid rgba(140,107,56,.22);
+  }
+  .portrait .note { position: absolute; left: 8px; bottom: 6px; font-size: 11px; color: rgba(200,176,136,.7); }
+  .sp-nm {
+    position: absolute; left: 2px; top: 328px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 20px; color: #E2AF54; letter-spacing: .05em;
+  }
+  .sp-id {
+    position: absolute; left: 2px; top: 358px; width: 196px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #C8B088; line-height: 1.4;
+  }
+  .sp-rel {
+    position: absolute; left: 2px; top: 398px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #9C7839;
+  }
+  .kv { position: absolute; left: 2px; font-family: "KaiTi","STKaiti",serif; font-size: 13px; }
+  .kv s { text-decoration: none; color: #6E6350; display: inline-block; width: 62px; }
+  .kv b { color: #C8B088; font-weight: 400; }
+
+  .convo-scroll { position: absolute; left: 0; top: 26px; width: 480px; height: 455px; overflow: hidden; }
+  .msg { margin-bottom: 16px; padding-left: 10px; border-left: 2px solid rgba(140,107,56,.22); }
+  .msg.me { border-left-color: rgba(200,176,136,.35); }
+  .who { font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #E2AF54; letter-spacing: .1em; }
+  .msg.me .who { color: #C8B088; }
+  .act {
+    font-family: "KaiTi","STKaiti",serif; font-size: 15px; font-style: italic;
+    color: #8A7C66; line-height: 1.7; margin-top: 2px;
+  }
+  .say {
+    font-family: "KaiTi","STKaiti",serif; font-size: 15px; color: #F2EDE4; line-height: 1.75; margin-top: 2px;
+  }
+
+  .inputbar { position: absolute; left: 0; top: 602px; width: 960px; height: 70px; }
+  .field {
+    position: absolute; left: 18px; top: 8px; width: 700px; height: 56px; border-radius: 6px;
+    background: #0B0806; border: 1px solid rgba(140,107,56,.4);
+    font-family: "KaiTi","STKaiti",serif; font-size: 15px; color: #F2EDE4;
+    padding: 8px 12px; outline: none; resize: none;
+  }
+  .field::placeholder { color: #6E6350; }
+  .field:focus { border-color: rgba(216,168,80,.8); }
+  .statusline {
+    position: absolute; left: 18px; top: 594px; width: 924px;
+    font-family: "KaiTi","STKaiti",serif; font-size: 13px; color: #6E6350;
+  }
+  .statusline em { font-style: normal; color: #9C7839; }
+
+  .tag { position: absolute; display: none; font-size: 11px; line-height: 1.3; padding: 1px 5px;
+         background: #0B0806; border: 1px solid #D8A850; color: #FBC86A; border-radius: 4px;
+         white-space: nowrap; z-index: 9; font-family: "Consolas", monospace; }
+  body.dim .tag { display: block; }
+  .zone { position: absolute; border: 1px dashed rgba(216,168,80,.28); display: none; border-radius: 4px; }
+  body.dim .zone { display: block; }
+  .zone span { position: absolute; left: 0; top: -15px; font-size: 11px; color: #9C7839; white-space: nowrap; }
+
+  table { border-collapse: collapse; margin-top: 26px; font-size: 13px; }
+  th, td { border: 1px solid rgba(140,107,56,.3); padding: 6px 10px; text-align: left; vertical-align: top; }
+  th { color: #E2AF54; font-weight: 500; background: rgba(72,64,48,.35); }
+  td { color: #C8B088; font-family: "KaiTi","STKaiti",serif; }
+  td.m { font-family: "Consolas", monospace; color: #9C7839; }
+  .lg { margin-top: 18px; font-size: 13px; color: #8A7C66; line-height: 1.9; }
+  .lg b { color: #C8B088; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<h1>NpcDialogue · 960×720 控件布局设计 01</h1>
+<div class="sub">
+  面板实数 <b>960×720</b>。本稿只解决一件事：<b>各个按钮 / 控件放哪、多大、什么状态</b>。<br>
+  文字内容一律是<b>占位符</b>，与任何设定无关 —— 只用来标出每块的字号与层级。
+</div>
+<div class="toolbar">
+  <label><input type="checkbox" id="dt" checked> 显示分区与尺寸标注</label>
+</div>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="cut tl"></div><div class="cut tr"></div><div class="cut bl"></div><div class="cut br"></div>
+
+    <div class="zone" style="left:0;top:0;width:960px;height:60px"><span>头带 960×60</span></div>
+    <div class="zone" style="left:0;top:60px;width:960px;height:5px"><span>分隔线 960×5</span></div>
+    <div class="zone" style="left:0;top:65px;width:960px;height:40px"><span>模式行 960×40</span></div>
+    <div class="zone" style="left:12px;top:111px;width:236px;height:481px"><span>A 在场人物 · 236</span></div>
+    <div class="zone" style="left:258px;top:111px;width:200px;height:481px"><span>B 说话人 · 200</span></div>
+    <div class="zone" style="left:468px;top:111px;width:480px;height:481px"><span>C 对话 · 480</span></div>
+    <div class="zone" style="left:0;top:602px;width:960px;height:70px"><span>D 输入区 960×70</span></div>
+
+    <div class="header">
+      <div class="ttl">场景标题</div>
+      <div class="meta">地点<i>|</i>时间<i>|</i>状态</div>
+    </div>
+    <div class="tag" style="left:108px;top:14px">标题 20px</div>
+    <div class="tag" style="left:150px;top:44px">元信息一行 · 竖线分隔 · 13px</div>
+    <div class="close"></div>
+    <div class="tag" style="left:838px;top:52px">关闭 40×40</div>
+    <div class="divider"></div>
+
+    <div class="btn tab on" style="left:12px;top:68px">模式一</div>
+    <div class="btn tab"    style="left:122px;top:68px">模式二</div>
+    <div class="btn ghost"  style="left:843px;top:68px">历史</div>
+    <div class="tag" style="left:12px;top:106px">Tab 105×35 · 间距 5</div>
+    <div class="tag" style="left:843px;top:106px">历史 105×35 · 右对齐</div>
+
+    <div class="col actors">
+      <div class="bar-title">在场人物</div><div class="bar-count">3 人</div>
+      <div class="actor on" style="top:26px">
+        <div class="av">甲</div><div class="nm">人物甲</div>
+        <div class="id">身份 · 头衔</div><div class="rel">与你的关系</div>
+      </div>
+      <div class="actor" style="top:117px">
+        <div class="av">乙</div><div class="nm">人物乙</div>
+        <div class="id">身份 · 头衔</div><div class="rel">与你的关系</div>
+      </div>
+      <div class="actor" style="top:208px">
+        <div class="av">丙</div><div class="nm">人物丙</div>
+        <div class="id">身份 · 头衔</div><div class="rel">与你的关系</div>
+      </div>
+      <div class="tag" style="left:0;top:0">条目 236×85 · 选中＝金框 + 左 2px 金条</div>
+      <div class="hair" style="top:328px"></div>
+      <div class="here-t" style="top:348px">此处</div>
+      <div class="here-img" style="top:372px">
+        <div class="glow"></div>
+        <div class="note">质感槽 236×110 · 待出图</div>
+      </div>
+      <div class="here-cap" style="top:494px">地点 · 一句话氛围</div>
+    </div>
+
+    <div class="col speaker">
+      <div class="portrait">
+        <div class="sil"></div><div class="sh"></div>
+        <div class="note">立绘槽 200×320</div>
+      </div>
+      <div class="tag" style="left:0;top:-18px">立绘槽 200×320</div>
+      <div class="sp-nm">人物甲</div>
+      <div class="sp-id">身份 · 头衔</div>
+      <div class="sp-rel">与你的关系</div>
+      <div class="hair" style="left:2px;width:196px;top:418px"></div>
+      <div class="kv" style="top:434px"><s>属性一</s><b>值</b></div>
+      <div class="kv" style="top:458px"><s>属性二</s><b>值</b></div>
+      <div class="kv" style="top:482px"><s>属性三</s><b>值</b></div>
+      <div class="tag" style="left:0;top:330px">名字 20px</div>
+      <div class="tag" style="left:0;top:446px">属性行 13px · 左标签右值</div>
+    </div>
+
+    <div class="col convo">
+      <div class="bar-title">本次对话</div><div class="bar-count">4 条</div>
+      <div class="convo-scroll">
+        <div class="msg me">
+          <div class="who">你</div>
+          <div class="say">玩家输入的内容（15px 亮色，左浅色标记条）</div>
+        </div>
+        <div class="msg">
+          <div class="who">人物甲</div>
+          <div class="act">动作与神态描写：斜体、次要色、不加引号。</div>
+          <div class="say">"引号内为台词，正文亮色。"</div>
+        </div>
+        <div class="msg">
+          <div class="who">人物乙</div>
+          <div class="act">同上的动作行。</div>
+          <div class="say">"同上的台词行。"</div>
+        </div>
+        <div class="msg me">
+          <div class="who">你</div>
+          <div class="say">又一个玩家条目。</div>
+        </div>
+      </div>
+      <div class="tag" style="left:0;top:-18px">对话流 480×455（可滚）</div>
+      <div class="tag" style="left:0;top:14px">说话人 13px 金 · 动作 15px 斜体灰 · 台词 15px 亮</div>
+    </div>
+
+    <div class="inputbar">
+      <textarea class="field" placeholder="输入对话；*描述动作，[推动叙事]"></textarea>
+      <div class="btn end"  style="left:728px;top:16px">结束</div>
+      <div class="btn send" style="left:838px;top:16px">发送</div>
+    </div>
+    <div class="tag" style="left:18px;top:668px">输入框 700×56 · 内凹 · 可换行</div>
+    <div class="tag" style="left:728px;top:668px">结束 100×35</div>
+    <div class="tag" style="left:838px;top:668px">发送 110×35 · 空输入时 Disabled</div>
+    <div class="statusline">已选 <em>1</em> 人 · 状态说明行（计数 / 数据说明）</div>
+    <div class="tag" style="left:600px;top:608px">状态行 13px · 全宽</div>
+  </div>
+</div>
+
+<table>
+  <tr><th>区</th><th>控件</th><th>位置（px · 左上为原点）</th><th>尺寸</th><th>状态</th><th>复用 Brush</th></tr>
+  <tr><td>头带</td><td>标题</td><td class="m">18 / 8</td><td class="m">—</td><td class="m">20px</td><td class="m">—</td></tr>
+  <tr><td>头带</td><td>元信息一行</td><td class="m">18 / 35</td><td class="m">—</td><td class="m">13px · 竖线分隔</td><td class="m">—</td></tr>
+  <tr><td>头带</td><td>关闭键</td><td class="m">910 / 10</td><td class="m">40×40</td><td class="m">默认 / 悬停 / 按下</td><td class="m">Awake.Button.Close</td></tr>
+  <tr><td>模式行</td><td>模式一 / 模式二</td><td class="m">12 · 122 / 68</td><td class="m">105×35</td><td class="m">默认 / 悬停 / 按下 / <b>选中</b></td><td class="m">Awake.Button.Tab</td></tr>
+  <tr><td>模式行</td><td>历史</td><td class="m">843 / 68</td><td class="m">105×35</td><td class="m">默认 / 悬停 / 按下 / 选中</td><td class="m">Awake.Button.Tab</td></tr>
+  <tr><td>A 在场人物</td><td>人物条目 ×3</td><td class="m">12 · 137 / 228 / 319</td><td class="m">236×85</td><td class="m">默认 / 悬停 / <b>选中</b></td><td class="m">Awake.Item.Contact</td></tr>
+  <tr><td>A 在场人物</td><td>此处 · 质感槽</td><td class="m">12 / 483</td><td class="m">236×110</td><td class="m">静图</td><td class="m">新增（待定）</td></tr>
+  <tr><td>B 说话人</td><td>立绘槽</td><td class="m">258 / 111</td><td class="m">200×320</td><td class="m">静图 · 换人换图</td><td class="m">新增（待定）</td></tr>
+  <tr><td>C 对话</td><td>对话流</td><td class="m">468 / 137</td><td class="m">480×455</td><td class="m">滚动</td><td class="m">—</td></tr>
+  <tr><td>D 输入区</td><td>输入框</td><td class="m">18 / 610</td><td class="m">700×56</td><td class="m">空 / 聚焦 / 有字</td><td class="m">Awake.Panel.Input800</td></tr>
+  <tr><td>D 输入区</td><td>结束</td><td class="m">728 / 618</td><td class="m">100×35</td><td class="m">默认 / 悬停 / 按下</td><td class="m">Awake.Button.Secondary</td></tr>
+  <tr><td>D 输入区</td><td>发送</td><td class="m">838 / 618</td><td class="m">110×35</td><td class="m">默认 / 悬停 / 按下 / <b>禁用</b></td><td class="m">Awake.Button.Primary</td></tr>
+  <tr><td>D 输入区</td><td>状态说明行</td><td class="m">18 / 594</td><td class="m">满宽</td><td class="m">13px 弱色</td><td class="m">—</td></tr>
+</table>
+
+<div class="lg">
+  <b>本稿对"控件布局"改了四处</b><br>
+  1. <b>补两栏</b>：现稿只有「头带 + 模式 + 对话流 + 输入区」；本稿把 <b>在场人物</b>（列）与 <b>说话人</b>（卡）提出来，各占一栏。<br>
+  2. <b>模式行重排</b>：模式一/二靠左成组，<b>历史挪到最右</b> —— 它是"离开当前对话"，与前两个不是一类。<br>
+  3. <b>输入区补键</b>：现稿只有「输入框 + 发送」；补出 <b>结束</b>，并把 <b>状态说明行</b> 放到输入框正下方。<br>
+  4. <b>按钮状态补全</b>：发送键有禁用态（空输入），模式键与条目都有明确的选中态（金框 + 金条 + 底色），不靠"变亮一点"。<br>
+  <b>待你定的两处</b>：三栏是否瘦成两栏（480 的对话列是否够宽）；「此处」「立绘」两个图槽要不要保留。
+</div>
+
+<script>
+  var cb = document.getElementById('dt');
+  function apply(){ document.body.classList.toggle('dim', cb.checked); }
+  cb.addEventListener('change', apply); apply();
+
+  var actors = document.querySelectorAll('.actor');
+  actors.forEach(function(el){
+    el.addEventListener('click', function(){
+      actors.forEach(function(o){ o.classList.remove('on'); });
+      el.classList.add('on');
+      document.querySelector('.sp-nm').textContent = el.querySelector('.nm').textContent;
+      document.querySelector('.sp-id').textContent = el.querySelector('.id').textContent;
+      document.querySelector('.sp-rel').textContent = el.querySelector('.rel').textContent;
+    });
+  });
+
+  document.querySelectorAll('.btn.tab').forEach(function(el){
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.btn.tab').forEach(function(o){ o.classList.remove('on'); });
+      el.classList.add('on');
+    });
+  });
+
+  var field = document.querySelector('.field');
+  var sendBtn = document.querySelector('.btn.send');
+  function refresh(){ sendBtn.classList.toggle('off', !(field.value || '').trim()); }
+  field.addEventListener('input', refresh); refresh();
+
+  function send(){
+    var v = (field.value || '').trim();
+    if (!v) return;
+    var d = document.createElement('div');
+    d.className = 'msg me';
+    d.innerHTML = '<div class="who">你</div>';
+    var s = document.createElement('div'); s.className = 'say'; s.textContent = v;
+    d.appendChild(s);
+    document.querySelector('.convo-scroll').appendChild(d);
+    field.value = ''; refresh();
+  }
+  sendBtn.addEventListener('click', send);
+  field.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+</script>
+</body>
+</html>
