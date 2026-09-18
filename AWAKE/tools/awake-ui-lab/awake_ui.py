@@ -565,7 +565,7 @@ def cmd_check(args):
             shot_note = ("找不到 Chrome / Edge —— 用 --chrome <路径> 指定，"
                          "或设环境变量 AWAKE_UILAB_BROWSER")
         else:
-            shot_dir = os.path.join(out, "shot")
+            shot_dir = os.path.join(out, "render" if args.render else "shot")
             os.makedirs(shot_dir, exist_ok=True)
             for r in report:
                 fn = r["prefab"]
@@ -575,7 +575,8 @@ def cmd_check(args):
                 png = os.path.join(shot_dir, stem + ".png")
                 ok, html_path, _err = geo.render_shot(
                     collect[fn]["entries"], collect[fn], fn, png, browser,
-                    args.shot_label, args.shot_scale, r)
+                    args.shot_label, args.shot_scale, r,
+                    render=args.render, render_bg=args.render_bg)
                 if ok:
                     shots[fn] = {"png": _rel(png, out), "html": _rel(html_path, out)}
 
@@ -841,6 +842,11 @@ def main():
                    help="不截图（默认截图）")
     c.add_argument("--shot-label", choices=("none", "compact", "full"), default="compact")
     c.add_argument("--shot-scale", type=float, default=1.0)
+    c.add_argument("--render", action="store_true",
+                   help="出**真渲染**图（只画真贴图/真底色/真文字）到 out/render/，"
+                        "与几何图分开放，互不覆盖")
+    c.add_argument("--render-bg", default=None,
+                   help="真渲染的底板色（默认 %s）" % geo.RENDER_BG)
     c.add_argument("--chrome", help="Chrome / Edge 可执行文件路径（默认自动探测）")
     c.add_argument("--flow", dest="flow", action="store_true", default=True,
                    help="跑 C# 本地 Lab（E2 + 全量 fixture）并写进报告 flow 字段（默认开）")

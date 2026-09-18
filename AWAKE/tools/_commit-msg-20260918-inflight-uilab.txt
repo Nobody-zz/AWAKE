@@ -1,0 +1,19 @@
+在途修改收口（UI Lab 侧）：真渲染模式与按面板切属性表
+
+内容（3 个已跟踪文件的在途改动，落库归档；不表示由本线撰写）：
+- awake-ui-lab/awake_ui.py
+  check 新增 `--render` 与 `--render-bg`：出真渲染图落到 out/render/，
+  与几何推导图（out/shot/）分开放，互不覆盖。
+- awake-ui-lab/preview/preview_prefab_geometry.py（+286 行）
+  新增 RENDER_BG（深灰褐 #2B2825，面板在游戏里浮在 3D 场景上，中性暗底便于判读）；
+  render_shot 增 render / render_bg 两个开关：开=只画真贴图/真底色/真文字，
+  关（默认）=推导几何分析图。
+- awake-ui-lab/preview/ui_text_metrics.py（+113 行）
+  新增按面板切属性表：由 Overlay 文件里 `LoadMovie("X", ds)` 与 `new YVM()`
+  成对出现，解析出"面板名 -> ViewModel 类"，据此把同名属性
+  （TitleText / SendButtonText / NoticeText…）拆到各自面板，不再靠猜。
+  并记录属性定义来源（类名 + 文件 + id/字面量）。
+
+提交前核验：
+- 三件自洽 —— awake_ui.py 调用的 render_shot 新签名与 RENDER_BG 均在几何脚本中定义；
+- 三个 py 均过 ast.parse 语法自检。

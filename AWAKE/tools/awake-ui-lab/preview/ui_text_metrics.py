@@ -395,6 +395,9 @@ _RE_PROP_ARROW = re.compile(
 _RE_PROP_ASSIGN = re.compile(
     r'(?:^|[^\w.])(?P<prop>[A-Za-z_]\w*)\s*=\s*(?P<expr>[^;]+);')
 _RE_STR_LIT = re.compile(r'^"(?P<lit>(?:[^"\\]|\\.)*)"$')
+_RE_CLASS = re.compile(r'\b(?:class|struct)\s+(?P<cls>[A-Za-z_]\w*)')
+_RE_LOADMOVIE = re.compile(r'LoadMovie\(\s*"(?P<movie>[A-Za-z_]\w*)"')
+_RE_NEW_VM = re.compile(r'new\s+(?P<cls>[A-Za-z_]\w*VM)\s*\(')
 
 
 def _unescape(s):
@@ -411,7 +414,9 @@ class TextResolver(object):
 
     def __init__(self, src_dir, lang_dirs, language):
         self.language = language
-        self.props = {}        # 属性名 -> {"id":..., "fallback":...} 或 {"lit":...}
+        self.props = {}        # 属性名 -> {"id":..., "fallback":...} 或 {"lit":...}（全局，先到先得）
+        self.prop_defs = {}    # 属性名 -> {(类名, 来源文件, id 或字面量 或 None)}
+        self.vm_of_movie = {}  # 面板名 -> 它的 ViewModel 类名（由 LoadMovie + new XVm 定）
         self.strings = {}      # id -> text（当前语言）
         self.notes = []
         self._load_src(src_dir)
@@ -431,29 +436,86 @@ class TextResolver(object):
                                    errors="replace").read()
                 except Exception:  # noqa: BLE001
                     continue
-                self._scan_cs(text)
+                self._scan_cs(text, fn)
+                self._scan_overlay(text)
 
-    def _scan_cs(self, text):
-        for m in _RE_PROP_ARROW.finditer(text):
-            self._record(m.group("prop"), m.group("expr"))
-        for m in _RE_PROP_ASSIGN.finditer(text):
-            self._record(m.group("prop"), m.group("expr"), weak=True)
+    def _scan_overlay(self, text):
+        """面板名 -> ViewModel 类：一个 Overlay 文件里 `LoadMovie("X", ds)` 与
+        `new YVM(...)` 成对出现。这是**能把属性表按面板切开**的唯一依据 ——
+        没有它，同名属性（TitleText / SendButtonText / NoticeText…）只能猜。
+        """
+        movies = _RE_LOADMOVIE.findall(text)
+        vms = _RE_NEW_VM.findall(text)
+        if len(movies) == 1 and len(vms) >= 1:
+            self.vm_of_movie.setdefault(movies[0], vms[0])
 
-    def _record(self, prop, expr, weak=False):
-        if not prop or prop in self.props:
+    def _scan_cs(self, text, origin=""):
+        # 按类切段：属性必须归属到它所在的类。同一个属性名在不同类里可能是
+        # 完全不同的东西（运行时数据 vs 写死标题），不切开就判断不了。
+        marks = [(m.start(), m.group("cls")) for m in _RE_CLASS.finditer(text)]
+        if not marks:
+            self._scan_seg(text, "", origin)
             return
+        for i, (pos, cls) in enumerate(marks):
+            end = marks[i + 1][0] if i + 1 < len(marks) else len(text)
+            self._scan_seg(text[pos:end], cls, origin)
+
+    def _scan_seg(self, seg, cls, origin):
+        for m in _RE_PROP_ARROW.finditer(seg):
+            self._record(cls, m.group("prop"), m.group("expr"), origin)
+        for m in _RE_PROP_ASSIGN.finditer(seg):
+            self._record(cls, m.group("prop"), m.group("expr"), origin, weak=True)
+
+    def _record(self, cls, prop, expr, origin="", weak=False):
+        if not prop:
+            return
+        defs = self.prop_defs.setdefault(prop, set())
         r = _RE_RESOLVE.search(expr)
         if r:
-            self.props[prop] = {"id": r.group("id"), "fallback": _unescape(r.group("fb"))}
+            sid = r.group("id")
+            defs.add((cls, origin, sid))
+            self.props.setdefault(prop, {"id": sid, "fallback": _unescape(r.group("fb"))})
             return
         if "Resolve(" in expr:
             got = _resolve_args(expr)
             if got:
-                self.props[prop] = {"id": got[0], "fallback": got[1]}
+                defs.add((cls, origin, got[0]))
+                self.props.setdefault(prop, {"id": got[0], "fallback": got[1]})
                 return
         lit = _RE_STR_LIT.match(expr.strip())
         if lit and not weak:
-            self.props[prop] = {"lit": _unescape(lit.group("lit"))}
+            v = _unescape(lit.group("lit"))
+            defs.add((cls, origin, v))
+            self.props.setdefault(prop, {"lit": v})
+            return
+        # 没有 Resolve / 字面量 —— 说明这个属性是**运行时数据**
+        #（如 `=> _contact.DisplayName`、`StatusText = evt.Text`）。
+        # 也要记一笔，否则"重名"判据看不见它。
+        defs.add((cls, origin, None))
+
+    def is_static(self, prop, movie=None):
+        """该属性名能不能**按名**安全解析出静态文本。
+
+        判据按优先级：
+          1. 知道这个面板的 ViewModel 类（movie -> VM）时，只看**那个类里**的定义：
+             有 Resolve/字面量 ⇒ 可解；只有运行时实现或同名多份 ⇒ 不可解。
+          2. 不知道时，退回全体：所有定义必须**解出同一串字**才算可信。
+
+        为什么非要这么麻烦：游戏里 `@X` 的值来自运行时 DataSource，本无静态文本；
+        这里能解出字，只是因为项目把属性名取成了本地化 id 的同名。这个巧合在重名时
+        就崩了 —— 实测把对话面板的标题画成了「醒世 · 开发者检查」（那是别处的字符串）。
+        """
+        defs = self.prop_defs.get(prop)
+        if not defs:
+            return False
+        cls = self.vm_of_movie.get(movie) if movie else None
+        if cls:
+            mine = {(c, o, v) for (c, o, v) in defs if c == cls}
+            if mine:
+                vals = {v for (_c, _o, v) in mine}
+                return len(vals) == 1 and None not in vals
+        vals = {v for (_c, _o, v) in defs}
+        return len(vals) == 1 and None not in vals
 
     # ---- 语言文件
     def _load_langs(self, lang_dirs):
@@ -511,6 +573,24 @@ class TextResolver(object):
             return self.strings[sid]
         return info.get("fallback", "")
 
+    def resolve_strict(self, raw, movie=None):
+        """只解析**可信**的绑定。
+
+        游戏里 `@X` 的值来自运行时 DataSource，本来就没有静态文本；这里之所以能
+        解出字来，是因为项目把属性名取成了本地化 id 的同名。这个巧合在**重名**
+        （同属性名被多个类定义）时就不成立了 ⇒ 那种一律不解，返回 ""。
+
+        `movie` = 面板名（如 "NpcDialogue"）：给了就能只看**这个面板自己的
+        ViewModel**，同名属性不会再串到别的面板上。
+
+        给**真渲染**用：渲染图越像真的，串号越危险（没人会怀疑它）。
+        """
+        if not self.looks_bound(raw):
+            return raw
+        if not self.is_static(raw[1:], movie):
+            return ""
+        return self.resolve(raw)
+
     def coverage(self, names):
         hit = [n for n in names if n in self.props]
         return len(hit), len(names), [n for n in names if n not in self.props]
@@ -530,6 +610,13 @@ class Metrics(object):
     # -- 文本
     def resolve_text(self, raw):
         return self.texts.resolve(raw)
+
+    def resolve_text_strict(self, raw, movie=None):
+        """只解可信绑定（给真渲染用）。见 TextResolver.resolve_strict。"""
+        return self.texts.resolve_strict(raw, movie)
+
+    def is_static_binding(self, prop, movie=None):
+        return self.texts.is_static(prop, movie)
 
     # -- 字体与字号：显式 Brush.FontSize > Brush 定义 FontSize > 默认
     def font_and_size(self, attrs, default=16.0):

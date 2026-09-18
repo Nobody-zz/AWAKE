@@ -595,18 +595,24 @@ def font_size(node, default=16.0):
     return num(node.attrs.get("Brush.FontSize"), default)
 
 
-def display_text(node):
+def display_text(node, strict=False, movie=None):
     """要显示的文本。
 
     `Text="@属性名"` 是 Gauntlet 的 DataSource 绑定，不是字面量——装配了
     度量层时解成本地化真文本（「发送」/「离开」…）；解不出（运行时才有值的
     动态内容，如联系人名）就原样返回 `@名`，便于报告里看出是哪个绑定。
+
+    strict=True（真渲染用）：只认**可信**绑定，重名的属性名一律不解 ——
+    否则「按属性名查本地化」会串到别的面板的字符串上（实测踩过标题串号），
+    而渲染图看起来越像真的，这种错越不会被发现。`movie` 传面板名可进一步
+    限定只看该面板自己的 ViewModel。
     """
     for key in ("Text", "RealText", "Brush.Text"):
         v = node.attrs.get(key)
         if v is not None and v != "":
             if METRICS is not None and METRICS.texts.looks_bound(v):
-                resolved = METRICS.resolve_text(v)
+                resolved = (METRICS.resolve_text_strict(v, movie) if strict
+                            else METRICS.resolve_text(v))
                 return resolved if resolved else v
             return v
     return ""
@@ -700,13 +706,40 @@ def widget_sprite(node):
     return got, info[4], info[5], nine
 
 
+_REL_BASE = None
+
+
+def set_rel_base(d):
+    """设定"当前正在写的 HTML 所在目录"。
+
+    贴图的 href 一律按它算**相对路径**，而不是 file:/// 绝对地址：
+    绝对 file:/// 只在"直接用浏览器打开本地文件"时可用；一旦这份 HTML 被
+    经 http（127.0.0.1 预览服务、或任何静态服务器）打开，浏览器会按
+    "跨源/本地文件"策略把 file:/// 图片全部拦掉 ⇒ 页面只剩线框、没有质感。
+    相对路径两种打开方式都能用。
+    """
+    global _REL_BASE
+    _REL_BASE = os.path.abspath(d) if d else None
+
+
 def _file_url(p):
-    """本地文件 -> file:/// URI（SVG <image href> 用绝对地址，兼容 shot 的 html 位置）。"""
+    """本地文件 -> 适合写进 SVG <image href> 的地址。
+
+    有 _REL_BASE（正常路径）⇒ 输出相对路径；跨盘符等算不出相对时退回 file:///。
+    """
+    ap = os.path.abspath(p)
+    if _REL_BASE:
+        try:
+            rel = os.path.relpath(ap, _REL_BASE).replace("\\", "/")
+            if not rel.startswith(".." * 8):  # 防止盘符不同的怪相对路径
+                return rel
+        except ValueError:  # 不同盘符
+            pass
     try:
         from pathlib import Path
-        return Path(p).resolve().as_uri()
+        return Path(ap).as_uri()
     except Exception:  # noqa: BLE001
-        return "file:///" + os.path.abspath(p).replace("\\", "/")
+        return "file:///" + ap.replace("\\", "/")
 
 
 # ---------------------------------------------------------------- 尺寸估算
@@ -1141,6 +1174,44 @@ PALETTE = {
     "standard": ("#e0f7fa", 1.0, "#00838f"),
 }
 
+# ---------------------------------------------------------------- 真渲染模式
+#
+# 与「推导几何」的区别：几何图是**分析视图**（分类色底 ＋ 描边 ＋ 尺寸标注 ＋ 网格），
+# 真渲染是**外表视图**——只画真机会画出来的东西：真贴图（已按 Color 染色）、真底色、
+# 真文字。**不画**分类色、不画描边、不画标注、不画网格。
+#
+# 纪律：渲染模式下「什么也不画的容器」就当它透明（真机里就是透明），
+# 不拿分类色去补，否则又是分析图。
+
+RENDER_BG = "#2B2825"   # 深灰褐底：面板在游戏里是浮在 3D 场景上的，给个中性暗底便于判读
+RENDER_TEXT_FALLBACK = "#FFFFFF"   # 取不到 Brush.FontColor 时的字色（不编造别的颜色）
+
+# 游戏字体名 -> 本机可用的等价字体族。
+# 关键一条：游戏简中字体就叫 simkai（楷体），而 Windows 自带 simkai.ttf（族名 KaiTi）
+# ⇒ 中文字形几乎同源，不需要从 .tpac 里抠 8192×8192 的字形图集。
+# 用字体族名让浏览器自己找（file:// 与 http 都能解析），不复制字体文件。
+FONT_STACK = {
+    "simkai": 'KaiTi,STKaiti,"楷体",serif',
+    "galahad": '"Segoe UI",Tahoma,sans-serif',
+    "firasans": '"Segoe UI",Tahoma,sans-serif',
+    "nanumgothic": '"Malgun Gothic",sans-serif',
+    "sourcehansans": '"Yu Gothic UI","Microsoft YaHei",sans-serif',
+}
+FONT_STACK_DEFAULT = 'KaiTi,STKaiti,"楷体","Microsoft YaHei",serif'
+
+_ALIGN_ANCHOR = {"Left": "start", "Center": "middle", "CenterHorizontal": "middle",
+                 "Right": "end"}
+
+
+def font_stack(name):
+    """游戏字体名（如 "simkai" / "Galahad"）-> SVG font-family 串。"""
+    if name:
+        key = name.lower().replace(" ", "").replace("-", "").replace("_", "")
+        for k, v in FONT_STACK.items():
+            if k in key:
+                return v
+    return FONT_STACK_DEFAULT
+
 
 def is_mask(node):
     a = node.attrs
@@ -1177,8 +1248,90 @@ def info_text(e):
     return head + ("  |  " + "  ".join(bits) if bits else "")
 
 
+def sprite_tag(e, x, y, w, h):
+    """控件的真贴图 -> SVG <image> 标签串（无贴图返回 None）。
+
+    九宫格 Brush 先按 Extend* 预合成目标尺寸的 PNG（四角原样、边单向拉伸），
+    其余（图标/背景/程序块）整体拉伸铺满。贴图已按控件 Color 染过色
+    （见 widget_sprite -> ATLAS.tint_png），所以这里不再叠任何颜色。
+    """
+    spr = widget_sprite(e.node)
+    if spr is None:
+        return None
+    spath, sw, sh, nine = spr
+    alpha_attr = e.node.attrs.get("AlphaFactor")
+    opa = ""
+    if alpha_attr:
+        try:
+            opa = ' opacity="%s"' % max(0.0, min(1.0, float(alpha_attr)))
+        except ValueError:
+            pass
+    if nine:
+        composed = ATLAS.nine_png(spath, nine, w, h)
+        if composed:
+            spath, opa = composed, ""  # 合成时不透明度由像素本身携带
+    return ('<image pointer-events="none" x="%s" y="%s" width="%s" height="%s" '
+            'href="%s" preserveAspectRatio="none"%s/>'
+            % (x, y, w, h, esc(_file_url(spath)), opa))
+
+
+def text_layer(entries, vx, vy, vw, vh, movie=None):
+    """真文字层：按**游戏真字体**（简中=楷体）、真字号、真字色、真对齐画。
+
+    只画**能解出内容**的文本；`Text="@绑定名"` 那种运行时才有值的（联系人名之类）
+    解不出就不画 —— 渲染图里不留假字，也不留占位符。
+    """
+    out = []
+    for e in entries:
+        if not is_text(e.node.tag):
+            continue
+        txt = display_text(e.node, strict=True, movie=movie)
+        if not is_known_text(txt):
+            continue
+        x, y, w, h = [round(v, 1) for v in e.rect]
+        if w <= 0 or h <= 0:
+            continue
+        if x + w < vx or y + h < vy or x > vx + vw or y > vy + vh:
+            continue
+        fs = font_size(e.node, 16.0)
+        if fs <= 0:
+            continue
+        col = widget_color(e.node)
+        fill = col[0] if col else RENDER_TEXT_FALLBACK
+        alpha = col[1] if col else 1.0
+        op = ' fill-opacity="%g"' % round(alpha, 3) if alpha < 1 else ""
+
+        a = e.node.attrs
+        anchor = _ALIGN_ANCHOR.get(a.get("HorizontalAlignment") or "", "start")
+        if anchor == "middle":
+            tx = x + w / 2.0
+        elif anchor == "end":
+            tx = x + w
+        else:
+            tx = x
+        valign = a.get("VerticalAlignment") or "Center"
+        lh = fs * 1.45
+        if METRICS is not None:
+            try:
+                lh = METRICS.line_height(text_font(e.node), fs) or lh
+            except Exception:  # noqa: BLE001
+                pass
+        asc = lh * 0.78          # .fnt 的 base/lineHeight ≈ 30/41
+        if valign == "Top":
+            ty = y + asc
+        elif valign == "Bottom":
+            ty = y + h - (lh - asc)
+        else:
+            ty = y + (h - lh) / 2.0 + asc
+        out.append('<text pointer-events="none" x="%s" y="%s" font-family="%s" '
+                   'font-size="%g" fill="%s"%s text-anchor="%s">%s</text>'
+                   % (round(tx, 1), round(ty, 1), font_stack(text_font(e.node)),
+                      round(fs, 2), fill, op, anchor, esc(txt)))
+    return out
+
+
 def svg_for(entries, panel_name, scale_note, view=None, label_mode="full",
-            fixed_size=None, show_note=True):
+            fixed_size=None, show_note=True, render=False, render_bg=None):
     vx, vy, vw, vh = view if view else (0.0, 0.0, float(CANVAS_W), float(CANVAS_H))
     if fixed_size:
         size_attr = 'width="%d" height="%d"' % (int(fixed_size[0]), int(fixed_size[1]))
@@ -1189,21 +1342,24 @@ def svg_for(entries, panel_name, scale_note, view=None, label_mode="full",
                  '%s preserveAspectRatio="xMidYMid meet" '
                  'font-family="-apple-system,Segoe UI,Microsoft YaHei,sans-serif">'
                  % (round(vx, 1), round(vy, 1), round(vw, 1), round(vh, 1), size_attr))
-    parts.append('<rect x="%s" y="%s" width="%s" height="%s" fill="#fafafa" stroke="#dadce0"/>'
-                 % (round(vx, 1), round(vy, 1), round(vw, 1), round(vh, 1)))
+    parts.append('<rect x="%s" y="%s" width="%s" height="%s" fill="%s" stroke="%s"/>'
+                 % (round(vx, 1), round(vy, 1), round(vw, 1), round(vh, 1),
+                    (render_bg or RENDER_BG) if render else "#fafafa",
+                    "none" if render else "#dadce0"))
 
-    # 50px 网格（仅作视觉参考，不对应原版栅格）
-    step = 50
-    gx = math.ceil(vx / step) * step
-    while gx < vx + vw:
-        parts.append('<line x1="%d" y1="%s" x2="%d" y2="%s" stroke="#eeeeee" stroke-width="1"/>'
-                     % (gx, round(vy, 1), gx, round(vy + vh, 1)))
-        gx += step
-    gy = math.ceil(vy / step) * step
-    while gy < vy + vh:
-        parts.append('<line x1="%s" y1="%d" x2="%s" y2="%d" stroke="#eeeeee" stroke-width="1"/>'
-                     % (round(vx, 1), gy, round(vx + vw, 1), gy))
-        gy += step
+    if not render:
+        # 50px 网格（仅作视觉参考，不对应原版栅格）——渲染模式下不要，它不属于画面
+        step = 50
+        gx = math.ceil(vx / step) * step
+        while gx < vx + vw:
+            parts.append('<line x1="%d" y1="%s" x2="%d" y2="%s" stroke="#eeeeee" stroke-width="1"/>'
+                         % (gx, round(vy, 1), gx, round(vy + vh, 1)))
+            gx += step
+        gy = math.ceil(vy / step) * step
+        while gy < vy + vh:
+            parts.append('<line x1="%s" y1="%d" x2="%s" y2="%d" stroke="#eeeeee" stroke-width="1"/>'
+                         % (round(vx, 1), gy, round(vx + vw, 1), gy))
+            gy += step
 
     # 两段式：先画全部分类色矩形，再统一画贴图。
     # 为什么：XML 里后出现的兄弟容器（如消息列表 ScrollablePanel）的分类色底是
@@ -1215,6 +1371,25 @@ def svg_for(entries, panel_name, scale_note, view=None, label_mode="full",
             continue
         if x + w < vx or y + h < vy or x > vx + vw or y > vy + vh:
             continue
+        if render:
+            # 真渲染：文字留给后面的文字层（要用真字号/对齐）；其余只画真会画出来的东西。
+            if is_text(e.node.tag):
+                continue
+            tag = sprite_tag(e, x, y, w, h)
+            if tag is not None:
+                imgs.append(tag)
+                continue
+            col = widget_color(e.node)
+            # 只有控件自己的 Color= 才是「底色」；Brush 的 FontColor 是字色，
+            # 拿去填容器会把透明容器画成一块字色板 —— 那又是编造。
+            if col is not None and col[2] == "attr":
+                hexv, alpha = col[0], col[1]
+                op = ' fill-opacity="%s"' % alpha if alpha < 1 else ""
+                parts.append('<rect x="%s" y="%s" width="%s" height="%s" fill="%s"%s/>'
+                             % (x, y, w, h, hexv, op))
+            # 三样都没有 ⇒ 真机里它什么都不画，这里也不画（不拿分类色补）
+            continue
+
         kind = "mask" if is_mask(e.node) else e.kind
         fill, opacity, stroke = PALETTE.get(kind, PALETTE["container"])
         dash = ' stroke-dasharray="4 3"' if kind in ("list", "scroll") else ""
@@ -1235,29 +1410,19 @@ def svg_for(entries, panel_name, scale_note, view=None, label_mode="full",
                      'fill="%s"%s stroke="%s" stroke-width="%s"%s/>'
                      % (esc(info_text(e)), x, y, w, h, fill, op, stroke,
                         1.6 if e.depth <= 2 else 1.0, dash))
-        # 质感线：有原版贴图就铺上。九宫格 Brush 先按 Extend* 预合成目标尺寸的 PNG
-        #（四角原样、边单向拉伸），其余（图标/背景/程序块）整体拉伸铺满。
-        spr = widget_sprite(e.node)
-        if spr is not None:
-            spath, sw, sh, nine = spr
-            alpha_attr = e.node.attrs.get("AlphaFactor")
-            opa = ""
-            if alpha_attr:
-                try:
-                    opa = ' opacity="%s"' % max(0.0, min(1.0, float(alpha_attr)))
-                except ValueError:
-                    pass
-            if nine:
-                composed = ATLAS.nine_png(spath, nine, w, h)
-                if composed:
-                    spath, opa = composed, ""  # 合成时不透明度由像素本身携带
-            imgs.append('<image pointer-events="none" x="%s" y="%s" width="%s" height="%s" '
-                        'href="%s" preserveAspectRatio="none"%s/>'
-                        % (x, y, w, h, esc(_file_url(spath)), opa))
+        # 质感线：有原版贴图就铺上。
+        tag = sprite_tag(e, x, y, w, h)
+        if tag is not None:
+            imgs.append(tag)
     parts.extend(imgs)
 
-    # 标签层（后画，保证在最上；不吃鼠标事件）
-    if label_mode != "none":
+    if render:
+        # 面板名（去掉 .xml）= Gauntlet 的电影名 = 找它自己 ViewModel 的钥匙
+        movie = os.path.splitext(os.path.basename(panel_name or ""))[0] or None
+        parts.extend(text_layer(entries, vx, vy, vw, vh, movie))
+
+    # 标签层（后画，保证在最上；不吃鼠标事件）。渲染模式下整层不要。
+    if label_mode != "none" and not render:
         for e in entries:
             x, y, w, h = [round(v, 1) for v in e.rect]
             if x + w < vx or y + h < vy or x > vx + vw or y > vy + vh:
@@ -1613,6 +1778,7 @@ def build(prefab_dir, out_dir, rows, only=None, render=True, collect=None, nativ
                            "panel_w": panel_w, "panel_h": panel_h}
 
         if render:
+            set_rel_base(out_dir)   # 贴图按相对 index.html 的路径写，http/file 两种打开都可用
             svg_full = svg_for(entries, fn, "%s · 全画布 %d×%d · 推导几何（非渲染）"
                                % (fn, CANVAS_W, CANVAS_H))
             svg_zoom = svg_for(entries, fn, "%s · 面板特写 · 推导几何（非渲染）" % fn, closeup)
@@ -1754,15 +1920,16 @@ def find_browser(explicit=None):
 SHOT_PAGE = """<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8"/><title>__TITLE__</title>
 <style>
-  html,body { margin:0; padding:0; background:#ffffff; }
+  html,body { margin:0; padding:0; background:__PAGEBG__; }
   .cap { height:26px; padding:0 10px; color:#5f6368;
          font:13px/26px -apple-system,"Segoe UI","Microsoft YaHei",sans-serif; }
   .cap b { color:#202124; }
   .foot { height:22px; padding:0 10px; color:#80868b;
           font:12px/22px -apple-system,"Segoe UI","Microsoft YaHei",sans-serif; }
+  __DARKCSS__
 </style></head>
 <body>
-<div class="cap"><b>__TITLE__</b> · 推导几何（非渲染） · 面板 __PW__×__PH__</div>
+<div class="cap"><b>__TITLE__</b> · __CAPTXT__ · 面板 __PW__×__PH__</div>
 __SVG__
 <div class="foot">控件 __WC__ · 问题 __IC__ 处（5 系违规 __GV__）· 基准：原版 5 的倍数栅格 · 最终验收以游戏内真机为准</div>
 </body></html>
@@ -1771,18 +1938,35 @@ __SVG__
 CAP_H = 26
 FOOT_H = 22
 
+DARK_CSS = ('html,body { background:%s; }\n'
+            '  .cap { color:#a8a29a; } .cap b { color:#efe9df; }\n'
+            '  .foot { color:#8d8880; }' % RENDER_BG)
 
-def render_shot(entries, meta, fn, out_png, browser, label_mode, scale, stats):
-    """把单个面板画成干净页（无导航 / 无悬停条），再用无头浏览器截成 PNG。"""
+
+def render_shot(entries, meta, fn, out_png, browser, label_mode, scale, stats,
+                render=False, render_bg=None):
+    """把单个面板画成干净页（无导航 / 无悬停条），再用无头浏览器截成 PNG。
+
+    render=True 时出的是**真渲染**（只画真贴图/真底色/真文字，无网格无标注无分类色），
+    render=False（默认）时出的是**推导几何**分析图。
+    """
     _, _, vw, vh = meta["closeup"]
     svg_w = int(math.ceil(vw))
     svg_h = int(math.ceil(vh))
     page_w = svg_w
     page_h = svg_h + CAP_H + FOOT_H
 
+    bg = render_bg or RENDER_BG
+    html_path = os.path.splitext(out_png)[0] + ".html"
+    set_rel_base(os.path.dirname(html_path))   # 贴图相对 shot/*.html 写
     svg = svg_for(entries, fn, "", view=meta["closeup"], label_mode=label_mode,
-                  fixed_size=(svg_w, svg_h), show_note=False)
+                  fixed_size=(svg_w, svg_h), show_note=False,
+                  render=render, render_bg=bg)
     page = (SHOT_PAGE
+            .replace("__PAGEBG__", bg if render else "#ffffff")
+            .replace("__DARKCSS__", DARK_CSS if render else "")
+            .replace("__CAPTXT__", "真渲染（贴图/底色/字体按游戏口径）" if render
+                     else "推导几何（非渲染）")
             .replace("__TITLE__", esc(fn))
             .replace("__PW__", str(meta["panel_w"]))
             .replace("__PH__", str(meta["panel_h"]))
@@ -1791,7 +1975,6 @@ def render_shot(entries, meta, fn, out_png, browser, label_mode, scale, stats):
             .replace("__IC__", str(stats.get("issue_count", 0)))
             .replace("__GV__", str(stats.get("grid_violations", 0))))
 
-    html_path = os.path.splitext(out_png)[0] + ".html"
     with io.open(html_path, "w", encoding="utf-8") as fh:
         fh.write(page)
 
@@ -1858,7 +2041,8 @@ def _run_shot(args):
             os.makedirs(parent, exist_ok=True)
         ok, html_path, err = render_shot(collect[fn]["entries"], collect[fn], fn,
                                          out_png, browser, args.shot_label,
-                                         args.shot_scale, r)
+                                         args.shot_scale, r,
+                                         render=args.render, render_bg=args.render_bg)
         size = os.path.getsize(out_png) if os.path.isfile(out_png) else 0
         if ok:
             done += 1
@@ -1943,6 +2127,10 @@ def main():
     ap.add_argument("--shot-label", choices=("none", "compact", "full"), default="compact",
                     help="截图标签：none 纯线框 / compact 只标尺寸（默认）/ full 标类型名")
     ap.add_argument("--shot-scale", type=float, default=1.0, help="截图缩放（默认 1.0）")
+    ap.add_argument("--render", action="store_true",
+                    help="真渲染：只画真贴图/真底色/真文字，无网格无标注无分类色")
+    ap.add_argument("--render-bg", default=None,
+                    help="真渲染的底板色（默认 %s）" % RENDER_BG)
     ap.add_argument("--chrome", help="Chrome / Edge 可执行文件路径（默认自动探测）")
     ap.add_argument("--native-dir", help="原版 Modules 目录（或某个 Prefabs 目录）；"
                                          "用于展开原版 Prefab 引用，默认自动探测")
