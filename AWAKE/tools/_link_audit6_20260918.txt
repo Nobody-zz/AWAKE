@@ -1,0 +1,42 @@
+=== ① 互提（双向）对按类别组合 ===
+  geography.castles          ↔ geography.villages         262
+  war.weapons                ↔ war.weapons                  6
+  geography.towns            ↔ politics.throne              6
+  geography.lakes            ↔ geography.towns              6
+  geography.mountains        ↔ geography.villages           6
+  geography.seas             ↔ geography.towns              4
+  geography.rivers           ↔ geography.villages           4
+  geography.mountains        ↔ geography.towns              4
+  geography.towns            ↔ politics.territories         4
+  geography.seas             ↔ geography.villages           2
+  组合数 35，合计 304（双向有向边；对数为 177）
+
+=== ② 度最高的条目（排除类别星形边）===
+  入度最高（谁被最多条目提到）：
+    geography.lakes-lakonis                  入  39  出  4  《拉科尼斯湖·水陆与生计》
+    culture.tales-lakonis-red-water          入  29  出  0  《拉科尼斯湖·水为何变红》
+    geography.peninsulas-kachar              入  27  出  3  《卡恰尔半岛·地要与用兵》
+    geography.lakes-tanaesis                 入  27  出  6  《塔奈西斯湖》
+    geography.seas-perassic                  入  24  出 10  《珀拉斯海》
+    culture.tales-kachar-rulership           入  22  出  0  《卡恰尔半岛·归谁所有》
+    politics.territories-kachar-ownership    入  22  出  0  《卡恰尔半岛·归属沿革》
+    economy.goods-deriat                     入  22  出 10  《德里亚特·毛皮生计》
+  出度最高：
+    geography.seas-perassic                  出  10  入 24  《珀拉斯海》
+    economy.goods-deriat                     出  10  入 22  《德里亚特·毛皮生计》
+    geography.castles-caleus-castle          出   8  入  3  《卡琉斯堡》
+    geography.castles-pendraic-castle        出   8  入  3  《潘德拉克堡》
+    geography.villages-deriat                出   8  入  2  《德里亚特》
+    geography.villages-dvorusta              出   8  入  1  《德沃鲁斯塔》
+    geography.castles-nevyansk-castle        出   7  入  2  《涅维扬斯克堡》
+    geography.castles-garontor-castle        出   7  入  4  《加隆托堡》
+
+=== ③ 单向边若反向使用，中心节点会新增多少连接 ===
+    geography.lakes-lakonis                  反向新增  38（其一侧单向）《拉科尼斯湖·水陆与生计》
+    culture.tales-lakonis-red-water          反向新增  29（其一侧单向）《拉科尼斯湖·水为何变红》
+    geography.peninsulas-kachar              反向新增  26（其一侧单向）《卡恰尔半岛·地要与用兵》
+    geography.lakes-tanaesis                 反向新增  24（其一侧单向）《塔奈西斯湖》
+    culture.tales-kachar-rulership           反向新增  22（其一侧单向）《卡恰尔半岛·归谁所有》
+    politics.territories-kachar-ownership    反向新增  22（其一侧单向）《卡恰尔半岛·归属沿革》
+    geography.seas-perassic                  反向新增  21（其一侧单向）《珀拉斯海》
+    geography.towns-varcheg                  反向新增  19（其一侧单向）《瓦尔切格》
