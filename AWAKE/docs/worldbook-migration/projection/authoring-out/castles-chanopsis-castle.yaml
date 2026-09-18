@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-chanopsis-castle
+title:
+  zh-CN: 卡诺普西斯堡
+  en: Chanopsis Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 卡诺普西斯堡
+  - 卡诺普西斯
+  - 波普西亚
+  en:
+  - Chanopsis Castle
+  - castle_ES8
+  - Chanopsis
+  - Popsia
+entity_ids:
+- entity.settlement.castle_es8
+summary:
+  zh-CN: 卡诺普西斯堡是南帝国守在塞堤斯河源头的一座城堡，辖着卡诺普西斯与波普西亚两村；平原上种麦，峡里伐松卖木。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_ES8
+  quote_hash: 872FC370CEAFD8DA7F91E7BE091CF8D38F1A54285840D587321908F7017D083D
+  quote: 卡诺普西斯堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-chanopsis-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 卡诺普西斯堡是南帝国守在塞堤斯河源头的一座城堡，辖着卡诺普西斯与波普西亚两村；平原上种麦，峡里伐松卖木。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_ES8
+    quote_hash: 872FC370CEAFD8DA7F91E7BE091CF8D38F1A54285840D587321908F7017D083D
+    quote: 卡诺普西斯堡
+  expressions:
+  - id: expr.castle-chanopsis-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 卡诺普西斯堡的人说，河从咱脚底下冒出来，堡子就压在源头。村里人说，峡谷里松树长得高，砍一棵能卖不少。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_ES8
+      quote_hash: 872FC370CEAFD8DA7F91E7BE091CF8D38F1A54285840D587321908F7017D083D
+      quote: 卡诺普西斯堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-chanopsis-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 卡诺普西斯堡据密泽亚德高原塞堤斯河源，下辖粮村与林农村各一；麦子上仓、松木循河下运，河源水口与林界由堡里勘定，运木之役按户摊派。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_ES8
+      quote_hash: 872FC370CEAFD8DA7F91E7BE091CF8D38F1A54285840D587321908F7017D083D
+      quote: 卡诺普西斯堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

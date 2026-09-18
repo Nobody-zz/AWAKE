@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-korsyas
+title:
+  zh-CN: 科尔夏斯
+  en: Korsyas
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 科尔夏斯
+  en:
+  - Korsyas
+  - village_S7_1
+summary:
+  zh-CN: 科尔夏斯位于瓦尔切格湾最窄处的旁边；村民出海向西，捕捞鳕鱼、鲑鱼和其他冒险游进湾里的冷水鱼。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#village_S7_1
+  quote_hash: A7289252030B0B43C5E4FBB0BBA97E088B71CE24332B9F0EA1DE4AB77973817C
+  quote: 科尔夏斯位于瓦尔切格湾最狭窄处旁。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-korsyas-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 科尔夏斯位于瓦尔切格湾最窄处的旁边；村民出海向西，捕捞鳕鱼、鲑鱼和其他冒险游进湾里的冷水鱼。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#village_S7_1
+    quote_hash: A7289252030B0B43C5E4FBB0BBA97E088B71CE24332B9F0EA1DE4AB77973817C
+    quote: 科尔夏斯位于瓦尔切格湾最狭窄处旁。
+  expressions:
+  - id: expr.village-korsyas-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 科尔夏斯的人看天出海。村里人说湾口一窄，风就急——鱼是好鱼，可命比鱼要紧。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#village_S7_1
+      quote_hash: A7289252030B0B43C5E4FBB0BBA97E088B71CE24332B9F0EA1DE4AB77973817C
+      quote: 科尔夏斯位于瓦尔切格湾最狭窄处旁。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-korsyas-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 科尔夏斯以湾口海渔为业——临窄口、通外海；鳕鱼多腌藏、鲑鱼走鲜货，按鱼种与鲜度分等，风急浪高即停船，冬汛最险也最丰。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#village_S7_1
+      quote_hash: A7289252030B0B43C5E4FBB0BBA97E088B71CE24332B9F0EA1DE4AB77973817C
+      quote: 科尔夏斯位于瓦尔切格湾最狭窄处旁。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

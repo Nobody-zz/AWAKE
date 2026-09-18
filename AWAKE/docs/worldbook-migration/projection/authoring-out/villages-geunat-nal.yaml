@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-geunat-nal
+title:
+  zh-CN: 格纳特·纳尔
+  en: Geunat Nal
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 格纳特·纳尔
+  en:
+  - Geunat Nal
+  - village_B3_2
+summary:
+  zh-CN: 格纳特·纳尔是巴旦尼亚传说中决斗之地附近的一座村庄，据传纳尔在此留下自己的头颅；村民以出众的护林本领闻名，帮着附近悬崖上的卡·班塞斯要塞抵挡斯特吉亚人和其他掠夺者，守着巴旦尼亚的腹地。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-battania
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+  locator: bannerlord.villages#village_B3_2
+  quote_hash: D30B129541A3318824DF44B436D23B792D8E95714BCFB49B4251835A94BA4B9E
+  quote: 格纳特·纳尔是巴旦尼亚传说中决斗之地附近的一座村庄，据传纳尔在此留下了他的头颅。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-geunat-nal-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 格纳特·纳尔是巴旦尼亚传说中决斗之地附近的一座村庄，据传纳尔在此留下自己的头颅；村民以出众的护林本领闻名，帮着附近悬崖上的卡·班塞斯要塞抵挡斯特吉亚人和其他掠夺者，守着巴旦尼亚的腹地。
+  sources:
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#village_B3_2
+    quote_hash: D30B129541A3318824DF44B436D23B792D8E95714BCFB49B4251835A94BA4B9E
+    quote: 格纳特·纳尔是巴旦尼亚传说中决斗之地附近的一座村庄，据传纳尔在此留下了他的头颅。
+  expressions:
+  - id: expr.village-geunat-nal-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 格纳特·纳尔的人走在林子里没声。村里人说外人进谷先看见树，我们进谷先看见人——守的是那道崖。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B3_2
+      quote_hash: D30B129541A3318824DF44B436D23B792D8E95714BCFB49B4251835A94BA4B9E
+      quote: 格纳特·纳尔是巴旦尼亚传说中决斗之地附近的一座村庄，据传纳尔在此留下了他的头颅。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-geunat-nal-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 格纳特·纳尔以护林据险为业——熟林道、善设伏；族人按村落编伍轮流守崖，报警用号角与烟，林货与山货是常产，战时先顾要塞。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B3_2
+      quote_hash: D30B129541A3318824DF44B436D23B792D8E95714BCFB49B4251835A94BA4B9E
+      quote: 格纳特·纳尔是巴旦尼亚传说中决斗之地附近的一座村庄，据传纳尔在此留下了他的头颅。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

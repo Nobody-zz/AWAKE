@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-pack_camel
+title:
+  zh-CN: 驮运骆驼
+  en: Pack Camel
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 驮运骆驼
+  - Horse
+  en:
+  - pack_camel
+summary:
+  zh-CN: 驮运骆驼是沙地商路上的大王，耐渴耐热，沙漠商队的命根子。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+  locator: bannerlord.items#pack_camel
+  quote_hash: 98B48BD6150BD818B2159270A6010D633D561F08A7175C65BF0075AB82330D6D
+  quote: 驮运骆驼 | Horse | 基准价 220 | 负重 520 | 冲撞 4 | 速度 35 | 操控 39
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.item-pack_camel-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 驮运骆驼是沙地商路上的大王，耐渴耐热，沙漠商队的命根子。
+  sources:
+  - source_id: source.calradia.game.items
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+    locator: bannerlord.items#pack_camel
+    quote_hash: 98B48BD6150BD818B2159270A6010D633D561F08A7175C65BF0075AB82330D6D
+    quote: 驮运骆驼 | Horse | 基准价 220 | 负重 520 | 冲撞 4 | 速度 35 | 操控 39
+  expressions:
+  - id: expr.item-pack_camel-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 听说沙漠里马走不了，全靠骆驼。那家伙几天不喝水照样走，沙漠商队离了它就得埋沙子里。
+    sources:
+    - source_id: source.calradia.game.items
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+      locator: bannerlord.items#pack_camel
+      quote_hash: 98B48BD6150BD818B2159270A6010D633D561F08A7175C65BF0075AB82330D6D
+      quote: 驮运骆驼 | Horse | 基准价 220 | 负重 520 | 冲撞 4 | 速度 35 | 操控 39
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.item-pack_camel-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 驮运骆驼基准价 220，贵过骡马一截，但穿沙漠只有它行。接沙漠单子，骆驼和向导的钱都得先算进本里。
+    sources:
+    - source_id: source.calradia.game.items
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+      locator: bannerlord.items#pack_camel
+      quote_hash: 98B48BD6150BD818B2159270A6010D633D561F08A7175C65BF0075AB82330D6D
+      quote: 驮运骆驼 | Horse | 基准价 220 | 负重 520 | 冲撞 4 | 速度 35 | 操控 39
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-ezbet-nahul
+title:
+  zh-CN: 艾兹贝特·纳胡勒
+  en: Ezbet Nahul
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 艾兹贝特·纳胡勒
+  en:
+  - Ezbet Nahul
+  - village_A8_1
+summary:
+  zh-CN: 艾兹贝特·纳胡勒位于俯瞰「拜赫尔·耶什姆」（翡翠之海）的多岩山角上，村民以水井取石缝间积蓄的地下水灌溉麦田。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+  locator: bannerlord.villages#village_A8_1
+  quote_hash: 0D898561A72DE470BF62A2BD962105376666DDC92F6936531D924108FC3F5659
+  quote: 艾兹贝特·纳胡勒位于俯瞰着阿塞莱人称作“拜赫尔·耶什姆”，即“翡翠之海”一处多岩山角上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-ezbet-nahul-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 艾兹贝特·纳胡勒位于俯瞰「拜赫尔·耶什姆」（翡翠之海）的多岩山角上，村民以水井取石缝间积蓄的地下水灌溉麦田。
+  sources:
+  - source_id: source.calradia.game.villages-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+    locator: bannerlord.villages#village_A8_1
+    quote_hash: 0D898561A72DE470BF62A2BD962105376666DDC92F6936531D924108FC3F5659
+    quote: 艾兹贝特·纳胡勒位于俯瞰着阿塞莱人称作“拜赫尔·耶什姆”，即“翡翠之海”一处多岩山角上。
+  expressions:
+  - id: expr.village-ezbet-nahul-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 艾兹贝特·纳胡勒的麦田全靠石头缝里攒的水。哪条缝养哪块田，村里的水账比婚书还郑重。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#village_A8_1
+      quote_hash: 0D898561A72DE470BF62A2BD962105376666DDC92F6936531D924108FC3F5659
+      quote: 艾兹贝特·纳胡勒位于俯瞰着阿塞莱人称作“拜赫尔·耶什姆”，即“翡翠之海”一处多岩山角上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-ezbet-nahul-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 艾兹贝特·纳胡勒的水账是产权核心——井与石缝水源绑定地块；傍着加西拉的泉水名号，麦价能多讲一分。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#village_A8_1
+      quote_hash: 0D898561A72DE470BF62A2BD962105376666DDC92F6936531D924108FC3F5659
+      quote: 艾兹贝特·纳胡勒位于俯瞰着阿塞莱人称作“拜赫尔·耶什姆”，即“翡翠之海”一处多岩山角上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

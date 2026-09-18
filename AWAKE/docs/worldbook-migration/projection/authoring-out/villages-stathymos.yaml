@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-stathymos
+title:
+  zh-CN: 斯塔堤摩斯
+  en: Stathymos
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 斯塔堤摩斯
+  en:
+  - Stathymos
+  - village_EN1_2
+summary:
+  zh-CN: 斯塔堤摩斯位于德律亚山脉高耸山脊下的一条狭长山谷中；高地溪流灌溉着山坡上的沃土，使该地区成为帝国北方的粮仓之一。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_EN1_2
+  quote_hash: 27926C30EB65C2F808E3565D56D2B3F2318D2F491C5A15B37C344DFDB7891427
+  quote: 斯塔堤摩斯位于德律亚山脉高耸山脊下的一条狭长山谷中。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-stathymos-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 斯塔堤摩斯位于德律亚山脉高耸山脊下的一条狭长山谷中；高地溪流灌溉着山坡上的沃土，使该地区成为帝国北方的粮仓之一。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EN1_2
+    quote_hash: 27926C30EB65C2F808E3565D56D2B3F2318D2F491C5A15B37C344DFDB7891427
+    quote: 斯塔堤摩斯位于德律亚山脉高耸山脊下的一条狭长山谷中。
+  expressions:
+  - id: expr.village-stathymos-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 斯塔堤摩斯的麦子是活水喂大的。村里人说山脊把水揽下来，一条谷都是粮。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EN1_2
+      quote_hash: 27926C30EB65C2F808E3565D56D2B3F2318D2F491C5A15B37C344DFDB7891427
+      quote: 斯塔堤摩斯位于德律亚山脉高耸山脊下的一条狭长山谷中。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-stathymos-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 斯塔堤摩斯的麦产靠高地溪灌——山谷狭长、连片田少，收粮分片走；溪水旺的年头麦粒压秤，是北方囤粮的重点货。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EN1_2
+      quote_hash: 27926C30EB65C2F808E3565D56D2B3F2318D2F491C5A15B37C344DFDB7891427
+      quote: 斯塔堤摩斯位于德律亚山脉高耸山脊下的一条狭长山谷中。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

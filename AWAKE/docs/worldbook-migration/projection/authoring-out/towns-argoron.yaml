@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-argoron
+title:
+  zh-CN: 阿耳戈隆
+  en: Argoron
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿耳戈隆
+  en:
+  - Argoron
+  - town_EN4
+summary:
+  zh-CN: 阿耳戈隆位于涅维斯河入拉科尼斯湖的河口，原住拉科尼亚人自愿拥抱帝国、通婚同化，古语言风俗尽失。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_EN4
+  quote_hash: 8939BEBBDED4250C2906CCAE785C1EEE24D3358827D28FF5C8F67C88D9822091
+  quote: 阿耳戈隆城位于冰冷缓慢的涅维斯河汇入拉科尼斯湖的河口处。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-argoron-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿耳戈隆位于涅维斯河入拉科尼斯湖的河口，原住拉科尼亚人自愿拥抱帝国、通婚同化，古语言风俗尽失。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EN4
+    quote_hash: 8939BEBBDED4250C2906CCAE785C1EEE24D3358827D28FF5C8F67C88D9822091
+    quote: 阿耳戈隆城位于冰冷缓慢的涅维斯河汇入拉科尼斯湖的河口处。
+  expressions:
+  - id: expr.town-argoron-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿耳戈隆人是自愿跟着帝国人的，婚也通了话也忘了。老人们说起祖宗的话，只剩几个地名。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EN4
+      quote_hash: 8939BEBBDED4250C2906CCAE785C1EEE24D3358827D28FF5C8F67C88D9822091
+      quote: 阿耳戈隆城位于冰冷缓慢的涅维斯河汇入拉科尼斯湖的河口处。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-argoron-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿耳戈隆占河口之利——涅维斯河与拉科尼斯湖水运交汇，渔获与转运是两桩稳当买卖；同化得早人心稳，适合长久置业。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EN4
+      quote_hash: 8939BEBBDED4250C2906CCAE785C1EEE24D3358827D28FF5C8F67C88D9822091
+      quote: 阿耳戈隆城位于冰冷缓慢的涅维斯河汇入拉科尼斯湖的河口处。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

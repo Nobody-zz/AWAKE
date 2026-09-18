@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-popsia
+title:
+  zh-CN: 波普西亚
+  en: Popsia
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 波普西亚
+  en:
+  - Popsia
+  - castle_village_ES8_2
+summary:
+  zh-CN: 波普西亚坐落于奥尼石山与俄佛堤斯湖域之间窄窄的峡谷内，山间阴凉处的树木生得高大，村民们砍伐松树并将木材卖出。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_ES8_2
+  quote_hash: DB29BF49977F6209EF87C5535E0D1E333E8D8A7CC86745E4494339337008875A
+  quote: 波普西亚坐落于奥尼石山与俄佛堤斯湖域之间窄窄的峡谷内。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-popsia-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 波普西亚坐落于奥尼石山与俄佛堤斯湖域之间窄窄的峡谷内，山间阴凉处的树木生得高大，村民们砍伐松树并将木材卖出。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_ES8_2
+    quote_hash: DB29BF49977F6209EF87C5535E0D1E333E8D8A7CC86745E4494339337008875A
+    quote: 波普西亚坐落于奥尼石山与俄佛堤斯湖域之间窄窄的峡谷内。
+  expressions:
+  - id: expr.village-popsia-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 波普西亚峡谷里的松树高得看不见头。村里人说树荫底下凉快得早——阴处长的才成材。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES8_2
+      quote_hash: DB29BF49977F6209EF87C5535E0D1E333E8D8A7CC86745E4494339337008875A
+      quote: 波普西亚坐落于奥尼石山与俄佛堤斯湖域之间窄窄的峡谷内。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-popsia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 波普西亚出整松大料——峡谷阴生纹理直、节疤少；大料按株议价，量径的尺是村规，外人带尺进村不算数。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES8_2
+      quote_hash: DB29BF49977F6209EF87C5535E0D1E333E8D8A7CC86745E4494339337008875A
+      quote: 波普西亚坐落于奥尼石山与俄佛堤斯湖域之间窄窄的峡谷内。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,248 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 5
+id: doc.geography.bays-charas
+title:
+  zh-CN: 沙拉斯湾·湾澳与港口
+  en: 'Charas Bay: Waters and Harbors'
+status: needs_review
+domain: geography
+subdomain: rivers
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 沙拉斯湾
+  - 加隆托海峡
+  - 沙拉斯港
+  en:
+  - Charas Bay
+entity_ids:
+- entity.settlement.town_v7
+summary:
+  zh-CN: 沙拉斯湾的半封闭水域形态、群岛防波、加隆托海峡要道与沙拉斯港生计。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.chronicle.shalas-bay
+  source_version: download-20260903
+  source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+  locator: chronicle-shalas-bay.txt#/Variants/2/Content
+  quote_hash: 1C51B54DFDF095190379A0808BF3A6F6D872F9074F618E248B2AA6ED4AEF84D7
+  quote: 沙拉斯湾是西大洋深入卡拉迪亚大陆西海岸的一个半封闭海域
+- source_id: source.calradia.chronicle.shalas-bay
+  source_version: download-20260903
+  source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+  locator: chronicle-shalas-bay.txt#/Variants/2/Content
+  quote_hash: 428EBFFCA3ADC44F13A1D62177C9888F009B2FA432C7B556195751E639D90D40
+  quote: 北部沙拉斯港的持续繁荣正是得益于这一水文庇护
+- source_id: source.calradia.chronicle.shalas-bay
+  source_version: download-20260903
+  source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+  locator: chronicle-shalas-bay.txt#/Variants/2/Content
+  quote_hash: 81D4B54D4CC58E83D46B36AA820DFEA5D8E8D088C24F8383716B52DDF606A6FD
+  quote: 加隆托海峡的潮流流速较快，是湾内外水体交换的主要通道，也是航运的关键节点
+- source_id: source.calradia.chronicle.shalas-bay
+  source_version: download-20260903
+  source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+  locator: chronicle-shalas-bay.txt#/Variants/2/Content
+  quote_hash: E68D46F1EBC1EE4AEDBA76516F8D806C4BD9081C1FB6F5A7C7E1DA72D559677D
+  quote: 南部密集的群岛形成了一道天然的防波屏障，有效削弱了大洋传来的长涌浪
+- source_id: source.calradia.game.settlements.geography2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 9af64df767747545a9a75b8e22528317e291c51f0314f6842eb79a9f061734b5
+  locator: bannerlord.db#settlements.castle_village_EW1_1.descriptionText
+  quote_hash: DFED20597FF55AD29B9F3FFF15AEE2BBBC0CFDE3796EB7AEBB4D9BFBBD8317E9
+  quote: 位于沙拉斯湾和珀拉斯内海间的海角以加隆托为名。沿海草甸茂盛，这些较高的草对海水盐质的耐受性不错，可用来饲养优良的马匹。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.bay-charas-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 沙拉斯湾是西大洋伸进大陆西岸的一片湾水，东头收口在加隆托海峡。
+  sources:
+  - source_id: source.calradia.chronicle.shalas-bay
+    source_version: download-20260903
+    source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+    locator: chronicle-shalas-bay.txt#/Variants/2/Content
+    quote_hash: 1C51B54DFDF095190379A0808BF3A6F6D872F9074F618E248B2AA6ED4AEF84D7
+    quote: 沙拉斯湾是西大洋深入卡拉迪亚大陆西海岸的一个半封闭海域
+  expressions:
+  - id: expr.bay-charas-1-summary
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 沙拉斯湾是西大洋伸进大陆西岸的一片湾水，东头收口在加隆托海峡。
+    sources:
+    - source_id: source.calradia.chronicle.shalas-bay
+      source_version: download-20260903
+      source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+      locator: chronicle-shalas-bay.txt#/Variants/2/Content
+      quote_hash: 1C51B54DFDF095190379A0808BF3A6F6D872F9074F618E248B2AA6ED4AEF84D7
+      quote: 沙拉斯湾是西大洋深入卡拉迪亚大陆西海岸的一个半封闭海域
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+- id: assertion.bay-charas-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 南侧群岛罗列，替湾子挡住外海涌浪，湾里水面平缓，泊船与近岸行船都安稳；海峡内通湾水、外连大洋，是这片水进出的要道。
+  sources:
+  - source_id: source.calradia.chronicle.shalas-bay
+    source_version: download-20260903
+    source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+    locator: chronicle-shalas-bay.txt#/Variants/2/Content
+    quote_hash: E68D46F1EBC1EE4AEDBA76516F8D806C4BD9081C1FB6F5A7C7E1DA72D559677D
+    quote: 南部密集的群岛形成了一道天然的防波屏障，有效削弱了大洋传来的长涌浪
+  - source_id: source.calradia.chronicle.shalas-bay
+    source_version: download-20260903
+    source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+    locator: chronicle-shalas-bay.txt#/Variants/2/Content
+    quote_hash: 81D4B54D4CC58E83D46B36AA820DFEA5D8E8D088C24F8383716B52DDF606A6FD
+    quote: 加隆托海峡的潮流流速较快，是湾内外水体交换的主要通道，也是航运的关键节点
+  expressions:
+  - id: expr.bay-charas-2-summary
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 南侧群岛罗列，替湾子挡住外海涌浪，湾里水面平缓，泊船与近岸行船都安稳。海峡内通湾水、外连大洋，是这片水进出的要道。
+    sources:
+    - source_id: source.calradia.chronicle.shalas-bay
+      source_version: download-20260903
+      source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+      locator: chronicle-shalas-bay.txt#/Variants/2/Content
+      quote_hash: E68D46F1EBC1EE4AEDBA76516F8D806C4BD9081C1FB6F5A7C7E1DA72D559677D
+      quote: 南部密集的群岛形成了一道天然的防波屏障，有效削弱了大洋传来的长涌浪
+    - source_id: source.calradia.chronicle.shalas-bay
+      source_version: download-20260903
+      source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+      locator: chronicle-shalas-bay.txt#/Variants/2/Content
+      quote_hash: 81D4B54D4CC58E83D46B36AA820DFEA5D8E8D088C24F8383716B52DDF606A6FD
+      quote: 加隆托海峡的潮流流速较快，是湾内外水体交换的主要通道，也是航运的关键节点
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+- id: assertion.bay-charas-4
+  revision: 1
+  kind: relation
+  text:
+    zh-CN: 沙拉斯港就靠这湾水面过活：打鱼的、跑船的、码头上讨生活的，都吃这湾水。
+  sources:
+  - source_id: source.calradia.chronicle.shalas-bay
+    source_version: download-20260903
+    source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+    locator: chronicle-shalas-bay.txt#/Variants/2/Content
+    quote_hash: 428EBFFCA3ADC44F13A1D62177C9888F009B2FA432C7B556195751E639D90D40
+    quote: 北部沙拉斯港的持续繁荣正是得益于这一水文庇护
+  expressions:
+  - id: expr.bay-charas-4-summary
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 沙拉斯港就靠这湾水面过活：打鱼的、跑船的、码头上讨生活的，都吃这湾水。
+    sources:
+    - source_id: source.calradia.chronicle.shalas-bay
+      source_version: download-20260903
+      source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+      locator: chronicle-shalas-bay.txt#/Variants/2/Content
+      quote_hash: 428EBFFCA3ADC44F13A1D62177C9888F009B2FA432C7B556195751E639D90D40
+      quote: 北部沙拉斯港的持续繁荣正是得益于这一水文庇护
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []

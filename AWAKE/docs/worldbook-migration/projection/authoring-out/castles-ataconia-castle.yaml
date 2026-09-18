@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-ataconia-castle
+title:
+  zh-CN: 阿塔科尼亚堡
+  en: Ataconia Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿塔科尼亚堡
+  - 阿塔科尼亚
+  - 珀塔米斯
+  en:
+  - Ataconia Castle
+  - castle_EN6
+  - Ataconia
+  - Potamis
+entity_ids:
+- entity.settlement.castle_en6
+summary:
+  zh-CN: 阿塔科尼亚堡是北帝国压着德律亚山前的一座城堡，辖着阿塔科尼亚与珀塔米斯两村；坡上出盐，谷里出奶。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_EN6
+  quote_hash: EB2D2A6AE33E4FCA709101E969DE145F7F37C73FEE4B5AD139471812B77E5465
+  quote: 阿塔科尼亚堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-ataconia-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿塔科尼亚堡是北帝国压着德律亚山前的一座城堡，辖着阿塔科尼亚与珀塔米斯两村；坡上出盐，谷里出奶。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_EN6
+    quote_hash: EB2D2A6AE33E4FCA709101E969DE145F7F37C73FEE4B5AD139471812B77E5465
+    quote: 阿塔科尼亚堡
+  expressions:
+  - id: expr.castle-ataconia-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿塔科尼亚堡的人说，盐到哪儿都认，堡子守着盐就不怕荒年。村里人说，养牛的老法子传了几辈人，牛奶黄油从不缺。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_EN6
+      quote_hash: EB2D2A6AE33E4FCA709101E969DE145F7F37C73FEE4B5AD139471812B77E5465
+      quote: 阿塔科尼亚堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-ataconia-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿塔科尼亚堡据德律亚山前高原，下辖盐村与牧牛村各一；山盐在堡中过秤、行销周边，牛乳与黄油按坊集中，盐井与牧场的界址由堡里立石定明、报行省存档。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_EN6
+      quote_hash: EB2D2A6AE33E4FCA709101E969DE145F7F37C73FEE4B5AD139471812B77E5465
+      quote: 阿塔科尼亚堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-crossbow_c
+title:
+  zh-CN: 劲弩
+  en: Arbalest
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 劲弩
+  - Crossbow
+  en:
+  - crossbow_c
+summary:
+  zh-CN: 劲弩是瓦兰迪亚弩手里的重家伙，一击穿透重甲，装填慢但威力冠绝。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-xml
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+  locator: bannerlord.items.xml#crossbow_c
+  quote_hash: 0C5963201B8549EFAA1D538DEE46A7F4EBE22331823D88027F15FC6F7B0EA985
+  quote: 劲弩 | Crossbow | 穿刺 89 | 弹速 87 | 精准 98 | 射速档 60 | 弓身长 95
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.item-crossbow_c-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 劲弩是瓦兰迪亚弩手里的重家伙，一击穿透重甲，装填慢但威力冠绝。
+  sources:
+  - source_id: source.calradia.game.items-xml
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+    locator: bannerlord.items.xml#crossbow_c
+    quote_hash: 0C5963201B8549EFAA1D538DEE46A7F4EBE22331823D88027F15FC6F7B0EA985
+    quote: 劲弩 | Crossbow | 穿刺 89 | 弹速 87 | 精准 98 | 射速档 60 | 弓身长 95
+  expressions:
+  - id: expr.item-crossbow_c-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 瓦兰迪亚的弩手装的弩劲儿大，一箭能洞穿铁甲，就是上弦慢得让人心焦。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#crossbow_c
+      quote_hash: 0C5963201B8549EFAA1D538DEE46A7F4EBE22331823D88027F15FC6F7B0EA985
+      quote: 劲弩 | Crossbow | 穿刺 89 | 弹速 87 | 精准 98 | 射速档 60 | 弓身长 95
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.item-crossbow_c-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 劲弩穿刺 89、弹速 87、精准 98——威力精准都顶格，贴脸放冷箭几乎不走空；射速档 60 是短板，装填要躲好掩护。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#crossbow_c
+      quote_hash: 0C5963201B8549EFAA1D538DEE46A7F4EBE22331823D88027F15FC6F7B0EA985
+      quote: 劲弩 | Crossbow | 穿刺 89 | 弹速 87 | 精准 98 | 射速档 60 | 弓身长 95
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

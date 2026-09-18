@@ -1,0 +1,163 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.politics.territories-charas-reign
+title:
+  zh-CN: 沙拉斯·归属与科尔坦家
+  en: Charas
+status: needs_review
+domain: politics
+subdomain: territories
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 沙拉斯
+  - 戴·科尔坦
+  - 科尔坦家
+  en:
+  - Charas
+  - dey Cortain
+entity_ids:
+- entity.settlement.town_v7
+summary:
+  zh-CN: 沙拉斯的归属沿革与科尔坦家财富的事实面。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_V7.descriptionText
+  quote_hash: A6320996F38B6FB78263786600EBBA00332983BFC35215A7EE622CD4DEF46D2E
+  quote: 瓦兰迪亚人到来后，沙拉斯落入了无情的戴·科尔坦家族手中
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_V7.descriptionText
+  quote_hash: 3C991D661E8FEAB098658207B6CE5B005BE7B2B702B9CDAC491B853E95A4FB3C
+  quote: 其无穷的财富助长了后者的野心
+- source_id: source.calradia.chronicle.animusforge
+  source_version: animusforge-20260912
+  source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+  locator: rules/rule_沙拉斯__沙拉斯.json#/Variants/1/Content
+  quote_hash: F94D61D3E7EF391C04A6279A00DDB44E49CC5177B9EF02800A22B3B44E1B649E
+  quote: 沙拉斯是戴·科尔坦家的钱袋子，也是我们瓦兰迪亚的摇钱树。那座港口的岁入能顶内陆好几个男爵领地的总和，因加泰尔敢在御前会议上横着走，靠的就是沙拉斯港的商船和关税。不过我们这些人看沙拉斯，看到的不是因加泰尔的底气，而是商机。沙拉斯的集市上帝国商人、阿塞莱驼队、库赛特皮货商挤在一起，货比别处便宜两成。但我们也得承认，因加泰尔把那座城榨得太狠了。他光顾着抽税，码头的老石阶坏了没人修，海湾边上帝国时代留下来的防波堤还是奥斯里克时代加固的。财富来得太容易，人就不珍惜。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.territory-charas-reign-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 瓦兰迪亚人到来之后，沙拉斯归了戴·科尔坦家族。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_V7.descriptionText
+    quote_hash: A6320996F38B6FB78263786600EBBA00332983BFC35215A7EE622CD4DEF46D2E
+    quote: 瓦兰迪亚人到来后，沙拉斯落入了无情的戴·科尔坦家族手中
+  expressions:
+  - id: expr.territory-charas-reign-1-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 瓦兰迪亚人到来之后，沙拉斯归了戴·科尔坦家族。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_V7.descriptionText
+      quote_hash: A6320996F38B6FB78263786600EBBA00332983BFC35215A7EE622CD4DEF46D2E
+      quote: 瓦兰迪亚人到来后，沙拉斯落入了无情的戴·科尔坦家族手中
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: summary
+    denies: []
+- id: assertion.territory-charas-reign-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 沙拉斯的财富成了科尔坦家势力的底气。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_V7.descriptionText
+    quote_hash: 3C991D661E8FEAB098658207B6CE5B005BE7B2B702B9CDAC491B853E95A4FB3C
+    quote: 其无穷的财富助长了后者的野心
+  - source_id: source.calradia.chronicle.animusforge
+    source_version: animusforge-20260912
+    source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+    locator: rules/rule_沙拉斯__沙拉斯.json#/Variants/1/Content
+    quote_hash: F94D61D3E7EF391C04A6279A00DDB44E49CC5177B9EF02800A22B3B44E1B649E
+    quote: 沙拉斯是戴·科尔坦家的钱袋子，也是我们瓦兰迪亚的摇钱树。那座港口的岁入能顶内陆好几个男爵领地的总和，因加泰尔敢在御前会议上横着走，靠的就是沙拉斯港的商船和关税。不过我们这些人看沙拉斯，看到的不是因加泰尔的底气，而是商机。沙拉斯的集市上帝国商人、阿塞莱驼队、库赛特皮货商挤在一起，货比别处便宜两成。但我们也得承认，因加泰尔把那座城榨得太狠了。他光顾着抽税，码头的老石阶坏了没人修，海湾边上帝国时代留下来的防波堤还是奥斯里克时代加固的。财富来得太容易，人就不珍惜。
+  expressions:
+  - id: expr.territory-charas-reign-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 沙拉斯的财富成了科尔坦家势力的底气。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_V7.descriptionText
+      quote_hash: 3C991D661E8FEAB098658207B6CE5B005BE7B2B702B9CDAC491B853E95A4FB3C
+      quote: 其无穷的财富助长了后者的野心
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    denies: []
+  - id: expr.territory-charas-reign-2-b-vlandia
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 沙拉斯是戴·科尔坦家的钱袋子，也是我们瓦兰迪亚的摇钱树。那座港口的岁入能顶内陆好几个男爵领地的总和，因加泰尔敢在御前会议上横着走，靠的就是沙拉斯港的商船和关税。不过我们这些人看沙拉斯，看到的不是因加泰尔的底气，而是商机。沙拉斯的集市上帝国商人、阿塞莱驼队、库赛特皮货商挤在一起，货比别处便宜两成。但我们也得承认，因加泰尔把那座城榨得太狠了。他光顾着抽税，码头的老石阶坏了没人修，海湾边上帝国时代留下来的防波堤还是奥斯里克时代加固的。财富来得太容易，人就不珍惜。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge
+      source_version: animusforge-20260912
+      source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+      locator: rules/rule_沙拉斯__沙拉斯.json#/Variants/1/Content
+      quote_hash: F94D61D3E7EF391C04A6279A00DDB44E49CC5177B9EF02800A22B3B44E1B649E
+      quote: 沙拉斯是戴·科尔坦家的钱袋子，也是我们瓦兰迪亚的摇钱树。那座港口的岁入能顶内陆好几个男爵领地的总和，因加泰尔敢在御前会议上横着走，靠的就是沙拉斯港的商船和关税。不过我们这些人看沙拉斯，看到的不是因加泰尔的底气，而是商机。沙拉斯的集市上帝国商人、阿塞莱驼队、库赛特皮货商挤在一起，货比别处便宜两成。但我们也得承认，因加泰尔把那座城榨得太狠了。他光顾着抽税，码头的老石阶坏了没人修，海湾边上帝国时代留下来的防波堤还是奥斯里克时代加固的。财富来得太容易，人就不珍惜。
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []

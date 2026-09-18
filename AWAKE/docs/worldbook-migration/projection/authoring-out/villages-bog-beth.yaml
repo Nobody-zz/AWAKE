@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-bog-beth
+title:
+  zh-CN: 博格·贝斯
+  en: Bog Beth
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 博格·贝斯
+  en:
+  - Bog Beth
+  - village_B3_1
+summary:
+  zh-CN: 博格·贝斯坐落于乌卡利翁地块东部一座地势低矮的林谷中；村民们在阴暗的沼泽林地里下套子，捕捉河狸、狐狸和其他毛皮兽。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-battania
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+  locator: bannerlord.villages#village_B3_1
+  quote_hash: 63F7B0FF557AF8801A9930753FF58BD54ACE4665D40494B0A74A015C9BD7CB6A
+  quote: 博格·贝斯坐落于乌卡利翁地块东部一座地势低矮的林谷中。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-bog-beth-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 博格·贝斯坐落于乌卡利翁地块东部一座地势低矮的林谷中；村民们在阴暗的沼泽林地里下套子，捕捉河狸、狐狸和其他毛皮兽。
+  sources:
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#village_B3_1
+    quote_hash: 63F7B0FF557AF8801A9930753FF58BD54ACE4665D40494B0A74A015C9BD7CB6A
+    quote: 博格·贝斯坐落于乌卡利翁地块东部一座地势低矮的林谷中。
+  expressions:
+  - id: expr.village-bog-beth-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 博格·贝斯的人看泥看脚印。村里人说天黑了才不用看——兽走的路，泥上写得清清楚楚。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B3_1
+      quote_hash: 63F7B0FF557AF8801A9930753FF58BD54ACE4665D40494B0A74A015C9BD7CB6A
+      quote: 博格·贝斯坐落于乌卡利翁地块东部一座地势低矮的林谷中。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-bog-beth-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 博格·贝斯以林间毛皮为业——沼林兽多、套猎成习；皮张按毛色与完整分等，河狸皮最贵，冬季毛厚时外运、皮贩登门。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B3_1
+      quote_hash: 63F7B0FF557AF8801A9930753FF58BD54ACE4665D40494B0A74A015C9BD7CB6A
+      quote: 博格·贝斯坐落于乌卡利翁地块东部一座地势低矮的林谷中。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

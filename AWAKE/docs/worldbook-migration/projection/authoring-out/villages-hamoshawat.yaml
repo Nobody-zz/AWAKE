@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-hamoshawat
+title:
+  zh-CN: 哈穆沙瓦
+  en: Hamoshawat
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 哈穆沙瓦
+  en:
+  - Hamoshawat
+  - village_A6_2
+summary:
+  zh-CN: 哈穆沙瓦在达玛尔河下游、快入海的地方。河水驮来的淤泥一路堆到这儿，堆出阿塞莱最肥的一片地。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+  locator: bannerlord.villages#village_A6_2
+  quote_hash: 9D1CDCA441B6DC5946EEB3AE3B1D8253ACF39E307A65319CFCE3B9CDC27E1FAF
+  quote: 哈穆沙瓦位于达玛尔河下游的入海口处，这条河流最终汇入耶什姆海。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-hamoshawat-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 哈穆沙瓦在达玛尔河下游、快入海的地方。河水驮来的淤泥一路堆到这儿，堆出阿塞莱最肥的一片地。
+  sources:
+  - source_id: source.calradia.game.villages-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+    locator: bannerlord.villages#village_A6_2
+    quote_hash: 9D1CDCA441B6DC5946EEB3AE3B1D8253ACF39E307A65319CFCE3B9CDC27E1FAF
+    quote: 哈穆沙瓦位于达玛尔河下游的入海口处，这条河流最终汇入耶什姆海。
+  expressions:
+  - id: expr.village-hamoshawat-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 哈穆沙瓦跟米贾伊特隔着不远，同喝一条河的肥。村里人夸口：我们的麦磨出来的面，能照见人影。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#village_A6_2
+      quote_hash: 9D1CDCA441B6DC5946EEB3AE3B1D8253ACF39E307A65319CFCE3B9CDC27E1FAF
+      quote: 哈穆沙瓦位于达玛尔河下游的入海口处，这条河流最终汇入耶什姆海。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-hamoshawat-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 哈穆沙瓦与河口诸村共吃达玛尔河的淤泥——产额互为参照；入海口水位定船期能否上溯收粮，行家先看水再订约。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#village_A6_2
+      quote_hash: 9D1CDCA441B6DC5946EEB3AE3B1D8253ACF39E307A65319CFCE3B9CDC27E1FAF
+      quote: 哈穆沙瓦位于达玛尔河下游的入海口处，这条河流最终汇入耶什姆海。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-hongard
+title:
+  zh-CN: 翁加尔
+  en: Hongard
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 翁加尔
+  en:
+  - Hongard
+  - castle_village_V2_1
+summary:
+  zh-CN: 翁加尔位于蜿蜒的特朗河附近的温暖林地；这片盛产小麦的土地曾是帝国腹地，如今是瓦兰迪亚王国的中心地带。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#castle_village_V2_1
+  quote_hash: 63C73458CB88E8F2A64F1D304AF7FCCB9BEE8E89E6CAA7BFA953FCACDCB85648
+  quote: 翁加尔坐落于蜿蜒的特朗河附近的温暖林地。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-hongard-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 翁加尔位于蜿蜒的特朗河附近的温暖林地；这片盛产小麦的土地曾是帝国腹地，如今是瓦兰迪亚王国的中心地带。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#castle_village_V2_1
+    quote_hash: 63C73458CB88E8F2A64F1D304AF7FCCB9BEE8E89E6CAA7BFA953FCACDCB85648
+    quote: 翁加尔坐落于蜿蜒的特朗河附近的温暖林地。
+  expressions:
+  - id: expr.village-hongard-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 翁加尔的麦子喂过帝国，如今喂瓦兰迪亚。村里人说换谁当家都一样，地还是那块地，只认水和太阳。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#castle_village_V2_1
+      quote_hash: 63C73458CB88E8F2A64F1D304AF7FCCB9BEE8E89E6CAA7BFA953FCACDCB85648
+      quote: 翁加尔坐落于蜿蜒的特朗河附近的温暖林地。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-hongard-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 翁加尔是王畿粮村——林地间夹大田、河运直通腹地；粮货供应附近市镇与军需，收粮看干湿与杂质，丰年官仓先购。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#castle_village_V2_1
+      quote_hash: 63C73458CB88E8F2A64F1D304AF7FCCB9BEE8E89E6CAA7BFA953FCACDCB85648
+      quote: 翁加尔坐落于蜿蜒的特朗河附近的温暖林地。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

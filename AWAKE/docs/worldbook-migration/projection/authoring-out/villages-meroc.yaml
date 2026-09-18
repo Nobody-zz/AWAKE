@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-meroc
+title:
+  zh-CN: 梅罗克
+  en: Meroc
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 梅罗克
+  en:
+  - Meroc
+  - village_V5_2
+summary:
+  zh-CN: 梅罗克是一座小渔村，俯瞰比斯坎海岸上的小海湾；村民向西出海捕近岸的鲻鱼与鲈鱼，并在南边岛屿附近寻获金枪鱼与沙丁鱼。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#village_V5_2
+  quote_hash: 8299D712C48CC7B8F4A2F7BE8B9957874469B24855ECF4B9C56040AD1B8D1297
+  quote: 梅罗克是一座小渔村，能够俯瞰比斯坎海岸上的小海湾。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-meroc-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 梅罗克是一座小渔村，俯瞰比斯坎海岸上的小海湾；村民向西出海捕近岸的鲻鱼与鲈鱼，并在南边岛屿附近寻获金枪鱼与沙丁鱼。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#village_V5_2
+    quote_hash: 8299D712C48CC7B8F4A2F7BE8B9957874469B24855ECF4B9C56040AD1B8D1297
+    quote: 梅罗克是一座小渔村，能够俯瞰比斯坎海岸上的小海湾。
+  expressions:
+  - id: expr.village-meroc-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 梅罗克的人看风下网。村里人说西边捞小的，南边追大的——船小不敢走远，能捞多少是多少。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V5_2
+      quote_hash: 8299D712C48CC7B8F4A2F7BE8B9957874469B24855ECF4B9C56040AD1B8D1297
+      quote: 梅罗克是一座小渔村，能够俯瞰比斯坎海岸上的小海湾。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-meroc-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 梅罗克渔获分两路——近岸鲻鱼鲈鱼走鲜市，南方岛屿金枪鱼沙丁鱼量大价低；鲜货离水即贱，多盐渍风干外运。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V5_2
+      quote_hash: 8299D712C48CC7B8F4A2F7BE8B9957874469B24855ECF4B9C56040AD1B8D1297
+      quote: 梅罗克是一座小渔村，能够俯瞰比斯坎海岸上的小海湾。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

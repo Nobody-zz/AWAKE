@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-kuruluk
+title:
+  zh-CN: 库鲁卢克
+  en: Kuruluk
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 库鲁卢克
+  en:
+  - Kuruluk
+  - castle_village_K4_2
+summary:
+  zh-CN: 库鲁卢克位于喀拉卡孜河的支流札罕河畔；这片谷地几乎终年积雪，草原小马靠吃春草、冬天刨雪找食，厚毛皮帮它们扛住砭骨寒风。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-khuzait
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+  locator: bannerlord.villages#castle_village_K4_2
+  quote_hash: 5D3311C55DED5373B84D9806821525950A51566EDD11F669B4E41ED7DE01A95F
+  quote: 库鲁卢克位于喀拉卡孜河的支流——札罕河畔。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-kuruluk-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 库鲁卢克位于喀拉卡孜河的支流札罕河畔；这片谷地几乎终年积雪，草原小马靠吃春草、冬天刨雪找食，厚毛皮帮它们扛住砭骨寒风。
+  sources:
+  - source_id: source.calradia.game.villages-desc-khuzait
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+    locator: bannerlord.villages#castle_village_K4_2
+    quote_hash: 5D3311C55DED5373B84D9806821525950A51566EDD11F669B4E41ED7DE01A95F
+    quote: 库鲁卢克位于喀拉卡孜河的支流——札罕河畔。
+  expressions:
+  - id: expr.village-kuruluk-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 库鲁卢克的马自己会刨雪。村里人说这儿的马不用喂得太细——雪底下有草，冷风里头有毛。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#castle_village_K4_2
+      quote_hash: 5D3311C55DED5373B84D9806821525950A51566EDD11F669B4E41ED7DE01A95F
+      quote: 库鲁卢克位于喀拉卡孜河的支流——札罕河畔。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-kuruluk-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 库鲁卢克出耐寒小马——雪谷放养、料省体健；马匹耐寒耐远，适合驿递与轻骑，厚毛品种在秋后最俏。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#castle_village_K4_2
+      quote_hash: 5D3311C55DED5373B84D9806821525950A51566EDD11F669B4E41ED7DE01A95F
+      quote: 库鲁卢克位于喀拉卡孜河的支流——札罕河畔。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

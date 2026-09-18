@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-spice
+title:
+  zh-CN: 香料
+  en: Spice
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 香料
+  - Goods
+  en:
+  - spice
+summary:
+  zh-CN: 香料是远方来的调味珍品，南方商队贩来的高值货物，餐桌与药柜都要用它。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+  locator: bannerlord.items#spice
+  quote_hash: 66A38D508ACE86E90697E7BC4861D4D74DF228D4B663A6AC7951F2466B93B61A
+  quote: 香料 | Goods | 基准价 300
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.item-spice-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 香料是远方来的调味珍品，南方商队贩来的高值货物，餐桌与药柜都要用它。
+  sources:
+  - source_id: source.calradia.game.items
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+    locator: bannerlord.items#spice
+    quote_hash: 66A38D508ACE86E90697E7BC4861D4D74DF228D4B663A6AC7951F2466B93B61A
+    quote: 香料 | Goods | 基准价 300
+  expressions:
+  - id: expr.item-spice-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 听说南边沙漠那头来的驼队带着香料，撒一点在肉里香得不得了，贵人宴席上才见得着。
+    sources:
+    - source_id: source.calradia.game.items
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+      locator: bannerlord.items#spice
+      quote_hash: 66A38D508ACE86E90697E7BC4861D4D74DF228D4B663A6AC7951F2466B93B61A
+      quote: 香料 | Goods | 基准价 300
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.item-spice-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 香料基准价 300，产地远、路途长，价差全在路上了。跟阿塞莱驼队拿货最划算，但要好骡马。
+    sources:
+    - source_id: source.calradia.game.items
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+      locator: bannerlord.items#spice
+      quote_hash: 66A38D508ACE86E90697E7BC4861D4D74DF228D4B663A6AC7951F2466B93B61A
+      quote: 香料 | Goods | 基准价 300
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

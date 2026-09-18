@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-steppe_war_bow
+title:
+  zh-CN: 草原战弓
+  en: Steppe War Bow
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 草原战弓
+  - Bow
+  en:
+  - steppe_war_bow
+summary:
+  zh-CN: 草原战弓是库赛特骑手的当家硬弓，穿透力强、精准出众，是草原骑射的招牌兵器。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-xml
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+  locator: bannerlord.items.xml#steppe_war_bow
+  quote_hash: 9A06E139AA253F028163FBD31FE5AD31CBF34766A2FF6BC50C768E45C8FD3A58
+  quote: 草原战弓 | Bow | 穿刺 54 | 弹速 80 | 精准 95 | 射速档 89 | 弓身长 107
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.item-steppe_war_bow-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 草原战弓是库赛特骑手的当家硬弓，穿透力强、精准出众，是草原骑射的招牌兵器。
+  sources:
+  - source_id: source.calradia.game.items-xml
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+    locator: bannerlord.items.xml#steppe_war_bow
+    quote_hash: 9A06E139AA253F028163FBD31FE5AD31CBF34766A2FF6BC50C768E45C8FD3A58
+    quote: 草原战弓 | Bow | 穿刺 54 | 弹速 80 | 精准 95 | 射速档 89 | 弓身长 107
+  expressions:
+  - id: expr.item-steppe_war_bow-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 库赛特人从小在马背上拉弓，那战弓射起来又快又准。听说好手能在百步外钉中奔狐。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#steppe_war_bow
+      quote_hash: 9A06E139AA253F028163FBD31FE5AD31CBF34766A2FF6BC50C768E45C8FD3A58
+      quote: 草原战弓 | Bow | 穿刺 54 | 弹速 80 | 精准 95 | 射速档 89 | 弓身长 107
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.item-steppe_war_bow-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 草原战弓穿刺 54、弹速 80、精准 95——弹道又平又狠，配破甲箭对付中甲最划算；弓身 107 长，骑射步射两用。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#steppe_war_bow
+      quote_hash: 9A06E139AA253F028163FBD31FE5AD31CBF34766A2FF6BC50C768E45C8FD3A58
+      quote: 草原战弓 | Bow | 穿刺 54 | 弹速 80 | 精准 95 | 射速档 89 | 弓身长 107
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

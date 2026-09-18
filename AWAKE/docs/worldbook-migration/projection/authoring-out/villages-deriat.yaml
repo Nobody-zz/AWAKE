@@ -1,0 +1,103 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 3
+id: doc.geography.villages-deriat
+title:
+  zh-CN: 德里亚特
+  en: Deriat
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 德里亚特
+  - 德里亚特村
+  en:
+  - Deriat
+entity_ids:
+- entity.settlement.castle_village_v6_2
+summary:
+  zh-CN: 德里亚特村庄的位置：卡琉斯堡附近、瓦尔切格湾与埃博半岛山脊之间。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.chronicle.deriat-village
+  source_version: download-20260903
+  source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10
+  locator: chronicle-deriat-village.txt#/Variants/0/Content
+  quote_hash: 71468F86320DEED56457A9C272178D6D55C2F588E0089465576DC29FD4133C7A
+  quote: 德里亚特是卡琉斯堡附近的一座村庄，位于瓦尔切格湾与埃博半岛的山脊之间
+- source_id: source.calradia.game.settlements.geography2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 9af64df767747545a9a75b8e22528317e291c51f0314f6842eb79a9f061734b5
+  locator: bannerlord.db#settlements.castle_village_V6_2.descriptionText
+  quote_hash: 21A50F72276C59CCF19F26843E82CCF8E4E46DF6912D208BCAC5FC69ABBD9E65
+  quote: 德里亚特位于瓦尔切格湾与埃博半岛的山脊之间。当地村民会在山上捕获河狸与水貂，有时会在海湾水域捉海豹。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-deriat-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 德里亚特是卡琉斯堡左近的一座村庄，夹在瓦尔切格湾和埃博半岛之间的山脊上。
+  sources:
+  - source_id: source.calradia.chronicle.deriat-village
+    source_version: download-20260903
+    source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10
+    locator: chronicle-deriat-village.txt#/Variants/0/Content
+    quote_hash: 71468F86320DEED56457A9C272178D6D55C2F588E0089465576DC29FD4133C7A
+    quote: 德里亚特是卡琉斯堡附近的一座村庄，位于瓦尔切格湾与埃博半岛的山脊之间
+  expressions:
+  - id: expr.village-deriat-1-summary
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 德里亚特是卡琉斯堡左近的一座村庄，夹在瓦尔切格湾和埃博半岛之间的山脊上。
+    sources:
+    - source_id: source.calradia.chronicle.deriat-village
+      source_version: download-20260903
+      source_content_hash: 7f5a130d45c652ae3a0c77421c81a89230ac4375c9ff0dba7bdbc7ee125a2d10
+      locator: chronicle-deriat-village.txt#/Variants/0/Content
+      quote_hash: 71468F86320DEED56457A9C272178D6D55C2F588E0089465576DC29FD4133C7A
+      quote: 德里亚特是卡琉斯堡附近的一座村庄，位于瓦尔切格湾与埃博半岛的山脊之间
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []

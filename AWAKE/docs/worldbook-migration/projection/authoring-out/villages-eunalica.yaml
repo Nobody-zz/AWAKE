@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-eunalica
+title:
+  zh-CN: 优纳利卡
+  en: Eunalica
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 优纳利卡
+  en:
+  - Eunalica
+  - castle_village_ES7_2
+summary:
+  zh-CN: 优纳利卡坐落于塔奈西斯湖西岸，这片洼地是种植亚麻的好地方。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_ES7_2
+  quote_hash: 4C27DDB31BE032598648F99A3609A8A21CF18D9DB20E2A9817047CBDA6FA5E64
+  quote: 优纳利卡坐落于塔奈西斯湖西岸。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-eunalica-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 优纳利卡坐落于塔奈西斯湖西岸，这片洼地是种植亚麻的好地方。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_ES7_2
+    quote_hash: 4C27DDB31BE032598648F99A3609A8A21CF18D9DB20E2A9817047CBDA6FA5E64
+    quote: 优纳利卡坐落于塔奈西斯湖西岸。
+  expressions:
+  - id: expr.village-eunalica-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 优纳利卡的洼地存得住潮气，亚麻一年比一年高。村里人说这地别的不长，专给麻铺路。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES7_2
+      quote_hash: 4C27DDB31BE032598648F99A3609A8A21CF18D9DB20E2A9817047CBDA6FA5E64
+      quote: 优纳利卡坐落于塔奈西斯湖西岸。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-eunalica-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 优纳利卡洼地单产高但只宜麻——退水线外的地才敢下种，涝年绝收；麻价随湖位走，懂水情的贩子赚差价。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES7_2
+      quote_hash: 4C27DDB31BE032598648F99A3609A8A21CF18D9DB20E2A9817047CBDA6FA5E64
+      quote: 优纳利卡坐落于塔奈西斯湖西岸。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

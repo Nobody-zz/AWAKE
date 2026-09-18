@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-borchovagorka
+title:
+  zh-CN: 博乔瓦戈卡
+  en: Borchovagorka
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 博乔瓦戈卡
+  en:
+  - Borchovagorka
+  - village_S4_1
+summary:
+  zh-CN: 博乔瓦戈卡坐落于拉科尼斯湖陡峭北岸的一处小高处；这座村子以捕鱼为生，从湖里捕鲈鱼、鲷鱼、鲑鱼，偶尔也捕大鲟鱼和梭鱼。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#village_S4_1
+  quote_hash: 9E7004CE1A210A592105CF69861AA166A9D425CB665892B277E29EA68E129054
+  quote: 博乔瓦戈卡坐落于拉科尼斯湖陡峭北岸的一个小高处。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-borchovagorka-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 博乔瓦戈卡坐落于拉科尼斯湖陡峭北岸的一处小高处；这座村子以捕鱼为生，从湖里捕鲈鱼、鲷鱼、鲑鱼，偶尔也捕大鲟鱼和梭鱼。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#village_S4_1
+    quote_hash: 9E7004CE1A210A592105CF69861AA166A9D425CB665892B277E29EA68E129054
+    quote: 博乔瓦戈卡坐落于拉科尼斯湖陡峭北岸的一个小高处。
+  expressions:
+  - id: expr.village-borchovagorka-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 博乔瓦戈卡的人怕风不怕水。村里人说湖大，什么鱼都有——就是北岸的浪，得看准了再出船。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#village_S4_1
+      quote_hash: 9E7004CE1A210A592105CF69861AA166A9D425CB665892B277E29EA68E129054
+      quote: 博乔瓦戈卡坐落于拉科尼斯湖陡峭北岸的一个小高处。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-borchovagorka-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 博乔瓦戈卡以湖渔为业——北岸水深、鱼种全；鲜鱼走湖岸市集，鲟鱼子腌成的货最贵，按鱼种与鲜度分等，浪大即歇船。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#village_S4_1
+      quote_hash: 9E7004CE1A210A592105CF69861AA166A9D425CB665892B277E29EA68E129054
+      quote: 博乔瓦戈卡坐落于拉科尼斯湖陡峭北岸的一个小高处。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

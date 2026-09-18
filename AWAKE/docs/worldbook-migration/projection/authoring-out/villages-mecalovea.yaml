@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-mecalovea
+title:
+  zh-CN: 墨卡罗维亚
+  en: Mecalovea
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 墨卡罗维亚
+  en:
+  - Mecalovea
+  - castle_village_EN9_1
+summary:
+  zh-CN: 墨卡罗维亚俯瞰伽尔喀斯大瀑布，村庄筑于峭壁之上以免受强盗侵扰；飞流直下的瀑布拍过峭壁，将许多矿石暴露出来，村民以此为生。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_EN9_1
+  quote_hash: 489962F298E6FAE44336DF3CC86B41FBC7C7F237C06FA4EC43A953599F7F2C87
+  quote: 墨卡罗维亚俯瞰着伽尔喀斯大瀑布，这座瀑布由一系列湍急的水流构成，并最终同弥戎河一起汇入拉科尼斯湖。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-mecalovea-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 墨卡罗维亚俯瞰伽尔喀斯大瀑布，村庄筑于峭壁之上以免受强盗侵扰；飞流直下的瀑布拍过峭壁，将许多矿石暴露出来，村民以此为生。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_EN9_1
+    quote_hash: 489962F298E6FAE44336DF3CC86B41FBC7C7F237C06FA4EC43A953599F7F2C87
+    quote: 墨卡罗维亚俯瞰着伽尔喀斯大瀑布，这座瀑布由一系列湍急的水流构成，并最终同弥戎河一起汇入拉科尼斯湖。
+  expressions:
+  - id: expr.village-mecalovea-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 墨卡罗维亚的矿是瀑布给露出来的。村里人说水声吵归吵，吵走了强盗，露出了铁矿，两头划算。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EN9_1
+      quote_hash: 489962F298E6FAE44336DF3CC86B41FBC7C7F237C06FA4EC43A953599F7F2C87
+      quote: 墨卡罗维亚俯瞰着伽尔喀斯大瀑布，这座瀑布由一系列湍急的水流构成，并最终同弥戎河一起汇入拉科尼斯湖。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-mecalovea-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 墨卡罗维亚的铁矿石随瀑季现面——春汛水大露矿多；峭壁地形运矿靠吊索，买矿自备驮力是规矩。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EN9_1
+      quote_hash: 489962F298E6FAE44336DF3CC86B41FBC7C7F237C06FA4EC43A953599F7F2C87
+      quote: 墨卡罗维亚俯瞰着伽尔喀斯大瀑布，这座瀑布由一系列湍急的水流构成，并最终同弥戎河一起汇入拉科尼斯湖。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

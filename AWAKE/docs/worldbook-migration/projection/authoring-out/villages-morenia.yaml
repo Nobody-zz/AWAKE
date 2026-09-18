@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-morenia
+title:
+  zh-CN: 摩雷尼亚
+  en: Morenia
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 摩雷尼亚
+  en:
+  - Morenia
+  - castle_village_ES5_1
+summary:
+  zh-CN: 摩雷尼亚俯瞰塞堤斯河，位于通往吕卡里亚谷的低矮入口处，村民在河畔收集黏土，供应帝国南方的窑炉。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_ES5_1
+  quote_hash: 37002DB5F77917A148B3776A39ACC373318074EC66EA94B8471804A0E33F0509
+  quote: 摩雷尼亚俯瞰着塞堤斯河，位于通往吕卡里亚谷的低矮入口处。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-morenia-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 摩雷尼亚俯瞰塞堤斯河，位于通往吕卡里亚谷的低矮入口处，村民在河畔收集黏土，供应帝国南方的窑炉。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_ES5_1
+    quote_hash: 37002DB5F77917A148B3776A39ACC373318074EC66EA94B8471804A0E33F0509
+    quote: 摩雷尼亚俯瞰着塞堤斯河，位于通往吕卡里亚谷的低矮入口处。
+  expressions:
+  - id: expr.village-morenia-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 摩雷尼亚的土是拿去烧的。村里人说别处的土养庄稼，我们这儿的土进窑炉——南边的窑等着它开饭。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES5_1
+      quote_hash: 37002DB5F77917A148B3776A39ACC373318074EC66EA94B8471804A0E33F0509
+      quote: 摩雷尼亚俯瞰着塞堤斯河，位于通往吕卡里亚谷的低矮入口处。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-morenia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 摩雷尼亚的黏土按层采挖——河畔的土一层压着一层，好坏分明；窑户按层订货，混层土烧器必裂，逃不过验火。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES5_1
+      quote_hash: 37002DB5F77917A148B3776A39ACC373318074EC66EA94B8471804A0E33F0509
+      quote: 摩雷尼亚俯瞰着塞堤斯河，位于通往吕卡里亚谷的低矮入口处。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

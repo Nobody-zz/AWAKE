@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-hunab
+title:
+  zh-CN: 侯纳卜
+  en: Hunab
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 侯纳卜
+  en:
+  - Hunab
+  - castle_village_A5_2
+summary:
+  zh-CN: 侯纳卜坐落于杰尔贾赖峭壁风化台地下的一座干谷中，村民利用春天短暂繁茂的山坡青草饲养马匹。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+  locator: bannerlord.villages#castle_village_A5_2
+  quote_hash: F079C66875D9F66033CF4B0566F6E82F73AB93FFEF38CD20B2BA6ECD7D1CFF23
+  quote: 侯纳卜坐落于杰尔贾赖峭壁风化台地下的一座干谷中。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-hunab-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 侯纳卜坐落于杰尔贾赖峭壁风化台地下的一座干谷中，村民利用春天短暂繁茂的山坡青草饲养马匹。
+  sources:
+  - source_id: source.calradia.game.villages-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+    locator: bannerlord.villages#castle_village_A5_2
+    quote_hash: F079C66875D9F66033CF4B0566F6E82F73AB93FFEF38CD20B2BA6ECD7D1CFF23
+    quote: 侯纳卜坐落于杰尔贾赖峭壁风化台地下的一座干谷中。
+  expressions:
+  - id: expr.village-hunab-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 侯纳卜的山谷一年就绿那么一阵。村里人掐着日子放马，说春天的草是攒了一年的劲儿长的。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#castle_village_A5_2
+      quote_hash: F079C66875D9F66033CF4B0566F6E82F73AB93FFEF38CD20B2BA6ECD7D1CFF23
+      quote: 侯纳卜坐落于杰尔贾赖峭壁风化台地下的一座干谷中。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-hunab-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 侯纳卜的马靠春草催膘——出栏集中在春末；错过草季马就掉膘，看马先看季节是本地规矩。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#castle_village_A5_2
+      quote_hash: F079C66875D9F66033CF4B0566F6E82F73AB93FFEF38CD20B2BA6ECD7D1CFF23
+      quote: 侯纳卜坐落于杰尔贾赖峭壁风化台地下的一座干谷中。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

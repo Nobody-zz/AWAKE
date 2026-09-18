@@ -1,0 +1,260 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-varcheg
+title:
+  zh-CN: 瓦尔切格
+  en: Varcheg
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 瓦尔切格
+  - 卡恰尔半岛
+  - 瓦尔切格·海崖与港
+  - 海崖与港
+  en:
+  - Varcheg
+  - Kachyar Peninsula
+entity_ids:
+- entity.settlement.town_s1
+summary:
+  zh-CN: 瓦尔切格的海崖地貌与港的生计由来。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_S1.descriptionText
+  quote_hash: EF11C9A49A66E1D7FB07B9102DCEB86DF3D94955059D34AB441C51141D368AE3
+  quote: 瓦尔切格位于风雨交加的海崖上，此地正是昔日巴旦尼亚领土的卡恰尔半岛深处
+- source_id: source.calradia.chronicle.animusforge
+  source_version: animusforge-20260912
+  source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+  locator: rules/rule_卡恰尔半岛__卡恰尔半岛.json#/Variants/1/Content
+  quote_hash: 31CC07E184932EB74EBB29642B25F88E795B6567FD3A0D3E03797D38B6E57D80
+  quote: 卡恰尔半岛是我们斯特吉亚东边的大门。从伊卡拉荒原往西走，地势越走越窄，最后就变成了那条怪石嶙峋的长条，硬生生插进海里。北边是诺德人的地盘，南边是巴旦尼亚人的老窝，我们卡在中间，守着两条海路。当年瓦尔切格那件事，我们的祖先就是被诺德人和巴旦尼亚人之间的烂账给卷进去的——他们互相咬，最后把肉送到了我们嘴里。现在半岛上的城镇是我们的，但石头底下埋着的历史不是。走在那些海崖上，风里还能闻到诺德人的长船和巴旦尼亚人的篝火的味道。
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_S1.descriptionText
+  quote_hash: 489ACFDA3F05B653AD694ADE8182E320CD9839AFBB2133D1D4EEE5F679A20B97
+  quote: 建立这个沿海前哨的雅尔希望与内陆进行贸易
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-varcheg-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 瓦尔切格坐落在风雨交加的海崖上，深处昔日巴旦尼亚领土的卡恰尔半岛。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_S1.descriptionText
+    quote_hash: EF11C9A49A66E1D7FB07B9102DCEB86DF3D94955059D34AB441C51141D368AE3
+    quote: 瓦尔切格位于风雨交加的海崖上，此地正是昔日巴旦尼亚领土的卡恰尔半岛深处
+  - source_id: source.calradia.chronicle.animusforge
+    source_version: animusforge-20260912
+    source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+    locator: rules/rule_卡恰尔半岛__卡恰尔半岛.json#/Variants/1/Content
+    quote_hash: 31CC07E184932EB74EBB29642B25F88E795B6567FD3A0D3E03797D38B6E57D80
+    quote: 卡恰尔半岛是我们斯特吉亚东边的大门。从伊卡拉荒原往西走，地势越走越窄，最后就变成了那条怪石嶙峋的长条，硬生生插进海里。北边是诺德人的地盘，南边是巴旦尼亚人的老窝，我们卡在中间，守着两条海路。当年瓦尔切格那件事，我们的祖先就是被诺德人和巴旦尼亚人之间的烂账给卷进去的——他们互相咬，最后把肉送到了我们嘴里。现在半岛上的城镇是我们的，但石头底下埋着的历史不是。走在那些海崖上，风里还能闻到诺德人的长船和巴旦尼亚人的篝火的味道。
+  expressions:
+  - id: expr.town-varcheg-1-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 瓦尔切格坐落在风雨交加的海崖上，深处昔日巴旦尼亚领土的卡恰尔半岛。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_S1.descriptionText
+      quote_hash: EF11C9A49A66E1D7FB07B9102DCEB86DF3D94955059D34AB441C51141D368AE3
+      quote: 瓦尔切格位于风雨交加的海崖上，此地正是昔日巴旦尼亚领土的卡恰尔半岛深处
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-varcheg-1-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 瓦尔切格坐落在风雨交加的海崖上，深处昔日巴旦尼亚领土的卡恰尔半岛。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_S1.descriptionText
+      quote_hash: EF11C9A49A66E1D7FB07B9102DCEB86DF3D94955059D34AB441C51141D368AE3
+      quote: 瓦尔切格位于风雨交加的海崖上，此地正是昔日巴旦尼亚领土的卡恰尔半岛深处
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: summary
+    denies: []
+  - id: expr.town-varcheg-1-b-sturgia
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 卡恰尔半岛是我们斯特吉亚东边的大门。从伊卡拉荒原往西走，地势越走越窄，最后就变成了那条怪石嶙峋的长条，硬生生插进海里。北边是诺德人的地盘，南边是巴旦尼亚人的老窝，我们卡在中间，守着两条海路。当年瓦尔切格那件事，我们的祖先就是被诺德人和巴旦尼亚人之间的烂账给卷进去的——他们互相咬，最后把肉送到了我们嘴里。现在半岛上的城镇是我们的，但石头底下埋着的历史不是。走在那些海崖上，风里还能闻到诺德人的长船和巴旦尼亚人的篝火的味道。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge
+      source_version: animusforge-20260912
+      source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+      locator: rules/rule_卡恰尔半岛__卡恰尔半岛.json#/Variants/1/Content
+      quote_hash: 31CC07E184932EB74EBB29642B25F88E795B6567FD3A0D3E03797D38B6E57D80
+      quote: 卡恰尔半岛是我们斯特吉亚东边的大门。从伊卡拉荒原往西走，地势越走越窄，最后就变成了那条怪石嶙峋的长条，硬生生插进海里。北边是诺德人的地盘，南边是巴旦尼亚人的老窝，我们卡在中间，守着两条海路。当年瓦尔切格那件事，我们的祖先就是被诺德人和巴旦尼亚人之间的烂账给卷进去的——他们互相咬，最后把肉送到了我们嘴里。现在半岛上的城镇是我们的，但石头底下埋着的历史不是。走在那些海崖上，风里还能闻到诺德人的长船和巴旦尼亚人的篝火的味道。
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.sturgia
+      kingdom_ids:
+      - entity.kingdom.sturgia
+    denies: []
+- id: assertion.town-varcheg-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 瓦尔切格本是诺德人的沿海前哨，建它是为了同内陆做买卖。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_S1.descriptionText
+    quote_hash: 489ACFDA3F05B653AD694ADE8182E320CD9839AFBB2133D1D4EEE5F679A20B97
+    quote: 建立这个沿海前哨的雅尔希望与内陆进行贸易
+  expressions:
+  - id: expr.town-varcheg-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 瓦尔切格本是诺德人的沿海前哨，建它是为了同内陆做买卖。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_S1.descriptionText
+      quote_hash: 489ACFDA3F05B653AD694ADE8182E320CD9839AFBB2133D1D4EEE5F679A20B97
+      quote: 建立这个沿海前哨的雅尔希望与内陆进行贸易
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-varcheg-2-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 瓦尔切格本是诺德人的沿海前哨，建它是为了同内陆做买卖。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_S1.descriptionText
+      quote_hash: 489ACFDA3F05B653AD694ADE8182E320CD9839AFBB2133D1D4EEE5F679A20B97
+      quote: 建立这个沿海前哨的雅尔希望与内陆进行贸易
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: summary
+    denies: []

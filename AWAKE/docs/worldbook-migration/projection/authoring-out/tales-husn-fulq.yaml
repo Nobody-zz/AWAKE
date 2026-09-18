@@ -1,0 +1,136 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.culture.tales-husn-fulq
+title:
+  zh-CN: 富勒格其人与“鬼点子”
+  en: Husn Fulq
+status: needs_review
+domain: culture
+subdomain: arts
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 富勒格
+  - 法耳科斯
+  - 富勒格的鬼点子
+  en:
+  - Fulq
+  - Falcos
+summary:
+  zh-CN: 富勒格其人其事与集市说书的“鬼点子”桥段。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_A2.descriptionText
+  quote_hash: 9E77249ED77B0FCE5DE677AECF27997C5FFBB6EF2068FC3735CA8337A9318FEB
+  quote: 富勒格，又名法耳科斯，是一位来自于极南之地的黑面孔雇佣兵酋长
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_A2.descriptionText
+  quote_hash: 473D2DC2703EF9B39985B0CC038E6522B18A890ED89FE6B79EC42E74823DAC4D
+  quote: 在玩了将近二十年的换队游戏之后，他驾着一艘满载黄金的船驶回了家，但许多阿塞莱的氏族仍然骄傲地自称是他的后裔
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_A2.descriptionText
+  quote_hash: F4C52BE23E149678FFF44AF12894E7B992CE9CFCAD400AB63155AE27A1139F0C
+  quote: “富勒格的鬼点子”也成为了许多集市说书人口中经久不衰的故事桥段
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.tale-husn-fulq-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 富勒格又名法耳科斯，是极南之地来的黑面孔雇佣兵酋长，玩了近二十年换队游戏后载着满船黄金回了家，不少阿塞莱氏族仍自称是他的后裔。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_A2.descriptionText
+    quote_hash: 9E77249ED77B0FCE5DE677AECF27997C5FFBB6EF2068FC3735CA8337A9318FEB
+    quote: 富勒格，又名法耳科斯，是一位来自于极南之地的黑面孔雇佣兵酋长
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_A2.descriptionText
+    quote_hash: 473D2DC2703EF9B39985B0CC038E6522B18A890ED89FE6B79EC42E74823DAC4D
+    quote: 在玩了将近二十年的换队游戏之后，他驾着一艘满载黄金的船驶回了家，但许多阿塞莱的氏族仍然骄傲地自称是他的后裔
+  expressions:
+  - id: expr.tale-husn-fulq-1-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 富勒格又名法耳科斯，是极南之地来的黑面孔雇佣兵酋长，玩了近二十年换队游戏后载着满船黄金回了家，不少阿塞莱氏族仍自称是他的后裔。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_A2.descriptionText
+      quote_hash: 473D2DC2703EF9B39985B0CC038E6522B18A890ED89FE6B79EC42E74823DAC4D
+      quote: 在玩了将近二十年的换队游戏之后，他驾着一艘满载黄金的船驶回了家，但许多阿塞莱的氏族仍然骄傲地自称是他的后裔
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: summary
+    denies: []
+- id: assertion.tale-husn-fulq-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: “富勒格的鬼点子”是集市说书人口中经久不衰的桥段。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_A2.descriptionText
+    quote_hash: F4C52BE23E149678FFF44AF12894E7B992CE9CFCAD400AB63155AE27A1139F0C
+    quote: “富勒格的鬼点子”也成为了许多集市说书人口中经久不衰的故事桥段
+  expressions:
+  - id: expr.tale-husn-fulq-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: “富勒格的鬼点子”是集市说书人口中经久不衰的桥段。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_A2.descriptionText
+      quote_hash: F4C52BE23E149678FFF44AF12894E7B992CE9CFCAD400AB63155AE27A1139F0C
+      quote: “富勒格的鬼点子”也成为了许多集市说书人口中经久不衰的故事桥段
+    grants:
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []

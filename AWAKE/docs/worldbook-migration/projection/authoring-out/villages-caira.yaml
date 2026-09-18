@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-caira
+title:
+  zh-CN: 恺拉
+  en: Caira
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 恺拉
+  en:
+  - Caira
+  - castle_village_ES1_2
+summary:
+  zh-CN: 恺拉坐落于被称为卡勒萨的河流湖泊交织之地，卡勒萨河与蒂亚具斯河共同塑造的冲积平原可以种植小麦；再往东则是相当贫瘠的碱性土。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_ES1_2
+  quote_hash: 7D0071175C58C6DDA2C9BD689AE2E38A2000DD6E461B5C4219A7DC9816838AAB
+  quote: 恺拉坐落于被称为卡勒萨的河流、湖泊、潟湖交织的网络中。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-caira-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 恺拉坐落于被称为卡勒萨的河流湖泊交织之地，卡勒萨河与蒂亚具斯河共同塑造的冲积平原可以种植小麦；再往东则是相当贫瘠的碱性土。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_ES1_2
+    quote_hash: 7D0071175C58C6DDA2C9BD689AE2E38A2000DD6E461B5C4219A7DC9816838AAB
+    quote: 恺拉坐落于被称为卡勒萨的河流、湖泊、潟湖交织的网络中。
+  expressions:
+  - id: expr.village-caira-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 恺拉的麦田是两条河合手堆出来的。村里人说往东一步土就咸了，守住这片冲积地就是守住饭碗。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES1_2
+      quote_hash: 7D0071175C58C6DDA2C9BD689AE2E38A2000DD6E461B5C4219A7DC9816838AAB
+      quote: 恺拉坐落于被称为卡勒萨的河流、湖泊、潟湖交织的网络中。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-caira-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 恺拉的麦产是东境的底粮——冲积平原肥力随汛期更新；粮价稳但有官粮征购，行商只能收余量。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES1_2
+      quote_hash: 7D0071175C58C6DDA2C9BD689AE2E38A2000DD6E461B5C4219A7DC9816838AAB
+      quote: 恺拉坐落于被称为卡勒萨的河流、湖泊、潟湖交织的网络中。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

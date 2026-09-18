@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-ostican
+title:
+  zh-CN: 奥斯蒂港
+  en: Ostican
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 奥斯蒂港
+  en:
+  - Ostican
+  - town_V8
+summary:
+  zh-CN: 奥斯蒂港原为帝国小港，今为北海海民的庇护所，多身怀长技的海盗；内战各方轮番雇佣，首批瓦兰迪亚移民即定居于此传话引军。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_V8
+  quote_hash: 522E133D88D48DC0F4F40703BD59692A0326F69B704EBB2DBF720D80BD0D5BB4
+  quote: 奥斯蒂港原本是一座帝国的小港口，现在却成为了北海海民的庇护所。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-ostican-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 奥斯蒂港原为帝国小港，今为北海海民的庇护所，多身怀长技的海盗；内战各方轮番雇佣，首批瓦兰迪亚移民即定居于此传话引军。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_V8
+    quote_hash: 522E133D88D48DC0F4F40703BD59692A0326F69B704EBB2DBF720D80BD0D5BB4
+    quote: 奥斯蒂港原本是一座帝国的小港口，现在却成为了北海海民的庇护所。
+  expressions:
+  - id: expr.town-ostican-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 奥斯蒂港的水手个顶个的厉害，也个顶个的危险。打仗的时候，哪路人马都来这儿雇人。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_V8
+      quote_hash: 522E133D88D48DC0F4F40703BD59692A0326F69B704EBB2DBF720D80BD0D5BB4
+      quote: 奥斯蒂港原本是一座帝国的小港口，现在却成为了北海海民的庇护所。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-ostican-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 奥斯蒂港是灰色人材市场——海盗雇佣、情报、船械二手的集散；官面管得松，风险溢价高，重货别在此地过夜。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_V8
+      quote_hash: 522E133D88D48DC0F4F40703BD59692A0326F69B704EBB2DBF720D80BD0D5BB4
+      quote: 奥斯蒂港原本是一座帝国的小港口，现在却成为了北海海民的庇护所。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

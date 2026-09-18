@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-glavstrom
+title:
+  zh-CN: 格拉夫斯特伦
+  en: Glavstrom
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 格拉夫斯特伦
+  en:
+  - Glavstrom
+  - castle_village_S8_2
+summary:
+  zh-CN: 格拉夫斯特伦坐落于东卡拉迪亚的峻峭险峰——伊勒坦山——脚下，这座山得名自草原民族的一位神灵；这片荒野上有许多毛皮兽，如貂、狐狸、兔子等。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#castle_village_S8_2
+  quote_hash: 765EEB74B3B77BB6AE5ADDFD9245B910B064DD320A67FBC1C44699C39C5D7478
+  quote: 格拉夫斯特伦坐落于东卡拉迪亚的一座峻峭险峰——伊勒坦山脚下，这座山得名自草原民族的一位神灵。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-glavstrom-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 格拉夫斯特伦坐落于东卡拉迪亚的峻峭险峰——伊勒坦山——脚下，这座山得名自草原民族的一位神灵；这片荒野上有许多毛皮兽，如貂、狐狸、兔子等。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#castle_village_S8_2
+    quote_hash: 765EEB74B3B77BB6AE5ADDFD9245B910B064DD320A67FBC1C44699C39C5D7478
+    quote: 格拉夫斯特伦坐落于东卡拉迪亚的一座峻峭险峰——伊勒坦山脚下，这座山得名自草原民族的一位神灵。
+  expressions:
+  - id: expr.village-glavstrom-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 格拉夫斯特伦的人受山神照看。村里人说山有名有姓，兽也就多——猎户来这儿，图的是毛皮，也图个心安。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S8_2
+      quote_hash: 765EEB74B3B77BB6AE5ADDFD9245B910B064DD320A67FBC1C44699C39C5D7478
+      quote: 格拉夫斯特伦坐落于东卡拉迪亚的一座峻峭险峰——伊勒坦山脚下，这座山得名自草原民族的一位神灵。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-glavstrom-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 格拉夫斯特伦以荒野猎皮为业——山脚兽多、猎期长；皮张按毛色与完整分等，貂狐为上，山名带神，猎户入山先祭、忌滥杀幼兽。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S8_2
+      quote_hash: 765EEB74B3B77BB6AE5ADDFD9245B910B064DD320A67FBC1C44699C39C5D7478
+      quote: 格拉夫斯特伦坐落于东卡拉迪亚的一座峻峭险峰——伊勒坦山脚下，这座山得名自草原民族的一位神灵。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

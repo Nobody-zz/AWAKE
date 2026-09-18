@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-quyaz
+title:
+  zh-CN: 古亚兹
+  en: Quyaz
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 古亚兹
+  en:
+  - Quyaz
+  - town_A1
+summary:
+  zh-CN: 古亚兹曾是主导西海与珀拉斯海贸易的商业共和国，帝国霸权挤压其商路后商权旁落纳哈撒商人，今为巴努·胡勒延部族的重要领地。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_A1
+  quote_hash: E35407E891890C22375D4EB2AB6176DABCAA0AE62073BBF26038A8F1C8008BFC
+  quote: 古亚兹曾是一个能主导西海和珀拉斯海贸易的商业共和国，当地人讲一种如今几近消亡的坎族语——和纳哈撒语类似。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-quyaz-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 古亚兹曾是主导西海与珀拉斯海贸易的商业共和国，帝国霸权挤压其商路后商权旁落纳哈撒商人，今为巴努·胡勒延部族的重要领地。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_A1
+    quote_hash: E35407E891890C22375D4EB2AB6176DABCAA0AE62073BBF26038A8F1C8008BFC
+    quote: 古亚兹曾是一个能主导西海和珀拉斯海贸易的商业共和国，当地人讲一种如今几近消亡的坎族语——和纳哈撒语类似。
+  expressions:
+  - id: expr.town-quyaz-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 老辈人说古亚兹人讲的坎族话快失传了。那地方从前比谁都阔，如今是胡勒延家的地盘。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_A1
+      quote_hash: E35407E891890C22375D4EB2AB6176DABCAA0AE62073BBF26038A8F1C8008BFC
+      quote: 古亚兹曾是一个能主导西海和珀拉斯海贸易的商业共和国，当地人讲一种如今几近消亡的坎族语——和纳哈撒语类似。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-quyaz-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 古亚兹的买卖根子在双海贸易——西海与珀拉斯海商路的交汇处；帝国霸权南压后商权易手，接货要看胡勒延部族的脸色，旧共和国的腔调只剩城里人的口音。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_A1
+      quote_hash: E35407E891890C22375D4EB2AB6176DABCAA0AE62073BBF26038A8F1C8008BFC
+      quote: 古亚兹曾是一个能主导西海和珀拉斯海贸易的商业共和国，当地人讲一种如今几近消亡的坎族语——和纳哈撒语类似。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

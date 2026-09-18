@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-hongard-castle
+title:
+  zh-CN: 翁加尔堡
+  en: Hongard Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 翁加尔堡
+  - 翁加尔
+  - 费顿
+  en:
+  - Hongard Castle
+  - castle_V2
+  - Hongard
+  - Ferton
+entity_ids:
+- entity.settlement.castle_v2
+summary:
+  zh-CN: 翁加尔堡是瓦兰迪亚踞特朗河畔的一座城堡，辖着翁加尔与费顿两村；这一带本是帝国腹地，如今成了瓦兰迪亚王国的中心。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_V2
+  quote_hash: 94422681CB4F4B12217EF260591476C5E0DEDAD501078751E67A97F0314B67DA
+  quote: 翁加尔堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-hongard-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 翁加尔堡是瓦兰迪亚踞特朗河畔的一座城堡，辖着翁加尔与费顿两村；这一带本是帝国腹地，如今成了瓦兰迪亚王国的中心。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_V2
+    quote_hash: 94422681CB4F4B12217EF260591476C5E0DEDAD501078751E67A97F0314B67DA
+    quote: 翁加尔堡
+  expressions:
+  - id: expr.castle-hongard-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 翁加尔堡的人说，堡子脚下的地，从前归帝国，如今归咱们的王。村里人说，河湾里麦子好，坡上橄榄也好。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_V2
+      quote_hash: 94422681CB4F4B12217EF260591476C5E0DEDAD501078751E67A97F0314B67DA
+      quote: 翁加尔堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-hongard-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 翁加尔堡据特朗河蜿蜒处要地，下辖粮村与橄榄村各一；麦子入堡仓、按封地纳赋，橄榄油在堡中压榨外销，通往比斯坎丘陵的山口由堡里设卡。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_V2
+      quote_hash: 94422681CB4F4B12217EF260591476C5E0DEDAD501078751E67A97F0314B67DA
+      quote: 翁加尔堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

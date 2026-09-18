@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-tyal
+title:
+  zh-CN: 蒂亚尔
+  en: Tyal
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 蒂亚尔
+  en:
+  - Tyal
+  - town_S5
+summary:
+  zh-CN: 蒂亚尔踞斯特吉亚东境的伊勒坦山西麓，远离诸公国纷争，民多流浪者商贩猎户；贵族与东边游牧部落世代联姻。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_S5
+  quote_hash: 4AD1DACB0F500DBDE0A3DCCA0BFA19B5D2911FE855CED93A4A10E9040666EA3E
+  quote: 蒂亚尔坐落于斯特吉亚东部边境的伊勒坦山西麓，该地区长期远离其他斯特吉亚公国的权力争斗。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-tyal-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 蒂亚尔踞斯特吉亚东境的伊勒坦山西麓，远离诸公国纷争，民多流浪者商贩猎户；贵族与东边游牧部落世代联姻。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_S5
+    quote_hash: 4AD1DACB0F500DBDE0A3DCCA0BFA19B5D2911FE855CED93A4A10E9040666EA3E
+    quote: 蒂亚尔坐落于斯特吉亚东部边境的伊勒坦山西麓，该地区长期远离其他斯特吉亚公国的权力争斗。
+  expressions:
+  - id: expr.town-tyal-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 蒂亚尔是天高皇帝远的地方，什么人都有。他们家的闺女嫁给东边草原上的老爷，谱牒上写着好几位大汗的名字。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_S5
+      quote_hash: 4AD1DACB0F500DBDE0A3DCCA0BFA19B5D2911FE855CED93A4A10E9040666EA3E
+      quote: 蒂亚尔坐落于斯特吉亚东部边境的伊勒坦山西麓，该地区长期远离其他斯特吉亚公国的权力争斗。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-tyal-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 蒂亚尔是边境杂居市场——马匹、毛皮、流浪者佣工三样流通最活；联姻网络即信用网络，东边草原的行情在此比别处灵通。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_S5
+      quote_hash: 4AD1DACB0F500DBDE0A3DCCA0BFA19B5D2911FE855CED93A4A10E9040666EA3E
+      quote: 蒂亚尔坐落于斯特吉亚东部边境的伊勒坦山西麓，该地区长期远离其他斯特吉亚公国的权力争斗。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

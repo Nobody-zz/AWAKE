@@ -1,0 +1,105 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 2
+id: doc.culture.tales-dawn-taboo
+title:
+  zh-CN: 黎明山脉·禁忌与传说
+  en: Dawn Mountains
+status: needs_review
+domain: culture
+subdomain: faith
+universe: awake_current
+era:
+  key: current
+  certainty: approximate
+content_tier: base
+aliases:
+  zh-CN:
+  - 黎明山脉
+  - 阿赫哈克
+  - 山灵禁忌
+  en:
+  - Dawn Mountains
+summary:
+  zh-CN: 阿赫哈克传说与黑魔法信仰叙述，及由此形成的禁入社会边界。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.chronicle.dawn-mountains
+  source_version: download-20260903
+  source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+  locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+  quote_hash: 72968E3B23E563F44EFB2E6A60DEFE4D017786E6A44E49FEB0E56006106D7FC4
+  quote: 相传阿赫哈克的双肩生有蝮蛇，其御所即建于山脉深处
+- source_id: source.calradia.chronicle.dawn-mountains
+  source_version: download-20260903
+  source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+  locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+  quote_hash: B3C17F0344DFB8CC99C1DD56808EDFF9E767C1B73C133D37C3477CAC7FA463A7
+  quote: 山脉核心区域历来对外来者封闭，任何未经允许的擅入均被视为对山灵与先祖的严重亵渎
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.tale-dawn-taboo-1
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 阿赫哈克、黑魔法和古老仪式的故事属于当地传说与信仰叙述。
+  sources:
+  - source_id: source.calradia.chronicle.dawn-mountains
+    source_version: download-20260903
+    source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+    locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+    quote_hash: 72968E3B23E563F44EFB2E6A60DEFE4D017786E6A44E49FEB0E56006106D7FC4
+    quote: 相传阿赫哈克的双肩生有蝮蛇，其御所即建于山脉深处
+  expressions:
+  - id: expr.tale-dawn-taboo-1
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 山里相传神话时代的暴君阿赫哈克双肩生蛇，御所藏在山脉深处；黑魔法与古老仪轨的故事，至今在周边部族口中流传。
+    sources:
+    - source_id: source.calradia.chronicle.dawn-mountains
+      source_version: download-20260903
+      source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+      locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+      quote_hash: 72968E3B23E563F44EFB2E6A60DEFE4D017786E6A44E49FEB0E56006106D7FC4
+      quote: 相传阿赫哈克的双肩生有蝮蛇，其御所即建于山脉深处
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []
+- id: assertion.tale-dawn-taboo-2
+  revision: 1
+  kind: relation
+  text:
+    zh-CN: 山脉腹地与山民习俗形成未经允许不得进入的社会边界。
+  sources:
+  - source_id: source.calradia.chronicle.dawn-mountains
+    source_version: download-20260903
+    source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+    locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+    quote_hash: B3C17F0344DFB8CC99C1DD56808EDFF9E767C1B73C133D37C3477CAC7FA463A7
+    quote: 山脉核心区域历来对外来者封闭，任何未经允许的擅入均被视为对山灵与先祖的严重亵渎
+  expressions:
+  - id: expr.tale-dawn-taboo-2
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 凭着这些相传的忌讳，山腹被当作禁地：不经允许踏进深处，即是冒犯山灵与先祖。当地部族守着这条规矩，把外人挡在山外。
+    sources:
+    - source_id: source.calradia.chronicle.dawn-mountains
+      source_version: download-20260903
+      source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+      locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+      quote_hash: B3C17F0344DFB8CC99C1DD56808EDFF9E767C1B73C133D37C3477CAC7FA463A7
+      quote: 山脉核心区域历来对外来者封闭，任何未经允许的擅入均被视为对山灵与先祖的严重亵渎
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    denies: []

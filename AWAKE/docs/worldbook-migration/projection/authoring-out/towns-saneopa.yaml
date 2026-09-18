@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-saneopa
+title:
+  zh-CN: 萨涅俄帕
+  en: Saneopa
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 萨涅俄帕
+  en:
+  - Saneopa
+  - town_EN3
+summary:
+  zh-CN: 萨涅俄帕扼涅维斯谷通俄佛堤斯湖的低矮隘口，人声鼎沸百业兴旺，是卡拉迪亚内陆重要贸易中心，与幽静圣湖成对照。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_EN3
+  quote_hash: 1400AB013A38DE42553C275B992031ED097ECAE6B1E2FBF0DBEE7040C98089BE
+  quote: 萨涅俄帕坐落在一道涅维斯谷通往北方俄佛堤斯湖的低矮隘口之上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-saneopa-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 萨涅俄帕扼涅维斯谷通俄佛堤斯湖的低矮隘口，人声鼎沸百业兴旺，是卡拉迪亚内陆重要贸易中心，与幽静圣湖成对照。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EN3
+    quote_hash: 1400AB013A38DE42553C275B992031ED097ECAE6B1E2FBF0DBEE7040C98089BE
+    quote: 萨涅俄帕坐落在一道涅维斯谷通往北方俄佛堤斯湖的低矮隘口之上。
+  expressions:
+  - id: expr.town-saneopa-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 萨涅俄帕那叫一个热闹，可城边的湖连桨声都没人敢出。老人们说湖底下是通往另一个世界的门。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EN3
+      quote_hash: 1400AB013A38DE42553C275B992031ED097ECAE6B1E2FBF0DBEE7040C98089BE
+      quote: 萨涅俄帕坐落在一道涅维斯谷通往北方俄佛堤斯湖的低矮隘口之上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-saneopa-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 萨涅俄帕是内陆商网的中枢节点——隘口即关卡，过路税与仓储两头收；俄佛堤斯湖是“彼世门户”的圣地，商贸区与圣区界线分明，做买卖莫越界。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EN3
+      quote_hash: 1400AB013A38DE42553C275B992031ED097ECAE6B1E2FBF0DBEE7040C98089BE
+      quote: 萨涅俄帕坐落在一道涅维斯谷通往北方俄佛堤斯湖的低矮隘口之上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

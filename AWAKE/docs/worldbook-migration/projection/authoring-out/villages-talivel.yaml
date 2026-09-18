@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-talivel
+title:
+  zh-CN: 塔利维尔
+  en: Talivel
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 塔利维尔
+  en:
+  - Talivel
+  - castle_village_V7_1
+summary:
+  zh-CN: 塔利维尔坐落在卡拉迪亚腹地的特朗河谷中段，村民在山坡上种植橄榄。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#castle_village_V7_1
+  quote_hash: 8543513802B863C3529485F24041E5C88D8B232F15F81B7B78025815C0590772
+  quote: 塔利维尔坐落在卡拉迪亚腹地的特朗河谷中段。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-talivel-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 塔利维尔坐落在卡拉迪亚腹地的特朗河谷中段，村民在山坡上种植橄榄。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#castle_village_V7_1
+    quote_hash: 8543513802B863C3529485F24041E5C88D8B232F15F81B7B78025815C0590772
+    quote: 塔利维尔坐落在卡拉迪亚腹地的特朗河谷中段。
+  expressions:
+  - id: expr.village-talivel-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 塔利维尔在谷中间，风从两头过。村里人说腹地的橄榄不娇气，坡上随便站站就结果。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#castle_village_V7_1
+      quote_hash: 8543513802B863C3529485F24041E5C88D8B232F15F81B7B78025815C0590772
+      quote: 塔利维尔坐落在卡拉迪亚腹地的特朗河谷中段。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-talivel-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 塔利维尔的橄榄走量——河谷中段坡地连片、易集中收果；榨坊随收季开张，油价看年成与河运，大宗货发往腹地市镇。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#castle_village_V7_1
+      quote_hash: 8543513802B863C3529485F24041E5C88D8B232F15F81B7B78025815C0590772
+      quote: 塔利维尔坐落在卡拉迪亚腹地的特朗河谷中段。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

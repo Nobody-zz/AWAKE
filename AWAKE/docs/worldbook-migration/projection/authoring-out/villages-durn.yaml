@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-durn
+title:
+  zh-CN: 杜恩
+  en: Durn
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 杜恩
+  en:
+  - Durn
+  - village_B5_1
+summary:
+  zh-CN: 杜恩位于特朗河上游峡谷的下方；水势平缓时，村民从河边的水洼泥塘里刮取淤泥，再沿着蜿蜒小路把泥背到头顶悬崖上的彭·坎诺克城。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-battania
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+  locator: bannerlord.villages#village_B5_1
+  quote_hash: 4DB2622A1DE6E85072C120308E368F265AAF49BA2F838ACB4D4BE40D331BC39F
+  quote: 杜恩位于特朗河上游峡谷的下方。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-durn-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 杜恩位于特朗河上游峡谷的下方；水势平缓时，村民从河边的水洼泥塘里刮取淤泥，再沿着蜿蜒小路把泥背到头顶悬崖上的彭·坎诺克城。
+  sources:
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#village_B5_1
+    quote_hash: 4DB2622A1DE6E85072C120308E368F265AAF49BA2F838ACB4D4BE40D331BC39F
+    quote: 杜恩位于特朗河上游峡谷的下方。
+  expressions:
+  - id: expr.village-durn-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 杜恩的人一辈子在爬坡。村里人说河边取泥不难，难的是那截路——可上头认这泥的账。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B5_1
+      quote_hash: 4DB2622A1DE6E85072C120308E368F265AAF49BA2F838ACB4D4BE40D331BC39F
+      quote: 杜恩位于特朗河上游峡谷的下方。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-durn-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 杜恩以河塘淤泥为业——水缓积泥、质细可用；泥背运上崖供彭·坎诺克窑口，按细粗分等，汛期水浊则停采、等泥沉。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B5_1
+      quote_hash: 4DB2622A1DE6E85072C120308E368F265AAF49BA2F838ACB4D4BE40D331BC39F
+      quote: 杜恩位于特朗河上游峡谷的下方。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

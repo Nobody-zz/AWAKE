@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-drapand-castle
+title:
+  zh-CN: 德拉庞堡
+  en: Drapand Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 德拉庞堡
+  - 德拉庞
+  - 瓦朗比
+  en:
+  - Drapand Castle
+  - castle_V3
+  - Drapand
+  - Valanby
+entity_ids:
+- entity.settlement.castle_v3
+summary:
+  zh-CN: 德拉庞堡是瓦兰迪亚压在法尔海角上的一座城堡，辖着德拉庞与瓦朗比两村；一村出海追鳕鱼，一村在河畔围场养马。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_V3
+  quote_hash: DD3B5D54B89F34D900D579E7B37F8FD9C28FB2DCCCF56FF544C59F0CFB3D44D0
+  quote: 德拉庞堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-drapand-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 德拉庞堡是瓦兰迪亚压在法尔海角上的一座城堡，辖着德拉庞与瓦朗比两村；一村出海追鳕鱼，一村在河畔围场养马。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_V3
+    quote_hash: DD3B5D54B89F34D900D579E7B37F8FD9C28FB2DCCCF56FF544C59F0CFB3D44D0
+    quote: 德拉庞堡
+  expressions:
+  - id: expr.castle-drapand-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 德拉庞堡的人说，堡子看着海口，风大浪急。村里人说，出远洋的船一出去就是几个月，回来的都算运气好。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_V3
+      quote_hash: DD3B5D54B89F34D900D579E7B37F8FD9C28FB2DCCCF56FF544C59F0CFB3D44D0
+      quote: 德拉庞堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-drapand-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 德拉庞堡据特朗河口南侧法尔海角，下辖远洋渔村与牧马村各一；鳕鱼腌渍后由堡中过秤外运，河畔沼泽围场按栏分给牧户，出海船只需在堡里挂号。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_V3
+      quote_hash: DD3B5D54B89F34D900D579E7B37F8FD9C28FB2DCCCF56FF544C59F0CFB3D44D0
+      quote: 德拉庞堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

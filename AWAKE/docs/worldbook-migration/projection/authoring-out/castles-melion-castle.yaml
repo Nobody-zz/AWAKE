@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-melion-castle
+title:
+  zh-CN: 墨利翁堡
+  en: Melion Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 墨利翁堡
+  - 墨利翁
+  - 萨戈利那
+  en:
+  - Melion Castle
+  - castle_ES3
+  - Melion
+  - Sagolina
+entity_ids:
+- entity.settlement.castle_es3
+summary:
+  zh-CN: 墨利翁堡是南帝国塞在密泽亚德窄谷里的一座城堡，辖着墨利翁与萨戈利那两村；一条谷里抽丝，一条谷里采银。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_ES3
+  quote_hash: 310D2787DE805EA9D5C2721AE646941B3D65D9713BCB7974B1A554ADD29CDBDD
+  quote: 墨利翁堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-melion-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 墨利翁堡是南帝国塞在密泽亚德窄谷里的一座城堡，辖着墨利翁与萨戈利那两村；一条谷里抽丝，一条谷里采银。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_ES3
+    quote_hash: 310D2787DE805EA9D5C2721AE646941B3D65D9713BCB7974B1A554ADD29CDBDD
+    quote: 墨利翁堡
+  expressions:
+  - id: expr.castle-melion-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 墨利翁堡的人说，堡子守的是两条谷——丝谷和银谷。村里人说，连草原上的骑士都爱穿咱的丝绸垫在甲里。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_ES3
+      quote_hash: 310D2787DE805EA9D5C2721AE646941B3D65D9713BCB7974B1A554ADD29CDBDD
+      quote: 墨利翁堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-melion-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 墨利翁堡据密泽亚德高原窄谷，下辖丝村与银矿村各一；生丝在堡中缫成、计价外销，银矿出料由堡里验数上报，守谷与护矿之役由行省按屯户分派。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_ES3
+      quote_hash: 310D2787DE805EA9D5C2721AE646941B3D65D9713BCB7974B1A554ADD29CDBDD
+      quote: 墨利翁堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

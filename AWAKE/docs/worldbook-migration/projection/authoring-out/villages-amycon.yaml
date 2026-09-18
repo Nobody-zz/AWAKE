@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-amycon
+title:
+  zh-CN: 阿密孔
+  en: Amycon
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿密孔
+  en:
+  - Amycon
+  - castle_village_ES6_2
+summary:
+  zh-CN: 阿密孔坐落于奥兰石山与阿里斯河谷之间逶迤嶙峋的山脊上，居民是牧羊人，以制作加孜然的咸味干酪而闻名。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_ES6_2
+  quote_hash: 861E56DE7B28492B4AE11EB642C075F7646AD437FC8530C69F6354CCDB74F13F
+  quote: 阿密孔坐落于奥兰石山与阿里斯河谷之间一片逶迤嶙峋的山脊之上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-amycon-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿密孔坐落于奥兰石山与阿里斯河谷之间逶迤嶙峋的山脊上，居民是牧羊人，以制作加孜然的咸味干酪而闻名。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_ES6_2
+    quote_hash: 861E56DE7B28492B4AE11EB642C075F7646AD437FC8530C69F6354CCDB74F13F
+    quote: 阿密孔坐落于奥兰石山与阿里斯河谷之间一片逶迤嶙峋的山脊之上。
+  expressions:
+  - id: expr.village-amycon-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿密孔的干酪隔着山脊就能认出来——孜然味冲。村里人说羊吃着带矿气的草，奶里自带咸头。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES6_2
+      quote_hash: 861E56DE7B28492B4AE11EB642C075F7646AD437FC8530C69F6354CCDB74F13F
+      quote: 阿密孔坐落于奥兰石山与阿里斯河谷之间一片逶迤嶙峋的山脊之上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-amycon-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿密孔的咸干酪耐运耐存——山脊路远，靠味重压秤赢远近市面；仿味的多，认村印的才敢长途收。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES6_2
+      quote_hash: 861E56DE7B28492B4AE11EB642C075F7646AD437FC8530C69F6354CCDB74F13F
+      quote: 阿密孔坐落于奥兰石山与阿里斯河谷之间一片逶迤嶙峋的山脊之上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

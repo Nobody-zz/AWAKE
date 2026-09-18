@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-samatha
+title:
+  zh-CN: 萨马塔
+  en: Samatha
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 萨马塔
+  en:
+  - Samatha
+  - village_EN5_4
+summary:
+  zh-CN: 萨马塔位于阳光普照的密泽亚德高地的一处斜坡上；山坡被改造成梯田以种植桑树，人们采桑叶入桶喂蚕。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_EN5_4
+  quote_hash: 13CD149D12196E4ED34E7AB584E8ED4B064B864EDECE90C5351232EBD16A298D
+  quote: 萨马塔位于阳光普照的密泽亚德高地的一处斜坡上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-samatha-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 萨马塔位于阳光普照的密泽亚德高地的一处斜坡上；山坡被改造成梯田以种植桑树，人们采桑叶入桶喂蚕。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EN5_4
+    quote_hash: 13CD149D12196E4ED34E7AB584E8ED4B064B864EDECE90C5351232EBD16A298D
+    quote: 萨马塔位于阳光普照的密泽亚德高地的一处斜坡上。
+  expressions:
+  - id: expr.village-samatha-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 萨马塔的坡是一层一层的，桑树顺着台阶往上爬。村里人说太阳管够，蚕就吃得住，丝就抽得长。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EN5_4
+      quote_hash: 13CD149D12196E4ED34E7AB584E8ED4B064B864EDECE90C5351232EBD16A298D
+      quote: 萨马塔位于阳光普照的密泽亚德高地的一处斜坡上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-samatha-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 萨马塔靠梯田桑养蚕——向阳坡地桑叶厚实、蚕期稳；收蚕看头眠齐整，丝料按茧色与匀净分级，阳坡的丝常年抢手。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EN5_4
+      quote_hash: 13CD149D12196E4ED34E7AB584E8ED4B064B864EDECE90C5351232EBD16A298D
+      quote: 萨马塔位于阳光普照的密泽亚德高地的一处斜坡上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

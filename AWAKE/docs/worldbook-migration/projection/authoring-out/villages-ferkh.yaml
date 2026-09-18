@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-ferkh
+title:
+  zh-CN: 费赫
+  en: Ferkh
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 费赫
+  en:
+  - Ferkh
+  - castle_village_S5_2
+summary:
+  zh-CN: 费赫位于伊卡拉荒原——拉科尼斯湖西北方森林——的北部边缘处；它是冒险深入森林的商贩落脚之处，那些人要面对严寒与狼群，还要应付寻毛皮的、脾性难料的林中居民，以及北地的赏金猎人。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#castle_village_S5_2
+  quote_hash: C2E15FA8F2C40C2B02BD5A9691F9B552B0CDC4E4370E81D5229DD17CD3D0C2C2
+  quote: 费赫位于伊卡拉荒原——拉科尼斯湖西北方森林的北部边缘处。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-ferkh-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 费赫位于伊卡拉荒原——拉科尼斯湖西北方森林——的北部边缘处；它是冒险深入森林的商贩落脚之处，那些人要面对严寒与狼群，还要应付寻毛皮的、脾性难料的林中居民，以及北地的赏金猎人。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#castle_village_S5_2
+    quote_hash: C2E15FA8F2C40C2B02BD5A9691F9B552B0CDC4E4370E81D5229DD17CD3D0C2C2
+    quote: 费赫位于伊卡拉荒原——拉科尼斯湖西北方森林的北部边缘处。
+  expressions:
+  - id: expr.village-ferkh-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 费赫的人见过太多来路不明的客。村里人说城里人想进林子发财，先进我们村——能不能出来，就难说了。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S5_2
+      quote_hash: C2E15FA8F2C40C2B02BD5A9691F9B552B0CDC4E4370E81D5229DD17CD3D0C2C2
+      quote: 费赫位于伊卡拉荒原——拉科尼斯湖西北方森林的北部边缘处。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-ferkh-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 费赫是林边商栈——据荒原入口、管进山补给；货按来路与成色分等，毛皮、腌肉与盐是常货，赊账多、赖账也多，冬季最险。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S5_2
+      quote_hash: C2E15FA8F2C40C2B02BD5A9691F9B552B0CDC4E4370E81D5229DD17CD3D0C2C2
+      quote: 费赫位于伊卡拉荒原——拉科尼斯湖西北方森林的北部边缘处。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

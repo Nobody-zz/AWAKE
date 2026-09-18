@@ -1,0 +1,227 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 3
+id: doc.geography.mountains-dawn
+title:
+  zh-CN: 黎明山脉·山岳
+  en: Dawn Mountains
+status: needs_review
+domain: geography
+subdomain: terrain
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 黎明山脉
+  - 黎明山
+  en:
+  - Dawn Mountains
+summary:
+  zh-CN: 黎明山脉的位置、全称、南北走向与高原东缘边界属性、山麓植被。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.chronicle.dawn-mountains
+  source_version: download-20260903
+  source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+  locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+  quote_hash: B6CFAF6B3A59D6D18CFFC37351E275255752A492CB5FE0B034099CADB2819881
+  quote: 黎明山脉，全称柯希·罗希尼——黎明山脉，坐落于德夫赛格高原东缘
+- source_id: source.calradia.chronicle.dawn-mountains
+  source_version: download-20260903
+  source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+  locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+  quote_hash: CFB7A4BB044BBA832618326C3D9830E3C2970A5275174B770A605D4FD04F188D
+  quote: 山麓地带则覆盖着茂密的针叶林与高山草甸
+- source_id: source.calradia.chronicle.dawn-mountains
+  source_version: download-20260903
+  source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+  locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+  quote_hash: EBC5CCFFBDDD7ACF1BCF76A8A314B058A3FCCEBBFCCB1823292CA004C5D7ED63
+  quote: 山脉主体呈南北走向
+- source_id: source.calradia.game.settlements.geography2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 9af64df767747545a9a75b8e22528317e291c51f0314f6842eb79a9f061734b5
+  locator: bannerlord.db#settlements.village_K6_2.descriptionText
+  quote_hash: F8D1136FFD5771A3BFBF49710379EF1511E1B5E03E3D27180BFD816CEF3E70EA
+  quote: 努丘克位于一片露头岩山脉之下，该山的达西语名为柯希·罗希尼，即黎明山脉。当地村民多是新近定居的游牧民，他们像祖先一样饲养绵羊。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.mountain-dawn-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 黎明山脉全称柯希·罗希尼，坐落在德夫赛格高原东缘，山势大体南北走向，是高原东边的天然界限。
+  sources:
+  - source_id: source.calradia.chronicle.dawn-mountains
+    source_version: download-20260903
+    source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+    locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+    quote_hash: B6CFAF6B3A59D6D18CFFC37351E275255752A492CB5FE0B034099CADB2819881
+    quote: 黎明山脉，全称柯希·罗希尼——黎明山脉，坐落于德夫赛格高原东缘
+  expressions:
+  - id: expr.mountain-dawn-1-summary
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 黎明山脉全称柯希·罗希尼，坐落在德夫赛格高原东缘，山势大体南北走向，是高原东边的天然界限。
+    sources:
+    - source_id: source.calradia.chronicle.dawn-mountains
+      source_version: download-20260903
+      source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+      locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+      quote_hash: B6CFAF6B3A59D6D18CFFC37351E275255752A492CB5FE0B034099CADB2819881
+      quote: 黎明山脉，全称柯希·罗希尼——黎明山脉，坐落于德夫赛格高原东缘
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+- id: assertion.mountain-dawn-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 黎明山脉全称柯希·罗希尼，坐落在德夫赛格高原东缘，山势大体南北走向，是高原东边的天然界限。
+  sources:
+  - source_id: source.calradia.chronicle.dawn-mountains
+    source_version: download-20260903
+    source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+    locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+    quote_hash: EBC5CCFFBDDD7ACF1BCF76A8A314B058A3FCCEBBFCCB1823292CA004C5D7ED63
+    quote: 山脉主体呈南北走向
+  expressions:
+  - id: expr.mountain-dawn-2-summary
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 黎明山脉全称柯希·罗希尼，坐落在德夫赛格高原东缘，山势大体南北走向，是高原东边的天然界限。
+    sources:
+    - source_id: source.calradia.chronicle.dawn-mountains
+      source_version: download-20260903
+      source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+      locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+      quote_hash: EBC5CCFFBDDD7ACF1BCF76A8A314B058A3FCCEBBFCCB1823292CA004C5D7ED63
+      quote: 山脉主体呈南北走向
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+- id: assertion.mountain-dawn-3
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 山麓生着针叶林与高山草甸。
+  sources:
+  - source_id: source.calradia.chronicle.dawn-mountains
+    source_version: download-20260903
+    source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+    locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+    quote_hash: CFB7A4BB044BBA832618326C3D9830E3C2970A5275174B770A605D4FD04F188D
+    quote: 山麓地带则覆盖着茂密的针叶林与高山草甸
+  expressions:
+  - id: expr.mountain-dawn-3-summary
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 山麓生着针叶林与高山草甸。
+    sources:
+    - source_id: source.calradia.chronicle.dawn-mountains
+      source_version: download-20260903
+      source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+      locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+      quote_hash: CFB7A4BB044BBA832618326C3D9830E3C2970A5275174B770A605D4FD04F188D
+      quote: 山麓地带则覆盖着茂密的针叶林与高山草甸
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []

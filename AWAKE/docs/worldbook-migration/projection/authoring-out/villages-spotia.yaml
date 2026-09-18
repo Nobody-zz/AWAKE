@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-spotia
+title:
+  zh-CN: 斯珀提亚
+  en: Spotia
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 斯珀提亚
+  en:
+  - Spotia
+  - village_ES6_2
+summary:
+  zh-CN: 斯珀提亚坐落于缓缓流淌的塞堤斯河畔；这里起伏的丘陵构成了帝国的粮仓之一。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_ES6_2
+  quote_hash: A90A33ADB9F1616E63862C5CCDF334156FA177C26C19AA34CF887F5E1E69550E
+  quote: 斯珀提亚坐落于缓缓流淌的塞堤斯河畔。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-spotia-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 斯珀提亚坐落于缓缓流淌的塞堤斯河畔；这里起伏的丘陵构成了帝国的粮仓之一。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_ES6_2
+    quote_hash: A90A33ADB9F1616E63862C5CCDF334156FA177C26C19AA34CF887F5E1E69550E
+    quote: 斯珀提亚坐落于缓缓流淌的塞堤斯河畔。
+  expressions:
+  - id: expr.village-spotia-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 斯珀提亚的坡地一层一层，麦子跟着水走。村里人说河水不急，粮食不慌。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_ES6_2
+      quote_hash: A90A33ADB9F1616E63862C5CCDF334156FA177C26C19AA34CF887F5E1E69550E
+      quote: 斯珀提亚坐落于缓缓流淌的塞堤斯河畔。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-spotia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 斯珀提亚依河产麦——缓丘梯田连片、水路外运便捷；粮产集中于秋收后，收货看干湿与杂质，河运活跃时本村粮价领涨领跌。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_ES6_2
+      quote_hash: A90A33ADB9F1616E63862C5CCDF334156FA177C26C19AA34CF887F5E1E69550E
+      quote: 斯珀提亚坐落于缓缓流淌的塞堤斯河畔。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

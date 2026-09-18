@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-alov
+title:
+  zh-CN: 阿洛夫
+  en: Alov
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿洛夫
+  en:
+  - Alov
+  - castle_village_S7_2
+summary:
+  zh-CN: 阿洛夫位于名叫伊勒坦运输线的冰湖网络的边缘处；村民在俯瞰湖泊的高地上种黑麦和大麦，肥沃的黑土补偿了当地漫长的冬季和短暂的生长期。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#castle_village_S7_2
+  quote_hash: E076475206D245DC6DE0E61791D14903C308ED5992D6D424F27C7C717EE399DF
+  quote: 阿洛夫位于名为伊勒坦运输线的冰湖网络边缘处。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-alov-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿洛夫位于名叫伊勒坦运输线的冰湖网络的边缘处；村民在俯瞰湖泊的高地上种黑麦和大麦，肥沃的黑土补偿了当地漫长的冬季和短暂的生长期。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#castle_village_S7_2
+    quote_hash: E076475206D245DC6DE0E61791D14903C308ED5992D6D424F27C7C717EE399DF
+    quote: 阿洛夫位于名为伊勒坦运输线的冰湖网络边缘处。
+  expressions:
+  - id: expr.village-alov-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿洛夫的人跟天抢日子。村里人说这地方能种的就那几个月——土好，才顶得住天短。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S7_2
+      quote_hash: E076475206D245DC6DE0E61791D14903C308ED5992D6D424F27C7C717EE399DF
+      quote: 阿洛夫位于名为伊勒坦运输线的冰湖网络边缘处。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-alov-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿洛夫以高地粮作为业——黑土厚、生长期短；黑麦为主、大麦次之，粮走湖道外销，雪早则抢收、粮价随年成涨落。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S7_2
+      quote_hash: E076475206D245DC6DE0E61791D14903C308ED5992D6D424F27C7C717EE399DF
+      quote: 阿洛夫位于名为伊勒坦运输线的冰湖网络边缘处。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

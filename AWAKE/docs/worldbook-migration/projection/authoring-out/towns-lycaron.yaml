@@ -1,0 +1,245 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-lycaron
+title:
+  zh-CN: 吕卡隆
+  en: Lycaron
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 吕卡隆
+  - 奥尼石山
+  - 吕卡隆·石山要塞
+  - 石山要塞
+  en:
+  - Lycaron
+  - Ornian rock
+entity_ids:
+- entity.settlement.town_es4
+summary:
+  zh-CN: 吕卡隆的地貌与屡遭围攻的现状；本地老兵与南帝国说法并录。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_ES4.descriptionText
+  quote_hash: 38AA2232E97DAA8453FB5028C8846CEAF1C4BAF85F90C10012EDF5FAE580281D
+  quote: 吕卡隆这座天然要塞位于巍峨的奥尼石山向外突出的一处缓坡之上
+- source_id: source.calradia.chronicle.animusforge
+  source_version: animusforge-20260912
+  source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+  locator: rules/rule_吕卡隆__吕卡隆.json#/Variants/5/Content
+  quote_hash: 0B8CA88AF72AFF6712089A949EE1EE9FAE91168B0091D42E31B998FAC0AC17C9
+  quote: 我在吕卡隆当了二十年兵，亲眼见过阿雷尼科斯皇帝在城墙上阅兵。那天的吕卡隆，鹰旗在石山顶上飘着，所有人都觉得帝国天下无敌。然后皇帝死了，死在皇宫里，就在我们这些当兵的眼皮底下。维基亚卫队本来该保护他的，结果他们要么死了，要么跑了，要么变成了暴徒。现在吕卡隆还是那个吕卡隆——城墙没变，银矿没变，石山上的秃鹫也没变。但鹰旗已经裂成了三块，而我们这些当兵的不知道该往哪面旗下站。
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_ES4.descriptionText
+  quote_hash: A92617C3CABA1A7178D2B8116DDE7020954E05A69AB51F9F6C081E9BA62FBD00
+  quote: 接踵而至的围城战仅仅是吕卡隆在接下来的几个世纪中屡遭围攻的第一次
+- source_id: source.calradia.chronicle.animusforge
+  source_version: animusforge-20260912
+  source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+  locator: rules/rule_吕卡隆__吕卡隆.json#/Variants/2/Content
+  quote_hash: EC22B72AD3EC2C88C06DA152547BCFB6B7947CA4B685DAD6CBEB5176A0A1F1C3
+  quote: 吕卡隆是帝国正统的最后堡垒。先皇在这里统治了十八年，他的血洒在皇宫的石板上，他的遗孀还在守护着这座城。那些元老院的叛徒被市民赶出去的时候，吕卡隆证明了自己不是那些只会耍嘴皮子的老家伙们能染指的。北边的卢孔在元老院里称帝，西边的加里俄斯在军营里称帝，但真正的帝国血脉还在吕卡隆。只要我们守住这座城，守住它的银矿和它的城墙，帝国就不算亡。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-lycaron-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 吕卡隆是奥尼石山缓坡上的一座天然要塞。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_ES4.descriptionText
+    quote_hash: 38AA2232E97DAA8453FB5028C8846CEAF1C4BAF85F90C10012EDF5FAE580281D
+    quote: 吕卡隆这座天然要塞位于巍峨的奥尼石山向外突出的一处缓坡之上
+  - source_id: source.calradia.chronicle.animusforge
+    source_version: animusforge-20260912
+    source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+    locator: rules/rule_吕卡隆__吕卡隆.json#/Variants/5/Content
+    quote_hash: 0B8CA88AF72AFF6712089A949EE1EE9FAE91168B0091D42E31B998FAC0AC17C9
+    quote: 我在吕卡隆当了二十年兵，亲眼见过阿雷尼科斯皇帝在城墙上阅兵。那天的吕卡隆，鹰旗在石山顶上飘着，所有人都觉得帝国天下无敌。然后皇帝死了，死在皇宫里，就在我们这些当兵的眼皮底下。维基亚卫队本来该保护他的，结果他们要么死了，要么跑了，要么变成了暴徒。现在吕卡隆还是那个吕卡隆——城墙没变，银矿没变，石山上的秃鹫也没变。但鹰旗已经裂成了三块，而我们这些当兵的不知道该往哪面旗下站。
+  expressions:
+  - id: expr.town-lycaron-1-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 吕卡隆是奥尼石山缓坡上的一座天然要塞。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_ES4.descriptionText
+      quote_hash: 38AA2232E97DAA8453FB5028C8846CEAF1C4BAF85F90C10012EDF5FAE580281D
+      quote: 吕卡隆这座天然要塞位于巍峨的奥尼石山向外突出的一处缓坡之上
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-lycaron-1-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 吕卡隆是奥尼石山缓坡上的一座天然要塞。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_ES4.descriptionText
+      quote_hash: 38AA2232E97DAA8453FB5028C8846CEAF1C4BAF85F90C10012EDF5FAE580281D
+      quote: 吕卡隆这座天然要塞位于巍峨的奥尼石山向外突出的一处缓坡之上
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: summary
+    denies: []
+  - id: expr.town-lycaron-1-b-soldier
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我在吕卡隆当了二十年兵，亲眼见过阿雷尼科斯皇帝在城墙上阅兵。那天的吕卡隆，鹰旗在石山顶上飘着，所有人都觉得帝国天下无敌。然后皇帝死了，死在皇宫里，就在我们这些当兵的眼皮底下。维基亚卫队本来该保护他的，结果他们要么死了，要么跑了，要么变成了暴徒。现在吕卡隆还是那个吕卡隆——城墙没变，银矿没变，石山上的秃鹫也没变。但鹰旗已经裂成了三块，而我们这些当兵的不知道该往哪面旗下站。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge
+      source_version: animusforge-20260912
+      source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+      locator: rules/rule_吕卡隆__吕卡隆.json#/Variants/5/Content
+      quote_hash: 0B8CA88AF72AFF6712089A949EE1EE9FAE91168B0091D42E31B998FAC0AC17C9
+      quote: 我在吕卡隆当了二十年兵，亲眼见过阿雷尼科斯皇帝在城墙上阅兵。那天的吕卡隆，鹰旗在石山顶上飘着，所有人都觉得帝国天下无敌。然后皇帝死了，死在皇宫里，就在我们这些当兵的眼皮底下。维基亚卫队本来该保护他的，结果他们要么死了，要么跑了，要么变成了暴徒。现在吕卡隆还是那个吕卡隆——城墙没变，银矿没变，石山上的秃鹫也没变。但鹰旗已经裂成了三块，而我们这些当兵的不知道该往哪面旗下站。
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      settlement_ids:
+      - entity.settlement.town_es4
+    denies: []
+- id: assertion.town-lycaron-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 吕卡隆屡遭围攻，围城战是这座城的常事。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_ES4.descriptionText
+    quote_hash: A92617C3CABA1A7178D2B8116DDE7020954E05A69AB51F9F6C081E9BA62FBD00
+    quote: 接踵而至的围城战仅仅是吕卡隆在接下来的几个世纪中屡遭围攻的第一次
+  - source_id: source.calradia.chronicle.animusforge
+    source_version: animusforge-20260912
+    source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+    locator: rules/rule_吕卡隆__吕卡隆.json#/Variants/2/Content
+    quote_hash: EC22B72AD3EC2C88C06DA152547BCFB6B7947CA4B685DAD6CBEB5176A0A1F1C3
+    quote: 吕卡隆是帝国正统的最后堡垒。先皇在这里统治了十八年，他的血洒在皇宫的石板上，他的遗孀还在守护着这座城。那些元老院的叛徒被市民赶出去的时候，吕卡隆证明了自己不是那些只会耍嘴皮子的老家伙们能染指的。北边的卢孔在元老院里称帝，西边的加里俄斯在军营里称帝，但真正的帝国血脉还在吕卡隆。只要我们守住这座城，守住它的银矿和它的城墙，帝国就不算亡。
+  expressions:
+  - id: expr.town-lycaron-2-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 吕卡隆屡遭围攻，围城战是这座城的常事。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_ES4.descriptionText
+      quote_hash: A92617C3CABA1A7178D2B8116DDE7020954E05A69AB51F9F6C081E9BA62FBD00
+      quote: 接踵而至的围城战仅仅是吕卡隆在接下来的几个世纪中屡遭围攻的第一次
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: summary
+    denies: []
+  - id: expr.town-lycaron-2-b-empire-s
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 吕卡隆是帝国正统的最后堡垒。先皇在这里统治了十八年，他的血洒在皇宫的石板上，他的遗孀还在守护着这座城。那些元老院的叛徒被市民赶出去的时候，吕卡隆证明了自己不是那些只会耍嘴皮子的老家伙们能染指的。北边的卢孔在元老院里称帝，西边的加里俄斯在军营里称帝，但真正的帝国血脉还在吕卡隆。只要我们守住这座城，守住它的银矿和它的城墙，帝国就不算亡。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge
+      source_version: animusforge-20260912
+      source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+      locator: rules/rule_吕卡隆__吕卡隆.json#/Variants/2/Content
+      quote_hash: EC22B72AD3EC2C88C06DA152547BCFB6B7947CA4B685DAD6CBEB5176A0A1F1C3
+      quote: 吕卡隆是帝国正统的最后堡垒。先皇在这里统治了十八年，他的血洒在皇宫的石板上，他的遗孀还在守护着这座城。那些元老院的叛徒被市民赶出去的时候，吕卡隆证明了自己不是那些只会耍嘴皮子的老家伙们能染指的。北边的卢孔在元老院里称帝，西边的加里俄斯在军营里称帝，但真正的帝国血脉还在吕卡隆。只要我们守住这座城，守住它的银矿和它的城墙，帝国就不算亡。
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+      kingdom_ids:
+      - entity.kingdom.empire_s
+    denies: []

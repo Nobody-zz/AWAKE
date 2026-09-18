@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-karahan
+title:
+  zh-CN: 喀拉罕
+  en: Karahan
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 喀拉罕
+  en:
+  - Karahan
+  - village_K6_1
+summary:
+  zh-CN: 喀拉罕位于柯希·罗希尼——黎明山脉山麓的丘陵地带；村民向迁徙的部落买马，自己也养一些，库赛特军队的许多马都出自此地。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-khuzait
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+  locator: bannerlord.villages#village_K6_1
+  quote_hash: 86AA2BE0EC6EA0EC7A3E6CE69F80C6BA55A5F09047203E2AAC1D93F348AC556E
+  quote: 喀拉罕位于柯希·罗希尼——黎明山脉山麓的丘陵地带。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-karahan-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 喀拉罕位于柯希·罗希尼——黎明山脉山麓的丘陵地带；村民向迁徙的部落买马，自己也养一些，库赛特军队的许多马都出自此地。
+  sources:
+  - source_id: source.calradia.game.villages-desc-khuzait
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+    locator: bannerlord.villages#village_K6_1
+    quote_hash: 86AA2BE0EC6EA0EC7A3E6CE69F80C6BA55A5F09047203E2AAC1D93F348AC556E
+    quote: 喀拉罕位于柯希·罗希尼——黎明山脉山麓的丘陵地带。
+  expressions:
+  - id: expr.village-karahan-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 喀拉罕的马有一半是买来的。村里人说部落的马路过，我们就挑好的留下——留下的马，将来是要上战场的。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#village_K6_1
+      quote_hash: 86AA2BE0EC6EA0EC7A3E6CE69F80C6BA55A5F09047203E2AAC1D93F348AC556E
+      quote: 喀拉罕位于柯希·罗希尼——黎明山脉山麓的丘陵地带。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-karahan-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 喀拉罕是军马集散村——山麓草场兼作中转栏；马按血统齿口分等，军马优先应征，买进卖出的差价是村中大账。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#village_K6_1
+      quote_hash: 86AA2BE0EC6EA0EC7A3E6CE69F80C6BA55A5F09047203E2AAC1D93F348AC556E
+      quote: 喀拉罕位于柯希·罗希尼——黎明山脉山麓的丘陵地带。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

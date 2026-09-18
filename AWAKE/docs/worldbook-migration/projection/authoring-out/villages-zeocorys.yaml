@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-zeocorys
+title:
+  zh-CN: 泽俄科律斯
+  en: Zeocorys
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 泽俄科律斯
+  en:
+  - Zeocorys
+  - village_EW2_4
+summary:
+  zh-CN: 泽俄科律斯位于伊勒塔尔丘陵脚下，沿着南帝国的海岸线而建；尽管气候相对干旱，农民依靠自流井水仍能获得很好的小麦收成。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_EW2_4
+  quote_hash: 40F3351519E4BD89D8C3EF6EB35AF987B23204C2C43A41806E6666149F0FC2FB
+  quote: 泽俄科律斯位于伊勒塔尔丘陵脚下，沿着南帝国的海岸线而建。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-zeocorys-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 泽俄科律斯位于伊勒塔尔丘陵脚下，沿着南帝国的海岸线而建；尽管气候相对干旱，农民依靠自流井水仍能获得很好的小麦收成。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EW2_4
+    quote_hash: 40F3351519E4BD89D8C3EF6EB35AF987B23204C2C43A41806E6666149F0FC2FB
+    quote: 泽俄科律斯位于伊勒塔尔丘陵脚下，沿着南帝国的海岸线而建。
+  expressions:
+  - id: expr.village-zeocorys-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 泽俄科律斯靠海却不指望海。村里人说海只给风，井才给粮——一口井一年一仓麦。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EW2_4
+      quote_hash: 40F3351519E4BD89D8C3EF6EB35AF987B23204C2C43A41806E6666149F0FC2FB
+      quote: 泽俄科律斯位于伊勒塔尔丘陵脚下，沿着南帝国的海岸线而建。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-zeocorys-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 泽俄科律斯倚丘陵井水种麦——海岸带风燥、土薄，产量靠井定；粮货近海路转运，干旱年景本村麦价反高，收粮先问井情。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EW2_4
+      quote_hash: 40F3351519E4BD89D8C3EF6EB35AF987B23204C2C43A41806E6666149F0FC2FB
+      quote: 泽俄科律斯位于伊勒塔尔丘陵脚下，沿着南帝国的海岸线而建。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

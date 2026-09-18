@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-sturgian_helmet_closed
+title:
+  zh-CN: 闭面军阀盔
+  en: Closed Warlord Helmet
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 闭面军阀盔
+  - HeadArmor
+  en:
+  - sturgian_helmet_closed
+summary:
+  zh-CN: 闭面军阀盔是斯特吉亚头领级的全覆面盔，护头到位，寒地作战的体面装备。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-xml
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+  locator: bannerlord.items.xml#sturgian_helmet_closed
+  quote_hash: F953008FBB54953EDAA081D364B354851FA588444094122257688A148EA5D6A6
+  quote: 闭面军阀盔 | HeadArmor | 护头 53
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.item-sturgian_helmet_closed-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 闭面军阀盔是斯特吉亚头领级的全覆面盔，护头到位，寒地作战的体面装备。
+  sources:
+  - source_id: source.calradia.game.items-xml
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+    locator: bannerlord.items.xml#sturgian_helmet_closed
+    quote_hash: F953008FBB54953EDAA081D364B354851FA588444094122257688A148EA5D6A6
+    quote: 闭面军阀盔 | HeadArmor | 护头 53
+  expressions:
+  - id: expr.item-sturgian_helmet_closed-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 北方头领戴的那种盔连脸都罩住，只露两条缝看人，看着就让人腿软。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#sturgian_helmet_closed
+      quote_hash: F953008FBB54953EDAA081D364B354851FA588444094122257688A148EA5D6A6
+      quote: 闭面军阀盔 | HeadArmor | 护头 53
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.item-sturgian_helmet_closed-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 闭面军阀盔护头 53、重 3.8——全覆面里防护顶格，代价是视野呼吸受限；阵前头领与卫士配发。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#sturgian_helmet_closed
+      quote_hash: F953008FBB54953EDAA081D364B354851FA588444094122257688A148EA5D6A6
+      quote: 闭面军阀盔 | HeadArmor | 护头 53
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

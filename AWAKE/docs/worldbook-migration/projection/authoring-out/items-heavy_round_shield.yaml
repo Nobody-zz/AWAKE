@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-heavy_round_shield
+title:
+  zh-CN: 重型圆盾
+  en: Heavy Round Shield
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 重型圆盾
+  - Shield
+  en:
+  - heavy_round_shield
+summary:
+  zh-CN: 重型圆盾是斯特吉亚步卒的看家家伙，盾面结实、耐打抗射，列阵堵路全靠它。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-xml
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+  locator: bannerlord.items.xml#heavy_round_shield
+  quote_hash: F7BA81A531DD0DB01C9C24F96B26FFEF1E53ECD7085D909DBDD209610927CA97
+  quote: 重型圆盾 | Shield | 穿刺 5 | 射速档 86 | 弓身长 70 | 身甲 9 | 耐久 500
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.item-heavy_round_shield-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 重型圆盾是斯特吉亚步卒的看家家伙，盾面结实、耐打抗射，列阵堵路全靠它。
+  sources:
+  - source_id: source.calradia.game.items-xml
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+    locator: bannerlord.items.xml#heavy_round_shield
+    quote_hash: F7BA81A531DD0DB01C9C24F96B26FFEF1E53ECD7085D909DBDD209610927CA97
+    quote: 重型圆盾 | Shield | 穿刺 5 | 射速档 86 | 弓身长 70 | 身甲 9 | 耐久 500
+  expressions:
+  - id: expr.item-heavy_round_shield-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 北方人的圆盾又大又厚，箭射上去跟挠痒似的。扛盾的兵往那一站，就是一堵墙。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#heavy_round_shield
+      quote_hash: F7BA81A531DD0DB01C9C24F96B26FFEF1E53ECD7085D909DBDD209610927CA97
+      quote: 重型圆盾 | Shield | 穿刺 5 | 射速档 86 | 弓身长 70 | 身甲 9 | 耐久 500
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.item-heavy_round_shield-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 重型圆盾耐久 500、盾防 9、格挡速 86——扛线第一梯队；四公斤半的分量只适合步战，骑手嫌坠手。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#heavy_round_shield
+      quote_hash: F7BA81A531DD0DB01C9C24F96B26FFEF1E53ECD7085D909DBDD209610927CA97
+      quote: 重型圆盾 | Shield | 穿刺 5 | 射速档 86 | 弓身长 70 | 身甲 9 | 耐久 500
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-larnac
+title:
+  zh-CN: 拉尔纳克
+  en: Larnac
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 拉尔纳克
+  en:
+  - Larnac
+  - village_V3_3
+summary:
+  zh-CN: 拉尔纳克坐落于特朗河谷下游的平缓山丘上；村民种植黑麦、大麦与小麦，出售给帕拉汶德附近缺粮的城镇居民。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#village_V3_3
+  quote_hash: E40AFD7AD4915A485CF7019140B65D4FC6ECF3C3448718B0D3A709F61DC93E1B
+  quote: 拉尔纳克坐落于特朗河谷下游的平缓山丘上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-larnac-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 拉尔纳克坐落于特朗河谷下游的平缓山丘上；村民种植黑麦、大麦与小麦，出售给帕拉汶德附近缺粮的城镇居民。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#village_V3_3
+    quote_hash: E40AFD7AD4915A485CF7019140B65D4FC6ECF3C3448718B0D3A709F61DC93E1B
+    quote: 拉尔纳克坐落于特朗河谷下游的平缓山丘上。
+  expressions:
+  - id: expr.village-larnac-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 拉尔纳克的粮进了城。村里人说城里人嘴多，地里的东西不愁没去处——就是价钱得看城里人的脸色。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V3_3
+      quote_hash: E40AFD7AD4915A485CF7019140B65D4FC6ECF3C3448718B0D3A709F61DC93E1B
+      quote: 拉尔纳克坐落于特朗河谷下游的平缓山丘上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-larnac-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 拉尔纳克是城郊粮村——三麦兼种、地力错开；粮货直供帕拉汶德，磨坊与酒坊是常客，城价一动本村先觉。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V3_3
+      quote_hash: E40AFD7AD4915A485CF7019140B65D4FC6ECF3C3448718B0D3A709F61DC93E1B
+      quote: 拉尔纳克坐落于特朗河谷下游的平缓山丘上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

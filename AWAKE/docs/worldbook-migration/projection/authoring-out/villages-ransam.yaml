@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-ransam
+title:
+  zh-CN: 兰萨木
+  en: Ransam
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 兰萨木
+  en:
+  - Ransam
+  - village_K4_2
+summary:
+  zh-CN: 兰萨木位于德夫赛格高原东南方的平原上；不久前还以游牧为生的村民，如今精于饲养马匹。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-khuzait
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+  locator: bannerlord.villages#village_K4_2
+  quote_hash: 27629C4A51639FFF52F0D0DD0BC4C9BB0567475A38FE9E1E1F3033A4C43C036F
+  quote: 兰萨木位于德夫赛格高原东南方的平原上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-ransam-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 兰萨木位于德夫赛格高原东南方的平原上；不久前还以游牧为生的村民，如今精于饲养马匹。
+  sources:
+  - source_id: source.calradia.game.villages-desc-khuzait
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+    locator: bannerlord.villages#village_K4_2
+    quote_hash: 27629C4A51639FFF52F0D0DD0BC4C9BB0567475A38FE9E1E1F3033A4C43C036F
+    quote: 兰萨木位于德夫赛格高原东南方的平原上。
+  expressions:
+  - id: expr.village-ransam-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 兰萨木的人上马不用想。村里人说骑了一辈子，改行也改不掉——干脆拿养马当营生。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#village_K4_2
+      quote_hash: 27629C4A51639FFF52F0D0DD0BC4C9BB0567475A38FE9E1E1F3033A4C43C036F
+      quote: 兰萨木位于德夫赛格高原东南方的平原上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-ransam-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 兰萨木出马——平原草场开阔、牧马成习；马按用途分驿马与战马，汗帐征调在先，余马走高原集市。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#village_K4_2
+      quote_hash: 27629C4A51639FFF52F0D0DD0BC4C9BB0567475A38FE9E1E1F3033A4C43C036F
+      quote: 兰萨木位于德夫赛格高原东南方的平原上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

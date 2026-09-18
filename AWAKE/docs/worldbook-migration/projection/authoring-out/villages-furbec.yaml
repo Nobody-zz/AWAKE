@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-furbec
+title:
+  zh-CN: 菲尔贝克
+  en: Furbec
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 菲尔贝克
+  en:
+  - Furbec
+  - village_V5_1
+summary:
+  zh-CN: 菲尔贝克坐落于一块巨岩上，俯瞰瓦兰迪亚中部嶙峋的比斯坎海岸；当地终年温暖，比斯坎山坡上的葡萄长势喜人。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#village_V5_1
+  quote_hash: ED5D11BC44F1C6B5B00D8CAB4220C750C9CD1FE63D146A93F0B9A869C62A35B9
+  quote: 菲尔贝克坐落于一块巨岩上，俯瞰着瓦兰迪亚中部嶙峋的比斯坎海岸。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-furbec-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 菲尔贝克坐落于一块巨岩上，俯瞰瓦兰迪亚中部嶙峋的比斯坎海岸；当地终年温暖，比斯坎山坡上的葡萄长势喜人。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#village_V5_1
+    quote_hash: ED5D11BC44F1C6B5B00D8CAB4220C750C9CD1FE63D146A93F0B9A869C62A35B9
+    quote: 菲尔贝克坐落于一块巨岩上，俯瞰着瓦兰迪亚中部嶙峋的比斯坎海岸。
+  expressions:
+  - id: expr.village-furbec-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 菲尔贝克的人站在石头顶上看海。村里人说海风到这儿就软了，葡萄晒得舒服——这地界，光比水多。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V5_1
+      quote_hash: ED5D11BC44F1C6B5B00D8CAB4220C750C9CD1FE63D146A93F0B9A869C62A35B9
+      quote: 菲尔贝克坐落于一块巨岩上，俯瞰着瓦兰迪亚中部嶙峋的比斯坎海岸。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-furbec-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 菲尔贝克凭暖坡种葡萄——临海日照长、病害少；酒质偏甜，装坛后沿海岸商路外销，风调的年头酒价压秤。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V5_1
+      quote_hash: ED5D11BC44F1C6B5B00D8CAB4220C750C9CD1FE63D146A93F0B9A869C62A35B9
+      quote: 菲尔贝克坐落于一块巨岩上，俯瞰着瓦兰迪亚中部嶙峋的比斯坎海岸。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

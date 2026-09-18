@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-aster-castle
+title:
+  zh-CN: 阿斯特堡
+  en: Aster Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿斯特堡
+  - 阿斯特
+  - 伊姆拉赫
+  en:
+  - Aster Castle
+  - castle_B7
+  - Aster
+  - Imlagh
+entity_ids:
+- entity.settlement.castle_b7
+summary:
+  zh-CN: 阿斯特堡是巴旦尼亚缩在格兰尼斯山旁浅谷里的一座城堡，辖着阿斯特与伊姆拉赫两村；两村都种葡萄，一村出醇酒，一村出甜酒。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_B7
+  quote_hash: 1D54E7BB668DC97FCF08FA4DF520B8FCB40828CC59CA2CADC1267F031CC5541A
+  quote: 阿斯特堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-aster-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿斯特堡是巴旦尼亚缩在格兰尼斯山旁浅谷里的一座城堡，辖着阿斯特与伊姆拉赫两村；两村都种葡萄，一村出醇酒，一村出甜酒。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_B7
+    quote_hash: 1D54E7BB668DC97FCF08FA4DF520B8FCB40828CC59CA2CADC1267F031CC5541A
+    quote: 阿斯特堡
+  expressions:
+  - id: expr.castle-aster-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿斯特堡的人说，咱这儿的人不爱动刀，爱算账。村里人说，长老们就认葡萄，说种一颗葡萄比拔一把剑值。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_B7
+      quote_hash: 1D54E7BB668DC97FCF08FA4DF520B8FCB40828CC59CA2CADC1267F031CC5541A
+      quote: 阿斯特堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-aster-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿斯特堡据乌卡利翁东北浅谷，下辖两处酒村；白葡萄榨出的甜酒与陈酿在堡中分窖存放，按酒色、年份议价，销往帝国与瓦兰迪亚，酒桶出入由长老指派的账手记数。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_B7
+      quote_hash: 1D54E7BB668DC97FCF08FA4DF520B8FCB40828CC59CA2CADC1267F031CC5541A
+      quote: 阿斯特堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

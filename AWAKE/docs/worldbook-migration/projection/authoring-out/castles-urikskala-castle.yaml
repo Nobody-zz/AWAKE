@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-urikskala-castle
+title:
+  zh-CN: 乌里克斯卡拉堡
+  en: Urikskala Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 乌里克斯卡拉堡
+  - 乌里克斯卡拉
+  - 阿洛夫
+  en:
+  - Urikskala Castle
+  - castle_S7
+  - Urikskala
+  - Alov
+entity_ids:
+- entity.settlement.castle_s7
+summary:
+  zh-CN: 乌里克斯卡拉堡是斯特吉亚守在伊勒坦运输线上的一座城堡，辖着乌里克斯卡拉与阿洛夫两村；湖网里拖得动长船，一村晒鱼，一村种麦。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_S7
+  quote_hash: 6F4062AD6072DDE413E3CF45A596D192241981B0B9951F416A0E352C3585171D
+  quote: 乌里克斯卡拉堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-urikskala-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 乌里克斯卡拉堡是斯特吉亚守在伊勒坦运输线上的一座城堡，辖着乌里克斯卡拉与阿洛夫两村；湖网里拖得动长船，一村晒鱼，一村种麦。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_S7
+    quote_hash: 6F4062AD6072DDE413E3CF45A596D192241981B0B9951F416A0E352C3585171D
+    quote: 乌里克斯卡拉堡
+  expressions:
+  - id: expr.castle-urikskala-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 乌里克斯卡拉堡的人说，长船到了这儿就得拖过湖去，堡子就靠这个吃饭。村里人说，黑土肥，就是夏天短，得抢着种。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_S7
+      quote_hash: 6F4062AD6072DDE413E3CF45A596D192241981B0B9951F416A0E352C3585171D
+      quote: 乌里克斯卡拉堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-urikskala-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 乌里克斯卡拉堡据伊勒坦运输线冰川湖网，下辖渔村与粮村各一；鲈鱼与螯虾风干后卖给过路旅人，黑麦大麦入堡仓，拖船过湖的役夫与湖道之资由堡里派定。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_S7
+      quote_hash: 6F4062AD6072DDE413E3CF45A596D192241981B0B9951F416A0E352C3585171D
+      quote: 乌里克斯卡拉堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

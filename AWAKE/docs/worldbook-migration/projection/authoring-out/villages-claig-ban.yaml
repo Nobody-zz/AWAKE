@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-claig-ban
+title:
+  zh-CN: 克莱格·班
+  en: Claig Ban
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 克莱格·班
+  en:
+  - Claig Ban
+  - castle_village_B5_2
+summary:
+  zh-CN: 克莱格·班坐落于乌卡利翁地块的一堵悬崖下；村民从旁边的米尔河里收集黏土，卖给巴旦尼亚各城镇的陶工。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-battania
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+  locator: bannerlord.villages#castle_village_B5_2
+  quote_hash: 2B01BB3C6E60605E73E0CA587A1E326DA8332D0A2A194EBFE2B71D51EE1D4704
+  quote: 克莱格·班坐落于乌卡利翁地块的一堵悬崖下。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-claig-ban-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 克莱格·班坐落于乌卡利翁地块的一堵悬崖下；村民从旁边的米尔河里收集黏土，卖给巴旦尼亚各城镇的陶工。
+  sources:
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#castle_village_B5_2
+    quote_hash: 2B01BB3C6E60605E73E0CA587A1E326DA8332D0A2A194EBFE2B71D51EE1D4704
+    quote: 克莱格·班坐落于乌卡利翁地块的一堵悬崖下。
+  expressions:
+  - id: expr.village-claig-ban-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 克莱格·班的人顺着河捡泥。村里人说水帮了忙——泥不用挖，它自己漂到崖根下等着。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#castle_village_B5_2
+      quote_hash: 2B01BB3C6E60605E73E0CA587A1E326DA8332D0A2A194EBFE2B71D51EE1D4704
+      quote: 克莱格·班坐落于乌卡利翁地块的一堵悬崖下。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-claig-ban-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 克莱格·班以河泥为业——崖根淤积、随水而聚；泥按细粗分等，供各城窑口烧器，上游暴雨则泥浊难用，须等水清再取。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#castle_village_B5_2
+      quote_hash: 2B01BB3C6E60605E73E0CA587A1E326DA8332D0A2A194EBFE2B71D51EE1D4704
+      quote: 克莱格·班坐落于乌卡利翁地块的一堵悬崖下。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

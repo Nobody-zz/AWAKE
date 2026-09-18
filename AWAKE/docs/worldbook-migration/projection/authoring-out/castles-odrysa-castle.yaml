@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-odrysa-castle
+title:
+  zh-CN: 俄德律萨堡
+  en: Odrysa Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 俄德律萨堡
+  - 俄德律萨
+  - 恺拉
+  en:
+  - Odrysa Castle
+  - castle_ES1
+  - Odrysa
+  - Caira
+entity_ids:
+- entity.settlement.castle_es1
+summary:
+  zh-CN: 俄德律萨堡是南帝国最东边的一座城堡，辖着俄德律萨与恺拉两村；河对面就是库赛特人，堡子一面看界，一面收粮收木。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_ES1
+  quote_hash: 855932CD4C9ABDB264ADA64CC91D624C2DA5D588DE1D7599534EE2807D1CD275
+  quote: 俄德律萨堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-odrysa-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 俄德律萨堡是南帝国最东边的一座城堡，辖着俄德律萨与恺拉两村；河对面就是库赛特人，堡子一面看界，一面收粮收木。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_ES1
+    quote_hash: 855932CD4C9ABDB264ADA64CC91D624C2DA5D588DE1D7599534EE2807D1CD275
+    quote: 俄德律萨堡
+  expressions:
+  - id: expr.castle-odrysa-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 俄德律萨堡的人说，堡子站在河边，堡楼上望过去就是库赛特的旗。村里人说，这边旱，就冲积滩上那点地还能种麦子。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_ES1
+      quote_hash: 855932CD4C9ABDB264ADA64CC91D624C2DA5D588DE1D7599534EE2807D1CD275
+      quote: 俄德律萨堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-odrysa-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 俄德律萨堡据蒂亚具斯河东岸，下辖林农村与粮村各一；峡谷橡木循河下运，冲积平原的麦子入堡仓，界河渡口与两岸往来由堡里验契、放行。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_ES1
+      quote_hash: 855932CD4C9ABDB264ADA64CC91D624C2DA5D588DE1D7599534EE2807D1CD275
+      quote: 俄德律萨堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

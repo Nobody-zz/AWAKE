@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-psotai
+title:
+  zh-CN: 索泰
+  en: Psotai
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 索泰
+  en:
+  - Psotai
+  - village_ES7_1
+summary:
+  zh-CN: 索泰位于塔奈西斯湖南端；这里地势低洼，是东部边境地区的主要产粮地之一。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_ES7_1
+  quote_hash: 2D5C711285860F865772A44ACF147A2FACBA21A18D25707F2EA4E68782F91A4B
+  quote: 索泰位于塔奈西斯湖南端。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-psotai-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 索泰位于塔奈西斯湖南端；这里地势低洼，是东部边境地区的主要产粮地之一。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_ES7_1
+    quote_hash: 2D5C711285860F865772A44ACF147A2FACBA21A18D25707F2EA4E68782F91A4B
+    quote: 索泰位于塔奈西斯湖南端。
+  expressions:
+  - id: expr.village-psotai-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 索泰的田泡在湖边上，水多得像不要钱。村里人说低地怕涝，可只要不淹，粮就压满仓。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_ES7_1
+      quote_hash: 2D5C711285860F865772A44ACF147A2FACBA21A18D25707F2EA4E68782F91A4B
+      quote: 索泰位于塔奈西斯湖南端。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-psotai-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 索泰是边境粮村——湖滨低地麦田广，丰歉看水位；粮货供应东部戍军，收成好时官仓先购，民间余粮随边情涨价。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_ES7_1
+      quote_hash: 2D5C711285860F865772A44ACF147A2FACBA21A18D25707F2EA4E68782F91A4B
+      quote: 索泰位于塔奈西斯湖南端。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

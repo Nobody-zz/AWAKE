@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-oristocorys
+title:
+  zh-CN: 俄里斯托科律斯
+  en: Oristocorys
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 俄里斯托科律斯
+  en:
+  - Oristocorys
+  - castle_village_EW7_1
+summary:
+  zh-CN: 俄里斯托科律斯位于俄耳堤西亚湾旁，西大洋与珀拉斯海间的航路经过此地；清晨自西而来的海雾与正午的烈日令酿酒葡萄得以生长。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_EW7_1
+  quote_hash: B087470C43B0ABE67C7D11BECA3F7ABAD697C24372F2EAAA5897482CDA0BCE86
+  quote: 俄里斯托科律斯位于俄耳堤西亚湾旁，西大洋与珀拉斯海间的航路途径此地。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-oristocorys-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 俄里斯托科律斯位于俄耳堤西亚湾旁，西大洋与珀拉斯海间的航路经过此地；清晨自西而来的海雾与正午的烈日令酿酒葡萄得以生长。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_EW7_1
+    quote_hash: B087470C43B0ABE67C7D11BECA3F7ABAD697C24372F2EAAA5897482CDA0BCE86
+    quote: 俄里斯托科律斯位于俄耳堤西亚湾旁，西大洋与珀拉斯海间的航路途径此地。
+  expressions:
+  - id: expr.village-oristocorys-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 俄里斯托科律斯的葡萄早上一头雾水，中午一身日头。村里人说这一凉一热，糖分全憋在果子里。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EW7_1
+      quote_hash: B087470C43B0ABE67C7D11BECA3F7ABAD697C24372F2EAAA5897482CDA0BCE86
+      quote: 俄里斯托科律斯位于俄耳堤西亚湾旁，西大洋与珀拉斯海间的航路途径此地。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-oristocorys-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 俄里斯托科律斯的酒借航路远销——湾边码头装船方便；昼夜温差是酒的风骨，外港仿味仿不出这份日雾。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EW7_1
+      quote_hash: B087470C43B0ABE67C7D11BECA3F7ABAD697C24372F2EAAA5897482CDA0BCE86
+      quote: 俄里斯托科律斯位于俄耳堤西亚湾旁，西大洋与珀拉斯海间的航路途径此地。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

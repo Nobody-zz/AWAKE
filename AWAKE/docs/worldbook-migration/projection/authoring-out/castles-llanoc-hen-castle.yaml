@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-llanoc-hen-castle
+title:
+  zh-CN: 拉诺克·亨堡
+  en: Llanoc Hen Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 拉诺克·亨堡
+  - 拉诺克·亨
+  - 坎特雷克
+  en:
+  - Llanoc Hen Castle
+  - castle_B2
+  - Llanoc Hen
+  - Cantrec
+entity_ids:
+- entity.settlement.castle_b2
+summary:
+  zh-CN: 拉诺克·亨堡是巴旦尼亚架在乌卡利翁山脊上的一座城堡，辖着拉诺克·亨与坎特雷克两村；两村都养猪，猪往东西两头卖。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_B2
+  quote_hash: 923858F9614E55C665AD0AFFD1251DDA2BBF8C82A5AE831BAC8B0F4931F371FF
+  quote: 拉诺克·亨堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-llanoc-hen-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 拉诺克·亨堡是巴旦尼亚架在乌卡利翁山脊上的一座城堡，辖着拉诺克·亨与坎特雷克两村；两村都养猪，猪往东西两头卖。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_B2
+    quote_hash: 923858F9614E55C665AD0AFFD1251DDA2BBF8C82A5AE831BAC8B0F4931F371FF
+    quote: 拉诺克·亨堡
+  expressions:
+  - id: expr.castle-llanoc-hen-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 拉诺克·亨堡的人说，堡子占着两条下山的路，往西往东都走得通。村里人说，山上地薄，种粮不行，猪倒是越养越多。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_B2
+      quote_hash: 923858F9614E55C665AD0AFFD1251DDA2BBF8C82A5AE831BAC8B0F4931F371FF
+      quote: 拉诺克·亨堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-llanoc-hen-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 拉诺克·亨堡据乌卡利翁山脊分水处，下辖两处养猪村；橡实与灌木养出的猪在堡中圈栏集中，往帝国与瓦兰迪亚两路出货，上下山的过路之资由堡里收。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_B2
+      quote_hash: 923858F9614E55C665AD0AFFD1251DDA2BBF8C82A5AE831BAC8B0F4931F371FF
+      quote: 拉诺克·亨堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

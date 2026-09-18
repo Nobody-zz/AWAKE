@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-corenia
+title:
+  zh-CN: 科雷尼亚
+  en: Corenia
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 科雷尼亚
+  en:
+  - Corenia
+  - castle_village_ES2_1
+summary:
+  zh-CN: 科雷尼亚是帝国境内最偏远的村庄之一，村民仍说着卡拉德语；它位于塔奈西斯湖东南方的平原、阿克坎丘陵附近，村民种植谷物，随时提防犯边的掠袭者。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_ES2_1
+  quote_hash: 67541FA3EC33EA5C7E96959672E0958B295F6B713840FECEB1093017A1A32FF1
+  quote: 科雷尼亚是帝国境内最偏远的村庄之一，这里的人还说着卡拉德语。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-corenia-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 科雷尼亚是帝国境内最偏远的村庄之一，村民仍说着卡拉德语；它位于塔奈西斯湖东南方的平原、阿克坎丘陵附近，村民种植谷物，随时提防犯边的掠袭者。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_ES2_1
+    quote_hash: 67541FA3EC33EA5C7E96959672E0958B295F6B713840FECEB1093017A1A32FF1
+    quote: 科雷尼亚是帝国境内最偏远的村庄之一，这里的人还说着卡拉德语。
+  expressions:
+  - id: expr.village-corenia-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 科雷尼亚是帝国最后一块还讲卡拉德话的地方。村里人一边种麦一边竖着耳朵听山口——掠袭者说来就来。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES2_1
+      quote_hash: 67541FA3EC33EA5C7E96959672E0958B295F6B713840FECEB1093017A1A32FF1
+      quote: 科雷尼亚是帝国境内最偏远的村庄之一，这里的人还说着卡拉德语。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-corenia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 科雷尼亚的谷物自带边地价——掠袭频繁、粮得囤村中地窖；买粮要结队进村，散客被抢不算村里的账。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES2_1
+      quote_hash: 67541FA3EC33EA5C7E96959672E0958B295F6B713840FECEB1093017A1A32FF1
+      quote: 科雷尼亚是帝国境内最偏远的村庄之一，这里的人还说着卡拉德语。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

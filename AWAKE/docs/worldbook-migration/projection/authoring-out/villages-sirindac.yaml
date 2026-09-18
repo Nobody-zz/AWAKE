@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-sirindac
+title:
+  zh-CN: 西岚达克
+  en: Sirindac
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 西岚达克
+  en:
+  - Sirindac
+  - castle_village_V5_2
+summary:
+  zh-CN: 西岚达克坐落于埃博半岛的高山脚下，山势略挡西北刮来的刺骨寒风；村民从山间溪流里挖出一种细腻的浅色黏土。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#castle_village_V5_2
+  quote_hash: 4B8FB81162AAD8C863E48609F88545E7187C19279CF1ADE314F2325E73FF3700
+  quote: 西岚达克坐落于埃博半岛的高山脚下，稍微阻挡了自西北方刮来的刺骨寒风。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-sirindac-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 西岚达克坐落于埃博半岛的高山脚下，山势略挡西北刮来的刺骨寒风；村民从山间溪流里挖出一种细腻的浅色黏土。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#castle_village_V5_2
+    quote_hash: 4B8FB81162AAD8C863E48609F88545E7187C19279CF1ADE314F2325E73FF3700
+    quote: 西岚达克坐落于埃博半岛的高山脚下，稍微阻挡了自西北方刮来的刺骨寒风。
+  expressions:
+  - id: expr.village-sirindac-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 西岚达克的泥是从溪底抠出来的。村里人说那泥里掺着亮渣子，一晒就闪——陶匠拿它做细白碗盏。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#castle_village_V5_2
+      quote_hash: 4B8FB81162AAD8C863E48609F88545E7187C19279CF1ADE314F2325E73FF3700
+      quote: 西岚达克坐落于埃博半岛的高山脚下，稍微阻挡了自西北方刮来的刺骨寒风。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-sirindac-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 西岚达克出细白泥——溪底取土、随层分质；泥性看手感与烧后成色，细泥专供器皿，粗泥做砖瓦，入冬封溪即停挖。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#castle_village_V5_2
+      quote_hash: 4B8FB81162AAD8C863E48609F88545E7187C19279CF1ADE314F2325E73FF3700
+      quote: 西岚达克坐落于埃博半岛的高山脚下，稍微阻挡了自西北方刮来的刺骨寒风。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

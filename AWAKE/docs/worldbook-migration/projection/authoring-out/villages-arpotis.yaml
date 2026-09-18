@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-arpotis
+title:
+  zh-CN: 阿耳波提斯
+  en: Arpotis
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿耳波提斯
+  en:
+  - Arpotis
+  - village_EW4_1
+summary:
+  zh-CN: 阿耳波提斯坐落于高崖之上，俯瞰阿米尼斯河、伽维斯河与泽俄斯河的交汇处；山的两侧是梯田，并建有蓄水池，收集海洋雨云携来的淡水。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_EW4_1
+  quote_hash: 4666574F3D3257BD5E022CFB632DC67514FC7E3CACD546463737492CC1B5FB4F
+  quote: 阿耳波提斯坐落于高崖之上，俯瞰着阿米尼斯河、伽维斯河和泽俄斯河的交汇处。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-arpotis-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿耳波提斯坐落于高崖之上，俯瞰阿米尼斯河、伽维斯河与泽俄斯河的交汇处；山的两侧是梯田，并建有蓄水池，收集海洋雨云携来的淡水。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EW4_1
+    quote_hash: 4666574F3D3257BD5E022CFB632DC67514FC7E3CACD546463737492CC1B5FB4F
+    quote: 阿耳波提斯坐落于高崖之上，俯瞰着阿米尼斯河、伽维斯河和泽俄斯河的交汇处。
+  expressions:
+  - id: expr.village-arpotis-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿耳波提斯站在崖顶上，三河都在脚下。村里人说雨云从海上来，被他们一片不落地接进池子。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EW4_1
+      quote_hash: 4666574F3D3257BD5E022CFB632DC67514FC7E3CACD546463737492CC1B5FB4F
+      quote: 阿耳波提斯坐落于高崖之上，俯瞰着阿米尼斯河、伽维斯河和泽俄斯河的交汇处。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-arpotis-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿耳波提斯靠蓄水池旱作——崖顶梯田、水源全靠接雨；池水丰则麦丰，枯则减种，收粮看池情，三河交汇的水运是外销通路。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EW4_1
+      quote_hash: 4666574F3D3257BD5E022CFB632DC67514FC7E3CACD546463737492CC1B5FB4F
+      quote: 阿耳波提斯坐落于高崖之上，俯瞰着阿米尼斯河、伽维斯河和泽俄斯河的交汇处。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

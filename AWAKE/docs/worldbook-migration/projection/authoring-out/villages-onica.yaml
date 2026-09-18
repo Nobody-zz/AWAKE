@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-onica
+title:
+  zh-CN: 俄尼卡
+  en: Onica
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 俄尼卡
+  en:
+  - Onica
+  - castle_village_EW3_1
+summary:
+  zh-CN: 俄尼卡坐落于珀拉斯海北岸，山丘上遍布梯田葡萄园，出产的干型葡萄酒在帝国各地广受欢迎。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_EW3_1
+  quote_hash: 3D7F6E99B1AAFB1B907DFD4088CFA93B32CEB47D6F3C677AD1D5F438E66A110C
+  quote: 俄尼卡坐落于珀拉斯海北岸。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-onica-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 俄尼卡坐落于珀拉斯海北岸，山丘上遍布梯田葡萄园，出产的干型葡萄酒在帝国各地广受欢迎。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_EW3_1
+    quote_hash: 3D7F6E99B1AAFB1B907DFD4088CFA93B32CEB47D6F3C677AD1D5F438E66A110C
+    quote: 俄尼卡坐落于珀拉斯海北岸。
+  expressions:
+  - id: expr.village-onica-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 俄尼卡的梯田挂在山坡上，一层压一层。村里人说干酒不甜，可帝国的酒桌上认这个涩劲。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EW3_1
+      quote_hash: 3D7F6E99B1AAFB1B907DFD4088CFA93B32CEB47D6F3C677AD1D5F438E66A110C
+      quote: 俄尼卡坐落于珀拉斯海北岸。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-onica-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 俄尼卡梯田酒走量也走名——北岸干型酒是招牌；年成看坡向，向阳梯田先熟先榨，混坡酒价掉档。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EW3_1
+      quote_hash: 3D7F6E99B1AAFB1B907DFD4088CFA93B32CEB47D6F3C677AD1D5F438E66A110C
+      quote: 俄尼卡坐落于珀拉斯海北岸。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

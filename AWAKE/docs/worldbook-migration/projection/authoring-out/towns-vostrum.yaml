@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-vostrum
+title:
+  zh-CN: 沃斯特鲁姆
+  en: Vostrum
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 沃斯特鲁姆
+  en:
+  - Vostrum
+  - town_ES2
+summary:
+  zh-CN: 沃斯特鲁姆由叛逃指挥官阿耳卡科斯建立，其家系以神王之制统治数代，兵败政倾；本地家族至今背负君主主义嫌疑。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_ES2
+  quote_hash: D5984DD635EEF1423C7EED39CFF29D8E4A837C54C6896AEC848911F96D4AD209
+  quote: 沃斯特鲁姆由卡拉德佣兵阿耳卡科斯建立，此人是帝国扩张时期背离帝国的数名叛逃指挥官之一。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-vostrum-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 沃斯特鲁姆由叛逃指挥官阿耳卡科斯建立，其家系以神王之制统治数代，兵败政倾；本地家族至今背负君主主义嫌疑。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_ES2
+    quote_hash: D5984DD635EEF1423C7EED39CFF29D8E4A837C54C6896AEC848911F96D4AD209
+    quote: 沃斯特鲁姆由卡拉德佣兵阿耳卡科斯建立，此人是帝国扩张时期背离帝国的数名叛逃指挥官之一。
+  expressions:
+  - id: expr.town-vostrum-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 沃斯特鲁姆的老底子是位自立为王的统帅，后来神像全叫人砸了。可元老们到今天还说这地方的人心思不正。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_ES2
+      quote_hash: D5984DD635EEF1423C7EED39CFF29D8E4A837C54C6896AEC848911F96D4AD209
+      quote: 沃斯特鲁姆由卡拉德佣兵阿耳卡科斯建立，此人是帝国扩张时期背离帝国的数名叛逃指挥官之一。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-vostrum-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 沃斯特鲁姆的政治史是负债——家族出身的买主常被扣君主主义的帽子，行商在此少谈王权旧事；本地产业扎实，敢置产的都是懂政治行情的。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_ES2
+      quote_hash: D5984DD635EEF1423C7EED39CFF29D8E4A837C54C6896AEC848911F96D4AD209
+      quote: 沃斯特鲁姆由卡拉德佣兵阿耳卡科斯建立，此人是帝国扩张时期背离帝国的数名叛逃指挥官之一。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

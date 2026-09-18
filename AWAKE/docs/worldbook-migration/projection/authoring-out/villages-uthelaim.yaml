@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-uthelaim
+title:
+  zh-CN: 乌瑟莱姆
+  en: Uthelaim
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 乌瑟莱姆
+  en:
+  - Uthelaim
+  - castle_village_B8_1
+summary:
+  zh-CN: 乌瑟莱姆位于巴旦尼亚东部边境的一座山脊上，俯瞰着米尔河的一条支流；当地人是林农，采伐橡树、紫杉和松树，把木材卖给建筑工和造船工。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-battania
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+  locator: bannerlord.villages#castle_village_B8_1
+  quote_hash: 67B32361BF33BAE1E25CE4ED84BDD216864651A2FA03396A881772CEDE5C846A
+  quote: 乌瑟莱姆位于巴旦尼亚东部边境的一座山脊上，俯瞰着米尔河的一条支流。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-uthelaim-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 乌瑟莱姆位于巴旦尼亚东部边境的一座山脊上，俯瞰着米尔河的一条支流；当地人是林农，采伐橡树、紫杉和松树，把木材卖给建筑工和造船工。
+  sources:
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#castle_village_B8_1
+    quote_hash: 67B32361BF33BAE1E25CE4ED84BDD216864651A2FA03396A881772CEDE5C846A
+    quote: 乌瑟莱姆位于巴旦尼亚东部边境的一座山脊上，俯瞰着米尔河的一条支流。
+  expressions:
+  - id: expr.village-uthelaim-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 乌瑟莱姆的人认树不认路。村里人说紫杉给弓、橡树给梁、松树给船——砍哪棵，心里都有数。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#castle_village_B8_1
+      quote_hash: 67B32361BF33BAE1E25CE4ED84BDD216864651A2FA03396A881772CEDE5C846A
+      quote: 乌瑟莱姆位于巴旦尼亚东部边境的一座山脊上，俯瞰着米尔河的一条支流。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-uthelaim-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 乌瑟莱姆以林农为业——山脊林好、材种齐；木料按树种与材分等，橡木走造船、紫杉留弓匠，边地买卖多做现钱。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#castle_village_B8_1
+      quote_hash: 67B32361BF33BAE1E25CE4ED84BDD216864651A2FA03396A881772CEDE5C846A
+      quote: 乌瑟莱姆位于巴旦尼亚东部边境的一座山脊上，俯瞰着米尔河的一条支流。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

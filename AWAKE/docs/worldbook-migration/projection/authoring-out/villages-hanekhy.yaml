@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-hanekhy
+title:
+  zh-CN: 哈内希
+  en: Hanekhy
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 哈内希
+  en:
+  - Hanekhy
+  - village_K3_2
+summary:
+  zh-CN: 哈内希坐落于阿克坎丘陵北部的一处山嘴上；土石上的红色条纹透出底下有铁，村民正在开挖。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-khuzait
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+  locator: bannerlord.villages#village_K3_2
+  quote_hash: 7F7C937B74A4B0250B131BB946778CC8D6D933E07A00D30EB3FFCF7CC89AADD3
+  quote: 哈内希坐落于阿克坎丘陵北部的一处山嘴上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-hanekhy-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 哈内希坐落于阿克坎丘陵北部的一处山嘴上；土石上的红色条纹透出底下有铁，村民正在开挖。
+  sources:
+  - source_id: source.calradia.game.villages-desc-khuzait
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+    locator: bannerlord.villages#village_K3_2
+    quote_hash: 7F7C937B74A4B0250B131BB946778CC8D6D933E07A00D30EB3FFCF7CC89AADD3
+    quote: 哈内希坐落于阿克坎丘陵北部的一处山嘴上。
+  expressions:
+  - id: expr.village-hanekhy-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 哈内希的人顺着红纹找矿。村里人说山自己把记号画在石头上——顺着走，准找到。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#village_K3_2
+      quote_hash: 7F7C937B74A4B0250B131BB946778CC8D6D933E07A00D30EB3FFCF7CC89AADD3
+      quote: 哈内希坐落于阿克坎丘陵北部的一处山嘴上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-hanekhy-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 哈内希以露头铁矿为业——红纹为记、浅挖即得；矿石按成色分堆，驮运出丘陵交锻造作坊，铁价随兵事涨落。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#village_K3_2
+      quote_hash: 7F7C937B74A4B0250B131BB946778CC8D6D933E07A00D30EB3FFCF7CC89AADD3
+      quote: 哈内希坐落于阿克坎丘陵北部的一处山嘴上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

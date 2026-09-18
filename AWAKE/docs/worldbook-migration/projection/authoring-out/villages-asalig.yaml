@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-asalig
+title:
+  zh-CN: 阿萨利格
+  en: Asalig
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿萨利格
+  en:
+  - Asalig
+  - village_K1_4
+summary:
+  zh-CN: 阿萨利格坐落于德夫赛格高原之巅的巴尔思山脚下；村民在相对低矮的山坡上养马，还得时时提防雪豹——山名也正是因此而来。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-khuzait
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+  locator: bannerlord.villages#village_K1_4
+  quote_hash: 79703186D9B32ADFE9E2AC857134AED40207E037DE3444B5E28DBAE8E9A14BE5
+  quote: 阿萨利格坐落于德夫赛格高原之巅的巴尔思山脚下。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-asalig-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿萨利格坐落于德夫赛格高原之巅的巴尔思山脚下；村民在相对低矮的山坡上养马，还得时时提防雪豹——山名也正是因此而来。
+  sources:
+  - source_id: source.calradia.game.villages-desc-khuzait
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+    locator: bannerlord.villages#village_K1_4
+    quote_hash: 79703186D9B32ADFE9E2AC857134AED40207E037DE3444B5E28DBAE8E9A14BE5
+    quote: 阿萨利格坐落于德夫赛格高原之巅的巴尔思山脚下。
+  expressions:
+  - id: expr.village-asalig-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿萨利格的马得有人守。村里人说雪豹比贼还精，夜里进圈叼的总是最好的那匹——所以守夜的人不敢打盹。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#village_K1_4
+      quote_hash: 79703186D9B32ADFE9E2AC857134AED40207E037DE3444B5E28DBAE8E9A14BE5
+      quote: 阿萨利格坐落于德夫赛格高原之巅的巴尔思山脚下。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-asalig-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿萨利格以高山育马为业——坡缓草短、马腿硬；因雪豹常来，圈栏筑得高、守夜成例，马按齿口体态定价。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#village_K1_4
+      quote_hash: 79703186D9B32ADFE9E2AC857134AED40207E037DE3444B5E28DBAE8E9A14BE5
+      quote: 阿萨利格坐落于德夫赛格高原之巅的巴尔思山脚下。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

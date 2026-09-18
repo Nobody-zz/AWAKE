@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-corenia-castle
+title:
+  zh-CN: 科雷尼亚堡
+  en: Corenia Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 科雷尼亚堡
+  - 科雷尼亚
+  - 墨塔基亚
+  en:
+  - Corenia Castle
+  - castle_ES2
+  - Corenia
+  - Metachia
+entity_ids:
+- entity.settlement.castle_es2
+summary:
+  zh-CN: 科雷尼亚堡是南帝国搁在塔奈西斯湖东南的一座城堡，辖着科雷尼亚与墨塔基亚两村；一村还说卡拉德语，一村种桑养蚕。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_ES2
+  quote_hash: 850FC6589F0C597CE81E31C98680C4F8AFB14B8A33CD7E43474961E0C9B6D125
+  quote: 科雷尼亚堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-corenia-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 科雷尼亚堡是南帝国搁在塔奈西斯湖东南的一座城堡，辖着科雷尼亚与墨塔基亚两村；一村还说卡拉德语，一村种桑养蚕。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_ES2
+    quote_hash: 850FC6589F0C597CE81E31C98680C4F8AFB14B8A33CD7E43474961E0C9B6D125
+    quote: 科雷尼亚堡
+  expressions:
+  - id: expr.castle-corenia-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 科雷尼亚堡的人说，堡子是帝国在这边的最后一根桩子，过了山就没人说咱们的话了。村里人说，掠袭的马队说来就来，收粮时得睁着眼。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_ES2
+      quote_hash: 850FC6589F0C597CE81E31C98680C4F8AFB14B8A33CD7E43474961E0C9B6D125
+      quote: 科雷尼亚堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-corenia-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 科雷尼亚堡据塔奈西斯湖东南平原、阿克坎丘陵口，下辖粮村与丝村各一；谷物先入堡仓以备边，桑蚕之利由堡中征收外运，边村烽铺与巡哨由堡里按户轮值。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_ES2
+      quote_hash: 850FC6589F0C597CE81E31C98680C4F8AFB14B8A33CD7E43474961E0C9B6D125
+      quote: 科雷尼亚堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

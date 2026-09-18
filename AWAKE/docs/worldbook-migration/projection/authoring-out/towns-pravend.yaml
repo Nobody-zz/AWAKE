@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-pravend
+title:
+  zh-CN: 帕拉汶德
+  en: Pravend
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 帕拉汶德
+  en:
+  - Pravend
+  - town_V3
+summary:
+  zh-CN: 帕拉汶德（巴拉维诺斯）是卡拉狄乌斯大帝所建第二座重镇，曾取代沙拉斯为卡拉德首都，今为西部经济重镇，由“铁壁”奥斯里克旁支戴·提尔家族承续。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_V3
+  quote_hash: 59C8B2083B0A8FD1B33F696058D84000A13174ABA182093D430FE614F1E84EFC
+  quote: 巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地，并在随后迅速取代沙拉斯，成为了卡拉德人的首都。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-pravend-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 帕拉汶德（巴拉维诺斯）是卡拉狄乌斯大帝所建第二座重镇，曾取代沙拉斯为卡拉德首都，今为西部经济重镇，由“铁壁”奥斯里克旁支戴·提尔家族承续。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_V3
+    quote_hash: 59C8B2083B0A8FD1B33F696058D84000A13174ABA182093D430FE614F1E84EFC
+    quote: 巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地，并在随后迅速取代沙拉斯，成为了卡拉德人的首都。
+  expressions:
+  - id: expr.town-pravend-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 老人们还管帕拉汶德叫巴拉维诺斯——那可是当过帝都的地方。瓦兰迪亚人没打它，是讲好了让它开城，如今那家的后人还坐着那把椅子。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_V3
+      quote_hash: 59C8B2083B0A8FD1B33F696058D84000A13174ABA182093D430FE614F1E84EFC
+      quote: 巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地，并在随后迅速取代沙拉斯，成为了卡拉德人的首都。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-pravend-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帕拉汶德是西部的老钱中枢——帝都底子、经济重镇、法统完整的戴·提尔家；金融与高值货在此最活跃，政治风向敏感度全帝国第一档。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_V3
+      quote_hash: 59C8B2083B0A8FD1B33F696058D84000A13174ABA182093D430FE614F1E84EFC
+      quote: 巴拉维诺斯是由卡拉狄乌斯大帝建立的第二座重要的殖民地，并在随后迅速取代沙拉斯，成为了卡拉德人的首都。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

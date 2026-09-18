@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-ov
+title:
+  zh-CN: 奥夫
+  en: Ov
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 奥夫
+  en:
+  - Ov
+  - castle_village_S5_1
+summary:
+  zh-CN: 奥夫是伊卡拉荒原——拉科尼斯湖西北方的森林——里一处较新的斯特吉亚垦殖地；村民起初靠打猎取皮为生，但猎物大多被赶到了森林深处，如今他们改在沼泽林地里种亚麻。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#castle_village_S5_1
+  quote_hash: 441C2B9A4BD4FA97D0991D71342499D8A72C791EF19804801B9C62DB7343D08A
+  quote: 奥夫是伊卡拉荒原——拉科尼斯湖西北方的森林里一处较新的斯特吉亚殖民地。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-ov-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 奥夫是伊卡拉荒原——拉科尼斯湖西北方的森林——里一处较新的斯特吉亚垦殖地；村民起初靠打猎取皮为生，但猎物大多被赶到了森林深处，如今他们改在沼泽林地里种亚麻。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#castle_village_S5_1
+    quote_hash: 441C2B9A4BD4FA97D0991D71342499D8A72C791EF19804801B9C62DB7343D08A
+    quote: 奥夫是伊卡拉荒原——拉科尼斯湖西北方的森林里一处较新的斯特吉亚殖民地。
+  expressions:
+  - id: expr.village-ov-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 奥夫的人换过一次生计。村里人说林子里的兽走光了，就改种麻——地还是那块地，活儿换了。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S5_1
+      quote_hash: 441C2B9A4BD4FA97D0991D71342499D8A72C791EF19804801B9C62DB7343D08A
+      quote: 奥夫是伊卡拉荒原——拉科尼斯湖西北方的森林里一处较新的斯特吉亚殖民地。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-ov-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 奥夫由猎转麻——原以毛皮立村，兽少后改种亚麻；麻按纤维与色泽分等，沤麻靠沼水，新垦地薄，收成尚不及老麻乡。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S5_1
+      quote_hash: 441C2B9A4BD4FA97D0991D71342499D8A72C791EF19804801B9C62DB7343D08A
+      quote: 奥夫是伊卡拉荒原——拉科尼斯湖西北方的森林里一处较新的斯特吉亚殖民地。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-battania_warlord_bracers
+title:
+  zh-CN: 鳞甲军阀护腕
+  en: Scale Warlord Bracers
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 鳞甲军阀护腕
+  - HandArmor
+  en:
+  - battania_warlord_bracers
+summary:
+  zh-CN: 鳞甲军阀护腕是巴坦尼亚军阀级的前臂护件，硬甲片护臂，挥刀格挡两不误。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-xml
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+  locator: bannerlord.items.xml#battania_warlord_bracers
+  quote_hash: 4CD43F4581A49C1507FF46E948D3004078906B51903A0E212B62A3C19F068AC9
+  quote: 鳞甲军阀护腕 | HandArmor | 护臂 25
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.item-battania_warlord_bracers-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 鳞甲军阀护腕是巴坦尼亚军阀级的前臂护件，硬甲片护臂，挥刀格挡两不误。
+  sources:
+  - source_id: source.calradia.game.items-xml
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+    locator: bannerlord.items.xml#battania_warlord_bracers
+    quote_hash: 4CD43F4581A49C1507FF46E948D3004078906B51903A0E212B62A3C19F068AC9
+    quote: 鳞甲军阀护腕 | HandArmor | 护臂 25
+  expressions:
+  - id: expr.item-battania_warlord_bracers-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 头领小臂上绑的甲片子，接刀都不带晃的，寻常兵的护腕比不了。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#battania_warlord_bracers
+      quote_hash: 4CD43F4581A49C1507FF46E948D3004078906B51903A0E212B62A3C19F068AC9
+      quote: 鳞甲军阀护腕 | HandArmor | 护臂 25
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.item-battania_warlord_bracers-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 鳞甲军阀护腕护臂 25——臂甲顶格档；分量轻不碍挥砍，斧手剑客都认它。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#battania_warlord_bracers
+      quote_hash: 4CD43F4581A49C1507FF46E948D3004078906B51903A0E212B62A3C19F068AC9
+      quote: 鳞甲军阀护腕 | HandArmor | 护臂 25
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

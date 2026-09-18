@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-amitatys
+title:
+  zh-CN: 阿弥塔堤斯
+  en: Amitatys
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿弥塔堤斯
+  en:
+  - Amitatys
+  - town_EW5
+summary:
+  zh-CN: 阿弥塔堤斯的帕拉暴君以屠戮取悦冥神求永生，帝国围城遇地震破墙，兵灾屠掠的死亡反超暴君之手。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_EW5
+  quote_hash: E15A866EB3D57CF436A95AB328FC0EE3075C7690F49BC1B3477D0D92EDA51D82
+  quote: 阿弥塔堤斯的帕拉酋长有着极为糟糕的名声，他是一名暴君，为了追求永生，他不惜屠戮无辜的百姓，只为取悦冥界诸神。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-amitatys-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿弥塔堤斯的帕拉暴君以屠戮取悦冥神求永生，帝国围城遇地震破墙，兵灾屠掠的死亡反超暴君之手。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EW5
+    quote_hash: E15A866EB3D57CF436A95AB328FC0EE3075C7690F49BC1B3477D0D92EDA51D82
+    quote: 阿弥塔堤斯的帕拉酋长有着极为糟糕的名声，他是一名暴君，为了追求永生，他不惜屠戮无辜的百姓，只为取悦冥界诸神。
+  expressions:
+  - id: expr.town-amitatys-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿弥塔堤斯的老城墙是叫天塌下来砸开的。老人们说那是天怒——可进城的兵杀的人比暴君还多。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EW5
+      quote_hash: E15A866EB3D57CF436A95AB328FC0EE3075C7690F49BC1B3477D0D92EDA51D82
+      quote: 阿弥塔堤斯的帕拉酋长有着极为糟糕的名声，他是一名暴君，为了追求永生，他不惜屠戮无辜的百姓，只为取悦冥界诸神。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-amitatys-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿弥塔堤斯的政治叙事是官定的“天罚说”——利于帝国站脚的宣传；做买卖不碰旧账，城防重建百年后的市面以农牧与零工为主。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EW5
+      quote_hash: E15A866EB3D57CF436A95AB328FC0EE3075C7690F49BC1B3477D0D92EDA51D82
+      quote: 阿弥塔堤斯的帕拉酋长有着极为糟糕的名声，他是一名暴君，为了追求永生，他不惜屠戮无辜的百姓，只为取悦冥界诸神。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

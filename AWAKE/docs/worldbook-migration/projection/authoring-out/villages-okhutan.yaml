@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-okhutan
+title:
+  zh-CN: 奥胡坦
+  en: Okhutan
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 奥胡坦
+  en:
+  - Okhutan
+  - village_K5_2
+summary:
+  zh-CN: 奥胡坦是一座位于小麦产区中央的村庄，地处库赛特人称作达那孜海的塔奈西斯湖与阿克坎丘陵之间的狭长平原。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-khuzait
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+  locator: bannerlord.villages#village_K5_2
+  quote_hash: 9269F5B78F6D97573724DB956966B95E53DFB8B1138A55D932C1DFCD10B3A100
+  quote: 奥胡坦是一座位于小麦种植区中央的村庄，地处库赛特人称作达那孜海的塔奈西斯湖与阿克坎丘陵之间的狭长平原。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-okhutan-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 奥胡坦是一座位于小麦产区中央的村庄，地处库赛特人称作达那孜海的塔奈西斯湖与阿克坎丘陵之间的狭长平原。
+  sources:
+  - source_id: source.calradia.game.villages-desc-khuzait
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+    locator: bannerlord.villages#village_K5_2
+    quote_hash: 9269F5B78F6D97573724DB956966B95E53DFB8B1138A55D932C1DFCD10B3A100
+    quote: 奥胡坦是一座位于小麦种植区中央的村庄，地处库赛特人称作达那孜海的塔奈西斯湖与阿克坎丘陵之间的狭长平原。
+  expressions:
+  - id: expr.village-okhutan-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 奥胡坦的麦地夹在湖和山中间。村里人说两边挡着，风小水足——这地方种粮，老天还算给面子。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#village_K5_2
+      quote_hash: 9269F5B78F6D97573724DB956966B95E53DFB8B1138A55D932C1DFCD10B3A100
+      quote: 奥胡坦是一座位于小麦种植区中央的村庄，地处库赛特人称作达那孜海的塔奈西斯湖与阿克坎丘陵之间的狭长平原。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-okhutan-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 奥胡坦是高原粮村——狭长平原水土相宜、麦田连片；粮货走湖岸与丘陵商路外销，收粮看饱满与干湿，秋后集中出仓。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#village_K5_2
+      quote_hash: 9269F5B78F6D97573724DB956966B95E53DFB8B1138A55D932C1DFCD10B3A100
+      quote: 奥胡坦是一座位于小麦种植区中央的村庄，地处库赛特人称作达那孜海的塔奈西斯湖与阿克坎丘陵之间的狭长平原。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

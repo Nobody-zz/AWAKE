@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-gersegos
+title:
+  zh-CN: 革耳塞戈斯
+  en: Gersegos
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 革耳塞戈斯
+  en:
+  - Gersegos
+  - castle_village_EW8_1
+summary:
+  zh-CN: 革耳塞戈斯坐落于分割库耳西翁峭壁与德律亚山脉的弥戎河谷中，村民在俯瞰村庄的山嘴上开矿，提炼出银与其他贵金属。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_EW8_1
+  quote_hash: DDA8D91F780A3BBA59AA9A5B44EDD2239B470B7E8A4F06B7F7CFF4F199566DCC
+  quote: 革耳塞戈斯坐落于分割库耳西翁峭壁与德律亚山脉的弥戎河谷中。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-gersegos-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 革耳塞戈斯坐落于分割库耳西翁峭壁与德律亚山脉的弥戎河谷中，村民在俯瞰村庄的山嘴上开矿，提炼出银与其他贵金属。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_EW8_1
+    quote_hash: DDA8D91F780A3BBA59AA9A5B44EDD2239B470B7E8A4F06B7F7CFF4F199566DCC
+    quote: 革耳塞戈斯坐落于分割库耳西翁峭壁与德律亚山脉的弥戎河谷中。
+  expressions:
+  - id: expr.village-gersegos-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 革耳塞戈斯的矿口就在村头山嘴上，抬头看得见。村里人说守矿就是守家——矿在，村就在。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EW8_1
+      quote_hash: DDA8D91F780A3BBA59AA9A5B44EDD2239B470B7E8A4F06B7F7CFF4F199566DCC
+      quote: 革耳塞戈斯坐落于分割库耳西翁峭壁与德律亚山脉的弥戎河谷中。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-gersegos-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 革耳塞戈斯出银并副产贵金属——山嘴矿口易守难攻；矿石就地粗炼，精炼货与矿砂分价，验色认火不认嘴。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EW8_1
+      quote_hash: DDA8D91F780A3BBA59AA9A5B44EDD2239B470B7E8A4F06B7F7CFF4F199566DCC
+      quote: 革耳塞戈斯坐落于分割库耳西翁峭壁与德律亚山脉的弥戎河谷中。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-elipa
+title:
+  zh-CN: 厄利帕
+  en: Elipa
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 厄利帕
+  en:
+  - Elipa
+  - village_EW5_1
+summary:
+  zh-CN: 厄利帕坐落于阿里斯河谷上游；这片光照充足、水源丰沛的高地是帝国重要的粮仓之一。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_EW5_1
+  quote_hash: 3A43DA9F068157A7312B00D0804BA9A3F0ED6AD9C8BF1DE11E346D17D982F47F
+  quote: 厄利帕坐落于阿里斯河谷上游。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-elipa-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 厄利帕坐落于阿里斯河谷上游；这片光照充足、水源丰沛的高地是帝国重要的粮仓之一。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EW5_1
+    quote_hash: 3A43DA9F068157A7312B00D0804BA9A3F0ED6AD9C8BF1DE11E346D17D982F47F
+    quote: 厄利帕坐落于阿里斯河谷上游。
+  expressions:
+  - id: expr.village-elipa-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 厄利帕的高地是晒太阳的粮仓。村里人说水跟太阳都不缺的地方，麦子只管长。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EW5_1
+      quote_hash: 3A43DA9F068157A7312B00D0804BA9A3F0ED6AD9C8BF1DE11E346D17D982F47F
+      quote: 厄利帕坐落于阿里斯河谷上游。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-elipa-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 厄利帕以高地麦产著称——谷源水足、日照长，麦粒饱满；粮产供帝国腹地，秋收后集中外运，好年成粮价压秤，是囤粮首选。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EW5_1
+      quote_hash: 3A43DA9F068157A7312B00D0804BA9A3F0ED6AD9C8BF1DE11E346D17D982F47F
+      quote: 厄利帕坐落于阿里斯河谷上游。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

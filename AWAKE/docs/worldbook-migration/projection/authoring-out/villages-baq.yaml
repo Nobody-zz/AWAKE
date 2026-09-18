@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-baq
+title:
+  zh-CN: 巴格
+  en: Baq
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 巴格
+  en:
+  - Baq
+  - village_A1_2
+summary:
+  zh-CN: 巴格位于塔玛尔山巨大的花岗岩露头山脚下，海风带来的高地雨水刚好够种橄榄树。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+  locator: bannerlord.villages#village_A1_2
+  quote_hash: 63B7C911EDC08BCC596DC281ED3EFABE3EB678A740135D2DDE4DFA8B0EFAE42D
+  quote: 巴格位于耶什姆海稍向内陆处，巨大的花岗岩露头山——塔玛尔山脚下。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-baq-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 巴格位于塔玛尔山巨大的花岗岩露头山脚下，海风带来的高地雨水刚好够种橄榄树。
+  sources:
+  - source_id: source.calradia.game.villages-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+    locator: bannerlord.villages#village_A1_2
+    quote_hash: 63B7C911EDC08BCC596DC281ED3EFABE3EB678A740135D2DDE4DFA8B0EFAE42D
+    quote: 巴格位于耶什姆海稍向内陆处，巨大的花岗岩露头山——塔玛尔山脚下。
+  expressions:
+  - id: expr.village-baq-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 巴格人靠山吃饭——塔玛尔山把海风拦下来，落到树上的就是雨。石头缝里都能种出橄榄来。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#village_A1_2
+      quote_hash: 63B7C911EDC08BCC596DC281ED3EFABE3EB678A740135D2DDE4DFA8B0EFAE42D
+      quote: 巴格位于耶什姆海稍向内陆处，巨大的花岗岩露头山——塔玛尔山脚下。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-baq-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 巴格的橄榄园嵌在花岗岩坡地——单产不高但果质浓；山体挡风，榨季比海角村晚几天，收油的可两头跑。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#village_A1_2
+      quote_hash: 63B7C911EDC08BCC596DC281ED3EFABE3EB678A740135D2DDE4DFA8B0EFAE42D
+      quote: 巴格位于耶什姆海稍向内陆处，巨大的花岗岩露头山——塔玛尔山脚下。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

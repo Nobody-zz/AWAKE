@@ -1,0 +1,102 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.culture.tales-lycaron-vultures
+title:
+  zh-CN: 吕卡隆·石山秃鹫
+  en: 'Lycaron: Vultures on the Rock'
+status: needs_review
+domain: culture
+subdomain: customs
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 秃鹫怪谈
+  - 奥尼石山
+  en:
+  - Lycaron vultures
+summary:
+  zh-CN: 石山顶上秃鹫的传言：本地说法与异邦版本并录，只陈述“传言”本身。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_ES4.descriptionText
+  quote_hash: 724F3896D28114D619F25040C4575F97DF274E34816CB7086C59902DCA482F56
+  quote: 甚至有人传言，居住在石山顶上的秃鹫已经享用过卡拉迪亚大陆上的每一种民族
+- source_id: source.calradia.chronicle.animusforge
+  source_version: animusforge-20260912
+  source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+  locator: rules/rule_吕卡隆__吕卡隆.json#/Variants/6/Content
+  quote_hash: 57F0EF49AF6F1D0F3195D1F4F1F495163939148FC203B3EECC26C5F239E4A393
+  quote: 吕卡隆是帝国人的心脏，但那颗心脏已经被人捅穿了。我们北方人不太关心帝国人的皇位争来争去谁对谁错，我们只知道，阿雷尼科斯死了之后，帝国的军团就再也没能像以前那样北上找我们的麻烦。他们的银矿还在挖，但挖出来的银子全花在内战上了。石山上的秃鹫还在飞，等着下一批在吕卡隆城下送死的帝国人。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.tale-lycaron-vultures-1
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 有人传言，石山顶上的秃鹫已经品尝过卡拉迪亚每一种民族。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_ES4.descriptionText
+    quote_hash: 724F3896D28114D619F25040C4575F97DF274E34816CB7086C59902DCA482F56
+    quote: 甚至有人传言，居住在石山顶上的秃鹫已经享用过卡拉迪亚大陆上的每一种民族
+  - source_id: source.calradia.chronicle.animusforge
+    source_version: animusforge-20260912
+    source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+    locator: rules/rule_吕卡隆__吕卡隆.json#/Variants/6/Content
+    quote_hash: 57F0EF49AF6F1D0F3195D1F4F1F495163939148FC203B3EECC26C5F239E4A393
+    quote: 吕卡隆是帝国人的心脏，但那颗心脏已经被人捅穿了。我们北方人不太关心帝国人的皇位争来争去谁对谁错，我们只知道，阿雷尼科斯死了之后，帝国的军团就再也没能像以前那样北上找我们的麻烦。他们的银矿还在挖，但挖出来的银子全花在内战上了。石山上的秃鹫还在飞，等着下一批在吕卡隆城下送死的帝国人。
+  expressions:
+  - id: expr.tale-lycaron-vultures-1-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 有人传言，石山顶上的秃鹫已经品尝过卡拉迪亚每一种民族。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_ES4.descriptionText
+      quote_hash: 724F3896D28114D619F25040C4575F97DF274E34816CB7086C59902DCA482F56
+      quote: 甚至有人传言，居住在石山顶上的秃鹫已经享用过卡拉迪亚大陆上的每一种民族
+    grants:
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []
+  - id: expr.tale-lycaron-vultures-1-b-sturgia
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 吕卡隆是帝国人的心脏，但那颗心脏已经被人捅穿了。我们北方人不太关心帝国人的皇位争来争去谁对谁错，我们只知道，阿雷尼科斯死了之后，帝国的军团就再也没能像以前那样北上找我们的麻烦。他们的银矿还在挖，但挖出来的银子全花在内战上了。石山上的秃鹫还在飞，等着下一批在吕卡隆城下送死的帝国人。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge
+      source_version: animusforge-20260912
+      source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+      locator: rules/rule_吕卡隆__吕卡隆.json#/Variants/6/Content
+      quote_hash: 57F0EF49AF6F1D0F3195D1F4F1F495163939148FC203B3EECC26C5F239E4A393
+      quote: 吕卡隆是帝国人的心脏，但那颗心脏已经被人捅穿了。我们北方人不太关心帝国人的皇位争来争去谁对谁错，我们只知道，阿雷尼科斯死了之后，帝国的军团就再也没能像以前那样北上找我们的麻烦。他们的银矿还在挖，但挖出来的银子全花在内战上了。石山上的秃鹫还在飞，等着下一批在吕卡隆城下送死的帝国人。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []

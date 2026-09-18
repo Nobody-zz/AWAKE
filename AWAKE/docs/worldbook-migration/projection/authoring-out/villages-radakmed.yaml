@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-radakmed
+title:
+  zh-CN: 拉达克梅德
+  en: Radakmed
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 拉达克梅德
+  en:
+  - Radakmed
+  - village_S6_2
+summary:
+  zh-CN: 拉达克梅德坐落于车尔特格山脉中的一片盆地；当地崎岖的荒野盛产狐狸、貂和兔子一类的毛皮动物。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#village_S6_2
+  quote_hash: 755DEEDAF71EDAB0F7E4D99361C46D847F5AB4FF7A9975C3ABFAC1835EC9FE83
+  quote: 拉达克梅德坐落于车尔特格山脉中的一片盆地。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-radakmed-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 拉达克梅德坐落于车尔特格山脉中的一片盆地；当地崎岖的荒野盛产狐狸、貂和兔子一类的毛皮动物。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#village_S6_2
+    quote_hash: 755DEEDAF71EDAB0F7E4D99361C46D847F5AB4FF7A9975C3ABFAC1835EC9FE83
+    quote: 拉达克梅德坐落于车尔特格山脉中的一片盆地。
+  expressions:
+  - id: expr.village-radakmed-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 拉达克梅德的人专挑冬天进山。村里人说夏天毛不厚，不值钱——冻一冻，皮才好卖。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#village_S6_2
+      quote_hash: 755DEEDAF71EDAB0F7E4D99361C46D847F5AB4FF7A9975C3ABFAC1835EC9FE83
+      quote: 拉达克梅德坐落于车尔特格山脉中的一片盆地。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-radakmed-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 拉达克梅德以盆地猎皮为业——荒野兽多、冬皮为上；皮张按毛色与完整分等，狐貂价高、兔皮做衬里，猎获多由行商过山来收。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#village_S6_2
+      quote_hash: 755DEEDAF71EDAB0F7E4D99361C46D847F5AB4FF7A9975C3ABFAC1835EC9FE83
+      quote: 拉达克梅德坐落于车尔特格山脉中的一片盆地。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

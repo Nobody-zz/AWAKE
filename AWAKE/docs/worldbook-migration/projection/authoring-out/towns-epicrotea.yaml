@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-epicrotea
+title:
+  zh-CN: 厄庇克洛忒亚
+  en: Epicrotea
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 厄庇克洛忒亚
+  en:
+  - Epicrotea
+  - town_EN1
+summary:
+  zh-CN: 厄庇克洛忒亚意为“战无不胜”，得名于击溃巴旦尼亚大军的将军萨拉庇俄斯；塔楼遥望弥戎河，常是北军南犯的第一站。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_EN1
+  quote_hash: 0D00304C9D38B9D3FB0F0AF3B476055778AC6FC338D544F70533F27D5CCFE7C7
+  quote: 厄庇克洛忒亚，意为“战无不胜”，得名自乖戾的长发将军萨拉庇俄斯，他击溃了一支巴旦尼亚大军，守护了帝国在拉科尼斯湖以西的领土。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-epicrotea-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 厄庇克洛忒亚意为“战无不胜”，得名于击溃巴旦尼亚大军的将军萨拉庇俄斯；塔楼遥望弥戎河，常是北军南犯的第一站。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EN1
+    quote_hash: 0D00304C9D38B9D3FB0F0AF3B476055778AC6FC338D544F70533F27D5CCFE7C7
+    quote: 厄庇克洛忒亚，意为“战无不胜”，得名自乖戾的长发将军萨拉庇俄斯，他击溃了一支巴旦尼亚大军，守护了帝国在拉科尼斯湖以西的领土。
+  expressions:
+  - id: expr.town-epicrotea-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 厄庇克洛忒亚的塔高，看得远。老人们说北边一有动静，头一个望见的就是这儿的塔。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EN1
+      quote_hash: 0D00304C9D38B9D3FB0F0AF3B476055778AC6FC338D544F70533F27D5CCFE7C7
+      quote: 厄庇克洛忒亚，意为“战无不胜”，得名自乖戾的长发将军萨拉庇俄斯，他击溃了一支巴旦尼亚大军，守护了帝国在拉科尼斯湖以西的领土。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-epicrotea-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 厄庇克洛忒亚是北疆军情的第一哨——弥戎河防线的了望塔；军需与边贸同源，此地粮草骡马的行情跟着北边局势走。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EN1
+      quote_hash: 0D00304C9D38B9D3FB0F0AF3B476055778AC6FC338D544F70533F27D5CCFE7C7
+      quote: 厄庇克洛忒亚，意为“战无不胜”，得名自乖戾的长发将军萨拉庇俄斯，他击溃了一支巴旦尼亚大军，守护了帝国在拉科尼斯湖以西的领土。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

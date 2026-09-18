@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-battania_mercenary_armor
+title:
+  zh-CN: 奢华布面铁甲
+  en: Luxury Brigandine
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 奢华布面铁甲
+  - BodyArmor
+  en:
+  - battania_mercenary_armor
+summary:
+  zh-CN: 奢华布面铁甲是巴坦尼亚佣兵里的体面货，铁甲衬布面，防护顶尖还不失体面。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-xml
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+  locator: bannerlord.items.xml#battania_mercenary_armor
+  quote_hash: 9CCB680F2B53DDA5392CCB5A8F16251E34D0118B33D9DD93AB0BB62797F7CA77
+  quote: 奢华布面铁甲 | BodyArmor | 身甲 53 | 护臂 10 | 护腿 18
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.item-battania_mercenary_armor-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 奢华布面铁甲是巴坦尼亚佣兵里的体面货，铁甲衬布面，防护顶尖还不失体面。
+  sources:
+  - source_id: source.calradia.game.items-xml
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+    locator: bannerlord.items.xml#battania_mercenary_armor
+    quote_hash: 9CCB680F2B53DDA5392CCB5A8F16251E34D0118B33D9DD93AB0BB62797F7CA77
+    quote: 奢华布面铁甲 | BodyArmor | 身甲 53 | 护臂 10 | 护腿 18
+  expressions:
+  - id: expr.item-battania_mercenary_armor-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 打过几场硬仗的佣兵才置办得起那样的甲，铁片钉在厚布上，刀砍上去梆梆响。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#battania_mercenary_armor
+      quote_hash: 9CCB680F2B53DDA5392CCB5A8F16251E34D0118B33D9DD93AB0BB62797F7CA77
+      quote: 奢华布面铁甲 | BodyArmor | 身甲 53 | 护臂 10 | 护腿 18
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.item-battania_mercenary_armor-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 奢华布面铁甲身甲 53、臂 10、腿 18，重 24——防护数值顶级但压秤，步战精锐穿它，轻骑嫌沉。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#battania_mercenary_armor
+      quote_hash: 9CCB680F2B53DDA5392CCB5A8F16251E34D0118B33D9DD93AB0BB62797F7CA77
+      quote: 奢华布面铁甲 | BodyArmor | 身甲 53 | 护臂 10 | 护腿 18
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

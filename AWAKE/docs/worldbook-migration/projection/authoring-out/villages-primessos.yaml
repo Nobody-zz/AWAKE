@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-primessos
+title:
+  zh-CN: 普里墨索斯
+  en: Primessos
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 普里墨索斯
+  en:
+  - Primessos
+  - village_EW1_1
+summary:
+  zh-CN: 普里墨索斯位于伽维斯河谷树木繁茂的上游；当地气候适合饲养以南方橡树的橡子为食的猪。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_EW1_1
+  quote_hash: 48068EA070AF62FBFA9DD879EF0AA3EE8FD666342257F056F8DA7123F7057DC4
+  quote: 普里墨索斯位于伽维斯河谷树木繁茂的上游。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-primessos-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 普里墨索斯位于伽维斯河谷树木繁茂的上游；当地气候适合饲养以南方橡树的橡子为食的猪。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EW1_1
+    quote_hash: 48068EA070AF62FBFA9DD879EF0AA3EE8FD666342257F056F8DA7123F7057DC4
+    quote: 普里墨索斯位于伽维斯河谷树木繁茂的上游。
+  expressions:
+  - id: expr.village-primessos-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 普里墨索斯的猪吃橡子，嘴刁得很。村里人说林子给什么，猪就长什么——橡子壮，肉就香。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EW1_1
+      quote_hash: 48068EA070AF62FBFA9DD879EF0AA3EE8FD666342257F056F8DA7123F7057DC4
+      quote: 普里墨索斯位于伽维斯河谷树木繁茂的上游。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-primessos-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 普里墨索斯出橡子猪——河谷橡林成片、放养省料；腌肉火腿风味浓，出货多在秋冬，收猪看橡子年成与膘厚，好年成腿货先订空。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EW1_1
+      quote_hash: 48068EA070AF62FBFA9DD879EF0AA3EE8FD666342257F056F8DA7123F7057DC4
+      quote: 普里墨索斯位于伽维斯河谷树木繁茂的上游。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

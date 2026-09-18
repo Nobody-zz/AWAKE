@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-bukits
+title:
+  zh-CN: 布基茨
+  en: Bukits
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 布基茨
+  en:
+  - Bukits
+  - village_S5_2
+summary:
+  zh-CN: 布基茨坐落于库赛特边境上伊勒坦山的东坡；这里的村民养一种高原牛，这品种扛得住从山上刮下来的刺骨寒风。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#village_S5_2
+  quote_hash: 3C62F5ED669BE7D66B16E9815A0548723F48D367E87A1A8F5CBEAEE667FD6920
+  quote: 布基茨坐落于库赛特边境上伊勒坦山的东坡。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-bukits-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 布基茨坐落于库赛特边境上伊勒坦山的东坡；这里的村民养一种高原牛，这品种扛得住从山上刮下来的刺骨寒风。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#village_S5_2
+    quote_hash: 3C62F5ED669BE7D66B16E9815A0548723F48D367E87A1A8F5CBEAEE667FD6920
+    quote: 布基茨坐落于库赛特边境上伊勒坦山的东坡。
+  expressions:
+  - id: expr.village-bukits-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 布基茨的人在边境上放牛。村里人说两边的旗子换来换去，牛认的是坡——谁的税轻，就卖给谁。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#village_S5_2
+      quote_hash: 3C62F5ED669BE7D66B16E9815A0548723F48D367E87A1A8F5CBEAEE667FD6920
+      quote: 布基茨坐落于库赛特边境上伊勒坦山的东坡。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-bukits-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 布基茨以边境牧牛为业——坡高风硬、牛性耐寒；牛按膘情与役力分等，边市双边买卖、税随属地而变，边情紧则赶牛内迁。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#village_S5_2
+      quote_hash: 3C62F5ED669BE7D66B16E9815A0548723F48D367E87A1A8F5CBEAEE667FD6920
+      quote: 布基茨坐落于库赛特边境上伊勒坦山的东坡。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

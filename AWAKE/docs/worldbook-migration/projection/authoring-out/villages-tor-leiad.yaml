@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-tor-leiad
+title:
+  zh-CN: 托·莱阿德
+  en: Tor Leiad
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 托·莱阿德
+  en:
+  - Tor Leiad
+  - village_B3_3
+summary:
+  zh-CN: 托·莱阿德——满月之丘——坐落于巴旦尼亚北部一座树木繁茂的小丘下；村民们采伐橡树、紫杉和山毛榉林，几百年来巴旦尼亚人细心照料这些树木，好让木材一直够砍够卖。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-battania
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+  locator: bannerlord.villages#village_B3_3
+  quote_hash: A428AE6FAE536BD58FDB7AAC696B0457B038FA6F11723694147B5585D64FD189
+  quote: 托·莱阿德，满月之丘，坐落于巴旦尼亚北部的一座树木繁茂的小山丘下。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-tor-leiad-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 托·莱阿德——满月之丘——坐落于巴旦尼亚北部一座树木繁茂的小丘下；村民们采伐橡树、紫杉和山毛榉林，几百年来巴旦尼亚人细心照料这些树木，好让木材一直够砍够卖。
+  sources:
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#village_B3_3
+    quote_hash: A428AE6FAE536BD58FDB7AAC696B0457B038FA6F11723694147B5585D64FD189
+    quote: 托·莱阿德，满月之丘，坐落于巴旦尼亚北部的一座树木繁茂的小山丘下。
+  expressions:
+  - id: expr.village-tor-leiad-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 托·莱阿德的人砍树先看年岁。村里人说祖宗定的规矩——幼树留着，老树才动，砍了要补。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B3_3
+      quote_hash: A428AE6FAE536BD58FDB7AAC696B0457B038FA6F11723694147B5585D64FD189
+      quote: 托·莱阿德，满月之丘，坐落于巴旦尼亚北部的一座树木繁茂的小山丘下。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-tor-leiad-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 托·莱阿德以丘林轮伐为业——林龄分区、砍补相续；木材按树种与材分等，橡紫杉供器用，族人共守伐期，逾规者罚。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B3_3
+      quote_hash: A428AE6FAE536BD58FDB7AAC696B0457B038FA6F11723694147B5585D64FD189
+      quote: 托·莱阿德，满月之丘，坐落于巴旦尼亚北部的一座树木繁茂的小山丘下。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

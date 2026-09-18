@@ -1,0 +1,213 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 4
+id: doc.geography.peninsulas-kachar
+title:
+  zh-CN: 卡恰尔半岛·地要与用兵
+  en: Kachyar Peninsula
+status: needs_review
+domain: geography
+subdomain: terrain
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 卡恰尔半岛
+  - 卡恰尔
+  - 伊卡拉荒原
+  en:
+  - Kachyar Peninsula
+  - Kachyar
+entity_ids:
+- entity.settlement.town_s1
+summary:
+  zh-CN: 卡恰尔半岛的位置地形、港位稀少、用兵价值与库赛特远距判断。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.chronicle.kachar-peninsula
+  source_version: download-20260903
+  source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+  locator: chronicle-kachar-peninsula.txt#/Variants/0/Content
+  quote_hash: 673C929F392118D705A2FCA69EACED50A863A3D90F8BCA2BB8CC76657E49EC8B
+  quote: 适合建港口的地方不多
+- source_id: source.calradia.chronicle.kachar-peninsula
+  source_version: download-20260903
+  source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+  locator: chronicle-kachar-peninsula.txt#/Variants/0/Content
+  quote_hash: 6D70F4FE22046082A0AE2131295775EC7BB48E7CD6AF7BA38A26DEC876F32F66
+  quote: 它的地形怪石嶙峋，海崖陡峭
+- source_id: source.calradia.chronicle.kachar-peninsula
+  source_version: download-20260903
+  source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+  locator: chronicle-kachar-peninsula.txt#/Variants/0/Content
+  quote_hash: 7415982CDC8CE67C09B49B32F5E377CAEB1CBB742D9AA10861341737561DD5E0
+  quote: 一旦占住了，就能同时扼住北边诺德人的比尔里海和南边巴旦尼亚人的海域
+- source_id: source.calradia.chronicle.kachar-peninsula
+  source_version: download-20260903
+  source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+  locator: chronicle-kachar-peninsula.txt#/Variants/0/Content
+  quote_hash: 804C91FB865048E2AFE47859CF3AD124B3172A8940E52765EAA06F9E0FE75483
+  quote: 卡恰尔半岛是斯特吉亚东边一块从伊卡拉荒原延伸出去的狭长陆地
+- source_id: source.calradia.chronicle.kachar-peninsula
+  source_version: download-20260903
+  source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+  locator: chronicle-kachar-peninsula.txt#/Variants/7/Content
+  quote_hash: AFD68418D78E1C79B526DCB6F5E4AACC8E3FD783C078907E9A8BD924106767BE
+  quote: 地面全是石头和海崖，马跑不起来
+- source_id: source.calradia.game.settlements.geography2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 9af64df767747545a9a75b8e22528317e291c51f0314f6842eb79a9f061734b5
+  locator: bannerlord.db#settlements.castle_village_S1_1.descriptionText
+  quote_hash: A118619C494B825D5C90C4A50EEDE24578C385D07199DC9E3B187D73B8A105B8
+  quote: 乌斯托科坐落于瓦尔切格湾与比亚里海之间当风的卡恰尔半岛。当地人饲养的耐寒北方牛会在石缝间找小草吃，困难时期则补充一些海藻。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.peninsula-kachar-1
+  revision: 1
+  kind: relation
+  text:
+    zh-CN: 卡恰尔半岛从伊卡拉荒原探进海里，是一条狭长的石地，恰好横在南北两片海域中间。地面多是石头和陡崖，种不出庄稼，能泊大船的港位没有几处。
+  sources:
+  - source_id: source.calradia.chronicle.kachar-peninsula
+    source_version: download-20260903
+    source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+    locator: chronicle-kachar-peninsula.txt#/Variants/0/Content
+    quote_hash: 804C91FB865048E2AFE47859CF3AD124B3172A8940E52765EAA06F9E0FE75483
+    quote: 卡恰尔半岛是斯特吉亚东边一块从伊卡拉荒原延伸出去的狭长陆地
+  - source_id: source.calradia.chronicle.kachar-peninsula
+    source_version: download-20260903
+    source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+    locator: chronicle-kachar-peninsula.txt#/Variants/0/Content
+    quote_hash: 6D70F4FE22046082A0AE2131295775EC7BB48E7CD6AF7BA38A26DEC876F32F66
+    quote: 它的地形怪石嶙峋，海崖陡峭
+  - source_id: source.calradia.chronicle.kachar-peninsula
+    source_version: download-20260903
+    source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+    locator: chronicle-kachar-peninsula.txt#/Variants/0/Content
+    quote_hash: 673C929F392118D705A2FCA69EACED50A863A3D90F8BCA2BB8CC76657E49EC8B
+    quote: 适合建港口的地方不多
+  expressions:
+  - id: expr.peninsula-kachar-1-summary
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 卡恰尔半岛从伊卡拉荒原探进海里，是一条狭长的石地，恰好横在南北两片海域中间。地面多是石头和陡崖，种不出庄稼，能泊大船的港位没有几处。地面多是石头和陡崖，种不出庄稼，能泊大船的港位没有几处。
+    sources:
+    - source_id: source.calradia.chronicle.kachar-peninsula
+      source_version: download-20260903
+      source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+      locator: chronicle-kachar-peninsula.txt#/Variants/0/Content
+      quote_hash: 804C91FB865048E2AFE47859CF3AD124B3172A8940E52765EAA06F9E0FE75483
+      quote: 卡恰尔半岛是斯特吉亚东边一块从伊卡拉荒原延伸出去的狭长陆地
+    - source_id: source.calradia.chronicle.kachar-peninsula
+      source_version: download-20260903
+      source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+      locator: chronicle-kachar-peninsula.txt#/Variants/0/Content
+      quote_hash: 6D70F4FE22046082A0AE2131295775EC7BB48E7CD6AF7BA38A26DEC876F32F66
+      quote: 它的地形怪石嶙峋，海崖陡峭
+    - source_id: source.calradia.chronicle.kachar-peninsula
+      source_version: download-20260903
+      source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+      locator: chronicle-kachar-peninsula.txt#/Variants/0/Content
+      quote_hash: 673C929F392118D705A2FCA69EACED50A863A3D90F8BCA2BB8CC76657E49EC8B
+      quote: 适合建港口的地方不多
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+- id: assertion.peninsula-kachar-4
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 有一种说法，把卡恰尔半岛说成设哨望海、扼住水路的用兵之地。
+  sources:
+  - source_id: source.calradia.chronicle.kachar-peninsula
+    source_version: download-20260903
+    source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+    locator: chronicle-kachar-peninsula.txt#/Variants/0/Content
+    quote_hash: 7415982CDC8CE67C09B49B32F5E377CAEB1CBB742D9AA10861341737561DD5E0
+    quote: 一旦占住了，就能同时扼住北边诺德人的比尔里海和南边巴旦尼亚人的海域
+  expressions:
+  - id: expr.peninsula-kachar-4
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 用兵的人看的是它的位置：占了合适的岬角，南北两海的动静都收在眼里，因此旧书把它说成设哨望海、把扼水路的要地。
+    sources:
+    - source_id: source.calradia.chronicle.kachar-peninsula
+      source_version: download-20260903
+      source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+      locator: chronicle-kachar-peninsula.txt#/Variants/0/Content
+      quote_hash: 7415982CDC8CE67C09B49B32F5E377CAEB1CBB742D9AA10861341737561DD5E0
+      quote: 一旦占住了，就能同时扼住北边诺德人的比尔里海和南边巴旦尼亚人的海域
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    denies: []
+- id: assertion.peninsula-kachar-5
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 库赛特叙述判断卡恰尔半岛地形不利于骑兵展开。
+  sources:
+  - source_id: source.calradia.chronicle.kachar-peninsula
+    source_version: download-20260903
+    source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+    locator: chronicle-kachar-peninsula.txt#/Variants/7/Content
+    quote_hash: AFD68418D78E1C79B526DCB6F5E4AACC8E3FD783C078907E9A8BD924106767BE
+    quote: 地面全是石头和海崖，马跑不起来
+  expressions:
+  - id: expr.peninsula-kachar-5
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 库赛特人对它兴致有限——按他们的说法，满地石头陡崖，马蹄站不住，骑兵使不开。
+    sources:
+    - source_id: source.calradia.chronicle.kachar-peninsula
+      source_version: download-20260903
+      source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+      locator: chronicle-kachar-peninsula.txt#/Variants/7/Content
+      quote_hash: AFD68418D78E1C79B526DCB6F5E4AACC8E3FD783C078907E9A8BD924106767BE
+      quote: 地面全是石头和海崖，马跑不起来
+    grants:
+    - profile_id: profile.merchant
+      scope: national
+      min_detail: summary
+    denies: []

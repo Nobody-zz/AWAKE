@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-alision
+title:
+  zh-CN: 阿利西翁
+  en: Alision
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿利西翁
+  en:
+  - Alision
+  - village_ES2_4
+summary:
+  zh-CN: 阿利西翁坐落于珀拉斯海北岸；当地渔业相当不景气，村民便在浅滩上建起盐田制盐。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_ES2_4
+  quote_hash: 270A3543C612405013F77BFD0005D71913DED36D5312BD2C0F5253390FE226BF
+  quote: 阿利西翁坐落于珀拉斯海北岸。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-alision-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿利西翁坐落于珀拉斯海北岸；当地渔业相当不景气，村民便在浅滩上建起盐田制盐。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_ES2_4
+    quote_hash: 270A3543C612405013F77BFD0005D71913DED36D5312BD2C0F5253390FE226BF
+    quote: 阿利西翁坐落于珀拉斯海北岸。
+  expressions:
+  - id: expr.village-alision-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿利西翁的鱼打不上来，人却不慌。村里人说海里不给鱼，就给盐——浅滩晒出来的，比鱼还耐存。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_ES2_4
+      quote_hash: 270A3543C612405013F77BFD0005D71913DED36D5312BD2C0F5253390FE226BF
+      quote: 阿利西翁坐落于珀拉斯海北岸。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-alision-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿利西翁由渔转盐——浅滩盐田成片、靠日晒取盐；盐货随潮汛与雨季起落，收盐看粒色与干度，转产之后本村盐价比邻村稳。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_ES2_4
+      quote_hash: 270A3543C612405013F77BFD0005D71913DED36D5312BD2C0F5253390FE226BF
+      quote: 阿利西翁坐落于珀拉斯海北岸。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

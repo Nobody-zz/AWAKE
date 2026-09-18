@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-rhotae
+title:
+  zh-CN: 洛泰
+  en: Rhotae
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 洛泰
+  en:
+  - Rhotae
+  - town_EW6
+summary:
+  zh-CN: 洛泰坐落于厄里特律斯山玄武巨岩下，原为帕拉山堡“洛塔什”；萨拉庇俄斯攻城后夷为平地，以其“名誉污点”之论留名。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_EW6
+  quote_hash: DAE8EF0ECE7DA0E18A57A7F00C63DB08916A714C1C358480FF4FA6BDBDE95E53
+  quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-rhotae-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 洛泰坐落于厄里特律斯山玄武巨岩下，原为帕拉山堡“洛塔什”；萨拉庇俄斯攻城后夷为平地，以其“名誉污点”之论留名。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EW6
+    quote_hash: DAE8EF0ECE7DA0E18A57A7F00C63DB08916A714C1C358480FF4FA6BDBDE95E53
+    quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。
+  expressions:
+  - id: expr.town-rhotae-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 洛泰那地方，山岩压着城。老人们说当年帝国的怪将军把城平了，血淌得跟河一样，还说什么名誉。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EW6
+      quote_hash: DAE8EF0ECE7DA0E18A57A7F00C63DB08916A714C1C358480FF4FA6BDBDE95E53
+      quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-rhotae-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 洛泰城是在焦土上重建的——玄武岩荫蔽下的地产讲山岩稳固；本地对“光荣攻下”之说心存芥蒂，官面典故莫当面引用。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EW6
+      quote_hash: DAE8EF0ECE7DA0E18A57A7F00C63DB08916A714C1C358480FF4FA6BDBDE95E53
+      quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

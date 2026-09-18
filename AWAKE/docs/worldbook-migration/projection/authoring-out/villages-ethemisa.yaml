@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-ethemisa
+title:
+  zh-CN: 厄忒弥萨
+  en: Ethemisa
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 厄忒弥萨
+  en:
+  - Ethemisa
+  - castle_village_ES4_2
+summary:
+  zh-CN: 厄忒弥萨坐落于阿塞莱人口中的「奈赫尔·凯勒斯」（苦河）、帝国人称之为卡勒萨的河流上游；河水刚从海边山上流下，尚未到达东南方的盐碱平原，附近土地小麦收成很好。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_ES4_2
+  quote_hash: 0F23E8EACCE54F07C08CA8CDB405BE206D36B0054209B5095DADF1C3D5D35091
+  quote: 厄忒弥萨坐落于阿塞莱人口中的“奈赫尔·凯勒斯”，即苦河之畔，帝国居民称之为卡勒萨。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-ethemisa-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 厄忒弥萨坐落于阿塞莱人口中的「奈赫尔·凯勒斯」（苦河）、帝国人称之为卡勒萨的河流上游；河水刚从海边山上流下，尚未到达东南方的盐碱平原，附近土地小麦收成很好。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_ES4_2
+    quote_hash: 0F23E8EACCE54F07C08CA8CDB405BE206D36B0054209B5095DADF1C3D5D35091
+    quote: 厄忒弥萨坐落于阿塞莱人口中的“奈赫尔·凯勒斯”，即苦河之畔，帝国居民称之为卡勒萨。
+  expressions:
+  - id: expr.village-ethemisa-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 厄忒弥萨的河在阿塞莱嘴里叫苦河，到了村里却喂出好麦子。村里人说苦是苦在下头，甜是甜在上头。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES4_2
+      quote_hash: 0F23E8EACCE54F07C08CA8CDB405BE206D36B0054209B5095DADF1C3D5D35091
+      quote: 厄忒弥萨坐落于阿塞莱人口中的“奈赫尔·凯勒斯”，即苦河之畔，帝国居民称之为卡勒萨。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-ethemisa-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 厄忒弥萨占苦河上游甜水——盐碱化未至、麦质干净；上下游用水有旧约，扩田动水必惊动两岸。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_ES4_2
+      quote_hash: 0F23E8EACCE54F07C08CA8CDB405BE206D36B0054209B5095DADF1C3D5D35091
+      quote: 厄忒弥萨坐落于阿塞莱人口中的“奈赫尔·凯勒斯”，即苦河之畔，帝国居民称之为卡勒萨。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,370 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-charas
+title:
+  zh-CN: 沙拉斯
+  en: Charas
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 沙拉斯
+  - Charas
+  - 沙拉斯·城与港
+  - 城与港
+  en:
+  - Charas
+entity_ids:
+- entity.settlement.town_v7
+summary:
+  zh-CN: 沙拉斯的位置、起源与海港生计；帝国与瓦兰迪亚两说并录。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_V7.descriptionText
+  quote_hash: 07A17EB7885B63FA489220FCC1CAAEAAF2FBE8B95896144F352C34FE5E82242F
+  quote: 其历史最早可以追溯到第一批卡拉德殖民者登上这片大陆的海岸之时
+- source_id: source.calradia.chronicle.animusforge
+  source_version: animusforge-20260912
+  source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+  locator: rules/rule_沙拉斯__沙拉斯.json#/Variants/4/Content
+  quote_hash: B4CD45EFFA03AF33047BAB2E12436672F54A85BDEF662BE58C68B08E0E287001
+  quote: 沙拉斯？那是瓦兰迪亚人的地盘了。我爷爷说那地方原本是帝国最老最老的城，比巴拉维诺斯还老，帝国就是从那儿起家的。现在归了蛮子，真可惜。不过说实话，我们老百姓对这种事没什么感觉。帝国起家那都是几百年前的事了，跟我们现在有啥关系？沙拉斯归谁管我们也要交税。
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_V7.descriptionText
+  quote_hash: 9A213D7E6B374946E3085136E0DF448C910C69C5867CC0E56C50CBCD5EF74FFE
+  quote: 沙拉斯则成为了一座海务和贸易的重要港口，帝国贵族们在周边海湾附近的和煦海滩上纷纷建起自己的纳凉别墅
+- source_id: source.calradia.chronicle.animusforge
+  source_version: animusforge-20260912
+  source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+  locator: rules/rule_沙拉斯__沙拉斯.json#/Variants/2/Content
+  quote_hash: D8FDDDE1B8668D5D6CFBE9A7FCDA6C209D771DBFE6D54ACE32F66E59005D984C
+  quote: 沙拉斯的活计多，这点我认。有人在那儿码头扛货，一天能挣内陆三天的工钱。但那儿的东西也贵，买个面包比我们这儿贵一倍。挣得多花得也多，到头来跟在家种地差不多。听说那地方的老百姓没人记得帝国了，都认了瓦兰迪亚的统治。管他呢，反正我就在这儿待着，听听就行了。
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_V7.descriptionText
+  quote_hash: 17D51C34D1D377FADC008D7A6D86C1486916D98EBD903C89E7EE32F40CF30FB1
+  quote: 时不时地划着小艇在小岛的周边游弋
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-charas-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 沙拉斯的城史最早被追到第一批卡拉德殖民者登岸之时，是这片大陆上最老的城之一。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_V7.descriptionText
+    quote_hash: 07A17EB7885B63FA489220FCC1CAAEAAF2FBE8B95896144F352C34FE5E82242F
+    quote: 其历史最早可以追溯到第一批卡拉德殖民者登上这片大陆的海岸之时
+  - source_id: source.calradia.chronicle.animusforge
+    source_version: animusforge-20260912
+    source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+    locator: rules/rule_沙拉斯__沙拉斯.json#/Variants/4/Content
+    quote_hash: B4CD45EFFA03AF33047BAB2E12436672F54A85BDEF662BE58C68B08E0E287001
+    quote: 沙拉斯？那是瓦兰迪亚人的地盘了。我爷爷说那地方原本是帝国最老最老的城，比巴拉维诺斯还老，帝国就是从那儿起家的。现在归了蛮子，真可惜。不过说实话，我们老百姓对这种事没什么感觉。帝国起家那都是几百年前的事了，跟我们现在有啥关系？沙拉斯归谁管我们也要交税。
+  expressions:
+  - id: expr.town-charas-1-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 沙拉斯的城史最早被追到第一批卡拉德殖民者登岸之时，是这片大陆上最老的城之一。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_V7.descriptionText
+      quote_hash: 07A17EB7885B63FA489220FCC1CAAEAAF2FBE8B95896144F352C34FE5E82242F
+      quote: 其历史最早可以追溯到第一批卡拉德殖民者登上这片大陆的海岸之时
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-charas-1-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 沙拉斯的城史最早被追到第一批卡拉德殖民者登岸之时，是这片大陆上最老的城之一。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_V7.descriptionText
+      quote_hash: 07A17EB7885B63FA489220FCC1CAAEAAF2FBE8B95896144F352C34FE5E82242F
+      quote: 其历史最早可以追溯到第一批卡拉德殖民者登上这片大陆的海岸之时
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: summary
+    denies: []
+  - id: expr.town-charas-1-b-empire
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 沙拉斯？那是瓦兰迪亚人的地盘了。我爷爷说那地方原本是帝国最老最老的城，比巴拉维诺斯还老，帝国就是从那儿起家的。现在归了蛮子，真可惜。不过说实话，我们老百姓对这种事没什么感觉。帝国起家那都是几百年前的事了，跟我们现在有啥关系？沙拉斯归谁管我们也要交税。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge
+      source_version: animusforge-20260912
+      source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+      locator: rules/rule_沙拉斯__沙拉斯.json#/Variants/4/Content
+      quote_hash: B4CD45EFFA03AF33047BAB2E12436672F54A85BDEF662BE58C68B08E0E287001
+      quote: 沙拉斯？那是瓦兰迪亚人的地盘了。我爷爷说那地方原本是帝国最老最老的城，比巴拉维诺斯还老，帝国就是从那儿起家的。现在归了蛮子，真可惜。不过说实话，我们老百姓对这种事没什么感觉。帝国起家那都是几百年前的事了，跟我们现在有啥关系？沙拉斯归谁管我们也要交税。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+- id: assertion.town-charas-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 沙拉斯是海务与贸易的重要港口，帝国时代的贵族环湾建着纳凉别墅。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_V7.descriptionText
+    quote_hash: 9A213D7E6B374946E3085136E0DF448C910C69C5867CC0E56C50CBCD5EF74FFE
+    quote: 沙拉斯则成为了一座海务和贸易的重要港口，帝国贵族们在周边海湾附近的和煦海滩上纷纷建起自己的纳凉别墅
+  - source_id: source.calradia.chronicle.animusforge
+    source_version: animusforge-20260912
+    source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+    locator: rules/rule_沙拉斯__沙拉斯.json#/Variants/2/Content
+    quote_hash: D8FDDDE1B8668D5D6CFBE9A7FCDA6C209D771DBFE6D54ACE32F66E59005D984C
+    quote: 沙拉斯的活计多，这点我认。有人在那儿码头扛货，一天能挣内陆三天的工钱。但那儿的东西也贵，买个面包比我们这儿贵一倍。挣得多花得也多，到头来跟在家种地差不多。听说那地方的老百姓没人记得帝国了，都认了瓦兰迪亚的统治。管他呢，反正我就在这儿待着，听听就行了。
+  expressions:
+  - id: expr.town-charas-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 沙拉斯是海务与贸易的重要港口，帝国时代的贵族环湾建着纳凉别墅。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_V7.descriptionText
+      quote_hash: 9A213D7E6B374946E3085136E0DF448C910C69C5867CC0E56C50CBCD5EF74FFE
+      quote: 沙拉斯则成为了一座海务和贸易的重要港口，帝国贵族们在周边海湾附近的和煦海滩上纷纷建起自己的纳凉别墅
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-charas-2-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 沙拉斯是海务与贸易的重要港口，帝国时代的贵族环湾建着纳凉别墅。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_V7.descriptionText
+      quote_hash: 9A213D7E6B374946E3085136E0DF448C910C69C5867CC0E56C50CBCD5EF74FFE
+      quote: 沙拉斯则成为了一座海务和贸易的重要港口，帝国贵族们在周边海湾附近的和煦海滩上纷纷建起自己的纳凉别墅
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: summary
+    denies: []
+  - id: expr.town-charas-2-b-vlandia
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 沙拉斯的活计多，这点我认。有人在那儿码头扛货，一天能挣内陆三天的工钱。但那儿的东西也贵，买个面包比我们这儿贵一倍。挣得多花得也多，到头来跟在家种地差不多。听说那地方的老百姓没人记得帝国了，都认了瓦兰迪亚的统治。管他呢，反正我就在这儿待着，听听就行了。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge
+      source_version: animusforge-20260912
+      source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+      locator: rules/rule_沙拉斯__沙拉斯.json#/Variants/2/Content
+      quote_hash: D8FDDDE1B8668D5D6CFBE9A7FCDA6C209D771DBFE6D54ACE32F66E59005D984C
+      quote: 沙拉斯的活计多，这点我认。有人在那儿码头扛货，一天能挣内陆三天的工钱。但那儿的东西也贵，买个面包比我们这儿贵一倍。挣得多花得也多，到头来跟在家种地差不多。听说那地方的老百姓没人记得帝国了，都认了瓦兰迪亚的统治。管他呢，反正我就在这儿待着，听听就行了。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+- id: assertion.town-charas-3
+  revision: 1
+  kind: relation
+  text:
+    zh-CN: 湾水暖、海滩缓，闲暇的贵族驾着小艇在群岛间游弋。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_V7.descriptionText
+    quote_hash: 17D51C34D1D377FADC008D7A6D86C1486916D98EBD903C89E7EE32F40CF30FB1
+    quote: 时不时地划着小艇在小岛的周边游弋
+  expressions:
+  - id: expr.town-charas-3-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 湾水暖、海滩缓，闲暇的贵族驾着小艇在群岛间游弋。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_V7.descriptionText
+      quote_hash: 17D51C34D1D377FADC008D7A6D86C1486916D98EBD903C89E7EE32F40CF30FB1
+      quote: 时不时地划着小艇在小岛的周边游弋
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-charas-3-local
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 湾水暖、海滩缓，闲暇的贵族驾着小艇在群岛间游弋。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_V7.descriptionText
+      quote_hash: 17D51C34D1D377FADC008D7A6D86C1486916D98EBD903C89E7EE32F40CF30FB1
+      quote: 时不时地划着小艇在小岛的周边游弋
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+      settlement_ids:
+      - entity.settlement.town_v7
+    denies: []

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-rovalt
+title:
+  zh-CN: 罗瓦尔
+  en: Rovalt
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 罗瓦尔
+  en:
+  - Rovalt
+  - town_V9
+summary:
+  zh-CN: 罗瓦拉堤斯地处埃博半岛群山，因银矿与毛皮之利引诺德人先于瓦兰迪亚人大批涌入；冬季恶劣但人口居全王国之最。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_V9
+  quote_hash: CF7843BA141BAF0682A3E537AEE361A07368E898F49A03FA1CF6FD264F602AE2
+  quote: 位于埃博半岛群山之中的罗瓦拉堤斯，从未成为一座彻头彻尾的帝国城镇。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-rovalt-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 罗瓦拉堤斯地处埃博半岛群山，因银矿与毛皮之利引诺德人先于瓦兰迪亚人大批涌入；冬季恶劣但人口居全王国之最。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_V9
+    quote_hash: CF7843BA141BAF0682A3E537AEE361A07368E898F49A03FA1CF6FD264F602AE2
+    quote: 位于埃博半岛群山之中的罗瓦拉堤斯，从未成为一座彻头彻尾的帝国城镇。
+  expressions:
+  - id: expr.town-rovalt-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 罗瓦尔山里说是有银子有皮子，北方人呼啦啦全涌来了。冬天冷得要命，可人比哪儿都多——都是奔着钱来的。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_V9
+      quote_hash: CF7843BA141BAF0682A3E537AEE361A07368E898F49A03FA1CF6FD264F602AE2
+      quote: 位于埃博半岛群山之中的罗瓦拉堤斯，从未成为一座彻头彻尾的帝国城镇。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-rovalt-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 罗瓦尔是人口红利型市场——劳力最便宜、消耗最大，谷地农庄供养人口；银矿真伪参半的传闻是投机温床，置业看实矿不听谣。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_V9
+      quote_hash: CF7843BA141BAF0682A3E537AEE361A07368E898F49A03FA1CF6FD264F602AE2
+      quote: 位于埃博半岛群山之中的罗瓦拉堤斯，从未成为一座彻头彻尾的帝国城镇。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

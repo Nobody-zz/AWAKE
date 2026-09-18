@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-swenryn
+title:
+  zh-CN: 斯温林
+  en: Swenryn
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 斯温林
+  en:
+  - Swenryn
+  - village_B4_4
+summary:
+  zh-CN: 斯温林俯瞰着一道岩石大瀑布——它拦下泰瓦尔湖的暗水，在乌卡利翁中央汇成湖；马匹在激流与瀑布之上的草地上吃草。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-battania
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+  locator: bannerlord.villages#village_B4_4
+  quote_hash: BDE149DA292CD2700D7DD4927212639A1953D9A326CBD09FBE179862FD633620
+  quote: 斯温林俯瞰着岩石大瀑布，它阻挡了泰瓦尔湖的黑暗水域，形成乌卡利翁中央的湖泊。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-swenryn-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 斯温林俯瞰着一道岩石大瀑布——它拦下泰瓦尔湖的暗水，在乌卡利翁中央汇成湖；马匹在激流与瀑布之上的草地上吃草。
+  sources:
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#village_B4_4
+    quote_hash: BDE149DA292CD2700D7DD4927212639A1953D9A326CBD09FBE179862FD633620
+    quote: 斯温林俯瞰着岩石大瀑布，它阻挡了泰瓦尔湖的黑暗水域，形成乌卡利翁中央的湖泊。
+  expressions:
+  - id: expr.village-swenryn-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 斯温林的人听得见瀑布。村里人说水声大不大，就知道湖里涨没涨——马只要那片没淹的草，就够了。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B4_4
+      quote_hash: BDE149DA292CD2700D7DD4927212639A1953D9A326CBD09FBE179862FD633620
+      quote: 斯温林俯瞰着岩石大瀑布，它阻挡了泰瓦尔湖的黑暗水域，形成乌卡利翁中央的湖泊。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-swenryn-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 斯温林以瀑布旁牧马为业——水气润草、马壮耐走；马按齿口与脚力分等，因近水源要道，马与皮货借水运外销。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B4_4
+      quote_hash: BDE149DA292CD2700D7DD4927212639A1953D9A326CBD09FBE179862FD633620
+      quote: 斯温林俯瞰着岩石大瀑布，它阻挡了泰瓦尔湖的黑暗水域，形成乌卡利翁中央的湖泊。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

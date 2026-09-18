@@ -1,0 +1,14 @@
+世界书 authoring 镜像入库：词条正文与建库脚本
+
+内容（docs/worldbook-migration/projection/authoring-out/，共 522 项）：
+- 444 个词条 yaml —— schema_version: awake.worldbook.authoring.v1，
+  title / domain / subdomain / era 等手写层（本仓的世界书内容镜像）
+- 59 个 `_` 建库过程脚本（村庄 / 城堡 / 城镇铺开、分类与税则改写、校验）
+- 18 个过程数据与审计 json、1 个 corrections 说明
+- 该目录此前 124 项已入库，本次补齐新增的 522 项
+
+为什么走镜像：ModuleData/Worldbook/ 的非 package 部分按 .gitignore 第 27-41 行
+明确不入库（旧 v1 内容目录已作废），内容侧的可追溯落点就是这份镜像档。
+（package 形态已在前一笔 26fa7a9 入库。）
+
+提交前核验：git diff --cached 全部 522 项均落在该目录内，无越界。

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-seonon
+title:
+  zh-CN: 肖农
+  en: Seonon
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 肖农
+  en:
+  - Seonon
+  - town_B4
+summary:
+  zh-CN: 肖农的历史伴着泰瓦尔湖的悲情传说——阿尔加娜为挚爱恸哭惊动魂灵；近世频遭斯特吉亚掠袭，卡拉多格自邻近的埃里尔王失踪之地崛起。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_B4
+  quote_hash: F5429EC0827FF5B3EB10FD00D428A251A679A671DB194F0DCB7091CFD55AB689
+  quote: 肖农啊，悲伤的肖农，她的历史如同泰瓦尔湖幽暗的湖水一般，令人潸然泪下。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-seonon-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 肖农的历史伴着泰瓦尔湖的悲情传说——阿尔加娜为挚爱恸哭惊动魂灵；近世频遭斯特吉亚掠袭，卡拉多格自邻近的埃里尔王失踪之地崛起。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_B4
+    quote_hash: F5429EC0827FF5B3EB10FD00D428A251A679A671DB194F0DCB7091CFD55AB689
+    quote: 肖农啊，悲伤的肖农，她的历史如同泰瓦尔湖幽暗的湖水一般，令人潸然泪下。
+  expressions:
+  - id: expr.town-seonon-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 肖农是个伤心城，湖面上传说见过死者的倒影。这几年北边的人常来抢，日子不安生。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_B4
+      quote_hash: F5429EC0827FF5B3EB10FD00D428A251A679A671DB194F0DCB7091CFD55AB689
+      quote: 肖农啊，悲伤的肖农，她的历史如同泰瓦尔湖幽暗的湖水一般，令人潸然泪下。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-seonon-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 肖农在斯特吉亚掠袭线上，护货成本要算足；湖景与悲情传说引客流，本地人心里记着埃里尔王失踪地——谈旧事容易碰人家忌讳。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_B4
+      quote_hash: F5429EC0827FF5B3EB10FD00D428A251A679A671DB194F0DCB7091CFD55AB689
+      quote: 肖农啊，悲伤的肖农，她的历史如同泰瓦尔湖幽暗的湖水一般，令人潸然泪下。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

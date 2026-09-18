@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-phasos
+title:
+  zh-CN: 法索斯
+  en: Phasos
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 法索斯
+  en:
+  - Phasos
+  - village_EW5_2
+summary:
+  zh-CN: 法索斯位于特美亚与阿里斯河谷之间高地起伏的白垩山丘中；低处肥美的牧草使这里成为帝国最好的养马地之一。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_EW5_2
+  quote_hash: 786D1FDA368DC2B3D6AA0FBDF0BC60D86AFEC4E28DA90019ACB9839B0C88C053
+  quote: 法索斯位于特美亚与阿里斯河谷间高地起伏的白垩山丘中。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-phasos-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 法索斯位于特美亚与阿里斯河谷之间高地起伏的白垩山丘中；低处肥美的牧草使这里成为帝国最好的养马地之一。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EW5_2
+    quote_hash: 786D1FDA368DC2B3D6AA0FBDF0BC60D86AFEC4E28DA90019ACB9839B0C88C053
+    quote: 法索斯位于特美亚与阿里斯河谷间高地起伏的白垩山丘中。
+  expressions:
+  - id: expr.village-phasos-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 法索斯的马是吃着白垩坡的草长大的。村里人说坡上草嫩水甜，马出了栏就没病过。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EW5_2
+      quote_hash: 786D1FDA368DC2B3D6AA0FBDF0BC60D86AFEC4E28DA90019ACB9839B0C88C053
+      quote: 法索斯位于特美亚与阿里斯河谷间高地起伏的白垩山丘中。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-phasos-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 法索斯出帝国上等良马——白垩丘间草场肥美、马群健旺；马匹体态佳、耐长途，军需与贵族都要，好马一季一价。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EW5_2
+      quote_hash: 786D1FDA368DC2B3D6AA0FBDF0BC60D86AFEC4E28DA90019ACB9839B0C88C053
+      quote: 法索斯位于特美亚与阿里斯河谷间高地起伏的白垩山丘中。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

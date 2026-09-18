@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-jamayeh
+title:
+  zh-CN: 贾迈耶
+  en: Jamayeh
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 贾迈耶
+  en:
+  - Jamayeh
+  - castle_village_A5_1
+summary:
+  zh-CN: 贾迈耶位于「拜赫尔·耶什姆」（翡翠之海）南岸，雨季短暂但气候很适合橄榄树生长。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+  locator: bannerlord.villages#castle_village_A5_1
+  quote_hash: 301625E6FB9DB2CCFE340136878DAF4872D4133C0096F1264CED72BC96E9E173
+  quote: 贾迈耶位于阿塞莱人所说的“拜赫尔·耶什姆”，即“翡翠之海”的南岸。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-jamayeh-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 贾迈耶位于「拜赫尔·耶什姆」（翡翠之海）南岸，雨季短暂但气候很适合橄榄树生长。
+  sources:
+  - source_id: source.calradia.game.villages-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+    locator: bannerlord.villages#castle_village_A5_1
+    quote_hash: 301625E6FB9DB2CCFE340136878DAF4872D4133C0096F1264CED72BC96E9E173
+    quote: 贾迈耶位于阿塞莱人所说的“拜赫尔·耶什姆”，即“翡翠之海”的南岸。
+  expressions:
+  - id: expr.village-jamayeh-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 贾迈耶的海风带水汽。雨是不多，可橄榄树就好这一口——村里人管这叫海赏饭。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#castle_village_A5_1
+      quote_hash: 301625E6FB9DB2CCFE340136878DAF4872D4133C0096F1264CED72BC96E9E173
+      quote: 贾迈耶位于阿塞莱人所说的“拜赫尔·耶什姆”，即“翡翠之海”的南岸。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-jamayeh-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 贾迈耶的橄榄品质好但总量受雨季限制——榨季集中；混收外地果充本地果的把戏在此行不通，村里认树不认秤。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#castle_village_A5_1
+      quote_hash: 301625E6FB9DB2CCFE340136878DAF4872D4133C0096F1264CED72BC96E9E173
+      quote: 贾迈耶位于阿塞莱人所说的“拜赫尔·耶什姆”，即“翡翠之海”的南岸。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

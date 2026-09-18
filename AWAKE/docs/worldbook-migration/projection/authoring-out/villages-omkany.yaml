@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-omkany
+title:
+  zh-CN: 奥姆卡尼
+  en: Omkany
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 奥姆卡尼
+  en:
+  - Omkany
+  - village_S4_3
+summary:
+  zh-CN: 奥姆卡尼坐落于拉科尼斯湖畔与积雪的车尔特格山脉之间；这一带的村民养猪，用盐和蒜腌好猪肥肉，卖到北地各处去。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#village_S4_3
+  quote_hash: 0A5258F9F247403522E4C9604274802A9130AF10800A63D904A971F5F229D956
+  quote: 奥姆卡尼坐落于拉科尼斯湖畔与冰雪覆盖的车尔特格山脉之间。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-omkany-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 奥姆卡尼坐落于拉科尼斯湖畔与积雪的车尔特格山脉之间；这一带的村民养猪，用盐和蒜腌好猪肥肉，卖到北地各处去。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#village_S4_3
+    quote_hash: 0A5258F9F247403522E4C9604274802A9130AF10800A63D904A971F5F229D956
+    quote: 奥姆卡尼坐落于拉科尼斯湖畔与冰雪覆盖的车尔特格山脉之间。
+  expressions:
+  - id: expr.village-omkany-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 奥姆卡尼的人靠腌肉过冬。村里人说湖边养猪省粮，盐和蒜一拌——往北一送，比活猪还值钱。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#village_S4_3
+      quote_hash: 0A5258F9F247403522E4C9604274802A9130AF10800A63D904A971F5F229D956
+      quote: 奥姆卡尼坐落于拉科尼斯湖畔与冰雪覆盖的车尔特格山脉之间。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-omkany-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 奥姆卡尼以腌猪为业——湖牧养猪、盐蒜入味；肥膘按厚薄与咸淡分等，腌货耐运走北地，冬前集中宰腌、开春外销。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#village_S4_3
+      quote_hash: 0A5258F9F247403522E4C9604274802A9130AF10800A63D904A971F5F229D956
+      quote: 奥姆卡尼坐落于拉科尼斯湖畔与冰雪覆盖的车尔特格山脉之间。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

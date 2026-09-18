@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-pen-cannoc
+title:
+  zh-CN: 彭·坎诺克
+  en: Pen Cannoc
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 彭·坎诺克
+  en:
+  - Pen Cannoc
+  - town_B5
+summary:
+  zh-CN: 彭·坎诺克高山俯瞰特朗河奔向瓦兰迪亚低地，水之女神暗池的传说源自对湍流的真实敬畏。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_B5
+  quote_hash: E382C0A9D2AAA96F3764F843F35B404518C2AEFD7F82B7DD9FD392E2CF1B15B6
+  quote: 彭·坎诺克坐落于高山之巅，注视着特朗河自乌卡利翁高原奔腾涌向瓦兰迪亚的低地。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-pen-cannoc-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 彭·坎诺克高山俯瞰特朗河奔向瓦兰迪亚低地，水之女神暗池的传说源自对湍流的真实敬畏。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_B5
+    quote_hash: E382C0A9D2AAA96F3764F843F35B404518C2AEFD7F82B7DD9FD392E2CF1B15B6
+    quote: 彭·坎诺克坐落于高山之巅，注视着特朗河自乌卡利翁高原奔腾涌向瓦兰迪亚的低地。
+  expressions:
+  - id: expr.town-pen-cannoc-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 山底下暗池里住着水娘娘，贪心的旅人会被拖下去。渔夫们说那不是神怪，是那条河真吃人。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_B5
+      quote_hash: E382C0A9D2AAA96F3764F843F35B404518C2AEFD7F82B7DD9FD392E2CF1B15B6
+      quote: 彭·坎诺克坐落于高山之巅，注视着特朗河自乌卡利翁高原奔腾涌向瓦兰迪亚的低地。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-pen-cannoc-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 彭·坎诺克扼特朗河上游——山地水路的龙头，放排下行的货在此集结；女神传说是行船人的规矩来源，雇船先敬河，纠纷少一半。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_B5
+      quote_hash: E382C0A9D2AAA96F3764F843F35B404518C2AEFD7F82B7DD9FD392E2CF1B15B6
+      quote: 彭·坎诺克坐落于高山之巅，注视着特朗河自乌卡利翁高原奔腾涌向瓦兰迪亚的低地。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

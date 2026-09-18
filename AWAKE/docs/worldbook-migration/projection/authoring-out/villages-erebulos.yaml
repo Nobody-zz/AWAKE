@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-erebulos
+title:
+  zh-CN: 厄瑞玻洛斯
+  en: Erebulos
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 厄瑞玻洛斯
+  en:
+  - Erebulos
+  - village_ES1_4
+summary:
+  zh-CN: 厄瑞玻洛斯位于一片潟湖旁——那里在被新形成的沙嘴封闭前曾是珀拉斯海的一部分；村民从溪底挖出黏土，卖给达努提斯卡及附近城镇的陶窑。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_ES1_4
+  quote_hash: C9BADD8B4281DE3E1688B00CBD4788EB5835119AE707E3E8415D695F9B89D172
+  quote: 厄瑞玻洛斯位于一片潟湖旁，这片潟湖被最近形成的沙嘴所封闭前，曾是珀拉斯海的一部分。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-erebulos-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 厄瑞玻洛斯位于一片潟湖旁——那里在被新形成的沙嘴封闭前曾是珀拉斯海的一部分；村民从溪底挖出黏土，卖给达努提斯卡及附近城镇的陶窑。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_ES1_4
+    quote_hash: C9BADD8B4281DE3E1688B00CBD4788EB5835119AE707E3E8415D695F9B89D172
+    quote: 厄瑞玻洛斯位于一片潟湖旁，这片潟湖被最近形成的沙嘴所封闭前，曾是珀拉斯海的一部分。
+  expressions:
+  - id: expr.village-erebulos-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 厄瑞玻洛斯的泥是沉下来的好东西。村里人说水退了，泥还在——陶匠要的就是这口老泥。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_ES1_4
+      quote_hash: C9BADD8B4281DE3E1688B00CBD4788EB5835119AE707E3E8415D695F9B89D172
+      quote: 厄瑞玻洛斯位于一片潟湖旁，这片潟湖被最近形成的沙嘴所封闭前，曾是珀拉斯海的一部分。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-erebulos-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 厄瑞玻洛斯专供陶土——潟湖老泥细腻耐火，溪底取土按层分质；货走达努提斯卡及邻镇窑口，泥性看手感与烧色，细泥价高过粗泥一倍。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_ES1_4
+      quote_hash: C9BADD8B4281DE3E1688B00CBD4788EB5835119AE707E3E8415D695F9B89D172
+      quote: 厄瑞玻洛斯位于一片潟湖旁，这片潟湖被最近形成的沙嘴所封闭前，曾是珀拉斯海的一部分。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

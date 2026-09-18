@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-boreagora
+title:
+  zh-CN: 玻瑞阿戈拉
+  en: Boreagora
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 玻瑞阿戈拉
+  en:
+  - Boreagora
+  - village_EN6_2
+summary:
+  zh-CN: 玻瑞阿戈拉位于帝国寒冷的北方，被伊勒坦运输线的冰湖网络所环绕；附近帝国堡垒在水路上若隐若现，监视着斯特吉亚与库赛特的劫掠者。这里的低地很适合种植亚麻。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_EN6_2
+  quote_hash: AAAE0BD722639D449EB6EEBF768E4D2ECF951721A07FF8339993C7A48DD671F1
+  quote: 玻瑞阿戈拉位于帝国寒冷的北方，被伊勒坦运输线的冰湖网络所包围。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-boreagora-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 玻瑞阿戈拉位于帝国寒冷的北方，被伊勒坦运输线的冰湖网络所环绕；附近帝国堡垒在水路上若隐若现，监视着斯特吉亚与库赛特的劫掠者。这里的低地很适合种植亚麻。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EN6_2
+    quote_hash: AAAE0BD722639D449EB6EEBF768E4D2ECF951721A07FF8339993C7A48DD671F1
+    quote: 玻瑞阿戈拉位于帝国寒冷的北方，被伊勒坦运输线的冰湖网络所包围。
+  expressions:
+  - id: expr.village-boreagora-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 玻瑞阿戈拉的地冻得早，可亚麻偏偏认它。村里人说堡垒就在水那头盯着，种地人夜里睡觉都知道有人守。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EN6_2
+      quote_hash: AAAE0BD722639D449EB6EEBF768E4D2ECF951721A07FF8339993C7A48DD671F1
+      quote: 玻瑞阿戈拉位于帝国寒冷的北方，被伊勒坦运输线的冰湖网络所包围。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-boreagora-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 玻瑞阿戈拉的亚麻是北方的硬通货——冷地纤维长、韧性足；运输走冰湖水道，封冻前是出货窗口，堡垒巡防牵动商队安全。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EN6_2
+      quote_hash: AAAE0BD722639D449EB6EEBF768E4D2ECF951721A07FF8339993C7A48DD671F1
+      quote: 玻瑞阿戈拉位于帝国寒冷的北方，被伊勒坦运输线的冰湖网络所包围。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

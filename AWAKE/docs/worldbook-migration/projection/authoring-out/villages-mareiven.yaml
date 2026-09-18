@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-mareiven
+title:
+  zh-CN: 马雷汶
+  en: Mareiven
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 马雷汶
+  en:
+  - Mareiven
+  - village_V2_1
+summary:
+  zh-CN: 马雷汶坐落于莱恩诺山脉密林覆盖的陡坡上，俯瞰着整个奥克斯湖；村民采伐高大的树木，卖到沿海城市。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#village_V2_1
+  quote_hash: 1A7023591151BB95E8F2D435B70AF612129C077A24F8B61990C38FC9FFD9B415
+  quote: 马雷汶坐落于莱恩诺山脉密林覆盖的陡坡之上，俯视着整个奥克斯湖。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-mareiven-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 马雷汶坐落于莱恩诺山脉密林覆盖的陡坡上，俯瞰着整个奥克斯湖；村民采伐高大的树木，卖到沿海城市。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#village_V2_1
+    quote_hash: 1A7023591151BB95E8F2D435B70AF612129C077A24F8B61990C38FC9FFD9B415
+    quote: 马雷汶坐落于莱恩诺山脉密林覆盖的陡坡之上，俯视着整个奥克斯湖。
+  expressions:
+  - id: expr.village-mareiven-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 马雷汶的人从上往下看湖。村里人说林子归我们，船归海边的人——木料顺坡滚下去，换回来的才是活钱。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V2_1
+      quote_hash: 1A7023591151BB95E8F2D435B70AF612129C077A24F8B61990C38FC9FFD9B415
+      quote: 马雷汶坐落于莱恩诺山脉密林覆盖的陡坡之上，俯视着整个奥克斯湖。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-mareiven-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 马雷汶以原木为业——陡坡取材、滑道下山，水运发往沿海船坞；木料按材与龄论价，造船的直材最贵，梁柱料次之。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V2_1
+      quote_hash: 1A7023591151BB95E8F2D435B70AF612129C077A24F8B61990C38FC9FFD9B415
+      quote: 马雷汶坐落于莱恩诺山脉密林覆盖的陡坡之上，俯视着整个奥克斯湖。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

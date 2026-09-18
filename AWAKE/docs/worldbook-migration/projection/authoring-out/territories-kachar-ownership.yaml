@@ -1,0 +1,142 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 3
+id: doc.politics.territories-kachar-ownership
+title:
+  zh-CN: 卡恰尔半岛·归属沿革
+  en: Kachyar Peninsula
+status: needs_review
+domain: politics
+subdomain: territories
+universe: awake_current
+era:
+  key: historical
+  certainty: approximate
+content_tier: base
+aliases:
+  zh-CN:
+  - 卡恰尔半岛
+  - 卡恰尔归属
+  en:
+  - Kachyar Peninsula
+entity_ids:
+- entity.settlement.town_s1
+summary:
+  zh-CN: 半岛先后由三方控制的归属沿革；易主次序与当前归属明确保持未决。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.chronicle.kachar-peninsula
+  source_version: download-20260903
+  source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+  locator: chronicle-kachar-peninsula.txt#/Variants/8/Content
+  quote_hash: 4AEE1B2FAD76F8CFE2EF96DE5A4F91C23083DEDE8476E29B7C5AA2F97032492A
+  quote: 据说当年诺德人先占了那里，巴旦尼亚人雇斯特吉亚人把他们赶走，结果斯特吉亚人自己留下了
+- source_id: source.calradia.chronicle.kachar-peninsula
+  source_version: download-20260903
+  source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+  locator: chronicle-kachar-peninsula.txt#/Variants/8/Content
+  quote_hash: 791905ECB4FB47E7D33534F3A228CA270AF1AC7DBE563F4E881D5EC5893B4DF8
+  quote: 这片半岛历史上换了三次主人
+- source_id: source.calradia.game.settlements.geography2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 9af64df767747545a9a75b8e22528317e291c51f0314f6842eb79a9f061734b5
+  locator: bannerlord.db#settlements.town_S7.descriptionText
+  quote_hash: E6311DD7455583A54B94365FA93A5BD41931E536C262DC2559B02A5E5BF177C5
+  quote: 雷维尔是怪石嶙峋的卡恰尔半岛上的一座重要城镇，同时也是巴尔加德的传统对手。根据传说，巴尔加德公主阿基娜的丈夫被雷维尔人杀死，但她接受了敌国国王的提议，与其结为连理以解决这一争端。然而，在新婚之夜，她堵住了厅堂的大门，将国王和他的一百名族人与勇士活活烧死在里面。这场争端后来通过一系列的条约和联姻解决了，也迎来了其乐融融的结局，但雷维尔人依旧对巴尔加德扶摇直上的贡达罗夫王朝心怀憎恨。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.territory-kachar-ownership-1
+  revision: 1
+  kind: state
+  text:
+    zh-CN: 半岛的归属几经变换：旧世界书的说法，它先后在巴旦尼亚人、诺德人和斯特吉亚人手里。
+  sources:
+  - source_id: source.calradia.chronicle.kachar-peninsula
+    source_version: download-20260903
+    source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+    locator: chronicle-kachar-peninsula.txt#/Variants/8/Content
+    quote_hash: 791905ECB4FB47E7D33534F3A228CA270AF1AC7DBE563F4E881D5EC5893B4DF8
+    quote: 这片半岛历史上换了三次主人
+  expressions:
+  - id: expr.territory-kachar-ownership-1-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 半岛的归属几经变换：旧世界书的说法，它先后在巴旦尼亚人、诺德人和斯特吉亚人手里。
+    sources:
+    - source_id: source.calradia.chronicle.kachar-peninsula
+      source_version: download-20260903
+      source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+      locator: chronicle-kachar-peninsula.txt#/Variants/8/Content
+      quote_hash: 791905ECB4FB47E7D33534F3A228CA270AF1AC7DBE563F4E881D5EC5893B4DF8
+      quote: 这片半岛历史上换了三次主人
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: summary
+    denies: []
+- id: assertion.territory-kachar-ownership-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 至于每一回易主的先后次序与眼下的归属，仅凭这部旧书说不清，须对照当世的状态证据才好定论。
+  sources:
+  - source_id: source.calradia.chronicle.kachar-peninsula
+    source_version: download-20260903
+    source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+    locator: chronicle-kachar-peninsula.txt#/Variants/8/Content
+    quote_hash: 4AEE1B2FAD76F8CFE2EF96DE5A4F91C23083DEDE8476E29B7C5AA2F97032492A
+    quote: 据说当年诺德人先占了那里，巴旦尼亚人雇斯特吉亚人把他们赶走，结果斯特吉亚人自己留下了
+  expressions:
+  - id: expr.territory-kachar-ownership-2-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 至于每一回易主的先后次序与眼下的归属，仅凭这部旧书说不清，须对照当世的状态证据才好定论。
+    sources:
+    - source_id: source.calradia.chronicle.kachar-peninsula
+      source_version: download-20260903
+      source_content_hash: a306e8aec67d3665c1f10846236b414d1e1a0c16c76aec106f00cf62e69aaceb
+      locator: chronicle-kachar-peninsula.txt#/Variants/8/Content
+      quote_hash: 4AEE1B2FAD76F8CFE2EF96DE5A4F91C23083DEDE8476E29B7C5AA2F97032492A
+      quote: 据说当年诺德人先占了那里，巴旦尼亚人雇斯特吉亚人把他们赶走，结果斯特吉亚人自己留下了
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: summary
+    denies: []

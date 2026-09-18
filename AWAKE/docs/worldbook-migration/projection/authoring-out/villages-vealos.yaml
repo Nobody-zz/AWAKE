@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-vealos
+title:
+  zh-CN: 威亚罗斯
+  en: Vealos
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 威亚罗斯
+  en:
+  - Vealos
+  - village_EN5_1
+summary:
+  zh-CN: 威亚罗斯坐落于帝国东边德律亚山脉东侧的缓坡上；山坡多覆山毛榉与橡树林，却能产优质马草，自古便是帝国军马育种地。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_EN5_1
+  quote_hash: A294EB27D2D07E814C456A00BBCBA6D00E740A6E25DE1D9D6C63CCEB9554AC90
+  quote: 威亚罗斯坐落于帝国东边德律亚山脉东侧的缓坡上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-vealos-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 威亚罗斯坐落于帝国东边德律亚山脉东侧的缓坡上；山坡多覆山毛榉与橡树林，却能产优质马草，自古便是帝国军马育种地。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EN5_1
+    quote_hash: A294EB27D2D07E814C456A00BBCBA6D00E740A6E25DE1D9D6C63CCEB9554AC90
+    quote: 威亚罗斯坐落于帝国东边德律亚山脉东侧的缓坡上。
+  expressions:
+  - id: expr.village-vealos-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 威亚罗斯的老话是林子归林子，马草归马草。村里人说祖上就给帝国养马，马尾一甩都是军里的。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EN5_1
+      quote_hash: A294EB27D2D07E814C456A00BBCBA6D00E740A6E25DE1D9D6C63CCEB9554AC90
+      quote: 威亚罗斯坐落于帝国东边德律亚山脉东侧的缓坡上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-vealos-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 威亚罗斯主供军马——育种世代相承、草场夹在林间；军马按年龄体型征调，村中好马先入军籍，民买只能捡次一等的。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EN5_1
+      quote_hash: A294EB27D2D07E814C456A00BBCBA6D00E740A6E25DE1D9D6C63CCEB9554AC90
+      quote: 威亚罗斯坐落于帝国东边德律亚山脉东侧的缓坡上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

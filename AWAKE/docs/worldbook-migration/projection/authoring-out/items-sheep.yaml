@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-sheep
+title:
+  zh-CN: 羊
+  en: Sheep
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 羊
+  - Animal
+  en:
+  - sheep
+summary:
+  zh-CN: 羊是牧地的当家牲畜，肉奶毛三样出产，赶着走的就是会动的钱袋。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+  locator: bannerlord.items#sheep
+  quote_hash: 24687507EE8A3B6F8D3B4B759729B19623B1E2A2C0EFCE60E2E0F15B41E42FF2
+  quote: 羊 | Animal | 基准价 80 | 负重 40 | 冲撞 0 | 速度 12 | 操控 40
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.item-sheep-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 羊是牧地的当家牲畜，肉奶毛三样出产，赶着走的就是会动的钱袋。
+  sources:
+  - source_id: source.calradia.game.items
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+    locator: bannerlord.items#sheep
+    quote_hash: 24687507EE8A3B6F8D3B4B759729B19623B1E2A2C0EFCE60E2E0F15B41E42FF2
+    quote: 羊 | Animal | 基准价 80 | 负重 40 | 冲撞 0 | 速度 12 | 操控 40
+  expressions:
+  - id: expr.item-sheep-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 牧民家的羊就是钱串子：卖羊毛、卖羊奶，过节宰一只，一年到头不缺进项。
+    sources:
+    - source_id: source.calradia.game.items
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+      locator: bannerlord.items#sheep
+      quote_hash: 24687507EE8A3B6F8D3B4B759729B19623B1E2A2C0EFCE60E2E0F15B41E42FF2
+      quote: 羊 | Animal | 基准价 80 | 负重 40 | 冲撞 0 | 速度 12 | 操控 40
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.item-sheep-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 羊基准价 80，单只利薄、走量取胜。跟着牧群季节收，转场前出手最合适，羊毛还能再赚一道。
+    sources:
+    - source_id: source.calradia.game.items
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+      locator: bannerlord.items#sheep
+      quote_hash: 24687507EE8A3B6F8D3B4B759729B19623B1E2A2C0EFCE60E2E0F15B41E42FF2
+      quote: 羊 | Animal | 基准价 80 | 负重 40 | 冲撞 0 | 速度 12 | 操控 40
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-askar
+title:
+  zh-CN: 阿斯凯尔
+  en: Askar
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿斯凯尔
+  en:
+  - Askar
+  - town_A7
+summary:
+  zh-CN: 阿斯凯尔扼达玛尔河中段，数千年来人口稠密；河流每隔几百年决堤一次抹去旧迹，今城为帝国旧营地经阿塞莱部落占领而来。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_A7
+  quote_hash: 52D2BE5D436AB76446A191B81EBFB0420579A7E2BAEADD0A222ABEA359EDE2F5
+  quote: 阿斯凯尔占据着达玛尔河的中段，河水在这里迂回穿过杰尔贾赖峭壁。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-askar-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿斯凯尔扼达玛尔河中段，数千年来人口稠密；河流每隔几百年决堤一次抹去旧迹，今城为帝国旧营地经阿塞莱部落占领而来。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_A7
+    quote_hash: 52D2BE5D436AB76446A191B81EBFB0420579A7E2BAEADD0A222ABEA359EDE2F5
+    quote: 阿斯凯尔占据着达玛尔河的中段，河水在这里迂回穿过杰尔贾赖峭壁。
+  expressions:
+  - id: expr.town-askar-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿斯凯尔那条河说翻脸就翻脸，几百年发一回大水，把老城全冲了。老人们讲，河底下压着一层又一层的旧城。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_A7
+      quote_hash: 52D2BE5D436AB76446A191B81EBFB0420579A7E2BAEADD0A222ABEA359EDE2F5
+      quote: 阿斯凯尔占据着达玛尔河的中段，河水在这里迂回穿过杰尔贾赖峭壁。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-askar-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿斯凯尔的地是河给的也是河收的——决堤周期是置产的死规矩，临河仓铺贵但险；城是军团旧营地底子，粮产稳定，走河运的货在此换骡马。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_A7
+      quote_hash: 52D2BE5D436AB76446A191B81EBFB0420579A7E2BAEADD0A222ABEA359EDE2F5
+      quote: 阿斯凯尔占据着达玛尔河的中段，河水在这里迂回穿过杰尔贾赖峭壁。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

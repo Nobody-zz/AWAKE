@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-akiser
+title:
+  zh-CN: 阿契赛尔
+  en: Akiser
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿契赛尔
+  en:
+  - Akiser
+  - castle_village_K2_1
+summary:
+  zh-CN: 阿契赛尔位于阿克坎丘陵的南端；这一带土层破碎，铁石在沟壑之间显露出来。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-khuzait
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+  locator: bannerlord.villages#castle_village_K2_1
+  quote_hash: 00E1EC9BB1B016F787E0E78E4D0837AB7A69123CC424ACC84DDA2179F47D08A6
+  quote: 阿契赛尔位于阿克坎丘陵的南端。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-akiser-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿契赛尔位于阿克坎丘陵的南端；这一带土层破碎，铁石在沟壑之间显露出来。
+  sources:
+  - source_id: source.calradia.game.villages-desc-khuzait
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+    locator: bannerlord.villages#castle_village_K2_1
+    quote_hash: 00E1EC9BB1B016F787E0E78E4D0837AB7A69123CC424ACC84DDA2179F47D08A6
+    quote: 阿契赛尔位于阿克坎丘陵的南端。
+  expressions:
+  - id: expr.village-akiser-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿契赛尔的沟里能捡到黑石头。村里人说地是自己裂开的——不挖都知道底下有什么。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#castle_village_K2_1
+      quote_hash: 00E1EC9BB1B016F787E0E78E4D0837AB7A69123CC424ACC84DDA2179F47D08A6
+      quote: 阿契赛尔位于阿克坎丘陵的南端。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-akiser-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿契赛尔以浅层铁矿为业——沟壑露矿、采法省工；矿石按成色分堆，驮运出丘陵卖给锻造作坊，铁价随军需起落。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#castle_village_K2_1
+      quote_hash: 00E1EC9BB1B016F787E0E78E4D0837AB7A69123CC424ACC84DDA2179F47D08A6
+      quote: 阿契赛尔位于阿克坎丘陵的南端。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-flintolg-castle
+title:
+  zh-CN: 弗林托格堡
+  en: Flintolg Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 弗林托格堡
+  - 弗林托格
+  - 格林托尔
+  en:
+  - Flintolg Castle
+  - castle_B6
+  - Flintolg
+  - Glintor
+entity_ids:
+- entity.settlement.castle_b6
+summary:
+  zh-CN: 弗林托格堡是巴旦尼亚坐落在乌卡利翁东山顶的一座城堡，辖着弗林托格与格林托尔两村；山上出木头，河边出马。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_B6
+  quote_hash: 98581EED6D499AE0D041D33B1B379371B10EE538D43F2E6761B63A8215830C38
+  quote: 弗林托格堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-flintolg-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 弗林托格堡是巴旦尼亚坐落在乌卡利翁东山顶的一座城堡，辖着弗林托格与格林托尔两村；山上出木头，河边出马。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_B6
+    quote_hash: 98581EED6D499AE0D041D33B1B379371B10EE538D43F2E6761B63A8215830C38
+    quote: 弗林托格堡
+  expressions:
+  - id: expr.castle-flintolg-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 弗林托格堡的人说，堡子靠的是山上的树和滩上的马。村里人说，林子里的木头又直又硬，造船的匠人专程来挑。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_B6
+      quote_hash: 98581EED6D499AE0D041D33B1B379371B10EE538D43F2E6761B63A8215830C38
+      quote: 弗林托格堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-flintolg-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 弗林托格堡据乌卡利翁东部山顶，下辖林农村与牧马村各一；原木循费尔河下运，草甸上的马由堡中验过再出手，斯特吉亚商贩来买亦须在堡里挂号。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_B6
+      quote_hash: 98581EED6D499AE0D041D33B1B379371B10EE538D43F2E6761B63A8215830C38
+      quote: 弗林托格堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

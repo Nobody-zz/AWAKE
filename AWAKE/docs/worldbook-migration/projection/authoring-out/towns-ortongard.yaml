@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-ortongard
+title:
+  zh-CN: 奥通加德
+  en: Ortongard
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 奥通加德
+  en:
+  - Ortongard
+  - town_K4
+summary:
+  zh-CN: 奥通加德坐落干燥的德夫赛格高原中央，春牧适时；由达西语商人建城贩畜西售帝国，后陷于兀儿浑汗，赐予库吉特部。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_K4
+  quote_hash: 6495DEA6900F371D91AFE71676FC8E677418632B659A9273DB8BA0AEC2FE5324
+  quote: 奥通加德坐落于干燥的德夫赛格高原中央，当地常年干旱，但在春天十分适合放牧。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-ortongard-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 奥通加德坐落干燥的德夫赛格高原中央，春牧适时；由达西语商人建城贩畜西售帝国，后陷于兀儿浑汗，赐予库吉特部。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_K4
+    quote_hash: 6495DEA6900F371D91AFE71676FC8E677418632B659A9273DB8BA0AEC2FE5324
+    quote: 奥通加德坐落于干燥的德夫赛格高原中央，当地常年干旱，但在春天十分适合放牧。
+  expressions:
+  - id: expr.town-ortongard-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 奥通加德春天满高原是牲口，达西商人攒够了牛羊马，一路护着往帝国卖。后来大汗来了，城赏给了打仗最狠的部落。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_K4
+      quote_hash: 6495DEA6900F371D91AFE71676FC8E677418632B659A9273DB8BA0AEC2FE5324
+      quote: 奥通加德坐落于干燥的德夫赛格高原中央，当地常年干旱，但在春天十分适合放牧。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-ortongard-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 奥通加德是畜产集散的季节性枢纽——春牧出栏、西销帝国，护卫队成本占本钱大头；库吉特部的领地身份决定税费与人脉，老商队关系在此最值钱。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_K4
+      quote_hash: 6495DEA6900F371D91AFE71676FC8E677418632B659A9273DB8BA0AEC2FE5324
+      quote: 奥通加德坐落于干燥的德夫赛格高原中央，当地常年干旱，但在春天十分适合放牧。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

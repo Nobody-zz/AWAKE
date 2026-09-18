@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-vesin
+title:
+  zh-CN: 韦桑
+  en: Vesin
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 韦桑
+  en:
+  - Vesin
+  - village_V7_2
+summary:
+  zh-CN: 韦桑位于沙拉斯湾的一处小溪旁——溪水自埃皮尔山丘流下；这片温暖的土地很宜橄榄树生长。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#village_V7_2
+  quote_hash: 42B8D16176FEDEFBB24FEF640011600E0F05E2F625EC8B587E83771C1AA2517C
+  quote: 韦桑村位于沙拉斯湾的埃皮尔山丘流下来的小溪旁，这片温暖的土地很适合橄榄树的生长。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-vesin-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 韦桑位于沙拉斯湾的一处小溪旁——溪水自埃皮尔山丘流下；这片温暖的土地很宜橄榄树生长。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#village_V7_2
+    quote_hash: 42B8D16176FEDEFBB24FEF640011600E0F05E2F625EC8B587E83771C1AA2517C
+    quote: 韦桑村位于沙拉斯湾的埃皮尔山丘流下来的小溪旁，这片温暖的土地很适合橄榄树的生长。
+  expressions:
+  - id: expr.village-vesin-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 韦桑的溪是从山丘上淌下来的。村里人说有溪就有菜园，坡上再栽几行橄榄——过日子够了。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V7_2
+      quote_hash: 42B8D16176FEDEFBB24FEF640011600E0F05E2F625EC8B587E83771C1AA2517C
+      quote: 韦桑村位于沙拉斯湾的埃皮尔山丘流下来的小溪旁，这片温暖的土地很适合橄榄树的生长。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-vesin-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 韦桑的橄榄靠溪灌——田块沿溪铺开、家户零散；产量不大但油质清，多在本村与邻镇市集散卖，罕有远销。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V7_2
+      quote_hash: 42B8D16176FEDEFBB24FEF640011600E0F05E2F625EC8B587E83771C1AA2517C
+      quote: 韦桑村位于沙拉斯湾的埃皮尔山丘流下来的小溪旁，这片温暖的土地很适合橄榄树的生长。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

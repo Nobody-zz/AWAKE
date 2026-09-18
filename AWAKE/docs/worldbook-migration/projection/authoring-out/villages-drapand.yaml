@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-drapand
+title:
+  zh-CN: 德拉庞
+  en: Drapand
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 德拉庞
+  en:
+  - Drapand
+  - castle_village_V3_1
+summary:
+  zh-CN: 德拉庞位于特朗河口正南方的法尔海角角尖；村民冒险远渡重洋，追捕随北方寒流而来的鳕鱼群。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#castle_village_V3_1
+  quote_hash: 4D9ABFB4E6BFA5203B959469093BC02890FB8A54C64B55C83EB30372DE7A9E92
+  quote: 德拉邦位于特朗河口正南方的法尔海角角尖处。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-drapand-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 德拉庞位于特朗河口正南方的法尔海角角尖；村民冒险远渡重洋，追捕随北方寒流而来的鳕鱼群。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#castle_village_V3_1
+    quote_hash: 4D9ABFB4E6BFA5203B959469093BC02890FB8A54C64B55C83EB30372DE7A9E92
+    quote: 德拉邦位于特朗河口正南方的法尔海角角尖处。
+  expressions:
+  - id: expr.village-drapand-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 德拉庞的男人一出门就是大半年。村里人说海那边有鱼群，也有寡妇——船回不回，看运气也看祖宗。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#castle_village_V3_1
+      quote_hash: 4D9ABFB4E6BFA5203B959469093BC02890FB8A54C64B55C83EB30372DE7A9E92
+      quote: 德拉邦位于特朗河口正南方的法尔海角角尖处。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-drapand-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 德拉庞以远海鳕鱼为业——船队循寒流鱼场北上，渔期长、风浪险；鱼获就地剖晒成干，干鳕耐存价稳，行情看船数与盐价。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#castle_village_V3_1
+      quote_hash: 4D9ABFB4E6BFA5203B959469093BC02890FB8A54C64B55C83EB30372DE7A9E92
+      quote: 德拉邦位于特朗河口正南方的法尔海角角尖处。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

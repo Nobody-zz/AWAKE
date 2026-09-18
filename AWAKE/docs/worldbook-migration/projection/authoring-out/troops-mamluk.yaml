@@ -1,0 +1,144 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 2
+id: doc.war.troops-mamluk
+title:
+  zh-CN: 马穆鲁克
+  en: Mamluk
+status: needs_review
+domain: war
+subdomain: troops
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 马穆鲁克
+  - 军事奴隶
+  - 阿塞莱马穆鲁克
+  en:
+  - Mamluk
+  - Military Slave
+summary:
+  zh-CN: 马穆鲁克：本义「被拥有者」——阿塞莱自幼购入、严格训练的外族少年兵，脱离血缘纽带、忠诚只系于主人；成年获自由身份领俸禄，出身标记终身伴随；已上升为阿塞莱举足轻重的军事政治集团。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: f6ee4a2afa309b794f12fddbb3c185c94500071365f74cd7655aede539ed3b56
+  locator: bannerlord.db#localization.Q4zplpf7
+  quote_hash: C3EBD3AEA482D488664188E0562C75B61C5483CF2A8A36618BA44403F5F56332
+  quote: 马穆鲁克这个词的本义是“财产”。阿塞莱贵族想要没有家庭羁绊，潜心磨练自身的战斗技巧，精通马术、枪术、弓术与剑术的专业士兵。马穆鲁克是阿塞莱身覆铁甲的制胜之军。根据需要，他们能轻松承担正面碾压，弓骑骚扰或侧翼突袭的任务。
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_马穆鲁克__马穆鲁克.json#/Variants/1/Content
+  quote_hash: 33A02E12822381FA41191D103499D4622FF36A2A5A8A0FD000829599CAFEC3BE
+  quote: “花金子养大的，就得拿命还。”埃米尔和谢赫们算这笔账时毫不含糊
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_马穆鲁克__马穆鲁克.json#/Variants/1/Content
+  quote_hash: 1D55AE824B722A8A7E7DA4BA4DADE7A57D13B6BF8D173804DF30D71AE5F83BB8
+  quote: 马穆鲁克只管杀人，剩下的不用他们操心
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.troop-mamluk-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 马穆鲁克一词本义为「被拥有者」或「奴隶」，特指阿塞莱自幼购入、经严格军事训练后编入精锐部队的军事奴隶阶层；来源多为突厥草原、高加索或黑海北岸的非阿塞莱少年，经奴隶商人转卖入宫廷军营，受严整的骑术、弓箭、刀术与战术训练；因自幼脱离血缘纽带、完全依附体制而被视为忠诚可靠的核心武力；成年后通常获自由身份并领取俸禄，但出身标记终身伴随；在阿塞莱苏丹国中已从侍卫部队上升为举足轻重的军事政治集团。
+  sources:
+  - source_id: source.calradia.game.lore.war1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: f6ee4a2afa309b794f12fddbb3c185c94500071365f74cd7655aede539ed3b56
+    locator: bannerlord.db#localization.Q4zplpf7
+    quote_hash: C3EBD3AEA482D488664188E0562C75B61C5483CF2A8A36618BA44403F5F56332
+    quote: 马穆鲁克这个词的本义是“财产”。阿塞莱贵族想要没有家庭羁绊，潜心磨练自身的战斗技巧，精通马术、枪术、弓术与剑术的专业士兵。马穆鲁克是阿塞莱身覆铁甲的制胜之军。根据需要，他们能轻松承担正面碾压，弓骑骚扰或侧翼突袭的任务。
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_马穆鲁克__马穆鲁克.json#/Variants/1/Content
+    quote_hash: 33A02E12822381FA41191D103499D4622FF36A2A5A8A0FD000829599CAFEC3BE
+    quote: “花金子养大的，就得拿命还。”埃米尔和谢赫们算这笔账时毫不含糊
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_马穆鲁克__马穆鲁克.json#/Variants/1/Content
+    quote_hash: 1D55AE824B722A8A7E7DA4BA4DADE7A57D13B6BF8D173804DF30D71AE5F83BB8
+    quote: 马穆鲁克只管杀人，剩下的不用他们操心
+  expressions:
+  - id: expr.troop-mamluk-def-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 马穆鲁克，词本义是「被拥有的人」。阿塞莱自幼买进外族少年——草原的、高加索的、黑海北岸的都有——在宫廷军营里教骑术弓箭刀术，练成精锐。这些人从小离开爹娘，除了主人和军队谁也不认，所以掌权者拿他们当最可靠的核心武力。成年后给自由身、领军饷，可「马穆鲁克」这个出身的记号跟一辈子。
+    sources:
+    - source_id: source.calradia.game.lore.war1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: f6ee4a2afa309b794f12fddbb3c185c94500071365f74cd7655aede539ed3b56
+      locator: bannerlord.db#localization.Q4zplpf7
+      quote_hash: C3EBD3AEA482D488664188E0562C75B61C5483CF2A8A36618BA44403F5F56332
+      quote: 马穆鲁克这个词的本义是“财产”。阿塞莱贵族想要没有家庭羁绊，潜心磨练自身的战斗技巧，精通马术、枪术、弓术与剑术的专业士兵。马穆鲁克是阿塞莱身覆铁甲的制胜之军。根据需要，他们能轻松承担正面碾压，弓骑骚扰或侧翼突袭的任务。
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    denies: []
+  - id: expr.troop-mamluk-aserai-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 埃米尔们的账算得清：马穆鲁克自幼购入、宫廷养大，成年便是纯粹的军事资产——「花金子养大的，就得拿命还」。养闲着是亏本买卖，所以手头有马穆鲁克就急着找仗打。但也清楚他们的短处：除了打仗什么都不会，掌印管钱的差事还得交给血亲。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_马穆鲁克__马穆鲁克.json#/Variants/1/Content
+      quote_hash: 33A02E12822381FA41191D103499D4622FF36A2A5A8A0FD000829599CAFEC3BE
+      quote: “花金子养大的，就得拿命还。”埃米尔和谢赫们算这笔账时毫不含糊
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_马穆鲁克__马穆鲁克.json#/Variants/1/Content
+      quote_hash: 1D55AE824B722A8A7E7DA4BA4DADE7A57D13B6BF8D173804DF30D71AE5F83BB8
+      quote: 马穆鲁克只管杀人，剩下的不用他们操心
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    denies: []
+  - id: expr.troop-mamluk-aserai-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 王帐跟前那些黑脸卫士，是打小买来的孩子养大的。听说他们连自己原先的姓都记不得了——就认发饷的人。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_马穆鲁克__马穆鲁克.json#/Variants/1/Content
+      quote_hash: 33A02E12822381FA41191D103499D4622FF36A2A5A8A0FD000829599CAFEC3BE
+      quote: “花金子养大的，就得拿命还。”埃米尔和谢赫们算这笔账时毫不含糊
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.aserai
+    denies: []

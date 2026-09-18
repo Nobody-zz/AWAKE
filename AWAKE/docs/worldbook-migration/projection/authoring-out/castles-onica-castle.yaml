@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-onica-castle
+title:
+  zh-CN: 俄尼卡堡
+  en: Onica Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 俄尼卡堡
+  - 俄尼卡
+  - 塔耳库提斯
+  en:
+  - Onica Castle
+  - castle_EW3
+  - Onica
+  - Tarcutis
+entity_ids:
+- entity.settlement.castle_ew3
+summary:
+  zh-CN: 俄尼卡堡是西帝国临珀拉斯海北岸的一座城堡，辖着俄尼卡与塔耳库提斯两村；一村占着梯田，一村占着海雾，都出干酒。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_EW3
+  quote_hash: 1BE90E3CBC78E29BE1D99439A10905FAFDACF02E65437721DF2AFFCFFECD41AD
+  quote: 俄尼卡堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-onica-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 俄尼卡堡是西帝国临珀拉斯海北岸的一座城堡，辖着俄尼卡与塔耳库提斯两村；一村占着梯田，一村占着海雾，都出干酒。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_EW3
+    quote_hash: 1BE90E3CBC78E29BE1D99439A10905FAFDACF02E65437721DF2AFFCFFECD41AD
+    quote: 俄尼卡堡
+  expressions:
+  - id: expr.castle-onica-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 俄尼卡堡的人说，堡子的酒卖得远，帝国哪儿的桌上都有。村里人说，海边的雾和沙子看着不好，种葡萄倒正好。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_EW3
+      quote_hash: 1BE90E3CBC78E29BE1D99439A10905FAFDACF02E65437721DF2AFFCFFECD41AD
+      quote: 俄尼卡堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-onica-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 俄尼卡堡据珀拉斯海北岸，下辖两处酒村；梯田与海边园圃的葡萄分园采收，干酒在堡中窖藏、按桶议价外销，酒园的界址与压榨之役由堡里定夺。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_EW3
+      quote_hash: 1BE90E3CBC78E29BE1D99439A10905FAFDACF02E65437721DF2AFFCFFECD41AD
+      quote: 俄尼卡堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

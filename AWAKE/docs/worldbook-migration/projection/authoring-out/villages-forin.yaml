@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-forin
+title:
+  zh-CN: 福林
+  en: Forin
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 福林
+  en:
+  - Forin
+  - castle_village_S2_2
+summary:
+  zh-CN: 福林坐落于伊卡拉荒原边上、加尔察河附近的黑麦和大麦田旁；这里的地主把林地改成了牧马的草场。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#castle_village_S2_2
+  quote_hash: D8CFCA686183E41C23C0AB385C0589B5A6E659C8800C72F099478ACD6EB69A2C
+  quote: 福林坐落于伊卡拉荒原边加尔察河附近的黑麦和大麦田旁。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-forin-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 福林坐落于伊卡拉荒原边上、加尔察河附近的黑麦和大麦田旁；这里的地主把林地改成了牧马的草场。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#castle_village_S2_2
+    quote_hash: D8CFCA686183E41C23C0AB385C0589B5A6E659C8800C72F099478ACD6EB69A2C
+    quote: 福林坐落于伊卡拉荒原边加尔察河附近的黑麦和大麦田旁。
+  expressions:
+  - id: expr.village-forin-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 福林的人眼看着林子变小。村里人说地主的马一年比一年多，树就一年比一年少——粮够吃，柴却得往外买。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S2_2
+      quote_hash: D8CFCA686183E41C23C0AB385C0589B5A6E659C8800C72F099478ACD6EB69A2C
+      quote: 福林坐落于伊卡拉荒原边加尔察河附近的黑麦和大麦田旁。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-forin-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 福林以粮田与马场并营——河畔宜麦、林地改牧；麦按干湿分等、马按齿口分等，军马应征在先，余粮余马走河路外销。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S2_2
+      quote_hash: D8CFCA686183E41C23C0AB385C0589B5A6E659C8800C72F099478ACD6EB69A2C
+      quote: 福林坐落于伊卡拉荒原边加尔察河附近的黑麦和大麦田旁。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

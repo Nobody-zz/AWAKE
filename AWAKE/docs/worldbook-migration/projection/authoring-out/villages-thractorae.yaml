@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-thractorae
+title:
+  zh-CN: 色雷刻托
+  en: Thractorae
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 色雷刻托
+  en:
+  - Thractorae
+  - castle_village_EW4_1
+summary:
+  zh-CN: 色雷刻托坐落于汇入沙拉斯湾的一片小海湾旁，受南方热风与山泉滋润，被帝国的地主们用来进行椰枣树的试验性种植。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_EW4_1
+  quote_hash: BE1EDE0EADB0CB5830407518AF2C3706D15433B2B8347E969FEBF542D062E92E
+  quote: 色雷刻托坐落于汇入沙拉斯湾的一片小海湾旁。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-thractorae-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 色雷刻托坐落于汇入沙拉斯湾的一片小海湾旁，受南方热风与山泉滋润，被帝国的地主们用来进行椰枣树的试验性种植。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_EW4_1
+    quote_hash: BE1EDE0EADB0CB5830407518AF2C3706D15433B2B8347E969FEBF542D062E92E
+    quote: 色雷刻托坐落于汇入沙拉斯湾的一片小海湾旁。
+  expressions:
+  - id: expr.village-thractorae-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 色雷刻托的枣树是老爷们的试验——南边热风加山泉，愣是在帝国地界种出了椰枣。成不成，年年有人来看。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EW4_1
+      quote_hash: BE1EDE0EADB0CB5830407518AF2C3706D15433B2B8347E969FEBF542D062E92E
+      quote: 色雷刻托坐落于汇入沙拉斯湾的一片小海湾旁。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-thractorae-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 色雷刻托枣园是产业试验田——地主资金撑着，产量谈不上；买枣是买稀罕，价钱看的是来年头一茬。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EW4_1
+      quote_hash: BE1EDE0EADB0CB5830407518AF2C3706D15433B2B8347E969FEBF542D062E92E
+      quote: 色雷刻托坐落于汇入沙拉斯湾的一片小海湾旁。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

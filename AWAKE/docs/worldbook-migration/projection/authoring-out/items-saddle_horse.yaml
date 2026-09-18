@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-saddle_horse
+title:
+  zh-CN: 旅行马
+  en: Saddle Horse
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 旅行马
+  - Horse
+  en:
+  - saddle_horse
+summary:
+  zh-CN: 旅行马是路上最常见的乘马，价廉耐用，商队赶路、传信跑腿都指着它。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+  locator: bannerlord.items#saddle_horse
+  quote_hash: C4C3B1A43DB1B312D4790AC19BBDB38B504C6CC9DCFE3AF169F54D0508A688A1
+  quote: 旅行马 | Horse | 基准价 140 | 负重 420 | 冲撞 12 | 速度 37 | 操控 52
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.item-saddle_horse-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 旅行马是路上最常见的乘马，价廉耐用，商队赶路、传信跑腿都指着它。
+  sources:
+  - source_id: source.calradia.game.items
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+    locator: bannerlord.items#saddle_horse
+    quote_hash: C4C3B1A43DB1B312D4790AC19BBDB38B504C6CC9DCFE3AF169F54D0508A688A1
+    quote: 旅行马 | Horse | 基准价 140 | 负重 420 | 冲撞 12 | 速度 37 | 操控 52
+  expressions:
+  - id: expr.item-saddle_horse-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 出门赶路全靠旅行马，不值几个钱但耐使。庄稼人买马，头一个看的就是它。
+    sources:
+    - source_id: source.calradia.game.items
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+      locator: bannerlord.items#saddle_horse
+      quote_hash: C4C3B1A43DB1B312D4790AC19BBDB38B504C6CC9DCFE3AF169F54D0508A688A1
+      quote: 旅行马 | Horse | 基准价 140 | 负重 420 | 冲撞 12 | 速度 37 | 操控 52
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.item-saddle_horse-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 旅行马基准价 140，冲撞 12、速度 37、操控 52——样样平平但没短板，走商队最划算的驮乘两用马。
+    sources:
+    - source_id: source.calradia.game.items
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+      locator: bannerlord.items#saddle_horse
+      quote_hash: C4C3B1A43DB1B312D4790AC19BBDB38B504C6CC9DCFE3AF169F54D0508A688A1
+      quote: 旅行马 | Horse | 基准价 140 | 负重 420 | 冲撞 12 | 速度 37 | 操控 52
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

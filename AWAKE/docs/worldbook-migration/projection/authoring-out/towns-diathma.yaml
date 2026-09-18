@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-diathma
+title:
+  zh-CN: 狄亚特马
+  en: Diathma
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 狄亚特马
+  en:
+  - Diathma
+  - town_EN2
+summary:
+  zh-CN: 狄亚特马为圣裁之城，建于俯瞰拉科尼斯湖的德律亚神殿废墟上；最北的帕拉人德律亚部在此最后一战覆灭。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_EN2
+  quote_hash: CBAF3F1CEC424DF3AB9351A2C3A7B796E1B974753C37D847BF96069C1819369D
+  quote: 狄亚特马，圣裁之城，一位帝国将军在能俯瞰拉科尼斯湖的德律亚神殿的废墟之上建立了这座城市。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-diathma-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 狄亚特马为圣裁之城，建于俯瞰拉科尼斯湖的德律亚神殿废墟上；最北的帕拉人德律亚部在此最后一战覆灭。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EN2
+    quote_hash: CBAF3F1CEC424DF3AB9351A2C3A7B796E1B974753C37D847BF96069C1819369D
+    quote: 狄亚特马，圣裁之城，一位帝国将军在能俯瞰拉科尼斯湖的德律亚神殿的废墟之上建立了这座城市。
+  expressions:
+  - id: expr.town-diathma-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 狄亚特马叫圣裁之城，老辈人打官司都往那儿去。听说城底下的湖水里还沉着古时候整支的部落。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EN2
+      quote_hash: CBAF3F1CEC424DF3AB9351A2C3A7B796E1B974753C37D847BF96069C1819369D
+      quote: 狄亚特马，圣裁之城，一位帝国将军在能俯瞰拉科尼斯湖的德律亚神殿的废墟之上建立了这座城市。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-diathma-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 狄亚特马的“圣裁”是块招牌——公断与公证的行当在此有传统；神殿废墟与古战场引来凭吊客，德律亚覆灭的旧事让本地人对外乡的刨根问底半迎半拒。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EN2
+      quote_hash: CBAF3F1CEC424DF3AB9351A2C3A7B796E1B974753C37D847BF96069C1819369D
+      quote: 狄亚特马，圣裁之城，一位帝国将军在能俯瞰拉科尼斯湖的德律亚神殿的废墟之上建立了这座城市。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

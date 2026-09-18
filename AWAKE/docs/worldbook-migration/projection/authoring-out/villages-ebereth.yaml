@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-ebereth
+title:
+  zh-CN: 埃贝雷斯
+  en: Ebereth
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 埃贝雷斯
+  en:
+  - Ebereth
+  - village_B1_2
+summary:
+  zh-CN: 埃贝雷斯坐落于一处鞍状山脊上，一边是泰瓦尔湖，另一边通往卡瓦尔谷的隘口；当地村民种葡萄，酿出巴旦尼亚地方甘甜的白葡萄酒。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-battania
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+  locator: bannerlord.villages#village_B1_2
+  quote_hash: EA550A88674CD835CD0E33EB830446BE93D6594626F34D8A09B43771F356A92B
+  quote: 埃贝雷斯坐落于一处鞍状山脊上，一边是泰瓦尔湖，另一边则通往卡瓦尔谷的隘口。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-ebereth-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 埃贝雷斯坐落于一处鞍状山脊上，一边是泰瓦尔湖，另一边通往卡瓦尔谷的隘口；当地村民种葡萄，酿出巴旦尼亚地方甘甜的白葡萄酒。
+  sources:
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#village_B1_2
+    quote_hash: EA550A88674CD835CD0E33EB830446BE93D6594626F34D8A09B43771F356A92B
+    quote: 埃贝雷斯坐落于一处鞍状山脊上，一边是泰瓦尔湖，另一边则通往卡瓦尔谷的隘口。
+  expressions:
+  - id: expr.village-ebereth-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 埃贝雷斯的人守着一个山口。村里人说湖在这边，路在那边——酒卖得出去，隘口就得有人盯着。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B1_2
+      quote_hash: EA550A88674CD835CD0E33EB830446BE93D6594626F34D8A09B43771F356A92B
+      quote: 埃贝雷斯坐落于一处鞍状山脊上，一边是泰瓦尔湖，另一边则通往卡瓦尔谷的隘口。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-ebereth-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 埃贝雷斯以隘口葡萄为业——山脊日照足、排水好；白葡萄按粒与甜分等，酒经隘口外销，隘口一乱酒价先涨。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B1_2
+      quote_hash: EA550A88674CD835CD0E33EB830446BE93D6594626F34D8A09B43771F356A92B
+      quote: 埃贝雷斯坐落于一处鞍状山脊上，一边是泰瓦尔湖，另一边则通往卡瓦尔谷的隘口。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

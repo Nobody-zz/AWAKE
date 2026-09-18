@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-pendraic
+title:
+  zh-CN: 潘德拉克
+  en: Pendraic
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 潘德拉克
+  en:
+  - Pendraic
+  - castle_village_B4_1
+summary:
+  zh-CN: 潘德拉克坐落在乌卡利翁北部、面向瓦尔切格湾的陡坡上；此地风大路险，瓦兰迪亚、巴旦尼亚与斯特吉亚的劫掠队都来过，养猪的村民一听号角，就把畜群赶进山里藏起来。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-battania
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+  locator: bannerlord.villages#castle_village_B4_1
+  quote_hash: 7859573EF0368C6C2D2DC8731F5BB39A2B15972EBCBFA41B43032E69821A6674
+  quote: 潘德拉克坐落在乌卡利翁北部的陡坡上，面对着瓦尔切格湾。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-pendraic-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 潘德拉克坐落在乌卡利翁北部、面向瓦尔切格湾的陡坡上；此地风大路险，瓦兰迪亚、巴旦尼亚与斯特吉亚的劫掠队都来过，养猪的村民一听号角，就把畜群赶进山里藏起来。
+  sources:
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#castle_village_B4_1
+    quote_hash: 7859573EF0368C6C2D2DC8731F5BB39A2B15972EBCBFA41B43032E69821A6674
+    quote: 潘德拉克坐落在乌卡利翁北部的陡坡上，面对着瓦尔切格湾。
+  expressions:
+  - id: expr.village-pendraic-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 潘德拉克的人睡觉都竖着耳朵。村里人说号角一响，先赶猪再拿矛——猪没了，明年就没指望。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#castle_village_B4_1
+      quote_hash: 7859573EF0368C6C2D2DC8731F5BB39A2B15972EBCBFA41B43032E69821A6674
+      quote: 潘德拉克坐落在乌卡利翁北部的陡坡上，面对着瓦尔切格湾。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-pendraic-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 潘德拉克以山坡养猪为业——林坡放养、橡实育膘；因处三国交界，猪群随警号入山躲避，猪按膘情分等，劫后余下的猪价反而更高。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#castle_village_B4_1
+      quote_hash: 7859573EF0368C6C2D2DC8731F5BB39A2B15972EBCBFA41B43032E69821A6674
+      quote: 潘德拉克坐落在乌卡利翁北部的陡坡上，面对着瓦尔切格湾。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

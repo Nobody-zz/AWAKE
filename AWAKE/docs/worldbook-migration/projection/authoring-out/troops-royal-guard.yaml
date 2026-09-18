@@ -1,0 +1,249 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 3
+id: doc.war.troops-royal-guard
+title:
+  zh-CN: 皇家侍卫
+  en: Huscarl
+status: needs_review
+domain: war
+subdomain: troops
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 皇家侍卫
+  - 诺德皇家侍卫
+  - 诺德侍卫
+  - 侍卫矛兵
+  en:
+  - Huscarl
+  - Royal Guard
+summary:
+  zh-CN: 皇家侍卫（Huscarl）：北方最精锐的重装剑盾步兵——重甲、大圆盾、长剑侍卫矛、投掷飞斧；纪律严明，盾墙坚不可摧；自幼与海浪为伴，海战跳帮尤称无敌。各文化对其评价迥异。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: f6ee4a2afa309b794f12fddbb3c185c94500071365f74cd7655aede539ed3b56
+  locator: bannerlord.db#localization.DHbF9JvO
+  quote_hash: 085B3641BF8785C2910553567A135022CB4F430EF48AFD48EDB6448A1B230EB5
+  quote: 皇家侍卫
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/0/Content
+  quote_hash: 02E21BF7E38E9D7B65E63D6364154B6847337656A0792C23EC89425275C4BA88
+  quote: 诺德皇家侍卫是诺德王国最精锐的步兵，在整个卡拉迪亚都威名赫赫
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/1/Content
+  quote_hash: A07B3F725D4F0D024E8AE234931C05EF44157929D62D61E38CA1103D75C840C8
+  quote: 他们的大圆盾能挡下箭雨和骑枪，手中的侍卫矛让骑兵有来无回，拔出长剑近战时更是无人能挡
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/7/Content
+  quote_hash: EC6F3BE392039293A5995A14CB7C50CEF776405CBD158401605AAD6939645AD4
+  quote: 诺德皇家侍卫是典型的重装剑盾步兵，代表了诺德军事体系的最高成就
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/6/Content
+  quote_hash: 28177362E468E5D614FAE56FC7CF5FF38AAB7227F956BF1C042EC57759316B3B
+  quote: 他们的盾墙极难突破，冷不丁飞过来的飞斧总能造成混乱
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/8/Content
+  quote_hash: 4B24B62CDB5A1B5090F88A2F9B8AF910405C1ED429CCC3F40426176084B43D5D
+  quote: 不过在平原上，他们缺乏机动性，终究是方旗骑士的猎物
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/9/Content
+  quote_hash: BB5F67E7F0461CF4D9BC0B6C605E193EF0EB1C9AB2BD3288C992479814828470
+  quote: 但他们有一点比我们更极致，那就是海战。斯特吉亚的战士也懂海，可诺德人简直就是从海里长出来的
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.troop-royal-guard-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 皇家侍卫是北方最精锐的步兵：装备重甲、坚固大圆盾，主武器为长剑或侍卫矛，腰别投掷飞斧；纪律严明、武艺高强，既能结成坚不可摧的盾墙，也能近战用剑；开战前一轮飞斧常砸乱敌阵；自幼在海浪中长大，海战能力远超内陆士兵。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/0/Content
+    quote_hash: 02E21BF7E38E9D7B65E63D6364154B6847337656A0792C23EC89425275C4BA88
+    quote: 诺德皇家侍卫是诺德王国最精锐的步兵，在整个卡拉迪亚都威名赫赫
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/1/Content
+    quote_hash: A07B3F725D4F0D024E8AE234931C05EF44157929D62D61E38CA1103D75C840C8
+    quote: 他们的大圆盾能挡下箭雨和骑枪，手中的侍卫矛让骑兵有来无回，拔出长剑近战时更是无人能挡
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/7/Content
+    quote_hash: EC6F3BE392039293A5995A14CB7C50CEF776405CBD158401605AAD6939645AD4
+    quote: 诺德皇家侍卫是典型的重装剑盾步兵，代表了诺德军事体系的最高成就
+  expressions:
+  - id: expr.troop-royal-guard-overview-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 皇家侍卫是北边最狠的步兵：重甲大圆盾，长剑侍卫矛，腰里还别着飞斧。盾墙一结推过来，正面进攻全是白给——上了船他们更可怕。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/0/Content
+      quote_hash: 02E21BF7E38E9D7B65E63D6364154B6847337656A0792C23EC89425275C4BA88
+      quote: 诺德皇家侍卫是诺德王国最精锐的步兵，在整个卡拉迪亚都威名赫赫
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/1/Content
+      quote_hash: A07B3F725D4F0D024E8AE234931C05EF44157929D62D61E38CA1103D75C840C8
+      quote: 他们的大圆盾能挡下箭雨和骑枪，手中的侍卫矛让骑兵有来无回，拔出长剑近战时更是无人能挡
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    denies: []
+  - id: expr.troop-royal-guard-nord-pride-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 皇家侍卫是咱诺德人的骄傲！大盾挡箭雨，侍卫矛叫骑兵有来无回，开打先一轮飞斧砸乱阵脚。海上更别提——敌船被他们靠上就等死吧。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/1/Content
+      quote_hash: A07B3F725D4F0D024E8AE234931C05EF44157929D62D61E38CA1103D75C840C8
+      quote: 他们的大圆盾能挡下箭雨和骑枪，手中的侍卫矛让骑兵有来无回，拔出长剑近战时更是无人能挡
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.nord
+    denies: []
+  - id: expr.troop-royal-guard-scholar-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 皇家侍卫是重装剑盾步兵的典范，北方军事体系的最高成就：弃笨重双手巨斧，改剑盾与长矛组合，辅以飞斧投掷，攻防两利；再加上北方人自幼与风浪搏斗的海洋传统——海上交战，他们的战力翻倍。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/7/Content
+      quote_hash: EC6F3BE392039293A5995A14CB7C50CEF776405CBD158401605AAD6939645AD4
+      quote: 诺德皇家侍卫是典型的重装剑盾步兵，代表了诺德军事体系的最高成就
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.troop-royal-guard-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 各方观感：帝国士兵称其盾墙极难突破、飞斧混乱难防、海战跳帮是噩梦；瓦兰迪亚人敬其为对手——盾墙挡弩矢，但平原上缺乏机动性，终是方旗骑士的猎物；斯特吉亚人认作打法相近的北方亲戚，唯海战自愧不如。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/6/Content
+    quote_hash: 28177362E468E5D614FAE56FC7CF5FF38AAB7227F956BF1C042EC57759316B3B
+    quote: 他们的盾墙极难突破，冷不丁飞过来的飞斧总能造成混乱
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/8/Content
+    quote_hash: 4B24B62CDB5A1B5090F88A2F9B8AF910405C1ED429CCC3F40426176084B43D5D
+    quote: 不过在平原上，他们缺乏机动性，终究是方旗骑士的猎物
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/9/Content
+    quote_hash: BB5F67E7F0461CF4D9BC0B6C605E193EF0EB1C9AB2BD3288C992479814828470
+    quote: 但他们有一点比我们更极致，那就是海战。斯特吉亚的战士也懂海，可诺德人简直就是从海里长出来的
+  expressions:
+  - id: expr.troop-royal-guard-empire-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 跟皇家侍卫交过手的都知道：盾墙难啃，冷不丁飞来的斧子总能搅出乱子。海上的遭遇战更是噩梦——跳帮那股凶狠熟练，咱们比不了。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/6/Content
+      quote_hash: 28177362E468E5D614FAE56FC7CF5FF38AAB7227F956BF1C042EC57759316B3B
+      quote: 他们的盾墙极难突破，冷不丁飞过来的飞斧总能造成混乱
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+  - id: expr.troop-royal-guard-vlandia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 皇家侍卫值得尊敬：盾墙能挡弩矢，剑术不差。可平原上他们腿慢——再硬的盾墙，也是方旗骑士的猎物。海上另算，那股从小跟风浪搏出来的悍勇，咱们也头疼。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/8/Content
+      quote_hash: 4B24B62CDB5A1B5090F88A2F9B8AF910405C1ED429CCC3F40426176084B43D5D
+      quote: 不过在平原上，他们缺乏机动性，终究是方旗骑士的猎物
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+  - id: expr.troop-royal-guard-sturgia-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 皇家侍卫是咱们北边的亲戚，打法一个路数——盾墙、利剑、长矛。就是海上他们比咱们狠，简直是从海里长出来的。波耶的船见了他们的长船也得绕道。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_诺德皇家侍卫__诺德皇家侍卫.json#/Variants/9/Content
+      quote_hash: BB5F67E7F0461CF4D9BC0B6C605E193EF0EB1C9AB2BD3288C992479814828470
+      quote: 但他们有一点比我们更极致，那就是海战。斯特吉亚的战士也懂海，可诺德人简直就是从海里长出来的
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []

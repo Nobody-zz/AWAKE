@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-vladiv
+title:
+  zh-CN: 弗拉基夫
+  en: Vladiv
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 弗拉基夫
+  en:
+  - Vladiv
+  - castle_village_S8_1
+summary:
+  zh-CN: 弗拉基夫坐落于伊勒坦山脚下寒冷阴暗的林谷中；这一带的耐寒牛在冬天会刨开厚厚的积雪找草吃，就这样熬到春天。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#castle_village_S8_1
+  quote_hash: 1B626F193CD15E095FC82CE8EDED9D6217073BC2DC70D37C47AD3C24850A471F
+  quote: 弗拉基夫坐落于伊勒坦山脚下寒冷阴暗的林谷中。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-vladiv-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 弗拉基夫坐落于伊勒坦山脚下寒冷阴暗的林谷中；这一带的耐寒牛在冬天会刨开厚厚的积雪找草吃，就这样熬到春天。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#castle_village_S8_1
+    quote_hash: 1B626F193CD15E095FC82CE8EDED9D6217073BC2DC70D37C47AD3C24850A471F
+    quote: 弗拉基夫坐落于伊勒坦山脚下寒冷阴暗的林谷中。
+  expressions:
+  - id: expr.village-vladiv-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 弗拉基夫的人只留刨得动雪的牛。村里人说养不活自己的牛，我们也养不活——能熬过冬天的才配吃粮。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S8_1
+      quote_hash: 1B626F193CD15E095FC82CE8EDED9D6217073BC2DC70D37C47AD3C24850A471F
+      quote: 弗拉基夫坐落于伊勒坦山脚下寒冷阴暗的林谷中。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-vladiv-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 弗拉基夫以耐寒牛群为业——雪谷放养、牛性耐馁；牛按耐寒与役力分等，林谷伐木所得与牛一起运出山，冬长则出栏推迟。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S8_1
+      quote_hash: 1B626F193CD15E095FC82CE8EDED9D6217073BC2DC70D37C47AD3C24850A471F
+      quote: 弗拉基夫坐落于伊勒坦山脚下寒冷阴暗的林谷中。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

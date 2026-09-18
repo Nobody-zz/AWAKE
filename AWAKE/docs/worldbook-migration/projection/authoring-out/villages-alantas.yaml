@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-alantas
+title:
+  zh-CN: 阿兰塔斯
+  en: Alantas
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿兰塔斯
+  en:
+  - Alantas
+  - village_V9_1
+summary:
+  zh-CN: 阿兰塔斯坐落于多山的伊博半岛中央；这里土薄天寒，但山里的铁矿养活了此地。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#village_V9_1
+  quote_hash: D01B95EE862ED61E75B3FE53DA8C3D08F5CDEEF3386C15ECFD85BEE063D5EF0E
+  quote: 阿兰塔斯坐落于多山的伊博半岛中央。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-alantas-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿兰塔斯坐落于多山的伊博半岛中央；这里土薄天寒，但山里的铁矿养活了此地。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#village_V9_1
+    quote_hash: D01B95EE862ED61E75B3FE53DA8C3D08F5CDEEF3386C15ECFD85BEE063D5EF0E
+    quote: 阿兰塔斯坐落于多山的伊博半岛中央。
+  expressions:
+  - id: expr.village-alantas-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿兰塔斯的麦长不好，铁倒是管够。村里人说地不给饭，山给——挖出来的黑石头，比麦子值钱。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V9_1
+      quote_hash: D01B95EE862ED61E75B3FE53DA8C3D08F5CDEEF3386C15ECFD85BEE063D5EF0E
+      quote: 阿兰塔斯坐落于多山的伊博半岛中央。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-alantas-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿兰塔斯以铁矿立村——山场矿口分散、靠人背畜驮；矿石按成色论价，就近卖给锻造作坊，铁货多走山路出半岛。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V9_1
+      quote_hash: D01B95EE862ED61E75B3FE53DA8C3D08F5CDEEF3386C15ECFD85BEE063D5EF0E
+      quote: 阿兰塔斯坐落于多山的伊博半岛中央。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

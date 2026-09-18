@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-agalmon
+title:
+  zh-CN: 阿加尔蒙
+  en: Agalmon
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿加尔蒙
+  en:
+  - Agalmon
+  - castle_village_EN9_2
+summary:
+  zh-CN: 阿加尔蒙紧挨伽尔喀斯河与弥戎河的汇流处，多林村庄的居民世代与相邻的斯特吉亚人通婚；战争的爆发令双方关系趋于紧张。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_EN9_2
+  quote_hash: C72E7AE9099B004BB51AA20577C7AD1EF3EC0683E9899C66C0D196042587CF72
+  quote: 阿加尔蒙紧挨着两条细小而湍急的北方河流——伽尔喀斯河和弥戎河的汇流处。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-agalmon-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿加尔蒙紧挨伽尔喀斯河与弥戎河的汇流处，多林村庄的居民世代与相邻的斯特吉亚人通婚；战争的爆发令双方关系趋于紧张。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_EN9_2
+    quote_hash: C72E7AE9099B004BB51AA20577C7AD1EF3EC0683E9899C66C0D196042587CF72
+    quote: 阿加尔蒙紧挨着两条细小而湍急的北方河流——伽尔喀斯河和弥戎河的汇流处。
+  expressions:
+  - id: expr.village-agalmon-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿加尔蒙家家都有斯特吉亚亲戚。以前两边的孩子满村跑，如今河对岸来人，先得看看带没带兵器。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EN9_2
+      quote_hash: C72E7AE9099B004BB51AA20577C7AD1EF3EC0683E9899C66C0D196042587CF72
+      quote: 阿加尔蒙紧挨着两条细小而湍急的北方河流——伽尔喀斯河和弥戎河的汇流处。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-agalmon-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿加尔蒙的木料走两河水路——汇流口集散方便；战事让北岸旧渠道断了半边，价钱比战前高出一截。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EN9_2
+      quote_hash: C72E7AE9099B004BB51AA20577C7AD1EF3EC0683E9899C66C0D196042587CF72
+      quote: 阿加尔蒙紧挨着两条细小而湍急的北方河流——伽尔喀斯河和弥戎河的汇流处。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-zeonica
+title:
+  zh-CN: 泽翁尼卡
+  en: Zeonica
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 泽翁尼卡
+  en:
+  - Zeonica
+  - town_EW2
+summary:
+  zh-CN: 泽翁尼卡踞滨海的伊勒塔尔丘陵，盛产美酒谷物骏马，得名于女摄政泽翁娜；夏季北吹的“泽翁娜之风”自沙漠越海而来。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_EW2
+  quote_hash: 0A5A79689D8097C15AC092BE28C5E316B564E5F8322DEABC8D9D5AE57579F7A1
+  quote: 泽翁尼卡位于滨海的伊勒塔尔丘陵之上，这是一片盛产美酒、谷物与骏马的土地。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-zeonica-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 泽翁尼卡踞滨海的伊勒塔尔丘陵，盛产美酒谷物骏马，得名于女摄政泽翁娜；夏季北吹的“泽翁娜之风”自沙漠越海而来。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EW2
+    quote_hash: 0A5A79689D8097C15AC092BE28C5E316B564E5F8322DEABC8D9D5AE57579F7A1
+    quote: 泽翁尼卡位于滨海的伊勒塔尔丘陵之上，这是一片盛产美酒、谷物与骏马的土地。
+  expressions:
+  - id: expr.town-zeonica-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 泽翁尼卡的酒和马都有名。夏天刮的风是从沙漠那头飘过来的，热乎乎的，诗人说那是激情的风。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EW2
+      quote_hash: 0A5A79689D8097C15AC092BE28C5E316B564E5F8322DEABC8D9D5AE57579F7A1
+      quote: 泽翁尼卡位于滨海的伊勒塔尔丘陵之上，这是一片盛产美酒、谷物与骏马的土地。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-zeonica-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 泽翁尼卡三样货——酒、粮、马，全是帝国家底级的产区；季风规律系着航期，做海运的按“泽翁娜之风”的日历排船期。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EW2
+      quote_hash: 0A5A79689D8097C15AC092BE28C5E316B564E5F8322DEABC8D9D5AE57579F7A1
+      quote: 泽翁尼卡位于滨海的伊勒塔尔丘陵之上，这是一片盛产美酒、谷物与骏马的土地。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

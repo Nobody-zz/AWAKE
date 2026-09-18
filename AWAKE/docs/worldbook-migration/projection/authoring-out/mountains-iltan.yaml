@@ -1,0 +1,300 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.mountains-iltan
+title:
+  zh-CN: 伊勒坦山
+  en: Mount Iltan
+status: needs_review
+domain: geography
+subdomain: terrain
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 伊勒坦山
+  - 伊勒坦运输线
+  - 伊勒坦人
+  - 伊勒坦
+  en:
+  - Iltan
+  - Portages of Iltan
+summary:
+  zh-CN: 伊勒坦山的界山地位、得名与伊勒坦人；冰川湖运输线的通行与沿线生计。编年史两处坏数据已焚毁。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+sources:
+- source_id: source.calradia.game.settlements.geo2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+  locator: bannerlord.db#localization.Settlements.Settlement.text.castle_village_S8_1
+  quote_hash: 1B626F193CD15E095FC82CE8EDED9D6217073BC2DC70D37C47AD3C24850A471F
+  quote: 弗拉基夫坐落于伊勒坦山脚下寒冷阴暗的林谷中。
+- source_id: source.calradia.game.settlements.geo2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+  locator: bannerlord.db#localization.Settlements.Settlement.text.village_S5_2
+  quote_hash: 3C62F5ED669BE7D66B16E9815A0548723F48D367E87A1A8F5CBEAEE667FD6920
+  quote: 布基茨坐落于库赛特边境上伊勒坦山的东坡。
+- source_id: source.calradia.game.settlements.geo2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+  locator: bannerlord.db#localization.F5HlQdgf
+  quote_hash: 78468C6DF9A8719C2BB1891AE9DE4A2517FFD6E0573A9BE10DB017671824A740
+  quote: 伊勒坦山西麓，该地区长期远离其他斯特吉亚公国的权力争斗。
+- source_id: source.calradia.chronicle.animusforge.geo2
+  source_version: animusforge-20260912
+  source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+  locator: rules/rule_伊勒坦山__伊勒坦山.json#/Variants/2/Content
+  quote_hash: AA1CC3878932439F17D2109C8DCE300C04950B73A820F79CC81D8DD3B391EEDD
+  quote: 伊勒坦山坐落于卡拉迪亚大陆东北角，是库赛特与斯特基亚的界山，著名的伊勒坦运输线就是从这里发源
+- source_id: source.calradia.game.settlements.geo2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+  locator: bannerlord.db#localization.Settlements.Settlement.text.village_S4_2
+  quote_hash: 765EEB74B3B77BB6AE5ADDFD9245B910B064DD320A67FBC1C44699C39C5D7478
+  quote: 格拉夫斯特伦坐落于东卡拉迪亚的一座峻峭险峰——伊勒坦山脚下，这座山得名自草原民族的一位神灵。
+- source_id: source.calradia.game.settlements.geo2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+  locator: bannerlord.db#localization.YNm9vaHw
+  quote_hash: B78A081F7EB462B71B64183C57CD656FE7D0FCB8E2F43DBCA258CC83055B04C3
+  quote: 由居住在山地的库赛特表亲伊勒坦人建造。
+- source_id: source.calradia.game.settlements.geo2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+  locator: bannerlord.db#localization.Settlements.Settlement.text.castle_village_EN7_2
+  quote_hash: D22EEFFC6B52BA8988F81409D5233C20C0802057FCBD59C61321F2743572FB3F
+  quote: 庞斯是帝国最北端的定居点之一。该地因位于伊勒坦运输线的“交叉口”而得名，一系列冰川湖构成的网络令船只得以通行于拉科尼斯湖与塔奈西斯湖之间。
+- source_id: source.calradia.game.settlements.geo2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+  locator: bannerlord.db#localization.Settlements.Settlement.text.castle_village_S7_1
+  quote_hash: EA2083F1999F9ED72AE34D18EC88FED64AE621AD047D0BAFCF495E16C94F9468
+  quote: 乌里克斯卡拉位于伊勒坦运输线上，那是一张由冰川湖构成的网络，拉科尼斯湖与塔奈西斯湖之间往来的长船可以在上面拖动与航行。
+- source_id: source.calradia.game.settlements.geo2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+  locator: bannerlord.db#localization.Settlements.Settlement.text.village_S5_3
+  quote_hash: CBB8C62576556693FEAAE0C74047B60F7E0B9218C66673E1402FEEA9EFAB72F3
+  quote: 村民们在俯瞰湖泊的高地上种植黑麦与大麦
+assertions:
+- id: assertion.mount-iltan-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 伊勒坦山耸立在大陆东北，是斯特吉亚林谷与库赛特草场之间的界山：西麓是斯特吉亚边境的寒冷林谷，东坡已属库赛特人的牧场。
+  sources:
+  - source_id: source.calradia.game.settlements.geo2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+    locator: bannerlord.db#localization.Settlements.Settlement.text.castle_village_S8_1
+    quote_hash: 1B626F193CD15E095FC82CE8EDED9D6217073BC2DC70D37C47AD3C24850A471F
+    quote: 弗拉基夫坐落于伊勒坦山脚下寒冷阴暗的林谷中。
+  - source_id: source.calradia.game.settlements.geo2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+    locator: bannerlord.db#localization.Settlements.Settlement.text.village_S5_2
+    quote_hash: 3C62F5ED669BE7D66B16E9815A0548723F48D367E87A1A8F5CBEAEE667FD6920
+    quote: 布基茨坐落于库赛特边境上伊勒坦山的东坡。
+  - source_id: source.calradia.game.settlements.geo2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+    locator: bannerlord.db#localization.F5HlQdgf
+    quote_hash: 78468C6DF9A8719C2BB1891AE9DE4A2517FFD6E0573A9BE10DB017671824A740
+    quote: 伊勒坦山西麓，该地区长期远离其他斯特吉亚公国的权力争斗。
+  - source_id: source.calradia.chronicle.animusforge.geo2
+    source_version: animusforge-20260912
+    source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+    locator: rules/rule_伊勒坦山__伊勒坦山.json#/Variants/2/Content
+    quote_hash: AA1CC3878932439F17D2109C8DCE300C04950B73A820F79CC81D8DD3B391EEDD
+    quote: 伊勒坦山坐落于卡拉迪亚大陆东北角，是库赛特与斯特基亚的界山，著名的伊勒坦运输线就是从这里发源
+  expressions:
+  - id: expr.mount-iltan-geo-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 山脚下冷得邪乎，一年里有半年是雪。可牛有牛的活法——刨开雪照样找着草吃，熬到开春就肥了。
+    sources:
+    - source_id: source.calradia.game.settlements.geo2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+      locator: bannerlord.db#localization.Settlements.Settlement.text.castle_village_S8_1
+      quote_hash: 1B626F193CD15E095FC82CE8EDED9D6217073BC2DC70D37C47AD3C24850A471F
+      quote: 弗拉基夫坐落于伊勒坦山脚下寒冷阴暗的林谷中。
+    - source_id: source.calradia.game.settlements.geo2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+      locator: bannerlord.db#localization.Settlements.Settlement.text.village_S5_2
+      quote_hash: 3C62F5ED669BE7D66B16E9815A0548723F48D367E87A1A8F5CBEAEE667FD6920
+      quote: 布基茨坐落于库赛特边境上伊勒坦山的东坡。
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []
+  - id: expr.mount-iltan-geo-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 伊勒坦山在大陆东北角，是两边的界山：西边林谷归斯特吉亚，东坡草场已是库赛特人的地界。
+    sources:
+    - source_id: source.calradia.game.settlements.geo2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+      locator: bannerlord.db#localization.F5HlQdgf
+      quote_hash: 78468C6DF9A8719C2BB1891AE9DE4A2517FFD6E0573A9BE10DB017671824A740
+      quote: 伊勒坦山西麓，该地区长期远离其他斯特吉亚公国的权力争斗。
+    - source_id: source.calradia.game.settlements.geo2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+      locator: bannerlord.db#localization.Settlements.Settlement.text.village_S5_2
+      quote_hash: 3C62F5ED669BE7D66B16E9815A0548723F48D367E87A1A8F5CBEAEE667FD6920
+      quote: 布基茨坐落于库赛特边境上伊勒坦山的东坡。
+    - source_id: source.calradia.chronicle.animusforge.geo2
+      source_version: animusforge-20260912
+      source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+      locator: rules/rule_伊勒坦山__伊勒坦山.json#/Variants/2/Content
+      quote_hash: AA1CC3878932439F17D2109C8DCE300C04950B73A820F79CC81D8DD3B391EEDD
+      quote: 伊勒坦山坐落于卡拉迪亚大陆东北角，是库赛特与斯特基亚的界山，著名的伊勒坦运输线就是从这里发源
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    denies: []
+- id: assertion.mount-iltan-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 山名得自草原人敬的一位神灵；山里住着库赛特的表亲——伊勒坦人，数百年前他们的首领被流放到南边平原，筑起了斧头堡垒。
+  sources:
+  - source_id: source.calradia.game.settlements.geo2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+    locator: bannerlord.db#localization.Settlements.Settlement.text.village_S4_2
+    quote_hash: 765EEB74B3B77BB6AE5ADDFD9245B910B064DD320A67FBC1C44699C39C5D7478
+    quote: 格拉夫斯特伦坐落于东卡拉迪亚的一座峻峭险峰——伊勒坦山脚下，这座山得名自草原民族的一位神灵。
+  - source_id: source.calradia.game.settlements.geo2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+    locator: bannerlord.db#localization.YNm9vaHw
+    quote_hash: B78A081F7EB462B71B64183C57CD656FE7D0FCB8E2F43DBCA258CC83055B04C3
+    quote: 由居住在山地的库赛特表亲伊勒坦人建造。
+  expressions:
+  - id: expr.mount-iltan-name-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 这座山用的可是一位神的名字——草原上的人这么叫，咱们也跟着叫。
+    sources:
+    - source_id: source.calradia.game.settlements.geo2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+      locator: bannerlord.db#localization.Settlements.Settlement.text.village_S4_2
+      quote_hash: 765EEB74B3B77BB6AE5ADDFD9245B910B064DD320A67FBC1C44699C39C5D7478
+      quote: 格拉夫斯特伦坐落于东卡拉迪亚的一座峻峭险峰——伊勒坦山脚下，这座山得名自草原民族的一位神灵。
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []
+  - id: expr.mount-iltan-name-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 山里的伊勒坦人是库赛特的表亲，守着山地过了几百年。他们有一支被流放到南边平原，垒起那座斧头堡垒——巴尔塔罕，就是他们手笔。
+    sources:
+    - source_id: source.calradia.game.settlements.geo2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+      locator: bannerlord.db#localization.YNm9vaHw
+      quote_hash: B78A081F7EB462B71B64183C57CD656FE7D0FCB8E2F43DBCA258CC83055B04C3
+      quote: 由居住在山地的库赛特表亲伊勒坦人建造。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    denies: []
+- id: assertion.mount-iltan-3
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 高地上湖连着湖，人称伊勒坦运输线：拉科尼斯湖与塔奈西斯湖之间的长船靠人力拖过湖岸、在水中续行；沿岸村民放养耐寒的牛羊、种黑麦大麦过活。
+  sources:
+  - source_id: source.calradia.game.settlements.geo2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+    locator: bannerlord.db#localization.Settlements.Settlement.text.castle_village_EN7_2
+    quote_hash: D22EEFFC6B52BA8988F81409D5233C20C0802057FCBD59C61321F2743572FB3F
+    quote: 庞斯是帝国最北端的定居点之一。该地因位于伊勒坦运输线的“交叉口”而得名，一系列冰川湖构成的网络令船只得以通行于拉科尼斯湖与塔奈西斯湖之间。
+  - source_id: source.calradia.game.settlements.geo2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+    locator: bannerlord.db#localization.Settlements.Settlement.text.castle_village_S7_1
+    quote_hash: EA2083F1999F9ED72AE34D18EC88FED64AE621AD047D0BAFCF495E16C94F9468
+    quote: 乌里克斯卡拉位于伊勒坦运输线上，那是一张由冰川湖构成的网络，拉科尼斯湖与塔奈西斯湖之间往来的长船可以在上面拖动与航行。
+  - source_id: source.calradia.game.settlements.geo2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+    locator: bannerlord.db#localization.Settlements.Settlement.text.village_S5_3
+    quote_hash: CBB8C62576556693FEAAE0C74047B60F7E0B9218C66673E1402FEEA9EFAB72F3
+    quote: 村民们在俯瞰湖泊的高地上种植黑麦与大麦
+  - source_id: source.calradia.chronicle.animusforge.geo2
+    source_version: animusforge-20260912
+    source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+    locator: rules/rule_伊勒坦山__伊勒坦山.json#/Variants/2/Content
+    quote_hash: AA1CC3878932439F17D2109C8DCE300C04950B73A820F79CC81D8DD3B391EEDD
+    quote: 伊勒坦山坐落于卡拉迪亚大陆东北角，是库赛特与斯特基亚的界山，著名的伊勒坦运输线就是从这里发源
+  expressions:
+  - id: expr.mount-iltan-route-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 北边那条水路全仗着一片冰川湖——船从拉科尼斯湖进来，拖过岸，再下水接着走，一路通到塔奈西斯湖。沿线村子不愁生计：山坡养羊，湖畔种麦，牛刨雪找草也能熬冬。
+    sources:
+    - source_id: source.calradia.game.settlements.geo2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+      locator: bannerlord.db#localization.Settlements.Settlement.text.castle_village_EN7_2
+      quote_hash: D22EEFFC6B52BA8988F81409D5233C20C0802057FCBD59C61321F2743572FB3F
+      quote: 庞斯是帝国最北端的定居点之一。该地因位于伊勒坦运输线的“交叉口”而得名，一系列冰川湖构成的网络令船只得以通行于拉科尼斯湖与塔奈西斯湖之间。
+    - source_id: source.calradia.game.settlements.geo2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+      locator: bannerlord.db#localization.Settlements.Settlement.text.castle_village_S7_1
+      quote_hash: EA2083F1999F9ED72AE34D18EC88FED64AE621AD047D0BAFCF495E16C94F9468
+      quote: 乌里克斯卡拉位于伊勒坦运输线上，那是一张由冰川湖构成的网络，拉科尼斯湖与塔奈西斯湖之间往来的长船可以在上面拖动与航行。
+    - source_id: source.calradia.game.settlements.geo2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+      locator: bannerlord.db#localization.Settlements.Settlement.text.village_S5_3
+      quote_hash: CBB8C62576556693FEAAE0C74047B60F7E0B9218C66673E1402FEEA9EFAB72F3
+      quote: 村民们在俯瞰湖泊的高地上种植黑麦与大麦
+    - source_id: source.calradia.chronicle.animusforge.geo2
+      source_version: animusforge-20260912
+      source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+      locator: rules/rule_伊勒坦山__伊勒坦山.json#/Variants/2/Content
+      quote_hash: AA1CC3878932439F17D2109C8DCE300C04950B73A820F79CC81D8DD3B391EEDD
+      quote: 伊勒坦山坐落于卡拉迪亚大陆东北角，是库赛特与斯特基亚的界山，著名的伊勒坦运输线就是从这里发源
+    grants:
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: detail
+    denies: []

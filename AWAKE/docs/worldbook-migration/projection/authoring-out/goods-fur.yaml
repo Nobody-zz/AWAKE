@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-fur
+title:
+  zh-CN: 毛皮
+  en: Fur
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 毛皮
+  - Goods
+  en:
+  - fur
+summary:
+  zh-CN: 毛皮是北方寒地的招牌货，保暖器物的头等原料，价高仅次于天鹅绒的体面商品。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+  locator: bannerlord.items#fur
+  quote_hash: 6757671840559D25093BEA2CD6388528A1E85C0FE4BF6A3579870866B4876D68
+  quote: 毛皮 | Goods | 基准价 400
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.item-fur-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 毛皮是北方寒地的招牌货，保暖器物的头等原料，价高仅次于天鹅绒的体面商品。
+  sources:
+  - source_id: source.calradia.game.items
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+    locator: bannerlord.items#fur
+    quote_hash: 6757671840559D25093BEA2CD6388528A1E85C0FE4BF6A3579870866B4876D68
+    quote: 毛皮 | Goods | 基准价 400
+  expressions:
+  - id: expr.item-fur-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 北方猎户拿毛皮换盐换酒，一张好皮子能顶半个月嚼谷。听说南边老爷们就认这个。
+    sources:
+    - source_id: source.calradia.game.items
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+      locator: bannerlord.items#fur
+      quote_hash: 6757671840559D25093BEA2CD6388528A1E85C0FE4BF6A3579870866B4876D68
+      quote: 毛皮 | Goods | 基准价 400
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.item-fur-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 毛皮基准价 400，北方价贱南方价贵，贩皮走的是南北价差。压仓库要防潮，霉了皮子就不值钱了。
+    sources:
+    - source_id: source.calradia.game.items
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: BAD48C3D287E339B729262826CBE5678F4C1AFB2BEF2D46C1EDDCCECB830CB6C
+      locator: bannerlord.items#fur
+      quote_hash: 6757671840559D25093BEA2CD6388528A1E85C0FE4BF6A3579870866B4876D68
+      quote: 毛皮 | Goods | 基准价 400
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

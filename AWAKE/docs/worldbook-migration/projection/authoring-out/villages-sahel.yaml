@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-sahel
+title:
+  zh-CN: 萨赫勒
+  en: Sahel
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 萨赫勒
+  en:
+  - Sahel
+  - castle_village_A2_1
+summary:
+  zh-CN: 萨赫勒地处阿塞莱边陲的阿沙卜山脉低坡，山脉留住雨云与季风，贮水农田得以种植栗子与小麦。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+  locator: bannerlord.villages#castle_village_A2_1
+  quote_hash: A07C518FA566FEF88CE759EC44262D4FB9045A8B41AF899C995D23A6894F809E
+  quote: 萨赫勒位于阿塞莱领土的边陲，坐落在低矮的阿沙卜山脉上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-sahel-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 萨赫勒地处阿塞莱边陲的阿沙卜山脉低坡，山脉留住雨云与季风，贮水农田得以种植栗子与小麦。
+  sources:
+  - source_id: source.calradia.game.villages-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+    locator: bannerlord.villages#castle_village_A2_1
+    quote_hash: A07C518FA566FEF88CE759EC44262D4FB9045A8B41AF899C995D23A6894F809E
+    quote: 萨赫勒位于阿塞莱领土的边陲，坐落在低矮的阿沙卜山脉上。
+  expressions:
+  - id: expr.village-sahel-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 萨赫勒是阿塞莱地界的边儿了，山把雨云拦下来才有的麦子。山里人讲，这雨是山神收下的过路钱。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#castle_village_A2_1
+      quote_hash: A07C518FA566FEF88CE759EC44262D4FB9045A8B41AF899C995D23A6894F809E
+      quote: 萨赫勒位于阿塞莱领土的边陲，坐落在低矮的阿沙卜山脉上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-sahel-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 萨赫勒是阿塞莱少见的粮产村——贮水农田的栗子与小麦在边地集市是硬通货；置产要先验水渠的引水权。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#castle_village_A2_1
+      quote_hash: A07C518FA566FEF88CE759EC44262D4FB9045A8B41AF899C995D23A6894F809E
+      quote: 萨赫勒位于阿塞莱领土的边陲，坐落在低矮的阿沙卜山脉上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

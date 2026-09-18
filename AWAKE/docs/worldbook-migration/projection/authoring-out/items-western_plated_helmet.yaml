@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-western_plated_helmet
+title:
+  zh-CN: 侧护覆板盔
+  en: Plated Helmet with Sideguards
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 侧护覆板盔
+  - HeadArmor
+  en:
+  - western_plated_helmet
+summary:
+  zh-CN: 侧护覆板盔是瓦兰迪亚骑士的常用盔，护板延伸护颊护耳，防护均衡。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-xml
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+  locator: bannerlord.items.xml#western_plated_helmet
+  quote_hash: 51EAFBCEE0BC55E2233BB2FAB0069A540418FDF52F1670CAA22CC674B06D9532
+  quote: 侧护覆板盔 | HeadArmor | 护头 52
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.item-western_plated_helmet-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 侧护覆板盔是瓦兰迪亚骑士的常用盔，护板延伸护颊护耳，防护均衡。
+  sources:
+  - source_id: source.calradia.game.items-xml
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+    locator: bannerlord.items.xml#western_plated_helmet
+    quote_hash: 51EAFBCEE0BC55E2233BB2FAB0069A540418FDF52F1670CAA22CC674B06D9532
+    quote: 侧护覆板盔 | HeadArmor | 护头 52
+  expressions:
+  - id: expr.item-western_plated_helmet-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 瓦兰迪亚老爷们的铁盔两侧带护板，马上冲杀时脸侧不露空门。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#western_plated_helmet
+      quote_hash: 51EAFBCEE0BC55E2233BB2FAB0069A540418FDF52F1670CAA22CC674B06D9532
+      quote: 侧护覆板盔 | HeadArmor | 护头 52
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.item-western_plated_helmet-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 侧护覆板盔护头 52、重 3.9，与闭面军阀盔同档；护板兼顾侧面劈砍，骑枪冲锋配它最稳。
+    sources:
+    - source_id: source.calradia.game.items-xml
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 5F94966E13658C6C0A016265CCFB2B54D53AAD5A0D4769A3D958A2C964A5F55C
+      locator: bannerlord.items.xml#western_plated_helmet
+      quote_hash: 51EAFBCEE0BC55E2233BB2FAB0069A540418FDF52F1670CAA22CC674B06D9532
+      quote: 侧护覆板盔 | HeadArmor | 护头 52
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-chaikand
+title:
+  zh-CN: 柴坎
+  en: Chaikand
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 柴坎
+  en:
+  - Chaikand
+  - town_K5
+summary:
+  zh-CN: 柴坎坐落塔奈西斯湖畔芦苇甸，旧日水路贸易兴于帝国保护领时代；库赛特征战后水路断绝，今为贸易中转与军事基地，属兀儿浑乃特部。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_K5
+  quote_hash: 9399A85D9E4CF24EE505345B203B0ECB168DCFE8B1406472C2479D8D36CC542E
+  quote: 柴坎坐落于塔奈西斯湖边的芦苇甸旁。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-chaikand-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 柴坎坐落塔奈西斯湖畔芦苇甸，旧日水路贸易兴于帝国保护领时代；库赛特征战后水路断绝，今为贸易中转与军事基地，属兀儿浑乃特部。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_K5
+    quote_hash: 9399A85D9E4CF24EE505345B203B0ECB168DCFE8B1406472C2479D8D36CC542E
+    quote: 柴坎坐落于塔奈西斯湖边的芦苇甸旁。
+  expressions:
+  - id: expr.town-chaikand-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 柴坎从前湖上全是商船，皮子羊毛出去，丝绸银子回来。仗一打，船停了，可城里还是热闹——军队也花钱。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_K5
+      quote_hash: 9399A85D9E4CF24EE505345B203B0ECB168DCFE8B1406472C2479D8D36CC542E
+      quote: 柴坎坐落于塔奈西斯湖边的芦苇甸旁。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-chaikand-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 柴坎的行情随驻军走——水路衰而陆转运，军需与中转是两根支柱；兀儿浑乃特部的封地规矩定税费，湖畔仓栈仍抢手。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_K5
+      quote_hash: 9399A85D9E4CF24EE505345B203B0ECB168DCFE8B1406472C2479D8D36CC542E
+      quote: 柴坎坐落于塔奈西斯湖边的芦苇甸旁。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

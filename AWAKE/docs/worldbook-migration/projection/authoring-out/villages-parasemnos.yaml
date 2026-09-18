@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-parasemnos
+title:
+  zh-CN: 帕拉森诺斯
+  en: Parasemnos
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 帕拉森诺斯
+  en:
+  - Parasemnos
+  - village_ES5_3
+summary:
+  zh-CN: 帕拉森诺斯坐落于连通塔尼平原与卡勒萨河的低矮隘口旁；村民从山口卡勒萨一侧山脊下的矿床采盐。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_ES5_3
+  quote_hash: 26A68098D67B7DE483B066113A8AC55654054CF98E2BFEBED56864503E02F807
+  quote: 帕拉森诺斯坐落于连通塔尼平原与卡勒萨河的低矮隘口旁。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-parasemnos-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 帕拉森诺斯坐落于连通塔尼平原与卡勒萨河的低矮隘口旁；村民从山口卡勒萨一侧山脊下的矿床采盐。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_ES5_3
+    quote_hash: 26A68098D67B7DE483B066113A8AC55654054CF98E2BFEBED56864503E02F807
+    quote: 帕拉森诺斯坐落于连通塔尼平原与卡勒萨河的低矮隘口旁。
+  expressions:
+  - id: expr.village-parasemnos-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 帕拉森诺斯守着山口吃盐饭。村里人说隘口是人走的，盐是地里长的——两头都不空。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_ES5_3
+      quote_hash: 26A68098D67B7DE483B066113A8AC55654054CF98E2BFEBED56864503E02F807
+      quote: 帕拉森诺斯坐落于连通塔尼平原与卡勒萨河的低矮隘口旁。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-parasemnos-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帕拉森诺斯以山口矿床采盐——矿层贴隘口、易于看守；盐货顺隘口商路流转，收盐按矿层分等，隘口一忙盐价就往上走。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_ES5_3
+      quote_hash: 26A68098D67B7DE483B066113A8AC55654054CF98E2BFEBED56864503E02F807
+      quote: 帕拉森诺斯坐落于连通塔尼平原与卡勒萨河的低矮隘口旁。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

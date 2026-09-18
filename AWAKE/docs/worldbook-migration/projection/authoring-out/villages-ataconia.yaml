@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-ataconia
+title:
+  zh-CN: 阿塔科尼亚
+  en: Ataconia
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿塔科尼亚
+  en:
+  - Ataconia
+  - castle_village_EN6_1
+summary:
+  zh-CN: 阿塔科尼亚坐落在德律亚山前的一片高原上。山上奔下来的溪水冲开坡面，露出底下成片的盐，本地人祖祖辈辈都在那儿采。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_EN6_1
+  quote_hash: 9E54A860EFFA3F1C296B3154043E7125F160C8AE30B505856C5FDB315F398A53
+  quote: 阿塔科尼亚坐落于德律亚山脉前的一片高原上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-ataconia-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿塔科尼亚坐落在德律亚山前的一片高原上。山上奔下来的溪水冲开坡面，露出底下成片的盐，本地人祖祖辈辈都在那儿采。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_EN6_1
+    quote_hash: 9E54A860EFFA3F1C296B3154043E7125F160C8AE30B505856C5FDB315F398A53
+    quote: 阿塔科尼亚坐落于德律亚山脉前的一片高原上。
+  expressions:
+  - id: expr.village-ataconia-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿塔科尼亚的盐是山上水冲出来的。村里人说这条溪是搬盐的力工，冲了一千年才把盐面冲给人看。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EN6_1
+      quote_hash: 9E54A860EFFA3F1C296B3154043E7125F160C8AE30B505856C5FDB315F398A53
+      quote: 阿塔科尼亚坐落于德律亚山脉前的一片高原上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-ataconia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿塔科尼亚的盐矿靠溪水露头——采面随水道改移，春汛后开新面是惯例；盐价与溪情挂钩，旱年反而好走货。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EN6_1
+      quote_hash: 9E54A860EFFA3F1C296B3154043E7125F160C8AE30B505856C5FDB315F398A53
+      quote: 阿塔科尼亚坐落于德律亚山脉前的一片高原上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,147 @@
+sheets: ['名录', '分类总览', '分类定义', '域汇总', '交叉覆盖', '刷新说明']
+
+名录 dims=A1:Q449 freeze=A2 filter=A1:Q449
+header: ['序号', '类别', '子域', '文件名前缀', 'doc_id', '文件名', '中文名', '英文名', '状态', '版本', '表达数', '授权数', '文化门数', '别名（中文）', '别名（英文）', '摘要', 'title校验']
+  r2: [1, 'politics', 'clans', 'clan', 'doc.politics.clan-charas-cortain-secret', 'clan-charas-cortain-secret.yaml', '沙拉斯·科尔坦家的账', 'Charas', 'needs_review', 1, 3, 9, 0, '科尔坦家的账、戴·科尔坦', 'dey Cortain', '科尔坦家财富的公开面（所有权事实）与秘密面（政治解读），分层分档。', '通过']
+  r3: [2, 'politics', 'territories', 'territory', 'doc.politics.territory-charas-reign', 'territory-charas-reign.yaml', '沙拉斯·归属与科尔坦家', 'Charas', 'needs_review', 1, 3, 11, 1, '沙拉斯、戴·科尔坦、科尔坦家', 'Charas, dey Cortain', '沙拉斯的归属沿革与科尔坦家财富的事实面。', '通过']
+条件格式: [('I2:I449', 'equal', ['"needs_review"']), ('Q2:Q449', 'equal', ['"缺失"'])]
+
+=== 分类总览 dims=A1:E39 ===
+  1 | AWAKE 世界书条目 · 分类总览
+  2 | 分类层级：主分类（5，封闭）＞ 二级主题（43）｜排序：主分类按分类目录顺序，二级主题按条数降序｜数据源：名录 448 条｜2026-09-14
+  4 | ① 主分类汇总
+  5 | 主分类 | 中文 | 条数 | 二级主题数 | 占比
+  6 | geography | 地理 | 407 | 4 | 0.9084821428571429
+  7 | economy | 经济 | 22 | 4 | 0.04910714285714286
+  8 | politics | 政治 | 7 | 3 | 0.015625
+  9 | culture | 文化 | 6 | 4 | 0.01339285714285714
+ 10 | war | 战争 | 6 | 3 | 0.01339285714285714
+ 11 | 合计 |  | 448 | 18 | 1
+ 13 | ② 主分类 × 二级主题 明细（筛这两列即可定位词条）
+ 14 | 主分类 | 二级主题 | 中文 | 条数
+ 15 | geography | settlements | 聚落 | 393
+ 16 | geography | terrain | 地形 | 10
+ 17 | geography | rivers | 河流 | 2
+ 18 | geography | sea_routes | 航路 | 2
+ 19 | economy | items | 器物 | 15
+ 20 | economy | goods | 物产 | 5
+ 21 | economy | land_production | 土地 | 1
+ 22 | economy | trade | 贸易 | 1
+ 23 | politics | territories | 领地 | 4
+ 24 | politics | throne | 王位 | 2
+ 25 | politics | clans | 家族 | 1
+ 26 | culture | faith | 信仰 | 3
+ 27 | culture | arts | 艺术 | 1
+ 28 | culture | customs | 习俗 | 1
+ 29 | culture | identity | 身份 | 1
+ 30 | war | military_system | 军制 | 3
+ 31 | war | troops | 兵种 | 2
+ 32 | war | weapons | 武器 | 1
+ 33 | 合计 |  |  | 448
+ 35 | ③ 口径与待办
+ 36 | • 分类只有两层：主分类 domain（5，封闭）＋ 二级主题 subdomain（43）。权威源 knowledge-taxonomy.v1.json，本表两列的定义与中文名均从它现场读取。
+ 37 | • 「文件名前缀」（doc_id 第三段）不是分类层，是命名概念（宪章 §三）；本工作簿只在名录列与「分类定义」附表里出现。
+ 38 | • 未用二级主题 25 个：目录已登记、作者可选、尚无条目。
+ 39 | • 定义、举例、归类冲突提示与纠错清单见「分类定义」表；全文见 docs/worldbook-migration/WORLDBOOK-CLASSIFICATION-REGISTRY-20260914.md。
+
+=== 分类定义 dims=A1:H96 ===
+  1 | AWAKE 世界书分类体系 · 定义表（主分类 / 二级主题）
+  2 | 权威源：knowledge-taxonomy.v1.json（唯一分类目录，raw-byte SHA-256 + CAS 门控）｜数据面 448 档｜生成 2026-09-14 10:19
+  4 | ① 主分类（5，封闭 · 宪章 §二「扩容不扩域」，第六域提案 BREAK）
+  5 | 主分类 | 中文 | 定义 | 归类冲突提示 | 档数 | 二级主题 已用/未用
+  6 | politics | 政治 | 国家、领地、制度和权力关系。 | 主权边界归这里；自然山脉和河流边界归地理。 / 聚落行政归这里；聚落所在位置归地理。 | 7 | 3 / 5
+  7 | economy | 经济 | 土地、生产、交易和财富流动。 | 土地生产归这里；土地地貌归地理。 / 商路经营归这里；道路走向归地理。 / 资源交易归这里；资源分布归地理。 | 22 | 4 / 6
+  8 | culture | 文化 | 信仰、习俗、身份和日常生活。 | 婚姻习俗归这里；婚姻造成的王位继承归政治。 / 宗教信条归这里；教会拥有的政治权力归政治。 | 6 | 4 / 4
+  9 | war | 战争 | 战事、军队、武器和战争后果。 | 要塞防御归这里；要塞所在位置归地理。 / 士兵编制归这里；士兵的社会身份归文化。 | 6 | 3 / 5
+ 10 | geography | 地理 | 地形、方位、道路、聚落和自然资源。 | 自然边界归这里；主权边界归政治。 / 聚落位置归这里；聚落行政归政治。 / 资源分布归这里；资源交易归经济。 / 要塞位置归这里；要塞防御归战争。 / 道路走向归这里；商路经营归经济。 | 407 | 4 / 5
+ 12 | ② 二级主题（43 ＝ 已用 18 ＋ 未用 25）——作者选的下拉目录
+ 13 | 状态 | 主分类 | 二级主题 | 中文 | 说明 | 例子 | 档数 | 在用文件名前缀
+ 14 | 已用 | 文化 | arts | 艺术 | 歌曲、故事、舞蹈、绘画和工艺。 | 酒馆里流传的歌谣 | 1 | tale(1)
+ 15 | 已用 | 文化 | customs | 习俗 | 礼节、禁忌、待人方式和地方传统。 | 见面时的礼节 | 1 | tale(1)
+ 16 | 已用 | 文化 | faith | 信仰 | 神祇、教义、仪式和宗教组织。 | 人们敬奉的神 | 3 | tale(3)
+ 17 | 已用 | 文化 | identity | 身份 | 民族、阶层、职业和社会归属。 | 如何称呼某个阶层 | 1 | tale(1)
+ 18 | 已用 | 经济 | goods | 物产 | 物产、特产、原料的产地与贸易。 | 这里出产什么 | 5 | item(5)
+ 19 | 已用 | 经济 | items | 器物 | 器物、装备、珍宝的来历、归属与流转。 | 这把剑是谁的 | 15 | item(15)
+ 20 | 已用 | 经济 | land_production | 土地 | 土地所有、耕作、牧场和生产。 | 平原适合种什么 | 1 | mine(1)
+ 21 | 已用 | 经济 | trade | 贸易 | 买卖、市场、商品和交易习惯。 | 某城镇出售的商品 | 1 | furs(1)
+ 22 | 已用 | 地理 | rivers | 河流 | 河流、湖泊、渡口和水域通行。 | 哪条河流经城镇 | 2 | river(2)
+ 23 | 已用 | 地理 | sea_routes | 航路 | 海上路线、港口之间的航行和水路方向。 | 港口之间如何航行 | 2 | bay(1)、sea(1)
+ 24 | 已用 | 地理 | settlements | 聚落 | 村庄、城镇、城堡和它们所在的位置。 | 某村庄位于哪片土地 | 393 | village(273)、castle(67)、town(53)
+ 25 | 已用 | 地理 | terrain | 地形 | 山地、平原、沙漠、森林和海岸。 | 某地是平原还是山地 | 10 | lake(3)、mount(2)、mountains(2)、desert(1)、peninsula(1)、plateau(1)
+ 26 | 已用 | 政治 | clans | 家族 | 家族、血缘、家名和政治网络。 | 某家族效忠的对象 | 1 | clan(1)
+ 27 | 已用 | 政治 | territories | 领地 | 领土、主权、行政范围和统治责任。 | 某领主负责的领地 | 4 | territory(4)
+ 28 | 已用 | 政治 | throne | 王位 | 国王、王位和统治合法性。 | 谁拥有王位 | 2 | throne(2)
+ 29 | 已用 | 战争 | military_system | 军制 | 军队编制、征募、军阶和服役。 | 谁负责征募士兵 | 3 | military(3)
+ 30 | 已用 | 战争 | troops | 兵种 | 步兵、骑兵、射手和特殊部队。 | 某国常见的兵种 | 2 | troop(2)
+ 31 | 已用 | 战争 | weapons | 武器 | 武器、护具、攻城器械和使用常识。 | 长矛适合什么战法 | 1 | weapon(1)
+ 32 | 未用 | 文化 | clothing | 服饰 | 衣物、装饰、身份标志和穿着场合。 | 贵族服饰的标志 | 0
+ 33 | 未用 | 文化 | festivals | 节庆 | 节日、纪念日、集市和庆典。 | 收获节的活动 | 0
+ 34 | 未用 | 文化 | language | 语言 | 语言、方言、称谓和书写。 | 不同民族的称呼 | 0
+ 35 | 未用 | 文化 | marriage | 婚姻 | 婚配习惯、婚礼和家庭关系。 | 某地的婚配习惯 | 0
+ 36 | 未用 | 经济 | currency | 货币 | 钱币、兑换、价值和支付。 | 常用钱币的名称 | 0
+ 37 | 未用 | 经济 | debt | 债务 | 借贷、利息、抵押和欠款。 | 商人的欠款 | 0
+ 38 | 未用 | 经济 | food | 粮食 | 粮食来源、储备、价格和短缺。 | 城镇的粮食来源 | 0
+ 39 | 未用 | 经济 | taxation | 税赋 | 税种、征收、负担和免税。 | 村民缴纳的税 | 0
+ 40 | 未用 | 经济 | trade_routes | 商路 | 商业路线、运输和通行成本。 | 商队从哪里经过 | 0
+ 41 | 未用 | 经济 | workshops | 工坊 | 工坊、手工业、产能和经营。 | 城市里常见的工坊 | 0
+ 42 | 未用 | 地理 | climate | 气候 | 季节、降雨、寒暑和天气规律。 | 北方冬季有多冷 | 0
+ 43 | 未用 | 地理 | directions | 方位 | 东南西北、远近和地标方向。 | 某城在何处 | 0
+ 44 | 未用 | 地理 | natural_boundaries | 边界 | 山脉、河流、海岸等自然形成的分界。 | 哪条河分隔两地 | 0
+ 45 | 未用 | 地理 | resources | 资源 | 矿产、森林、牧场和其他自然资源的分布。 | 铁矿在哪里 | 0
+ 46 | 未用 | 地理 | roads | 道路 | 道路、山口、渡口和陆上通行路线。 | 两座城之间的道路 | 0
+ 47 | 未用 | 政治 | diplomacy | 外交 | 盟约、使节、谈判和国家关系。 | 两国签订的盟约 | 0
+ 48 | 未用 | 政治 | kingdoms | 王国 | 王国、势力和国家身份。 | 王国的正式名称 | 0
+ 49 | 未用 | 政治 | law | 法律 | 法律、裁判、罪责和惩罚。 | 盗窃如何定罪 | 0
+ 50 | 未用 | 政治 | offices | 官职 | 官职、职责和治理机构。 | 城镇头人的职责 | 0
+ 51 | 未用 | 政治 | succession | 继承 | 王位、领地、家产和家名的继承。 | 无子嗣时如何继承 | 0
+ 52 | 未用 | 战争 | fortifications | 要塞 | 城墙、堡垒、防守和攻城。 | 城墙的防守方式 | 0
+ 53 | 未用 | 战争 | logistics | 军需 | 粮秣、运输、营地和军队消耗。 | 军队如何获得粮食 | 0
+ 54 | 未用 | 战争 | prisoners | 俘虏 | 俘虏、看守、赎金和交换。 | 俘虏如何被看守 | 0
+ 55 | 未用 | 战争 | tactics | 战术 | 阵形、行军、伏击和战场方法。 | 骑兵如何冲击 | 0
+ 56 | 未用 | 战争 | war_history | 战史 | 战争、战役、胜负和历史影响。 | 某次战役的结果 | 0
+ 58 | ③ 纠错清单（4 条，拿原设计的归类判定当尺子）
+ 59 | # | 对象 | 设计怎么说 | 实际怎么挂 | 建议
+ 60 | 1 | 湖（3 档） | geography.rivers 说明含「河流、湖泊、渡口和水域通行」⇒ 湖的落点是 rivers | 3 档 lake 全挂在 geography.terrain | 二选一：改 rivers 说明去掉湖泊，或把 3 档改挂 rivers
+ 61 | 2 | 吕卡隆矿场 | 归类判定：「资源分布→geography.resources」 | 挂在 economy.land_production（说明是土地所有/耕作/牧场） | 改挂 geography.resources
+ 62 | 3 | 德瑞亚特毛皮 | economy.goods 说明＝物产、特产、原料的产地与贸易 | 挂在 economy.trade（说明是买卖、市场、交易习惯） | 改挂 economy.goods
+ 63 | 4 | 湾澳 / 海域（各 1 档） | geography.sea_routes 说明＝海上路线、港口之间的航行和水路方向（说的是路，不是水） | 2 档挂在 sea_routes | 要么把 sea_routes 说明扩到含近海水域，要么登记一个水域类二级主题
+ 65 | ④ 命名约定附表：文件名前缀（22 个）——不是分类层，只是文件名的取词表
+ 66 | 前缀 | 中文 | 在用档数 | 常见所属二级主题
+ 67 | village | 村庄 | 273 | settlements
+ 68 | castle | 城堡 | 67 | settlements
+ 69 | town | 城镇 | 53 | settlements
+ 70 | item | 器物 | 20 | items、goods
+ 71 | tale | 传说 | 6 | faith、customs、identity、arts
+ 72 | territory | 领地 | 4 | territories
+ 73 | lake | 湖泊 | 3 | terrain
+ 74 | military | 军制 | 3 | military_system
+ 75 | mount | 山峰 | 2 | terrain
+ 76 | mountains | 山岭 | 2 | terrain
+ 77 | river | 河流 | 2 | rivers
+ 78 | throne | 王权 | 2 | throne
+ 79 | troop | 兵种 | 2 | troops
+ 80 | bay | 湾澳 | 1 | sea_routes
+ 81 | clan | 氏族 | 1 | clans
+ 82 | desert | 荒漠 | 1 | terrain
+ 83 | furs | 毛皮 | 1 | trade
+ 84 | mine | 矿场 | 1 | land_production
+ 85 | peninsula | 半岛 | 1 | terrain
+ 86 | plateau | 高原 | 1 | terrain
+ 87 | sea | 海域 | 1 | sea_routes
+ 88 | weapon | 兵器 | 1 | weapons
+ 90 | ⑤ 维护口径（全文见 docs/worldbook-migration/WORLDBOOK-CLASSIFICATION-REGISTRY-20260914.md）
+ 91 | • 不得有第二份分类清单：taxonomy 是唯一目录，Studio 由 TaxonomyCatalogService 单点校验。
+ 92 | • 新增档案：主分类从 5 个里挑，二级主题从 43 个里挑（拿 §② 的说明与例子当尺）。成本低。
+ 93 | • 新增文件名前缀：改档名规范 ＋ 一览表生成器的取词表即可，不动包、不动 hash。
+ 94 | • 新增/启用二级主题：改 taxonomy ⇒ 包 hash/manifest 变 ⇒ Studio CAS 409 ⇒ 须重建包；走 corrections_<日期> 留痕。
+ 95 | • 新增主分类：不许（宪章 §二，红测 E9 守）。
+ 96 | • 本表由 _gen_name_index_20260913.py 读 _classification-flat.v1.json 生成（重跑即刷新，勿手改）。
+
+=== 域汇总 dims=A1:F7 ===
+  1 | 主分类 | 中文 | 档数 | 表达合计 | 授权合计 | 文化门合计
+  2 | politics | 政治 | 7 | 31 | 66 | 6
+  3 | economy | 经济 | 22 | 45 | 311 | 0
+  4 | culture | 文化 | 6 | 15 | 22 | 1
+  5 | war | 战争 | 6 | 34 | 43 | 19
+  6 | geography | 地理 | 407 | 868 | 5729 | 11
+  7 | 合计 |  | 448 | 993 | 6171 | 37

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-jalmarys
+title:
+  zh-CN: 贾尔马律斯
+  en: Jalmarys
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 贾尔马律斯
+  en:
+  - Jalmarys
+  - town_EW3
+summary:
+  zh-CN: 贾尔马律斯是帝国最早的内陆殖民地之一，素以居民迂腐守旧被嘲，直到将军卡尔索斯以一句“那你听得懂这个吗”的政变扭转讥名。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_EW3
+  quote_hash: 1EC07928064916A7AABE17F85A3C3A5BDA8A1D26C7EE602B41A65F488FE6F534
+  quote: 每个王国都有一座当地居民会因迂腐守旧与不谙世故而被嘲笑的城市，对帝国来说，这样的城市就是贾尔马律斯。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-jalmarys-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 贾尔马律斯是帝国最早的内陆殖民地之一，素以居民迂腐守旧被嘲，直到将军卡尔索斯以一句“那你听得懂这个吗”的政变扭转讥名。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EW3
+    quote_hash: 1EC07928064916A7AABE17F85A3C3A5BDA8A1D26C7EE602B41A65F488FE6F534
+    quote: 每个王国都有一座当地居民会因迂腐守旧与不谙世故而被嘲笑的城市，对帝国来说，这样的城市就是贾尔马律斯。
+  expressions:
+  - id: expr.town-jalmarys-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 帝国人笑话贾尔马律斯人死板，直到卡尔索斯将军在元老院拔了剑。打那以后，笑话的人少了。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EW3
+      quote_hash: 1EC07928064916A7AABE17F85A3C3A5BDA8A1D26C7EE602B41A65F488FE6F534
+      quote: 每个王国都有一座当地居民会因迂腐守旧与不谙世故而被嘲笑的城市，对帝国来说，这样的城市就是贾尔马律斯。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-jalmarys-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 贾尔马律斯是老殖民地的稳字诀——掠夺时代过去后靠规矩吃粮，契约执行严；本地人自尊心强，谈判桌上别拿老段子开场。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EW3
+      quote_hash: 1EC07928064916A7AABE17F85A3C3A5BDA8A1D26C7EE602B41A65F488FE6F534
+      quote: 每个王国都有一座当地居民会因迂腐守旧与不谙世故而被嘲笑的城市，对帝国来说，这样的城市就是贾尔马律斯。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

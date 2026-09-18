@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-jaculan
+title:
+  zh-CN: 杰屈朗
+  en: Jaculan
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 杰屈朗
+  en:
+  - Jaculan
+  - town_V6
+summary:
+  zh-CN: 杰屈朗位于比斯坎海岸南段的橄榄山峦，旧为帝国贵族猎熊度假地；本地自治农民以异端思潮闻名，绿林兄弟会是系列叛乱的最新章。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_V6
+  quote_hash: 9099D6B251828AC73DBA12C9649305FE9C9DDF8A2958917216BDA7D193ABFBCA
+  quote: 杰屈朗位于比斯坎海岸温暖的南侧，绵延的山峦上有着享誉四海的橄榄树。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-jaculan-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 杰屈朗位于比斯坎海岸南段的橄榄山峦，旧为帝国贵族猎熊度假地；本地自治农民以异端思潮闻名，绿林兄弟会是系列叛乱的最新章。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_V6
+    quote_hash: 9099D6B251828AC73DBA12C9649305FE9C9DDF8A2958917216BDA7D193ABFBCA
+    quote: 杰屈朗位于比斯坎海岸温暖的南侧，绵延的山峦上有着享誉四海的橄榄树。
+  expressions:
+  - id: expr.town-jaculan-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 杰屈朗的橄榄树满山都是。山里人硬气，官府管不动——绿林好汉就藏在那片林子里，听说老爷们还偷偷给他们塞钱。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_V6
+      quote_hash: 9099D6B251828AC73DBA12C9649305FE9C9DDF8A2958917216BDA7D193ABFBCA
+      quote: 杰屈朗位于比斯坎海岸温暖的南侧，绵延的山峦上有着享誉四海的橄榄树。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-jaculan-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 杰屈朗是治安溢价市场——橄榄油的产地价好，但护路成本人人要摊；贵族输资绿林的怪格局是本地行情的一部分，收购者惯于两头下注。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_V6
+      quote_hash: 9099D6B251828AC73DBA12C9649305FE9C9DDF8A2958917216BDA7D193ABFBCA
+      quote: 杰屈朗位于比斯坎海岸温暖的南侧，绵延的山峦上有着享誉四海的橄榄树。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

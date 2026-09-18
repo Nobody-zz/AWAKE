@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-ustokol
+title:
+  zh-CN: 乌斯托科
+  en: Ustokol
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 乌斯托科
+  en:
+  - Ustokol
+  - castle_village_S1_1
+summary:
+  zh-CN: 乌斯托科坐落于瓦尔切格湾与比亚里海之间当风的卡恰尔半岛上；当地人养的耐寒北方牛在石缝间找小草吃，艰难时则添些海藻。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#castle_village_S1_1
+  quote_hash: B64A44B042D851C8B93E18D45BCE27C68DA741774FC53EF14289BFC5D9DA1A7D
+  quote: 乌斯托科坐落于瓦尔切格湾与比亚里海之间当风的卡恰尔半岛。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-ustokol-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 乌斯托科坐落于瓦尔切格湾与比亚里海之间当风的卡恰尔半岛上；当地人养的耐寒北方牛在石缝间找小草吃，艰难时则添些海藻。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#castle_village_S1_1
+    quote_hash: B64A44B042D851C8B93E18D45BCE27C68DA741774FC53EF14289BFC5D9DA1A7D
+    quote: 乌斯托科坐落于瓦尔切格湾与比亚里海之间当风的卡恰尔半岛。
+  expressions:
+  - id: expr.village-ustokol-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 乌斯托科的人看牛也看风。村里人说这地方的草不够厚，牛得自己想办法——海边的东西，能吃的都算收成。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S1_1
+      quote_hash: B64A44B042D851C8B93E18D45BCE27C68DA741774FC53EF14289BFC5D9DA1A7D
+      quote: 乌斯托科坐落于瓦尔切格湾与比亚里海之间当风的卡恰尔半岛。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-ustokol-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 乌斯托科以耐寒牛群为业——风大草短、牛只耐役；牛按膘情与耐力分等，海藻当荒年添料，肉奶自用、余牛与皮张走湾内船运。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S1_1
+      quote_hash: B64A44B042D851C8B93E18D45BCE27C68DA741774FC53EF14289BFC5D9DA1A7D
+      quote: 乌斯托科坐落于瓦尔切格湾与比亚里海之间当风的卡恰尔半岛。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

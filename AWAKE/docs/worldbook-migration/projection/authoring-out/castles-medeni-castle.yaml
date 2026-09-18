@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-medeni-castle
+title:
+  zh-CN: 迈代尼堡
+  en: Medeni Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 迈代尼堡
+  - 迈代尼
+  - 吉德纳尔
+  en:
+  - Medeni Castle
+  - castle_A4
+  - Medeni
+  - Qidnar
+entity_ids:
+- entity.settlement.castle_a4
+summary:
+  zh-CN: 迈代尼堡是阿塞莱依着杰尔贾赖峭壁的一道城堡，辖着迈代尼与吉德纳尔两村；两村都靠水吃水，一个拦山洪，一个等河涨。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_A4
+  quote_hash: C09277AD6DE2E8F34577DA5E85FE25315141E7DF5470D98A9E1379135157E1B9
+  quote: 迈代尼堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-medeni-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 迈代尼堡是阿塞莱依着杰尔贾赖峭壁的一道城堡，辖着迈代尼与吉德纳尔两村；两村都靠水吃水，一个拦山洪，一个等河涨。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_A4
+    quote_hash: C09277AD6DE2E8F34577DA5E85FE25315141E7DF5470D98A9E1379135157E1B9
+    quote: 迈代尼堡
+  expressions:
+  - id: expr.castle-medeni-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 迈代尼堡的人说，堡子看的是那两条水——旱谷的水和达玛尔河的水。村里人说，河一涨上来，滩上的地就肥一层，一年就靠这一层。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_A4
+      quote_hash: C09277AD6DE2E8F34577DA5E85FE25315141E7DF5470D98A9E1379135157E1B9
+      quote: 迈代尼堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-medeni-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 迈代尼堡据峭壁与海之间的低地要口，下辖两处灌溉村；椰枣在堡中晒制囤积，达玛尔河泛期由堡里派人数水、分堤，沿河田亩的租税按淤泥覆盖的厚薄议定。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_A4
+      quote_hash: C09277AD6DE2E8F34577DA5E85FE25315141E7DF5470D98A9E1379135157E1B9
+      quote: 迈代尼堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

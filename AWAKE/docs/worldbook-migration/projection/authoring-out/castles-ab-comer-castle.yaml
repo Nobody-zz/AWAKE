@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-ab-comer-castle
+title:
+  zh-CN: 阿布·科梅尔堡
+  en: Ab Comer Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 阿布·科梅尔堡
+  - 阿布·科梅尔
+  - 因韦斯
+  en:
+  - Ab Comer Castle
+  - castle_B1
+  - Ab Comer
+  - Inveth
+entity_ids:
+- entity.settlement.castle_b1
+summary:
+  zh-CN: 阿布·科梅尔堡是巴旦尼亚压在特朗河上游的一座城堡，辖着阿布·科梅尔与因韦斯两村；坡上出葡萄，河湾种小麦。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_B1
+  quote_hash: B00BAB31706DABE136A8FB0FDC223A1C9EEEF55DD536DA0A750FBAFC81604700
+  quote: 阿布·科梅尔堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-ab-comer-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 阿布·科梅尔堡是巴旦尼亚压在特朗河上游的一座城堡，辖着阿布·科梅尔与因韦斯两村；坡上出葡萄，河湾种小麦。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_B1
+    quote_hash: B00BAB31706DABE136A8FB0FDC223A1C9EEEF55DD536DA0A750FBAFC81604700
+    quote: 阿布·科梅尔堡
+  expressions:
+  - id: expr.castle-ab-comer-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿布·科梅尔堡的人说，堡子的酒比堡子本身有名。村里人说，帝国人和瓦兰迪亚人都来买咱的酒，车队一来，堡子就热闹。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_B1
+      quote_hash: B00BAB31706DABE136A8FB0FDC223A1C9EEEF55DD536DA0A750FBAFC81604700
+      quote: 阿布·科梅尔堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-ab-comer-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿布·科梅尔堡扼特朗河上游陡岸，下辖酒村与粮村各一；白葡萄酒由堡中窖藏、按坛过货，河湾小麦经水路下运，酿酒与运粮的用工由氏族长老派定。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_B1
+      quote_hash: B00BAB31706DABE136A8FB0FDC223A1C9EEEF55DD536DA0A750FBAFC81604700
+      quote: 阿布·科梅尔堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

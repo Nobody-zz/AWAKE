@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-etirfurd
+title:
+  zh-CN: 埃蒂尔菲德
+  en: Etirfurd
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 埃蒂尔菲德
+  en:
+  - Etirfurd
+  - village_V1_2
+summary:
+  zh-CN: 埃蒂尔菲德位于巴旦尼亚边界的一处低矮山嘴旁，埃蒂尔河自乌卡利翁山崖的泉眼里涌出；村民种小麦，卖给驻扎附近的军队。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#village_V1_2
+  quote_hash: 4E259800F46EA5ACFE451C1ABA10969D01D45E1C88BB41B4559B50C36932E231
+  quote: 埃蒂尔菲德位于巴旦尼亚边界的一个低矮山嘴附近，埃蒂尔河从乌卡利翁地块山崖上的泉水中喷涌而出。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-etirfurd-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 埃蒂尔菲德位于巴旦尼亚边界的一处低矮山嘴旁，埃蒂尔河自乌卡利翁山崖的泉眼里涌出；村民种小麦，卖给驻扎附近的军队。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#village_V1_2
+    quote_hash: 4E259800F46EA5ACFE451C1ABA10969D01D45E1C88BB41B4559B50C36932E231
+    quote: 埃蒂尔菲德位于巴旦尼亚边界的一个低矮山嘴附近，埃蒂尔河从乌卡利翁地块山崖上的泉水中喷涌而出。
+  expressions:
+  - id: expr.village-etirfurd-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 埃蒂尔菲德的麦子直接进了军营。村里人说边上有兵，粮就不愁卖——只要不打仗，年年都有人来收。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V1_2
+      quote_hash: 4E259800F46EA5ACFE451C1ABA10969D01D45E1C88BB41B4559B50C36932E231
+      quote: 埃蒂尔菲德位于巴旦尼亚边界的一个低矮山嘴附近，埃蒂尔河从乌卡利翁地块山崖上的泉水中喷涌而出。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-etirfurd-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 埃蒂尔菲德以军粮为大宗——崖泉灌田、产量稳；粮货按军单先行认购，边衅一起粮价先涨，余粮才轮到民市。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V1_2
+      quote_hash: 4E259800F46EA5ACFE451C1ABA10969D01D45E1C88BB41B4559B50C36932E231
+      quote: 埃蒂尔菲德位于巴旦尼亚边界的一个低矮山嘴附近，埃蒂尔河从乌卡利翁地块山崖上的泉水中喷涌而出。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-vladiv-castle
+title:
+  zh-CN: 弗拉基夫堡
+  en: Vladiv Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 弗拉基夫堡
+  - 弗拉基夫
+  - 格拉夫斯特伦
+  en:
+  - Vladiv Castle
+  - castle_S8
+  - Vladiv
+  - Glavstrom
+entity_ids:
+- entity.settlement.castle_s8
+summary:
+  zh-CN: 弗拉基夫堡是斯特吉亚缩在伊勒坦山脚林谷里的一座城堡，辖着弗拉基夫与格拉夫斯特伦两村；一村养能刨雪的牛，一村猎皮毛兽。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_S8
+  quote_hash: 0F69F3CB1AF523FC83748C12FE3E089F6CF70E53009A40038CE048DF08A1B959
+  quote: 弗拉基夫堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-vladiv-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 弗拉基夫堡是斯特吉亚缩在伊勒坦山脚林谷里的一座城堡，辖着弗拉基夫与格拉夫斯特伦两村；一村养能刨雪的牛，一村猎皮毛兽。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_S8
+    quote_hash: 0F69F3CB1AF523FC83748C12FE3E089F6CF70E53009A40038CE048DF08A1B959
+    quote: 弗拉基夫堡
+  expressions:
+  - id: expr.castle-vladiv-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 弗拉基夫堡的人说，山那边的神灵管着这地方，进山得敬着点。村里人说，牛冬天自己会刨雪找草，比人还经冻。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_S8
+      quote_hash: 0F69F3CB1AF523FC83748C12FE3E089F6CF70E53009A40038CE048DF08A1B959
+      quote: 弗拉基夫堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-vladiv-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 弗拉基夫堡据伊勒坦山脚林谷，下辖牧牛村与猎户村各一；耐寒牛按季清点，貂狐兔皮在堡中验成色、销往外路，山林的猎界与谷中牧场由波耶间议定、堡里立凭。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_S8
+      quote_hash: 0F69F3CB1AF523FC83748C12FE3E089F6CF70E53009A40038CE048DF08A1B959
+      quote: 弗拉基夫堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

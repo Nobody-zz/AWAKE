@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-omrotok
+title:
+  zh-CN: 鄂木罗托克
+  en: Omrotok
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 鄂木罗托克
+  en:
+  - Omrotok
+  - castle_village_K5_2
+summary:
+  zh-CN: 鄂木罗托克坐落于德夫赛格高原东边的速仑山脚下；村民往附近的树林采伐这一带为数不多的木材。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-khuzait
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+  locator: bannerlord.villages#castle_village_K5_2
+  quote_hash: 1F138B49FF900E4448608B4987F62AD04976588C961AF31EDCF73B520F0C709D
+  quote: 鄂木罗托克坐落于德夫赛格高原东边的速仑山脚下。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-omrotok-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 鄂木罗托克坐落于德夫赛格高原东边的速仑山脚下；村民往附近的树林采伐这一带为数不多的木材。
+  sources:
+  - source_id: source.calradia.game.villages-desc-khuzait
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+    locator: bannerlord.villages#castle_village_K5_2
+    quote_hash: 1F138B49FF900E4448608B4987F62AD04976588C961AF31EDCF73B520F0C709D
+    quote: 鄂木罗托克坐落于德夫赛格高原东边的速仑山脚下。
+  expressions:
+  - id: expr.village-omrotok-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 鄂木罗托克的林子金贵。村里人说高原上树比人少，砍一棵得记着补——要不往后连车辕都没处找。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#castle_village_K5_2
+      quote_hash: 1F138B49FF900E4448608B4987F62AD04976588C961AF31EDCF73B520F0C709D
+      quote: 鄂木罗托克坐落于德夫赛格高原东边的速仑山脚下。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-omrotok-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 鄂木罗托克供高原木材——林小量少、择木再伐；木料按材分等，车辕、帐杆与屋梁各取所需，因稀缺旱年价高。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#castle_village_K5_2
+      quote_hash: 1F138B49FF900E4448608B4987F62AD04976588C961AF31EDCF73B520F0C709D
+      quote: 鄂木罗托克坐落于德夫赛格高原东边的速仑山脚下。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-kaysar-castle
+title:
+  zh-CN: 开撒尔堡
+  en: Kaysar Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 开撒尔堡
+  - 开撒尔
+  - 帕亚木
+  en:
+  - Kaysar Castle
+  - castle_K9
+  - Kaysar
+  - Payam
+entity_ids:
+- entity.settlement.castle_k9
+summary:
+  zh-CN: 开撒尔堡是库赛特东北方的一座城堡，辖着开撒尔与帕亚木两村；雪化得晚，牛和麦子都得赶着时令。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_K9
+  quote_hash: 5BF58C8FAB96D3D9ABC6995131A01F2E1F2B5C42967466AAE5D714890668CE83
+  quote: 开撒尔堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-kaysar-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 开撒尔堡是库赛特东北方的一座城堡，辖着开撒尔与帕亚木两村；雪化得晚，牛和麦子都得赶着时令。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_K9
+    quote_hash: 5BF58C8FAB96D3D9ABC6995131A01F2E1F2B5C42967466AAE5D714890668CE83
+    quote: 开撒尔堡
+  expressions:
+  - id: expr.castle-kaysar-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 开撒尔堡的人说，这儿的春天短，地一解冻就得下种。村里人说，牛不怕冷，就是草少，得往河边赶。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_K9
+      quote_hash: 5BF58C8FAB96D3D9ABC6995131A01F2E1F2B5C42967466AAE5D714890668CE83
+      quote: 开撒尔堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-kaysar-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 开撒尔堡据喀拉卡孜河谷东北段，下辖牧牛村与粮村各一；解冻后抢种的麦与大麦入堡仓，牛群按季清点、循河谷转场，沿河牧场界址由堡里勘定。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_K9
+      quote_hash: 5BF58C8FAB96D3D9ABC6995131A01F2E1F2B5C42967466AAE5D714890668CE83
+      quote: 开撒尔堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

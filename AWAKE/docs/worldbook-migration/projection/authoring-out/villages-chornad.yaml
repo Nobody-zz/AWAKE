@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-chornad
+title:
+  zh-CN: 绍尔纳
+  en: Chornad
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 绍尔纳
+  en:
+  - Chornad
+  - village_V6_4
+summary:
+  zh-CN: 绍尔纳坐瞰着穿过比斯坎山的通路；当地村民与瓦兰迪亚中部的许多居民一样，专事养猪。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#village_V6_4
+  quote_hash: A5F04809D802F8BFC8CD7DBCD5389FAB1F869C56771035EBBF587613AC2C4E5E
+  quote: 绍尔纳坐瞰着经过比斯坎山的通路。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-chornad-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 绍尔纳坐瞰着穿过比斯坎山的通路；当地村民与瓦兰迪亚中部的许多居民一样，专事养猪。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#village_V6_4
+    quote_hash: A5F04809D802F8BFC8CD7DBCD5389FAB1F869C56771035EBBF587613AC2C4E5E
+    quote: 绍尔纳坐瞰着经过比斯坎山的通路。
+  expressions:
+  - id: expr.village-chornad-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 绍尔纳守着山口。村里人说猪爱吃路上掉的橡子，商队一走，猪就跟着捡——山路养人，也养膘。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V6_4
+      quote_hash: A5F04809D802F8BFC8CD7DBCD5389FAB1F869C56771035EBBF587613AC2C4E5E
+      quote: 绍尔纳坐瞰着经过比斯坎山的通路。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-chornad-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 绍尔纳以养猪为业——山口林坡放养、商路余粮省料；腌肉熏腿耐存价高，收猪看膘情与奔走，冬前是集中出货季。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#village_V6_4
+      quote_hash: A5F04809D802F8BFC8CD7DBCD5389FAB1F869C56771035EBBF587613AC2C4E5E
+      quote: 绍尔纳坐瞰着经过比斯坎山的通路。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

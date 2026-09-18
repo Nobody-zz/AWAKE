@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-leblenion
+title:
+  zh-CN: 勒布伦尼翁
+  en: Leblenion
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 勒布伦尼翁
+  en:
+  - Leblenion
+  - village_EW6_4
+summary:
+  zh-CN: 勒布伦尼翁位于拔地而起的玄武岩巨山厄里特律斯山下的阿米尼斯河旁；该地区是帝国的粮仓之一。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_EW6_4
+  quote_hash: A724D8A08CC14DDD2D3861A9755F83E89C56001EEF44739A78AE3366583D7B12
+  quote: 勒布伦尼翁位于拔地而起的玄武岩巨山——厄里特律斯山下的阿米尼斯河旁。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-leblenion-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 勒布伦尼翁位于拔地而起的玄武岩巨山厄里特律斯山下的阿米尼斯河旁；该地区是帝国的粮仓之一。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EW6_4
+    quote_hash: A724D8A08CC14DDD2D3861A9755F83E89C56001EEF44739A78AE3366583D7B12
+    quote: 勒布伦尼翁位于拔地而起的玄武岩巨山——厄里特律斯山下的阿米尼斯河旁。
+  expressions:
+  - id: expr.village-leblenion-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 勒布伦尼翁的麦地紧挨着河，山在背后镇着。村里人说水是明的粮，山是暗的保——年年不落空。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EW6_4
+      quote_hash: A724D8A08CC14DDD2D3861A9755F83E89C56001EEF44739A78AE3366583D7B12
+      quote: 勒布伦尼翁位于拔地而起的玄武岩巨山——厄里特律斯山下的阿米尼斯河旁。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-leblenion-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 勒布伦尼翁以河灌麦田立村——临水背山、灌溉便利，麦产稳；粮货经阿米尼斯河集运，丰年官仓先收，民间余粮随市价流转。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EW6_4
+      quote_hash: A724D8A08CC14DDD2D3861A9755F83E89C56001EEF44739A78AE3366583D7B12
+      quote: 勒布伦尼翁位于拔地而起的玄武岩巨山——厄里特律斯山下的阿米尼斯河旁。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

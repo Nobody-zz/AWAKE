@@ -1,0 +1,226 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 4
+id: doc.war.military-sturgia
+title:
+  zh-CN: 斯特吉亚军事力量
+  en: Sturgian Military Forces
+status: needs_review
+domain: war
+subdomain: military
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 斯特吉亚的军事制度
+  - 斯特吉亚军制
+  - 波耶亲卫队
+  - 瓦连格
+  en:
+  - Sturgian Military System
+  - Druzhinnik
+summary:
+  zh-CN: 斯特吉亚军制：波耶职业亲卫队与自由民动员相结合，核心为重步兵盾墙，辅以轻骑袭扰与飞斧投射；瓦连格为贵族子弟精锐步兵，资深者有资格骑马。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: f6ee4a2afa309b794f12fddbb3c185c94500071365f74cd7655aede539ed3b56
+  locator: bannerlord.db#localization.k1Xr4rKn
+  quote_hash: 850CC6F0869266F85C06DC06E743008EEB33633FDCF362EFF6D685E6A97A8AED
+  quote: 亲卫骑兵
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/1/Content
+  quote_hash: 2986202B8940F63DE990A41D25BE9ACB9443196611808AB8B9D624F362EA5AA3
+  quote: 我们的瓦连格——那些贵族子弟组成的精锐步兵——站在盾墙最前排，飞斧开路，斧头收割，简单直接。
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/0/Content
+  quote_hash: 5D87C35BC04A7E9AD18F090349C563319FBAFF5213E45DB4855375DB9AA3BBE9
+  quote: 斯特吉亚的军事制度建立在波耶私兵与平民动员相结合的基础上。每一位波耶都维持着自己的亲卫队，这些亲卫是脱产的职业战士，装备精良、训练有素。
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/0/Content
+  quote_hash: 71FA0419823D39FCB9BBF91ED8C50B44BF5937EBD2965D0BDF7726710B986C12
+  quote: 他们的军队不像帝国那样有严格的军团编制，也不像瓦兰迪亚那样以重骑兵为主，而是以坚固的步兵阵线为根本
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/2/Content
+  quote_hash: E6BB10D6B2D30EAEFBE3A4FA3F3DDAF5DDCB774877CF107323157ED1F109C18C
+  quote: 他们之中最优秀的能升成资深瓦连格，到了那个级别就有资格骑马了——在北方能骑马作战是身份和实力的象征。
+- source_id: source.calradia.chronicle.animusforge.war1
+  source_version: animusforge-20260913
+  source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+  locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/3/Content
+  quote_hash: 00916A9A71C774355CF8D90988FF4C9B431DC9A5A2A060514E756A5B3C46CEFB
+  quote: 筝形盾、单手斧、飞斧，每一样都是自己掏钱打的。我们在盾墙最前排，大公或波耶一声令下，先掷飞斧打乱敌阵，然后拔出斧头撞上去。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.military-sturgia-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 斯特吉亚军制建立在波耶私兵与平民动员相结合的基础上：每位波耶维持脱产的职业亲卫队，装备精良、训练有素；战时大公向各波耶发征召令，波耶率亲卫并武装自由民应召；军队核心是重步兵盾墙，辅以轻骑兵袭扰和飞斧投射——既无帝国式军团编制，也不以重骑兵为主，而是以坚固步兵阵线为根本。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/1/Content
+    quote_hash: 2986202B8940F63DE990A41D25BE9ACB9443196611808AB8B9D624F362EA5AA3
+    quote: 我们的瓦连格——那些贵族子弟组成的精锐步兵——站在盾墙最前排，飞斧开路，斧头收割，简单直接。
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/0/Content
+    quote_hash: 5D87C35BC04A7E9AD18F090349C563319FBAFF5213E45DB4855375DB9AA3BBE9
+    quote: 斯特吉亚的军事制度建立在波耶私兵与平民动员相结合的基础上。每一位波耶都维持着自己的亲卫队，这些亲卫是脱产的职业战士，装备精良、训练有素。
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/0/Content
+    quote_hash: 71FA0419823D39FCB9BBF91ED8C50B44BF5937EBD2965D0BDF7726710B986C12
+    quote: 他们的军队不像帝国那样有严格的军团编制，也不像瓦兰迪亚那样以重骑兵为主，而是以坚固的步兵阵线为根本
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/2/Content
+    quote_hash: E6BB10D6B2D30EAEFBE3A4FA3F3DDAF5DDCB774877CF107323157ED1F109C18C
+    quote: 他们之中最优秀的能升成资深瓦连格，到了那个级别就有资格骑马了——在北方能骑马作战是身份和实力的象征。
+  expressions:
+  - id: expr.military-sturgia-sturgia-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 大公一吹号，波耶老爷带着亲兵出来，我们这些拿得起斧头的跟在后面。盾墙一列，飞斧开路——北边这地方，扛得住风雪和刀剑的步兵才靠得住。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/1/Content
+      quote_hash: 2986202B8940F63DE990A41D25BE9ACB9443196611808AB8B9D624F362EA5AA3
+      quote: 我们的瓦连格——那些贵族子弟组成的精锐步兵——站在盾墙最前排，飞斧开路，斧头收割，简单直接。
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []
+  - id: expr.military-sturgia-overview-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 斯特吉亚的军队靠两样：波耶的亲卫队和武装起来的自由民。核心是重步兵盾墙，轻骑兵袭扰，飞斧开路——步兵阵线是根本。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/0/Content
+      quote_hash: 5D87C35BC04A7E9AD18F090349C563319FBAFF5213E45DB4855375DB9AA3BBE9
+      quote: 斯特吉亚的军事制度建立在波耶私兵与平民动员相结合的基础上。每一位波耶都维持着自己的亲卫队，这些亲卫是脱产的职业战士，装备精良、训练有素。
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/0/Content
+      quote_hash: 71FA0419823D39FCB9BBF91ED8C50B44BF5937EBD2965D0BDF7726710B986C12
+      quote: 他们的军队不像帝国那样有严格的军团编制，也不像瓦兰迪亚那样以重骑兵为主，而是以坚固的步兵阵线为根本
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    denies: []
+  - id: expr.military-sturgia-boyar-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 波耶的亲卫队是脱产的职业战士，从小在领地上养大练出来的。战时大公发征召令，波耶带亲卫打头阵，自由民跟在后面；打完仗各回各处。这套制度养不出帝国那样的十几万军团，但胜在省钱，而且每个战士都是为熟人而战——士气不是军饷换来的。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/0/Content
+      quote_hash: 5D87C35BC04A7E9AD18F090349C563319FBAFF5213E45DB4855375DB9AA3BBE9
+      quote: 斯特吉亚的军事制度建立在波耶私兵与平民动员相结合的基础上。每一位波耶都维持着自己的亲卫队，这些亲卫是脱产的职业战士，装备精良、训练有素。
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/2/Content
+      quote_hash: E6BB10D6B2D30EAEFBE3A4FA3F3DDAF5DDCB774877CF107323157ED1F109C18C
+      quote: 他们之中最优秀的能升成资深瓦连格，到了那个级别就有资格骑马了——在北方能骑马作战是身份和实力的象征。
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.military-sturgia-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 瓦连格（瓦良格）是斯特吉亚军中的精锐步兵阶层：贵族子弟组成，站在盾墙最前排，自备筝形盾、单手斧与飞斧；战术为先掷飞斧打乱敌阵、再拔斧冲撞；其中最优秀者升为资深瓦连格，获得骑马作战的资格——在北方，骑马作战是身份与实力的象征。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/3/Content
+    quote_hash: 00916A9A71C774355CF8D90988FF4C9B431DC9A5A2A060514E756A5B3C46CEFB
+    quote: 筝形盾、单手斧、飞斧，每一样都是自己掏钱打的。我们在盾墙最前排，大公或波耶一声令下，先掷飞斧打乱敌阵，然后拔出斧头撞上去。
+  - source_id: source.calradia.chronicle.animusforge.war1
+    source_version: animusforge-20260913
+    source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+    locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/2/Content
+    quote_hash: E6BB10D6B2D30EAEFBE3A4FA3F3DDAF5DDCB774877CF107323157ED1F109C18C
+    quote: 他们之中最优秀的能升成资深瓦连格，到了那个级别就有资格骑马了——在北方能骑马作战是身份和实力的象征。
+  expressions:
+  - id: expr.military-sturgia-varyag-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 瓦良格的装备全是自家掏钱置办的：筝形盾、单手斧、飞斧。令下先掷飞斧搅乱敌阵，再拔斧撞上去。资深瓦良格能骑马，那就是亲卫骑兵——机动和冲击都更强。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/3/Content
+      quote_hash: 00916A9A71C774355CF8D90988FF4C9B431DC9A5A2A060514E756A5B3C46CEFB
+      quote: 筝形盾、单手斧、飞斧，每一样都是自己掏钱打的。我们在盾墙最前排，大公或波耶一声令下，先掷飞斧打乱敌阵，然后拔出斧头撞上去。
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    denies: []
+  - id: expr.military-sturgia-rank-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 北方的军阶看马：普通战士站着打，最优秀的升资深瓦连格，到了那个级别才有资格骑马——在斯特吉亚，马背是身份和实力的界碑。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war1
+      source_version: animusforge-20260913
+      source_content_hash: 5ef28e5ee78d4a461f944468d745f28c2e041ab9871f42806b816a29ef60045d
+      locator: rules/rule_斯特吉亚的军事制度__斯特吉亚的军事制度.json#/Variants/2/Content
+      quote_hash: E6BB10D6B2D30EAEFBE3A4FA3F3DDAF5DDCB774877CF107323157ED1F109C18C
+      quote: 他们之中最优秀的能升成资深瓦连格，到了那个级别就有资格骑马了——在北方能骑马作战是身份和实力的象征。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    denies: []

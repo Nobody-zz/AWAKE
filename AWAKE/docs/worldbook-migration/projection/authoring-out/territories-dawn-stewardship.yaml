@@ -1,0 +1,128 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 3
+id: doc.politics.territories-dawn-stewardship
+title:
+  zh-CN: 黎明山脉·归属与守护
+  en: Dawn Mountains
+status: needs_review
+domain: politics
+subdomain: territories
+universe: awake_current
+era:
+  key: historical
+  certainty: approximate
+content_tier: base
+aliases:
+  zh-CN:
+  - 黎明山脉
+  - 库吉特
+  - 看守人
+  en:
+  - Dawn Mountains
+  - Khergit
+  - Warden
+summary:
+  zh-CN: 库吉特西征后进入山地并被解释为融入守护的沿革；当前实际控制未决。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.chronicle.dawn-mountains
+  source_version: download-20260903
+  source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+  locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+  quote_hash: 0C7386966EC3A5D8DCF7DAD941C2FFDA3388E4E85E1891C9DB5396F15544B113
+  quote: 在库赛特汗国西征之后，黎明山脉地区被划归合儿必特部管辖
+- source_id: source.calradia.chronicle.dawn-mountains
+  source_version: download-20260903
+  source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+  locator: chronicle-dawn-mountains.txt#/Variants/1/Content
+  quote_hash: 57B74D0A6F9CE427BB4B841B235EC0BFF36AEC341081C6E3334ED88A64630560
+  quote: 这片山划给了合儿必特部
+- source_id: source.calradia.game.settlements.geography2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 9af64df767747545a9a75b8e22528317e291c51f0314f6842eb79a9f061734b5
+  locator: bannerlord.db#settlements.village_K6_1.descriptionText
+  quote_hash: 53B4A4186231816E472D093D78A17A6166FB7BEA1B952F4F2E3B805631E0F950
+  quote: 喀拉罕位于柯希·罗希尼——黎明山脉山麓的丘陵地带。当地村民向迁徙的部落购买马匹，自己也饲养一些，库赛特军队的许多马匹都来源于此。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.territory-dawn-stewardship-1
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 库吉特进入山地被来源解释为通过通婚、共俗和守护者身份融入当地。
+  sources:
+  - source_id: source.calradia.chronicle.dawn-mountains
+    source_version: download-20260903
+    source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+    locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+    quote_hash: 0C7386966EC3A5D8DCF7DAD941C2FFDA3388E4E85E1891C9DB5396F15544B113
+    quote: 在库赛特汗国西征之后，黎明山脉地区被划归合儿必特部管辖
+  expressions:
+  - id: expr.territory-dawn-stewardship-1
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 库赛特西征之后，山地便归了库吉特人治下。库吉特人不强改当地风俗，靠通婚、随俗一代代融进山民之中，并以山地的看守人自居——这是编年史的讲法。
+    sources:
+    - source_id: source.calradia.chronicle.dawn-mountains
+      source_version: download-20260903
+      source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+      locator: chronicle-dawn-mountains.txt#/Variants/0/Content
+      quote_hash: 0C7386966EC3A5D8DCF7DAD941C2FFDA3388E4E85E1891C9DB5396F15544B113
+      quote: 在库赛特汗国西征之后，黎明山脉地区被划归合儿必特部管辖
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    denies: []
+- id: assertion.territory-dawn-stewardship-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 至于如今山里实际由谁做主，旧书没有可依据的记述，须待当世证据。
+  sources:
+  - source_id: source.calradia.chronicle.dawn-mountains
+    source_version: download-20260903
+    source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+    locator: chronicle-dawn-mountains.txt#/Variants/1/Content
+    quote_hash: 57B74D0A6F9CE427BB4B841B235EC0BFF36AEC341081C6E3334ED88A64630560
+    quote: 这片山划给了合儿必特部
+  expressions:
+  - id: expr.territory-dawn-stewardship-2-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 至于如今山里实际由谁做主，旧书没有可依据的记述，须待当世证据。
+    sources:
+    - source_id: source.calradia.chronicle.dawn-mountains
+      source_version: download-20260903
+      source_content_hash: ce7dfa47cb14840e624df2088a450ffe309c8759eb72fe7da60bef4f8fc19fc3
+      locator: chronicle-dawn-mountains.txt#/Variants/1/Content
+      quote_hash: 57B74D0A6F9CE427BB4B841B235EC0BFF36AEC341081C6E3334ED88A64630560
+      quote: 这片山划给了合儿必特部
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    - profile_id: profile.headman
+      scope: national
+      min_detail: summary
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: summary
+    denies: []

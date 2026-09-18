@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-orthra
+title:
+  zh-CN: 俄耳特拉
+  en: Orthra
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 俄耳特拉
+  en:
+  - Orthra
+  - village_EN5_2
+summary:
+  zh-CN: 俄耳特拉是一处较年轻的定居点，得名自一位在此破晓东望密泽亚德美景的帝国将领；这里是帝国马匹育种场，从东方草原运来牧草，为帝国骑兵供马。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+  locator: bannerlord.villages#village_EN5_2
+  quote_hash: 8D37AB4D233BD157267DBBE868A0130EB707A80C66106AEE997C6DD2F3F84E94
+  quote: 俄耳特拉是一座相对较年轻的定居点，得名自一位帝国将领，他于破晓时分在此东望，看到密泽亚德的美景后就命名了日后这座帝国东部的山村。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-orthra-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 俄耳特拉是一处较年轻的定居点，得名自一位在此破晓东望密泽亚德美景的帝国将领；这里是帝国马匹育种场，从东方草原运来牧草，为帝国骑兵供马。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EN5_2
+    quote_hash: 8D37AB4D233BD157267DBBE868A0130EB707A80C66106AEE997C6DD2F3F84E94
+    quote: 俄耳特拉是一座相对较年轻的定居点，得名自一位帝国将领，他于破晓时分在此东望，看到密泽亚德的美景后就命名了日后这座帝国东部的山村。
+  expressions:
+  - id: expr.village-orthra-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 俄耳特拉的年头不长，可排场不小。村里人说将军看日出看出的村，养的马也跟着看日出——早起喂，四更上草。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EN5_2
+      quote_hash: 8D37AB4D233BD157267DBBE868A0130EB707A80C66106AEE997C6DD2F3F84E94
+      quote: 俄耳特拉是一座相对较年轻的定居点，得名自一位帝国将领，他于破晓时分在此东望，看到密泽亚德的美景后就命名了日后这座帝国东部的山村。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-orthra-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 俄耳特拉以育马为业——牧草从东方草原贩入、补本地草场之缺；马匹标注血统与年头，供骑兵部队征调，牧草行情直接牵动马价。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EN5_2
+      quote_hash: 8D37AB4D233BD157267DBBE868A0130EB707A80C66106AEE997C6DD2F3F84E94
+      quote: 俄耳特拉是一座相对较年轻的定居点，得名自一位帝国将领，他于破晓时分在此东望，看到密泽亚德的美景后就命名了日后这座帝国东部的山村。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-mazhadan
+title:
+  zh-CN: 马扎丹
+  en: Mazhadan
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 马扎丹
+  en:
+  - Mazhadan
+  - castle_village_S2_1
+summary:
+  zh-CN: 马扎丹靠近伽尔喀斯河的源头，在拉科尼斯湖的正西边；这片湿冷之地的村民，在泥泞的山谷里种植亚麻。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-sturgia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+  locator: bannerlord.villages#castle_village_S2_1
+  quote_hash: B5567C3DD6C78D3E5AFE9D3042DA30E9E6FC936530AAD3694DE4B2253123EAE5
+  quote: 马扎丹靠近伽尔喀斯河的源头，在拉科尼斯湖的正西方。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-mazhadan-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 马扎丹靠近伽尔喀斯河的源头，在拉科尼斯湖的正西边；这片湿冷之地的村民，在泥泞的山谷里种植亚麻。
+  sources:
+  - source_id: source.calradia.game.villages-desc-sturgia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+    locator: bannerlord.villages#castle_village_S2_1
+    quote_hash: B5567C3DD6C78D3E5AFE9D3042DA30E9E6FC936530AAD3694DE4B2253123EAE5
+    quote: 马扎丹靠近伽尔喀斯河的源头，在拉科尼斯湖的正西方。
+  expressions:
+  - id: expr.village-mazhadan-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 马扎丹的人不怕湿。村里人说这地方干不了，麻却要湿——地跟活儿正好对上。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S2_1
+      quote_hash: B5567C3DD6C78D3E5AFE9D3042DA30E9E6FC936530AAD3694DE4B2253123EAE5
+      quote: 马扎丹靠近伽尔喀斯河的源头，在拉科尼斯湖的正西方。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-mazhadan-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 马扎丹以湿谷种麻为业——水源近、土湿宜麻；麻按纤维与色泽分等，沤麻靠谷水，供织坊纺线结网，秋后集中收麻。
+    sources:
+    - source_id: source.calradia.game.villages-desc-sturgia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 245A872B3EDE6470FF4C7CF5AF375DC32B4DBBC64D29674DD0F9A44B7CEA61A9
+      locator: bannerlord.villages#castle_village_S2_1
+      quote_hash: B5567C3DD6C78D3E5AFE9D3042DA30E9E6FC936530AAD3694DE4B2253123EAE5
+      quote: 马扎丹靠近伽尔喀斯河的源头，在拉科尼斯湖的正西方。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

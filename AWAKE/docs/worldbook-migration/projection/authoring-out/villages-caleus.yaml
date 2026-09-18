@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-caleus
+title:
+  zh-CN: 卡琉斯
+  en: Caleus
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 卡琉斯
+  en:
+  - Caleus
+  - castle_village_V6_1
+summary:
+  zh-CN: 卡琉斯位于瓦尔切格湾以南多雾的沿海平原上；当地村民讲一种混合了瓦兰迪亚、斯特吉亚与巴旦尼亚成分的话，在低地种植亚麻。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-vlandia
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+  locator: bannerlord.villages#castle_village_V6_1
+  quote_hash: 9AE7F2C41CD1794A9CC172776F4233161E4FA0D5A76176A0BFA41CA4923AD98F
+  quote: 卡琉斯坐落于瓦尔切格湾南边多雾的沿海平原上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-caleus-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 卡琉斯位于瓦尔切格湾以南多雾的沿海平原上；当地村民讲一种混合了瓦兰迪亚、斯特吉亚与巴旦尼亚成分的话，在低地种植亚麻。
+  sources:
+  - source_id: source.calradia.game.villages-desc-vlandia
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+    locator: bannerlord.villages#castle_village_V6_1
+    quote_hash: 9AE7F2C41CD1794A9CC172776F4233161E4FA0D5A76176A0BFA41CA4923AD98F
+    quote: 卡琉斯坐落于瓦尔切格湾南边多雾的沿海平原上。
+  expressions:
+  - id: expr.village-caleus-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 卡琉斯人说话三国都听得懂一半。村里人说祖上是杂着来的，话也杂着长——卖麻的时候倒谁都不吃亏。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#castle_village_V6_1
+      quote_hash: 9AE7F2C41CD1794A9CC172776F4233161E4FA0D5A76176A0BFA41CA4923AD98F
+      quote: 卡琉斯坐落于瓦尔切格湾南边多雾的沿海平原上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-caleus-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 卡琉斯以低地亚麻为主产——雾重地湿、纤维柔长；因通三方话语，本村麻商能直接对接北境与山地买家，麻价随边境松紧浮动。
+    sources:
+    - source_id: source.calradia.game.villages-desc-vlandia
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 42F8130BB9D7660D5C61522B38D824A285BE4296DE217E2CF06026E1612034A3
+      locator: bannerlord.villages#castle_village_V6_1
+      quote_hash: 9AE7F2C41CD1794A9CC172776F4233161E4FA0D5A76176A0BFA41CA4923AD98F
+      quote: 卡琉斯坐落于瓦尔切格湾南边多雾的沿海平原上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

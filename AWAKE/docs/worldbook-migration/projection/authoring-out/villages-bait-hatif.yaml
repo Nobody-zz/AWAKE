@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-bait-hatif
+title:
+  zh-CN: 拜特·哈提夫
+  en: Bait Hatif
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 拜特·哈提夫
+  en:
+  - Bait Hatif
+  - village_A7_2
+summary:
+  zh-CN: 拜特·哈提夫坐落于达玛尔河冲积平原，石质土壤限制灌溉效果，山上的春草却能让马匹茁壮成长。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+  locator: bannerlord.villages#village_A7_2
+  quote_hash: 408645D8FA8F2DAF0A361B9CCC1D2582337C4CAA0674400CC2463F31BF245A22
+  quote: 拜特·哈提夫坐落于杰尔贾赖峭壁被达玛尔河分割形成的冲积平原上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-bait-hatif-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 拜特·哈提夫坐落于达玛尔河冲积平原，石质土壤限制灌溉效果，山上的春草却能让马匹茁壮成长。
+  sources:
+  - source_id: source.calradia.game.villages-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+    locator: bannerlord.villages#village_A7_2
+    quote_hash: 408645D8FA8F2DAF0A361B9CCC1D2582337C4CAA0674400CC2463F31BF245A22
+    quote: 拜特·哈提夫坐落于杰尔贾赖峭壁被达玛尔河分割形成的冲积平原上。
+  expressions:
+  - id: expr.village-bait-hatif-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 拜特·哈提夫的地看着平，底下全是石头，种粮不成。可山上的春草喂马，一头头油光水滑。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#village_A7_2
+      quote_hash: 408645D8FA8F2DAF0A361B9CCC1D2582337C4CAA0674400CC2463F31BF245A22
+      quote: 拜特·哈提夫坐落于杰尔贾赖峭壁被达玛尔河分割形成的冲积平原上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-bait-hatif-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 拜特·哈提夫是石地牧村——粮不行、马顶上；紧邻阿斯凯尔河市，马驹就地换粮是常例，价钱两头都熟。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#village_A7_2
+      quote_hash: 408645D8FA8F2DAF0A361B9CCC1D2582337C4CAA0674400CC2463F31BF245A22
+      quote: 拜特·哈提夫坐落于杰尔贾赖峭壁被达玛尔河分割形成的冲积平原上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

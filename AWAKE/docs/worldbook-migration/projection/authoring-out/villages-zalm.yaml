@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-zalm
+title:
+  zh-CN: 扎勒姆
+  en: Zalm
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 扎勒姆
+  en:
+  - Zalm
+  - village_A7_4
+summary:
+  zh-CN: 扎勒姆坐落于「枯焦之门」——达玛尔河自纳哈撒沙漠发源并穿过杰尔贾赖峭壁之处，河水淤泥使当地小麦收成很好。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+  locator: bannerlord.villages#village_A7_4
+  quote_hash: B3798185D5012D97158E46B725A58EAFE65558FE308030A806471B87E5E46A14
+  quote: 扎勒姆坐落于枯焦之门，达玛尔河在此处从纳哈撒沙漠发源并穿过杰尔贾赖峭壁。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-zalm-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 扎勒姆坐落于「枯焦之门」——达玛尔河自纳哈撒沙漠发源并穿过杰尔贾赖峭壁之处，河水淤泥使当地小麦收成很好。
+  sources:
+  - source_id: source.calradia.game.villages-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+    locator: bannerlord.villages#village_A7_4
+    quote_hash: B3798185D5012D97158E46B725A58EAFE65558FE308030A806471B87E5E46A14
+    quote: 扎勒姆坐落于枯焦之门，达玛尔河在此处从纳哈撒沙漠发源并穿过杰尔贾赖峭壁。
+  expressions:
+  - id: expr.village-zalm-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 扎勒姆守着枯焦之门——沙漠里出来的河，头一段水最金贵。老人说河是从死地里逃出来的，带的全是活气。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#village_A7_4
+      quote_hash: B3798185D5012D97158E46B725A58EAFE65558FE308030A806471B87E5E46A14
+      quote: 扎勒姆坐落于枯焦之门，达玛尔河在此处从纳哈撒沙漠发源并穿过杰尔贾赖峭壁。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-zalm-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 扎勒姆卡着达玛尔河出沙漠的头一隘口——上水情先到、下水村后知，粮价资讯比别村快半步。
+    sources:
+    - source_id: source.calradia.game.villages-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8922DA67E165970BFD39F803B4BE46AE8B2292750514F66E05D2092CA29EB523
+      locator: bannerlord.villages#village_A7_4
+      quote_hash: B3798185D5012D97158E46B725A58EAFE65558FE308030A806471B87E5E46A14
+      quote: 扎勒姆坐落于枯焦之门，达玛尔河在此处从纳哈撒沙漠发源并穿过杰尔贾赖峭壁。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

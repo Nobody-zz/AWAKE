@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-mag-arba
+title:
+  zh-CN: 马格·阿尔巴
+  en: Mag Arba
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 马格·阿尔巴
+  en:
+  - Mag Arba
+  - village_B4_3
+summary:
+  zh-CN: 马格·阿尔巴坐落于俯瞰“林·泰瓦尔”也就是暗湖的草场上；村民们在泥泞的山谷里种植亚麻。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-battania
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+  locator: bannerlord.villages#village_B4_3
+  quote_hash: 4B7945B0E7AA84048CA8EBC96C54D707392FD47A96DA2BC7BA437439D515631C
+  quote: 马格·阿尔巴坐落于俯瞰“林·泰瓦尔”——即暗湖的草场上。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-mag-arba-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 马格·阿尔巴坐落于俯瞰“林·泰瓦尔”也就是暗湖的草场上；村民们在泥泞的山谷里种植亚麻。
+  sources:
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#village_B4_3
+    quote_hash: 4B7945B0E7AA84048CA8EBC96C54D707392FD47A96DA2BC7BA437439D515631C
+    quote: 马格·阿尔巴坐落于俯瞰“林·泰瓦尔”——即暗湖的草场上。
+  expressions:
+  - id: expr.village-mag-arba-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 马格·阿尔巴的人跟湿泥打交道。村里人说草场给牲口，泥谷给亚麻——湿是湿了点，麻线倒是韧。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B4_3
+      quote_hash: 4B7945B0E7AA84048CA8EBC96C54D707392FD47A96DA2BC7BA437439D515631C
+      quote: 马格·阿尔巴坐落于俯瞰“林·泰瓦尔”——即暗湖的草场上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-mag-arba-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 马格·阿尔巴以谷地种麻为业——湿土宜麻、纤维韧长；麻按纤维与色泽分等，沤麻靠谷水，供织坊纺线与结网，多与草场牲畜搭卖。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B4_3
+      quote_hash: 4B7945B0E7AA84048CA8EBC96C54D707392FD47A96DA2BC7BA437439D515631C
+      quote: 马格·阿尔巴坐落于俯瞰“林·泰瓦尔”——即暗湖的草场上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

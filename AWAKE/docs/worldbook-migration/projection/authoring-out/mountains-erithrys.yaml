@@ -1,0 +1,251 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.mountains-erithrys
+title:
+  zh-CN: 厄里特律斯山
+  en: Mount Erithrys
+status: needs_review
+domain: geography
+subdomain: terrain
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 厄里特律斯山
+  - 厄吕特律斯山
+  - 洛泰
+  - 洛塔什
+  en:
+  - Mount Erithrys
+  - Rhotae
+  - Rotash
+summary:
+  zh-CN: 玄武巨岩之山的形胜；山影下的洛泰与萨拉庇俄斯焚城；山腰隐者的传闻。河名等编年史私造词已焚毁。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+sources:
+- source_id: source.calradia.game.settlements.geo2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+  locator: bannerlord.db#localization.5SpYVtie
+  quote_hash: 30D026293DCE251447851D0B7C63331599C6FB2B2C7815CD1D16906D3E42BA6D
+  quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。在拉革塔之后，洛塔什也很快落入帝国手中。
+- source_id: source.calradia.chronicle.animusforge.geo2
+  source_version: animusforge-20260912
+  source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+  locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/0/Content
+  quote_hash: 91D894D460D3E6270F579A43BADA1E5F472F364D01E0E13590900CB7A4C7170A
+  quote: 厄吕特律斯山是卡拉迪亚大陆最雄伟的山峰，坐落于阿米尼斯河谷的怀抱之中。整座山由深色的玄武巨岩构成，陡峭的岩壁从河谷中拔地而起，山顶终年积雪不化。
+- source_id: source.calradia.game.settlements.geo2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+  locator: bannerlord.db#localization.5SpYVtie
+  quote_hash: 8181731F3F9C6764E7419B179CF843AFFEFA2CCE8C8C1E29D7D8A0B15317E289
+  quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。在拉革塔之后，洛塔什也很快落入帝国手中。当地的帕拉酋长在听说邻国发生的事情后，屠戮了受他保护的几十名帝国公民。性格古怪的长发将军萨拉庇俄斯率领着惩戒部队攻下了洛塔什，并将其夷为平地。
+- source_id: source.calradia.chronicle.animusforge.geo2
+  source_version: animusforge-20260912
+  source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+  locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/2/Content
+  quote_hash: 4A78F7A9CB5EA0080B1B42BFC3895F45D067AF0AAB2DF02448801C1D20FF47FF
+  quote: 谁控制了洛泰，谁就握住了整个阿米尼斯河谷的粮食命脉。
+- source_id: source.calradia.chronicle.animusforge.geo2
+  source_version: animusforge-20260912
+  source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+  locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/4/Content
+  quote_hash: 5DFE97B5C0CF3D71FB37D0A8B6B62BA2B7EA4272F284ABA4439EE361ECBEA1A6
+  quote: 它离我们不算近，但天气特别好的时候，站在高原的西南边缘，能看到它的雪顶在极远处闪着微光
+- source_id: source.calradia.chronicle.animusforge.geo2
+  source_version: animusforge-20260912
+  source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+  locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/10/Content
+  quote_hash: 805ACE64EE86B5A5A48E3907C04D8080F1E55808ABB20E5341F3AF4918867A17
+  quote: 这座山给了我们水，也给了他们藏身的地方，各取所需。
+assertions:
+- id: assertion.mount-erithrys-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 黑色的巨岩山体拔地而起，山顶积雪终年不化；平原上的人把它当作大陆最雄伟的山。
+  sources:
+  - source_id: source.calradia.game.settlements.geo2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+    locator: bannerlord.db#localization.5SpYVtie
+    quote_hash: 30D026293DCE251447851D0B7C63331599C6FB2B2C7815CD1D16906D3E42BA6D
+    quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。在拉革塔之后，洛塔什也很快落入帝国手中。
+  - source_id: source.calradia.chronicle.animusforge.geo2
+    source_version: animusforge-20260912
+    source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+    locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/0/Content
+    quote_hash: 91D894D460D3E6270F579A43BADA1E5F472F364D01E0E13590900CB7A4C7170A
+    quote: 厄吕特律斯山是卡拉迪亚大陆最雄伟的山峰，坐落于阿米尼斯河谷的怀抱之中。整座山由深色的玄武巨岩构成，陡峭的岩壁从河谷中拔地而起，山顶终年积雪不化。
+  expressions:
+  - id: expr.mount-erithrys-mountain-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 黑石头山，雪顶一年到头不化——走过商路的人都说，那是大陆上最气派的一座山。
+    sources:
+    - source_id: source.calradia.game.settlements.geo2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+      locator: bannerlord.db#localization.5SpYVtie
+      quote_hash: 30D026293DCE251447851D0B7C63331599C6FB2B2C7815CD1D16906D3E42BA6D
+      quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。在拉革塔之后，洛塔什也很快落入帝国手中。
+    - source_id: source.calradia.chronicle.animusforge.geo2
+      source_version: animusforge-20260912
+      source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+      locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/0/Content
+      quote_hash: 91D894D460D3E6270F579A43BADA1E5F472F364D01E0E13590900CB7A4C7170A
+      quote: 厄吕特律斯山是卡拉迪亚大陆最雄伟的山峰，坐落于阿米尼斯河谷的怀抱之中。整座山由深色的玄武巨岩构成，陡峭的岩壁从河谷中拔地而起，山顶终年积雪不化。
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+- id: assertion.mount-erithrys-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 山影下坐落着洛泰——旧名洛塔什的帕拉人山堡，帝国夺之；山上雪水滋养谷地，四里八乡的麦子由此装船南运。
+  sources:
+  - source_id: source.calradia.game.settlements.geo2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+    locator: bannerlord.db#localization.5SpYVtie
+    quote_hash: 30D026293DCE251447851D0B7C63331599C6FB2B2C7815CD1D16906D3E42BA6D
+    quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。在拉革塔之后，洛塔什也很快落入帝国手中。
+  - source_id: source.calradia.game.settlements.geo2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+    locator: bannerlord.db#localization.5SpYVtie
+    quote_hash: 8181731F3F9C6764E7419B179CF843AFFEFA2CCE8C8C1E29D7D8A0B15317E289
+    quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。在拉革塔之后，洛塔什也很快落入帝国手中。当地的帕拉酋长在听说邻国发生的事情后，屠戮了受他保护的几十名帝国公民。性格古怪的长发将军萨拉庇俄斯率领着惩戒部队攻下了洛塔什，并将其夷为平地。
+  - source_id: source.calradia.chronicle.animusforge.geo2
+    source_version: animusforge-20260912
+    source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+    locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/2/Content
+    quote_hash: 4A78F7A9CB5EA0080B1B42BFC3895F45D067AF0AAB2DF02448801C1D20FF47FF
+    quote: 谁控制了洛泰，谁就握住了整个阿米尼斯河谷的粮食命脉。
+  - source_id: source.calradia.chronicle.animusforge.geo2
+    source_version: animusforge-20260912
+    source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+    locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/4/Content
+    quote_hash: 5DFE97B5C0CF3D71FB37D0A8B6B62BA2B7EA4272F284ABA4439EE361ECBEA1A6
+    quote: 它离我们不算近，但天气特别好的时候，站在高原的西南边缘，能看到它的雪顶在极远处闪着微光
+  expressions:
+  - id: expr.mount-erithrys-rhotae-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 洛泰挨着山根，打帕拉人的山堡过来的，旧名洛塔什——帝国当年为了它动过刀兵，萨拉庇俄斯一把火把旧城烧了个干净。如今谷里的麦子打这儿上船，往南一船一船地走。
+    sources:
+    - source_id: source.calradia.game.settlements.geo2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+      locator: bannerlord.db#localization.5SpYVtie
+      quote_hash: 30D026293DCE251447851D0B7C63331599C6FB2B2C7815CD1D16906D3E42BA6D
+      quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。在拉革塔之后，洛塔什也很快落入帝国手中。
+    - source_id: source.calradia.game.settlements.geo2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 8fcc88868e40b0d90b9e6fada6e9ad7029dd90df4e2905f1718e00673932e0c4
+      locator: bannerlord.db#localization.5SpYVtie
+      quote_hash: 8181731F3F9C6764E7419B179CF843AFFEFA2CCE8C8C1E29D7D8A0B15317E289
+      quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。在拉革塔之后，洛塔什也很快落入帝国手中。当地的帕拉酋长在听说邻国发生的事情后，屠戮了受他保护的几十名帝国公民。性格古怪的长发将军萨拉庇俄斯率领着惩戒部队攻下了洛塔什，并将其夷为平地。
+    - source_id: source.calradia.chronicle.animusforge.geo2
+      source_version: animusforge-20260912
+      source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+      locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/2/Content
+      quote_hash: 4A78F7A9CB5EA0080B1B42BFC3895F45D067AF0AAB2DF02448801C1D20FF47FF
+      quote: 谁控制了洛泰，谁就握住了整个阿米尼斯河谷的粮食命脉。
+    grants:
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+  - id: expr.mount-erithrys-rhotae-battanian
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 天好的时候，站在高原西南边上，能瞅见远处雪顶闪白光。老辈人有的管它叫黑壁，有的叫白冠——帝国人的粮城在山根下，与我们无干。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.geo2
+      source_version: animusforge-20260912
+      source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+      locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/4/Content
+      quote_hash: 5DFE97B5C0CF3D71FB37D0A8B6B62BA2B7EA4272F284ABA4439EE361ECBEA1A6
+      quote: 它离我们不算近，但天气特别好的时候，站在高原的西南边缘，能看到它的雪顶在极远处闪着微光
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.battania
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.battania
+    denies: []
+- id: assertion.mount-erithrys-3
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 山腰洞窟隐者之说流传于洛泰与各条商路：一群从不下山的人，来历无人说得清；有人敬他们，有人只当山里多了几个影子。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.geo2
+    source_version: animusforge-20260912
+    source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+    locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/10/Content
+    quote_hash: 805ACE64EE86B5A5A48E3907C04D8080F1E55808ABB20E5341F3AF4918867A17
+    quote: 这座山给了我们水，也给了他们藏身的地方，各取所需。
+  expressions:
+  - id: expr.mount-erithrys-hermit-townsfolk
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 上山采药的远远见过洞口有人影。他们不下山，我们不上山——这山给了我们水，也给了他们落脚的地方，各过各的。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.geo2
+      source_version: animusforge-20260912
+      source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+      locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/10/Content
+      quote_hash: 805ACE64EE86B5A5A48E3907C04D8080F1E55808ABB20E5341F3AF4918867A17
+      quote: 这座山给了我们水，也给了他们藏身的地方，各取所需。
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.mount-erithrys-hermit-soldier
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 驻在洛泰那阵子，伙食是各处驻地里最好的。新兵问山上那些人闷不闷——山下打成那样，山上闷一点有什么不好。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.geo2
+      source_version: animusforge-20260912
+      source_content_hash: 84fd65e5b2426ab069a4e93456f42e0dc5ad3f68be065bf890cd7a43110b9d93
+      locator: rules/rule_厄吕特律斯山__厄吕特律斯山.json#/Variants/10/Content
+      quote_hash: 805ACE64EE86B5A5A48E3907C04D8080F1E55808ABB20E5341F3AF4918867A17
+      quote: 这座山给了我们水，也给了他们藏身的地方，各取所需。
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+    denies: []

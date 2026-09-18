@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-karahalli
+title:
+  zh-CN: 喀拉哈力
+  en: Karahalli
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 喀拉哈力
+  en:
+  - Karahalli
+  - castle_village_K6_2
+summary:
+  zh-CN: 喀拉哈力位于库赛特部落联盟的极北之地，离冰冷的比亚里海不远，是与斯特吉亚人常年争夺的边境；这里几乎终年积雪，春草仍养活了相当多的绵羊，厚羊毛帮人挡下海上刮来的砭骨寒风。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-khuzait
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+  locator: bannerlord.villages#castle_village_K6_2
+  quote_hash: BCE08625A11F824668C453C467762E54147BE1AC6614F4DD5406594B929992D9
+  quote: 喀拉哈力位于库赛特部落联盟的极北之地，离冰冷的比亚里海不远，是与斯特吉亚人常年争夺得边境之地。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-karahalli-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 喀拉哈力位于库赛特部落联盟的极北之地，离冰冷的比亚里海不远，是与斯特吉亚人常年争夺的边境；这里几乎终年积雪，春草仍养活了相当多的绵羊，厚羊毛帮人挡下海上刮来的砭骨寒风。
+  sources:
+  - source_id: source.calradia.game.villages-desc-khuzait
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+    locator: bannerlord.villages#castle_village_K6_2
+    quote_hash: BCE08625A11F824668C453C467762E54147BE1AC6614F4DD5406594B929992D9
+    quote: 喀拉哈力位于库赛特部落联盟的极北之地，离冰冷的比亚里海不远，是与斯特吉亚人常年争夺得边境之地。
+  expressions:
+  - id: expr.village-karahalli-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 喀拉哈力两边都说是自己的。村里人说换谁的旗都一样，羊照放——就是收毛的人来得少了，价倒涨。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#castle_village_K6_2
+      quote_hash: BCE08625A11F824668C453C467762E54147BE1AC6614F4DD5406594B929992D9
+      quote: 喀拉哈力位于库赛特部落联盟的极北之地，离冰冷的比亚里海不远，是与斯特吉亚人常年争夺得边境之地。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-karahalli-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 喀拉哈力出边境厚毛羊——争地不定、牧户结伴放牧；毛货多由行商冒险上门收，边情一紧毛价先涨，货也最容易被劫。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#castle_village_K6_2
+      quote_hash: BCE08625A11F824668C453C467762E54147BE1AC6614F4DD5406594B929992D9
+      quote: 喀拉哈力位于库赛特部落联盟的极北之地，离冰冷的比亚里海不远，是与斯特吉亚人常年争夺得边境之地。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

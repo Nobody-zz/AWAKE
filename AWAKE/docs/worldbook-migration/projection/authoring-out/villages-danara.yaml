@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-danara
+title:
+  zh-CN: 达纳拉
+  en: Danara
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 达纳拉
+  en:
+  - Danara
+  - village_K6_3
+summary:
+  zh-CN: 达纳拉位于库赛特人称作昌尕淖尔的那片不解渴的盐湖旁；村民从苦涩的湖水里取盐。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-khuzait
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+  locator: bannerlord.villages#village_K6_3
+  quote_hash: B312F41937B3111BBECBCF4A0AAFE933CD289F794F4CBAD6EC2F74DEEA2BD798
+  quote: 达纳拉位于库赛特人称作昌尕淖尔的不解渴的盐湖旁。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-danara-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 达纳拉位于库赛特人称作昌尕淖尔的那片不解渴的盐湖旁；村民从苦涩的湖水里取盐。
+  sources:
+  - source_id: source.calradia.game.villages-desc-khuzait
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+    locator: bannerlord.villages#village_K6_3
+    quote_hash: B312F41937B3111BBECBCF4A0AAFE933CD289F794F4CBAD6EC2F74DEEA2BD798
+    quote: 达纳拉位于库赛特人称作昌尕淖尔的不解渴的盐湖旁。
+  expressions:
+  - id: expr.village-danara-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 达纳拉的水喝不得，盐却用得。村里人说湖是咸的，日子也是咸的——可咸有咸的用处。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#village_K6_3
+      quote_hash: B312F41937B3111BBECBCF4A0AAFE933CD289F794F4CBAD6EC2F74DEEA2BD798
+      quote: 达纳拉位于库赛特人称作昌尕淖尔的不解渴的盐湖旁。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-danara-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 达纳拉靠湖盐为生——湖水晒取成盐、粒粗味苦；盐货驮往高原与草海市集，收盐看粒色与干度，咸水湖边寸草不生。
+    sources:
+    - source_id: source.calradia.game.villages-desc-khuzait
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: F706361EC26C22B5C10913FAA900C61513EAFD7EA536DBD4C7A0B24EB91402DD
+      locator: bannerlord.villages#village_K6_3
+      quote_hash: B312F41937B3111BBECBCF4A0AAFE933CD289F794F4CBAD6EC2F74DEEA2BD798
+      quote: 达纳拉位于库赛特人称作昌尕淖尔的不解渴的盐湖旁。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

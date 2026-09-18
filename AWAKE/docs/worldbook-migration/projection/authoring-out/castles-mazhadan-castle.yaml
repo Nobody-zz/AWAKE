@@ -1,0 +1,127 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.castles-mazhadan-castle
+title:
+  zh-CN: 马扎丹堡
+  en: Mazhadan Castle
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 马扎丹堡
+  - 马扎丹
+  - 福林
+  en:
+  - Mazhadan Castle
+  - castle_S2
+  - Mazhadan
+  - Forin
+entity_ids:
+- entity.settlement.castle_s2
+summary:
+  zh-CN: 马扎丹堡是斯特吉亚立在伽尔喀斯河源的一座城堡，辖着马扎丹与福林两村；湿谷里种亚麻，林地改成牧场养马。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.castles
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+  locator: bannerlord.castles#castle_S2
+  quote_hash: E46093EBFD53D3C6B6FB3D79BDED856C5846A70989C502E4E43BE718EA324E6C
+  quote: 马扎丹堡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.castle-mazhadan-castle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 马扎丹堡是斯特吉亚立在伽尔喀斯河源的一座城堡，辖着马扎丹与福林两村；湿谷里种亚麻，林地改成牧场养马。
+  sources:
+  - source_id: source.calradia.game.castles
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+    locator: bannerlord.castles#castle_S2
+    quote_hash: E46093EBFD53D3C6B6FB3D79BDED856C5846A70989C502E4E43BE718EA324E6C
+    quote: 马扎丹堡
+  expressions:
+  - id: expr.castle-mazhadan-castle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 马扎丹堡的人说，堡子这地方湿冷，亚麻就爱这种地。村里人说，林子里原先砍木头，如今圈起来放马了。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_S2
+      quote_hash: E46093EBFD53D3C6B6FB3D79BDED856C5846A70989C502E4E43BE718EA324E6C
+      quote: 马扎丹堡
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.castle-mazhadan-castle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 马扎丹堡据伽尔喀斯河源、拉科尼斯湖西侧，下辖亚麻村与牧马村各一；亚麻在堡中沤浸、打包外销，林垦牧场按围栏分界，波耶之间议定的地界由堡里立碑为凭。
+    sources:
+    - source_id: source.calradia.game.castles
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 2B450CB00D9CB782185EBD4863CAACE892D4402A65CB064BE8130881B51BBF30
+      locator: bannerlord.castles#castle_S2
+      quote_hash: E46093EBFD53D3C6B6FB3D79BDED856C5846A70989C502E4E43BE718EA324E6C
+      quote: 马扎丹堡
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

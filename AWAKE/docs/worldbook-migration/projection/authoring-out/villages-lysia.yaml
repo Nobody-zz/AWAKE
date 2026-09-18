@@ -1,0 +1,121 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.villages-lysia
+title:
+  zh-CN: 吕西亚
+  en: Lysia
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 吕西亚
+  en:
+  - Lysia
+  - castle_village_EW1_2
+summary:
+  zh-CN: 珀拉斯内海汇入西海所经的狭长海峡以吕西亚为名，此地位于珀拉斯海一侧，附近宽阔的海滩用于建设盐田。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.villages-desc-emp1
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+  locator: bannerlord.villages#castle_village_EW1_2
+  quote_hash: BECCE28B4FE095FD4CE21EAB4188742DEA5778945FC498F42E4EE7687962803A
+  quote: 珀拉斯内海汇入西海所经过的那条狭长海峡便以吕西亚为名。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.village-lysia-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 珀拉斯内海汇入西海所经的狭长海峡以吕西亚为名，此地位于珀拉斯海一侧，附近宽阔的海滩用于建设盐田。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp1
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+    locator: bannerlord.villages#castle_village_EW1_2
+    quote_hash: BECCE28B4FE095FD4CE21EAB4188742DEA5778945FC498F42E4EE7687962803A
+    quote: 珀拉斯内海汇入西海所经过的那条狭长海峡便以吕西亚为名。
+  expressions:
+  - id: expr.village-lysia-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 吕西亚的海峡是内海出海的喉咙。村里人守着滩涂晒盐——潮水一天两趟，盐田就吃这两趟。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EW1_2
+      quote_hash: BECCE28B4FE095FD4CE21EAB4188742DEA5778945FC498F42E4EE7687962803A
+      quote: 珀拉斯内海汇入西海所经过的那条狭长海峡便以吕西亚为名。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-lysia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 吕西亚盐田吃海峡潮差——滩宽卤足、航路近便；盐随船走，内海船户出海口前必在此补盐。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp1
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 41906DE8708C76E04A59FB46F98C9F919DEA3D44AF7BA553FB9DCEEC55C02DC8
+      locator: bannerlord.villages#castle_village_EW1_2
+      quote_hash: BECCE28B4FE095FD4CE21EAB4188742DEA5778945FC498F42E4EE7687962803A
+      quote: 珀拉斯内海汇入西海所经过的那条狭长海峡便以吕西亚为名。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

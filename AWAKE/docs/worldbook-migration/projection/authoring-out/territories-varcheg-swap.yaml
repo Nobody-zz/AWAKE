@@ -1,0 +1,197 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.politics.territories-varcheg-swap
+title:
+  zh-CN: 瓦尔切格·三易其手与镇名
+  en: Varcheg
+status: needs_review
+domain: politics
+subdomain: territories
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 瓦尔切格
+  - 戴恩玛查
+  - 誓言之同伴
+  en:
+  - Varcheg
+  - Dernmachad
+entity_ids:
+- entity.settlement.town_s1
+summary:
+  zh-CN: 瓦尔切格效忠—雇佣—击溃—夺城的易手链与镇名由来（斯特吉亚说法与巴旦尼亚说法并录）。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_S1.descriptionText
+  quote_hash: 9B6DAF9A2CEF381AE5923E70D5E6F693CE3B1F68199735B4136AFF9A0D33AFBD
+  quote: 于是向巴旦尼亚至高王戴恩玛查宣誓效忠，但随后却开始涉足巴旦尼亚政治。恼怒的戴恩玛查雇佣了斯特吉亚军队来击败他不可靠的新封臣
+- source_id: source.calradia.chronicle.animusforge
+  source_version: animusforge-20260912
+  source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+  locator: rules/rule_卡恰尔半岛__卡恰尔半岛.json#/Variants/5/Content
+  quote_hash: AA8CD0808EEA49428DA9EE6C460FCDA8A93601180ACB8DE5C6E9C2D8916D5134
+  quote: 卡恰尔半岛曾经是我们巴旦尼亚的土地。当年我们的至高王戴恩玛在那里接受了诺德人的效忠，结果那帮北方佬不讲信用，吃里扒外。戴恩玛雇了斯特吉亚人来清理门户，结果斯特吉亚人打完仗不走了，把整片半岛都吞了。这件事教会我们一个道理：不要雇比你更贪婪的人来帮你打架。现在半岛上还留着我们祖先的石阵残迹，海风从南边吹过来的时候，还能闻到我们当年篝火的烟味。土地可以被人抢走，但风不会忘。
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_S1.descriptionText
+  quote_hash: A4CC70575716C0B16E2BE98780CE40768A9BCA0BCBC0A77AEE0DF6303EFCD28F
+  quote: 斯特吉亚人奉命击溃了诺德人，但随后要求把新夺得的城镇作为他们的报酬
+- source_id: source.calradia.game.settlements
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+  locator: bannerlord.db#settlements.town_S1.descriptionText
+  quote_hash: D6FDABB707FA324C86210054422B9F083AED4DCF4A7E214E1997633C6B53220D
+  quote: 他们将这个城镇称为“瓦尔切格”，这是诺德词“誓言之同伴”的变体，以嘲讽两个因争斗而将战利品拱手让给他们的敌人
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.territory-varcheg-swap-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 诺德雅尔向巴旦尼亚至高王戴恩玛查宣誓效忠后又生异心，戴恩玛查雇斯特吉亚人击败了他。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_S1.descriptionText
+    quote_hash: 9B6DAF9A2CEF381AE5923E70D5E6F693CE3B1F68199735B4136AFF9A0D33AFBD
+    quote: 于是向巴旦尼亚至高王戴恩玛查宣誓效忠，但随后却开始涉足巴旦尼亚政治。恼怒的戴恩玛查雇佣了斯特吉亚军队来击败他不可靠的新封臣
+  - source_id: source.calradia.chronicle.animusforge
+    source_version: animusforge-20260912
+    source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+    locator: rules/rule_卡恰尔半岛__卡恰尔半岛.json#/Variants/5/Content
+    quote_hash: AA8CD0808EEA49428DA9EE6C460FCDA8A93601180ACB8DE5C6E9C2D8916D5134
+    quote: 卡恰尔半岛曾经是我们巴旦尼亚的土地。当年我们的至高王戴恩玛在那里接受了诺德人的效忠，结果那帮北方佬不讲信用，吃里扒外。戴恩玛雇了斯特吉亚人来清理门户，结果斯特吉亚人打完仗不走了，把整片半岛都吞了。这件事教会我们一个道理：不要雇比你更贪婪的人来帮你打架。现在半岛上还留着我们祖先的石阵残迹，海风从南边吹过来的时候，还能闻到我们当年篝火的烟味。土地可以被人抢走，但风不会忘。
+  expressions:
+  - id: expr.territory-varcheg-swap-1-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 诺德雅尔向巴旦尼亚至高王戴恩玛查宣誓效忠后又生异心，戴恩玛查雇斯特吉亚人击败了他。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_S1.descriptionText
+      quote_hash: 9B6DAF9A2CEF381AE5923E70D5E6F693CE3B1F68199735B4136AFF9A0D33AFBD
+      quote: 于是向巴旦尼亚至高王戴恩玛查宣誓效忠，但随后却开始涉足巴旦尼亚政治。恼怒的戴恩玛查雇佣了斯特吉亚军队来击败他不可靠的新封臣
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    denies: []
+  - id: expr.territory-varcheg-swap-1-b-battania
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 卡恰尔半岛曾经是我们巴旦尼亚的土地。当年我们的至高王戴恩玛在那里接受了诺德人的效忠，结果那帮北方佬不讲信用，吃里扒外。戴恩玛雇了斯特吉亚人来清理门户，结果斯特吉亚人打完仗不走了，把整片半岛都吞了。这件事教会我们一个道理：不要雇比你更贪婪的人来帮你打架。现在半岛上还留着我们祖先的石阵残迹，海风从南边吹过来的时候，还能闻到我们当年篝火的烟味。土地可以被人抢走，但风不会忘。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge
+      source_version: animusforge-20260912
+      source_content_hash: 407C6E6DCA55C8EC47104C4F29489DDE7BCB991298B50BD99DA57503ABA171B2
+      locator: rules/rule_卡恰尔半岛__卡恰尔半岛.json#/Variants/5/Content
+      quote_hash: AA8CD0808EEA49428DA9EE6C460FCDA8A93601180ACB8DE5C6E9C2D8916D5134
+      quote: 卡恰尔半岛曾经是我们巴旦尼亚的土地。当年我们的至高王戴恩玛在那里接受了诺德人的效忠，结果那帮北方佬不讲信用，吃里扒外。戴恩玛雇了斯特吉亚人来清理门户，结果斯特吉亚人打完仗不走了，把整片半岛都吞了。这件事教会我们一个道理：不要雇比你更贪婪的人来帮你打架。现在半岛上还留着我们祖先的石阵残迹，海风从南边吹过来的时候，还能闻到我们当年篝火的烟味。土地可以被人抢走，但风不会忘。
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.battania
+    denies: []
+- id: assertion.territory-varcheg-swap-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 斯特吉亚人击溃诺德人后索要城镇作酬劳，瓦尔切格由此易手。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_S1.descriptionText
+    quote_hash: A4CC70575716C0B16E2BE98780CE40768A9BCA0BCBC0A77AEE0DF6303EFCD28F
+    quote: 斯特吉亚人奉命击溃了诺德人，但随后要求把新夺得的城镇作为他们的报酬
+  expressions:
+  - id: expr.territory-varcheg-swap-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 斯特吉亚人击溃诺德人后索要城镇作酬劳，瓦尔切格由此易手。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_S1.descriptionText
+      quote_hash: A4CC70575716C0B16E2BE98780CE40768A9BCA0BCBC0A77AEE0DF6303EFCD28F
+      quote: 斯特吉亚人奉命击溃了诺德人，但随后要求把新夺得的城镇作为他们的报酬
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    denies: []
+- id: assertion.territory-varcheg-swap-3
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: “瓦尔切格”是诺德词“誓言之同伴”的变体——斯特吉亚人起这名嘲讽两个把战利品拱手让人的人。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_S1.descriptionText
+    quote_hash: D6FDABB707FA324C86210054422B9F083AED4DCF4A7E214E1997633C6B53220D
+    quote: 他们将这个城镇称为“瓦尔切格”，这是诺德词“誓言之同伴”的变体，以嘲讽两个因争斗而将战利品拱手让给他们的敌人
+  expressions:
+  - id: expr.territory-varcheg-swap-3-t3
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: “瓦尔切格”是诺德词“誓言之同伴”的变体——斯特吉亚人起这名嘲讽两个把战利品拱手让人的人。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_S1.descriptionText
+      quote_hash: D6FDABB707FA324C86210054422B9F083AED4DCF4A7E214E1997633C6B53220D
+      quote: 他们将这个城镇称为“瓦尔切格”，这是诺德词“誓言之同伴”的变体，以嘲讽两个因争斗而将战利品拱手让给他们的敌人
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.sturgia
+      kingdom_ids:
+      - entity.kingdom.sturgia
+    denies: []

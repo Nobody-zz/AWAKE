@@ -1,0 +1,147 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 4
+id: doc.culture.tales-charas-origins
+title:
+  zh-CN: 沙拉斯湾·三种来历
+  en: 'Charas Bay: Three Origins'
+status: needs_review
+domain: culture
+subdomain: faith
+universe: awake_current
+era:
+  key: historical
+  certainty: unknown
+content_tier: base
+aliases:
+  zh-CN:
+  - 沙拉斯湾
+  - 帝国摇篮
+  - 卡拉德登陆
+  en:
+  - Charas Bay
+summary:
+  zh-CN: 帝国“摇篮”史称、先祖登陆传说（未经确证）与船人怪谈：三种口径分层记录。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.chronicle.shalas-bay
+  source_version: download-20260903
+  source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+  locator: chronicle-shalas-bay.txt#/Variants/0/Content
+  quote_hash: CBFEB839BA93471B2F9BA696C4F3F2E9511F10E7A4A0AFFE639E4B49B5CE2ADC
+  quote: 老一辈跑船的说那些岛有古怪——雾天的时候岛的形状会变，罗盘靠近某些礁石会乱转
+- source_id: source.calradia.chronicle.shalas-bay
+  source_version: download-20260903
+  source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+  locator: chronicle-shalas-bay.txt#/Variants/1/Content
+  quote_hash: 74F16884C38BA32EC0EA9F57A6459B6ED5ADF2E82C0ADC9FED6156DF747DF82F
+  quote: 这句话在帝国的史书里写着，在元老院的颂词里念着
+- source_id: source.calradia.chronicle.shalas-bay
+  source_version: download-20260903
+  source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+  locator: chronicle-shalas-bay.txt#/Variants/2/Content
+  quote_hash: 10831E62B382FEB5DEF2A43CB8D882C7AC4E92DAF46CB7D79A0D5ADDD990FDE0
+  quote: 关于卡拉德人经由这些岛屿渡海登陆的传说，在考古学和移民史领域尚未得到确证
+- source_id: source.calradia.game.settlements.geography2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 9af64df767747545a9a75b8e22528317e291c51f0314f6842eb79a9f061734b5
+  locator: bannerlord.db#settlements.town_V7.descriptionText
+  quote_hash: 8EE833C6D58960F09A06447ADA65FE77A685D65C2DC76AC4BC7639EC4D6CD3FC
+  quote: 这座如今被称为沙拉斯的城市，其历史最早可以追溯到第一批卡拉德殖民者登上这片大陆的海岸之时。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.tale-charas-origins-1
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 帝国历史传统把沙拉斯湾解释为卡拉德先祖登陆的摇篮。
+  sources:
+  - source_id: source.calradia.chronicle.shalas-bay
+    source_version: download-20260903
+    source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+    locator: chronicle-shalas-bay.txt#/Variants/1/Content
+    quote_hash: 74F16884C38BA32EC0EA9F57A6459B6ED5ADF2E82C0ADC9FED6156DF747DF82F
+    quote: 这句话在帝国的史书里写着，在元老院的颂词里念着
+  expressions:
+  - id: expr.tale-charas-origins-1
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帝国的史书里，这片湾被唤作帝国的摇篮：按史书的说法，卡拉德人的先祖正是从南部群岛渡水而来，头一回在北岸的沙拉斯踏上这片大陆。史书、颂词、老贵族的家训都这么讲。
+    sources:
+    - source_id: source.calradia.chronicle.shalas-bay
+      source_version: download-20260903
+      source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+      locator: chronicle-shalas-bay.txt#/Variants/1/Content
+      quote_hash: 74F16884C38BA32EC0EA9F57A6459B6ED5ADF2E82C0ADC9FED6156DF747DF82F
+      quote: 这句话在帝国的史书里写着，在元老院的颂词里念着
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    denies: []
+- id: assertion.tale-charas-origins-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 先祖从群岛渡海登陆的故事，只在传闻里流传，无从查考。
+  sources:
+  - source_id: source.calradia.chronicle.shalas-bay
+    source_version: download-20260903
+    source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+    locator: chronicle-shalas-bay.txt#/Variants/2/Content
+    quote_hash: 10831E62B382FEB5DEF2A43CB8D882C7AC4E92DAF46CB7D79A0D5ADDD990FDE0
+    quote: 关于卡拉德人经由这些岛屿渡海登陆的传说，在考古学和移民史领域尚未得到确证
+  expressions:
+  - id: expr.tale-charas-origins-2
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 登陆的故事本身无从查考：没有掘出的旧物作证，也没有可靠的迁徙记闻，帝国学士自己也只当传说记着。
+    sources:
+    - source_id: source.calradia.chronicle.shalas-bay
+      source_version: download-20260903
+      source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+      locator: chronicle-shalas-bay.txt#/Variants/2/Content
+      quote_hash: 10831E62B382FEB5DEF2A43CB8D882C7AC4E92DAF46CB7D79A0D5ADDD990FDE0
+      quote: 关于卡拉德人经由这些岛屿渡海登陆的传说，在考古学和移民史领域尚未得到确证
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+- id: assertion.tale-charas-origins-3
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 群岛的雾、罗盘和石刻故事属于船员传闻。
+  sources:
+  - source_id: source.calradia.chronicle.shalas-bay
+    source_version: download-20260903
+    source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+    locator: chronicle-shalas-bay.txt#/Variants/0/Content
+    quote_hash: CBFEB839BA93471B2F9BA696C4F3F2E9511F10E7A4A0AFFE639E4B49B5CE2ADC
+    quote: 老一辈跑船的说那些岛有古怪——雾天的时候岛的形状会变，罗盘靠近某些礁石会乱转
+  expressions:
+  - id: expr.tale-charas-origins-3
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 跑船人另有闲谈：起雾的天，群岛的轮廓会变样；罗盘挨着某些礁石转个不停；石头上刻着没人认得的符号，说不清是帝国人凿的还是更早年间的手笔。港里人只当怪谈讲讲，航道平安要紧。
+    sources:
+    - source_id: source.calradia.chronicle.shalas-bay
+      source_version: download-20260903
+      source_content_hash: 94cfdb418327b295dbd00bd4a97b937e329265c3c1c67ef25c75500a7e80b99b
+      locator: chronicle-shalas-bay.txt#/Variants/0/Content
+      quote_hash: CBFEB839BA93471B2F9BA696C4F3F2E9511F10E7A4A0AFFE639E4B49B5CE2ADC
+      quote: 老一辈跑船的说那些岛有古怪——雾天的时候岛的形状会变，罗盘靠近某些礁石会乱转
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []
