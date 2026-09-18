@@ -1,0 +1,25 @@
+链路现状核查（12:18-12:19 实测）＋可复用的读数脚本
+
+甲方「回到链路上来。现在什么状况」⇒ 现状必须**实跑**，不能拿记忆里的旧读数当现状。
+
+**三根闸全 PASS**（读数 `tools/_gates_now_20260918.txt`）：
+- RETRIEVAL_GATE：A_hit3=10/13、B_hit3=9/10、ALL_hit3=19/23、observed_only=2；negative/overmatch 均在界内
+- MERGE_GATE：八项判据全 PASS；概念题（村庄/城堡/城镇）三条都答对、top1 即概念词条
+- IDENTITY_GATE：泄漏 0、点名题失败 0、非空转（被排除 71 行 / 该知道 205 行、真拿到 180）
+
+**主要状况：离线包比游戏目录新 34 条**
+- 仓库包 `ModuleData/.../calradia/runtime.json`：**482 条**（09-18 01:17），entityRefs 402（83%）
+- 游戏目录包：**448 条**（09-17 17:05）
+- 差的 34 条全是 09-18 凌晨新加：**3 条概念词条**（settlement-types-castle/town/village）
+  ＋ **31 条甲胄兵器类**（armor-cape-*、hands、legs、shield-heater…）
+- ⇒ **概念词条在离线验台过得了，游戏里还看不到**（MERGE_GATE 用的是仓库包）
+
+**K1 核查（排除一个疑似隐患）**：编译器 `RuntimePackageCompiler.cs` 挂着未提交改动（把内部 id 从 keywords 去掉）。
+实测两份包内 **0/482、0/448 条**关键词带内部 id ⇒ **K1 已应用、包与工作区同源**，
+那处未提交只是"编包的状态没入库"，**不是包与代码不一致**。
+
+**一个可定位的缺口**：25 行"该知道却没拿到"里前 8 行全是同一件事 ——
+「斯特吉亚的军队怎么打仗？」× 各身份（state=partial），与 RETRIEVAL_GATE 的 MISS `war.military-sturgia` 同指一处。
+
+**新增可复用脚本**：`tools/_chain_status.py` —— 一次看清「仓库包 vs 游戏目录包」的条目数／时间／
+entityRefs 覆盖率／只在某一侧有的条目／K1 是否已应用。以后答"现在什么状况"先跑它。
