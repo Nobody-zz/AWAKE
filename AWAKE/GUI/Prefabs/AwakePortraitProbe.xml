@@ -1,0 +1,66 @@
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#000000FF" AlphaFactor="0.82" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+      <Children>
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="760" SuggestedHeight="560" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="Awake.Panel.Status720" DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+          <Children>
+
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="50" Brush="Awake.Ornament.HeaderBand" DoNotAcceptEvents="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="30" MarginRight="60" Brush="Popup.Title.Text" Brush.FontSize="22" Brush.TextHorizontalAlignment="Left" Brush.TextVerticalAlignment="Center" Text="@TitleText" DoNotAcceptEvents="true" />
+              </Children>
+            </Widget>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="5" MarginTop="50" VerticalAlignment="Top" Brush="Awake.Ornament.DividerGold" DoNotAcceptEvents="true" />
+
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" HorizontalAlignment="Right" VerticalAlignment="Top" MarginRight="10" MarginTop="5" Brush="Awake.Button.Close" Command.Click="ExecuteClose" DoNotPassEventsToChildren="true" UpdateChildrenStates="true" />
+
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="220" SuggestedHeight="368" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="30" MarginTop="72" Sprite="BlankWhite" Color="#FFC8A468" AlphaFactor="0.55" ExtendLeft="4" ExtendTop="4" ExtendRight="4" ExtendBottom="4" DoNotAcceptEvents="true">
+              <Children>
+                <AwakePortraitImageWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="212" SuggestedHeight="360" HorizontalAlignment="Center" VerticalAlignment="Center" PortraitKey="@PortraitKey" DoNotAcceptEvents="true" />
+              </Children>
+            </Widget>
+
+            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="460" SuggestedHeight="46" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="272" MarginTop="72" Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FFC0A882" Text="@LocationText" CanBreakWords="true" DoNotAcceptEvents="true" />
+
+            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="460" SuggestedHeight="26" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="272" MarginTop="124" Brush="Popup.Description.Text" Brush.FontSize="15" Brush.FontColor="#FFE8D8C8" Text="@StatusText" CanBreakWords="true" DoNotAcceptEvents="true" />
+
+            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="460" SuggestedHeight="60" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="272" MarginTop="154" Brush="Popup.Description.Text" Brush.FontSize="14" Brush.FontColor="#FFE0C8B0" Text="@DetailText" CanBreakWords="true" DoNotAcceptEvents="true" />
+
+            <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="460" SuggestedHeight="35" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="272" MarginTop="228" StackLayout.LayoutMethod="HorizontalLeftToRight" Spacing="10">
+              <Children>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="120" SuggestedHeight="35" Brush="Awake.Button.Secondary" Command.Click="ExecutePrevious" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="15" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@PreviousText" DoNotAcceptEvents="true" />
+                  </Children>
+                </ButtonWidget>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="120" SuggestedHeight="35" Brush="Awake.Button.Secondary" Command.Click="ExecuteNext" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="15" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@NextText" DoNotAcceptEvents="true" />
+                  </Children>
+                </ButtonWidget>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="140" SuggestedHeight="35" Brush="Awake.Button.Secondary" Command.Click="ExecuteReload" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="15" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@ReloadText" DoNotAcceptEvents="true" />
+                  </Children>
+                </ButtonWidget>
+              </Children>
+            </ListPanel>
+
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="38" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="272" MarginTop="278" Brush="Awake.Button.Primary" Command.Click="ExecuteSeedFixture" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="15" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@SeedText" DoNotAcceptEvents="true" />
+              </Children>
+            </ButtonWidget>
+
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="160" SuggestedHeight="38" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="484" MarginTop="278" Brush="Awake.Button.Secondary" Command.Click="ExecuteOpenFolder" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="15" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@OpenFolderText" DoNotAcceptEvents="true" />
+              </Children>
+            </ButtonWidget>
+
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

@@ -1,0 +1,165 @@
+<Prefab>
+  <!--
+    AWAKE 画位控件（Portrait Slot）· UI 编辑层
+
+    这是什么：NPC 全身像的「一格」。空着的时候显空位，生成完了显图，中间有生成中与失败两种
+    过渡态。一个按钮靠**位置**表达状态 —— 空位时居画位中央，生成后下移到底部。
+
+    与设计稿的关系：落地 `docs/ui-design/npc-dialogue-layout-07.html` 的四态与按钮落点，
+    尺寸 212×360 与 AwakePortraitProbe.xml 的画位一致。
+
+    ⚠️ 本 Prefab 只依赖**已有** Brush 与一个**已存在**的自定义控件：
+        Awake.Button.Secondary / Popup.Button.Text / Popup.Description.Text（都已在本组件库）
+        AwakePortraitImageWidget（src/AwakePortraitImageWidget.cs，属性 PortraitKey）
+    ⇒ 不新增任何 sprite、不新增任何 Brush。
+
+    ⚠️ 它绑的是一组**尚未存在**的 VM 属性（见文件末尾「数据源契约」）。属性到位前加载本 Prefab
+       只会得到一块黑底 —— 这不是渲染问题，是数据源没接。契约清单另见
+       docs/UI-PORTRAIT-SLOT-CONTRACT-20260914.md。
+
+    ⚠️ 未验：真机加载（需主干侧 C# 建 layer + LoadMovie 才能看到，本层只做静态可解析性验证）。
+  -->
+  <Constants>
+    <!-- 画位尺寸＝07 稿定的 212×360。
+         ⚠️ 212 不落 5 栅格，属**已接受偏差**：美术需求 §4.4 第 12 条、运行时纹理尺寸都钉在 212，
+         改它要同时改三边（美术／运行时／控件），不值当。 -->
+    <Constant Name="SlotWidth" Value="212" />
+    <Constant Name="SlotHeight" Value="360" />
+    <Constant Name="SlotButtonWidth" Value="140" />
+    <Constant Name="SlotButtonHeight" Value="35" />
+    <!-- 按钮两个落点**不写魔法数**：居中用 VerticalAlignment=Center，下移用 Bottom + MarginBottom。
+         07 稿写的是 top 163 ↔ 308 —— 那组数字与项目 5 栅格规则冲突（Lab 会报 grid_off_5），
+         这里换成**等价的对齐式**：居中＝真居中（不靠 163 这个近似值），下移＝底距 20。 -->
+    <Constant Name="ButtonBottomGap" Value="20" />
+    <!-- 空位细线框的内缩：07/06 稿写 inset 7，不落 5 栅格 ⇒ 收到 5（框 202×350，差 4px）。 -->
+    <Constant Name="SlotFrameInset" Value="5" />
+    <!-- 失败行距顶。画位高 360，居中按钮占 35，130 让错误行落在大致居中的位置。 -->
+    <Constant Name="ErrorLineTop" Value="130" />
+  </Constants>
+  <Window>
+    <!-- ⚠️ 根**不画任何底色**：画位是"一格"，底色归宿主面板（07 稿的 .slot 本身也是透明的）。
+         这里曾误挂过一层 α0.80 的暗底（那是给"整面板当背景"用的写法），塞进对话页中列后
+         变成一块黑洞 —— 三列里只有中列是黑的。真机上该调的是宿主，不是这里。
+         唯一该暗的是 ③ 生成中遮罩，它自己带 α0.80，见下。 -->
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent"
+            DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+      <Children>
+
+        <!-- ================= 画位本体 212×360 ================= -->
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                SuggestedWidth="!SlotWidth" SuggestedHeight="!SlotHeight"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                DoNotAcceptEvents="false" DoNotPassEventsToChildren="false">
+          <Children>
+
+            <!-- ========== ① 空位 ==========
+                 四边各一条 1px 淡金线拼成框（XML 画不出矢量，也没有"只有边框"的 sprite，
+                 所以用四条细线拼；用 Extend 的实心块做不到空心边框）。 -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent"
+                    IsVisible="@ShowEmptySlot" DoNotAcceptEvents="true">
+              <Children>
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="1"
+                        VerticalAlignment="Top" MarginTop="!SlotFrameInset" MarginLeft="!SlotFrameInset" MarginRight="!SlotFrameInset"
+                        Sprite="BlankWhite" Color="#FF8C6B38" AlphaFactor="0.32" DoNotAcceptEvents="true" />
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="1"
+                        VerticalAlignment="Bottom" MarginBottom="!SlotFrameInset" MarginLeft="!SlotFrameInset" MarginRight="!SlotFrameInset"
+                        Sprite="BlankWhite" Color="#FF8C6B38" AlphaFactor="0.32" DoNotAcceptEvents="true" />
+                <Widget WidthSizePolicy="Fixed" SuggestedWidth="1" HeightSizePolicy="StretchToParent"
+                        HorizontalAlignment="Left" MarginLeft="!SlotFrameInset" MarginTop="!SlotFrameInset" MarginBottom="!SlotFrameInset"
+                        Sprite="BlankWhite" Color="#FF8C6B38" AlphaFactor="0.32" DoNotAcceptEvents="true" />
+                <Widget WidthSizePolicy="Fixed" SuggestedWidth="1" HeightSizePolicy="StretchToParent"
+                        HorizontalAlignment="Right" MarginRight="!SlotFrameInset" MarginTop="!SlotFrameInset" MarginBottom="!SlotFrameInset"
+                        Sprite="BlankWhite" Color="#FF8C6B38" AlphaFactor="0.32" DoNotAcceptEvents="true" />
+
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20"
+                            VerticalAlignment="Top" MarginTop="15"
+                            Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF5A5142"
+                            Brush.TextHorizontalAlignment="Center"
+                            Text="@SlotLabelText" DoNotAcceptEvents="true" />
+              </Children>
+            </Widget>
+
+            <!-- ========== ② 已生成 ========== -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent"
+                    IsVisible="@ShowPortrait" DoNotAcceptEvents="true">
+              <Children>
+                <AwakePortraitImageWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent"
+                                          PortraitKey="@PortraitKey" DoNotAcceptEvents="true" />
+
+                <!-- 角标：标明这张是生成来的、以及生成时间 -->
+                <Widget WidthSizePolicy="Fixed" SuggestedWidth="130" HeightSizePolicy="Fixed" SuggestedHeight="20"
+                        HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="10" MarginTop="10"
+                        Sprite="BlankWhite" Color="#FF0B0806" AlphaFactor="0.66" DoNotAcceptEvents="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent"
+                                Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF9C7839"
+                                Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center"
+                                Text="@PortraitBadgeText" DoNotAcceptEvents="true" />
+                  </Children>
+                </Widget>
+              </Children>
+            </Widget>
+
+            <!-- ========== ③ 生成中 ==========
+                 盖在下面的层之上：有图时压旧图，无图时压空位，两种都不闪白。 -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent"
+                    Sprite="BlankWhite" Color="#FF080605" AlphaFactor="0.80"
+                    IsVisible="@ShowGenerating" DoNotAcceptEvents="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20"
+                            VerticalAlignment="Center"
+                            Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FF9C7839"
+                            Brush.TextHorizontalAlignment="Center"
+                            Text="@GeneratingText" DoNotAcceptEvents="true" />
+              </Children>
+            </Widget>
+
+            <!-- ========== ④ 失败 ========== -->
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20"
+                            VerticalAlignment="Top" MarginTop="!ErrorLineTop" MarginLeft="10" MarginRight="10"
+                            Brush="Popup.Description.Text" Brush.FontSize="13" Brush.FontColor="#FFB06A50"
+                            Brush.TextHorizontalAlignment="Center"
+                            Text="@PortraitErrorText" CanBreakWords="true"
+                            IsVisible="@ShowError" DoNotAcceptEvents="true" />
+
+            <!-- ========== ⑤ 居中按钮（空位 / 失败） ========== -->
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                          SuggestedWidth="!SlotButtonWidth" SuggestedHeight="!SlotButtonHeight"
+                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Brush="Awake.Button.Secondary" Command.Click="ExecuteGeneratePortrait"
+                          IsVisible="@ShowCenteredButton"
+                          UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent"
+                            Brush="Popup.Button.Text" Brush.FontSize="15"
+                            Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center"
+                            Text="@GenerateButtonText" DoNotAcceptEvents="true" />
+              </Children>
+            </ButtonWidget>
+
+            <!-- ========== ⑥ 底部按钮（已生成 / 有图刷新失败） ==========
+                 与 ⑤ 是**同一颗按钮的两个落点**（Gauntlet 里没有位置过渡，只能各放一个、按状态显示一个）。
+                 视觉结果与 07 稿一致：切状态时按钮从中央消失、在底部出现。
+                 ⚠️ 绑定是 `ShowRegenerateButton`、**不是** `ShowPortrait`：
+                 07 稿规格表写死「② 生成中 ⇒ 按钮隐藏（不可重复触发）」，
+                 而有旧图时 `ShowPortrait` 仍为真 ⇒ 用它会让按钮在生成中露出来。 -->
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                          SuggestedWidth="!SlotButtonWidth" SuggestedHeight="!SlotButtonHeight"
+                          HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginBottom="!ButtonBottomGap"
+                          Brush="Awake.Button.Secondary" Command.Click="ExecuteGeneratePortrait"
+                          IsVisible="@ShowRegenerateButton"
+                          UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent"
+                            Brush="Popup.Button.Text" Brush.FontSize="15"
+                            Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center"
+                            Text="@RegenerateButtonText" DoNotAcceptEvents="true" />
+              </Children>
+            </ButtonWidget>
+
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

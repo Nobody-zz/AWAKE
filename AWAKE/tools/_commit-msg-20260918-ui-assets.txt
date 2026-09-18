@@ -1,0 +1,18 @@
+UI 贴图与预制入库：AWAKE 自有控件的贴图管线
+
+内容（AWAKE/GUI/，共 56 项）：
+- SpriteParts/Config.xml + 4 个贴图分类目录（52 张 png）：
+  ui_awake_button（按钮逐状态）、ui_awake_frame（面板/框/凹槽）、
+  ui_awake_icon（图标 48/72 双档）、ui_awake_ornament（栏头/分隔/角饰）。
+  分类名以 ui_ 开头、每类带 <AlwaysLoad/>，是官方贴图管线的硬要求。
+- AWAKESpriteData.xml —— 引用上述分类的贴图数据（15 处 button、6 处 frame、
+  3 处 ornament）。
+- Prefabs/AwakePortraitProbe.xml、Prefabs/AwakePortraitSlot.xml —— 肖像探针与槽位。
+
+这批是"游戏读得到的那一层"：此前 AWAKE/GUI/ 只入库了 Brushes 与 6 个 Prefab，
+贴图管线整个在版本管理之外。
+
+未纳入（另判）：AWAKE/AssetSources/GauntletUI/ 3 张原始导出图（2.8 MB）——
+疑为上游暂存，待美术线确认是留还是弃。
+
+边界核验：暂存 56 项，全部位于 AWAKE/GUI/ 之下，无越界。
