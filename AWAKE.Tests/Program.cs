@@ -67,6 +67,7 @@ internal static class Program
 			("ui-dispatcher-main-thread", () => RunUiDispatcherMainThreadSmokeAsync()),
 			("npc-target-stable-id", () => { RunNpcTargetStableIdSmoke(); return Task.CompletedTask; }),
 			("unnamed-profile", () => { RunUnnamedProfileSmoke(); return Task.CompletedTask; }),
+			("role-normalization-camelcase", () => { RunRoleNormalizationSmoke(); return Task.CompletedTask; }),
 			("scene-dialogue-range", () => { RunSceneDialogueRangeSmoke(); return Task.CompletedTask; }),
 			("scene-selection-ux", () => { RunSceneSelectionUxSmoke(); return Task.CompletedTask; }),
 			("scene-shout-contract", () => { RunSceneShoutContractSmoke(); return Task.CompletedTask; }),
@@ -3428,6 +3429,69 @@ private static void RunMessengerHistorySmoke()
 			throw new InvalidOperationException("unnamed profile null target should use the generic state block.");
 		}
 		Console.WriteLine("PASS unnamed profile role labels");
+	}
+
+	// 09-18 新增。游戏枚举给的是驼峰（RansomBroker），而规则表与内容侧写的是下划线（ransom_broker）。
+	// 原先归一化只做小写、不拆驼峰 ⇒ 12 个多词职业永远匹配不上，静默掉进「匿名」（一条说法都拿不到）。
+	// 本用例钉两件事：① 多词驼峰必须被接住；② 单词枚举与大写缩写一字不改（防过度拆分）。
+	private static void RunRoleNormalizationSmoke()
+	{
+		string[] camelRoles =
+		{
+			"GoodsTrader", "RansomBroker", "HorseTrader", "TavernWench", "TavernGameHost",
+			"GangLeader", "RuralNotable", "PrisonGuard", "ShopWorker", "BannerBearer",
+			"CaravanGuard", "ShipWright"
+		};
+		foreach (string role in camelRoles)
+		{
+			string normalized = WorldbookIdentityEvaluator.NormalizeRole(role);
+			if (normalized.IndexOf('_') < 0)
+			{
+				throw new InvalidOperationException("camel role not split: " + role + " -> " + normalized);
+			}
+			WorldbookIdentityCapabilityProfile profile = WorldbookIdentityCapabilityRules.Resolve(role, false, 30, 0);
+			if (StringComparer.Ordinal.Equals(profile.ProfileId, "profile.anonymous"))
+			{
+				throw new InvalidOperationException("camel role still falls into anonymous: " + role);
+			}
+			if (!profile.KnowledgeScopeAvailable || !profile.EffectiveDetailAvailable)
+			{
+				throw new InvalidOperationException("camel role has no capability: " + role);
+			}
+		}
+		// 反向：不能被拆坏的那些
+		var keepers = new (string Input, string Expect)[]
+		{
+			("Villager", "villager"),
+			("Merchant", "merchant"),
+			("Tavernkeeper", "tavernkeeper"),
+			("NPC", "npc"),
+			("role_soldier", "soldier"),
+			("Ransom-Broker", "ransom_broker"),
+			("role:GoodsTrader", "goods_trader")
+		};
+		foreach ((string input, string expect) in keepers)
+		{
+			string actual = WorldbookIdentityEvaluator.NormalizeRole(input);
+			if (!StringComparer.Ordinal.Equals(actual, expect))
+			{
+				throw new InvalidOperationException("normalize mismatch: " + input + " -> " + actual + " (want " + expect + ")");
+			}
+		}
+		// 竞技场主归城镇要人；Special 是游戏占位值，不该被当职业接住；强盗的位置先留着。
+		if (!StringComparer.Ordinal.Equals(WorldbookIdentityCapabilityRules.Resolve("ArenaMaster", false, 30, 0).ProfileId, "profile.notable"))
+		{
+			throw new InvalidOperationException("ArenaMaster should map to profile.notable.");
+		}
+		if (!StringComparer.Ordinal.Equals(WorldbookIdentityCapabilityRules.Resolve("Special", false, 30, 0).ProfileId, "profile.anonymous"))
+		{
+			throw new InvalidOperationException("Occupation.Special must not be treated as a job.");
+		}
+		if (!StringComparer.Ordinal.Equals(WorldbookIdentityCapabilityRules.Resolve("Bandit", false, 30, 0).ProfileId, "profile.bandit"))
+		{
+			throw new InvalidOperationException("Bandit placeholder profile is missing.");
+		}
+		Console.WriteLine("PASS role normalization camelcase");
 	}
 
 	private static void RunNpcTargetStableIdSmoke()

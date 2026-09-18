@@ -152,6 +152,11 @@
     <Compile Include="..\AWAKE\src\WorldKnowledgeSemantic.cs" Link="WorldKnowledgeSemantic.cs" />
     <Compile Include="..\AWAKE\src\WorldKnowledgeLoader.cs" Link="WorldKnowledgeLoader.cs" />
     <Compile Include="..\AWAKE\src\WorldbookIdentityEvaluator.cs" Link="WorldbookIdentityEvaluator.cs" />
+    <!-- 2026-09-18 补记：本工程原来只收了 Evaluator、没收 CapabilityRules（角色名归一化与能力档规则表
+         都在这个文件里）。同日修「驼峰职业名匹配不上」时，用例一调 Resolve() 就 CS0246 —— 与上面
+         AwakeSemanticArmBootstrap / AwakeGuardImage* 是同一个坑的第三次。原则不变：
+         **src/ 在 AWAKE.csproj 里通配编译，本工程是显式清单；往 src/ 新增源文件必须同步加到这里。** -->
+    <Compile Include="..\AWAKE\src\WorldbookIdentityCapabilityRules.cs" Link="WorldbookIdentityCapabilityRules.cs" />
     <Compile Include="..\AWAKE\src\WorldbookPackageIntegrity.cs" Link="WorldbookPackageIntegrity.cs" />
     <Compile Include="..\AWAKE\src\WorldbookPackageRegistry.cs" Link="WorldbookPackageRegistry.cs" />
 <Compile Include="..\AWAKE\src\WorldEventContracts.cs" Link="WorldEventContracts.cs" />

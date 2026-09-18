@@ -16,7 +16,7 @@ internal static class WorldbookIdentityCapabilityRules
 {
     internal static WorldbookIdentityCapabilityProfile Resolve(string role, bool isNoble, int age, int management)
     {
-        string normalizedRole = NormalizeRole(role);
+        string normalizedRole = WorldbookIdentityEvaluator.NormalizeRole(role);
         if (isNoble || normalizedRole == "noble" || normalizedRole == "lord")
         {
             return ResolveNoble(age, management);
@@ -39,6 +39,7 @@ internal static class WorldbookIdentityCapabilityRules
                 return Available("profile.headman", "headman", "national", "detail");
             case "rural_notable":
             case "notable":
+            case "arena_master": // 竞技场主／锦标赛主持：游戏里属城镇要人一类，与 notable 同档
                 return Available("profile.notable", "notable", "regional", "detail");
             case "merchant":
             case "goods_trader":
@@ -68,6 +69,10 @@ internal static class WorldbookIdentityCapabilityRules
                 return Available("profile.notable", "gang_leader", "regional", "detail");
             case "gangster":
                 return Available("profile.townsfolk", "gangster", "regional", "summary");
+            // 强盗：位置先留着。世界书侧补上 awake:identity:bandit 这个身份（并授予它的说法）之前，
+            // 这里给到的仍是一条空手身份——拿不到知识，但不再是「匿名」，日志里能看出他是谁。
+            case "bandit":
+                return Available("profile.bandit", "bandit", "local", "rumor");
             default:
                 return Unknown();
         }
@@ -125,13 +130,5 @@ internal static class WorldbookIdentityCapabilityRules
         }
     }
 
-    private static string NormalizeRole(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value)) return string.Empty;
-        string normalized = value.Trim().ToLowerInvariant();
-        int separator = normalized.LastIndexOf(':');
-        if (separator >= 0) normalized = normalized.Substring(separator + 1);
-        if (normalized.StartsWith("role_", StringComparison.Ordinal)) normalized = normalized.Substring(5);
-        return normalized.Replace('-', '_').Replace(' ', '_');
-    }
+    // 角色名归一化只有一份实现，在 WorldbookIdentityEvaluator（此前两份副本必须手工保持同步）。
 }

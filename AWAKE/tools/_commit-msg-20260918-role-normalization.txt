@@ -1,0 +1,44 @@
+fix(identity): 接上 12 个驼峰职业名 + 竞技场主归要人 + 强盗预留位 + 匿名必须落日志
+
+背景（AUDIT-20260918-身份链潜在问题.md）：游戏 Occupation 枚举给的是驼峰名
+（RansomBroker），而能力规则表与内容侧写的是下划线（ransom_broker）。归一化只做
+小写、不拆驼峰 ⇒ 12 个多词职业永远匹配不上 ⇒ default: Unknown() ⇒ profile.anonymous
+⇒ 该角色在全部说法上一条都拿不到，且不报错、不打日志。（对照：AwakeUnnamedProfileService
+按枚举 switch，把 Merchant/GoodsTrader/HorseTrader 一并译作「商贩」——同一 NPC，提示词里
+写着「帝国的商贩」，检索侧当他是匿名。）
+
+本次改动
+- A1 归一化补驼峰拆分：WorldbookIdentityEvaluator.NormalizeRole 成为全仓唯一实现
+  （先拆驼峰再小写，只在「大写紧跟小写字母/数字」处插下划线；全大写缩写 NPC 与纯小写
+  字面量一字不改）。WorldbookIdentityCapabilityRules 原来那份重复副本已删、改为直接调用，
+  以后不会再出现"两份副本手工同步"。
+- A3 三个无映射职业（甲方 09-18 口径）：
+  · ArenaMaster → 归 notable（城镇要人档；游戏里挂在竞技场主身上，is_hero=false）
+  · Bandit → 位置先留着：规则表给 profile.bandit（local/rumor）。世界书侧补上
+    awake:identity:bandit 并授予说法后自动接通，代码侧不必再改；补上之前它是"有身份但空手"，
+    不再是匿名。
+  · Occupation.Special → 不算职业（游戏占位值：训练假人、隐士），两处 Resolve*Role 显式跳过，
+    跳过之后才轮到 IsSoldier 兜底。
+- A4 不许静默：落到 profile.anonymous 时落 worldbook_identity_unmapped
+  source=hero|npc|fallback role=… occupation=… subject=…（同组合只记一次，带锁去重，
+  不参与任何判定）。
+
+验证
+- 三根门禁改前改后逐项相同（RETRIEVAL A_hit3=10/13 B_hit3=9/11 ALL=19/24；
+  MERGE 判据 E offenders=0/0 concept=0/0 known_gaps=3/3；IDENTITY 排除 78/泄漏 0/
+  该知道 210 真拿 180/失败 0）。**这不是"没修"**：三根闸都直接喂规范身份 id
+  （IdentityId="profile.commoner" / Role="soldier"），而 grep -rln "Occupation" AWAKE/tools/
+  --include=*.cs 零命中 ⇒ 没有任何工具工程走过 BannerlordWorldbookIdentityAdapter。数字不变
+  = 这一层本来就没有闸。
+- 因此新增 AWAKE.Tests 用例 role-normalization-camelcase（钉 12 个驼峰职业不再落匿名 +
+  单词枚举/大写缩写一字不改 + ArenaMaster→notable + Special→anonymous + Bandit→profile.bandit）。
+  变异检验：临时把 SplitCamelCase 回退成不拆 ⇒ 该用例立刻变红（[7/64] FAIL），其余 6 条历史红
+  不动 ⇒ 有分辨力。恢复后 total=64 passed=58 failed=6（6 条红与改动前同一批）。
+- 未验（不许写成已验）：adapter 那两处（跳过 Special、落 worldbook_identity_unmapped）需要真实
+  Hero/CharacterObject，离线造不出同源替身 ⇒ 只能真机看 Awake.log。
+
+顺带修的坑（第三次）：AWAKE.Tests.csproj 的显式编译清单没收 WorldbookIdentityCapabilityRules.cs，
+用例一调 Resolve() 就 CS0246。已补入清单并就地写注释。
+
+其余（未定，等甲方口径）：A5「你身份不够」与「世界书没这条」压成同一个 not_found 的拆分，
+连带判据 E 的尺子要同批重定。

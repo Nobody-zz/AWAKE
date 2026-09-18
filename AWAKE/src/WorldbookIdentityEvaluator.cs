@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Awake;
 
@@ -112,14 +113,35 @@ internal static class WorldbookIdentityEvaluator
         return text.StartsWith("awake:identity:", StringComparison.Ordinal) ? text : "awake:identity:" + text;
     }
 
+    // 全仓唯一的角色名归一化实现（WorldbookIdentityCapabilityRules 直接调这里，不再各写一份）。
     internal static string NormalizeRole(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return string.Empty;
-        string role = value.Trim().ToLowerInvariant();
+        string role = value.Trim();
         int separator = role.LastIndexOf(':');
         if (separator >= 0) role = role.Substring(separator + 1);
+        // 必须先拆驼峰再小写：游戏枚举给的是 RansomBroker，规则表与内容侧写的是 ransom_broker。
+        role = SplitCamelCase(role).ToLowerInvariant();
         if (role.StartsWith("role_", StringComparison.Ordinal)) role = role.Substring(5);
         return role.Replace('-', '_').Replace(' ', '_');
+    }
+
+    // 只在「大写紧跟小写字母或数字」处插分隔符 ⇒ 纯小写字面量（villager）与全大写缩写（NPC）一字不改。
+    internal static string SplitCamelCase(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return value ?? string.Empty;
+        var builder = new StringBuilder(value.Length + 4);
+        for (int i = 0; i < value.Length; i++)
+        {
+            char current = value[i];
+            if (i > 0 && char.IsUpper(current))
+            {
+                char previous = value[i - 1];
+                if (char.IsLower(previous) || char.IsDigit(previous)) builder.Append('_');
+            }
+            builder.Append(current);
+        }
+        return builder.ToString();
     }
 
     private static IEnumerable<string> IdentitiesForRole(string role, bool clanLeader)
