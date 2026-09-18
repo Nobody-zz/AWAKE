@@ -58,6 +58,8 @@ internal static class Program
     };
 
     private const int SemanticArmLimit = 3;      // = WorldKnowledgeQueryService.SemanticCandidateLimit
+    // 流水线式对照要扫的「语义召回闸宽度」。产品那档是 3 —— 3 太窄，语义没召回到的字面命中会被整条掐死。
+    private static readonly int[] PinpointRecallSweep = { 3, 5, 8, 12, 20 };
     private const int MergedOvermatchMax = 5 + SemanticArmLimit;
 
     // ── E「该空手时空手」（2026-09-17 加，甲方点题）───────────────────────────────
@@ -212,6 +214,12 @@ internal static class Program
             // 对照用（**不是上线规则**）：把两条臂的输出按「谁优先」简单串起来，看这两个极端各值几条。
             // 上线的是 WorldKnowledgeRankFusion（对称 RRF）。这两行只是给决策留数，别当成实现。
             int semanticFirstHit1 = 0, literalFirstHit1 = 0, semanticFirstLost = 0, literalFirstGained = 0;
+            // 流水线式（甲方 09-18 口径）：语义先召回、字面在集合内定位。同样**不是上线规则**，只留数。
+            // 扫的旋钮＝**语义召回闸开多大**（产品那档只有 3）。
+            int[] pinpointHit1 = new int[PinpointRecallSweep.Length];
+            int[] pinpointHit3 = new int[PinpointRecallSweep.Length];
+            int[] pinpointBypassHit1 = new int[PinpointRecallSweep.Length];
+            int[] pinpointBypassHit3 = new int[PinpointRecallSweep.Length];
             var lostByMerge = new List<string>();
             var gainedByMerge = new List<string>();
             var semanticOnly = new List<string>();
@@ -305,6 +313,30 @@ internal static class Program
                     semanticFirstLost += (litH1 && !sfH1) ? 1 : 0;
                     if (litH1 && !sfH1) semanticFirstLostQueries.Add(text);
                     literalFirstGained += (lfH1 && !litH1) ? 1 : 0;
+
+                    // ── 流水线式（甲方 09-18 口径：「得先抓住大概的语义，再去按照字面的去找对应具体词条」）──
+                    // 与上面两版**不同**：语义不是"排在前面"，而是**先当召回闸**（决定"大概在说哪一类"），
+                    // 字面只在这个集合**内部**负责钉到具体条目。
+                    // ⚠️ 定位顺序**直接借产品的字面名次**（`litHits`），不另算一套 —— 免得变成"另写一个引擎"。
+                    // ★ 闸门开多大是关键旋钮：产品那档只有 3（`SemanticCandidateLimit`），
+                    //   3 太窄 ⇒ 语义没召回到的字面命中会被整条掐死。所以这里**扫一遍宽度**。
+                    for (int pinIndex = 0; pinIndex < PinpointRecallSweep.Length; pinIndex++)
+                    {
+                        int recallN = PinpointRecallSweep[pinIndex];
+                        List<string> semRecall = semantic.Search(text, recallN).ToList();
+                        List<string> orderPinpoint = semRecall
+                            .OrderBy(x => { int i = litHits.IndexOf(x); return i < 0 ? int.MaxValue : i; })
+                            .ThenBy(x => semRecall.IndexOf(x))
+                            .ToList();
+                        // 变体：**指名道姓时不让召回闸把入口关掉** —— 字面第 1 若不在语义集合里，前置。
+                        List<string> orderPinpointBypass = new List<string>(orderPinpoint);
+                        if (litHits.Count > 0 && !semRecall.Contains(litHits[0])) orderPinpointBypass.Insert(0, litHits[0]);
+
+                        pinpointHit1[pinIndex] += (orderPinpoint.Count > 0 && orderPinpoint[0] == target) ? 1 : 0;
+                        pinpointHit3[pinIndex] += orderPinpoint.Take(3).Any(x => x == target) ? 1 : 0;
+                        pinpointBypassHit1[pinIndex] += (orderPinpointBypass.Count > 0 && orderPinpointBypass[0] == target) ? 1 : 0;
+                        pinpointBypassHit3[pinIndex] += orderPinpointBypass.Take(3).Any(x => x == target) ? 1 : 0;
+                    }
                 }
                 else
                 {
@@ -365,6 +397,26 @@ internal static class Program
                 + "（跌的就是那几条：" + Join(semanticFirstLostQueries) + "）");
             Console.WriteLine("★ 上线：对称 RRF（k=" + WorldKnowledgeRankFusion.RankConstant + "）          合计="
                 + (merA + merB) + "/" + total + "，较字面涨 " + gainedByMerge.Count + " 跌 " + lostByMerge.Count);
+
+            // 流水线式（甲方 09-18 口径）——这是**第三种形状**，不是"谁优先"。
+            // 判据同门禁口径：@hit3 为准（@hit1 一并给）。旋钮＝语义召回闸开多大。
+            Console.WriteLine();
+            Console.WriteLine("── 流水线式（语义先召回 → 字面在集合内定位；甲方 09-18 口径，**都不是上线规则**）──");
+            Console.WriteLine("   闸宽  语义召回闸+字面定位        指名道姓不被闸拦（变体）");
+            Console.WriteLine("          @hit3   @hit1              @hit3   @hit1");
+            for (int i = 0; i < PinpointRecallSweep.Length; i++)
+            {
+                Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+                    "   {0,4}   {1,5}/{2,-4} {3,5}/{2,-4}      {4,5}/{2,-4} {5,5}/{2,-4}",
+                    PinpointRecallSweep[i],
+                    pinpointHit3[i], total, pinpointHit1[i],
+                    pinpointBypassHit3[i], pinpointBypassHit1[i]));
+            }
+            Console.WriteLine("   ★ 对照：上线（对称 RRF）      @hit3=" + (merA3 + merB3) + "/" + total
+                + "  @hit1=" + (merA + merB) + "/" + total
+                + "；字面臂 @hit3=" + (litA3 + litB3) + " @hit1=" + (litA + litB)
+                + "；语义臂 @hit3=" + (semA3 + semB3) + " @hit1=" + (semA + semB));
+            Console.WriteLine("  （定位顺序直接借产品字面名次，不另算；闸宽 3 = 与产品同一档 `SemanticCandidateLimit`）");
 
             Console.WriteLine();
             Console.WriteLine("只有语义能拿的 " + semanticOnly.Count + " 条：" + Join(semanticOnly));

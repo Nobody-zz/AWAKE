@@ -1,0 +1,132 @@
+包 = awake:worldbook.calradia@1.0.0，条目 482 条
+模型目录 = D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AnimusForge\ONNX
+词表     = D:\AWAKE-Dev\AWAKE\tools\_af_tokenizer_20260916\vocab.txt
+
+[A] 维度 512，不同向量 5/5，自比 1.000000  => PASS
+[入库] 拼法 feed-D-v1，示例：沙拉斯湾·三种来历。沙拉斯湾·三种来历、沙拉斯湾、帝国摇篮、卡拉德登陆。帝国“摇篮”史称、先祖登陆传说（未经确证）与船人…
+[入库] 语料指纹 = awake:worldbook.calradia@1.0.0#feed-D-v1
+[入库] OK，写入 482 条，用时 8286 ms
+
+──────────────────────────────────────────────────────────────────────────────
+组  问法                            目标                                  字面  语义  合并  上限  池  涨
+A   拉迈萨那地方养什么？                     geography.villages-lamesa                1      1      1      1      7          
+A   西米拉堡是谁的城堡？                     geography.castles-simira-castle          1      1      1      1      7          
+A   乔诺巴斯在哪儿？                       geography.villages-chornobas             1      1      1      1      5          
+A   富勒格是谁？                         culture.tales-husn-fulq                  1      1      1      1      3          
+A   卡恰尔半岛归谁？                       culture.tales-kachar-rulership           1      1      1      1      7          
+A   萨涅俄帕是什么地方？                     politics.throne-saneopa                  0      0      0      0      6          
+A   斯特吉亚的军队怎么打仗？                   war.military-sturgia                     0      1      0      1      7          
+A   库赛特靠什么打仗？                      war.military-khuzait                     0      1      0      1      7          
+A   皇家侍卫是什么兵？                      war.troops-royal-guard                   1      1      1      1      6          
+A   毛皮值钱吗？                         economy.goods-fur                        1      1      1      1      4          
+A   盐是从哪儿来的？                       economy.goods-salt                       1      1      1      1      7          
+A   侧护覆板盔谁在用？                      economy.items-western_plated_helmet      1      1      1      1      3          
+A   瓦尔切格怎么会换主人？                    politics.territories-varcheg-swap        0      1      0      1      10         
+B   这一带有好马吗？                       geography.villages-lamesa                0      0      0      0      8          
+B   有大瀑布的村子是哪个？                    geography.villages-chornobas             0      1      1      1      5      +   
+B   集市上说书人讲的那个鬼点子是谁的？              culture.tales-husn-fulq                  1      1      1      1      5          
+B   有个半岛被三家抢过，谁说了算？                culture.tales-kachar-rulership           1      1      1      1      7          
+B   山里有不让进的地方吗？                    culture.tales-dawn-taboo                 0      0      0      0      6          
+B   隘口上那个商埠，哪个家族在那儿定过都？            politics.throne-saneopa                  0      1      1      1      6      +   
+B   什么人拿大圆盾扔飞斧？                    war.troops-royal-guard                   0      0      0      0      7          
+B   游牧的人怎么用骑马射手打仗？                 war.military-khuzait                     1      0      1      1      7          
+B   盾墙加飞斧是哪个国家的打法？                 war.military-sturgia                     1      0      1      1      6          
+B   北方有什么又暖又贵的皮货？                  economy.goods-fur                        1      1      1      1      4          
+B   桌上少不了、产地又集中的日用品是什么？            economy.goods-salt                       1      1      1      1      7          
+B   哪种头盔护到腮帮子和耳朵？                  economy.items-western_plated_helmet      0      0      0      0      3          
+
+字面臂（未挂语义）  A_hit1=9/13  B_hit1=6/11  合计=15/24
+语义臂（单独）      A_hit1=12/13  B_hit1=6/11  合计=18/24
+合并后（真融合）    A_hit1=9/13  B_hit1=8/11  合计=17/24
+上限（任一臂即算）  合计=20/24  ← 两条臂能力的上界，融合只能无限接近、不能超过
+
+⚠️ 分母是 24 条，不是 26 条（09-17 删掉一条题不可判的废题；另有 1 条标了不计入门禁）
+  B 这一带有好马吗？（目标 geography.villages-lamesa） ⇒ 字面0 语义0 合并0（三臂都拿不到第 1；这条不计入门禁，原因见题集 JSON 的 note）
+
+── 换一个口径：进没进「前 3 / 前 5」（下游是把前几条一起拼给模型的，不是只取第 1 条）──
+                 hit@1   hit@3   hit@5
+  字面臂           15      19      20
+  语义臂           18      20      22
+  ★ 合并（上线）   17      22      22
+
+── ★ 验收口径（甲方 09-17 拍板）：**进前 3 就算过**；下面这行才是门禁看的那一行 ──
+                  hit@3 A组   hit@3 B组   hit@3 合计
+  字面臂           10/13       9/11      19/24  
+  语义臂           12/13       8/11      20/24  
+  ★ 合并（上线）   13/13       9/11      22/24  
+  （hit@1 同口径供对照：字面 15/24、语义 18/24、合并 17/24 —— **不再是门禁口径**，只留作退化预警）
+  合并 vs 字面 @hit@3：涨 3 条，跌 0 条（@hit@1 口径：涨 2 跌 0）
+
+── 对照：两个极端规则各值多少（**都不是上线规则**）──────────────
+字面优先（字面原序 + 语义补尾）        合计=15/24，较字面涨 0 跌 0
+语义优先（语义原序 + 字面补尾）        合计=18/24，较字面涨 5 跌 2（跌的就是那几条：游牧的人怎么用骑马射手打仗？ / 盾墙加飞斧是哪个国家的打法？）
+★ 上线：对称 RRF（k=60）          合计=17/24，较字面涨 2 跌 0
+
+── 流水线式（语义先召回 → 字面在集合内定位；甲方 09-18 口径，**都不是上线规则**）──
+   闸宽  语义召回闸+字面定位        指名道姓不被闸拦（变体）
+          @hit3   @hit1              @hit3   @hit1
+      3      20/24      18/24           20/24      15/24  
+      5      21/24      16/24           21/24      15/24  
+      8      22/24      16/24           22/24      15/24  
+     12      22/24      16/24           22/24      15/24  
+     20      21/24      16/24           20/24      15/24  
+   ★ 对照：上线（对称 RRF）      @hit3=22/24  @hit1=17/24；字面臂 @hit3=19 @hit1=15；语义臂 @hit3=20 @hit1=18
+  （定位顺序直接借产品字面名次，不另算；闸宽 3 = 与产品同一档 `SemanticCandidateLimit`）
+
+只有语义能拿的 5 条：斯特吉亚的军队怎么打仗？ / 库赛特靠什么打仗？ / 瓦尔切格怎么会换主人？ / 有大瀑布的村子是哪个？ / 隘口上那个商埠，哪个家族在那儿定过都？
+只有字面能拿的 2 条：游牧的人怎么用骑马射手打仗？ / 盾墙加飞斧是哪个国家的打法？
+合并仍拿不到的 2 条：山里有不让进的地方吗？ / 哪种头盔护到腮帮子和耳朵？
+合并比字面多拿 2 条：有大瀑布的村子是哪个？ / 隘口上那个商埠，哪个家族在那儿定过都？
+合并比字面少拿 0 条：（无）
+
+阴性 候选=3 语义臂=0 q=今天午饭吃什么
+阴性 候选=0 语义臂=0 q=帮我写一段排序代码
+阴性 候选=0 语义臂=0 q=火车时刻表在哪儿查
+NEGATIVE_WORST candidates=3 max=3 OK
+笼统 候选=4 语义臂=3 q=村民的一亩地归谁
+笼统 候选=2 语义臂=3 q=帝国的一座城
+OVERMATCH_WORST candidates=4 max=8 OK
+
+── E 该空手时空手（判的是『会不会被拼给模型』，不是『捞回几条』）──
+NOANSWER KNOWN_GAP(已确认缺口，内容侧未修) expect=empty status=known_gap 不对的身份[soldier,noble,merchant] q=领主
+    soldier=partial/喂知识 开口=True 通路=semantic top1=war.troops-mamluk 条数=1
+      它答的是：马穆鲁克，词本义是「被拥有的人」。阿塞莱自幼买进外族少年——草原的、高加索的、黑海北岸的都有——在宫廷军营里教骑术弓箭刀术，练成精锐。这些人从小离开爹娘，除了主人和军队谁也不认，所…
+    noble=partial/喂知识 开口=True 通路=semantic top1=war.troops-mamluk 条数=1
+      它答的是：马穆鲁克，词本义是「被拥有的人」。阿塞莱自幼买进外族少年——草原的、高加索的、黑海北岸的都有——在宫廷军营里教骑术弓箭刀术，练成精锐。这些人从小离开爹娘，除了主人和军队谁也不认，所…
+    merchant=partial/喂知识 开口=True 通路=semantic top1=war.troops-mamluk 条数=1
+      它答的是：马穆鲁克，词本义是「被拥有的人」。阿塞莱自幼买进外族少年——草原的、高加索的、黑海北岸的都有——在宫廷军营里教骑术弓箭刀术，练成精锐。这些人从小离开爹娘，除了主人和军队谁也不认，所…
+NOANSWER OK expect=empty q=那谁
+    commoner=not_found/空手 开口=True 通路=identity top1=- 条数=0
+      它答的是：(空)
+NOANSWER KNOWN_GAP(已确认缺口，内容侧未修) expect=empty status=known_gap 不对的身份[commoner] q=这边的人怎么样
+    commoner=partial/喂知识 开口=True 通路=hybrid top1=geography.castles-dinar-castle 条数=7
+      它答的是：迪纳尔堡的人说，风从冰河面上刮过来，没遮没拦。村里人说，羊身上那层毛，是咱过冬的命。
+进城是件大事。车上的东西卖完、该买的买到，才算没白跑一趟。
+厄毗诺萨堡的人说，堡子冷得早，…
+NOANSWER KNOWN_GAP(已确认缺口，内容侧未修) expect=empty status=known_gap 不对的身份[commoner] q=附近有什么好东西
+    commoner=partial/喂知识 开口=True 通路=keyword top1=geography.villages-lamesa 条数=5
+      它答的是：阿塞莱最好的马在拉迈萨吃草——这话草原上没人反驳。那片平原带着海风，草里有咸味，马吃了壮。
+拉耳图绪斯的泉眼会自己冒上来。村里人说那不是泉，是地底那口海在喘气——别往下看，盐是它…
+NOANSWER OK expect=empty q=他们都怎么说
+    commoner=not_found/空手 开口=True 通路=identity top1=- 条数=0
+      它答的是：(空)
+NOANSWER OK expect=empty q=你说的谁啊
+    commoner=not_found/空手 开口=True 通路=identity top1=- 条数=0
+      它答的是：(空)
+NOANSWER OK expect=concept q=村庄
+    commoner=partial/喂知识 开口=True 通路=hybrid top1=geography.settlement-types-village 条数=3
+      它答的是：村里的事就那几样：下地、喂牲口、交粮。老爷的人来收，就交；来征人，就出人。
+进城是件大事。车上的东西卖完、该买的买到，才算没白跑一趟。
+克沃尔的人不问来路。村里人说各家都有各家…
+NOANSWER OK expect=concept q=城堡
+    commoner=partial/喂知识 开口=True 通路=hybrid top1=geography.settlement-types-castle 条数=3
+      它答的是：守堡就那几件事：看墙、轮值、数粮。真打起来先护主楼那面旗——旗在，这个堡就还在。
+塔科尔堡的人说，堡子管着山口，谁南来北往都得打招呼。村里人说，赶在黎明前下到崖底，鲑鱼正往石头上…
+NOANSWER OK expect=concept q=城镇
+    commoner=partial/喂知识 开口=True 通路=hybrid top1=geography.settlement-types-town 条数=2
+      它答的是：进城是件大事。车上的东西卖完、该买的买到，才算没白跑一趟。
+萨哥特这名字是外来语，意思是营寨。城底下压着一座更老的城，是谁毁的，各人说法不一。
+NOANSWER_RULER offenders=0/0 concept_offenders=0/0 known_gaps=3/3 OK
+
+JUDGE positive_control=PASS literal_unchanged=PASS merged_improves=PASS negative_clean=PASS overmatch_bounded=PASS no_answer_clean=PASS concept_clean=PASS known_gaps_bounded=PASS
+MERGE_GATE PASS need **hit@3** literal A>=10 B>=9 ALL>=19 merged A>=10 ALL>(literal) losses@3=0 negative<=3 overmatch<=8 硬答<=0 概念错位<=0 已知缺口<=3
