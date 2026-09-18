@@ -60,6 +60,13 @@
 >   "451"已成过时读数。依据：`docs/FEED-20260918-护甲形制批上线与两处修复.md`。
 > - **角色卡那格的"五道门"是 09-14 的口径**：该线后来按规范 v4 扩到**八道门禁**（见技能 `awake-persona-card-gates`），
 >   "76/76 五道门"这个读数**不是**八道门下的读数 ⇒ 别拿它当今天的状态。
+> - **09-18 13:1x 补：测试读数已变，本节"61 例（2 条跨线红）"过时** —— 实跑（`AWAKE.Tests/bin/Debug/net472/Awake.SdkSmoke.exe`，退出码 **1**）
+>   得 **total=64 / passed=58 / failed=6**，红：`g3-s0-focused-readiness`／`persona-template`／`shared-persona-golden-fixture`／
+>   `persona-persistence`／`persona-anchor`／`dialogue-chain-redtest`。
+>   其中 `dialogue-chain-redtest` 要的包形态是 `awake.worldbook.v2`，与 09-14 拍板落地的 `registry.v1` **不是同一个**
+>   ⇒ **判据没跟着决定走**；改它之前先定"哪个形态是对的"。
+>   ⚠ 该读数出自 **10:04 的构建**，而最后一笔动 `src` 的提交 `0bff7b9` 在 **10:05** ⇒ 要准数须重编再跑。
+>   全过程与其余实测见 `docs/REVIEW-ALL-LINES-20260918.md`。
 
 ### 一句话
 
