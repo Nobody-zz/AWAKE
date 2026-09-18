@@ -1,0 +1,15 @@
+上线包入库：模组自带的世界书数据
+
+内容（ModuleData/Worldbook 之下，.gitignore 第 40-47 行早已显式放行）：
+- manifest.json —— 世界书包清单
+- packages/calradia/manifest.json —— 分卷清单
+- packages/calradia/index.json —— 词条索引
+- packages/calradia/runtime.json —— 运行时数据（482 条词条，1.7 MB）
+
+背景：
+- 这 4 个文件此前从未入库 —— 规则写好了、从没 add 过；
+  .gitignore 注释原文写明「没有这些文件，模组根本不带世界书」。
+- 本笔只收编入库；不改内容。
+
+包状态：482 条词条（09-18 01:17 编出）。
+注：游戏安装目录那份为 448 条（09-17 17:05），差 34 条，属部署动作，与本笔无关。
