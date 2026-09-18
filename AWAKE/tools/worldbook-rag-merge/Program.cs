@@ -58,9 +58,35 @@ internal static class Program
     };
 
     private const int SemanticArmLimit = 3;      // = WorldKnowledgeQueryService.SemanticCandidateLimit
-    // 流水线式对照要扫的「语义召回闸宽度」。产品那档是 3 —— 3 太窄，语义没召回到的字面命中会被整条掐死。
-    private static readonly int[] PinpointRecallSweep = { 3, 5, 8, 12, 20 };
+    // ① 硬闸式对照要扫的「语义召回闸宽度」。形状**已判定为错**，保留只为在报告里留一条反面证据。
+    private static readonly int[] PinpointRecallSweep = { 3, 5, 8, 20 };
+    // ② 逐级收窄要扫的「用语义最像的前几条去定类」。1 ＝ 完全听第一条的（最激进），3 ＝ 产品那一档。
+    private static readonly int[] CascadeSeedSweep = { 1, 2, 3, 5 };
+    // 语义这一次能吐多宽（用来回答"语义这一级够不够当粗筛"）。
+    private const int CascadePoolProbe = 500;
     private const int MergedOvermatchMax = 5 + SemanticArmLimit;
+
+    /// <summary>
+    /// 「粗类」＝条目 id 的**类目段**，用来做级联第一级的"范围"。
+    /// id 形态：`&lt;域&gt;.&lt;细类&gt;-&lt;…&gt;`，例如
+    /// `geography.villages-lamesa` → `geography.villages`；
+    /// `war.troops-royal-guard` → `war.troops`；
+    /// `war.weapons-armor-shield-round` → `war.weapons-armor`（护甲与武器分开，否则 war 一级太大）。
+    /// ⚠️ 这一层**不是产品行为**，只是本对照用来模拟"先抓住大概"的粗粒度。
+    /// </summary>
+    private static string CoarseBucket(string id)
+    {
+        if (string.IsNullOrEmpty(id)) return string.Empty;
+        int dot = id.IndexOf('.');
+        if (dot < 0) return id;
+        string domain = id.Substring(0, dot);
+        string rest = id.Substring(dot + 1);
+        string[] tokens = rest.Split('-');
+        if (tokens.Length == 0 || tokens[0].Length == 0) return domain;
+        if (tokens[0] == "weapons" && tokens.Length >= 2 && tokens[1].Length > 0)
+            return domain + "." + tokens[0] + "-" + tokens[1];
+        return domain + "." + tokens[0];
+    }
 
     // ── E「该空手时空手」（2026-09-17 加，甲方点题）───────────────────────────────
     // 上面 A~D 四条判据量的都是**候选/命中条数**，量不出「库里本就没这一条，却答得很自信」。
@@ -214,12 +240,19 @@ internal static class Program
             // 对照用（**不是上线规则**）：把两条臂的输出按「谁优先」简单串起来，看这两个极端各值几条。
             // 上线的是 WorldKnowledgeRankFusion（对称 RRF）。这两行只是给决策留数，别当成实现。
             int semanticFirstHit1 = 0, literalFirstHit1 = 0, semanticFirstLost = 0, literalFirstGained = 0;
-            // 流水线式（甲方 09-18 口径）：语义先召回、字面在集合内定位。同样**不是上线规则**，只留数。
-            // 扫的旋钮＝**语义召回闸开多大**（产品那档只有 3）。
+            // ① 硬闸式（形状错，留作反面参照）：语义一刀砍到 N 条。
             int[] pinpointHit1 = new int[PinpointRecallSweep.Length];
             int[] pinpointHit3 = new int[PinpointRecallSweep.Length];
-            int[] pinpointBypassHit1 = new int[PinpointRecallSweep.Length];
-            int[] pinpointBypassHit3 = new int[PinpointRecallSweep.Length];
+            // ② 逐级收窄（甲方口径）：语义划"类"→ 类内全量 → 字面钉具体。
+            int[] cascadeHit1 = new int[CascadeSeedSweep.Length];
+            int[] cascadeHit3 = new int[CascadeSeedSweep.Length];
+            int[] cascadeHit5 = new int[CascadeSeedSweep.Length];
+            int[] cascadeScopeSize = new int[CascadeSeedSweep.Length];
+            int[] cascadeTargetInScope = new int[CascadeSeedSweep.Length];
+            int[] cascadeSemHit1 = new int[CascadeSeedSweep.Length];
+            int[] cascadeSemHit3 = new int[CascadeSeedSweep.Length];
+            var semPoolSizes = new List<int>();
+            int targetInSemPool = 0;
             var lostByMerge = new List<string>();
             var gainedByMerge = new List<string>();
             var semanticOnly = new List<string>();
@@ -314,12 +347,9 @@ internal static class Program
                     if (litH1 && !sfH1) semanticFirstLostQueries.Add(text);
                     literalFirstGained += (lfH1 && !litH1) ? 1 : 0;
 
-                    // ── 流水线式（甲方 09-18 口径：「得先抓住大概的语义，再去按照字面的去找对应具体词条」）──
-                    // 与上面两版**不同**：语义不是"排在前面"，而是**先当召回闸**（决定"大概在说哪一类"），
-                    // 字面只在这个集合**内部**负责钉到具体条目。
-                    // ⚠️ 定位顺序**直接借产品的字面名次**（`litHits`），不另算一套 —— 免得变成"另写一个引擎"。
-                    // ★ 闸门开多大是关键旋钮：产品那档只有 3（`SemanticCandidateLimit`），
-                    //   3 太窄 ⇒ 语义没召回到的字面命中会被整条掐死。所以这里**扫一遍宽度**。
+                    // ── ① 硬闸式（09-18 第一版，**形状是错的**，留作反面参照）──
+                    // 语义一刀砍到 N 条，剩下按字面排。问题：**任何一步只用一个信号做一次性判决，
+                    // 砍掉的不会再回来** ⇒ 闸一紧就丢东西（闸宽 3 时 @hit3 掉到 20）。
                     for (int pinIndex = 0; pinIndex < PinpointRecallSweep.Length; pinIndex++)
                     {
                         int recallN = PinpointRecallSweep[pinIndex];
@@ -328,14 +358,45 @@ internal static class Program
                             .OrderBy(x => { int i = litHits.IndexOf(x); return i < 0 ? int.MaxValue : i; })
                             .ThenBy(x => semRecall.IndexOf(x))
                             .ToList();
-                        // 变体：**指名道姓时不让召回闸把入口关掉** —— 字面第 1 若不在语义集合里，前置。
-                        List<string> orderPinpointBypass = new List<string>(orderPinpoint);
-                        if (litHits.Count > 0 && !semRecall.Contains(litHits[0])) orderPinpointBypass.Insert(0, litHits[0]);
-
                         pinpointHit1[pinIndex] += (orderPinpoint.Count > 0 && orderPinpoint[0] == target) ? 1 : 0;
                         pinpointHit3[pinIndex] += orderPinpoint.Take(3).Any(x => x == target) ? 1 : 0;
-                        pinpointBypassHit1[pinIndex] += (orderPinpointBypass.Count > 0 && orderPinpointBypass[0] == target) ? 1 : 0;
-                        pinpointBypassHit3[pinIndex] += orderPinpointBypass.Take(3).Any(x => x == target) ? 1 : 0;
+                    }
+
+                    // ── ② 逐级收窄（甲方 09-18 口径：「范围逐渐缩小的原理才是合理的」）──
+                    // 与 ① 的**唯一但关键**的差别：语义那一级不"砍条数"，而是**划范围**——
+                    // 用语义最像的那几条定出「大概在说哪一类」（取 id 里的细类，如 geography 的 villages、
+                    // war 的 weapons / troops），然后把**该类全部条目**留下，再在类内用字面名次钉具体条目。
+                    // ⇒ 语义一级只做粗定向，不做淘汰；淘汰交给更细的信号。
+                    List<string> semPool = semantic.Search(text, CascadePoolProbe).ToList();
+                    semPoolSizes.Add(semPool.Count);
+                    if (semPool.Contains(target)) targetInSemPool++;
+
+                    for (int ci = 0; ci < CascadeSeedSweep.Length; ci++)
+                    {
+                        int seeds = CascadeSeedSweep[ci];
+                        var buckets = new HashSet<string>(StringComparer.Ordinal);
+                        for (int s = 0; s < Math.Min(seeds, semPool.Count); s++) buckets.Add(CoarseBucket(semPool[s]));
+
+                        List<string> scope = new List<string>();
+                        foreach (string id in litHits) if (buckets.Contains(CoarseBucket(id))) scope.Add(id);
+                        foreach (WorldKnowledgeEntry e in snapshot.Entries.Values)
+                            if (buckets.Contains(CoarseBucket(e.Id)) && !scope.Contains(e.Id)) scope.Add(e.Id);
+
+                        cascadeScopeSize[ci] += scope.Count;
+                        cascadeHit1[ci] += (scope.Count > 0 && scope[0] == target) ? 1 : 0;
+                        cascadeHit3[ci] += scope.Take(3).Any(x => x == target) ? 1 : 0;
+                        cascadeHit5[ci] += scope.Take(5).Any(x => x == target) ? 1 : 0;
+                        // ★ 分诊用：**目标到底在不在这个"范围"里**。
+                        //   在范围里却没进前三 ⇒ 是**排序**的问题；不在范围里 ⇒ 是**收窄那一刀切多了**。
+                        //   两者修法完全不同，不能混成一个数。
+                        if (scope.Contains(target)) cascadeTargetInScope[ci]++;
+                        // 变体 ②-b：类内改成**语义先、字面平手** —— 看"具体定位"交给字面到底是对是错。
+                        List<string> scopeBySemantic = scope
+                            .OrderBy(x => { int i = semPool.IndexOf(x); return i < 0 ? int.MaxValue : i; })
+                            .ThenBy(x => { int i = litHits.IndexOf(x); return i < 0 ? int.MaxValue : i; })
+                            .ToList();
+                        cascadeSemHit1[ci] += (scopeBySemantic.Count > 0 && scopeBySemantic[0] == target) ? 1 : 0;
+                        cascadeSemHit3[ci] += scopeBySemantic.Take(3).Any(x => x == target) ? 1 : 0;
                     }
                 }
                 else
@@ -398,25 +459,43 @@ internal static class Program
             Console.WriteLine("★ 上线：对称 RRF（k=" + WorldKnowledgeRankFusion.RankConstant + "）          合计="
                 + (merA + merB) + "/" + total + "，较字面涨 " + gainedByMerge.Count + " 跌 " + lostByMerge.Count);
 
-            // 流水线式（甲方 09-18 口径）——这是**第三种形状**，不是"谁优先"。
-            // 判据同门禁口径：@hit3 为准（@hit1 一并给）。旋钮＝语义召回闸开多大。
+            // 两条口径的对照 —— ① 硬闸式（形状错）／② 逐级收窄（甲方口径）。
             Console.WriteLine();
-            Console.WriteLine("── 流水线式（语义先召回 → 字面在集合内定位；甲方 09-18 口径，**都不是上线规则**）──");
-            Console.WriteLine("   闸宽  语义召回闸+字面定位        指名道姓不被闸拦（变体）");
-            Console.WriteLine("          @hit3   @hit1              @hit3   @hit1");
+            Console.WriteLine("── ① 硬闸式：语义一刀砍到 N 条，剩下按字面排（09-18 首版；**形状已判定为错**）──");
+            Console.WriteLine("   闸宽   @hit3   @hit1");
             for (int i = 0; i < PinpointRecallSweep.Length; i++)
-            {
                 Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
-                    "   {0,4}   {1,5}/{2,-4} {3,5}/{2,-4}      {4,5}/{2,-4} {5,5}/{2,-4}",
-                    PinpointRecallSweep[i],
-                    pinpointHit3[i], total, pinpointHit1[i],
-                    pinpointBypassHit3[i], pinpointBypassHit1[i]));
+                    "   {0,4}   {1,5}/{2,-4} {3,5}/{2,-4}",
+                    PinpointRecallSweep[i], pinpointHit3[i], total, pinpointHit1[i]));
+
+            Console.WriteLine();
+            Console.WriteLine("── ② 逐级收窄：语义用最像的前 k 条**定类**（不砍条数）→ 该类**全量**留下 → 类内定位 ──");
+            Console.WriteLine("   k(定类种子)  该类平均留几条  目标在范围内  类内字面先@hit3/@hit1   类内语义先@hit3/@hit1");
+            for (int i = 0; i < CascadeSeedSweep.Length; i++)
+                Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
+                    "   {0,8}   {1,12:F1}   {2,8}/{3,-4}   {4,5}/{3,-4} {5,5}/{3,-4}      {6,5}/{3,-4} {7,5}/{3,-4}",
+                    CascadeSeedSweep[i], total > 0 ? (double)cascadeScopeSize[i] / total : 0d,
+                    cascadeTargetInScope[i], total,
+                    cascadeHit3[i], cascadeHit1[i],
+                    cascadeSemHit3[i], cascadeSemHit1[i]));
+            Console.WriteLine("   ⚠️ 分诊读法：**目标在范围内却没进前三 ⇒ 排序问题；不在范围内 ⇒ 收窄那一刀切多了。**");
+
+            Console.WriteLine();
+            Console.WriteLine("── 对照（同一套题、同一台工具）──");
+            Console.WriteLine("   ★ 上线（对称 RRF）  @hit3=" + (merA3 + merB3) + "/" + total + "  @hit1=" + (merA + merB) + "/" + total);
+            Console.WriteLine("   字面臂            @hit3=" + (litA3 + litB3) + "/" + total + "  @hit1=" + (litA + litB) + "/" + total);
+            Console.WriteLine("   语义臂            @hit3=" + (semA3 + semB3) + "/" + total + "  @hit1=" + (semA + semB) + "/" + total);
+            Console.WriteLine("   上限（任一臂命中@3）@hit3=" + (total - stillMissed.Count) + "/" + total
+                + "（谁都拿不到的是：" + Join(stillMissed) + "）");
+            Console.WriteLine();
+            // 这一行回答的是"语义这一级够不够当粗筛"：它一次能吐多宽、目标在不在里面。
+            if (semPoolSizes.Count > 0)
+            {
+                List<int> sorted = semPoolSizes.OrderBy(x => x).ToList();
+                Console.WriteLine("   语义臂这一次能吐多宽（探到 " + CascadePoolProbe + "）："
+                    + "中位 " + sorted[sorted.Count / 2] + "、最大 " + sorted[sorted.Count - 1]
+                    + "、最小 " + sorted[0] + "；**目标在这个池子里的 " + targetInSemPool + "/" + semPoolSizes.Count + "**");
             }
-            Console.WriteLine("   ★ 对照：上线（对称 RRF）      @hit3=" + (merA3 + merB3) + "/" + total
-                + "  @hit1=" + (merA + merB) + "/" + total
-                + "；字面臂 @hit3=" + (litA3 + litB3) + " @hit1=" + (litA + litB)
-                + "；语义臂 @hit3=" + (semA3 + semB3) + " @hit1=" + (semA + semB));
-            Console.WriteLine("  （定位顺序直接借产品字面名次，不另算；闸宽 3 = 与产品同一档 `SemanticCandidateLimit`）");
 
             Console.WriteLine();
             Console.WriteLine("只有语义能拿的 " + semanticOnly.Count + " 条：" + Join(semanticOnly));
