@@ -22,6 +22,26 @@ try
         WriteJson(new JsonObject { ["ok"] = true, ["document_revision"] = AuthorityPublicProjection.Document(result, root) });
         return 0;
     }
+    if (command == "authoring-register-batch")
+    {
+        var manifestPath = RequiredOption(args, "--manifest");
+        var manifest = JsonNode.Parse(File.ReadAllText(manifestPath))?.AsArray()
+            ?? throw new InvalidOperationException("WB-AUTHORITY-400: manifest 不是 JSON 数组。");
+        var items = new JsonArray();
+        var index = 0;
+        foreach (var node in manifest)
+        {
+            if (node is not JsonObject item) throw new InvalidOperationException("WB-AUTHORITY-400: manifest 项必须是对象。");
+            var operationId = item["operation"]?.GetValue<string>() ?? throw new InvalidOperationException("WB-AUTHORITY-400: manifest 项缺 operation。");
+            var documentPath = item["path"]?.GetValue<string>() ?? throw new InvalidOperationException("WB-AUTHORITY-400: manifest 项缺 path。");
+            var revision = authority.RegisterDocument(operationId, documentPath);
+            items.Add(new JsonObject { ["operation"] = operationId, ["document_revision"] = AuthorityPublicProjection.Document(revision, root) });
+            index++;
+            if (index % 25 == 0) Console.Error.WriteLine("[batch] " + index + "/" + manifest.Count);
+        }
+        WriteJson(new JsonObject { ["ok"] = true, ["count"] = index, ["items"] = items });
+        return 0;
+    }
     if (command == "authoring-select")
     {
         var ids = RequiredOption(args, "--document-id").Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
@@ -182,7 +202,7 @@ try
             WriteJson(new JsonObject { ["ok"] = true, ["sdk"] = "10.0.301", ["offline"] = true, ["schema_root"] = Path.GetFullPath(schemaRoot), ["workspace"] = Path.GetFullPath(root), ["v1_runtime_write"] = false, ["ai"] = true });
             return 0;
         default:
-            Console.Error.WriteLine("用法: init|validate|authoring-register|authoring-select|authoring-approve|authoring-proof|compile|preview|export|publish-staging|ai-providers|ai-consent-preview|ai-analyze|ai-apply|ai-reject|doctor");
+            Console.Error.WriteLine("用法: init|validate|authoring-register|authoring-register-batch|authoring-select|authoring-approve|authoring-proof|compile|preview|export|publish-staging|ai-providers|ai-consent-preview|ai-analyze|ai-apply|ai-reject|doctor");
             return 3;
     }
 }

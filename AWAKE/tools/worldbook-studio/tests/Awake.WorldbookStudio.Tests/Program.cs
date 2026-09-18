@@ -914,8 +914,8 @@ Run("K1 runtime keywords carry titles document aliases and entity anchor names",
         Assert(keywords.Contains("帕拉汶德"), "entity anchor display name must become a runtime keyword");
         Assert(keywords.Contains("Pravend"), "entity anchor english name must become a runtime keyword");
         Assert(keywords.Contains("Paravenos"), "entity anchor aliases must become runtime keywords");
-        Assert(keywords[^1] == "doc.politics.demo", "internal document id must be kept as the last fallback keyword");
-        Assert(keywords.Length > 2 && keywords.Count(x => x == "doc.politics.demo") == 1, "internal document id must no longer be the only keyword");
+        Assert(!keywords.Contains("doc.politics.demo"), "internal document id must NOT become a runtime keyword (K1 2026-09-16: it would steal ordering by string length)");
+        Assert(keywords.Length > 2 && !keywords.Any(x => x.StartsWith("doc.", StringComparison.Ordinal)), "runtime keywords must come from title/aliases/anchors only, never internal document ids");
         var keywordIndex = runtime["indexes"]!["keywordToEntryIds"]!.AsObject();
         Assert(keywordIndex["帕拉汶德"]?[0]?.GetValue<string>() == "awake:entry:politics.demo", "keyword index must resolve the anchor name to its entry");
         Assert(keywordIndex["Demo Alias"]?[0]?.GetValue<string>() == "awake:entry:politics.demo", "keyword index must resolve document aliases to their entry");
@@ -938,7 +938,7 @@ Run("K1 runtime keywords degrade safely without the entity mapping package", () 
         Assert(compiled.Validation.Valid, "missing entity mapping must not block compilation");
         var runtime = JsonNode.Parse(Encoding.UTF8.GetString(compiled.Files["runtime.json"]))!.AsObject();
         var keywords = runtime["entries"]![0]!["keywords"]!.AsArray().Select(x => x!.GetValue<string>()).ToArray();
-        Assert(keywords.Contains("帕拉汶德") && keywords[^1] == "doc.politics.demo", "keywords must fall back to title, aliases and the internal id");
+        Assert(keywords.Contains("帕拉汶德") && !keywords.Contains("doc.politics.demo"), "keywords must fall back to title and aliases only, never the internal id");
         Assert(!keywords.Contains("Pravend"), "anchor english name requires the mapping package and must be absent without it");
     }
     finally

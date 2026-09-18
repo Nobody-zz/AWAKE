@@ -110,7 +110,9 @@ public static class RuntimePackageCompiler
         var sourceId = document["id"]?.GetValue<string>() ?? "doc.unknown";
         var entryId = StableEntry(sourceId);
         // K1：keywords 是运行时的可读检索词，来源为「标题（多语言）+ 别名（多语言）+ 实体锚点的可读名称」。
-        // 内部文档 id 保留为兜底检索词并排在最后：它不是玩家/NPC 会用的说法，不应再充当主要关键词。
+        // K1 修正（2026-09-16）：内部文档 id 不再进 keywords。它不是玩家/NPC 会用的说法；
+        //   且运行时只做「集合成员判定」（数组位置无意义），排序只按「匹配串长度」⇒ id 会凭串长压过真关键词。
+        //   需要按 id 取用请走 entry.id / extensions.sourceDocumentId，不经过检索。
         var keywords = new JsonArray();
         var addedKeywords = new HashSet<string>(StringComparer.Ordinal);
         AddLocalizedKeywords(keywords, addedKeywords, document["title"] as JsonObject);
@@ -118,7 +120,6 @@ public static class RuntimePackageCompiler
         foreach (var entityId in ReadEntityIds(document))
             foreach (var anchorName in LookupEntityAnchorNames(entityAnchorNames, entityId))
                 AddKeyword(keywords, addedKeywords, anchorName);
-        AddKeyword(keywords, addedKeywords, sourceId);
         var expressions = new JsonArray();
         foreach (var assertion in document["assertions"]?.AsArray().OfType<JsonObject>() ?? [])
         {
