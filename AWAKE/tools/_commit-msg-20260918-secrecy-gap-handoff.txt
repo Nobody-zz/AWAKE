@@ -1,0 +1,34 @@
+docs(worldbook): 身份分层补料单 —— 先取数再开单，"谁不该知道什么"全包只有一个样条
+
+甲方 09-18 选"先补料"。没有直接写单子，先从真包取证（`_probe_secrecy_gap_20260918.py`，
+读数 `_probe_secrecy_gap_20260918.txt`，可复跑）。
+
+关键事实（包 awake:worldbook.calradia/1.0.0，482 条目 / 1115 说法，09-18）：
+- `denies`（硬拒绝）**3 条，全部集中在同一个条目**（politics.clans-charas-cortain-secret）
+- `detail=secret` 的说法**2 条，也在同一条目**（授权 noble / elite·secret）
+- 说法档位 detail 545 ｜ rumor 524 ｜ summary 44 ｜ secret 2
+- 授权门槛 rumor 4671 ｜ detail 1994 ｜ summary 137 ｜ secret 2
+- 条目分层结构：多档 476 ｜ 单档 6 ⇒ **骨架在（一粗一细），缺上半段纵深**
+- 按 domain：geography 411 / war 37 / economy 21 / politics 7 / culture 6，
+  而 secret 与 denies **只出现在 politics（7 条）** ⇒ 全包只有 1 个类别示范了完整分层
+
+⇒ 结论：不是"少写几条禁忌"，是**门装好了、门后是空的**。
+
+按身份统计「完全查不到任何说法」的条目数（对齐身份词汇用）：
+anonymous 482(100%)｜ransom_broker 31(6.4%)｜commoner 30(6.2%)｜tavernkeeper 27(5.6%)｜
+notable 20(4.1%)｜soldier 11｜townsfolk 10｜noble 9｜merchant 7｜villager 6。
+
+⚠️ 取证中发现一个**要世界书线先定的口径**：内容侧大量授权写 `villager`，而 `commoner` 与 `villager`
+在包里是两个不同身份，且**没有任何游戏职业直接产生 `commoner`**（Occupation 枚举里没有这一项）
+⇒ commoner 那 30 条"缺口"可能不是漏写，是这个词本来就不该用。**这条不定，覆盖补了也会错位。**
+
+⚠️ 另一处自纠（我先前猜错）：一度以为"基础地理对平民关闭"是过度收紧，核查后发现
+那些条目的 grant 写的是 `awake:identity:villager`，**我的探针按 `commoner` 查所以看起来是缺**
+⇒ **不是内容侧的问题，是我探针的口径**。已写进单据。
+
+单据：`AWAKE/docs/HANDOFF-20260918-世界书补料单-身份分层与禁忌.md`
+（背景 / 现状数字与出处 / 要补三件 / 字段口径与样板 / 验收命令 / 约束）。
+
+验收信号已留：补上 denies 之后，`worldbook-runtime-sim -- identity-gate` 新报的
+`被排除行的状态分布` 里 `blocked/permission` 应从 **0 变非 0**，届时代码侧才动
+"让角色用自己的身份语气说出来"那一步。

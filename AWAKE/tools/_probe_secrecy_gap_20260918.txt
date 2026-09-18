@@ -1,0 +1,288 @@
+包：awake:worldbook.calradia/1.0.0 ｜ 条目 482
+顶层键：entries, extensions, identities, indexes, packageId, referrals, revision, schemaVersion, version, worldId
+====================================================================================
+entry 键：domain, expressions, extensions, id, keywords, summary, title
+expression 键：denies, detail, extensions, grants, id, text
+grant 键：conditions, identity_id, min_detail, scope
+grant 样例：{"conditions": {}, "identity_id": "awake:identity:notable", "min_detail": "detail", "scope": "regional"}
+denies 字段存在？True
+------------------------------------------------------------------------------------
+① 硬拒绝（denies）合计 = 3 条
+   awake:entry:politics.clans-charas-cortain-secret ｜ {'en': 'Charas', 'zh-CN': '沙拉斯·科尔坦家的账'}
+       expression=awake:expression:clan-charas-cortain-secret-1-public
+       rule={"conditions": {}, "identity_id": "awake:identity:tavernkeeper", "min_detail": "rumor", "scope": "local"}
+   awake:entry:politics.clans-charas-cortain-secret ｜ {'en': 'Charas', 'zh-CN': '沙拉斯·科尔坦家的账'}
+       expression=awake:expression:clan-charas-cortain-secret-1-secret
+       rule={"conditions": {}, "identity_id": "awake:identity:anonymous", "min_detail": "rumor", "scope": "local"}
+   awake:entry:politics.clans-charas-cortain-secret ｜ {'en': 'Charas', 'zh-CN': '沙拉斯·科尔坦家的账'}
+       expression=awake:expression:clan-charas-cortain-secret-1-b-ingal
+       rule={"conditions": {}, "identity_id": "awake:identity:anonymous", "min_detail": "rumor", "scope": "local"}
+------------------------------------------------------------------------------------
+② 身份覆盖（有多少条目给了这个身份）：
+   villager           476
+   merchant           475
+   noble              473
+   townsfolk          472
+   soldier            471
+   headman            468
+   notable            462
+   tavernkeeper       455
+   commoner           452
+   ransom_broker      451
+   带 public（人人可得）的条目 = 0 / 482
+------------------------------------------------------------------------------------
+说法档位（expression.detail）分布：
+   detail       545
+   rumor        524
+   summary      44
+   secret       2
+授权门槛（grant.min_detail）分布：
+   rumor        4671
+   detail       1994
+   summary      137
+   secret       2
+条目分层结构：**单档条目 6**（无论谁来问都同一档）｜ 多档条目 476
+------------------------------------------------------------------------------------
+③ 精确候选：**只有一条说法、档位是 detail/secret、却发给了底层身份** = 0 条
+------------------------------------------------------------------------------------
+④ 那 6 条「单档条目」（只有一种说法 ⇒ 谁问都是同一档）：
+   awake:entry:culture.tales-kachar-rulership     卡恰尔半岛·归谁所有  [detail]  现给：notable
+   awake:entry:culture.tales-lycaron-vultures     吕卡隆·石山秃鹫  [rumor]  现给：commoner,tavernkeeper,villager
+   awake:entry:geography.bays-charas              沙拉斯湾·湾澳与港口  [rumor]  现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+   awake:entry:geography.mountains-dawn           黎明山脉·山岳  [rumor]  现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+   awake:entry:geography.villages-deriat          德里亚特  [rumor]  现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+   awake:entry:politics.territories-kachar-ownership 卡恰尔半岛·归属沿革  [summary]  现给：headman,merchant,noble,notable,soldier,townsfolk
+全包 detail=secret 的说法 = 2 条
+   awake:entry:politics.clans-charas-cortain-secret ｜ 沙拉斯·科尔坦家的账
+       说法 id=awake:expression:clan-charas-cortain-secret-1-secret
+       授权={"conditions": {}, "identity_id": "awake:identity:noble", "min_detail": "secret", "scope": "elite"}
+   awake:entry:politics.clans-charas-cortain-secret ｜ 沙拉斯·科尔坦家的账
+       说法 id=awake:expression:clan-charas-cortain-secret-1-b-ingal
+       授权={"conditions": {}, "identity_id": "awake:identity:noble", "min_detail": "secret", "scope": "elite"}
+------------------------------------------------------------------------------------
+⑤ 对某个身份「一条说法都不给」的条目数（＝他完全查不到）：
+   commoner         查不到  30 / 482  (6.2%)
+   villager         查不到   6 / 482  (1.2%)
+   townsfolk        查不到  10 / 482  (2.1%)
+   soldier          查不到  11 / 482  (2.3%)
+   merchant         查不到   7 / 482  (1.5%)
+   tavernkeeper     查不到  27 / 482  (5.6%)
+   notable          查不到  20 / 482  (4.1%)
+   ransom_broker    查不到  31 / 482  (6.4%)
+   noble            查不到   9 / 482  (1.9%)
+   anonymous        查不到 482 / 482  (100.0%)
+------------------------------------------------------------------------------------
+⑥ 全包唯一写了 denies 的条目（当样板）：
+{
+ "domain": "politics",
+ "expressions": [
+  {
+   "denies": [
+    {
+     "conditions": {},
+     "identity_id": "awake:identity:tavernkeeper",
+     "min_detail": "rumor",
+     "scope": "local"
+    }
+   ],
+   "detail": "summary",
+   "extensions": {
+    "sourceAssertionId": "assertion.clan-charas-cortain-secret-1"
+   },
+   "grants": [
+    {
+     "conditions": {},
+     "identity_id": "awake:identity:townsfolk",
+     "min_detail": "summary",
+     "scope": "regional"
+    },
+    {
+     "conditions": {},
+     "identity_id": "awake:identity:notable",
+     "min_detail": "summary",
+     "scope": "regional"
+    },
+    {
+     "conditions": {},
+     "identity_id": "awake:identity:merchant",
+     "min_detail": "summary",
+     "scope": "faction"
+    },
+    {
+     "conditions": {},
+     "identity_id": "awake:identity:headman",
+     "min_detail": "summary",
+     "scope": "national"
+    },
+    {
+     "conditions": {},
+     "identity_id": "awake:identity:soldier",
+     "min_detail": "summary",
+     "scope": "national"
+    },
+    {
+     "conditions": {},
+     "identity_id": "awake:identity:noble",
+     "min_detail": "summary",
+     "scope": "elite"
+    },
+    {
+     "conditions": {},
+     "identity_id": "awake:identity:tavernkeeper",
+     "min_detail": "summary",
+     "scope": "faction"
+    }
+   ],
+   "id": "awake:expression:clan-charas-cortain-secret-1-public",
+   "text": {
+    "zh-CN": "沙拉斯的海务财富尽归戴·科尔坦家族。"
+   }
+  },
+  {
+   "denies": [
+    {
+     "conditions": {},
+     "identity_id": "awake:identity:anonymous",
+     "min_detail": "rumor",
+     "scope": "local"
+    }
+   ],
+   "detail": "secret",
+   "extensions": {
+    "sourceAssertionId": "assertion.clan-charas-cortain-secret-1"
+   },
+   "grants": [
+    {
+     "conditions": {},
+     "identity_id": "awake:identity:noble",
+     "min_detail": "secret",
+     "scope": "elite"
+    }
+   ],
+   "id": "awake:expression:clan-charas-cortain-secret-1-secret",
+   "text": {
+    "zh-CN": "这些财富正被拿来操办科尔坦家的图谋：港税、渔市、地租，尽入其囊中以养其势。"
+   }
+  },
+  {
+   "denies": [
+    {
+     "conditions": {},
+     "identity_id": "awake:identity:anonymous",
+     "min_detail": "rumor",
+     "scope": "local"
+    }
+   ],
+   "detail": "secret",
+   "extensions": {
+    "sourceAssertionId": "assertion.clan-charas-cortain-secret-1"
+   },
+   "grants": [
+    {
+     "conditions": {},
+     "identity_id": "awake:identity:noble",
+     "min_detail": "secret",
+     "scope": "elite"
+    }
+   ],
+   "id": "awake:expression:clan-charas-cortain-secret-1-b-ingal",
+   "text": {
+    "zh-CN": "沙拉斯是我的。这句话没人敢反驳。戴·科尔坦家从奥斯里克时代就攥着这座港口，攥了一百五十年，攥得比梅罗克家攥那顶金冠还紧。帝国的旧贵族们现在还管沙拉斯叫“龙兴之地”——龙兴个屁，龙早死了，骨头都烂了，
+------------------------------------------------------------------------------------
+⑦ 按 domain 汇总（条目 / 有 secret 档的说法 / denies / 单档条目）：
+   geography              条目 411 ｜ secret 0 ｜ denies 0 ｜ 单档 3
+   war                    条目  37 ｜ secret 0 ｜ denies 0 ｜ 单档 0
+   economy                条目  21 ｜ secret 0 ｜ denies 0 ｜ 单档 0
+   politics               条目   7 ｜ secret 2 ｜ denies 3 ｜ 单档 1
+   culture                条目   6 ｜ secret 0 ｜ denies 0 ｜ 单档 2
+------------------------------------------------------------------------------------
+⑧ 平民（commoner）完全查不到的 30 条（今天仅有的「完全挡」，也是唯一在跑的样本）：
+   awake:entry:culture.tales-charas-origins         沙拉斯湾·三种来历
+   awake:entry:culture.tales-dawn-taboo             黎明山脉·禁忌与传说
+   awake:entry:culture.tales-husn-fulq              富勒格其人与“鬼点子”
+   awake:entry:culture.tales-kachar-rulership       卡恰尔半岛·归谁所有
+   awake:entry:culture.tales-lakonis-red-water      拉科尼斯湖·水为何变红
+   awake:entry:geography.deserts-nahasa             纳哈撒沙漠
+   awake:entry:geography.lakes-llyn-modris          林·莫德里斯
+   awake:entry:geography.lakes-tanaesis             塔奈西斯湖
+   awake:entry:geography.mines-lycaron              吕卡隆·银矿
+   awake:entry:geography.mountains-dryatic          德律亚山
+   awake:entry:geography.mountains-erithrys         厄里特律斯山
+   awake:entry:geography.mountains-iltan            伊勒坦山
+   awake:entry:geography.plateaus-devseg            德夫赛格高原
+   awake:entry:geography.rivers-miron               弥戎河
+   awake:entry:geography.rivers-sethys              塞堤斯河
+   awake:entry:geography.seas-perassic              珀拉斯海
+   awake:entry:politics.clans-charas-cortain-secret 沙拉斯·科尔坦家的账
+   awake:entry:politics.territories-charas-reign    沙拉斯·归属与科尔坦家
+   awake:entry:politics.territories-dawn-stewardship 黎明山脉·归属与守护
+   awake:entry:politics.territories-kachar-ownership 卡恰尔半岛·归属沿革
+   awake:entry:politics.territories-varcheg-swap    瓦尔切格·三易其手与镇名
+   awake:entry:politics.throne-paravenos            帕拉汶德·旧帝都的沦陷
+   awake:entry:politics.throne-saneopa              萨涅俄帕·隘口商埠与旧都
+   awake:entry:war.military-khuzait                 库赛特军事力量
+   awake:entry:war.military-sturgia                 斯特吉亚军事力量
+   awake:entry:war.military-vlandia                 瓦兰迪亚军事力量
+   awake:entry:war.troops-mamluk                    马穆鲁克
+   awake:entry:war.troops-royal-guard               皇家侍卫
+   awake:entry:war.weapons-crossbow                 弩
+   awake:entry:war.weapons-head-fur-cap             毛皮帽
+------------------------------------------------------------------------------------
+③ 「现在人人可得、但内容看着该分层」的候选 = 19 条
+   awake:entry:culture.tales-dawn-taboo           {'en': 'Dawn Mountains', 'zh-CN': '黎明山脉·禁忌与传说'}
+       现给：notable,villager
+       线索：忌讳
+   awake:entry:economy.goods-velvet               {'en': 'Velvet', 'zh-CN': '天鹅绒'}
+       现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+       线索：只有
+   awake:entry:economy.items-pack_camel           {'en': 'Pack Camel', 'zh-CN': '驮运骆驼'}
+       现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+       线索：只有
+   awake:entry:geography.mines-lycaron            {'en': 'Lycaron', 'zh-CN': '吕卡隆·银矿'}
+       现给：headman,merchant,noble,notable,soldier,townsfolk
+       线索：叛
+   awake:entry:geography.plateaus-devseg          {'en': 'Devseg Plateau', 'zh-CN': '德夫赛格高原'}
+       现给：headman,merchant,noble,townsfolk,villager
+       线索：秘密
+   awake:entry:geography.towns-lycaron            {'en': 'Lycaron', 'zh-CN': '吕卡隆'}
+       现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+       线索：叛
+   awake:entry:geography.towns-odokh              {'en': 'Odokh', 'zh-CN': '奥多赫'}
+       现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+       线索：秘密
+   awake:entry:geography.towns-qasira             {'en': 'Qasira', 'zh-CN': '加西拉'}
+       现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+       线索：忌讳
+   awake:entry:geography.towns-seonon             {'en': 'Seonon', 'zh-CN': '肖农'}
+       现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+       线索：忌讳
+   awake:entry:geography.villages-shapeshte       {'en': 'Shapeshte', 'zh-CN': '沙佩什特'}
+       现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+       线索：只有
+   awake:entry:politics.clans-charas-cortain-secret {'en': 'Charas', 'zh-CN': '沙拉斯·科尔坦家的账'}
+       现给：headman,merchant,noble,notable,soldier,tavernkeeper,townsfolk
+       线索：图谋
+   awake:entry:politics.throne-paravenos          {'en': 'Pravend', 'zh-CN': '帕拉汶德·旧帝都的沦陷'}
+       现给：merchant,noble,soldier,townsfolk,villager
+       线索：私下
+   awake:entry:war.military-vlandia               {'en': 'Vlandian Military Power', 'zh-CN': '瓦兰迪亚军事力量'}
+       现给：merchant,noble,soldier,villager
+       线索：只有
+   awake:entry:war.weapons-armor-hands            {'en': 'Gloves and Bracers', 'zh-CN': '护手与臂铠'}
+       现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+       线索：只有
+   awake:entry:war.weapons-armor-legs             {'en': 'Legwear and Boots', 'zh-CN': '护腿与靴'}
+       现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+       线索：只有
+   awake:entry:war.weapons-armor-torso-civil      {'en': "Commoner's Clothing", 'zh-CN': '平民便服'}
+       现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+       线索：只有
+   awake:entry:war.weapons-crossbow               {'en': 'Crossbow', 'zh-CN': '弩'}
+       现给：noble,soldier,townsfolk,villager
+       线索：私下
+   awake:entry:war.weapons-head-cloth-coif        {'en': 'Cloth Coifs and Head Wraps', 'zh-CN': '布制围帽与头巾'}
+       现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+       线索：只有
+   awake:entry:war.weapons-head-mail-coif         {'en': 'Mail Coif', 'zh-CN': '链甲围帽'}
+       现给：commoner,headman,merchant,noble,notable,ransom_broker,soldier,tavernkeeper,townsfolk,villager
+       线索：只有
