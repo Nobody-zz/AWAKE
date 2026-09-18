@@ -1,0 +1,16 @@
+在途修改收口（世界书·文档侧）：作废标注、类别词修正、自检刷新
+
+内容（3 个已跟踪文件的在途改动，落库归档；不表示由本线撰写）：
+- docs/LIGHTWEIGHT-EMBEDDING-CANDIDATES-20260916.md
+  第 4 条"暂不搬进 mod"加作废标注：模型已定为随包分发（DECISION-20260916），
+  且实测证明分词不必自写（官方 Microsoft.ML.Tokenizers + 离线 vocab.txt，
+  16 条真实中文查询与 HF 原生逐位一致）——原反对理由不成立。
+- authoring-out/_rollout_towns_gen_20260913.py
+  2026-09-17 修正：类别词「城镇」不再进 aliases。它挂在数百条上 ⇒ 覆盖 > 40
+  ⇒ 被索引卫生 R1 剔掉 ⇒ 指不到任何东西，还留下"谁都能沾"的口子。
+  类别词已升格为概念词条 doc.geography.settlement-types-town。
+- authoring-out/SELF-CHECK-20260913-v2.json
+  自检刷新：docs 448→458、expressions 993→1032、grants 6171→6369；
+  文件名规范化的连带更新（desert-nahasa → deserts-nahasa）。JSON 已验合法。
+
+未纳入（另判）：tools/worldbook-pilot-package/WorldbookPilotPackage.csproj —— 见后续说明。

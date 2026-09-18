@@ -269,7 +269,11 @@ def main():
             "universe": "awake_current",
             "era": {"key": "current", "certainty": "bounded"},
             "content_tier": "base",
-            "aliases": {"zh-CN": [m["cn"], "城镇"], "en": [m["en"], sid]},
+            # 2026-09-17：类别词「城镇」不再进 aliases。
+            # 它挂在几百条上 ⇒ 覆盖 > 40 ⇒ 被索引卫生 R1 剔掉 ⇒ 指不到任何东西，
+            # 还留了「谁都能沾」的坑（德里亚特的「德里亚特·村庄」就是这么劫走 272 条泛问的）。
+            # 类别词已升格为概念词条 doc.geography.settlement-types-town。
+            "aliases": {"zh-CN": [m["cn"]], "en": [m["en"], sid]},
             "summary": {"zh-CN": a_text},
             "registry_bindings": dict(REG_BIND),
             "sources": [src],
