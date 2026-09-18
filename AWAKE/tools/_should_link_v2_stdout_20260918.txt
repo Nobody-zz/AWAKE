@@ -1,0 +1,38 @@
+=== v2：分桶与方向已固化进边表 ===
+条目 482；名字池 725（留 721；丢纯泛词 4；保留枢纽名 14）
+
+== 按桶 ==
+  专名边（DF<=12）                    边  580   其中互提 338   应进引用图
+  高频专名边（DF>12 的真地名）              边  398   其中互提  44   应进引用图
+  类别星形边（→概念词条）                   边   99   其中互提   0   单列，不进加权图
+  应进引用图合计 978 条 / 互提 382 条
+
+== 方向 ==
+  互提（mutual）边     382   （占应进图 39%）
+  单向（out）边        695
+  互提的无向对         177
+
+== 互提对长在哪些类别组合（只算应进图的边）==
+  geography.castles        ↔ geography.villages       267
+  war.weapons              ↔ war.weapons                9
+  geography.towns          ↔ politics.throne            8
+  geography.mountains      ↔ geography.towns            7
+  geography.lakes          ↔ geography.towns            6
+  geography.mountains      ↔ geography.villages         6
+  economy.goods            ↔ geography.castles          5
+  geography.peninsulas     ↔ geography.towns            5
+  geography.towns          ↔ politics.territories       5
+  geography.rivers         ↔ geography.villages         4
+  geography.seas           ↔ geography.towns            4
+  culture.tales            ↔ geography.towns            3
+
+== 反向不可用的中心节点（入边多、出边少 ⇒ 其入边一律只能 forward）==
+  geography.lakes-lakonis                  入  41  出  4  互提 2  《拉科尼斯湖·水陆与生计》
+  geography.peninsulas-kachar              入  38  出  3  互提 4  《卡恰尔半岛·地要与用兵》
+  geography.lakes-tanaesis                 入  33  出  6  互提 3  《塔奈西斯湖》
+  geography.bays-charas                    入  32  出  6  互提 10  《沙拉斯湾·湾澳与港口》
+  culture.tales-lakonis-red-water          入  29  出  0  互提 0  《拉科尼斯湖·水为何变红》
+  politics.territories-kachar-ownership    入  25  出  0  互提 0  《卡恰尔半岛·归属沿革》
+
+JSON: D:\AWAKE-Dev\AWAKE\docs\mappings\worldbook-should-link\20260918\should-link.v2.json
+报告: D:\AWAKE-Dev\AWAKE\tools\_should_link_report_v2_20260918.txt
