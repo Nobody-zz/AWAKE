@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Awake;
 using MarcusAwakeStorage;
 using Newtonsoft.Json.Linq;
@@ -82,6 +83,16 @@ if (args.Length > 0 && StringComparer.OrdinalIgnoreCase.Equals(args[0], "identit
 if (args.Length > 0 && StringComparer.OrdinalIgnoreCase.Equals(args[0], "full-context"))
 {
     return RunFullContextMode(args.Skip(1).ToArray());
+}
+
+// fallback-probe：把「字面兜底通道」单独拉出来看（2026-09-18）。
+// 用法: dotnet run -c Release -- fallback-probe <manifest.json> <spec.json> <out.json>
+// 为什么加：`probe` 只回「命中条数 ＋ 最终 hits」，看不出**兜底那一腿自己捞回了什么**。
+// 这里**反射调产品那个私有方法本身**（`FindLiteralCandidates` / `FindFallbackCandidates`），
+// 不重写匹配与排序 ⇒ 是读数，不是"另写一个引擎"。不含身份门、不含语义臂。
+if (args.Length > 0 && StringComparer.OrdinalIgnoreCase.Equals(args[0], "fallback-probe"))
+{
+    return RunFallbackProbe(args.Skip(1).ToArray());
 }
 
 string manifestPath = args.Length > 0 && !string.IsNullOrWhiteSpace(args[0])
@@ -554,6 +565,114 @@ int RunIdentityGate(string[] a)
     Console.WriteLine($"IDENTITY_GATE {(pass ? "PASS" : "FAIL")} need leaks=0 deniedFail=0 且非空转（deniedRows>0 且 shouldKnowHit>0）");
     Console.WriteLine("报告已导出: " + outPath);
     return pass ? 0 : 1;
+}
+
+// ---------- fallback-probe 实现 ----------
+
+// 把「字面兜底通道」单独拉出来看（2026-09-18）。
+// 与产品**同源**的三处：① 入参先过 `NormalizeQueryText`（产品 `Query()` 第 62 行就这么做）；
+// ② 用的是加载器建出来的**真索引**（`KeywordIndex` / `FallbackTermIndex`）；
+// ③ 切词器就是产品的 `WorldbookTermIndex.TermSet`。
+// 匹配与排序**不重写** —— 直接反射调产品那两个私有方法。
+// ⚠️ 输出里 `fallback_shared_terms`（"凭什么捞这条"）是为讲清成因、用真索引重算的一列，
+//    不是产品返回值；产品返回的就是那份 id 列表本身。
+int RunFallbackProbe(string[] a)
+{
+    if (a.Length < 3)
+    {
+        Console.WriteLine("用法: fallback-probe <manifest.json> <spec.json> <out.json>");
+        return 2;
+    }
+    string manifest = a[0];
+    if (!File.Exists(manifest))
+    {
+        Console.WriteLine("找不到 manifest: " + manifest);
+        return 2;
+    }
+    var spec = JObject.Parse(File.ReadAllText(a[1]));
+    string workDir = Path.Combine(Path.GetTempPath(), "awake-fallback-probe", Guid.NewGuid().ToString("N"));
+    Directory.CreateDirectory(workDir);
+    foreach (string name in new[] { "manifest.json", "runtime.json", "index.json" })
+    {
+        string src = Path.Combine(Path.GetDirectoryName(manifest)!, name);
+        if (File.Exists(src)) File.Copy(src, Path.Combine(workDir, name), true);
+    }
+    var snapshot = WorldKnowledgeLoader.Load(Path.Combine(workDir, "manifest.json"));
+    var service = new WorldKnowledgeQueryService(snapshot);
+    Console.WriteLine($"fallback-probe: package={snapshot.PackageId} entries={snapshot.Entries.Count}");
+
+    var literalMi = typeof(WorldKnowledgeQueryService)
+        .GetMethod("FindLiteralCandidates", BindingFlags.NonPublic | BindingFlags.Instance);
+    var fallbackMi = typeof(WorldKnowledgeQueryService)
+        .GetMethod("FindFallbackCandidates", BindingFlags.NonPublic | BindingFlags.Instance);
+    if (literalMi == null || fallbackMi == null)
+    {
+        Console.WriteLine("PROBE-FAIL 反射没找到产品方法（签名变了？）—— 读数无效");
+        return 1;
+    }
+
+    List<WorldKnowledgeEntry> Call(MethodInfo mi, string t) =>
+        ((System.Collections.IEnumerable)mi.Invoke(service, new object[] { t })!)
+            .Cast<WorldKnowledgeEntry>().ToList();
+
+    var rows = new JArray();
+    int emptyFallback = 0;
+    foreach (var q in spec["queries"] ?? new JArray())
+    {
+        string raw = q.Value<string>("text") ?? "";
+        string norm = WorldKnowledgeQueryService.NormalizeQueryText(raw);
+        List<WorldKnowledgeEntry> literal = Call(literalMi, norm);
+        List<WorldKnowledgeEntry> fbOnly = Call(fallbackMi, norm);
+        if (fbOnly.Count == 0) emptyFallback++;
+
+        var kwHits = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var pair in snapshot.KeywordIndex)
+            if (norm.IndexOf(pair.Key, StringComparison.OrdinalIgnoreCase) >= 0
+                || pair.Key.IndexOf(norm, StringComparison.OrdinalIgnoreCase) >= 0) kwHits.Add(pair.Key);
+        var qTerms = WorldbookTermIndex.TermSet(norm);
+
+        string targetRaw = q.Value<string>("target") ?? "";
+        // ⚠️ 比的时候必须用**原始形态**：`entry.Id` 是 `awake:entry:xxx` 带前缀的。
+        //    第一版我拿去掉前缀的短串去比 ⇒ 恒不相等 ⇒ 那一列恒 0（＝没验过，不是"一条都没中"）。
+        string tShort = targetRaw.StartsWith("awake:entry:", StringComparison.Ordinal)
+            ? targetRaw.Substring("awake:entry:".Length) : targetRaw;
+        int tRankFb = targetRaw.Length == 0 ? 0 : fbOnly.FindIndex(x => x.Id == targetRaw) + 1;
+        int tRankLiteral = targetRaw.Length == 0 ? 0 : literal.FindIndex(x => x.Id == targetRaw) + 1;
+
+        Console.WriteLine($"[{q.Value<string>("name")}] {raw}");
+        Console.WriteLine($"    kw={kwHits.Count} term={qTerms.Count} 兜底={fbOnly.Count} 条"
+            + (tShort.Length > 0 ? $"，目标在兜底里排 {tRankFb}、在字面联合里排 {tRankLiteral}" : "")
+            + "：" + Trunc(string.Join(" | ", fbOnly.Select(x => x.Id)), 170));
+
+        rows.Add(new JObject
+        {
+            ["name"] = q.Value<string>("name"),
+            ["kind"] = q.Value<string>("kind"),
+            ["group"] = q.Value<string>("group"),
+            ["why"] = q.Value<string>("why"),
+            ["player_text"] = raw,
+            ["normalized"] = norm,
+            ["keyword_terms_hit"] = new JArray(kwHits.OrderBy(x => x, StringComparer.Ordinal)),
+            ["query_term_count"] = qTerms.Count,
+            ["target"] = tShort,
+            ["target_rank_in_fallback"] = tRankFb,
+            ["target_rank_in_literal_union"] = tRankLiteral,
+            ["fallback_ids"] = new JArray(fbOnly.Select(x => x.Id)),
+            ["fallback_titles"] = new JArray(fbOnly.Select(x => Trunc(x.Title ?? "", 28))),
+            ["fallback_shared_terms"] = new JArray(fbOnly.Select(x => (JToken)new JArray(
+                qTerms.Where(t => snapshot.FallbackTermIndex.TryGetValue(t, out List<string> ids)
+                                  && ids.Contains(x.Id))
+                      .OrderBy(t => t, StringComparer.Ordinal)))),
+            ["literal_count"] = literal.Count,
+            ["literal_first5"] = new JArray(literal.Take(5).Select(x => x.Id)),
+        });
+    }
+    File.WriteAllText(a[2], rows.ToString(Newtonsoft.Json.Formatting.Indented));
+    Console.WriteLine($"空手（兜底 0 条）的行: {emptyFallback} / {rows.Count}"
+        + (emptyFallback == rows.Count ? "  ⚠️ 全空 ⇒ 疑似恒空，读数无效（「恒 0 命中＝没验过」）" : ""));
+    Console.WriteLine("fallback-probe 结果已导出: " + a[2]);
+    Console.WriteLine("FALLBACK-PROBE-OK");
+    return 0;
 }
 
 // ---------- probe 模式实现 ----------
