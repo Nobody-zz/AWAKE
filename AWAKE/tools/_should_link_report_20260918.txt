@@ -1,0 +1,201 @@
+=== 判据：正文点名的 ↔ 被点名的 ===
+条目 482 条；名字池 725 个（留 721；按 DF>12 丢掉纯泛词 4 个，但**是条目标题主词的枢纽名保留 14 个**）
+
+== 结果 ==
+  提及边（去重后）      1077   （强边 960 ／ 弱边 117）
+  不同的条目对          813   （强边贡献 756）
+  有出边的条目          369
+  有入边的条目          292
+
+== 保留的枢纽名（是条目标题主词、DF 又超过阈值的，前 20）==
+  城堡               出现在  67 条正文里
+  拉科尼斯湖            出现在  29 条正文里
+  塔奈西斯湖            出现在  27 条正文里
+  珀拉斯海             出现在  25 条正文里
+  毛皮               出现在  21 条正文里
+  沙拉斯              出现在  19 条正文里
+  城镇               出现在  19 条正文里
+  德夫赛格高原           出现在  18 条正文里
+  瓦尔切格             出现在  17 条正文里
+  德律亚山             出现在  17 条正文里
+  弥戎河              出现在  14 条正文里
+  沙拉斯湾             出现在  13 条正文里
+  村庄               出现在  13 条正文里
+  密泽亚              出现在  13 条正文里
+
+== 丢掉的纯泛词（不是任何条目标题，前 20）==
+  伊勒坦            出现在  17 条正文里
+  德律亚山脉          出现在  15 条正文里
+  链甲             出现在  15 条正文里
+  银矿             出现在  14 条正文里
+
+== 用作边的名字里，复用最多的（前 20）==
+  瓦尔切格             83 条边   (DF=17)
+  沙拉斯              72 条边   (DF=19)
+  城堡               67 条边   (DF=67)
+  拉科尼斯湖            57 条边   (DF=29)
+  毛皮               40 条边   (DF=21)
+  卡恰尔半岛            30 条边   (DF=8)
+  塔奈西斯湖            26 条边   (DF=27)
+  弥戎河              26 条边   (DF=14)
+  沙拉斯湾             25 条边   (DF=13)
+  珀拉斯海             24 条边   (DF=25)
+  城镇               19 条边   (DF=19)
+  德夫赛格高原           17 条边   (DF=18)
+  德律亚山             16 条边   (DF=17)
+  黎明山脉             14 条边   (DF=5)
+  村庄               13 条边   (DF=13)
+  吕卡隆              12 条边   (DF=5)
+  密泽亚              12 条边   (DF=13)
+  伊勒坦运输线           11 条边   (DF=11)
+  塞堤斯               9 条边   (DF=10)
+  奥尼石山              9 条边   (DF=5)
+
+== 出边最多的条目（前 12）==
+  economy.goods-deriat                             12 条出边
+  geography.seas-perassic                          11 条出边
+  geography.villages-deriat                        11 条出边
+  geography.villages-ustokol                       11 条出边
+  geography.castles-caleus-castle                  10 条出边
+  geography.towns-varcheg                          10 条出边
+  politics.territories-varcheg-swap                10 条出边
+  geography.castles-garontor-castle                9 条出边
+  geography.castles-pendraic-castle                9 条出边
+  geography.castles-thractorae-castle              9 条出边
+  geography.castles-tubilis-castle                 9 条出边
+  geography.castles-nevyansk-castle                8 条出边
+
+== 例子（前 20 条边，带原文）==
+  culture.tales-charas-origins
+     → politics.clans-charas-cortain-secret   （因为正文提到「沙拉斯」）
+       原文：帝国的史书里，这片湾被唤作帝国的摇篮：按史书的说法，卡拉德人的先祖正是从南部群岛渡水而来，头一回在北岸的沙拉斯踏上这片大陆
+  culture.tales-charas-origins
+     → geography.bays-charas   （因为正文提到「沙拉斯」）
+       原文：帝国的史书里，这片湾被唤作帝国的摇篮：按史书的说法，卡拉德人的先祖正是从南部群岛渡水而来，头一回在北岸的沙拉斯踏上这片大陆
+  culture.tales-charas-origins
+     → politics.territories-charas-reign   （因为正文提到「沙拉斯」）
+       原文：帝国的史书里，这片湾被唤作帝国的摇篮：按史书的说法，卡拉德人的先祖正是从南部群岛渡水而来，头一回在北岸的沙拉斯踏上这片大陆
+  culture.tales-charas-origins
+     → geography.towns-charas   （因为正文提到「沙拉斯」）
+       原文：帝国的史书里，这片湾被唤作帝国的摇篮：按史书的说法，卡拉德人的先祖正是从南部群岛渡水而来，头一回在北岸的沙拉斯踏上这片大陆
+  culture.tales-lycaron-vultures
+     → geography.towns-lycaron   （因为正文提到「吕卡隆」）
+       原文：吕卡隆是帝国人的心脏，但那颗心脏已经被人捅穿了
+  culture.tales-lycaron-vultures
+     → geography.mines-lycaron   （因为正文提到「吕卡隆」）
+       原文：吕卡隆是帝国人的心脏，但那颗心脏已经被人捅穿了
+  economy.goods-deriat
+     → geography.villages-caleus   （因为正文提到「卡琉斯」）
+       原文：做成斗篷顶得住水汽，卡琉斯堡守军过冬的皮袄，有些料子就出自德里亚特
+  economy.goods-deriat
+     → geography.castles-caleus-castle   （因为正文提到「卡琉斯」）
+       原文：做成斗篷顶得住水汽，卡琉斯堡守军过冬的皮袄，有些料子就出自德里亚特
+  economy.goods-deriat
+     → geography.castles-caleus-castle   （因为正文提到「卡琉斯堡」）
+       原文：做成斗篷顶得住水汽，卡琉斯堡守军过冬的皮袄，有些料子就出自德里亚特
+  economy.goods-deriat
+     → geography.villages-deriat   （因为正文提到「德里亚特」）
+       原文：德里亚特的毛皮油脂产出、交易去向、斗篷皮袄用途、海豹油点灯与道路不便的商旅解读
+  economy.goods-deriat
+     → geography.castles-caleus-castle   （因为正文提到「德里亚特」）
+       原文：德里亚特的毛皮油脂产出、交易去向、斗篷皮袄用途、海豹油点灯与道路不便的商旅解读
+  economy.goods-deriat
+     → war.weapons-armor-cape-mantle   （因为正文提到「斗篷」）
+       原文：德里亚特的毛皮油脂产出、交易去向、斗篷皮袄用途、海豹油点灯与道路不便的商旅解读
+  economy.goods-deriat
+     → economy.goods-fur   （因为正文提到「毛皮」）
+       原文：德里亚特的毛皮油脂产出、交易去向、斗篷皮袄用途、海豹油点灯与道路不便的商旅解读
+  economy.goods-deriat
+     → geography.towns-varcheg   （因为正文提到「瓦尔切格」）
+       原文：海豹的皮货在瓦尔切格湾那片水面上有名，进的是湾内各处的交易
+  economy.goods-deriat
+     → geography.peninsulas-kachar   （因为正文提到「瓦尔切格」）
+       原文：海豹的皮货在瓦尔切格湾那片水面上有名，进的是湾内各处的交易
+  economy.goods-deriat
+     → politics.territories-kachar-ownership   （因为正文提到「瓦尔切格」）
+       原文：海豹的皮货在瓦尔切格湾那片水面上有名，进的是湾内各处的交易
+  economy.goods-deriat
+     → culture.tales-kachar-rulership   （因为正文提到「瓦尔切格」）
+       原文：海豹的皮货在瓦尔切格湾那片水面上有名，进的是湾内各处的交易
+  economy.goods-deriat
+     → politics.territories-varcheg-swap   （因为正文提到「瓦尔切格」）
+       原文：海豹的皮货在瓦尔切格湾那片水面上有名，进的是湾内各处的交易
+  economy.goods-fur
+     → economy.goods-velvet   （因为正文提到「天鹅绒」）
+       原文：毛皮是北方寒地的招牌货，保暖器物的头等原料，价高仅次于天鹅绒的体面商品
+  economy.goods-fur
+     → economy.goods-deriat   （因为正文提到「毛皮」）
+       原文：毛皮是北方寒地的招牌货，保暖器物的头等原料，价高仅次于天鹅绒的体面商品
+
+== 按「出方类别 → 入方类别」分组（只算专名边，DF<=12）==
+  geography.villages       → geography.castles        138
+  geography.castles        → geography.villages       134
+  war.weapons              → war.weapons              35
+  geography.villages       → geography.towns          27
+  economy.items            → war.weapons              21
+  geography.villages       → geography.mountains      20
+  geography.villages       → geography.rivers         14
+  geography.villages       → geography.villages       13
+  geography.villages       → geography.lakes          12
+  geography.villages       → geography.peninsulas     10
+  geography.towns          → geography.mountains      9
+  geography.villages       → culture.tales            8
+  geography.towns          → culture.tales            7
+  geography.towns          → geography.peninsulas     6
+  geography.villages       → politics.territories     5
+  geography.castles        → geography.rivers         4
+
+== 枢纽／上位边（viaName 的 DF>12，即 67 条正文提「城堡」这类）—— **单列，建议不进引用图** ==
+  合计 497 条
+  瓦尔切格              83 条边  → 指向 culture.tales-kachar-rulership, geography.peninsulas-kachar, geography
+  沙拉斯               72 条边  → 指向 geography.bays-charas, geography.towns-charas, politics.clans-charas-c
+  城堡                67 条边  → 指向 geography.settlement-types-castle
+  拉科尼斯湖             57 条边  → 指向 culture.tales-lakonis-red-water, geography.lakes-lakonis
+  毛皮                40 条边  → 指向 economy.goods-deriat, economy.goods-fur
+  塔奈西斯湖             26 条边  → 指向 geography.lakes-tanaesis
+  弥戎河               26 条边  → 指向 geography.lakes-lakonis, geography.rivers-miron
+  沙拉斯湾              25 条边  → 指向 culture.tales-charas-origins, geography.bays-charas
+  珀拉斯海              24 条边  → 指向 geography.seas-perassic
+  城镇                19 条边  → 指向 geography.settlement-types-town
+  德夫赛格高原            17 条边  → 指向 geography.plateaus-devseg
+  德律亚山              16 条边  → 指向 geography.mountains-dryatic
+  村庄                13 条边  → 指向 geography.settlement-types-village
+  密泽亚               12 条边  → 指向 geography.towns-myzea
+
+== 每个类别组合给一个例子（专名边）==
+  [culture.tales → geography.towns] culture.tales-lycaron-vultures
+      → geography.towns-lycaron（因为提到「吕卡隆」）
+        原文：吕卡隆是帝国人的心脏，但那颗心脏已经被人捅穿了
+  [culture.tales → geography.mines] culture.tales-lycaron-vultures
+      → geography.mines-lycaron（因为提到「吕卡隆」）
+        原文：吕卡隆是帝国人的心脏，但那颗心脏已经被人捅穿了
+  [economy.goods → geography.villages] economy.goods-deriat
+      → geography.villages-caleus（因为提到「卡琉斯」）
+        原文：做成斗篷顶得住水汽，卡琉斯堡守军过冬的皮袄，有些料子就出自德里亚特
+  [economy.goods → geography.castles] economy.goods-deriat
+      → geography.castles-caleus-castle（因为提到「卡琉斯」）
+        原文：做成斗篷顶得住水汽，卡琉斯堡守军过冬的皮袄，有些料子就出自德里亚特
+  [economy.goods → war.weapons] economy.goods-deriat
+      → war.weapons-armor-cape-mantle（因为提到「斗篷」）
+        原文：德里亚特的毛皮油脂产出、交易去向、斗篷皮袄用途、海豹油点灯与道路不便的商旅解读
+  [economy.goods → economy.goods] economy.goods-fur
+      → economy.goods-velvet（因为提到「天鹅绒」）
+        原文：毛皮是北方寒地的招牌货，保暖器物的头等原料，价高仅次于天鹅绒的体面商品
+  [economy.items → war.weapons] economy.items-battania_mercenary_armor
+      → war.weapons-armor-torso-brigandine（因为提到「布面铁甲」）
+        原文：奢华布面铁甲是巴坦尼亚佣兵里的体面货，铁甲衬布面，防护顶尖还不失体面
+  [economy.items → economy.items] economy.items-western_plated_helmet
+      → economy.items-sturgian_helmet_closed（因为提到「闭面军阀盔」）
+        原文：侧护覆板盔护头 52、重 3.9，与闭面军阀盔同档
+  [geography.bays → geography.villages] geography.bays-charas
+      → geography.villages-garontor（因为提到「加隆托」）
+        原文：沙拉斯湾的半封闭水域形态、群岛防波、加隆托海峡要道与沙拉斯港生计
+  [geography.bays → geography.castles] geography.bays-charas
+      → geography.castles-garontor-castle（因为提到「加隆托」）
+        原文：沙拉斯湾的半封闭水域形态、群岛防波、加隆托海峡要道与沙拉斯港生计
+  [geography.castles → geography.villages] geography.castles-ab-comer-castle
+      → geography.villages-inveth（因为提到「因韦斯」）
+        原文：阿布·科梅尔堡是巴旦尼亚压在特朗河上游的一座城堡，辖着阿布·科梅尔与因韦斯两村
+  [geography.castles → economy.goods] geography.castles-caleus-castle
+      → economy.goods-deriat（因为提到「德里亚特」）
+        原文：卡琉斯堡是瓦兰迪亚立在瓦尔切格湾南岸的一座城堡，辖着卡琉斯与德里亚特两村

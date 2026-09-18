@@ -1,0 +1,74 @@
+packageEntries=482  sameAsProductAtK3=5/5  controlOk=3/3  denom=23
+
+== cumulative hit@N per K (denominator 23) ==
+K      hit@1    hit@2    hit@3    hit@4    hit@5    miss       lenAvg/max  
+3      17/23    22/23    22/23    22/23    22/23    1          6/10        
+10     17/23    20/23    22/23    23/23    23/23    0          11/14       
+20     17/23    19/23    20/23    23/23    23/23    0          16/24       
+50     17/23    19/23    20/23    23/23    23/23    0          23/54       
+100    17/23    19/23    20/23    23/23    23/23    0          23/56       
+
+== rank change vs K=3 (only cases that move) ==
+  K=3:2 | K=10:3 | K=20:4 | K=50:4 | K=100:4
+     group=  query=斯特吉亚的军队怎么打仗？
+     target=awake:entry:war.military-sturgia
+  K=3:2 | K=10:2 | K=20:4 | K=50:4 | K=100:4
+     group=  query=库赛特靠什么打仗？
+     target=awake:entry:war.military-khuzait
+  K=3:2 | K=10:3 | K=20:3 | K=50:3 | K=100:3
+     group=  query=什么人拿大圆盾扔飞斧？
+     target=awake:entry:war.troops-royal-guard
+  K=3:MISS | K=10:4 | K=20:4 | K=50:4 | K=100:4
+     group=  query=哪种头盔护到腮帮子和耳朵？
+     target=awake:entry:economy.items-western_plated_helmet
+  moved cases: 4 / 23
+
+== cases still MISS at every K ==
+
+== rank at K=10 .. K=100, cases whose rank <= 6 at any K ==
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     拉迈萨那地方养什么？ -> awake:entry:geography.villages-lamesa
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     西米拉堡是谁的城堡？ -> awake:entry:geography.castles-simira-castle
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     乔诺巴斯在哪儿？ -> awake:entry:geography.villages-chornobas
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     富勒格是谁？ -> awake:entry:culture.tales-husn-fulq
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     卡恰尔半岛归谁？ -> awake:entry:culture.tales-kachar-rulership
+  best=2  K=3:2 | K=10:2 | K=20:2 | K=50:2 | K=100:2
+     萨涅俄帕是什么地方？ -> awake:entry:politics.throne-saneopa
+  best=2  K=3:2 | K=10:3 | K=20:4 | K=50:4 | K=100:4
+     斯特吉亚的军队怎么打仗？ -> awake:entry:war.military-sturgia
+  best=2  K=3:2 | K=10:2 | K=20:4 | K=50:4 | K=100:4
+     库赛特靠什么打仗？ -> awake:entry:war.military-khuzait
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     皇家侍卫是什么兵？ -> awake:entry:war.troops-royal-guard
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     毛皮值钱吗？ -> awake:entry:economy.goods-fur
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     盐是从哪儿来的？ -> awake:entry:economy.goods-salt
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     侧护覆板盔谁在用？ -> awake:entry:economy.items-western_plated_helmet
+  best=2  K=3:2 | K=10:2 | K=20:2 | K=50:2 | K=100:2
+     瓦尔切格怎么会换主人？ -> awake:entry:politics.territories-varcheg-swap
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     有大瀑布的村子是哪个？ -> awake:entry:geography.villages-chornobas
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     集市上说书人讲的那个鬼点子是谁的？ -> awake:entry:culture.tales-husn-fulq
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     有个半岛被三家抢过，谁说了算？ -> awake:entry:culture.tales-kachar-rulership
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     隘口上那个商埠，哪个家族在那儿定过都？ -> awake:entry:politics.throne-saneopa
+  best=2  K=3:2 | K=10:3 | K=20:3 | K=50:3 | K=100:3
+     什么人拿大圆盾扔飞斧？ -> awake:entry:war.troops-royal-guard
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     游牧的人怎么用骑马射手打仗？ -> awake:entry:war.military-khuzait
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     盾墙加飞斧是哪个国家的打法？ -> awake:entry:war.military-sturgia
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     北方有什么又暖又贵的皮货？ -> awake:entry:economy.goods-fur
+  best=1  K=3:1 | K=10:1 | K=20:1 | K=50:1 | K=100:1
+     桌上少不了、产地又集中的日用品是什么？ -> awake:entry:economy.goods-salt
+  best=4  K=3:MISS | K=10:4 | K=20:4 | K=50:4 | K=100:4
+     哪种头盔护到腮帮子和耳朵？ -> awake:entry:economy.items-western_plated_helmet

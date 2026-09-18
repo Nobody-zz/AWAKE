@@ -1,0 +1,149 @@
+=== 结构 ===
+  settlement-hierarchy keys: ['counts', 'edges', 'generated_at_utc', 'note', 'schema_version', 'sources']
+  第一条归属边: {"from": "awake:entry:geography.villages-varagos", "to": ["awake:entry:geography.castles-varagos-castle"], "via": "bound_settlement", "villageCode": "castle_village_EN1_1", "villageNameZh": "瓦拉戈斯", "parentCode": "castle_EN1", "parentNameZh": "瓦拉戈斯堡", "parentType": "castle", "cultureCode": "empire", "parentEntryCount": 1}
+  归属边条数(容器): 274
+  should-link keys: ['counts', 'edges', 'generated_at_utc', 'method', 'params', 'schema_version']
+  should-link counts: {"entries": 482, "namesTotal": 725, "namesKept": 721, "namesDroppedAsGeneric": 4, "hubsKept": 14, "edges": 1077, "distinctPairs": 813, "edgesStrong": 960, "edgesWeak": 117, "pairsStrong": 756, "entriesWithOutgoing": 369, "entriesWithIncoming": 292}
+
+=== 提及边分层 ===
+  提及边全量                  边  1077   条目对   813
+  专名边(DF<=12)            边   580   条目对   380
+    专名强边                 边   463   条目对   311
+    专名弱边                 边   117   条目对   104
+  枢纽边(DF>12)             边   497   条目对   473
+
+=== 专名强边：按 出方类别→入方类别 全量分组 ===
+  geography.villages       -> geography.castles        138
+  geography.castles        -> geography.villages       134
+  geography.villages       -> geography.towns           24
+  geography.villages       -> geography.villages        13
+  economy.items            -> war.weapons               12
+  geography.villages       -> geography.mountains       12
+  war.weapons              -> war.weapons                9
+  geography.villages       -> geography.rivers           6
+  geography.villages       -> culture.tales              5
+  geography.villages       -> politics.territories       5
+  geography.lakes          -> geography.towns            4
+  geography.mountains      -> geography.villages         4
+  geography.towns          -> culture.tales              4
+  geography.towns          -> geography.mountains        4
+  economy.goods            -> geography.castles          3
+  geography.castles        -> geography.towns            3
+  geography.seas           -> geography.towns            3
+  geography.towns          -> politics.territories       3
+  geography.villages       -> geography.peninsulas       3
+  politics.throne          -> geography.towns            3
+  economy.goods            -> geography.villages         2
+  geography.castles        -> geography.rivers           2
+  geography.castles        -> geography.mountains        2
+  geography.mountains      -> geography.castles          2
+  geography.mountains      -> geography.towns            2
+  geography.plateaus       -> geography.towns            2
+  geography.rivers         -> geography.towns            2
+  geography.rivers         -> geography.villages         2
+  geography.towns          -> geography.villages         2
+  geography.towns          -> politics.throne            2
+  geography.towns          -> geography.towns            2
+  geography.towns          -> geography.peninsulas       2
+  geography.villages       -> geography.deserts          2
+  geography.villages       -> economy.goods              2
+  geography.villages       -> politics.throne            2
+  culture.tales            -> geography.towns            1
+  culture.tales            -> geography.mines            1
+  economy.goods            -> economy.goods              1
+  economy.items            -> economy.items              1
+  geography.bays           -> geography.villages         1
+  geography.bays           -> geography.castles          1
+  geography.castles        -> economy.goods              1
+  geography.castles        -> politics.territories       1
+  geography.castles        -> geography.peninsulas       1
+  geography.castles        -> culture.tales              1
+  geography.mines          -> geography.towns            1
+  geography.mines          -> culture.tales              1
+  geography.mountains      -> culture.tales              1
+  geography.mountains      -> politics.territories       1
+  geography.peninsulas     -> politics.territories       1
+  geography.peninsulas     -> geography.towns            1
+  geography.peninsulas     -> culture.tales              1
+  geography.plateaus       -> geography.mountains        1
+  geography.plateaus       -> culture.tales              1
+  geography.plateaus       -> politics.territories       1
+  geography.rivers         -> geography.castles          1
+  geography.rivers         -> geography.mines            1
+  geography.rivers         -> culture.tales              1
+  geography.seas           -> geography.villages         1
+  geography.seas           -> geography.castles          1
+  geography.towns          -> geography.mines            1
+  politics.clans           -> geography.villages         1
+  politics.territories     -> politics.territories       1
+  politics.territories     -> geography.towns            1
+  politics.territories     -> geography.peninsulas       1
+  politics.territories     -> culture.tales              1
+  politics.throne          -> geography.mines            1
+  politics.throne          -> culture.tales              1
+  politics.throne          -> geography.villages         1
+  politics.throne          -> geography.castles          1
+  war.military             -> war.weapons                1
+  war.military             -> geography.towns            1
+  war.military             -> geography.castles          1
+  war.military             -> geography.villages         1
+  war.troops               -> war.weapons                1
+  war.weapons              -> economy.items              1
+  -- 组合数 76，合计 463（应等于专名强边数）
+
+=== 归属边 ===
+  容器条数 274，展开后父链接 290
+  涉及条目：出方 274，入方 128，合计 402
+  父类型分布：{'castle': 133, 'town': 157}
+
+=== 孤立条目（按口径）===
+  宽口径：任何提及边              不加归属边        孤立  83
+  宽口径：任何提及边              加归属边         孤立  13
+  专名口径：专名边(含弱)           不加归属边        孤立 139
+  专名口径：专名边(含弱)           加归属边         孤立  21
+  严口径：仅专名强边              不加归属边        孤立 165
+  严口径：仅专名强边              加归属边         孤立  34
+
+=== 孤立清单（严口径：仅专名强边 + 归属边）===
+  war.weapons              16
+  economy.items            7
+  culture.tales            3
+  geography.settlement     3
+  economy.goods            2
+  geography.lakes          1
+  war.military             1
+  war.troops               1
+    culture.tales-charas-origins   《沙拉斯湾》
+    culture.tales-husn-fulq   《富勒格其人与“鬼点子”》
+    culture.tales-lakonis-red-water   《拉科尼斯湖》
+    economy.goods-salt   《盐》
+    economy.goods-silver   《银矿石》
+    economy.items-cow   《牛》
+    economy.items-desert_lamellar   《轻型扎甲》
+    economy.items-mule   《骡子》
+    economy.items-pack_camel   《驮运骆驼》
+    economy.items-saddle_horse   《旅行马》
+    economy.items-sheep   《羊》
+    economy.items-steppe_war_bow   《草原战弓》
+    geography.lakes-lakonis   《拉科尼斯湖》
+    geography.settlement-types-castle   《城堡》
+    geography.settlement-types-town   《城镇》
+    geography.settlement-types-village   《村庄》
+    war.military-khuzait   《库赛特军事力量》
+    war.troops-mamluk   《马穆鲁克》
+    war.weapons-armor-cape-fur   《兽皮披挂》
+    war.weapons-armor-cape-mantle   《披风与围巾》
+    war.weapons-armor-cape-shoulders   《软甲护肩与背带》
+    war.weapons-armor-hands   《护手与臂铠》
+    war.weapons-armor-legs   《护腿与靴》
+    war.weapons-armor-shield-heater   《扇形盾》
+    war.weapons-armor-shield-wicker   《柳条盾与杏形盾》
+    war.weapons-armor-torso-civil   《平民便服》
+    war.weapons-armor-torso-gambeson   《填充衣》
+    war.weapons-armor-torso-plate   《板甲》
+    war.weapons-head-cheekguard   《护颊盔》
+    war.weapons-head-cloth-coif   《布制围帽与头巾》
+    war.weapons-head-crown   《王冠与仪式盔》
+    war.weapons-head-fur-cap   《毛皮帽》
+    war.weapons-head-nasal   《护鼻盔》
+    war.weapons-head-oddity   《兽首与面具盔》

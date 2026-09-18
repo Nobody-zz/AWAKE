@@ -94,6 +94,23 @@ if (args.Length > 0 && StringComparer.OrdinalIgnoreCase.Equals(args[0], "fallbac
 {
     return RunFallbackProbe(args.Skip(1).ToArray());
 }
+// rank-probe（2026-09-18）：量「目标在产品**真实候选序**里排第几」。
+// 这是跨轮累积里 W（在场范围留几条）该看的指标，也是我先前自认「没量过」的那件事。
+// 反射调产品的 private `FindCandidates` 拿完整序，零替身；自带阳性对照。
+if (args.Length > 0 && StringComparer.OrdinalIgnoreCase.Equals(args[0], "rank-probe"))
+{
+    return RunRankProbe(args.Skip(1).ToArray());
+}
+// midlayer-probe（2026-09-18）：量「把语义臂的召回宽度调大一档，能不能把那两条被切掉的目标捞回来」。
+// 这是"中间层"里**代价最低的那个候选方案**：产品一行不改，只把 `SemanticCandidateLimit` 换成参数 K。
+// 与产品**同源**三处：① 语义索引＝bootstrap 真挂上去的那一个（反射取私有字段 `_semantic`，
+//   不是另建一个）；② 查询串先过产品的 `NormalizeQueryText`、并按产品的 `MinSemanticQueryLength`
+//   截短表；③ 融合与排序仍走产品的 private `FindCandidates`，**一个字不重写**。
+// 自带两道自检：`K=3` 必须与产品 `QuerySemanticIds` 逐字相同（同源），阳性对照必须排第 1（有分辨力）。
+if (args.Length > 0 && StringComparer.OrdinalIgnoreCase.Equals(args[0], "midlayer-probe"))
+{
+    return RunMidLayerProbe(args.Skip(1).ToArray());
+}
 
 string manifestPath = args.Length > 0 && !string.IsNullOrWhiteSpace(args[0])
     ? args[0]
@@ -595,6 +612,318 @@ int RunIdentityGate(string[] a)
 // 匹配与排序**不重写** —— 直接反射调产品那两个私有方法。
 // ⚠️ 输出里 `fallback_shared_terms`（"凭什么捞这条"）是为讲清成因、用真索引重算的一列，
 //    不是产品返回值；产品返回的就是那份 id 列表本身。
+// 用法: rank-probe <manifest.json> <cases.json> <out.json>
+// 量的是「目标在产品**真实候选序**里排第几」——跨轮累积的 W（在场范围）该看的指标。
+// ⚠️ 必须反射调产品的 private `FindCandidates`：private 是类作用域，编进同一程序集也看不见；
+//    重写一遍就变成"另写一个引擎"，不是读数。
+int RunRankProbe(string[] a)
+{
+    if (a.Length < 3)
+    {
+        Console.WriteLine("用法: rank-probe <manifest.json> <cases.json> <out.json>");
+        return 2;
+    }
+    string manifest = a[0];
+    if (!File.Exists(manifest))
+    {
+        Console.WriteLine("找不到 manifest: " + manifest);
+        return 2;
+    }
+    var spec = JObject.Parse(File.ReadAllText(a[1]));
+    string workDir = Path.Combine(Path.GetTempPath(), "awake-rank-probe", Guid.NewGuid().ToString("N"));
+    Directory.CreateDirectory(workDir);
+    foreach (string name in new[] { "manifest.json", "runtime.json", "index.json" })
+    {
+        string src = Path.Combine(Path.GetDirectoryName(manifest)!, name);
+        if (File.Exists(src)) File.Copy(src, Path.Combine(workDir, name), true);
+    }
+    var snapshot = WorldKnowledgeLoader.Load(Path.Combine(workDir, "manifest.json"));
+    var service = new WorldKnowledgeQueryService(snapshot);
+    AttachSemanticArm(service, snapshot);
+
+    var semMi = typeof(WorldKnowledgeQueryService)
+        .GetMethod("QuerySemanticIds", BindingFlags.NonPublic | BindingFlags.Instance);
+    var findMi = typeof(WorldKnowledgeQueryService)
+        .GetMethod("FindCandidates", BindingFlags.NonPublic | BindingFlags.Instance);
+    if (semMi == null || findMi == null)
+    {
+        Console.WriteLine("PROBE-FAIL 反射没找到产品方法（签名变了？）—— 读数无效");
+        return 1;
+    }
+
+    int RankOf(string text, string targetId, out int total)
+    {
+        string norm = WorldKnowledgeQueryService.NormalizeQueryText(text);
+        var semIds = (IReadOnlyList<string>)semMi.Invoke(service, new object[] { norm });
+        object[] callArgs = { norm, semIds, null };
+        var cands = (List<WorldKnowledgeEntry>)findMi.Invoke(service, callArgs);
+        total = cands.Count;
+        return cands.FindIndex(x => x.Id == targetId) + 1;   // 0 ＝ 不在候选序里
+    }
+
+    Console.WriteLine($"rank-probe: package={snapshot.PackageId} entries={snapshot.Entries.Count} 语义臂={service.HasSemanticIndex}");
+
+    // ── 阳性对照：拿「条目标题」当问句、目标就是它自己 —— 这种必然排第 1。
+    //    对照都排不到第 1 ⇒ 探针没有分辨力 ⇒ 下面的读数一律无效。
+    int ctrlOk = 0, ctrlTotal = 0;
+    foreach (WorldKnowledgeEntry e in snapshot.Entries.Values.OrderBy(x => x.Id, StringComparer.Ordinal).Take(3))
+    {
+        ctrlTotal++;
+        int cr = RankOf(e.Title, e.Id, out _);
+        if (cr == 1) ctrlOk++;
+        Console.WriteLine($"    [对照] 标题「{e.Title}」→ 排 {cr}");
+    }
+    Console.WriteLine($"    阳性对照 {ctrlOk}/{ctrlTotal} 排第 1"
+        + (ctrlOk == ctrlTotal ? " ✓ 探针有分辨力" : " ⚠️ 对照没全中 ⇒ 下面读数不可信"));
+
+    var buckets = new int[10];
+    var lenB = new int[8];
+    int n = 0, skipped = 0, lenMin = int.MaxValue, lenMax = 0, lenSum = 0;
+    var rows = new JArray();
+    foreach (var q in spec["cases"] ?? new JArray())
+    {
+        string raw = q.Value<string>("query") ?? "";
+        string target = q.Value<string>("target") ?? "";
+        if (target.Length == 0) continue;
+        // 题集里 `countInGate:false` 的题**不进分母**（与三根门禁同口径），但明细照样打。
+        bool counted = q.Value<bool?>("countInGate") != false;
+        int rank = RankOf(raw, target, out int total);
+        if (counted)
+        {
+            n++;
+            lenSum += total;
+            if (total < lenMin) lenMin = total;
+            if (total > lenMax) lenMax = total;
+            if (total <= 1) lenB[0]++;
+            else if (total <= 3) lenB[1]++;
+            else if (total <= 5) lenB[2]++;
+            else if (total <= 10) lenB[3]++;
+            else if (total <= 20) lenB[4]++;
+            else if (total <= 50) lenB[5]++;
+            else if (total <= 100) lenB[6]++;
+            else lenB[7]++;
+            if (rank == 0) buckets[9]++;
+            else if (rank <= 1) buckets[0]++;
+            else if (rank <= 3) buckets[1]++;
+            else if (rank <= 5) buckets[2]++;
+            else if (rank <= 10) buckets[3]++;
+            else if (rank <= 20) buckets[4]++;
+            else if (rank <= 30) buckets[5]++;
+            else if (rank <= 50) buckets[6]++;
+            else if (rank <= 100) buckets[7]++;
+            else buckets[8]++;
+        }
+        else skipped++;
+        Console.WriteLine($"    [{q.Value<string>("group")}] {raw} → " + (rank == 0 ? "不在候选序里" : "排 " + rank)
+            + $" / 候选 {total} 条" + (counted ? "" : "   [不计入]"));
+        rows.Add(new JObject
+        {
+            ["group"] = q.Value<string>("group"),
+            ["query"] = raw,
+            ["target"] = target,
+            ["rank"] = rank,
+            ["candidateCount"] = total,
+            ["countInGate"] = counted
+        });
+    }
+
+    string[] labels = { "=1", "<=3", "<=5", "<=10", "<=20", "<=30", "<=50", "<=100", "<=300", ">300 或不在" };
+    Console.WriteLine($"── 目标排名分布（产品真实候选序；分母 {n} 条"
+        + (skipped > 0 ? $"，另 {skipped} 条 countInGate=false 不计" : "") + "）──");
+    for (int i = 0; i < labels.Length; i++)
+        Console.WriteLine($"    {labels[i],-12} {buckets[i],3} / {n}");
+    string[] lenLabels = { "<=1", "<=3", "<=5", "<=10", "<=20", "<=50", "<=100", ">100" };
+    Console.WriteLine("── 候选序长度（每题返回几条）──");
+    for (int i = 0; i < lenLabels.Length; i++)
+        Console.WriteLine($"    {lenLabels[i],-12} {lenB[i],3} / {n}");
+    if (n > 0)
+        Console.WriteLine($"    长度：最小 {lenMin} / 均值 {lenSum / n} / 最大 {lenMax}");
+    if (n == 0)
+    {
+        Console.WriteLine("PROBE-FAIL 题集读到 0 条 —— 读数无效");
+        return 1;
+    }
+
+    File.WriteAllText(a[2], new JObject
+    {
+        ["packageEntries"] = snapshot.Entries.Count,
+        ["controlOk"] = ctrlOk,
+        ["controlTotal"] = ctrlTotal,
+        ["buckets"] = new JArray(buckets),
+        ["labels"] = new JArray(labels),
+        ["cases"] = rows
+    }.ToString(Newtonsoft.Json.Formatting.Indented));
+    Console.WriteLine("写入 " + a[2]);
+    return 0;
+}
+
+int RunMidLayerProbe(string[] a)
+{
+    if (a.Length < 3)
+    {
+        Console.WriteLine("用法: midlayer-probe <manifest.json> <cases.json> <out.json> [3,10,20,50,100]");
+        return 2;
+    }
+    string manifest = a[0];
+    if (!File.Exists(manifest)) { Console.WriteLine("找不到 manifest: " + manifest); return 2; }
+    int[] ks = a.Length > 3 && !string.IsNullOrWhiteSpace(a[3])
+        ? a[3].Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+              .Select(s => int.Parse(s)).Distinct().OrderBy(x => x).ToArray()
+        : new[] { 3, 10, 20, 50, 100 };
+    int productK = 3;   // ＝产品 `SemanticCandidateLimit`；K=3 那一档必须与产品逐字相同
+
+    var spec = JObject.Parse(File.ReadAllText(a[1]));
+    string workDir = Path.Combine(Path.GetTempPath(), "awake-midlayer-probe", Guid.NewGuid().ToString("N"));
+    Directory.CreateDirectory(workDir);
+    foreach (string name in new[] { "manifest.json", "runtime.json", "index.json" })
+    {
+        string src = Path.Combine(Path.GetDirectoryName(manifest)!, name);
+        if (File.Exists(src)) File.Copy(src, Path.Combine(workDir, name), true);
+    }
+    var snapshot = WorldKnowledgeLoader.Load(Path.Combine(workDir, "manifest.json"));
+    var service = new WorldKnowledgeQueryService(snapshot);
+    AttachSemanticArm(service, snapshot);
+
+    var semField = typeof(WorldKnowledgeQueryService)
+        .GetField("_semantic", BindingFlags.NonPublic | BindingFlags.Instance);
+    var findMi = typeof(WorldKnowledgeQueryService)
+        .GetMethod("FindCandidates", BindingFlags.NonPublic | BindingFlags.Instance);
+    var semMi = typeof(WorldKnowledgeQueryService)
+        .GetMethod("QuerySemanticIds", BindingFlags.NonPublic | BindingFlags.Instance);
+    var index = semField?.GetValue(service) as IWorldKnowledgeSemanticIndex;
+    if (index == null || findMi == null || semMi == null)
+    {
+        Console.WriteLine("PROBE-FAIL 语义索引没挂上 / 反射没找到产品方法 —— 读数无效");
+        return 1;
+    }
+
+    // 与产品同源：短查询不给语义腿（产品的 `MinSemanticQueryLength = 2`）。
+    const int minSemanticQueryLength = 2;
+
+    IReadOnlyList<string> SemanticIdsAt(string norm, int k)
+    {
+        if (norm.Trim().Length < minSemanticQueryLength) return Array.Empty<string>();
+        return index.Search(norm, k) ?? (IReadOnlyList<string>)Array.Empty<string>();
+    }
+
+    List<WorldKnowledgeEntry> CandidatesAt(string norm, int k)
+    {
+        IReadOnlyList<string> ids = SemanticIdsAt(norm, k);
+        object[] callArgs = { norm, ids, null };
+        return (List<WorldKnowledgeEntry>)findMi.Invoke(service, callArgs);
+    }
+
+    Console.WriteLine($"midlayer-probe: package={snapshot.PackageId} entries={snapshot.Entries.Count} 语义臂={service.HasSemanticIndex}");
+    Console.WriteLine($"    K 扫描 = {string.Join(" / ", ks)}（产品现值 = {productK}）");
+
+    // ── 自检 ①：K=3 必须与产品的 `QuerySemanticIds` 逐字相同 —— 否则这个扫描量的是别的东西。
+    int sameOk = 0, sameTotal = 0;
+    foreach (var q in (spec["cases"] ?? new JArray()).Take(5))
+    {
+        string norm = WorldKnowledgeQueryService.NormalizeQueryText(q.Value<string>("query") ?? "");
+        var mine = SemanticIdsAt(norm, productK);
+        var prod = (IReadOnlyList<string>)semMi.Invoke(service, new object[] { norm });
+        sameTotal++;
+        if (mine.SequenceEqual(prod)) sameOk++;
+    }
+    Console.WriteLine($"    同源自检 K=3 vs 产品 QuerySemanticIds：{sameOk}/{sameTotal}"
+        + (sameOk == sameTotal ? " ✓ 逐字相同" : " ⚠️ 不一致 ⇒ 下面读数不可信"));
+
+    // ── 自检 ②：阳性对照（条目标题当问句、目标就是它自己）。
+    int ctrlOk = 0, ctrlTotal = 0;
+    foreach (WorldKnowledgeEntry e in snapshot.Entries.Values.OrderBy(x => x.Id, StringComparer.Ordinal).Take(3))
+    {
+        ctrlTotal++;
+        string norm = WorldKnowledgeQueryService.NormalizeQueryText(e.Title);
+        var cands = CandidatesAt(norm, productK);
+        int r = cands.FindIndex(x => x.Id == e.Id) + 1;
+        if (r == 1) ctrlOk++;
+    }
+    Console.WriteLine($"    阳性对照 {ctrlOk}/{ctrlTotal} 排第 1"
+        + (ctrlOk == ctrlTotal ? " ✓ 探针有分辨力" : " ⚠️ 对照没全中 ⇒ 下面读数不可信"));
+
+    // ── 分母口径与三根门禁一致：`countInGate:false` 不进分母。
+    var cases = new List<(string Group, string Query, string Target, bool Counted)>();
+    foreach (var q in spec["cases"] ?? new JArray())
+    {
+        string target = q.Value<string>("target") ?? "";
+        if (target.Length == 0) continue;
+        cases.Add((q.Value<string>("group") ?? "", q.Value<string>("query") ?? "", target,
+            q.Value<bool?>("countInGate") != false));
+    }
+    int denom = cases.Count(c => c.Counted);
+    if (denom == 0) { Console.WriteLine("PROBE-FAIL 题集读到 0 条 —— 读数无效"); return 1; }
+
+    var stat = new JArray();
+    Console.WriteLine($"── 逐档读数（分母 {denom} 条；命中＝目标落在合并候选序前 N 名）──");
+    Console.WriteLine($"    {"K",-6}{"hit@1",-9}{"hit@3",-9}{"不在序里",-11}{"候选长度(均/最大)",-18}");
+    var rankAtProduct = new Dictionary<string, int>(StringComparer.Ordinal);
+    foreach (int k in ks)
+    {
+        int h1 = 0, h3 = 0, miss = 0, lenSum = 0, lenMax = 0;
+        int counted = 0;
+        var rows = new JArray();
+        foreach (var c in cases)
+        {
+            string norm = WorldKnowledgeQueryService.NormalizeQueryText(c.Query);
+            var cands = CandidatesAt(norm, k);
+            int rank = cands.FindIndex(x => x.Id == c.Target) + 1;
+            if (c.Counted)
+            {
+                counted++;
+                lenSum += cands.Count;
+                if (cands.Count > lenMax) lenMax = cands.Count;
+                if (rank == 1) h1++;
+                if (rank >= 1 && rank <= 3) h3++;
+                if (rank == 0) miss++;
+                if (k == productK) rankAtProduct[c.Query + "|" + c.Target] = rank;
+            }
+            rows.Add(new JObject
+            {
+                ["group"] = c.Group, ["query"] = c.Query, ["target"] = c.Target,
+                ["rank"] = rank, ["candidateCount"] = cands.Count, ["countInGate"] = c.Counted
+            });
+        }
+        Console.WriteLine($"    {k,-6}{h1 + "/" + counted,-9}{h3 + "/" + counted,-9}{miss,-11}{lenSum / counted + " / " + lenMax,-18}");
+        stat.Add(new JObject
+        {
+            ["k"] = k, ["hitAt1"] = h1, ["hitAt3"] = h3, ["notInCandidates"] = miss,
+            ["candidateAvg"] = lenSum / counted, ["candidateMax"] = lenMax, ["cases"] = rows
+        });
+    }
+
+    // ── 捞回台账：K=3 时不在序里的那几条，到哪一档才出现。
+    if (rankAtProduct.Count > 0)
+    {
+        var lost = cases.Where(c => c.Counted && rankAtProduct.TryGetValue(c.Query + "|" + c.Target, out int r0) && r0 == 0).ToList();
+        Console.WriteLine($"── 被 K={productK} 切掉的目标（{lost.Count} 条）后面有没有回来 ──");
+        foreach (var c in lost)
+        {
+            var back = new List<string>();
+            foreach (int k in ks)
+            {
+                string norm = WorldKnowledgeQueryService.NormalizeQueryText(c.Query);
+                var cands = CandidatesAt(norm, k);
+                int r = cands.FindIndex(x => x.Id == c.Target) + 1;
+                if (r > 0) back.Add($"K={k}→第 {r} 名");
+            }
+            Console.WriteLine($"    [{c.Group}] {c.Query} → {c.Target}"
+                + (back.Count == 0 ? "  ✗ 扩大召回也没回来（不是被切掉，是语义臂自己没召到）" : "  ✓ " + string.Join("，", back)));
+        }
+    }
+
+    File.WriteAllText(a[2], new JObject
+    {
+        ["packageEntries"] = snapshot.Entries.Count,
+        ["sameAsProductAtK3"] = $"{sameOk}/{sameTotal}",
+        ["controlOk"] = $"{ctrlOk}/{ctrlTotal}",
+        ["denominator"] = denom,
+        ["stats"] = stat
+    }.ToString(Newtonsoft.Json.Formatting.Indented));
+    Console.WriteLine("写入 " + a[2]);
+    return 0;
+}
+
 int RunFallbackProbe(string[] a)
 {
     if (a.Length < 3)

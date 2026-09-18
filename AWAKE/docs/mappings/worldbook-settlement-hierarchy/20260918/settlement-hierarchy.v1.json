@@ -1,0 +1,3879 @@
+{
+ "schema_version": "awake.worldbook.settlement-hierarchy.v1",
+ "generated_at_utc": "2026-09-18T03:30:15Z",
+ "sources": {
+  "entity_registry": {
+   "path": "D:/AWAKE-Dev/AWAKE/docs/mappings/persona-entity/generations/b1-7590085e3662512d7c1c6646c529694bda9850146234827b2dafbd9f20c6a2b3/entity-registry.v1.json",
+   "catalog_build_id": "b1-7590085e3662512d7c1c6646c529694bda9850146234827b2dafbd9f20c6a2b3",
+   "entities": 890
+  },
+  "runtime_package": {
+   "path": "D:/AWAKE-Dev/AWAKE/ModuleData/Worldbook/packages/calradia/runtime.json",
+   "entries": 482
+  }
+ },
+ "note": "「条目 ↔ 条目」在契约里没有字段（`knowledge_entry` 只到 `related_domains` 领域级），所以这层关系先以独立料档存在。边的含义＝**村庄条目 ↔ 它归属的城堡/城镇条目**，依据是游戏数据里的 `bound_settlement_code`（登记表已核到 base_game/exact_base）。运行时暂无消费者 —— 这是「牵」那一步要吃的料，不是已经接通的东西。",
+ "counts": {
+  "villages": 273,
+  "towns": 53,
+  "castles": 67,
+  "edges": 274,
+  "village_without_bound": 0,
+  "village_without_entry": 0,
+  "parent_without_entry": 0
+ },
+ "edges": [
+  {
+   "from": "awake:entry:geography.villages-varagos",
+   "to": [
+    "awake:entry:geography.castles-varagos-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN1_1",
+   "villageNameZh": "瓦拉戈斯",
+   "parentCode": "castle_EN1",
+   "parentNameZh": "瓦拉戈斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-lochana",
+   "to": [
+    "awake:entry:geography.castles-lochana-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN2_1",
+   "villageNameZh": "罗卡那",
+   "parentCode": "castle_EN2",
+   "parentNameZh": "罗卡那堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-rhesos",
+   "to": [
+    "awake:entry:geography.castles-rhesos-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN3_1",
+   "villageNameZh": "雷索斯",
+   "parentCode": "castle_EN3",
+   "parentNameZh": "雷索斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-gaos",
+   "to": [
+    "awake:entry:geography.castles-gaos-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN4_1",
+   "villageNameZh": "伽俄斯",
+   "parentCode": "castle_EN4",
+   "parentNameZh": "伽俄斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-atrion",
+   "to": [
+    "awake:entry:geography.castles-atrion-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN5_1",
+   "villageNameZh": "阿特里翁",
+   "parentCode": "castle_EN5",
+   "parentNameZh": "阿特里翁堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ataconia",
+   "to": [
+    "awake:entry:geography.castles-ataconia-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN6_1",
+   "villageNameZh": "阿塔科尼亚",
+   "parentCode": "castle_EN6",
+   "parentNameZh": "阿塔科尼亚堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-epinosa",
+   "to": [
+    "awake:entry:geography.castles-epinosa-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN7_1",
+   "villageNameZh": "厄毗诺萨",
+   "parentCode": "castle_EN7",
+   "parentNameZh": "厄毗诺萨堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-pons",
+   "to": [
+    "awake:entry:geography.castles-epinosa-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN7_2",
+   "villageNameZh": "庞斯",
+   "parentCode": "castle_EN7",
+   "parentNameZh": "厄毗诺萨堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-syratos",
+   "to": [
+    "awake:entry:geography.castles-syratos-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN8_1",
+   "villageNameZh": "叙拉托斯",
+   "parentCode": "castle_EN8",
+   "parentNameZh": "叙拉托斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-tememos",
+   "to": [
+    "awake:entry:geography.castles-syratos-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN8_2",
+   "villageNameZh": "特美摩斯",
+   "parentCode": "castle_EN8",
+   "parentNameZh": "叙拉托斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-mecalovea",
+   "to": [
+    "awake:entry:geography.castles-mecalovea-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN9_1",
+   "villageNameZh": "墨卡罗维亚",
+   "parentCode": "castle_EN9",
+   "parentNameZh": "墨卡罗维亚堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-agalmon",
+   "to": [
+    "awake:entry:geography.castles-mecalovea-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN9_2",
+   "villageNameZh": "阿加尔蒙",
+   "parentCode": "castle_EN9",
+   "parentNameZh": "墨卡罗维亚堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-marathea",
+   "to": [
+    "awake:entry:geography.towns-epicrotea"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN1_1",
+   "villageNameZh": "马拉忒亚",
+   "parentCode": "town_EN1",
+   "parentNameZh": "厄庇克洛忒亚",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-stathymos",
+   "to": [
+    "awake:entry:geography.towns-epicrotea"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN1_2",
+   "villageNameZh": "斯塔堤摩斯",
+   "parentCode": "town_EN1",
+   "parentNameZh": "厄庇克洛忒亚",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-gymos",
+   "to": [
+    "awake:entry:geography.towns-epicrotea"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN1_3",
+   "villageNameZh": "居摩斯",
+   "parentCode": "town_EN1",
+   "parentNameZh": "厄庇克洛忒亚",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-dyopalis",
+   "to": [
+    "awake:entry:geography.castles-rhesos-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN3_2",
+   "villageNameZh": "底俄帕利斯",
+   "parentCode": "castle_EN3",
+   "parentNameZh": "雷索斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-alosea",
+   "to": [
+    "awake:entry:geography.towns-diathma"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN2_1",
+   "villageNameZh": "阿罗塞亚",
+   "parentCode": "town_EN2",
+   "parentNameZh": "狄亚特马",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-jeracos",
+   "to": [
+    "awake:entry:geography.towns-diathma"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN2_2",
+   "villageNameZh": "耶拉科斯",
+   "parentCode": "town_EN2",
+   "parentNameZh": "狄亚特马",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-masangara",
+   "to": [
+    "awake:entry:geography.castles-atrion-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN5_2",
+   "villageNameZh": "马珊加拉",
+   "parentCode": "castle_EN5",
+   "parentNameZh": "阿特里翁堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-enoisa",
+   "to": [
+    "awake:entry:geography.towns-saneopa"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN3_1",
+   "villageNameZh": "厄诺伊萨",
+   "parentCode": "town_EN3",
+   "parentNameZh": "萨涅俄帕",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-aeoria",
+   "to": [
+    "awake:entry:geography.castles-varagos-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN1_2",
+   "villageNameZh": "艾俄里亚",
+   "parentCode": "castle_EN1",
+   "parentNameZh": "瓦拉戈斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-crios",
+   "to": [
+    "awake:entry:geography.towns-saneopa"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN3_3",
+   "villageNameZh": "克里俄斯",
+   "parentCode": "town_EN3",
+   "parentNameZh": "萨涅俄帕",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-potamis",
+   "to": [
+    "awake:entry:geography.castles-ataconia-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN6_2",
+   "villageNameZh": "珀塔米斯",
+   "parentCode": "castle_EN6",
+   "parentNameZh": "阿塔科尼亚堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-alatys",
+   "to": [
+    "awake:entry:geography.towns-argoron"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN4_2",
+   "villageNameZh": "阿拉堤斯",
+   "parentCode": "town_EN4",
+   "parentNameZh": "阿耳戈隆",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-nortanisa",
+   "to": [
+    "awake:entry:geography.castles-lochana-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN2_2",
+   "villageNameZh": "诺耳塔尼萨",
+   "parentCode": "castle_EN2",
+   "parentNameZh": "罗卡那堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-hetania",
+   "to": [
+    "awake:entry:geography.towns-argoron"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN4_4",
+   "villageNameZh": "赫塔尼亚",
+   "parentCode": "town_EN4",
+   "parentNameZh": "阿耳戈隆",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-vealos",
+   "to": [
+    "awake:entry:geography.towns-myzea"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN5_1",
+   "villageNameZh": "威亚罗斯",
+   "parentCode": "town_EN5",
+   "parentNameZh": "密泽亚",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-orthra",
+   "to": [
+    "awake:entry:geography.towns-myzea"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN5_2",
+   "villageNameZh": "俄耳特拉",
+   "parentCode": "town_EN5",
+   "parentNameZh": "密泽亚",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-themys",
+   "to": [
+    "awake:entry:geography.castles-gaos-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EN4_2",
+   "villageNameZh": "忒密斯",
+   "parentCode": "castle_EN4",
+   "parentNameZh": "伽俄斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-samatha",
+   "to": [
+    "awake:entry:geography.towns-myzea"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN5_4",
+   "villageNameZh": "萨马塔",
+   "parentCode": "town_EN5",
+   "parentNameZh": "密泽亚",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-avasinton",
+   "to": [
+    "awake:entry:geography.towns-amprela"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN6_1",
+   "villageNameZh": "阿瓦辛顿",
+   "parentCode": "town_EN6",
+   "parentNameZh": "安普雷拉",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-boreagora",
+   "to": [
+    "awake:entry:geography.towns-amprela"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EN6_2",
+   "villageNameZh": "玻瑞阿戈拉",
+   "parentCode": "town_EN6",
+   "parentNameZh": "安普雷拉",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-garontor",
+   "to": [
+    "awake:entry:geography.castles-garontor-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW1_1",
+   "villageNameZh": "加隆托",
+   "parentCode": "castle_EW1",
+   "parentNameZh": "加隆托堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-thorios",
+   "to": [
+    "awake:entry:geography.castles-thorios-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW2_1",
+   "villageNameZh": "托里俄斯",
+   "parentCode": "castle_EW2",
+   "parentNameZh": "托里俄斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-bergum",
+   "to": [
+    "awake:entry:geography.castles-thorios-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW2_2",
+   "villageNameZh": "柏耳贡",
+   "parentCode": "castle_EW2",
+   "parentNameZh": "托里俄斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-onica",
+   "to": [
+    "awake:entry:geography.castles-onica-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW3_1",
+   "villageNameZh": "俄尼卡",
+   "parentCode": "castle_EW3",
+   "parentNameZh": "俄尼卡堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-thractorae",
+   "to": [
+    "awake:entry:geography.castles-thractorae-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW4_1",
+   "villageNameZh": "色雷刻托",
+   "parentCode": "castle_EW4",
+   "parentNameZh": "色雷刻托堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-veron",
+   "to": [
+    "awake:entry:geography.castles-veron-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW5_1",
+   "villageNameZh": "维戎",
+   "parentCode": "castle_EW5",
+   "parentNameZh": "维戎堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-goleryn",
+   "to": [
+    "awake:entry:geography.castles-veron-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW5_2",
+   "villageNameZh": "戈勒林",
+   "parentCode": "castle_EW5",
+   "parentNameZh": "维戎堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-hertogea",
+   "to": [
+    "awake:entry:geography.castles-hertogea-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW6_1",
+   "villageNameZh": "赫托该亚",
+   "parentCode": "castle_EW6",
+   "parentNameZh": "赫托该亚堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-oristocorys",
+   "to": [
+    "awake:entry:geography.castles-oristocorys-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW7_1",
+   "villageNameZh": "俄里斯托科律斯",
+   "parentCode": "castle_EW7",
+   "parentNameZh": "俄里斯托科律斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-elvania",
+   "to": [
+    "awake:entry:geography.castles-oristocorys-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW7_2",
+   "villageNameZh": "厄尔凡尼亚",
+   "parentCode": "castle_EW7",
+   "parentNameZh": "俄里斯托科律斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-gersegos",
+   "to": [
+    "awake:entry:geography.castles-gersegos-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW8_1",
+   "villageNameZh": "革耳塞戈斯",
+   "parentCode": "castle_EW8",
+   "parentNameZh": "革耳塞戈斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-primessos",
+   "to": [
+    "awake:entry:geography.towns-lageta"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW1_1",
+   "villageNameZh": "普里墨索斯",
+   "parentCode": "town_EW1",
+   "parentNameZh": "拉革塔",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-montos",
+   "to": [
+    "awake:entry:geography.towns-lageta"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW1_2",
+   "villageNameZh": "蒙托斯",
+   "parentCode": "town_EW1",
+   "parentNameZh": "拉革塔",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-nideon",
+   "to": [
+    "awake:entry:geography.castles-hertogea-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW6_2",
+   "villageNameZh": "尼得翁",
+   "parentCode": "castle_EW6",
+   "parentNameZh": "赫托该亚堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-tarcutis",
+   "to": [
+    "awake:entry:geography.castles-onica-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW3_2",
+   "villageNameZh": "塔耳库提斯",
+   "parentCode": "castle_EW3",
+   "parentNameZh": "俄尼卡堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-neocorys",
+   "to": [
+    "awake:entry:geography.towns-zeonica"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW2_2",
+   "villageNameZh": "涅俄科律斯",
+   "parentCode": "town_EW2",
+   "parentNameZh": "泽翁尼卡",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-alsasos",
+   "to": [
+    "awake:entry:geography.towns-zeonica"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW2_3",
+   "villageNameZh": "阿尔萨索斯",
+   "parentCode": "town_EW2",
+   "parentNameZh": "泽翁尼卡",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-zeocorys",
+   "to": [
+    "awake:entry:geography.towns-zeonica"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW2_4",
+   "villageNameZh": "泽俄科律斯",
+   "parentCode": "town_EW2",
+   "parentNameZh": "泽翁尼卡",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-gamardan",
+   "to": [
+    "awake:entry:geography.castles-thractorae-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW4_2",
+   "villageNameZh": "伽玛耳丹",
+   "parentCode": "castle_EW4",
+   "parentNameZh": "色雷刻托堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-aegosca",
+   "to": [
+    "awake:entry:geography.towns-jalmarys"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW3_2",
+   "villageNameZh": "埃戈斯卡",
+   "parentCode": "town_EW3",
+   "parentNameZh": "贾尔马律斯",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-dradios",
+   "to": [
+    "awake:entry:geography.towns-jalmarys"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW3_3",
+   "villageNameZh": "得拉狄俄斯",
+   "parentCode": "town_EW3",
+   "parentNameZh": "贾尔马律斯",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-arpotis",
+   "to": [
+    "awake:entry:geography.towns-ortysia"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW4_1",
+   "villageNameZh": "阿耳波提斯",
+   "parentCode": "town_EW4",
+   "parentNameZh": "俄耳堤西亚",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-lysia",
+   "to": [
+    "awake:entry:geography.castles-garontor-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW1_2",
+   "villageNameZh": "吕西亚",
+   "parentCode": "castle_EW1",
+   "parentNameZh": "加隆托堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-vinela",
+   "to": [
+    "awake:entry:geography.towns-ortysia"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW4_3",
+   "villageNameZh": "维尼拉",
+   "parentCode": "town_EW4",
+   "parentNameZh": "俄耳堤西亚",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-garengolia",
+   "to": [
+    "awake:entry:geography.towns-ortysia"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW4_4",
+   "villageNameZh": "伽伦戈利亚",
+   "parentCode": "town_EW4",
+   "parentNameZh": "俄耳堤西亚",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-elipa",
+   "to": [
+    "awake:entry:geography.towns-amitatys"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW5_1",
+   "villageNameZh": "厄利帕",
+   "parentCode": "town_EW5",
+   "parentNameZh": "阿弥塔堤斯",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-phasos",
+   "to": [
+    "awake:entry:geography.towns-amitatys"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW5_2",
+   "villageNameZh": "法索斯",
+   "parentCode": "town_EW5",
+   "parentNameZh": "阿弥塔堤斯",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-carphenion",
+   "to": [
+    "awake:entry:geography.towns-rhotae"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW6_1",
+   "villageNameZh": "卡耳斐尼翁",
+   "parentCode": "town_EW6",
+   "parentNameZh": "洛泰",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-vathea",
+   "to": [
+    "awake:entry:geography.castles-gersegos-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_EW8_2",
+   "villageNameZh": "瓦忒亚",
+   "parentCode": "castle_EW8",
+   "parentNameZh": "革耳塞戈斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-thersenion",
+   "to": [
+    "awake:entry:geography.towns-rhotae"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW6_3",
+   "villageNameZh": "忒耳塞尼翁",
+   "parentCode": "town_EW6",
+   "parentNameZh": "洛泰",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-leblenion",
+   "to": [
+    "awake:entry:geography.towns-rhotae"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_EW6_4",
+   "villageNameZh": "勒布伦尼翁",
+   "parentCode": "town_EW6",
+   "parentNameZh": "洛泰",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-odrysa",
+   "to": [
+    "awake:entry:geography.castles-odrysa-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES1_1",
+   "villageNameZh": "俄德律萨",
+   "parentCode": "castle_ES1",
+   "parentNameZh": "俄德律萨堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-corenia",
+   "to": [
+    "awake:entry:geography.castles-corenia-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES2_1",
+   "villageNameZh": "科雷尼亚",
+   "parentCode": "castle_ES2",
+   "parentNameZh": "科雷尼亚堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-metachia",
+   "to": [
+    "awake:entry:geography.castles-corenia-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES2_2",
+   "villageNameZh": "墨塔基亚",
+   "parentCode": "castle_ES2",
+   "parentNameZh": "科雷尼亚堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-melion",
+   "to": [
+    "awake:entry:geography.castles-melion-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES3_1",
+   "villageNameZh": "墨利翁",
+   "parentCode": "castle_ES3",
+   "parentNameZh": "墨利翁堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-sagolina",
+   "to": [
+    "awake:entry:geography.castles-melion-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES3_2",
+   "villageNameZh": "萨戈利那",
+   "parentCode": "castle_ES3",
+   "parentNameZh": "墨利翁堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-lavenia",
+   "to": [
+    "awake:entry:geography.castles-lavenia-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES4_1",
+   "villageNameZh": "拉文尼亚",
+   "parentCode": "castle_ES4",
+   "parentNameZh": "拉文尼亚堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ethemisa",
+   "to": [
+    "awake:entry:geography.castles-lavenia-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES4_2",
+   "villageNameZh": "厄忒弥萨",
+   "parentCode": "castle_ES4",
+   "parentNameZh": "拉文尼亚堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-morenia",
+   "to": [
+    "awake:entry:geography.castles-morenia-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES5_1",
+   "villageNameZh": "摩雷尼亚",
+   "parentCode": "castle_ES5",
+   "parentNameZh": "摩雷尼亚堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-sestadaim",
+   "to": [
+    "awake:entry:geography.castles-sestadaim-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES6_1",
+   "villageNameZh": "塞斯塔代姆",
+   "parentCode": "castle_ES6",
+   "parentNameZh": "塞斯塔代姆堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-jogurys",
+   "to": [
+    "awake:entry:geography.castles-jogurys-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES7_1",
+   "villageNameZh": "约格律斯",
+   "parentCode": "castle_ES7",
+   "parentNameZh": "约格律斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-chanopsis",
+   "to": [
+    "awake:entry:geography.castles-chanopsis-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES8_1",
+   "villageNameZh": "卡诺普西斯",
+   "parentCode": "castle_ES8",
+   "parentNameZh": "卡诺普西斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-caira",
+   "to": [
+    "awake:entry:geography.castles-odrysa-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES1_2",
+   "villageNameZh": "恺拉",
+   "parentCode": "castle_ES1",
+   "parentNameZh": "俄德律萨堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-polisia",
+   "to": [
+    "awake:entry:geography.towns-danustica"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES1_2",
+   "villageNameZh": "波利西亚",
+   "parentCode": "town_ES1",
+   "parentNameZh": "达努斯提卡",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-tegresos",
+   "to": [
+    "awake:entry:geography.towns-danustica"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES1_3",
+   "villageNameZh": "泰格瑞索斯",
+   "parentCode": "town_ES1",
+   "parentNameZh": "达努斯提卡",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-erebulos",
+   "to": [
+    "awake:entry:geography.towns-danustica"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES1_4",
+   "villageNameZh": "厄瑞玻洛斯",
+   "parentCode": "town_ES1",
+   "parentNameZh": "达努斯提卡",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-atphynia",
+   "to": [
+    "awake:entry:geography.castles-morenia-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES5_2",
+   "villageNameZh": "阿特费尼亚",
+   "parentCode": "castle_ES5",
+   "parentNameZh": "摩雷尼亚堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-gorcorys",
+   "to": [
+    "awake:entry:geography.towns-vostrum"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES2_2",
+   "villageNameZh": "戈耳科律斯",
+   "parentCode": "town_ES2",
+   "parentNameZh": "沃斯特鲁姆",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-avalyps",
+   "to": [
+    "awake:entry:geography.towns-vostrum"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES2_3",
+   "villageNameZh": "阿瓦吕普斯",
+   "parentCode": "town_ES2",
+   "parentNameZh": "沃斯特鲁姆",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-alision",
+   "to": [
+    "awake:entry:geography.towns-vostrum"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES2_4",
+   "villageNameZh": "阿利西翁",
+   "parentCode": "town_ES2",
+   "parentNameZh": "沃斯特鲁姆",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-canoros",
+   "to": [
+    "awake:entry:geography.towns-poros"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES3_1",
+   "villageNameZh": "卡诺洛斯",
+   "parentCode": "town_ES3",
+   "parentNameZh": "波罗斯",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-tevea",
+   "to": [
+    "awake:entry:geography.towns-poros"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES3_2",
+   "villageNameZh": "特维亚",
+   "parentCode": "town_ES3",
+   "parentNameZh": "波罗斯",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-zestea",
+   "to": [
+    "awake:entry:geography.towns-poros"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES3_3",
+   "villageNameZh": "泽斯特亚",
+   "parentCode": "town_ES3",
+   "parentNameZh": "波罗斯",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-sagora",
+   "to": [
+    "awake:entry:geography.mines-lycaron",
+    "awake:entry:geography.towns-lycaron"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES4_1",
+   "villageNameZh": "萨戈拉",
+   "parentCode": "town_ES4",
+   "parentNameZh": "吕卡隆",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 2
+  },
+  {
+   "from": "awake:entry:geography.villages-popsia",
+   "to": [
+    "awake:entry:geography.castles-chanopsis-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES8_2",
+   "villageNameZh": "波普西亚",
+   "parentCode": "castle_ES8",
+   "parentNameZh": "卡诺普西斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-canterion",
+   "to": [
+    "awake:entry:geography.mines-lycaron",
+    "awake:entry:geography.towns-lycaron"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES4_3",
+   "villageNameZh": "坎忒里翁",
+   "parentCode": "town_ES4",
+   "parentNameZh": "吕卡隆",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 2
+  },
+  {
+   "from": "awake:entry:geography.villages-lanthas",
+   "to": [
+    "awake:entry:geography.towns-onira"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES5_1",
+   "villageNameZh": "兰塔斯",
+   "parentCode": "town_ES5",
+   "parentNameZh": "俄尼拉",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-lartusys",
+   "to": [
+    "awake:entry:geography.towns-onira"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES5_2",
+   "villageNameZh": "拉耳图绪斯",
+   "parentCode": "town_ES5",
+   "parentNameZh": "俄尼拉",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-parasemnos",
+   "to": [
+    "awake:entry:geography.towns-onira"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES5_3",
+   "villageNameZh": "帕拉森诺斯",
+   "parentCode": "town_ES5",
+   "parentNameZh": "俄尼拉",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-saldannis",
+   "to": [
+    "awake:entry:geography.towns-phycaon"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES6_1",
+   "villageNameZh": "萨尔丹尼斯",
+   "parentCode": "town_ES6",
+   "parentNameZh": "费卡翁",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-spotia",
+   "to": [
+    "awake:entry:geography.towns-phycaon"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES6_2",
+   "villageNameZh": "斯珀提亚",
+   "parentCode": "town_ES6",
+   "parentNameZh": "费卡翁",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-amycon",
+   "to": [
+    "awake:entry:geography.castles-sestadaim-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES6_2",
+   "villageNameZh": "阿密孔",
+   "parentCode": "castle_ES6",
+   "parentNameZh": "塞斯塔代姆堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-psotai",
+   "to": [
+    "awake:entry:geography.towns-syronea"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES7_1",
+   "villageNameZh": "索泰",
+   "parentCode": "town_ES7",
+   "parentNameZh": "席隆尼亚",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-vargornis",
+   "to": [
+    "awake:entry:geography.towns-syronea"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_ES7_2",
+   "villageNameZh": "瓦耳戈尼斯",
+   "parentCode": "town_ES7",
+   "parentNameZh": "席隆尼亚",
+   "parentType": "town",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-eunalica",
+   "to": [
+    "awake:entry:geography.castles-jogurys-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_ES7_2",
+   "villageNameZh": "优纳利卡",
+   "parentCode": "castle_ES7",
+   "parentNameZh": "约格律斯堡",
+   "parentType": "castle",
+   "cultureCode": "empire",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ustokol",
+   "to": [
+    "awake:entry:geography.castles-ustokol-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S1_1",
+   "villageNameZh": "乌斯托科",
+   "parentCode": "castle_S1",
+   "parentNameZh": "乌斯托科堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-mazhadan",
+   "to": [
+    "awake:entry:geography.castles-mazhadan-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S2_1",
+   "villageNameZh": "马扎丹",
+   "parentCode": "castle_S2",
+   "parentNameZh": "马扎丹堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-nevyansk",
+   "to": [
+    "awake:entry:geography.castles-nevyansk-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S3_1",
+   "villageNameZh": "涅夫扬斯克",
+   "parentCode": "castle_S3",
+   "parentNameZh": "涅维扬斯克堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-dnin",
+   "to": [
+    "awake:entry:geography.castles-nevyansk-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S3_2",
+   "villageNameZh": "德宁",
+   "parentCode": "castle_S3",
+   "parentNameZh": "涅维扬斯克堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-kranirog",
+   "to": [
+    "awake:entry:geography.castles-kranirog-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S4_1",
+   "villageNameZh": "克拉尼罗格",
+   "parentCode": "castle_S4",
+   "parentNameZh": "克拉尼罗格堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ismilkorg",
+   "to": [
+    "awake:entry:geography.castles-kranirog-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S4_2",
+   "villageNameZh": "伊斯米尔科格",
+   "parentCode": "castle_S4",
+   "parentNameZh": "克拉尼罗格堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ov",
+   "to": [
+    "awake:entry:geography.castles-ov-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S5_1",
+   "villageNameZh": "奥夫",
+   "parentCode": "castle_S5",
+   "parentNameZh": "奥夫堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ferkh",
+   "to": [
+    "awake:entry:geography.castles-ov-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S5_2",
+   "villageNameZh": "费赫",
+   "parentCode": "castle_S5",
+   "parentNameZh": "奥夫堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-takor",
+   "to": [
+    "awake:entry:geography.castles-takor-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S6_1",
+   "villageNameZh": "塔科尔",
+   "parentCode": "castle_S6",
+   "parentNameZh": "塔科尔堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-urikskala",
+   "to": [
+    "awake:entry:geography.castles-urikskala-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S7_1",
+   "villageNameZh": "乌里克斯卡拉",
+   "parentCode": "castle_S7",
+   "parentNameZh": "乌里克斯卡拉堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-vladiv",
+   "to": [
+    "awake:entry:geography.castles-vladiv-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S8_1",
+   "villageNameZh": "弗拉基夫",
+   "parentCode": "castle_S8",
+   "parentNameZh": "弗拉基夫堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-rodobas",
+   "to": [
+    "awake:entry:culture.tales-kachar-rulership",
+    "awake:entry:geography.peninsulas-kachar",
+    "awake:entry:geography.towns-varcheg",
+    "awake:entry:politics.territories-kachar-ownership",
+    "awake:entry:politics.territories-varcheg-swap"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S1_1",
+   "villageNameZh": "罗多巴斯",
+   "parentCode": "town_S1",
+   "parentNameZh": "瓦尔切格",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 5
+  },
+  {
+   "from": "awake:entry:geography.villages-forin",
+   "to": [
+    "awake:entry:geography.castles-mazhadan-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S2_2",
+   "villageNameZh": "福林",
+   "parentCode": "castle_S2",
+   "parentNameZh": "马扎丹堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-kargrev",
+   "to": [
+    "awake:entry:culture.tales-kachar-rulership",
+    "awake:entry:geography.peninsulas-kachar",
+    "awake:entry:geography.towns-varcheg",
+    "awake:entry:politics.territories-kachar-ownership",
+    "awake:entry:politics.territories-varcheg-swap"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S1_3",
+   "villageNameZh": "卡格雷夫",
+   "parentCode": "town_S1",
+   "parentNameZh": "瓦尔切格",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 5
+  },
+  {
+   "from": "awake:entry:geography.villages-safna",
+   "to": [
+    "awake:entry:geography.towns-balgard"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S2_1",
+   "villageNameZh": "萨夫纳",
+   "parentCode": "town_S2",
+   "parentNameZh": "巴尔加德",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-marabrot",
+   "to": [
+    "awake:entry:geography.towns-balgard"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S2_2",
+   "villageNameZh": "马拉布罗特",
+   "parentCode": "town_S2",
+   "parentNameZh": "巴尔加德",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-dvorusta",
+   "to": [
+    "awake:entry:geography.castles-takor-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S6_2",
+   "villageNameZh": "德沃鲁斯塔",
+   "parentCode": "castle_S6",
+   "parentNameZh": "塔科尔堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-chornobas",
+   "to": [
+    "awake:entry:geography.towns-omor"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S3_1",
+   "villageNameZh": "乔诺巴斯",
+   "parentCode": "town_S3",
+   "parentNameZh": "奥莫尔",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-skorin",
+   "to": [
+    "awake:entry:geography.towns-omor"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S3_2",
+   "villageNameZh": "斯科林",
+   "parentCode": "town_S3",
+   "parentNameZh": "奥莫尔",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-borchovagorka",
+   "to": [
+    "awake:entry:geography.towns-varnovapol"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S4_1",
+   "villageNameZh": "博乔瓦戈卡",
+   "parentCode": "town_S4",
+   "parentNameZh": "瓦尔诺瓦波尔",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-glavstrom",
+   "to": [
+    "awake:entry:geography.castles-vladiv-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S8_2",
+   "villageNameZh": "格拉夫斯特伦",
+   "parentCode": "castle_S8",
+   "parentNameZh": "弗拉基夫堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-omkany",
+   "to": [
+    "awake:entry:geography.towns-varnovapol"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S4_3",
+   "villageNameZh": "奥姆卡尼",
+   "parentCode": "town_S4",
+   "parentNameZh": "瓦尔诺瓦波尔",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-yangutum",
+   "to": [
+    "awake:entry:geography.towns-varnovapol"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S4_4",
+   "villageNameZh": "扬古图姆",
+   "parentCode": "town_S4",
+   "parentNameZh": "瓦尔诺瓦波尔",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-visibrot",
+   "to": [
+    "awake:entry:geography.towns-tyal"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S5_1",
+   "villageNameZh": "维西布罗特",
+   "parentCode": "town_S5",
+   "parentNameZh": "蒂亚尔",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-bukits",
+   "to": [
+    "awake:entry:geography.towns-tyal"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S5_2",
+   "villageNameZh": "布基茨",
+   "parentCode": "town_S5",
+   "parentNameZh": "蒂亚尔",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-alov",
+   "to": [
+    "awake:entry:geography.castles-urikskala-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S7_2",
+   "villageNameZh": "阿洛夫",
+   "parentCode": "castle_S7",
+   "parentNameZh": "乌里克斯卡拉堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-kvol",
+   "to": [
+    "awake:entry:geography.towns-sibir"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S6_1",
+   "villageNameZh": "克沃尔",
+   "parentCode": "town_S6",
+   "parentNameZh": "西比尔",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-radakmed",
+   "to": [
+    "awake:entry:geography.towns-sibir"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S6_2",
+   "villageNameZh": "拉达克梅德",
+   "parentCode": "town_S6",
+   "parentNameZh": "西比尔",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-alebat",
+   "to": [
+    "awake:entry:geography.towns-sibir"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S6_3",
+   "villageNameZh": "阿莱巴特",
+   "parentCode": "town_S6",
+   "parentNameZh": "西比尔",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-korsyas",
+   "to": [
+    "awake:entry:geography.towns-revyl"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S7_1",
+   "villageNameZh": "科尔夏斯",
+   "parentCode": "town_S7",
+   "parentNameZh": "雷维尔",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-karbur",
+   "to": [
+    "awake:entry:geography.towns-revyl"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_S7_2",
+   "villageNameZh": "卡布尔",
+   "parentCode": "town_S7",
+   "parentNameZh": "雷维尔",
+   "parentType": "town",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-zhemyan",
+   "to": [
+    "awake:entry:geography.castles-ustokol-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_S1_2",
+   "villageNameZh": "哲米扬",
+   "parentCode": "castle_S1",
+   "parentNameZh": "乌斯托科堡",
+   "parentType": "castle",
+   "cultureCode": "sturgia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-tubilis",
+   "to": [
+    "awake:entry:geography.castles-tubilis-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A1_1",
+   "villageNameZh": "突比力斯",
+   "parentCode": "castle_A1",
+   "parentNameZh": "突比力斯堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-sahel",
+   "to": [
+    "awake:entry:geography.castles-sahel-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A2_1",
+   "villageNameZh": "萨赫勒",
+   "parentCode": "castle_A2",
+   "parentNameZh": "萨赫勒堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-asmait",
+   "to": [
+    "awake:entry:geography.castles-sahel-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A2_2",
+   "villageNameZh": "阿斯麦特",
+   "parentCode": "castle_A2",
+   "parentNameZh": "萨赫勒堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ain-baliq",
+   "to": [
+    "awake:entry:geography.castles-ain-baliq-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A3_1",
+   "villageNameZh": "艾因·巴力克",
+   "parentCode": "castle_A3",
+   "parentNameZh": "艾因·巴力克堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-deir-hawa",
+   "to": [
+    "awake:entry:geography.castles-ain-baliq-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A3_2",
+   "villageNameZh": "代尔·哈瓦",
+   "parentCode": "castle_A3",
+   "parentNameZh": "艾因·巴力克堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-medeni",
+   "to": [
+    "awake:entry:geography.castles-medeni-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A4_1",
+   "villageNameZh": "迈代尼",
+   "parentCode": "castle_A4",
+   "parentNameZh": "迈代尼堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-qidnar",
+   "to": [
+    "awake:entry:geography.castles-medeni-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A4_2",
+   "villageNameZh": "吉德纳尔",
+   "parentCode": "castle_A4",
+   "parentNameZh": "迈代尼堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-jamayeh",
+   "to": [
+    "awake:entry:geography.castles-jamayeh-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A5_1",
+   "villageNameZh": "贾迈耶",
+   "parentCode": "castle_A5",
+   "parentNameZh": "贾迈耶堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-shibal-zumr",
+   "to": [
+    "awake:entry:geography.castles-shibal-zumr-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A6_1",
+   "villageNameZh": "希巴勒·祖姆尔",
+   "parentCode": "castle_A6",
+   "parentNameZh": "希巴勒·祖姆尔堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-uqba",
+   "to": [
+    "awake:entry:geography.castles-uqba-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A7_1",
+   "villageNameZh": "乌格巴",
+   "parentCode": "castle_A7",
+   "parentNameZh": "乌格巴堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-bunqaz",
+   "to": [
+    "awake:entry:geography.castles-uqba-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A7_2",
+   "villageNameZh": "本盖兹",
+   "parentCode": "castle_A7",
+   "parentNameZh": "乌格巴堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-tamnuh",
+   "to": [
+    "awake:entry:geography.castles-tamnuh-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A8_1",
+   "villageNameZh": "坦姆努",
+   "parentCode": "castle_A8",
+   "parentNameZh": "坦姆努堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-barihal",
+   "to": [
+    "awake:entry:geography.castles-barihal-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A9_1",
+   "villageNameZh": "巴里哈勒",
+   "parentCode": "castle_A9",
+   "parentNameZh": "巴里哈勒堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-tasheba",
+   "to": [
+    "awake:entry:geography.towns-quyaz"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A1_1",
+   "villageNameZh": "塔舍巴",
+   "parentCode": "town_A1",
+   "parentNameZh": "古亚兹",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-baq",
+   "to": [
+    "awake:entry:geography.towns-quyaz"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A1_2",
+   "villageNameZh": "巴格",
+   "parentCode": "town_A1",
+   "parentNameZh": "古亚兹",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-fanab",
+   "to": [
+    "awake:entry:geography.castles-tubilis-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A1_2",
+   "villageNameZh": "法纳卜",
+   "parentCode": "castle_A1",
+   "parentNameZh": "突比力斯堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-hiblet",
+   "to": [
+    "awake:entry:geography.towns-quyaz"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A1_4",
+   "villageNameZh": "希卜莱特",
+   "parentCode": "town_A1",
+   "parentNameZh": "古亚兹",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-lamesa",
+   "to": [
+    "awake:entry:geography.castles-shibal-zumr-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A6_2",
+   "villageNameZh": "拉迈萨",
+   "parentCode": "castle_A6",
+   "parentNameZh": "希巴勒·祖姆尔堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-abu-khih",
+   "to": [
+    "awake:entry:geography.towns-husn-fulq"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A2_2",
+   "villageNameZh": "艾布·希",
+   "parentCode": "town_A2",
+   "parentNameZh": "侯森·富勒格",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-hoqqa",
+   "to": [
+    "awake:entry:geography.towns-husn-fulq"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A2_3",
+   "villageNameZh": "胡加",
+   "parentCode": "town_A2",
+   "parentNameZh": "侯森·富勒格",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-abba",
+   "to": [
+    "awake:entry:geography.towns-iyakis"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A3_1",
+   "villageNameZh": "阿卜巴",
+   "parentCode": "town_A3",
+   "parentNameZh": "以亚基斯",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-hunab",
+   "to": [
+    "awake:entry:geography.castles-jamayeh-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A5_2",
+   "villageNameZh": "侯纳卜",
+   "parentCode": "castle_A5",
+   "parentNameZh": "贾迈耶堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-bir-seif",
+   "to": [
+    "awake:entry:geography.towns-iyakis"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A3_3",
+   "villageNameZh": "比尔·赛义夫",
+   "parentCode": "town_A3",
+   "parentNameZh": "以亚基斯",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-qablab",
+   "to": [
+    "awake:entry:geography.towns-razih"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A4_1",
+   "villageNameZh": "加卜拉卜",
+   "parentCode": "town_A4",
+   "parentNameZh": "拉齐赫",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-mussum",
+   "to": [
+    "awake:entry:geography.towns-razih"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A4_2",
+   "villageNameZh": "穆苏姆",
+   "parentCode": "town_A4",
+   "parentNameZh": "拉齐赫",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-kuqa",
+   "to": [
+    "awake:entry:geography.castles-tamnuh-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A8_2",
+   "villageNameZh": "库加",
+   "parentCode": "castle_A8",
+   "parentNameZh": "坦姆努堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-doqa",
+   "to": [
+    "awake:entry:geography.towns-razih"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A4_4",
+   "villageNameZh": "多加",
+   "parentCode": "town_A4",
+   "parentNameZh": "拉齐赫",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-mahloul",
+   "to": [
+    "awake:entry:geography.towns-hubyar"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A5_1",
+   "villageNameZh": "马赫卢勒",
+   "parentCode": "town_A5",
+   "parentNameZh": "胡比亚",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-liwas",
+   "to": [
+    "awake:entry:geography.towns-hubyar"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A5_2",
+   "villageNameZh": "利瓦斯",
+   "parentCode": "town_A5",
+   "parentNameZh": "胡比亚",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-waltas",
+   "to": [
+    "awake:entry:geography.towns-hubyar"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A5_3",
+   "villageNameZh": "瓦勒塔斯",
+   "parentCode": "town_A5",
+   "parentNameZh": "胡比亚",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-mijayit",
+   "to": [
+    "awake:entry:geography.towns-sanala"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A6_1",
+   "villageNameZh": "米贾伊特",
+   "parentCode": "town_A6",
+   "parentNameZh": "撒纳拉",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-hamoshawat",
+   "to": [
+    "awake:entry:geography.towns-sanala"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A6_2",
+   "villageNameZh": "哈穆沙瓦",
+   "parentCode": "town_A6",
+   "parentNameZh": "撒纳拉",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-jahasim",
+   "to": [
+    "awake:entry:geography.towns-sanala"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A6_3",
+   "villageNameZh": "贾哈西姆",
+   "parentCode": "town_A6",
+   "parentNameZh": "撒纳拉",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-nahlan",
+   "to": [
+    "awake:entry:geography.towns-sanala"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A6_4",
+   "villageNameZh": "纳赫兰",
+   "parentCode": "town_A6",
+   "parentNameZh": "撒纳拉",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-wadar",
+   "to": [
+    "awake:entry:geography.castles-barihal-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_A9_2",
+   "villageNameZh": "瓦达尔",
+   "parentCode": "castle_A9",
+   "parentNameZh": "巴里哈勒堡",
+   "parentType": "castle",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-bait-hatif",
+   "to": [
+    "awake:entry:geography.towns-askar"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A7_2",
+   "villageNameZh": "拜特·哈提夫",
+   "parentCode": "town_A7",
+   "parentNameZh": "阿斯凯尔",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-mabwaz",
+   "to": [
+    "awake:entry:geography.towns-askar"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A7_3",
+   "villageNameZh": "马卜瓦兹",
+   "parentCode": "town_A7",
+   "parentNameZh": "阿斯凯尔",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-zalm",
+   "to": [
+    "awake:entry:geography.towns-askar"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A7_4",
+   "villageNameZh": "扎勒姆",
+   "parentCode": "town_A7",
+   "parentNameZh": "阿斯凯尔",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ezbet-nahul",
+   "to": [
+    "awake:entry:geography.towns-qasira"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A8_1",
+   "villageNameZh": "艾兹贝特·纳胡勒",
+   "parentCode": "town_A8",
+   "parentNameZh": "加西拉",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-abghan",
+   "to": [
+    "awake:entry:geography.towns-qasira"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_A8_2",
+   "villageNameZh": "阿卜甘",
+   "parentCode": "town_A8",
+   "parentNameZh": "加西拉",
+   "parentType": "town",
+   "cultureCode": "aserai",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-usanc",
+   "to": [
+    "awake:entry:geography.castles-usanc-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V1_1",
+   "villageNameZh": "于桑克",
+   "parentCode": "castle_V1",
+   "parentNameZh": "于桑克堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-hongard",
+   "to": [
+    "awake:entry:geography.castles-hongard-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V2_1",
+   "villageNameZh": "翁加尔",
+   "parentCode": "castle_V2",
+   "parentNameZh": "翁加尔堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ferton",
+   "to": [
+    "awake:entry:geography.castles-hongard-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V2_2",
+   "villageNameZh": "费顿",
+   "parentCode": "castle_V2",
+   "parentNameZh": "翁加尔堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-drapand",
+   "to": [
+    "awake:entry:geography.castles-drapand-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V3_1",
+   "villageNameZh": "德拉庞",
+   "parentCode": "castle_V3",
+   "parentNameZh": "德拉庞堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ormanfard",
+   "to": [
+    "awake:entry:geography.castles-ormanfard-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V4_1",
+   "villageNameZh": "奥曼法德",
+   "parentCode": "castle_V4",
+   "parentNameZh": "奥曼法德堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-tirby",
+   "to": [
+    "awake:entry:geography.castles-tirby-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V5_1",
+   "villageNameZh": "蒂尔比",
+   "parentCode": "castle_V5",
+   "parentNameZh": "蒂尔比堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-sirindac",
+   "to": [
+    "awake:entry:geography.castles-tirby-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V5_2",
+   "villageNameZh": "西岚达克",
+   "parentCode": "castle_V5",
+   "parentNameZh": "蒂尔比堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-caleus",
+   "to": [
+    "awake:entry:geography.castles-caleus-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V6_1",
+   "villageNameZh": "卡琉斯",
+   "parentCode": "castle_V6",
+   "parentNameZh": "卡琉斯堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:economy.goods-deriat",
+   "to": [
+    "awake:entry:geography.castles-caleus-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V6_2",
+   "villageNameZh": "德里亚特",
+   "parentCode": "castle_V6",
+   "parentNameZh": "卡琉斯堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-deriat",
+   "to": [
+    "awake:entry:geography.castles-caleus-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V6_2",
+   "villageNameZh": "德里亚特",
+   "parentCode": "castle_V6",
+   "parentNameZh": "卡琉斯堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-talivel",
+   "to": [
+    "awake:entry:geography.castles-talivel-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V7_1",
+   "villageNameZh": "塔利维尔",
+   "parentCode": "castle_V7",
+   "parentNameZh": "塔利维尔堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-verecsand",
+   "to": [
+    "awake:entry:geography.castles-verecsand-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V8_1",
+   "villageNameZh": "韦雷克桑",
+   "parentCode": "castle_V8",
+   "parentNameZh": "韦雷克桑堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-calioc",
+   "to": [
+    "awake:entry:geography.towns-sargot"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V1_1",
+   "villageNameZh": "卡利奥克",
+   "parentCode": "town_V1",
+   "parentNameZh": "萨哥特",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-etirfurd",
+   "to": [
+    "awake:entry:geography.towns-sargot"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V1_2",
+   "villageNameZh": "埃蒂尔菲德",
+   "parentCode": "town_V1",
+   "parentNameZh": "萨哥特",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-rodetan",
+   "to": [
+    "awake:entry:geography.castles-talivel-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V7_2",
+   "villageNameZh": "罗德唐",
+   "parentCode": "castle_V7",
+   "parentNameZh": "塔利维尔堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-mareiven",
+   "to": [
+    "awake:entry:geography.towns-ocs-hall"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V2_1",
+   "villageNameZh": "马雷汶",
+   "parentCode": "town_V2",
+   "parentNameZh": "奥克斯·霍尔",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-oritan",
+   "to": [
+    "awake:entry:geography.towns-ocs-hall"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V2_2",
+   "villageNameZh": "奥里唐",
+   "parentCode": "town_V2",
+   "parentNameZh": "奥克斯·霍尔",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-fregian",
+   "to": [
+    "awake:entry:geography.towns-ocs-hall"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V2_3",
+   "villageNameZh": "弗雷吉昂",
+   "parentCode": "town_V2",
+   "parentNameZh": "奥克斯·霍尔",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-marin",
+   "to": [
+    "awake:entry:geography.castles-verecsand-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V8_2",
+   "villageNameZh": "马林",
+   "parentCode": "castle_V8",
+   "parentNameZh": "韦雷克桑堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-valanby",
+   "to": [
+    "awake:entry:geography.castles-drapand-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_V3_2",
+   "villageNameZh": "瓦朗比",
+   "parentCode": "castle_V3",
+   "parentNameZh": "德拉庞堡",
+   "parentType": "castle",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-rulund",
+   "to": [
+    "awake:entry:geography.towns-pravend"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V3_2",
+   "villageNameZh": "鲁兰德",
+   "parentCode": "town_V3",
+   "parentNameZh": "帕拉汶德",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-larnac",
+   "to": [
+    "awake:entry:geography.towns-pravend"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V3_3",
+   "villageNameZh": "拉尔纳克",
+   "parentCode": "town_V3",
+   "parentNameZh": "帕拉汶德",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-palisont",
+   "to": [
+    "awake:entry:geography.towns-pravend"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V3_4",
+   "villageNameZh": "帕利松",
+   "parentCode": "town_V3",
+   "parentNameZh": "帕拉汶德",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-furbec",
+   "to": [
+    "awake:entry:geography.towns-galend"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V5_1",
+   "villageNameZh": "菲尔贝克",
+   "parentCode": "town_V5",
+   "parentNameZh": "加伦",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-meroc",
+   "to": [
+    "awake:entry:geography.towns-galend"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V5_2",
+   "villageNameZh": "梅罗克",
+   "parentCode": "town_V5",
+   "parentNameZh": "加伦",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-nogrent",
+   "to": [
+    "awake:entry:geography.towns-galend"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V5_3",
+   "villageNameZh": "诺格伦",
+   "parentCode": "town_V5",
+   "parentNameZh": "加伦",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-arromanc",
+   "to": [
+    "awake:entry:geography.towns-jaculan"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V6_1",
+   "villageNameZh": "阿罗曼克",
+   "parentCode": "town_V6",
+   "parentNameZh": "杰屈朗",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-mot",
+   "to": [
+    "awake:entry:geography.towns-jaculan"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V6_2",
+   "villageNameZh": "莫特",
+   "parentCode": "town_V6",
+   "parentNameZh": "杰屈朗",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-alorstan",
+   "to": [
+    "awake:entry:geography.towns-jaculan"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V6_3",
+   "villageNameZh": "阿洛斯唐",
+   "parentCode": "town_V6",
+   "parentNameZh": "杰屈朗",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-chornad",
+   "to": [
+    "awake:entry:geography.towns-jaculan"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V6_4",
+   "villageNameZh": "绍尔纳",
+   "parentCode": "town_V6",
+   "parentNameZh": "杰屈朗",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-savinth",
+   "to": [
+    "awake:entry:geography.bays-charas",
+    "awake:entry:geography.towns-charas",
+    "awake:entry:politics.clans-charas-cortain-secret",
+    "awake:entry:politics.territories-charas-reign"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V7_1",
+   "villageNameZh": "萨万特",
+   "parentCode": "town_V7",
+   "parentNameZh": "沙拉斯",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 4
+  },
+  {
+   "from": "awake:entry:geography.villages-vesin",
+   "to": [
+    "awake:entry:geography.bays-charas",
+    "awake:entry:geography.towns-charas",
+    "awake:entry:politics.clans-charas-cortain-secret",
+    "awake:entry:politics.territories-charas-reign"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V7_2",
+   "villageNameZh": "韦桑",
+   "parentCode": "town_V7",
+   "parentNameZh": "沙拉斯",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 4
+  },
+  {
+   "from": "awake:entry:geography.villages-horsger",
+   "to": [
+    "awake:entry:geography.towns-ostican"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V8_1",
+   "villageNameZh": "奥尔斯热",
+   "parentCode": "town_V8",
+   "parentNameZh": "奥斯蒂港",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-cananc",
+   "to": [
+    "awake:entry:geography.towns-ostican"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V8_2",
+   "villageNameZh": "卡南克",
+   "parentCode": "town_V8",
+   "parentNameZh": "奥斯蒂港",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-remental",
+   "to": [
+    "awake:entry:geography.towns-ostican"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V8_3",
+   "villageNameZh": "勒芒塔尔",
+   "parentCode": "town_V8",
+   "parentNameZh": "奥斯蒂港",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-alantas",
+   "to": [
+    "awake:entry:geography.towns-rovalt"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V9_1",
+   "villageNameZh": "阿兰塔斯",
+   "parentCode": "town_V9",
+   "parentNameZh": "罗瓦尔",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-halisvust",
+   "to": [
+    "awake:entry:geography.towns-rovalt"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_V9_2",
+   "villageNameZh": "阿利斯维斯特",
+   "parentCode": "town_V9",
+   "parentNameZh": "罗瓦尔",
+   "parentType": "town",
+   "cultureCode": "vlandia",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ab-comer",
+   "to": [
+    "awake:entry:geography.castles-ab-comer-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B1_1",
+   "villageNameZh": "阿布·科梅尔",
+   "parentCode": "castle_B1",
+   "parentNameZh": "阿布·科梅尔堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-llanoc-hen",
+   "to": [
+    "awake:entry:geography.castles-llanoc-hen-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B2_1",
+   "villageNameZh": "拉诺克·亨",
+   "parentCode": "castle_B2",
+   "parentNameZh": "拉诺克·亨堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-cantrec",
+   "to": [
+    "awake:entry:geography.castles-llanoc-hen-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B2_2",
+   "villageNameZh": "坎特雷克",
+   "parentCode": "castle_B2",
+   "parentNameZh": "拉诺克·亨堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-druimmor",
+   "to": [
+    "awake:entry:geography.castles-druimmor-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B3_1",
+   "villageNameZh": "德鲁伊莫尔",
+   "parentCode": "castle_B3",
+   "parentNameZh": "德鲁伊莫尔堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-pendraic",
+   "to": [
+    "awake:entry:geography.castles-pendraic-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B4_1",
+   "villageNameZh": "潘德拉克",
+   "parentCode": "castle_B4",
+   "parentNameZh": "潘德拉克堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-rhemtoil",
+   "to": [
+    "awake:entry:geography.castles-rhemtoil-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B5_1",
+   "villageNameZh": "雷姆托伊尔",
+   "parentCode": "castle_B5",
+   "parentNameZh": "雷姆托伊尔堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-claig-ban",
+   "to": [
+    "awake:entry:geography.castles-rhemtoil-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B5_2",
+   "villageNameZh": "克莱格·班",
+   "parentCode": "castle_B5",
+   "parentNameZh": "雷姆托伊尔堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-flintolg",
+   "to": [
+    "awake:entry:geography.castles-flintolg-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B6_1",
+   "villageNameZh": "弗林托格",
+   "parentCode": "castle_B6",
+   "parentNameZh": "弗林托格堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-glintor",
+   "to": [
+    "awake:entry:geography.castles-flintolg-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B6_2",
+   "villageNameZh": "格林托尔",
+   "parentCode": "castle_B6",
+   "parentNameZh": "弗林托格堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-aster",
+   "to": [
+    "awake:entry:geography.castles-aster-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B7_1",
+   "villageNameZh": "阿斯特",
+   "parentCode": "castle_B7",
+   "parentNameZh": "阿斯特堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-uthelaim",
+   "to": [
+    "awake:entry:geography.castles-uthelaim-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B8_1",
+   "villageNameZh": "乌瑟莱姆",
+   "parentCode": "castle_B8",
+   "parentNameZh": "乌瑟莱姆堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-dalmengus",
+   "to": [
+    "awake:entry:geography.towns-marunath"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B1_1",
+   "villageNameZh": "达尔门格斯",
+   "parentCode": "town_B1",
+   "parentNameZh": "马鲁纳斯",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ebereth",
+   "to": [
+    "awake:entry:geography.towns-marunath"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B1_2",
+   "villageNameZh": "埃贝雷斯",
+   "parentCode": "town_B1",
+   "parentNameZh": "马鲁纳斯",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-beglomuar",
+   "to": [
+    "awake:entry:geography.towns-marunath"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B1_3",
+   "villageNameZh": "贝格洛米艾",
+   "parentCode": "town_B1",
+   "parentNameZh": "马鲁纳斯",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ath-cafal",
+   "to": [
+    "awake:entry:geography.towns-marunath"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B1_4",
+   "villageNameZh": "阿斯·卡瓦尔",
+   "parentCode": "town_B1",
+   "parentNameZh": "马鲁纳斯",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-diantogmail",
+   "to": [
+    "awake:entry:geography.towns-dunglanys"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B2_1",
+   "villageNameZh": "迪安托格麦尔",
+   "parentCode": "town_B2",
+   "parentNameZh": "邓格拉尼斯",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-glenlithrig",
+   "to": [
+    "awake:entry:geography.towns-dunglanys"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B2_2",
+   "villageNameZh": "格伦利斯里格",
+   "parentCode": "town_B2",
+   "parentNameZh": "邓格拉尼斯",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-morihig",
+   "to": [
+    "awake:entry:geography.towns-dunglanys"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B2_3",
+   "villageNameZh": "莫里希格",
+   "parentCode": "town_B2",
+   "parentNameZh": "邓格拉尼斯",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-imlagh",
+   "to": [
+    "awake:entry:geography.castles-aster-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B7_2",
+   "villageNameZh": "伊姆拉赫",
+   "parentCode": "castle_B7",
+   "parentNameZh": "阿斯特堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-lindorn",
+   "to": [
+    "awake:entry:geography.castles-pendraic-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B4_2",
+   "villageNameZh": "林杜恩",
+   "parentCode": "castle_B4",
+   "parentNameZh": "潘德拉克堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-bog-beth",
+   "to": [
+    "awake:entry:geography.towns-car-banseth"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B3_1",
+   "villageNameZh": "博格·贝斯",
+   "parentCode": "town_B3",
+   "parentNameZh": "卡·班塞斯",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-geunat-nal",
+   "to": [
+    "awake:entry:geography.towns-car-banseth"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B3_2",
+   "villageNameZh": "格纳特·纳尔",
+   "parentCode": "town_B3",
+   "parentNameZh": "卡·班塞斯",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-tor-leiad",
+   "to": [
+    "awake:entry:geography.towns-car-banseth"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B3_3",
+   "villageNameZh": "托·莱阿德",
+   "parentCode": "town_B3",
+   "parentNameZh": "卡·班塞斯",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-tor-melina",
+   "to": [
+    "awake:entry:geography.castles-druimmor-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B3_2",
+   "villageNameZh": "托·梅利纳",
+   "parentCode": "castle_B3",
+   "parentNameZh": "德鲁伊莫尔堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-bryn-glas",
+   "to": [
+    "awake:entry:geography.towns-seonon"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B4_1",
+   "villageNameZh": "布林·格拉斯",
+   "parentCode": "town_B4",
+   "parentNameZh": "肖农",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-andurn",
+   "to": [
+    "awake:entry:geography.towns-seonon"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B4_2",
+   "villageNameZh": "安杜恩",
+   "parentCode": "town_B4",
+   "parentNameZh": "肖农",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-mag-arba",
+   "to": [
+    "awake:entry:geography.towns-seonon"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B4_3",
+   "villageNameZh": "马格·阿尔巴",
+   "parentCode": "town_B4",
+   "parentNameZh": "肖农",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-swenryn",
+   "to": [
+    "awake:entry:geography.towns-seonon"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B4_4",
+   "villageNameZh": "斯温林",
+   "parentCode": "town_B4",
+   "parentNameZh": "肖农",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-seordas",
+   "to": [
+    "awake:entry:geography.castles-uthelaim-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B8_2",
+   "villageNameZh": "肖尔达斯",
+   "parentCode": "castle_B8",
+   "parentNameZh": "乌瑟莱姆堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-durn",
+   "to": [
+    "awake:entry:geography.towns-pen-cannoc"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B5_1",
+   "villageNameZh": "杜恩",
+   "parentCode": "town_B5",
+   "parentNameZh": "彭·坎诺克",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-gainseth",
+   "to": [
+    "awake:entry:geography.towns-pen-cannoc"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B5_2",
+   "villageNameZh": "盖恩塞斯",
+   "parentCode": "town_B5",
+   "parentNameZh": "彭·坎诺克",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-fenon-etir",
+   "to": [
+    "awake:entry:geography.towns-pen-cannoc"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_B5_3",
+   "villageNameZh": "韦农·埃蒂尔",
+   "parentCode": "town_B5",
+   "parentNameZh": "彭·坎诺克",
+   "parentType": "town",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-inveth",
+   "to": [
+    "awake:entry:geography.castles-ab-comer-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_B1_2",
+   "villageNameZh": "因韦斯",
+   "parentCode": "castle_B1",
+   "parentNameZh": "阿布·科梅尔堡",
+   "parentType": "castle",
+   "cultureCode": "battania",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-usek",
+   "to": [
+    "awake:entry:geography.castles-usek-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K1_1",
+   "villageNameZh": "乌赛克",
+   "parentCode": "castle_K1",
+   "parentNameZh": "乌赛克堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-esme",
+   "to": [
+    "awake:entry:geography.castles-usek-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K1_2",
+   "villageNameZh": "埃斯梅",
+   "parentCode": "castle_K1",
+   "parentNameZh": "乌赛克堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-akiser",
+   "to": [
+    "awake:entry:geography.castles-akiser-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K2_1",
+   "villageNameZh": "阿契赛尔",
+   "parentCode": "castle_K2",
+   "parentNameZh": "阿契赛尔堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-hakkun",
+   "to": [
+    "awake:entry:geography.castles-hakkun-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K3_1",
+   "villageNameZh": "哈坤",
+   "parentCode": "castle_K3",
+   "parentNameZh": "哈坤堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-tepes",
+   "to": [
+    "awake:entry:geography.castles-tepes-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K4_1",
+   "villageNameZh": "泰佩斯",
+   "parentCode": "castle_K4",
+   "parentNameZh": "泰佩斯堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-khimli",
+   "to": [
+    "awake:entry:geography.castles-khimli-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K5_1",
+   "villageNameZh": "希木利",
+   "parentCode": "castle_K5",
+   "parentNameZh": "希木利堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-dinar",
+   "to": [
+    "awake:entry:geography.castles-dinar-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K6_1",
+   "villageNameZh": "迪纳尔",
+   "parentCode": "castle_K6",
+   "parentNameZh": "迪纳尔堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-karahalli",
+   "to": [
+    "awake:entry:geography.castles-dinar-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K6_2",
+   "villageNameZh": "喀拉哈力",
+   "parentCode": "castle_K6",
+   "parentNameZh": "迪纳尔堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-simira",
+   "to": [
+    "awake:entry:geography.castles-simira-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K7_1",
+   "villageNameZh": "西米拉",
+   "parentCode": "castle_K7",
+   "parentNameZh": "西米拉堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-erzenur",
+   "to": [
+    "awake:entry:geography.castles-erzenur-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K8_1",
+   "villageNameZh": "埃泽努尔",
+   "parentCode": "castle_K8",
+   "parentNameZh": "埃泽努尔堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-kaysar",
+   "to": [
+    "awake:entry:geography.castles-kaysar-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K9_1",
+   "villageNameZh": "开撒尔",
+   "parentCode": "castle_K9",
+   "parentNameZh": "开撒尔堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-payam",
+   "to": [
+    "awake:entry:geography.castles-kaysar-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K9_2",
+   "villageNameZh": "帕亚木",
+   "parentCode": "castle_K9",
+   "parentNameZh": "开撒尔堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-fisnar",
+   "to": [
+    "awake:entry:geography.towns-baltakhand"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K1_1",
+   "villageNameZh": "菲斯纳尔",
+   "parentCode": "town_K1",
+   "parentNameZh": "巴尔塔罕",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ulaan",
+   "to": [
+    "awake:entry:geography.towns-baltakhand"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K1_2",
+   "villageNameZh": "乌兰",
+   "parentCode": "town_K1",
+   "parentNameZh": "巴尔塔罕",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-kuruluk",
+   "to": [
+    "awake:entry:geography.castles-tepes-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K4_2",
+   "villageNameZh": "库鲁卢克",
+   "parentCode": "castle_K4",
+   "parentNameZh": "泰佩斯堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-asalig",
+   "to": [
+    "awake:entry:geography.towns-baltakhand"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K1_4",
+   "villageNameZh": "阿萨利格",
+   "parentCode": "town_K1",
+   "parentNameZh": "巴尔塔罕",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-karakalat",
+   "to": [
+    "awake:entry:geography.towns-akkalat"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K2_1",
+   "villageNameZh": "喀拉卡拉特",
+   "parentCode": "town_K2",
+   "parentNameZh": "阿克卡拉特",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-tismil",
+   "to": [
+    "awake:entry:geography.towns-akkalat"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K2_2",
+   "villageNameZh": "帖斯密勒",
+   "parentCode": "town_K2",
+   "parentNameZh": "阿克卡拉特",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-gereden",
+   "to": [
+    "awake:entry:geography.castles-erzenur-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K8_2",
+   "villageNameZh": "格烈登",
+   "parentCode": "castle_K8",
+   "parentNameZh": "埃泽努尔堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-kiraz",
+   "to": [
+    "awake:entry:geography.castles-hakkun-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K3_2",
+   "villageNameZh": "基拉兹",
+   "parentCode": "castle_K3",
+   "parentNameZh": "哈坤堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-shapeshte",
+   "to": [
+    "awake:entry:geography.towns-makeb"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K3_1",
+   "villageNameZh": "沙佩什特",
+   "parentCode": "town_K3",
+   "parentNameZh": "马凯布",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-hanekhy",
+   "to": [
+    "awake:entry:geography.towns-makeb"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K3_2",
+   "villageNameZh": "哈内希",
+   "parentCode": "town_K3",
+   "parentNameZh": "马凯布",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-mazen",
+   "to": [
+    "awake:entry:geography.towns-makeb"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K3_3",
+   "villageNameZh": "马津",
+   "parentCode": "town_K3",
+   "parentNameZh": "马凯布",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-omrotok",
+   "to": [
+    "awake:entry:geography.castles-khimli-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K5_2",
+   "villageNameZh": "鄂木罗托克",
+   "parentCode": "castle_K5",
+   "parentNameZh": "希木利堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ransam",
+   "to": [
+    "awake:entry:geography.towns-ortongard"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K4_2",
+   "villageNameZh": "兰萨木",
+   "parentCode": "town_K4",
+   "parentNameZh": "奥通加德",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-mivanjan",
+   "to": [
+    "awake:entry:geography.towns-ortongard"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K4_3",
+   "villageNameZh": "米万占",
+   "parentCode": "town_K4",
+   "parentNameZh": "奥通加德",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-urunjan",
+   "to": [
+    "awake:entry:geography.towns-ortongard"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K4_4",
+   "villageNameZh": "乌伦占",
+   "parentCode": "town_K4",
+   "parentNameZh": "奥通加德",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-kamshar",
+   "to": [
+    "awake:entry:geography.castles-akiser-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K2_2",
+   "villageNameZh": "喀木沙",
+   "parentCode": "castle_K2",
+   "parentNameZh": "阿契赛尔堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-okhutan",
+   "to": [
+    "awake:entry:geography.towns-chaikand"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K5_2",
+   "villageNameZh": "奥胡坦",
+   "parentCode": "town_K5",
+   "parentNameZh": "柴坎",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-ispantar",
+   "to": [
+    "awake:entry:geography.towns-chaikand"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K5_3",
+   "villageNameZh": "依斯潘塔尔",
+   "parentCode": "town_K5",
+   "parentNameZh": "柴坎",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-pabastan",
+   "to": [
+    "awake:entry:geography.towns-chaikand"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K5_4",
+   "villageNameZh": "帕巴斯坦",
+   "parentCode": "town_K5",
+   "parentNameZh": "柴坎",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-karahan",
+   "to": [
+    "awake:entry:geography.towns-odokh"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K6_1",
+   "villageNameZh": "喀拉罕",
+   "parentCode": "town_K6",
+   "parentNameZh": "奥多赫",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-nutyuk",
+   "to": [
+    "awake:entry:geography.towns-odokh"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K6_2",
+   "villageNameZh": "努丘克",
+   "parentCode": "town_K6",
+   "parentNameZh": "奥多赫",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-danara",
+   "to": [
+    "awake:entry:geography.towns-odokh"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "village_K6_3",
+   "villageNameZh": "达纳拉",
+   "parentCode": "town_K6",
+   "parentNameZh": "奥多赫",
+   "parentType": "town",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  },
+  {
+   "from": "awake:entry:geography.villages-kohi-ajik",
+   "to": [
+    "awake:entry:geography.castles-simira-castle"
+   ],
+   "via": "bound_settlement",
+   "villageCode": "castle_village_K7_2",
+   "villageNameZh": "柯希·阿吉克",
+   "parentCode": "castle_K7",
+   "parentNameZh": "西米拉堡",
+   "parentType": "castle",
+   "cultureCode": "khuzait",
+   "parentEntryCount": 1
+  }
+ ]
+}

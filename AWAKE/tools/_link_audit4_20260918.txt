@@ -1,0 +1,48 @@
+=== 边分桶 ===
+  proper     580
+  hubproper  398
+  star       99
+
+=== proper：有向边 527 ===
+  单向（只有 A 提 B，B 没提 A） 233  (44%)
+  互为提及                    294
+  无向对 380
+
+=== hubproper：有向边 384 ===
+  单向（只有 A 提 B，B 没提 A） 364  (95%)
+  互为提及                    20
+  无向对 374
+
+=== 归属边 vs 正文互引 重合度 ===
+  归属边（无向对）      290
+  被正文互引覆盖        161  (56%)
+  归属边有、正文没提    129
+  例（没提的，前 8）：
+    geography.villages-tevea《特维亚》 ↔ geography.towns-poros《波罗斯》
+    geography.villages-abghan《阿卜甘》 ↔ geography.towns-qasira《加西拉》
+    geography.villages-crios《克里俄斯》 ↔ geography.towns-saneopa《萨涅俄帕》
+    geography.villages-fregian《弗雷吉昂》 ↔ geography.towns-ocs-hall《奥克斯·霍尔》
+    geography.towns-askar《阿斯凯尔》 ↔ geography.villages-zalm《扎勒姆》
+    geography.villages-alision《阿利西翁》 ↔ geography.towns-vostrum《沃斯特鲁姆》
+    geography.villages-marathea《马拉忒亚》 ↔ geography.towns-epicrotea《厄庇克洛忒亚》
+    geography.villages-lartusys《拉耳图绪斯》 ↔ geography.towns-onira《俄尼拉》
+
+=== 真孤立（专名边∪高频专名边∪归属边 都没边） 18 条 ===
+    economy.goods-salt                         《盐》
+    economy.goods-silver                       《银矿石》
+    economy.items-cow                          《牛》
+    economy.items-mule                         《骡子》
+    economy.items-pack_camel                   《驮运骆驼》
+    economy.items-saddle_horse                 《旅行马》
+    economy.items-sheep                        《羊》
+    economy.items-steppe_war_bow               《草原战弓》
+    geography.settlement-types-castle          《城堡》
+    geography.settlement-types-town            《城镇》
+    geography.settlement-types-village         《村庄》
+    war.military-khuzait                       《库赛特军事力量》
+    war.troops-mamluk                          《马穆鲁克》
+    war.weapons-armor-shield-heater            《扇形盾》
+    war.weapons-armor-shield-wicker            《柳条盾与杏形盾》
+    war.weapons-armor-torso-gambeson           《填充衣》
+    war.weapons-head-cheekguard                《护颊盔》
+    war.weapons-head-oddity                    《兽首与面具盔》

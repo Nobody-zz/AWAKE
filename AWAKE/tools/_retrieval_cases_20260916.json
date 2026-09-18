@@ -98,7 +98,9 @@
     {
       "group": "B",
       "target": "awake:entry:culture.tales-dawn-taboo",
-      "query": "山里有不让进的地方吗？"
+      "query": "山里有不让进的地方吗？",
+      "countInGate": false,
+      "note": "靶子任意：`geography.towns-odokh` 正文写「奥多赫背后那座山进不得，说是黑魔法的地方」⇒ 至少两条条目都答得上，把「黎明山脉·禁忌与传说」定成唯一目标是任意的。按 09-17 裁定处理：仍跑、仍打印，不进分子分母。"
     },
     {
       "group": "B",
@@ -153,7 +155,8 @@
   "rulings": {
     "2026-09-17": "甲方三条裁定（原话）：「废题别留着。不让进本来就不应该成提示词，好马被多个词条占据也是正常现象」。落点：① 废题删掉、不留档；② 撤回上一轮「给词条补题面词把题喂中」的修法（不为「不让进」补 keywords）；③ 多个词条共有某个意思（好马）是正常现象，不硬定赢家。⇒ 一句话：**不拿自造题集去改语料**。",
     "2026-09-17b": "甲方拍板「可以」⇒ **验收口径从「排第 1」改成「进前 3」**。缘由：下游不是只取第 1 条，而是把**前几条一起**拼给模型（`MaximumRetrievedBlockBytes`），卡第 1 名会把『其实找得到』判成找不到 —— hit@1 会夸大问题。⇒ **门禁改看 hit@3**；hit@1 仍打印，只当退化预警。",
-    "2026-09-17c": "甲方「补啊」⇒ 把核验里提的两件补上：① 给验收补一列「该不该知道」（＝本文件 `deniedCases` ＋ `tools/worldbook-runtime-sim` 的 identity-gate 子命令）；② 题集补一类「他不该知道」的题（本题 5 条）。口径：**阳性对照不可省** —— 被禁的那一档必须在够格的身份那里真能出现，否则「他没漏」是空转；**同一个问句换人问**，不另造问法；**不改语料**（沿用 09-17 三条裁定）。"
+    "2026-09-17c": "甲方「补啊」⇒ 把核验里提的两件补上：① 给验收补一列「该不该知道」（＝本文件 `deniedCases` ＋ `tools/worldbook-runtime-sim` 的 identity-gate 子命令）；② 题集补一类「他不该知道」的题（本题 5 条）。口径：**阳性对照不可省** —— 被禁的那一档必须在够格的身份那里真能出现，否则「他没漏」是空转；**同一个问句换人问**，不另造问法；**不改语料**（沿用 09-17 三条裁定）。",
+    "2026-09-18": "甲方原话：「因为什么山里有不让进的话问出去本身就很扯淡」。落点：① 该题（`山里有不让进的地方吗？`）标 `countInGate=false` 移出计数——它问法本身就不成立，且 `geography.towns-odokh` 已直接写着「背后那座山进不得」，属**靶子任意**，与「这一带有好马吗？」同一形状；② 沿用 09-17 三条裁定：**不为题面词补 keywords、不改问法、不拿自造题集去改语料**。⚠️ 移出后计分题 24 → 23（A 13 / B 10）。"
   },
   "acceptance20260917": {
     "metric": "hit@3",
@@ -203,6 +206,13 @@
       "why": "甲方 09-17「照着我的初衷核验一遍」核出：现有 24 条题**在「谁知道」这一维上是盲的**（门禁验台 `PickIdentity` 从目标条目自己的 grants 里挑身份，题集里 `identity` 0 命中）。初衷第一层就是「谁知道」，不补这一类题，它永远没有判据。",
       "effect": "**不动**原有 24 条的分母与分子、不动任何门禁常量；这是**新增的第二条门禁**（跑在 `tools/worldbook-runtime-sim identity-gate`），与 `RETRIEVAL_GATE` / `MERGE_GATE` 并列。",
       "evidence": "`tools/_identity_gate_off_20260917.txt`（不挂语义臂，PASS）、`tools/_identity_gate_on_20260917.txt`（挂语义臂，PASS）、`tools/_identity_gate_mutate_20260917.txt`（变异检验：冒充够得着的身份 ⇒ 泄漏 0→60、点名题失败 0→5，两处都判红）。报告 JSON 同名 `.json`。"
+    },
+    {
+      "date": "2026-09-18",
+      "what": "把 `山里有不让进的地方吗？`（target = culture.tales-dawn-taboo）标为 `countInGate=false`。",
+      "why": "① 甲方：这题问出去本身就扯淡；② 实测靶子不唯一：`geography.towns-odokh` 正文第一条就是「奥多赫背后那座山进不得」，`geography.villages-deir-hawa` 也写「外人不许看」⇒ 多条条目都答得上，答哪条都对。",
+      "effect": "计分题 24 → 23（A 13 / B 10）。该题在**字面臂与合并臂两处都是 0**（证据：`tools/_smoke_run_20260917_hit3.txt` 的 `RETRIEVAL_MISS B ... tales-dawn-taboo`；`_midlayer_probe_*` 里它到 K=100 都不在候选序）⇒ **分子不动、只缩分母**，两处验台的门禁常量（GateAHit3=10 / GateBHit3=9 / GateAllHit3=19）理论上不必动，但**必须复跑两闸核实**，不许只靠推。",
+      "gate": "复跑：`worldbook-runtime-smoke`（RETRIEVAL_GATE）与 `worldbook-rag-merge`（MERGE_GATE），读数见 `tools/_retrieval_gate_after_taboo_20260918.txt` / `_merge_gate_after_taboo_20260918.txt`。"
     }
   ],
   "deniedCases": {

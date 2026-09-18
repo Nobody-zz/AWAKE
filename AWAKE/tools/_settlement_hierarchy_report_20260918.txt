@@ -1,0 +1,42 @@
+=== 聚落归属表 ===
+登记表 890 实体（聚落 393：村庄 273 / 城堡 67 / 城镇 53）
+上线包 482 条目，其中带 entityRefs 的 402
+
+== 生成结果 ==
+  边数（村庄条目 → 父条目）      274
+  村庄无 bound_settlement_code  0
+  村庄本身没有世界书条目        0
+  父聚落没有世界书条目          0
+  bound 指向的 code 查不到      0
+
+== 按父聚落类型 ==
+  town       141 条边
+  castle     133 条边
+
+== 每条村庄条目平均连到几个父条目 ==
+  连到 1 个父条目 : 268 条
+  连到 2 个父条目 : 2 条
+  连到 4 个父条目 : 2 条
+  连到 5 个父条目 : 2 条
+
+== 样例（前 8 条边）==
+  瓦拉戈斯(castle_village_EN1_1)                 → geography.castles-varagos-castle [瓦拉戈斯堡]
+  罗卡那(castle_village_EN2_1)                  → geography.castles-lochana-castle [罗卡那堡]
+  雷索斯(castle_village_EN3_1)                  → geography.castles-rhesos-castle [雷索斯堡]
+  伽俄斯(castle_village_EN4_1)                  → geography.castles-gaos-castle [伽俄斯堡]
+  阿特里翁(castle_village_EN5_1)                 → geography.castles-atrion-castle [阿特里翁堡]
+  阿塔科尼亚(castle_village_EN6_1)                → geography.castles-ataconia-castle [阿塔科尼亚堡]
+  厄毗诺萨(castle_village_EN7_1)                 → geography.castles-epinosa-castle [厄毗诺萨堡]
+  庞斯(castle_village_EN7_2)                   → geography.castles-epinosa-castle [厄毗诺萨堡]
+
+== 同一父聚落下挂了多少条村庄（最大的前 10 组）==
+  town_A6          撒纳拉        4 个村庄条目
+  town_V6          杰屈朗        4 个村庄条目
+  town_B1          马鲁纳斯       4 个村庄条目
+  town_B4          肖农         4 个村庄条目
+  town_EN1         厄庇克洛忒亚     3 个村庄条目
+  town_EN5         密泽亚        3 个村庄条目
+  town_EW2         泽翁尼卡       3 个村庄条目
+  town_EW4         俄耳堤西亚      3 个村庄条目
+  town_EW6         洛泰         3 个村庄条目
+  town_ES1         达努斯提卡      3 个村庄条目
