@@ -5,9 +5,16 @@
 要回答的问题：修好职业名归一化之后，"你的身份决定了你听不到"这件事**有多常发生**？
 如果它很少发生，那"让角色按身份说自己不知道"就是不值得做的功能；如果很多，它就是主线。
 
-算的是：对每个身份，1050 条说法里有多少条授予他（grant 命中），多少条把他挡在门外。
+算的是：对每个身份，全部说法里有多少条授予他（grant 命中），多少条把他挡在门外。
 不启动游戏、不改产品、纯统计上线包。
+
+⚠️ 2026-09-18 修订（**这一版之前的读数是错的**）：旧版是按「这个身份 id 有没有直接出现在
+grant 里」算的，**没有计算身份继承**。而包里身份是一棵树（见下），一个人物**同时拥有他的全部祖先身份**——
+例如 `ransom_broker` 还带着 `merchant`→`townsfolk`→`commoner`；`noble` 带着 `notable`→`commoner`。
+⇒ 旧版的"能听"一律**偏低**、"被挡"一律**偏高**（差距在小身份上最大）。
+现在两列都出：`能听`＝含祖先，`[仅本层]`＝只算自己（旧口径，留作对照）。
 """
+
 import json
 import os
 from collections import Counter
@@ -70,20 +77,52 @@ def main():
     print("  带 denies（硬拒绝）的说法 = %d / %d (%.1f%%)" % (denies, total, 100.0 * denies / total))
     print()
 
-    # 表达按"能不能被某个身份听到"分组
+    # 身份树：一个人物同时拥有自己的全部祖先身份（代码侧 AddIdentity 沿 parents 往上加）
+    tree = {}
+    for item in package.get("identities") or []:
+        if not isinstance(item, dict):
+            continue
+        ident = str(item.get("id") or "")
+        if ident:
+            tree[ident] = [str(p) for p in (item.get("parents") or [])]
+
+    def ancestors(ident, seen=None):
+        seen = seen if seen is not None else set()
+        if ident in seen:
+            return set()
+        seen.add(ident)
+        out = {ident}
+        for parent in tree.get(ident, []):
+            out |= ancestors(parent, seen)
+        return out
+
+    print("身份树（← 左边是子、右边是它继承的父身份）：")
+    for ident in sorted(tree):
+        parents = tree[ident]
+        label = ident.replace("awake:identity:", "")
+        if parents:
+            print("   %-20s ← %s" % (label, " ← ".join(p.replace("awake:identity:", "") for p in parents)))
+        else:
+            print("   %-20s （根）" % label)
+    print()
+
+    # 表达按"能不能被某个身份听到"分组（含继承）
     by_identity = {}
+    own_only = {}
     for name in ROLE_TO_IDENTITY:
         full = "awake:identity:" + name
-        heard = sum(1 for granted in expressions if full in granted)
-        by_identity[name] = heard
+        reach = ancestors(full)
+        by_identity[name] = sum(1 for granted in expressions if granted & reach)
+        own_only[name] = sum(1 for granted in expressions if full in granted)
 
     print("=" * 76)
     print("每个身份能听到多少条说法（分母 %d）" % total)
+    print("  「能听」＝含继承；「仅本层」＝只算直接写他名字的（旧口径，对照用）")
     print("=" * 76)
     for name, heard in sorted(by_identity.items(), key=lambda kv: kv[1]):
         blocked = total - heard
-        print("  %-14s 能听 %4d (%5.1f%%)   被挡 %4d (%5.1f%%)"
-              % (name, heard, 100.0 * heard / total, blocked, 100.0 * blocked / total))
+        print("  %-14s 能听 %4d (%5.1f%%)  [仅本层 %4d]   被挡 %4d (%5.1f%%)"
+              % (name, heard, 100.0 * heard / total, own_only[name], blocked, 100.0 * blocked / total))
     print()
     print("  （对照）anonymous：能听 0 (0.0%%)   被挡 %d (100.0%%)" % total)
     print()

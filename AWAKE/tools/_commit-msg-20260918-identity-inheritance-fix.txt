@@ -1,0 +1,40 @@
+fix(audit): 身份覆盖算错了 —— 人物同时拥有全部祖先身份，旧读数一律偏低
+
+起因：甲方一句「城镇平民和农民不是一类吧？」——对。查包里的 identities 才发现**身份是一棵树**
+（子身份自动拥有父身份）：
+
+  commoner（普通平民·根）
+   ├─ townsfolk（城镇居民）─┬─ merchant ─ ransom_broker
+   │                        └─ tavernkeeper
+   ├─ villager（普通村民）
+   ├─ soldier
+   └─ notable ─┬─ noble ─ noble_high_steward
+               └─ headman
+
+⇒ 两个探针的 `heard` / `reachable` 都只数了「grant 里有没有**直接写他名字**」，**没算继承** ⇒
+"能听"一律偏低、"被挡"一律偏高。修正前后：
+
+- `_probe_identity_coverage_20260918`（说法层，分母 1115）：
+  ransom_broker 461(41.3%) → **1011(90.7%)**；tavernkeeper 467→511；noble 979→1008；merchant 982→1011；
+  **下层几个基本不变**（它们本就是父身份那一支）：commoner 467、villager 514→518、townsfolk 502→508、
+  notable 493→502。⇒ **结论不变**（下层被挡 53.5%–58.1%、上层 9.3%–12.1%，上下差约 44pp），
+  但 **ransom_broker 要从"下层"挪到"上层"**（他拿到的比贵族还多）。
+- `_probe_secrecy_gap_20260918`（条目层，分母 482，"完全查不到"）：
+  ransom_broker 31→**4**；tavernkeeper 27→9；noble 9→3；merchant 7→4；其余小幅。
+  ⇒ **覆盖缺口其实很小（0.6%–3.9%）** ⇒ 补料单第 ③ 项从"必补"**降级为"顺手补"**，主线是 ①②。
+
+词汇口径同时纠正（我上一轮说反了）：
+- `commoner` **不是废词**，它是这棵树的**根**——"任何平民都算"；villager／townsfolk／soldier／
+  notable／noble **全部继承它** ⇒ 写 `commoner` ＝ 人人有份。
+- `villager`（只有村民）与 `townsfolk`（只有城镇居民）是**两个分支，不能互相替代**。
+- ⚠️ 由此得一条写授权时的硬规矩：**授权是往上继承的** ⇒ 想"只给上层"就别写底层身份
+  （写 commoner 连贵族都有份）；这条搞反，分层会整个错位。已写进补料单 §四。
+
+改动文件：
+- AWAKE/tools/_probe_identity_coverage_20260918.py/.txt（加身份树与祖先递归；两列对照）
+- AWAKE/tools/_probe_secrecy_gap_20260918.py/.txt（同上）
+- AWAKE/docs/AUDIT-20260918-身份链潜在问题.md（§二 覆盖表更正 + 身份树 + 更正说明）
+- AWAKE/docs/HANDOFF-20260918-世界书补料单-身份分层与禁忌.md（§三③ 重写 + §四 加继承规矩）
+
+教训：**判"谁能看到"必须走继承（自己 ＋ 全部祖先），别只看"有没有写他名字"** ——
+这一层我在别处已经知道（代码 `AddIdentity` 沿 parents 往上加），但写统计时没带上。

@@ -173,23 +173,45 @@ for entry, expr in secret_exprs:
     print("       授权=%s" % ",".join(json.dumps(r, ensure_ascii=False) for r in (expr.get("grants") or [])))
 print("-" * 84)
 
-# --- ⑤ 有多少条目对底层身份**一条说法都不给**（＝真正的身份门槛）---
-def reachable(entry, identity):
-    ident = "awake:identity:" + identity
+# --- ⑤ 有多少条目对某身份**一条说法都不给**（＝真正的身份门槛）---
+# ⚠️ 修订 09-18：**必须算身份继承**。人物同时拥有全部祖先身份
+# （ransom_broker → merchant → townsfolk → commoner；noble → notable → commoner），
+# 只按"直接写他名字"算会**严重低估覆盖**。
+TREE = {}
+for item in package.get("identities") or []:
+    if isinstance(item, dict) and item.get("id"):
+        TREE[str(item["id"])] = [str(p) for p in (item.get("parents") or [])]
+
+
+def ancestors_of(ident, seen=None):
+    seen = seen if seen is not None else set()
+    if ident in seen:
+        return set()
+    seen.add(ident)
+    out = {ident}
+    for parent in TREE.get(ident, []):
+        out |= ancestors_of(parent, seen)
+    return out
+
+
+def reachable(entry, identity, use_inheritance=True):
+    reach = ancestors_of("awake:identity:" + identity) if use_inheritance else {"awake:identity:" + identity}
     for expr in entry.get("expressions") or []:
         if expr.get("enabled") is False:
             continue
         for rule in expr.get("grants") or []:
-            if str(rule.get("identity_id") or "") == ident:
+            if str(rule.get("identity_id") or "") in reach:
                 return True
     return False
 
-print("⑤ 对某个身份「一条说法都不给」的条目数（＝他完全查不到）：")
+
+print("⑤ 对某身份「一条说法都不给」的条目数（含继承 ｜ [仅本层] 对照）：")
 for identity in ["commoner", "villager", "townsfolk", "soldier", "merchant",
                  "tavernkeeper", "notable", "ransom_broker", "noble", "anonymous"]:
     blocked = sum(1 for entry in entries if not reachable(entry, identity))
-    print("   %-16s 查不到 %3d / %d  (%.1f%%)" % (identity, blocked, len(entries),
-                                                  100.0 * blocked / max(len(entries), 1)))
+    blocked_own = sum(1 for entry in entries if not reachable(entry, identity, use_inheritance=False))
+    print("   %-16s 查不到 %3d / %d  (%4.1f%%)   [仅本层 %3d]"
+          % (identity, blocked, len(entries), 100.0 * blocked / max(len(entries), 1), blocked_own))
 print("-" * 84)
 
 # --- ⑥ 唯一那条写了硬拒绝的条目，完整看一遍（当样板）---
