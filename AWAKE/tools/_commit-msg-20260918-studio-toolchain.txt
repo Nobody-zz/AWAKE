@@ -1,0 +1,21 @@
+工具链入库（收口悬置改动）：Studio 编译器 K1 修正
+
+背景：这批改动在 `git status` 里挂了 2–3 天（mtime 09-16 / 09-17），一直没人提交。
+表现是一个真问题：**包能编出来，但构成它的代码不在历史里** ——
+任何新克隆按 HEAD 编，编不出与当前一致的包。
+
+内容（**按目录边界归档，不表示由本线撰写**）：
+- `RuntimePackageCompiler.cs` —— **K1 修正（2026-09-16）**：内部文档 id 不再进 keywords。
+  文件内原注释：运行时只做「集合成员判定」（数组位置无意义），排序只按「匹配串长度」
+  ⇒ id 会凭串长压过真关键词；需要按 id 取用请走 `entry.id` / `extensions.sourceDocumentId`。
+  ★ **这条必须入库**：实测当前两份包的 keywords 都已是 K1 后的形态
+  （0/482、0/448 条带内部 id）⇒ **包依赖这份未提交代码**。
+- `Cli/Program.cs`、`Tests/Program.cs`、`Tests.csproj`：同批工具链改动。
+
+提交前过编译闸：`Awake.WorldbookStudio.slnx` → **0 错 0 警**
+（读数 `tools/_precommit_build_20260918.txt`）。
+
+**未纳入**：`tools/worldbook-pilot-package/WorldbookPilotPackage.csproj`（同批在途）——
+它加了 `WorldKnowledgeSemantic.cs`，却仍缺 `WorldFactQuery.cs` / `WorldFactJournal.cs` /
+`WorldStateStore.cs`，**实编 32 个 CS0246** ⇒ 按「不把编不过的状态钉进历史」，**留原状**
+待其负责人补全（这正是"改共享工程要同步显式编译清单"那条纪律的实例）。

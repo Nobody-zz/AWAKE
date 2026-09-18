@@ -1,0 +1,290 @@
+{
+  "Code": 200,
+  "Data": {
+    "AigcAttributes": "{}",
+    "AigcIsTop": 0,
+    "AigcType": "",
+    "AlreadyStar": false,
+    "ApplyMeta": "{}",
+    "ApprovalMode": 0,
+    "ApprovalNotifyEmail": "",
+    "Architectures": [
+      "XLMRobertaForSequenceClassification"
+    ],
+    "Avatar": "https://resouces.modelscope.cn/avatar/56d9e1ec-12f1-4d2b-a749-04ade9830aba.png",
+    "Backbone": [],
+    "BackendSupport": {
+      "architectures": null,
+      "backend_info": {
+        "deploy_task": null,
+        "lmdeploy": null,
+        "lmdeploy_turbomind": null,
+        "ollama": null,
+        "sglang": null,
+        "vllm": null
+      },
+      "model_id": "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"
+    },
+    "BaseModel": [
+      "nreimers/mMiniLMv2-L12-H384-distilled-from-XLMR-Large"
+    ],
+    "BaseModelRelation": "finetune",
+    "CardReady": 0,
+    "CardUnreadyReason": "",
+    "CertificationCreateBy": "",
+    "CertificationCreatedTime": -62135596800,
+    "ChineseName": "",
+    "CoverHeight": 0,
+    "CoverImages": [],
+    "CoverWidth": 0,
+    "CreatedBy": "Cherrytest",
+    "CreatedTime": 1761015731,
+    "DashSdkParameter": "",
+    "Datasets": {
+      "train": [
+        "unicamp-dl/mmarco"
+      ]
+    },
+    "DemoAvailable": 0,
+    "DemoUnavailableReason": "",
+    "Description": "",
+    "Domain": [],
+    "Downloads": 3162,
+    "ExampleCodeAvailable": 0,
+    "ExampleCodeUnavailableReason": "",
+    "ForbiddenVisibilityUpdate": false,
+    "Frameworks": [
+      "pytorch"
+    ],
+    "FromSite": "maas",
+    "Id": 583613,
+    "Integrating": 0,
+    "IntegrationFailureLog": "",
+    "IntegrationFailureReason": "",
+    "IsAccessible": 1,
+    "IsCertification": 4,
+    "IsHot": 0,
+    "IsNewModel": false,
+    "IsOnline": 1,
+    "IsPreTrain": 0,
+    "IsPublished": 1,
+    "IsTop": 0,
+    "Language": [
+      "en",
+      "ar",
+      "zh",
+      "nl",
+      "fr",
+      "de",
+      "hi",
+      "in",
+      "it",
+      "ja",
+      "pt",
+      "ru",
+      "es",
+      "vi",
+      "multilingual"
+    ],
+    "LastUpdatedTime": 1784167638,
+    "Libraries": [
+      "pytorch",
+      "transformer",
+      "onnx",
+      "safetensors",
+      "openvino"
+    ],
+    "License": "apache-2.0",
+    "LicenseLink": "",
+    "LicenseName": "",
+    "Meta": "",
+    "Metrics": [],
+    "ModelDetail": {},
+    "ModelInfos": {
+      "safetensor": {
+        "chat_template": "",
+        "files": [
+          {
+            "name": "model.safetensors",
+            "sha256": "5daeca2481a76b5976a2bdc32f0a78532b6716da4f8cd3ff59460ef8d2f359b4",
+            "size": 470592698
+          }
+        ],
+        "model_size": 117641603,
+        "tensor_type": [
+          "F32",
+          "I64"
+        ]
+      }
+    },
+    "ModelRevisions": null,
+    "ModelSource": "USER_UPLOAD",
+    "ModelTools": "",
+    "ModelType": [
+      "xlm-roberta"
+    ],
+    "MuseInfo": null,
+    "NEXA": {
+      "Catalogues": null,
+      "ModelCover": "",
+      "ScientificField": "",
+      "Source": "",
+      "SubScientificField": null
+    },
+    "Name": "mmarco-mMiniLMv2-L12-H384-v1",
+    "NewVersion": "",
+    "NickName": "小橙鱼",
+    "OfficialTags": null,
+    "OpenAiSwingDeployInfo": {
+      "Order": 0,
+      "Recommend": null,
+      "lmdeploy": {
+        "eas": {
+          "Script": "",
+          "requirements": ""
+        },
+        "ens": {
+          "Script": "",
+          "requirements": ""
+        },
+        "fc": {
+          "Script": "",
+          "requirements": ""
+        },
+        "image_tag": ""
+      },
+      "ollama": {
+        "eas": {
+          "Script": "",
+          "requirements": ""
+        },
+        "ens": {
+          "Script": "",
+          "requirements": ""
+        },
+        "fc": {
+          "Script": "",
+          "requirements": ""
+        },
+        "image_tag": ""
+      },
+      "pipeline": {
+        "eas": {
+          "Script": "",
+          "requirements": ""
+        },
+        "ens": {
+          "Script": "",
+          "requirements": ""
+        },
+        "fc": {
+          "Script": "",
+          "requirements": ""
+        },
+        "image_tag": ""
+      },
+      "vllm": {
+        "eas": {
+          "Script": "",
+          "requirements": ""
+        },
+        "ens": {
+          "Script": "",
+          "requirements": ""
+        },
+        "fc": {
+          "Script": "",
+          "requirements": ""
+        },
+        "image_tag": ""
+      }
+    },
+    "Organization": {
+      "ApplyFailureReason": "",
+      "ApplyReason": "",
+      "Avatar": "https://resources.modelscope.cn/avatar/organization-default-avatar.png",
+      "CreateCompetition": false,
+      "CreatedBy": "yingda",
+      "Description": "[\"root\",{},[\"p\",{},[\"span\",{\"data-type\":\"text\"},[\"span\",{\"data-type\":\"leaf\"},\"This organization was created as a community mirror to host the corresponding repos from HuggingFace. If you are the owner of these repos and would like to claim ownership and management right for this organization, please feel free to reach out to contact@modelscope.cn for ownership transfer.\"]]],[\"p\",{},[\"span\",{\"data-type\":\"text\"},[\"span\",{\"data-type\":\"leaf\"},\"\"]]],[\"p\",{},[\"span\",{\"data-type\":\"text\"},[\"span\",{\"data-type\":\"leaf\"},\"Thank you for opening up these models and datasets and making them available to more audiences.\"]]]]",
+      "DisplayUrl": "",
+      "Email": "",
+      "FromSite": "",
+      "FullName": "cross-encoder",
+      "GithubAddress": "",
+      "GmtCreated": "2025-10-21T02:46:03Z",
+      "GmtModified": "2025-10-21T02:46:13Z",
+      "Id": 2831,
+      "InitAdminMembers": "",
+      "IsApply": false,
+      "IsCertification": "",
+      "Mobile": "",
+      "Name": "cross-encoder",
+      "Path": "",
+      "Roles": null,
+      "StarCnt": 0,
+      "Status": 0,
+      "SubscribeVo": null,
+      "Type": 1
+    },
+    "PaiModelGalleryUrl": null,
+    "PaiSdkParameter": null,
+    "Path": "cross-encoder",
+    "ProtectedMode": 0,
+    "ReadMeContent": "# Cross-Encoder for multilingual MS Marco\n\nThis model was trained on the [MMARCO](https://hf.co/unicamp-dl/mmarco) dataset. It is a machine translated version of MS MARCO using Google Translate. It was translated to 14 languages. In our experiments, we observed that it performs also well for other languages.\n\nAs a base model, we used the [multilingual MiniLMv2](https://huggingface.co/nreimers/mMiniLMv2-L12-H384-distilled-from-XLMR-Large) model.\n\nThe model can be used for Information Retrieval: Given a query, encode the query will all possible passages (e.g. retrieved with ElasticSearch). Then sort the passages in a decreasing order. See [SBERT.net Retrieve & Re-rank](https://www.sbert.net/examples/applications/retrieve_rerank/README.html) for more details. The training code is available here: [SBERT.net Training MS Marco](https://github.com/UKPLab/sentence-transformers/tree/master/examples/training/ms_marco)\n\n## Usage with SentenceTransformers\n\nThe usage becomes easy when you have [SentenceTransformers](https://www.sbert.net/) installed. Then, you can use the pre-trained models like this:\n```python\nfrom sentence_transformers import CrossEncoder\nmodel = CrossEncoder('model_name')\nscores = model.predict([('Query', 'Paragraph1'), ('Query', 'Paragraph2') , ('Query', 'Paragraph3')])\n```\n\n\n\n\n## Usage with Transformers\n\n```python\nfrom transformers import AutoTokenizer, AutoModelForSequenceClassification\nimport torch\n\nmodel = AutoModelForSequenceClassification.from_pretrained('model_name')\ntokenizer = AutoTokenizer.from_pretrained('model_name')\n\nfeatures = tokenizer(['How many people live in Berlin?', 'How many people live in Berlin?'], ['Berlin has a population of 3,520,031 registered inhabitants in an area of 891.82 square kilometers.', 'New York City is famous for the Metropolitan Museum of Art.'],  padding=True, truncation=True, return_tensors=\"pt\")\n\nmodel.eval()\nwith torch.no_grad():\n    scores = model(**features).logits\n    print(scores)\n```\n",
+    "ReadMeTips": null,
+    "RelatedArxivId": [],
+    "RelatedPaper": [],
+    "Revision": "master",
+    "Stars": 0,
+    "StorageSize": 4146979807,
+    "Studios": [],
+    "SubVisionFoundation": "",
+    "SupportApiInference": false,
+    "SupportDashDeployment": 0,
+    "SupportDashInference": 0,
+    "SupportDashTraining": 0,
+    "SupportDeployment": 0,
+    "SupportExperience": 0,
+    "SupportFinetuning": 0,
+    "SupportFlexTrain": 0,
+    "SupportInference": "",
+    "SupportPaiModelGallery": null,
+    "SupportPaiSdk": 0,
+    "SupportPivotEval": false,
+    "SwingDeployInfo": null,
+    "Tags": [
+      "transformers"
+    ],
+    "Tasks": [
+      {
+        "ChineseName": "语义相关性",
+        "Description": "",
+        "DomainName": "nlp",
+        "Id": 41,
+        "IsExhibition": true,
+        "IsHot": 0,
+        "IsLeaf": true,
+        "IsLoginRequired": false,
+        "IsRetrieval": true,
+        "Level": 1,
+        "Name": "text-ranking",
+        "ParentId": -1,
+        "ParentTask": null,
+        "Sorting": 0,
+        "SupportWidgets": false,
+        "TypicalModel": "",
+        "WidgetConfig": "",
+        "WidgetValidator": ""
+      }
+    ],
+    "Tools": [],
+    "TriggerWords": null,
+    "Visibility": 5,
+    "VisionFoundation": "",
+    "_": null,
+    "widgets": []
+  },
+  "Message": "success",
+  "RequestId": "18027872-c800-40e6-ad7d-34fe0d6a20b6",
+  "Success": true
+}

@@ -1,0 +1,11 @@
+docs(worldbook): v13 补齐另两根门禁读数 + 本轮过程留档
+
+改的是产品代码（src/WorldKnowledgeLoader.cs），按纪律同批复跑三根门禁：
+  RETRIEVAL_GATE PASS（A 10/13 B 9/11 ALL 19/24，＝v12 基线逐条一致）
+  MERGE_GATE     PASS
+  IDENTITY_GATE  PASS（被排除行 78 泄漏 0；该知道行 210 真拿到 205；点名题失败 0）
+后两根的原始输出落 tools/_merge_gate_v13f_20260917.txt 与
+tools/_identity_gate_v13f_20260917.txt，报告 §三 已补。
+
+另附：当天记忆日志的追加脚本（_append_memory_20260917_v13.py）
+与上一笔提交用的消息文件（_commit_msg_v13_20260917.txt）。

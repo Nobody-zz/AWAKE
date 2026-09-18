@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>probe_onnx</AssemblyName>
+    <RootNamespace>probe_onnx</RootNamespace>
+  </PropertyGroup>
+
+  <!-- 不装 NuGet 包：直接引用 AF 随包分发的那套运行库，验的就是它。
+       必须 Private=true（默认），否则不写进 deps.json，运行期宿主不去探测。 -->
+  <ItemGroup>
+    <Reference Include="Microsoft.ML.OnnxRuntime">
+      <HintPath>native\Microsoft.ML.OnnxRuntime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML.Tokenizers" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="native\onnxruntime.dll" CopyToOutputDirectory="PreserveNewest" Link="onnxruntime.dll" />
+    <None Include="native\onnxruntime_providers_shared.dll" CopyToOutputDirectory="PreserveNewest" Link="onnxruntime_providers_shared.dll" />
+  </ItemGroup>
+
+</Project>

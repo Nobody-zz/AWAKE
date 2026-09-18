@@ -1,0 +1,284 @@
+{
+  "Code": 200,
+  "Data": {
+    "AigcAttributes": "{}",
+    "AigcIsTop": 0,
+    "AigcType": "",
+    "AlreadyStar": false,
+    "ApplyMeta": "{}",
+    "ApprovalMode": 0,
+    "ApprovalNotifyEmail": "",
+    "Architectures": [
+      "LayerWiseMiniCPMForCausalLM"
+    ],
+    "Avatar": "https://resouces.modelscope.cn/avatar/56d9e1ec-12f1-4d2b-a749-04ade9830aba.png",
+    "Backbone": [],
+    "BackendSupport": {
+      "architectures": null,
+      "backend_info": {
+        "deploy_task": null,
+        "lmdeploy": null,
+        "lmdeploy_turbomind": null,
+        "ollama": null,
+        "sglang": null,
+        "vllm": null
+      },
+      "model_id": "BAAI/bge-reranker-v2-minicpm-layerwise"
+    },
+    "BaseModel": [],
+    "BaseModelRelation": "",
+    "CardReady": 0,
+    "CardUnreadyReason": "",
+    "CertificationCreateBy": "",
+    "CertificationCreatedTime": -62135596800,
+    "ChineseName": "",
+    "CoverHeight": 0,
+    "CoverImages": [],
+    "CoverWidth": 0,
+    "CreatedBy": "Cherrytest",
+    "CreatedTime": 1726196045,
+    "DashSdkParameter": "",
+    "Datasets": {},
+    "DemoAvailable": 0,
+    "DemoUnavailableReason": "",
+    "Description": "",
+    "Domain": [],
+    "Downloads": 47074,
+    "ExampleCodeAvailable": 0,
+    "ExampleCodeUnavailableReason": "",
+    "ForbiddenVisibilityUpdate": false,
+    "Frameworks": [
+      "pytorch"
+    ],
+    "FromSite": "maas",
+    "Id": 329530,
+    "Integrating": 0,
+    "IntegrationFailureLog": "",
+    "IntegrationFailureReason": "",
+    "IsAccessible": 1,
+    "IsCertification": 4,
+    "IsHot": 0,
+    "IsNewModel": false,
+    "IsOnline": 1,
+    "IsPreTrain": 0,
+    "IsPublished": 1,
+    "IsTop": 0,
+    "Language": [
+      "multilingual"
+    ],
+    "LastUpdatedTime": 1732196791,
+    "Libraries": [
+      "pytorch",
+      "transformer",
+      "sentence-transformers",
+      "safetensors"
+    ],
+    "License": "apache-2.0",
+    "LicenseLink": "",
+    "LicenseName": "",
+    "Meta": "",
+    "Metrics": [],
+    "ModelDetail": {},
+    "ModelInfos": {
+      "safetensor": {
+        "chat_template": "{% for message in messages %}{% if message['role'] == 'user' %}{{'<用户>' + message['content'].strip() + '<AI>'}}{% else %}{{message['content'].strip()}}{% endif %}{% endfor %}",
+        "files": [
+          {
+            "name": "model.safetensors.index.json",
+            "sha256": "4516cb8b99e0b84b3b12e669e2595b116f8f377b123a25c36362324156b9a83c",
+            "size": 32235
+          },
+          {
+            "name": "model-00001-of-00003.safetensors",
+            "sha256": "e2bd6342e253cce7debf1efd1b5813011fd79cce0c6528fd8d6d7d2b20f549ee",
+            "size": 4985494472
+          },
+          {
+            "name": "model-00002-of-00003.safetensors",
+            "sha256": "568f1cc88ffbc58516066cf49dcc8aca39a6e6dae1b771a771b58a1bdcfda154",
+            "size": 4979702584
+          },
+          {
+            "name": "model-00003-of-00003.safetensors",
+            "sha256": "4a8921a5c38d777e6cd6ccf5e92015c18ef50d5d31f65d7ba8a3a64280a894a2",
+            "size": 934675392
+          }
+        ],
+        "model_size": 2724956928,
+        "tensor_type": [
+          "F32"
+        ]
+      }
+    },
+    "ModelRevisions": null,
+    "ModelSource": "USER_UPLOAD",
+    "ModelTools": "",
+    "ModelType": [
+      "minicpm"
+    ],
+    "MuseInfo": null,
+    "NEXA": {
+      "Catalogues": null,
+      "ModelCover": "",
+      "ScientificField": "",
+      "Source": "",
+      "SubScientificField": null
+    },
+    "Name": "bge-reranker-v2-minicpm-layerwise",
+    "NewVersion": "",
+    "NickName": "小橙鱼",
+    "OfficialTags": null,
+    "OpenAiSwingDeployInfo": {
+      "Order": 0,
+      "Recommend": null,
+      "lmdeploy": {
+        "eas": {
+          "Script": "",
+          "requirements": ""
+        },
+        "ens": {
+          "Script": "",
+          "requirements": ""
+        },
+        "fc": {
+          "Script": "",
+          "requirements": ""
+        },
+        "image_tag": ""
+      },
+      "ollama": {
+        "eas": {
+          "Script": "",
+          "requirements": ""
+        },
+        "ens": {
+          "Script": "",
+          "requirements": ""
+        },
+        "fc": {
+          "Script": "",
+          "requirements": ""
+        },
+        "image_tag": ""
+      },
+      "pipeline": {
+        "eas": {
+          "Script": "",
+          "requirements": ""
+        },
+        "ens": {
+          "Script": "",
+          "requirements": ""
+        },
+        "fc": {
+          "Script": "",
+          "requirements": ""
+        },
+        "image_tag": ""
+      },
+      "vllm": {
+        "eas": {
+          "Script": "",
+          "requirements": ""
+        },
+        "ens": {
+          "Script": "",
+          "requirements": ""
+        },
+        "fc": {
+          "Script": "",
+          "requirements": ""
+        },
+        "image_tag": ""
+      }
+    },
+    "Organization": {
+      "ApplyFailureReason": "",
+      "ApplyReason": "",
+      "Avatar": "https://resouces.modelscope.cn/avatar/5b2ecfe4-6631-4f8d-8a69-9579f1a98b05.png",
+      "CreateCompetition": false,
+      "CreatedBy": "yanster",
+      "Description": "[\"root\",{},[\"p\",{},[\"span\",{\"data-type\":\"text\"},[\"span\",{\"color\":\"rgb(234, 67, 53)\",\"data-type\":\"leaf\"},\"智源\"],[\"span\",{\"color\":\"rgb(77, 81, 86)\",\"data-type\":\"leaf\"},\"研究院是人工智能领域的新型研发机构，汇集国际顶尖人工智能学者，聚焦核心技术与原始创新，旨在推动人工智能领域发展政\"],[\"span\",{\"color\":\"rgb(55, 65, 81)\",\"highlight\":\"rgb(247, 247, 248)\",\"data-type\":\"leaf\"},\"策与产业创新。\"]]]]",
+      "DisplayUrl": "",
+      "Email": "",
+      "FromSite": "",
+      "FullName": "北京智源人工智能研究院",
+      "GithubAddress": "https://www.baai.ac.cn/",
+      "GmtCreated": "2023-10-31T04:08:58Z",
+      "GmtModified": "2025-11-21T08:30:42Z",
+      "Id": 400,
+      "InitAdminMembers": "",
+      "IsApply": false,
+      "IsCertification": "",
+      "Mobile": "",
+      "Name": "BAAI",
+      "Path": "",
+      "Roles": null,
+      "StarCnt": 0,
+      "Status": 0,
+      "SubscribeVo": null,
+      "Type": 1
+    },
+    "PaiModelGalleryUrl": null,
+    "PaiSdkParameter": null,
+    "Path": "BAAI",
+    "ProtectedMode": 0,
+    "ReadMeContent": "\n# Reranker\n\n**More details please refer to our Github: [FlagEmbedding](https://github.com/FlagOpen/FlagEmbedding/tree/master).**\n\n- [Model List](#model-list)\n- [Usage](#usage)\n- [Fine-tuning](#fine-tune)\n- [Evaluation](#evaluation)\n- [Citation](#citation)\n\nDifferent from embedding model, reranker uses question and document as input and directly output similarity instead of embedding. \nYou can get a relevance score by inputting query and passage to the reranker. \nAnd the score can be mapped to a float value in [0,1] by sigmoid function.\n\n\n## Model List\n\n| Model                                                                     | Base model                                                           | Language | layerwise |                           feature                            |\n|:--------------------------------------------------------------------------|:--------:|:-----------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|\n| [BAAI/bge-reranker-base](https://huggingface.co/BAAI/bge-reranker-base) | [xlm-roberta-base](https://huggingface.co/xlm-roberta-base) | Chinese and English |     -     | Lightweight reranker model, easy to deploy, with fast inference. |\n| [BAAI/bge-reranker-large](https://huggingface.co/BAAI/bge-reranker-large) | [xlm-roberta-large](https://huggingface.co/FacebookAI/xlm-roberta-large) | Chinese and English |     -     | Lightweight reranker model, easy to deploy, with fast inference. |\n| [BAAI/bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3) | [bge-m3](https://huggingface.co/BAAI/bge-m3) |    Multilingual     |     -     | Lightweight reranker model, possesses strong multilingual capabilities, easy to deploy, with fast inference. |\n| [BAAI/bge-reranker-v2-gemma](https://huggingface.co/BAAI/bge-reranker-v2-gemma) |      [gemma-2b](https://huggingface.co/google/gemma-2b)      |    Multilingual     |     -     | Suitable for multilingual contexts, performs well in both English proficiency and multilingual capabilities. |\n| [BAAI/bge-reranker-v2-minicpm-layerwise](https://huggingface.co/BAAI/bge-reranker-v2-minicpm-layerwise) | [MiniCPM-2B-dpo-bf16](https://huggingface.co/openbmb/MiniCPM-2B-dpo-bf16) |    Multilingual     |   8-40    | Suitable for multilingual contexts, performs well in both English and Chinese proficiency, allows freedom to select layers for output, facilitating accelerated inference. |\n\n\nYou can select the model according your senario and resource. \n- For **multilingual**, utilize [BAAI/bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3) and [BAAI/bge-reranker-v2-gemma](https://huggingface.co/BAAI/bge-reranker-v2-gemma)\n\n- For **Chinese or English**, utilize [BAAI/bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3) and [BAAI/bge-reranker-v2-minicpm-layerwise](https://huggingface.co/BAAI/bge-reranker-v2-minicpm-layerwise). \n\n- For **efficiency**, utilize [BAAI/bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3) and the low layer of [BAAI/bge-reranker-v2-minicpm-layerwise](https://huggingface.co/BAAI/bge-reranker-v2-minicpm-layerwise). \n\n- For better performance, recommand [BAAI/bge-reranker-v2-minicpm-layerwise](https://huggingface.co/BAAI/bge-reranker-v2-minicpm-layerwise) and [BAAI/bge-reranker-v2-gemma](https://huggingface.co/BAAI/bge-reranker-v2-gemma)\n\n## Usage \n### Using FlagEmbedding\n\n```\npip install -U FlagEmbedding\n```\n\n#### For normal reranker (bge-reranker-base / bge-reranker-large / bge-reranker-v2-m3 )\n\nGet relevance scores (higher scores indicate more relevance):\n\n```python\nfrom FlagEmbedding import FlagReranker\nreranker = FlagReranker('BAAI/bge-reranker-v2-m3', use_fp16=True) # Setting use_fp16 to True speeds up computation with a slight performance degradation\n\nscore = reranker.compute_score(['query', 'passage'])\nprint(score) # -5.65234375\n\n# You can map the scores into 0-1 by set \"normalize=True\", which will apply sigmoid function to the score\nscore = reranker.compute_score(['query', 'passage'], normalize=True)\nprint(score) # 0.003497010252573502\n\nscores = reranker.compute_score([['what is panda?', 'hi'], ['what is panda?', 'The giant panda (Ailuropoda melanoleuca), sometimes called a panda bear or simply panda, is a bear species endemic to China.']])\nprint(scores) # [-8.1875, 5.26171875]\n\n# You can map the scores into 0-1 by set \"normalize=True\", which will apply sigmoid function to the score\nscores = reranker.compute_score([['what is panda?', 'hi'], ['what is panda?', 'The giant panda (Ailuropoda melanoleuca), sometimes called a panda bear or simply panda, is a bear species endemic to China.']], normalize=True)\nprint(scores) # [0.00027803096387751553, 0.9948403768236574]\n```\n\n#### For LLM-based reranker\n\n```python\nfrom FlagEmbedding import FlagLLMReranker\nreranker = FlagLLMReranker('BAAI/bge-reranker-v2-gemma', use_fp16=True) # Setting use_fp16 to True speeds up computation with a slight performance degradation\n# reranker = FlagLLMReranker('BAAI/bge-reranker-v2-gemma', use_bf16=True) # You can also set use_bf16=True to speed up computation with a slight performance degradation\n\nscore = reranker.compute_score(['query', 'passage'])\nprint(score)\n\nscores = reranker.compute_score([['what is panda?', 'hi'], ['what is panda?', 'The giant panda (Ailuropoda melanoleuca), sometimes called a panda bear or simply panda, is a bear species endemic to China.']])\nprint(scores)\n```\n\n#### For LLM-based layerwise reranker\n\n```python\nfrom FlagEmbedding import LayerWiseFlagLLMReranker\nreranker = LayerWiseFlagLLMReranker('BAAI/bge-reranker-v2-minicpm-layerwise', use_fp16=True) # Setting use_fp16 to True speeds up computation with a slight performance degradation\n# reranker = LayerWiseFlagLLMReranker('BAAI/bge-reranker-v2-minicpm-layerwise', use_bf16=True) # You can also set use_bf16=True to speed up computation with a slight performance degradation\n\nscore = reranker.compute_score(['query', 'passage'], cutoff_layers=[28]) # Adjusting 'cutoff_layers' to pick which layers are used for computing the score.\nprint(score)\n\nscores = reranker.compute_score([['what is panda?', 'hi'], ['what is panda?', 'The giant panda (Ailuropoda melanoleuca), sometimes called a panda bear or simply panda, is a bear species endemic to China.']], cutoff_layers=[28])\nprint(scores)\n```\n\n### Using Huggingface transformers\n\n#### For normal reranker (bge-reranker-base / bge-reranker-large / bge-reranker-v2-m3 )\n\nGet relevance scores (higher scores indicate more relevance):\n\n```python\nimport torch\nfrom transformers import AutoModelForSequenceClassification, AutoTokenizer\n\ntokenizer = AutoTokenizer.from_pretrained('BAAI/bge-reranker-v2-m3')\nmodel = AutoModelForSequenceClassification.from_pretrained('BAAI/bge-reranker-v2-m3')\nmodel.eval()\n\npairs = [['what is panda?', 'hi'], ['what is panda?', 'The giant panda (Ailuropoda melanoleuca), sometimes called a panda bear or simply panda, is a bear species endemic to China.']]\nwith torch.no_grad():\n    inputs = tokenizer(pairs, padding=True, truncation=True, return_tensors='pt', max_length=512)\n    scores = model(**inputs, return_dict=True).logits.view(-1, ).float()\n    print(scores)\n```\n\n#### For LLM-based reranker\n\n```python\nimport torch\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\ndef get_inputs(pairs, tokenizer, prompt=None, max_length=1024):\n    if prompt is None:\n        prompt = \"Given a query A and a passage B, determine whether the passage contains an answer to the query by providing a prediction of either 'Yes' or 'No'.\"\n    sep = \"\\n\"\n    prompt_inputs = tokenizer(prompt,\n                              return_tensors=None,\n                              add_special_tokens=False)['input_ids']\n    sep_inputs = tokenizer(sep,\n                           return_tensors=None,\n                           add_special_tokens=False)['input_ids']\n    inputs = []\n    for query, passage in pairs:\n        query_inputs = tokenizer(f'A: {query}',\n                                 return_tensors=None,\n                                 add_special_tokens=False,\n                                 max_length=max_length * 3 // 4,\n                                 truncation=True)\n        passage_inputs = tokenizer(f'B: {passage}',\n                                   return_tensors=None,\n                                   add_special_tokens=False,\n                                   max_length=max_length,\n                                   truncation=True)\n        item = tokenizer.prepare_for_model(\n            [tokenizer.bos_token_id] + query_inputs['input_ids'],\n            sep_inputs + passage_inputs['input_ids'],\n            truncation='only_second',\n            max_length=max_length,\n            padding=False,\n            return_attention_mask=False,\n            return_token_type_ids=False,\n            add_special_tokens=False\n        )\n        item['input_ids'] = item['input_ids'] + sep_inputs + prompt_inputs\n        item['attention_mask'] = [1] * len(item['input_ids'])\n        inputs.append(item)\n    return tokenizer.pad(\n            inputs,\n            padding=True,\n            max_length=max_length + len(sep_inputs) + len(prompt_inputs),\n            pad_to_multiple_of=8,\n            return_tensors='pt',\n    )\n\ntokenizer = AutoTokenizer.from_pretrained('BAAI/bge-reranker-v2-gemma')\nmodel = AutoModelForCausalLM.from_pretrained('BAAI/bge-reranker-v2-gemma')\nyes_loc = tokenizer('Yes', add_special_tokens=False)['input_ids'][0]\nmodel.eval()\n\npairs = [['what is panda?', 'hi'], ['what is panda?', 'The giant panda (Ailuropoda melanoleuca), sometimes called a panda bear or simply panda, is a bear species endemic to China.']]\nwith torch.no_grad():\n    inputs = get_inputs(pairs, tokenizer)\n    scores = model(**inputs, return_dict=True).logits[:, -1, yes_loc].view(-1, ).float()\n    print(scores)\n```\n\n#### For LLM-based layerwise reranker\n\n```python\nimport torch\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\ndef get_inputs(pairs, tokenizer, prompt=None, max_length=1024):\n    if prompt is None:\n        prompt = \"Given a query A and a passage B, determine whether the passage contains an answer to the query by providing a prediction of either 'Yes' or 'No'.\"\n    sep = \"\\n\"\n    prompt_inputs = tokenizer(prompt,\n                              return_tensors=None,\n                              add_special_tokens=False)['input_ids']\n    sep_inputs = tokenizer(sep,\n                           return_tensors=None,\n                           add_special_tokens=False)['input_ids']\n    inputs = []\n    for query, passage in pairs:\n        query_inputs = tokenizer(f'A: {query}',\n                                 return_tensors=None,\n                                 add_special_tokens=False,\n                                 max_length=max_length * 3 // 4,\n                                 truncation=True)\n        passage_inputs = tokenizer(f'B: {passage}',\n                                   return_tensors=None,\n                                   add_special_tokens=False,\n                                   max_length=max_length,\n                                   truncation=True)\n        item = tokenizer.prepare_for_model(\n            [tokenizer.bos_token_id] + query_inputs['input_ids'],\n            sep_inputs + passage_inputs['input_ids'],\n            truncation='only_second',\n            max_length=max_length,\n            padding=False,\n            return_attention_mask=False,\n            return_token_type_ids=False,\n            add_special_tokens=False\n        )\n        item['input_ids'] = item['input_ids'] + sep_inputs + prompt_inputs\n        item['attention_mask'] = [1] * len(item['input_ids'])\n        inputs.append(item)\n    return tokenizer.pad(\n            inputs,\n            padding=True,\n            max_length=max_length + len(sep_inputs) + len(prompt_inputs),\n            pad_to_multiple_of=8,\n            return_tensors='pt',\n    )\n\ntokenizer = AutoTokenizer.from_pretrained('BAAI/bge-reranker-v2-minicpm-layerwise', trust_remote_code=True)\nmodel = AutoModelForCausalLM.from_pretrained('BAAI/bge-reranker-v2-minicpm-layerwise', trust_remote_code=True, torch_dtype=torch.bfloat16)\nmodel = model.to('cuda')\nmodel.eval()\n\npairs = [['what is panda?', 'hi'], ['what is panda?', 'The giant panda (Ailuropoda melanoleuca), sometimes called a panda bear or simply panda, is a bear species endemic to China.']]\nwith torch.no_grad():\n    inputs = get_inputs(pairs, tokenizer).to(model.device)\n    all_scores = model(**inputs, return_dict=True, cutoff_layers=[28])\n    all_scores = [scores[:, -1].view(-1, ).float() for scores in all_scores[0]]\n    print(all_scores)\n```\n\n## Fine-tune\n\n### Data Format\n\nTrain data should be a json file, where each line is a dict like this:\n\n```\n{\"query\": str, \"pos\": List[str], \"neg\":List[str], \"prompt\": str}\n```\n\n`query` is the query, and `pos` is a list of positive texts, `neg` is a list of negative texts, `prompt` indicates the relationship between query and texts. If you have no negative texts for a query, you can random sample some from the entire corpus as the negatives.\n\nSee [toy_finetune_data.jsonl](https://github.com/FlagOpen/FlagEmbedding/tree/master/FlagEmbedding/llm_reranker/toy_finetune_data.jsonl) for a toy data file.\n\n### Train\n\nYou can fine-tune the reranker with the following code:\n\n**For llm-based reranker**\n\n```shell\ntorchrun --nproc_per_node {number of gpus} \\\n-m FlagEmbedding.llm_reranker.finetune_for_instruction.run \\\n--output_dir {path to save model} \\\n--model_name_or_path google/gemma-2b \\\n--train_data ./toy_finetune_data.jsonl \\\n--learning_rate 2e-4 \\\n--num_train_epochs 1 \\\n--per_device_train_batch_size 1 \\\n--gradient_accumulation_steps 16 \\\n--dataloader_drop_last True \\\n--query_max_len 512 \\\n--passage_max_len 512 \\\n--train_group_size 16 \\\n--logging_steps 1 \\\n--save_steps 2000 \\\n--save_total_limit 50 \\\n--ddp_find_unused_parameters False \\\n--gradient_checkpointing \\\n--deepspeed stage1.json \\\n--warmup_ratio 0.1 \\\n--bf16 \\\n--use_lora True \\\n--lora_rank 32 \\\n--lora_alpha 64 \\\n--use_flash_attn True \\\n--target_modules q_proj k_proj v_proj o_proj\n```\n\n**For llm-based layerwise reranker**\n\n```shell\ntorchrun --nproc_per_node {number of gpus} \\\n-m FlagEmbedding.llm_reranker.finetune_for_layerwise.run \\\n--output_dir {path to save model} \\\n--model_name_or_path openbmb/MiniCPM-2B-dpo-bf16 \\\n--train_data ./toy_finetune_data.jsonl \\\n--learning_rate 2e-4 \\\n--num_train_epochs 1 \\\n--per_device_train_batch_size 1 \\\n--gradient_accumulation_steps 16 \\\n--dataloader_drop_last True \\\n--query_max_len 512 \\\n--passage_max_len 512 \\\n--train_group_size 16 \\\n--logging_steps 1 \\\n--save_steps 2000 \\\n--save_total_limit 50 \\\n--ddp_find_unused_parameters False \\\n--gradient_checkpointing \\\n--deepspeed stage1.json \\\n--warmup_ratio 0.1 \\\n--bf16 \\\n--use_lora True \\\n--lora_rank 32 \\\n--lora_alpha 64 \\\n--use_flash_attn True \\\n--target_modules q_proj k_proj v_proj o_proj \\\n--start_layer 8 \\\n--head_multi True \\\n--head_type simple \\\n--lora_extra_parameters linear_head\n```\n\nOur rerankers are initialized from [google/gemma-2b](https://huggingface.co/google/gemma-2b) (for llm-based reranker) and [openbmb/MiniCPM-2B-dpo-bf16](https://huggingface.co/openbmb/MiniCPM-2B-dpo-bf16) (for llm-based layerwise reranker), and we train it on a mixture of multilingual datasets:\n\n- [bge-m3-data](https://huggingface.co/datasets/Shitao/bge-m3-data)\n- [quora train data](https://huggingface.co/datasets/quora)\n- [fever train data](https://fever.ai/dataset/fever.html)\n\n## Evaluation\n\n- llama-index.\n\n![image-20240317193909373](./assets/llama-index.png)\n\n\n- BEIR.   \n\nrereank the top 100 results from bge-en-v1.5 large.\n\n![image-20240317174633333](./assets/BEIR-bge-en-v1.5.png)\n\nrereank the top 100 results from e5 mistral 7b instruct.\n\n![image-20240317172949713](./assets/BEIR-e5-mistral.png)\n\n- CMTEB-retrieval.   \nIt rereank the top 100 results from bge-zh-v1.5 large.\n\n![image-20240317173026235](./assets/CMTEB-retrieval-bge-zh-v1.5.png)\n\n- miracl (multi-language).   \nIt rereank the top 100 results from bge-m3.\n\n![image-20240317173117639](./assets/miracl-bge-m3.png)\n\n\n\n## Citation\n\nIf you find this repository useful, please consider giving a star and citation\n\n```bibtex\n@misc{li2023making,\n      title={Making Large Language Models A Better Foundation For Dense Retrieval}, \n      author={Chaofan Li and Zheng Liu and Shitao Xiao and Yingxia Shao},\n      year={2023},\n      eprint={2312.15503},\n      archivePrefix={arXiv},\n      primaryClass={cs.CL}\n}\n@misc{chen2024bge,\n      title={BGE M3-Embedding: Multi-Lingual, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation}, \n      author={Jianlv Chen and Shitao Xiao and Peitian Zhang and Kun Luo and Defu Lian and Zheng Liu},\n      year={2024},\n      eprint={2402.03216},\n      archivePrefix={arXiv},\n      primaryClass={cs.CL}\n}\n```\n",
+    "ReadMeTips": null,
+    "RelatedArxivId": [],
+    "RelatedPaper": [],
+    "Revision": "master",
+    "Stars": 9,
+    "StorageSize": 10908513144,
+    "Studios": [],
+    "SubVisionFoundation": "",
+    "SupportApiInference": false,
+    "SupportDashDeployment": 0,
+    "SupportDashInference": 0,
+    "SupportDashTraining": 0,
+    "SupportDeployment": 0,
+    "SupportExperience": 0,
+    "SupportFinetuning": 0,
+    "SupportFlexTrain": 0,
+    "SupportInference": "",
+    "SupportPaiModelGallery": null,
+    "SupportPaiSdk": 0,
+    "SupportPivotEval": false,
+    "SwingDeployInfo": null,
+    "Tags": [
+      "transformers",
+      "sentence-transformers"
+    ],
+    "Tasks": [
+      {
+        "ChineseName": "文本分类",
+        "Description": "",
+        "DomainName": "nlp",
+        "Id": 147,
+        "IsExhibition": true,
+        "IsHot": 0,
+        "IsLeaf": true,
+        "IsLoginRequired": false,
+        "IsRetrieval": true,
+        "Level": 1,
+        "Name": "text-classification",
+        "ParentId": -1,
+        "ParentTask": null,
+        "Sorting": 0,
+        "SupportWidgets": false,
+        "TypicalModel": "",
+        "WidgetConfig": "{}",
+        "WidgetValidator": ""
+      }
+    ],
+    "Tools": [],
+    "TriggerWords": null,
+    "Visibility": 5,
+    "VisionFoundation": "",
+    "_": null,
+    "widgets": []
+  },
+  "Message": "success",
+  "RequestId": "e2b6c4dc-4486-44a4-9278-9b81b5a07cec",
+  "Success": true
+}

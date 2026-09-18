@@ -1,0 +1,20 @@
+工具与验台脚本入库：探针 / 验台 / 美术板 / 分桶档
+
+内容（AWAKE/tools/，共 238 项，全部落在 tools/ 内）：
+- awake-art-lab/ 97 项 —— 美术板与形状/色调探针脚本（其 out/ 由目录内 .gitignore 排除）
+- 直属脚本 71 项 —— 检索/门禁/词条相关探针与校验（_probe_*、_semantic_floor、
+  _corpus_*、_entry_fit_*、_validate_report_v13、_redtest_semantic 等），
+  以及两个正式脚本 deploy_worldbook_to_game.ps1、assemble_worldbook_package.ps1
+- _reranker_survey/ 33 项 —— 重排器候选调研报告（md/json）；
+  其 dl/ 下 9 个 onnx 模型（合计 2.2 GB）为下载物，不入库
+- awake-ui-lab/ 12 项 —— UI 实验室探针脚本
+- persona-runtime-sim/ 5 项 —— 角色对话离线模拟工程（C#）
+- _probe_*/ 探针小工程 —— 各含 Program.cs + csproj；
+  其 native/*.dll（onnxruntime 原生运行库）不入库
+- _af_tokenizer_20260916/ 4 项、worldbook-runtime-sim/ 1 项
+- 本批分桶脚本与留痕：_bucket_untracked_20260918.py + 5 份 _bucket_*.txt
+  （含 _bucket_excluded.txt —— 370 项未纳入件的清单）
+
+纪律：本期 `_` 前缀过程脚本一并留档；按分桶清单逐条 add，未使用目录通配。
+
+边界核验：暂存 238 项，全部位于 AWAKE/tools/ 之下；无 .onnx / .dll 混入。

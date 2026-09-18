@@ -1,0 +1,858 @@
+{
+ "stats": {
+  "A_lexical_hit1": "9/13",
+  "A_lexical_hit3": "10/13",
+  "A_cheap_hit1": "8/13",
+  "A_cheap_hit3": "11/13",
+  "A_semantic_hit1": "11/13",
+  "A_semantic_hit3": "12/13",
+  "B_lexical_hit1": "0/13",
+  "B_lexical_hit3": "0/13",
+  "B_cheap_hit1": "5/13",
+  "B_cheap_hit3": "7/13",
+  "B_semantic_hit1": "7/13",
+  "B_semantic_hit3": "8/13",
+  "ALL_lexical_hit1": "9/26",
+  "ALL_lexical_hit3": "10/26",
+  "ALL_cheap_hit1": "13/26",
+  "ALL_cheap_hit3": "18/26",
+  "ALL_semantic_hit1": "18/26",
+  "ALL_semantic_hit3": "20/26"
+ },
+ "rows": [
+  {
+   "group": "A",
+   "query": "拉迈萨那地方养什么？",
+   "target": "awake:entry:geography.villages-lamesa",
+   "lexical_top3": [
+    "awake:entry:geography.villages-lamesa",
+    "awake:entry:geography.castles-shibal-zumr-castle"
+   ],
+   "lexical_hit1": true,
+   "lexical_hit3": true,
+   "cheap_top3": [
+    "awake:entry:geography.castles-shibal-zumr-castle",
+    "awake:entry:geography.villages-lamesa",
+    "awake:entry:geography.castles-veron-castle"
+   ],
+   "cheap_hit1": false,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:geography.villages-lamesa",
+     "sim": 0.6937
+    },
+    {
+     "id": "awake:entry:geography.villages-samatha",
+     "sim": 0.5194
+    },
+    {
+     "id": "awake:entry:geography.villages-ransam",
+     "sim": 0.5081
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "A",
+   "query": "西米拉堡是谁的城堡？",
+   "target": "awake:entry:geography.castles-simira-castle",
+   "lexical_top3": [
+    "awake:entry:geography.castles-simira-castle",
+    "awake:entry:geography.villages-simira",
+    "awake:entry:geography.castles-ab-comer-castle"
+   ],
+   "lexical_hit1": true,
+   "lexical_hit3": true,
+   "cheap_top3": [
+    "awake:entry:geography.castles-simira-castle",
+    "awake:entry:geography.villages-simira",
+    "awake:entry:geography.castles-urikskala-castle"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:geography.castles-simira-castle",
+     "sim": 0.7584
+    },
+    {
+     "id": "awake:entry:geography.villages-simira",
+     "sim": 0.6334
+    },
+    {
+     "id": "awake:entry:geography.castles-kranirog-castle",
+     "sim": 0.5659
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "A",
+   "query": "乔诺巴斯在哪儿？",
+   "target": "awake:entry:geography.villages-chornobas",
+   "lexical_top3": [
+    "awake:entry:geography.villages-chornobas"
+   ],
+   "lexical_hit1": true,
+   "lexical_hit3": true,
+   "cheap_top3": [
+    "awake:entry:geography.villages-chornobas",
+    "awake:entry:geography.villages-pabastan",
+    "awake:entry:geography.villages-rodobas"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:geography.villages-chornobas",
+     "sim": 0.6336
+    },
+    {
+     "id": "awake:entry:geography.villages-seordas",
+     "sim": 0.5068
+    },
+    {
+     "id": "awake:entry:geography.villages-ebereth",
+     "sim": 0.4987
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "A",
+   "query": "富勒格是谁？",
+   "target": "awake:entry:culture.tales-husn-fulq",
+   "lexical_top3": [
+    "awake:entry:culture.tales-husn-fulq"
+   ],
+   "lexical_hit1": true,
+   "lexical_hit3": true,
+   "cheap_top3": [
+    "awake:entry:culture.tales-husn-fulq",
+    "awake:entry:geography.towns-husn-fulq"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:geography.towns-husn-fulq",
+     "sim": 0.6086
+    },
+    {
+     "id": "awake:entry:culture.tales-husn-fulq",
+     "sim": 0.5736
+    },
+    {
+     "id": "awake:entry:geography.villages-tismil",
+     "sim": 0.4797
+    }
+   ],
+   "semantic_hit1": false,
+   "semantic_hit3": true
+  },
+  {
+   "group": "A",
+   "query": "卡恰尔半岛归谁？",
+   "target": "awake:entry:culture.tales-kachar-rulership",
+   "lexical_top3": [
+    "awake:entry:culture.tales-kachar-rulership",
+    "awake:entry:geography.peninsulas-kachar",
+    "awake:entry:geography.towns-varcheg"
+   ],
+   "lexical_hit1": true,
+   "lexical_hit3": true,
+   "cheap_top3": [
+    "awake:entry:culture.tales-kachar-rulership",
+    "awake:entry:geography.castles-ustokol-castle",
+    "awake:entry:geography.peninsulas-kachar"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:culture.tales-kachar-rulership",
+     "sim": 0.7874
+    },
+    {
+     "id": "awake:entry:politics.territories-kachar-ownership",
+     "sim": 0.6868
+    },
+    {
+     "id": "awake:entry:geography.peninsulas-kachar",
+     "sim": 0.6163
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "A",
+   "query": "萨涅俄帕是什么地方？",
+   "target": "awake:entry:politics.throne-saneopa",
+   "lexical_top3": [
+    "awake:entry:geography.towns-saneopa",
+    "awake:entry:politics.throne-saneopa"
+   ],
+   "lexical_hit1": false,
+   "lexical_hit3": true,
+   "cheap_top3": [
+    "awake:entry:geography.towns-saneopa",
+    "awake:entry:politics.throne-saneopa",
+    "awake:entry:geography.villages-neocorys"
+   ],
+   "cheap_hit1": false,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:geography.towns-saneopa",
+     "sim": 0.7002
+    },
+    {
+     "id": "awake:entry:geography.villages-odrysa",
+     "sim": 0.6114
+    },
+    {
+     "id": "awake:entry:geography.villages-dyopalis",
+     "sim": 0.5939
+    }
+   ],
+   "semantic_hit1": false,
+   "semantic_hit3": false
+  },
+  {
+   "group": "A",
+   "query": "斯特吉亚的军队怎么打仗？",
+   "target": "awake:entry:war.military-sturgia",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:war.military-sturgia",
+    "awake:entry:geography.villages-aster",
+    "awake:entry:geography.villages-etirfurd"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:war.military-sturgia",
+     "sim": 0.6335
+    },
+    {
+     "id": "awake:entry:geography.towns-epicrotea",
+     "sim": 0.5376
+    },
+    {
+     "id": "awake:entry:war.military-khuzait",
+     "sim": 0.5052
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "A",
+   "query": "库赛特靠什么打仗？",
+   "target": "awake:entry:war.military-khuzait",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:geography.villages-aster",
+    "awake:entry:economy.items-steppe_war_bow",
+    "awake:entry:geography.castles-akiser-castle"
+   ],
+   "cheap_hit1": false,
+   "cheap_hit3": false,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:war.military-khuzait",
+     "sim": 0.6263
+    },
+    {
+     "id": "awake:entry:geography.castles-usek-castle",
+     "sim": 0.5429
+    },
+    {
+     "id": "awake:entry:economy.items-steppe_war_bow",
+     "sim": 0.5387
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "A",
+   "query": "皇家侍卫是什么兵？",
+   "target": "awake:entry:war.troops-royal-guard",
+   "lexical_top3": [
+    "awake:entry:war.troops-royal-guard"
+   ],
+   "lexical_hit1": true,
+   "lexical_hit3": true,
+   "cheap_top3": [
+    "awake:entry:war.troops-royal-guard"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:war.troops-royal-guard",
+     "sim": 0.679
+    },
+    {
+     "id": "awake:entry:war.military-sturgia",
+     "sim": 0.4627
+    },
+    {
+     "id": "awake:entry:war.military-vlandia",
+     "sim": 0.4514
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "A",
+   "query": "毛皮值钱吗？",
+   "target": "awake:entry:economy.goods-fur",
+   "lexical_top3": [
+    "awake:entry:economy.goods-fur",
+    "awake:entry:economy.goods-deriat"
+   ],
+   "lexical_hit1": true,
+   "lexical_hit3": true,
+   "cheap_top3": [
+    "awake:entry:economy.goods-deriat",
+    "awake:entry:economy.goods-fur",
+    "awake:entry:geography.towns-omor"
+   ],
+   "cheap_hit1": false,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:economy.goods-fur",
+     "sim": 0.5988
+    },
+    {
+     "id": "awake:entry:economy.goods-deriat",
+     "sim": 0.4837
+    },
+    {
+     "id": "awake:entry:economy.goods-velvet",
+     "sim": 0.4798
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "A",
+   "query": "盐是从哪儿来的？",
+   "target": "awake:entry:economy.goods-salt",
+   "lexical_top3": [
+    "awake:entry:economy.goods-salt"
+   ],
+   "lexical_hit1": true,
+   "lexical_hit3": true,
+   "cheap_top3": [
+    "awake:entry:economy.goods-salt",
+    "awake:entry:economy.goods-spice",
+    "awake:entry:geography.castles-caleus-castle"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:economy.goods-salt",
+     "sim": 0.5901
+    },
+    {
+     "id": "awake:entry:geography.villages-alision",
+     "sim": 0.5165
+    },
+    {
+     "id": "awake:entry:geography.villages-danara",
+     "sim": 0.4989
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "A",
+   "query": "侧护覆板盔谁在用？",
+   "target": "awake:entry:economy.items-western_plated_helmet",
+   "lexical_top3": [
+    "awake:entry:economy.items-western_plated_helmet"
+   ],
+   "lexical_hit1": true,
+   "lexical_hit3": true,
+   "cheap_top3": [
+    "awake:entry:economy.items-western_plated_helmet"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:economy.items-western_plated_helmet",
+     "sim": 0.7194
+    },
+    {
+     "id": "awake:entry:economy.items-sturgian_helmet_closed",
+     "sim": 0.5238
+    },
+    {
+     "id": "awake:entry:economy.items-scale_shoulder_armor",
+     "sim": 0.4811
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "A",
+   "query": "瓦尔切格怎么会换主人？",
+   "target": "awake:entry:politics.territories-varcheg-swap",
+   "lexical_top3": [
+    "awake:entry:geography.towns-varcheg",
+    "awake:entry:culture.tales-kachar-rulership",
+    "awake:entry:geography.peninsulas-kachar"
+   ],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:war.troops-mamluk",
+    "awake:entry:culture.tales-kachar-rulership",
+    "awake:entry:geography.castles-caleus-castle"
+   ],
+   "cheap_hit1": false,
+   "cheap_hit3": false,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:politics.territories-varcheg-swap",
+     "sim": 0.524
+    },
+    {
+     "id": "awake:entry:geography.towns-varcheg",
+     "sim": 0.4919
+    },
+    {
+     "id": "awake:entry:geography.villages-kargrev",
+     "sim": 0.4243
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "B",
+   "query": "这一带有好马吗？",
+   "target": "awake:entry:geography.villages-lamesa",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:geography.villages-diantogmail",
+    "awake:entry:geography.castles-hongard-castle",
+    "awake:entry:geography.villages-akiser"
+   ],
+   "cheap_hit1": false,
+   "cheap_hit3": false,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:economy.items-saddle_horse",
+     "sim": 0.5618
+    },
+    {
+     "id": "awake:entry:geography.villages-marin",
+     "sim": 0.4488
+    },
+    {
+     "id": "awake:entry:geography.villages-mareiven",
+     "sim": 0.4444
+    }
+   ],
+   "semantic_hit1": false,
+   "semantic_hit3": false
+  },
+  {
+   "group": "B",
+   "query": "哪座城堡底下管着两个村子？",
+   "target": "awake:entry:geography.castles-simira-castle",
+   "lexical_top3": [
+    "awake:entry:geography.castles-ab-comer-castle",
+    "awake:entry:geography.castles-ain-baliq-castle",
+    "awake:entry:geography.castles-akiser-castle"
+   ],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:geography.villages-diantogmail",
+    "awake:entry:geography.villages-ataconia",
+    "awake:entry:geography.villages-hanekhy"
+   ],
+   "cheap_hit1": false,
+   "cheap_hit3": false,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:geography.castles-odrysa-castle",
+     "sim": 0.5093
+    },
+    {
+     "id": "awake:entry:geography.towns-husn-fulq",
+     "sim": 0.5059
+    },
+    {
+     "id": "awake:entry:geography.castles-uqba-castle",
+     "sim": 0.5039
+    }
+   ],
+   "semantic_hit1": false,
+   "semantic_hit3": false
+  },
+  {
+   "group": "B",
+   "query": "有大瀑布的村子是哪个？",
+   "target": "awake:entry:geography.villages-chornobas",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:economy.items-mule",
+    "awake:entry:geography.villages-takor",
+    "awake:entry:geography.castles-mecalovea-castle"
+   ],
+   "cheap_hit1": false,
+   "cheap_hit3": false,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:geography.villages-chornobas",
+     "sim": 0.6033
+    },
+    {
+     "id": "awake:entry:geography.villages-mecalovea",
+     "sim": 0.5844
+    },
+    {
+     "id": "awake:entry:geography.villages-swenryn",
+     "sim": 0.5488
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "B",
+   "query": "集市上说书人讲的那个鬼点子是谁的？",
+   "target": "awake:entry:culture.tales-husn-fulq",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:culture.tales-husn-fulq",
+    "awake:entry:economy.items-cow",
+    "awake:entry:economy.items-mule"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:culture.tales-husn-fulq",
+     "sim": 0.6205
+    },
+    {
+     "id": "awake:entry:geography.towns-jaculan",
+     "sim": 0.4087
+    },
+    {
+     "id": "awake:entry:culture.tales-lycaron-vultures",
+     "sim": 0.3973
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "B",
+   "query": "有个半岛被三家抢过，谁说了算？",
+   "target": "awake:entry:culture.tales-kachar-rulership",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:geography.castles-epinosa-castle",
+    "awake:entry:geography.castles-oristocorys-castle",
+    "awake:entry:geography.villages-fenon-etir"
+   ],
+   "cheap_hit1": false,
+   "cheap_hit3": false,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:culture.tales-kachar-rulership",
+     "sim": 0.5189
+    },
+    {
+     "id": "awake:entry:culture.tales-charas-origins",
+     "sim": 0.4896
+    },
+    {
+     "id": "awake:entry:politics.territories-varcheg-swap",
+     "sim": 0.4146
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "B",
+   "query": "山里有不让进的地方吗？",
+   "target": "awake:entry:culture.tales-dawn-taboo",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:geography.villages-kvol",
+    "awake:entry:geography.castles-veron-castle",
+    "awake:entry:geography.villages-hamoshawat"
+   ],
+   "cheap_hit1": false,
+   "cheap_hit3": false,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:geography.villages-baq",
+     "sim": 0.4528
+    },
+    {
+     "id": "awake:entry:geography.mountains-dryatic",
+     "sim": 0.4508
+    },
+    {
+     "id": "awake:entry:geography.mountains-erithrys",
+     "sim": 0.4441
+    }
+   ],
+   "semantic_hit1": false,
+   "semantic_hit3": false
+  },
+  {
+   "group": "B",
+   "query": "隘口上那个商埠，哪个家族在那儿定过都？",
+   "target": "awake:entry:politics.throne-saneopa",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:geography.villages-ataconia",
+    "awake:entry:politics.throne-saneopa",
+    "awake:entry:geography.villages-remental"
+   ],
+   "cheap_hit1": false,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:politics.throne-saneopa",
+     "sim": 0.5937
+    },
+    {
+     "id": "awake:entry:geography.towns-sibir",
+     "sim": 0.4494
+    },
+    {
+     "id": "awake:entry:geography.towns-galend",
+     "sim": 0.4434
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "B",
+   "query": "什么人拿大圆盾扔飞斧？",
+   "target": "awake:entry:war.troops-royal-guard",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:war.troops-royal-guard",
+    "awake:entry:economy.items-heavy_round_shield",
+    "awake:entry:war.military-sturgia"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:economy.items-heavy_round_shield",
+     "sim": 0.4873
+    },
+    {
+     "id": "awake:entry:war.weapons-crossbow",
+     "sim": 0.4487
+    },
+    {
+     "id": "awake:entry:economy.items-crossbow_c",
+     "sim": 0.4402
+    }
+   ],
+   "semantic_hit1": false,
+   "semantic_hit3": false
+  },
+  {
+   "group": "B",
+   "query": "游牧的人怎么用骑马射手打仗？",
+   "target": "awake:entry:war.military-khuzait",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:war.military-khuzait",
+    "awake:entry:geography.villages-aster",
+    "awake:entry:war.military-sturgia"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:economy.items-steppe_war_bow",
+     "sim": 0.5237
+    },
+    {
+     "id": "awake:entry:war.military-khuzait",
+     "sim": 0.5017
+    },
+    {
+     "id": "awake:entry:war.military-vlandia",
+     "sim": 0.4936
+    }
+   ],
+   "semantic_hit1": false,
+   "semantic_hit3": true
+  },
+  {
+   "group": "B",
+   "query": "盾墙加飞斧是哪个国家的打法？",
+   "target": "awake:entry:war.military-sturgia",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:war.military-sturgia",
+    "awake:entry:war.troops-royal-guard",
+    "awake:entry:economy.goods-velvet"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:war.weapons-crossbow",
+     "sim": 0.5182
+    },
+    {
+     "id": "awake:entry:geography.towns-lycaron",
+     "sim": 0.4965
+    },
+    {
+     "id": "awake:entry:economy.items-heavy_round_shield",
+     "sim": 0.4922
+    }
+   ],
+   "semantic_hit1": false,
+   "semantic_hit3": false
+  },
+  {
+   "group": "B",
+   "query": "北方有什么又暖又贵的皮货？",
+   "target": "awake:entry:economy.goods-fur",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:economy.goods-velvet",
+    "awake:entry:economy.goods-fur",
+    "awake:entry:geography.castles-kaysar-castle"
+   ],
+   "cheap_hit1": false,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:economy.goods-fur",
+     "sim": 0.6498
+    },
+    {
+     "id": "awake:entry:economy.goods-velvet",
+     "sim": 0.5241
+    },
+    {
+     "id": "awake:entry:geography.villages-payam",
+     "sim": 0.4632
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "B",
+   "query": "桌上少不了、产地又集中的日用品是什么？",
+   "target": "awake:entry:economy.goods-salt",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [
+    "awake:entry:economy.goods-salt",
+    "awake:entry:geography.villages-lochana",
+    "awake:entry:geography.villages-flintolg"
+   ],
+   "cheap_hit1": true,
+   "cheap_hit3": true,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:economy.goods-salt",
+     "sim": 0.4778
+    },
+    {
+     "id": "awake:entry:economy.goods-spice",
+     "sim": 0.4138
+    },
+    {
+     "id": "awake:entry:economy.goods-fur",
+     "sim": 0.3853
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  },
+  {
+   "group": "B",
+   "query": "哪种头盔护到腮帮子和耳朵？",
+   "target": "awake:entry:economy.items-western_plated_helmet",
+   "lexical_top3": [],
+   "lexical_hit1": false,
+   "lexical_hit3": false,
+   "cheap_top3": [],
+   "cheap_hit1": false,
+   "cheap_hit3": false,
+   "semantic_top3": [
+    {
+     "id": "awake:entry:economy.items-western_plated_helmet",
+     "sim": 0.5378
+    },
+    {
+     "id": "awake:entry:economy.items-sturgian_helmet_closed",
+     "sim": 0.4751
+    },
+    {
+     "id": "awake:entry:economy.items-scale_shoulder_armor",
+     "sim": 0.4266
+    }
+   ],
+   "semantic_hit1": true,
+   "semantic_hit3": true
+  }
+ ],
+ "negative_top_sim": 0.40599286556243896,
+ "self_cos": 1.0
+}

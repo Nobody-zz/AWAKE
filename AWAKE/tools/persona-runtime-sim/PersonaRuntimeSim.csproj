@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    角色卡运行时模拟器（PersonaRuntimeSim）—— 角色卡线自有测试装置，只读、离线。
+
+    与 tools/worldbook-runtime-sim/（世界书门控模拟器）**完全并列、互不引用**。
+    那条链是给「世界书 → 门控 → 对话」用的；角色卡不需要世界书，也就不该搭它的车。
+
+    本工程只编角色卡真正需要的真实运行时源码：
+      · PersonaModels        定义模型
+      · PersonaTagRegistry   标签表
+      · PersonaDslGenerator  真实 DSL 生成器（与线上同一份源码）
+      · PersonaDataLoader    定义装载
+      · PersonaRoster        名册与选卡
+    替身只有 PersonaSimStubs.cs（顶住 PersonaDslGenerator 的两个外部依赖），
+    刻意不引 TaleWorlds / MarcusAwakeFramework。
+
+    详见 README.md
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Awake.PersonaRuntimeSim</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Nullable>disable</Nullable>
+    <AssemblyName>PersonaRuntimeSim</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json" HintPath="D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\Newtonsoft.Json.dll" />
+    <!-- 角色卡真实运行时源码（与线上同一份） -->
+    <Compile Include="..\..\src\PersonaModels.cs" />
+    <Compile Include="..\..\src\PersonaTagRegistry.cs" />
+    <Compile Include="..\..\src\PersonaDslGenerator.cs" />
+    <Compile Include="..\..\src\PersonaDataLoader.cs" />
+    <Compile Include="..\..\src\PersonaRoster.cs" />
+    <!-- 本工程自有件 -->
+    <Compile Include="PersonaSimStubs.cs" />
+    <Compile Include="PersonaDialogueSim.cs" />
+    <Compile Include="PersonaRosterSim.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+</Project>

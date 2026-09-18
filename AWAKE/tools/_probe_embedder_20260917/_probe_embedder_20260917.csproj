@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>probe_embedder</AssemblyName>
+    <RootNamespace>probe_embedder</RootNamespace>
+  </PropertyGroup>
+
+  <!-- 验的是**真实现**：直接引用 MarcusAwakeStorage 里那个 OnnxSentenceEmbedder，
+       不是另写一份复刻（平行实现必然分叉）。 -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\framework\MarcusAwakeStorage\MarcusAwakeStorage.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\framework\MarcusAwakeStorage\native\onnxruntime.dll" CopyToOutputDirectory="PreserveNewest" Link="onnxruntime.dll" />
+    <None Include="..\..\framework\MarcusAwakeStorage\native\onnxruntime_providers_shared.dll" CopyToOutputDirectory="PreserveNewest" Link="onnxruntime_providers_shared.dll" />
+  </ItemGroup>
+
+</Project>
