@@ -1,0 +1,106 @@
+规则表接受的职业字面量（33 个）:
+   armorer, artisan, banner_bearer, blacksmith, caravan_guard, commoner, farmer, gang_leader, gangster, goods_trader, guard, headman, horse_trader, mercenary, merchant, musician, notable, preacher, prison_guard, ransom_broker, rural_notable, ship_wright, shop_worker, soldier, tavern_game_host, tavern_wench, tavernkeeper, town_headman, townsfolk, village_headman, villager, wanderer, weaponsmith
+
+==============================================================================
+枚举真名 -> 归一化结果 -> 能不能被规则表接住
+==============================================================================
+  OK    Tavernkeeper     -> tavernkeeper    
+  OK    Mercenary        -> mercenary       
+  OK    Villager         -> villager        
+  OK    Soldier          -> soldier         
+  OK    Townsfolk        -> townsfolk       
+  OK    Weaponsmith      -> weaponsmith     
+  OK    Armorer          -> armorer         
+  OK    Wanderer         -> wanderer        
+  OK    Artisan          -> artisan         
+  OK    Merchant         -> merchant        
+  OK    Preacher         -> preacher        
+  OK    Headman          -> headman         
+  OK    Guard            -> guard           
+  OK    Musician         -> musician        
+  OK    Gangster         -> gangster        
+  OK    Blacksmith       -> blacksmith      
+
+  落空  Lord             -> lord              表里若按驼峰拆应为 lord （Lord 不算：调用点第一步 IsNoble 就接住了）
+  落空  GoodsTrader      -> goodstrader       表里若按驼峰拆应为 goods_trader 
+  落空  ArenaMaster      -> arenamaster       表里若按驼峰拆应为 arena_master 
+  落空  RansomBroker     -> ransombroker      表里若按驼峰拆应为 ransom_broker 
+  落空  HorseTrader      -> horsetrader       表里若按驼峰拆应为 horse_trader 
+  落空  TavernWench      -> tavernwench       表里若按驼峰拆应为 tavern_wench 
+  落空  TavernGameHost   -> taverngamehost    表里若按驼峰拆应为 tavern_game_host 
+  落空  Bandit           -> bandit            表里若按驼峰拆应为 bandit 
+  落空  GangLeader       -> gangleader        表里若按驼峰拆应为 gang_leader 
+  落空  RuralNotable     -> ruralnotable      表里若按驼峰拆应为 rural_notable 
+  落空  PrisonGuard      -> prisonguard       表里若按驼峰拆应为 prison_guard 
+  落空  ShopWorker       -> shopworker        表里若按驼峰拆应为 shop_worker 
+  落空  BannerBearer     -> bannerbearer      表里若按驼峰拆应为 banner_bearer 
+  落空  CaravanGuard     -> caravanguard      表里若按驼峰拆应为 caravan_guard 
+  落空  Special          -> special           表里若按驼峰拆应为 special 
+  落空  ShipWright       -> shipwright        表里若按驼峰拆应为 ship_wright 
+
+==============================================================================
+真落空 15 / 31 个职业（已扣掉 Lord 这个误报）。
+落空者一律走 default: Unknown() -> profile.anonymous。
+其中「表里写了下划线、只是永远匹配不上」的 12 个（纯归一化错配）：
+   GoodsTrader      表里写的是 goods_trader     实际传进来是 goodstrader
+   RansomBroker     表里写的是 ransom_broker    实际传进来是 ransombroker
+   HorseTrader      表里写的是 horse_trader     实际传进来是 horsetrader
+   TavernWench      表里写的是 tavern_wench     实际传进来是 tavernwench
+   TavernGameHost   表里写的是 tavern_game_host 实际传进来是 taverngamehost
+   GangLeader       表里写的是 gang_leader      实际传进来是 gangleader
+   RuralNotable     表里写的是 rural_notable    实际传进来是 ruralnotable
+   PrisonGuard      表里写的是 prison_guard     实际传进来是 prisonguard
+   ShopWorker       表里写的是 shop_worker      实际传进来是 shopworker
+   BannerBearer     表里写的是 banner_bearer    实际传进来是 bannerbearer
+   CaravanGuard     表里写的是 caravan_guard    实际传进来是 caravanguard
+   ShipWright       表里写的是 ship_wright      实际传进来是 shipwright
+
+表里根本没有的（内容/映射缺口，不是归一化问题）:
+   ArenaMaster      -> arenamaster
+   Bandit           -> bandit
+   Special          -> special
+==============================================================================
+修法安全性：把驼峰拆成下划线，会不会改坏现有值
+==============================================================================
+  样本① 内容侧 conditions.roleIds 实际取值数 = 0
+     ⇒ 内容侧**不使用** roleIds 这个条件；改它不波及任何一条内容。
+        （作者侧 docs/.../authoring-out/ 里也是 0 处，同一结论。）
+  样本② 包的 identities（12 个）：
+       awake:identity:anonymous           不变
+       awake:identity:commoner            不变
+       awake:identity:headman             不变
+       awake:identity:merchant            不变
+       awake:identity:noble               不变
+       awake:identity:noble_high_steward  不变
+       awake:identity:notable             不变
+       awake:identity:ransom_broker       不变
+       awake:identity:soldier             不变
+       awake:identity:tavernkeeper        不变
+       awake:identity:townsfolk           不变
+       awake:identity:villager            不变
+
+  结构性理由（不依赖任何样本）：驼峰拆分只在**大写字母前**插一个下划线，
+  ⇒ 任何已经是小写的字面量（`noble`、`awake:identity:ransom_broker`、`tavernkeeper`）
+     拆完一字不改；它只影响 `RansomBroker` 这类**从枚举 ToString() 来的驼峰值**。
+  ⇒ 修法只可能把「本来落空」的接上，不可能把「本来接上的」弄坏。
+
+==============================================================================
+若把驼峰拆成下划线：
+   立刻被接住 12 个：
+      GoodsTrader      -> goods_trader
+      RansomBroker     -> ransom_broker
+      HorseTrader      -> horse_trader
+      TavernWench      -> tavern_wench
+      TavernGameHost   -> tavern_game_host
+      GangLeader       -> gang_leader
+      RuralNotable     -> rural_notable
+      PrisonGuard      -> prison_guard
+      ShopWorker       -> shop_worker
+      BannerBearer     -> banner_bearer
+      CaravanGuard     -> caravan_guard
+      ShipWright       -> ship_wright
+   仍然接不住 4 个（表里根本没有，要另补映射或补内容）：
+      Lord             -> lord
+      ArenaMaster      -> arena_master
+      Bandit           -> bandit
+      Special          -> special

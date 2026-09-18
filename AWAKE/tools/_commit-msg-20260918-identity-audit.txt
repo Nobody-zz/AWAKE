@@ -1,0 +1,65 @@
+audit(identity): 身份链红队复核 —— 挖到"12 个职业永远匹配不上、掉进匿名＝零知识"
+
+甲方口径：「先写进文档。然后找对策」。本笔只到文档与对策，**未动产品代码**。
+
+## 硬伤（可复现）
+
+同一个游戏枚举被两处消费，用了**两把尺子**：
+- 取：`BannerlordWorldbookIdentityAdapter.cs:82` `hero.Occupation.ToString()` ⇒ 驼峰 `"RansomBroker"`
+- 归：`WorldbookIdentityCapabilityRules.cs:128-136` `NormalizeRole` **只小写、不拆驼峰** ⇒ `"ransombroker"`
+  （`WorldbookIdentityEvaluator.cs:115-123` 里还有一份一模一样的，两处都得改）
+- 比：表里写的是 `case "ransom_broker":` ⇒ 永远对不上 ⇒ `default: Unknown()` ⇒ `profile.anonymous`
+
+落空 **15/31**（探针机械比对）：12 个纯驼峰错配（GoodsTrader／RansomBroker／HorseTrader／
+TavernWench／TavernGameHost／GangLeader／RuralNotable／PrisonGuard／ShopWorker／BannerBearer／
+CaravanGuard／ShipWright）＋ 3 个表里没有（ArenaMaster／Bandit／Special）。
+`Lord` 是误报（第一步 IsNoble 就接住），报数已扣掉。**规律：单词语枚举名全对，凡多词驼峰全落空。**
+
+后果：`awake:identity:anonymous` **只出现在 denies、从不出现在 grants**（实测 461 条／1050 说法）
+⇒ 匿名角色**一条知识都拿不到，不报错不打日志**。
+内容侧给 `merchant` 写了 917 条、`ransom_broker` 440 条 ＋ 一条指路，**永远发不出去**。
+已核游戏数据：`occupation="GoodsTrader"` 挂在 `is_hero="true"` 的 Trader 身上。
+
+★ **最有说服力的对照**：`AwakeUnnamedProfileService.cs:39-83` 的 `RoleLabel(Occupation)`
+**直接 switch 枚举**（对），还把 `Merchant/GoodsTrader/HorseTrader` 一并译成「商贩」
+⇒ **同一个 NPC，提示词里写着「帝国的商贩」，检索侧当他是匿名、一字不给。**
+
+⚠️ **一处我先猜错、已就地纠正**：匿名**不是**"被硬拒吐台词"。`SelectExpression:487` 身份不匹配时
+直接 `continue`、不设 `PermissionLimited` ⇒ 实际表现是**永久 not_found**（关键词命中与否都一样）。
+写进文档是为了免得下一个人照错的去查。
+
+## 另有四条
+
+1. **身份分层实际只有两档**（1050 说法／34 组合／83% 压两种；noble vs soldier 只有 5% 能区分；
+   denies 只有 3/1050；指路只有 4 条且口径单一）—— **属世界书线，本文只报数不动内容**。
+2. **无名 NPC 有职业＋年龄＋一条身份约束**（"不掌握超出身份的信息"），**有名英雄三样都没有**
+   （`BuildStateConstraint` 对英雄返回空）⇒ 越有名的角色身份材料越薄。
+   而那句话正是"按身份表述自己不知道"在代码里的唯一一处落地。
+3. **更正 09-18 说宽的一句**：有知识那一轮，知识块里**是带着**身份/范围/详细度的；
+   问题是 `not_found` 时整块消失 ⇒ **那份"我知道多大范围"的自知跟着一起没了**。
+4. **待核（不许当结论）**：`MatchMode` 在候选为空时错标成 `identity`（候选不含身份，不可能是身份筛空的）；
+   人格 DSL 的英文 token 模型读不读得懂；`IsSoldier` 是否先接住旗手/商队护卫/狱卒；其余 10 个职业的命中面未穷举。
+
+## 就地更正我自己 09-18 的过度结论
+
+`PROBE-20260918` 写的"病根在产出侧／这条路关掉"**只对空壳背景成立** ——
+那次探针为了让"只换一格"成立，把身份／人格／记忆／状态全换成了占位符，
+等于**把甲方最在意的那一维固定成了空格**，并在其上下了关于一般情况的结论。
+受控对比仍成立；推广是越界的，**真机上加说明句根本没测**。
+文首加更正块、§一/§五 就地标注；记忆里那条"关掉的路"也加了限定；
+技能 `awake-local-model-prompt-probe` 补了第 4 条铁律（**隔离变量别把要研究的维度固定成空格**）。
+
+## 对策（`docs/AUDIT-20260918-身份链潜在问题.md` §六）
+
+A（我的线）：A1 归一化补驼峰拆分（**安全性已验**：只在大写字母前插下划线 ⇒ 小写字面量一字不改；
+且内容侧**从不使用** `conditions.roleIds`，只用 `identity_id` ⇒ 不可能把"本来接上的"弄坏）
+→ A4 匿名必须落日志 → A5 把「身份/知识范围/允许详细度」从知识块里拆出、`not_found` 时照样给
+→ A2/A3 定口径（兜底顺序／3 个无映射职业）→ A6 referral 放行 AI → A7 MatchMode。
+**A1 改完三根门禁数字一定会变**（动的是身份解析），变了要能解释。
+B（世界书线）：只出交接，不动内容。C：A2/A3/A5/B 四项口径等甲方定。
+
+## 产出
+
+- 新增 `docs/AUDIT-20260918-身份链潜在问题.md`
+- 新增 `tools/_probe_role_normalization_20260918.py` ＋落盘 `.txt`（只对字符串，不跑产品）
+- 更正 `docs/PROBE-20260918-空知识格实测-未知态该在哪一层表达.md`
