@@ -1,0 +1,25 @@
+回路的判定补测：按「谁知道×何时知道×信不信」三轴重算（09-19 22:3x）
+
+甲方问「回路你觉得呢」⇒ 顺着设计初衷的三根轴把五路闸重算一遍，
+结果比原来那句"五路全绿"更准：**绿的全是同一根轴**。
+
+比原文多出来的三条：
+
+1. **「何时知道」= 有管道、无门禁**（本次 grep 实测）
+   `src/` 里 day／tick 只当数据用（`TryCreateWar(day,…)`、周报 `windowStartDay/EndDay`、
+   `WorldFactJournal`）；四处闸里**唯一**按天循环的地方是 smoke 的账本容量挤出
+   （`tools/worldbook-runtime-smoke/Program.cs:1805`，`for (int day = 8; day <= 57; …)`）——
+   与"谁是几时知道的"无关。⇒ 问过"他这时候该知道吗"的闸：**零**。
+
+2. **「信不信」= 只有"够不够格拿细档"，没有"信不信这个说法"**
+   内容侧用 `detail(rumor|detail|secret)` 分层，运行时按身份解析出**能拿到哪一档**
+   （`ProfileOfIdentity → (Scope, Detail)`）；代码侧 `Believ`／`Conviction`／`Credib`
+   在 `src/` 内 **0 命中**。
+   ⚠️ 证据边界：`TrustDelta`（±100）确实存在，但它是**人际关系**信任度，
+   与 `LoveDelta`／`HostilityDelta` 并列，**不是对这个知识的相信** —— 两者别混。
+
+3. **顺带纠了本档自己的一个错数**：§3.1 原写"PRODUCTION_SMOKE 27 项"，
+   读数档实测是 `RESULT passed=31 failed=0`。（数自己档里的数也要复核。）
+
+本笔只改 `docs/REVIEW-MY-OBJECTS-20260919.md`：
+§0 一页话由"两件事"改"三件事"、新增 §3.4 三轴对照表、§3.1 的 27→31、口径时间改 22:3x。
