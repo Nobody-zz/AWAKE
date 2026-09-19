@@ -1,14 +1,23 @@
 # -*- coding: utf-8 -*-
-"""重编并实跑知识识别回路的四道闸，读数落一份档。
+"""重编并实跑知识识别回路各轴的闸，读数落一份档。
+
+现在跑七路（五道闸 + 两次变异检验）：
+  1 检索闸 / 2 合流闸 / 3 身份闸「谁知道」/ 4 身份闸[变异]
+  5 时间闸「何时知道」(09-19 新增) / 6 时间闸[变异] / 7 生产闸
 
 为什么先编再跑：现成 exe 可能过期（09-18 吃过一次：exe 构建于 10:04、
 而最后一笔动 src 的提交在 10:05 ⇒ 那次读数不含最新改动）。
 
-四道闸各自的目标框架/程序集名都不同（net8.0 / net10.0-windows / net472 / net10.0），
+各闸的目标框架/程序集名都不同（net8.0 / net10.0-windows / net472 / net10.0），
 产物有的落在 bin/，有的落在 artifacts/bin/（被 .gitignore 排除）——一律按实际产物解析。
 
-身份闸另跑一次**变异检验**（AWAKE_GATE_MUTATE_ASSUME_ALLOWED=1）：闸 ① 必须判红，
-用来证明这道闸有分辨力，而不是"全绿但没在测"。
+两道变异检验用来证明闸有分辨力，而不是"全绿但没在测"：
+  · AWAKE_GATE_MUTATE_ASSUME_ALLOWED=1 ⇒ 身份闸 ① 必须判红
+  · AWAKE_GATE_MUTATE_FORGE_DAY=1     ⇒ 时间闸 ① 必须判红（把「当下」冒充成事实发生那天）
+
+⚠️ 子进程若打印 GBK 编不出的字符（✓ / ✗ / ① …），落到管道会被按 GBK 编码
+   ⇒ 读数档里静默变成 `?`（判阅证据失真）。验台自己要显式
+   `Console.OutputEncoding = System.Text.Encoding.UTF8;`（time-gate 已这么做）。
 
 用法：python _run_gates_20260919.py
 输出：AWAKE/tools/_gates_now_20260919.txt
@@ -28,20 +37,29 @@ REAL_MANIFEST = ROOT / "AWAKE/ModuleData/Worldbook/packages/calradia/manifest.js
 CASES = TOOLS / "_retrieval_cases_20260916.json"
 
 GATES = [
-    dict(idx="1/5", name="RETRIEVAL_GATE", dir="worldbook-runtime-smoke",
+    dict(idx="1/7", name="RETRIEVAL_GATE", dir="worldbook-runtime-smoke",
          stem="WorldbookRuntimeSmoke", asm="WorldbookRuntimeSmoke"),
-    dict(idx="2/5", name="MERGE_GATE", dir="worldbook-rag-merge",
+    dict(idx="2/7", name="MERGE_GATE", dir="worldbook-rag-merge",
          stem="WorldbookRagMerge", asm="worldbook-rag-merge"),
-    dict(idx="3/5", name="IDENTITY_GATE", dir="worldbook-runtime-sim",
+    dict(idx="3/7", name="IDENTITY_GATE", dir="worldbook-runtime-sim",
          stem="WorldbookRuntimeSim", asm="WorldbookRuntimeSim",
          args=["identity-gate", str(REAL_MANIFEST), str(CASES),
                str(pathlib.Path(os.environ.get("TEMP", ".")) / "awake-identity-gate-20260919.json")]),
-    dict(idx="4/5", name="IDENTITY_GATE[MUTANT]", dir="worldbook-runtime-sim",
+    dict(idx="4/7", name="IDENTITY_GATE[MUTANT]", dir="worldbook-runtime-sim",
          stem="WorldbookRuntimeSim", asm="WorldbookRuntimeSim",
          args=["identity-gate", str(REAL_MANIFEST), str(CASES),
                str(pathlib.Path(os.environ.get("TEMP", ".")) / "awake-identity-gate-mutant.json")],
          env={"AWAKE_GATE_MUTATE_ASSUME_ALLOWED": "1"}),
-    dict(idx="5/5", name="PRODUCTION_SMOKE", dir="worldbook-runtime-production-smoke",
+    # 「何时知道」这条轴的闸（09-19 新增）：事实的时点 —— 未来不得泄漏、到了必须出现、
+    # 老料不回流、周窗形状。不需要外部输入（事实由真件现造）。
+    dict(idx="5/7", name="TIME_GATE", dir="worldbook-runtime-sim",
+         stem="WorldbookRuntimeSim", asm="WorldbookRuntimeSim",
+         args=["time-gate", str(TOOLS / "out" / "time-gate.json")]),
+    dict(idx="6/7", name="TIME_GATE[MUTANT]", dir="worldbook-runtime-sim",
+         stem="WorldbookRuntimeSim", asm="WorldbookRuntimeSim",
+         args=["time-gate", str(TOOLS / "out" / "time-gate-mutant.json")],
+         env={"AWAKE_GATE_MUTATE_FORGE_DAY": "1"}),
+    dict(idx="7/7", name="PRODUCTION_SMOKE", dir="worldbook-runtime-production-smoke",
          stem="WorldbookRuntimeProductionSmoke", asm="Awake.WorldbookRuntimeProductionSmoke"),
 ]
 

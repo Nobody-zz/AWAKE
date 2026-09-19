@@ -1,6 +1,6 @@
 
-########## 1/5 RETRIEVAL_GATE (worldbook-runtime-smoke) ##########
-Sat Sep 19 22:09:42 2026
+########## 1/7 RETRIEVAL_GATE (worldbook-runtime-smoke) ##########
+Sat Sep 19 22:41:16 2026
 ARTIFACT worldbook-runtime-smoke\bin\Debug\net10.0\WorldbookRuntimeSmoke.exe
 RETRIEVAL_CASE HIT group=A h1=1 hits=5 top3=[geography.villages-lamesa,geography.castles-shibal-zumr-castle,geography.castles-veron-castle] identity=awake:identity:commoner q=�������ǵط���ʲô��
 RETRIEVAL_CASE HIT group=A h1=1 hits=6 top3=[geography.castles-simira-castle,geography.villages-simira,geography.settlement-types-castle] identity=awake:identity:commoner q=����������˭�ĳǱ���
@@ -57,8 +57,8 @@ RETRIEVAL_GATE PASS need A_hit3>=10 B_hit3>=9 ALL_hit3>=19 negative<=3 overmatch
 PASS: runtime loader/query/overlay/identity/registry/weekly-report/event-ledger smoke
 EXIT=0
 
-########## 2/5 MERGE_GATE (worldbook-rag-merge) ##########
-Sat Sep 19 22:09:44 2026
+########## 2/7 MERGE_GATE (worldbook-rag-merge) ##########
+Sat Sep 19 22:41:22 2026
 ARTIFACT worldbook-rag-merge\bin\Debug\net8.0\worldbook-rag-merge.exe
 包 = awake:worldbook.calradia@1.0.0，条目 482 条
 模型目录 = D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AnimusForge\ONNX
@@ -67,7 +67,7 @@ ARTIFACT worldbook-rag-merge\bin\Debug\net8.0\worldbook-rag-merge.exe
 [A] 维度 512，不同向量 5/5，自比 1.000000  => PASS
 [入库] 拼法 feed-D-v1，示例：沙拉斯湾·三种来历。沙拉斯湾·三种来历、沙拉斯湾、帝国摇篮、卡拉德登陆。帝国“摇篮”史称、先祖登陆传说（未经确证）与船人…
 [入库] 语料指纹 = awake:worldbook.calradia@1.0.0#feed-D-v1
-[入库] OK，写入 482 条，用时 8282 ms
+[入库] OK，写入 482 条，用时 9120 ms
 
 ──────────────────────────────────────────────────────────────────────────────
 组  问法                            目标                                  字面  语义  合并  上限  池  涨
@@ -207,8 +207,8 @@ JUDGE positive_control=PASS literal_unchanged=PASS merged_improves=PASS negative
 MERGE_GATE PASS need **hit@3** literal A>=10 B>=9 ALL>=19 merged A>=10 ALL>(literal) losses@3=0 negative<=3 overmatch<=8 硬答<=0 概念错位<=0 已知缺口<=3
 EXIT=0
 
-########## 3/5 IDENTITY_GATE (worldbook-runtime-sim) ##########
-Sat Sep 19 22:09:57 2026
+########## 3/7 IDENTITY_GATE (worldbook-runtime-sim) ##########
+Sat Sep 19 22:41:40 2026
 ARTIFACT worldbook-runtime-sim\bin\Debug\net10.0-windows\WorldbookRuntimeSim.exe
 identity-gate: package=awake:worldbook.calradia entries=482 semantic=False
 
@@ -269,8 +269,8 @@ IDENTITY_GATE PASS need leaks=0 deniedFail=0 且非空转（deniedRows>0 且 sho
 报告已导出: C:\Users\26811\AppData\Local\Temp\awake-identity-gate-20260919.json
 EXIT=0
 
-########## 4/5 IDENTITY_GATE[MUTANT] (worldbook-runtime-sim) ##########
-Sat Sep 19 22:09:58 2026
+########## 4/7 IDENTITY_GATE[MUTANT] (worldbook-runtime-sim) ##########
+Sat Sep 19 22:41:43 2026
 ARTIFACT worldbook-runtime-sim\bin\Debug\net10.0-windows\WorldbookRuntimeSim.exe
 ENV AWAKE_GATE_MUTATE_ASSUME_ALLOWED=1
 identity-gate: package=awake:worldbook.calradia entries=482 semantic=False
@@ -333,8 +333,44 @@ IDENTITY_GATE FAIL need leaks=0 deniedFail=0 且非空转（deniedRows>0 且 sho
 报告已导出: C:\Users\26811\AppData\Local\Temp\awake-identity-gate-mutant.json
 EXIT=1
 
-########## 5/5 PRODUCTION_SMOKE (worldbook-runtime-production-smoke) ##########
-Sat Sep 19 22:10:00 2026
+########## 5/7 TIME_GATE (worldbook-runtime-sim) ##########
+Sat Sep 19 22:41:45 2026
+ARTIFACT worldbook-runtime-sim\bin\Debug\net10.0-windows\WorldbookRuntimeSim.exe
+=== time-gate：事实的时点（何时知道）===
+  事实 64faf3caf2c17bef9e436e9c2cee0214f636fcbccc8a928d45a48343107b2360 ⇒ 第 9 天发生
+  事实 a89a2fbf09da613f523ad7990aaaee746205fa9e0359783064fb67c541508098 ⇒ 第 11 天发生
+  事实 78f78811637d0f16cdb2ad30d5907b1fc5cb1247930c44ae062fad63c65237b5 ⇒ 第 13 天发生
+  ✓ ①未来不泄漏：64faf3caf2c17bef9e436e9c2cee0214f636fcbccc8a928d45a48343107b2360 在当下=第 8 天时被挡（理由 excluded_outside_window）
+  ✓ ①未来不泄漏：a89a2fbf09da613f523ad7990aaaee746205fa9e0359783064fb67c541508098 在当下=第 10 天时被挡（理由 excluded_outside_window）
+  ✓ ①未来不泄漏：78f78811637d0f16cdb2ad30d5907b1fc5cb1247930c44ae062fad63c65237b5 在当下=第 12 天时被挡（理由 excluded_outside_window）
+  ✓ ④周窗形状：当下=第 14 天 ⇒ 窗 [8, 14]（应 [8, 14]）
+
+扫描：阴性行 3（泄漏 0、理由错 0）；阳性行 3（真拿到 3）；老料行 3（回流 0）
+TIME_GATE PASS need leaks=0 wrongReason=0 staleLeaks=0 windowOk 且非空转
+报告已导出: D:\AWAKE-Dev\AWAKE\tools\out\time-gate.json
+EXIT=0
+
+########## 6/7 TIME_GATE[MUTANT] (worldbook-runtime-sim) ##########
+Sat Sep 19 22:41:48 2026
+ARTIFACT worldbook-runtime-sim\bin\Debug\net10.0-windows\WorldbookRuntimeSim.exe
+ENV AWAKE_GATE_MUTATE_FORGE_DAY=1
+=== time-gate：事实的时点（何时知道）===
+⚠️ 变异中：把「当下」冒充成事实发生的那一天 ⇒ 判据①应当判红
+  事实 64faf3caf2c17bef9e436e9c2cee0214f636fcbccc8a928d45a48343107b2360 ⇒ 第 9 天发生
+  事实 a89a2fbf09da613f523ad7990aaaee746205fa9e0359783064fb67c541508098 ⇒ 第 11 天发生
+  事实 78f78811637d0f16cdb2ad30d5907b1fc5cb1247930c44ae062fad63c65237b5 ⇒ 第 13 天发生
+  ✗ ①泄漏：64faf3caf2c17bef9e436e9c2cee0214f636fcbccc8a928d45a48343107b2360（第 9 天发生）在当下=第 9 天时已被当成已知
+  ✗ ①泄漏：a89a2fbf09da613f523ad7990aaaee746205fa9e0359783064fb67c541508098（第 11 天发生）在当下=第 11 天时已被当成已知
+  ✗ ①泄漏：78f78811637d0f16cdb2ad30d5907b1fc5cb1247930c44ae062fad63c65237b5（第 13 天发生）在当下=第 13 天时已被当成已知
+  ✓ ④周窗形状：当下=第 14 天 ⇒ 窗 [8, 14]（应 [8, 14]）
+
+扫描：阴性行 3（泄漏 3、理由错 0）；阳性行 3（真拿到 3）；老料行 3（回流 0）
+TIME_GATE FAIL need leaks=0 wrongReason=0 staleLeaks=0 windowOk 且非空转
+报告已导出: D:\AWAKE-Dev\AWAKE\tools\out\time-gate-mutant.json
+EXIT=1
+
+########## 7/7 PRODUCTION_SMOKE (worldbook-runtime-production-smoke) ##########
+Sat Sep 19 22:41:50 2026
 ARTIFACT worldbook-runtime-production-smoke\artifacts\bin\Debug\Awake.WorldbookRuntimeProductionSmoke.exe
 PASS lifecycle-final-drain
 PASS unknown-state-kind-rejected
@@ -354,7 +390,7 @@ PASS record-before-boundary
 PASS record-after-boundary
 PASS queued-record-generation
 PASS load-cannot-clear-new-events
-PASS store-switch-blocks-old-load
+FAIL store-switch-blocks-old-load :: InvalidOperationException:campaign reset must invalidate the old store
 PASS readiness-projection-monotonicity
 PASS weekly-report-snapshot-repair
 PASS submodule-reset-boundary
@@ -367,5 +403,5 @@ PASS world-fact-event-caller
 PASS world-fact-trigger-caller
 PASS world-fact-trigger-content-api
 PASS world-fact-event-cancellation
-RESULT passed=31 failed=0
-EXIT=0
+RESULT passed=30 failed=1
+EXIT=1

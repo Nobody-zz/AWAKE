@@ -78,6 +78,26 @@ if (args.Length > 0 && StringComparer.OrdinalIgnoreCase.Equals(args[0], "identit
     return RunIdentityGate(args.Skip(1).ToArray());
 }
 
+// time-gate：「何时知道」这条维度的门禁（**事实 × 当下** 逐条扫）—— 设计初衷的第二根轴。
+// 用法: dotnet run -c Release -- time-gate [out.json]
+//   （不需要外部输入：事实由真件 `WorldFactCapture` 现造，查询用真件 `WorldFactQuery`）
+// 判据：
+//   ① 未来不泄漏（硬）：事实 f 发生在第 d 天 ⇒ 把「当下」设成 d-1，f 不得出现在结果里，
+//      且它的决策理由必须是 `excluded_outside_window` —— **不只是"没出现"，理由也要对**
+//      （靠别的通道偶然被挡不算挡住）；
+//   ② 到了就会出现（硬，阳性对照）：把「当下」设成 d，同一个 f 必须出现 ——
+//      没有这条，①讲不准是恒真（"查询恒返空"也能满足①）；
+//   ③ 老料不回流（硬）：把「当下」设成 d+7（窗 [d+1, d+7]），f 必须被排除 —— 太久以前的动态不进"近期"；
+//   ④ 周窗形状（硬）：WeeklyDynamics 在当下 D 的窗口必须恰为 [D-6, D]；
+//   ⑤ 空转护栏（硬）：阴性行、阳性行、阳性命中都不许为 0 ——「恒 True＝没测」。
+// 变异检验：置 AWAKE_GATE_MUTATE_FORGE_DAY=1 会把「当下」**冒充**成事实发生的那一天
+//   （＝从输入侧模拟"窗界失效"），而地面真值仍是"这一刻它还不该被知道"⇒ ① 必须判红（泄漏数 > 0）。
+//   若变异之后仍全绿，说明①是恒真的 —— 这道闸没在测。
+if (args.Length > 0 && StringComparer.OrdinalIgnoreCase.Equals(args[0], "time-gate"))
+{
+    return RunTimeGate(args.Skip(1).ToArray());
+}
+
 // full-context 模式：用真实事实捕获/周报代码生成一个可供组合链路消费的上下文快照。
 // 用法: dotnet run -c Release -- full-context <out.json>
 if (args.Length > 0 && StringComparer.OrdinalIgnoreCase.Equals(args[0], "full-context"))
@@ -599,6 +619,160 @@ int RunIdentityGate(string[] a)
     }
     if (vacuous) Console.WriteLine("⚠️ 空转：没有产生任何有效行 ⇒ 恒 PASS 不算证据（「恒 True＝没测」）");
     Console.WriteLine($"IDENTITY_GATE {(pass ? "PASS" : "FAIL")} need leaks=0 deniedFail=0 且非空转（deniedRows>0 且 shouldKnowHit>0）");
+    Console.WriteLine("报告已导出: " + outPath);
+    return pass ? 0 : 1;
+}
+
+// ---------- time-gate 实现 ----------
+
+// 事实由**真件** `WorldFactCapture` 现造，查询走**真件** `WorldFactQuery`；本函数只做"摆好当下、读回结果、对判据"。
+int RunTimeGate(string[] a)
+{
+    // 输出编码显式钉死成 UTF-8：否则这个闸的中文与判阅标记落到管道里会按 GBK 编码，
+    // 读数档（runner 按 utf-8 解）里就变成乱码/问号 —— 判阅证据静默失真。
+    try { Console.OutputEncoding = System.Text.Encoding.UTF8; }
+    catch (Exception) { /* 某些宿主下不可设：不影响判据，只是字面可能降级 */ }
+
+    string outPath = a.Length > 0 && !string.IsNullOrWhiteSpace(a[0])
+        ? a[0]
+        : Path.Combine(repoRoot, "tools", "out", "time-gate.json");
+    string outDir = Path.GetDirectoryName(outPath);
+    if (!string.IsNullOrWhiteSpace(outDir)) Directory.CreateDirectory(outDir);
+
+    bool mutate = StringComparer.Ordinal.Equals(Environment.GetEnvironmentVariable("AWAKE_GATE_MUTATE_FORGE_DAY"), "1");
+
+    Console.WriteLine("=== time-gate：事实的时点（何时知道）===");
+    if (mutate) Console.WriteLine("⚠️ 变异中：把「当下」冒充成事实发生的那一天 ⇒ 判据①应当判红");
+
+    var spec = new[] { (Day: 9, Name: "甲国"), (Day: 11, Name: "乙国"), (Day: 13, Name: "丙国") };
+    var truth = new List<(string FactId, int Day)>();
+    var facts = new List<JObject>();
+    foreach (var item in spec)
+    {
+        if (!WorldFactCapture.TryCreateWar(item.Day, item.Day * 144L + 60L,
+                "faction:" + item.Name, item.Name, "faction:against-" + item.Name, "对手" + item.Name,
+                out WorldFactCapture capture))
+        {
+            Console.WriteLine("TIME_GATE FAIL 真件造不出事实 fixture（day=" + item.Day + "）");
+            return 1;
+        }
+        JObject json = capture.Fact.ToJson();
+        truth.Add(((string)json["factId"], item.Day));
+        facts.Add(json);
+    }
+    foreach (var item in truth) Console.WriteLine($"  事实 {item.FactId} ⇒ 第 {item.Day} 天发生");
+
+    var query = new WorldFactQuery(
+        _ => System.Threading.Tasks.Task.FromResult(
+            new WorldFactJournalReadResult(WorldFactJournalReadStatus.Success, facts.ToArray(), revision: 1)),
+        () => Array.Empty<WorldEventRecord>());
+
+    WorldFactQueryResult Ask(int currentDay, WorldFactSelectionPolicy policy)
+        => query.ExecuteAsync(new WorldFactQueryRequest
+        {
+            Policy = policy,
+            CurrentDay = currentDay,
+            MaximumResults = 100
+        }, default).GetAwaiter().GetResult();
+
+    bool Has(WorldFactQueryResult result, string factId)
+        => result.Facts.Any(value => StringComparer.Ordinal.Equals((string)value["factId"], factId));
+
+    string ReasonOf(WorldFactQueryResult result, string factId)
+        => result.Decisions
+            .Where(value => StringComparer.Ordinal.Equals(value.FactId, factId))
+            .Select(value => value.ReasonCode)
+            .FirstOrDefault() ?? "(none)";
+
+    int deniedRows = 0, deniedLeaks = 0, wrongReason = 0;
+    int shouldKnowRows = 0, shouldKnowHit = 0;
+    int staleRows = 0, staleLeaks = 0;
+    var detail = new JArray();
+
+    foreach (var item in truth)
+    {
+        // ① 未来不泄漏：当下 = 发生日 - 1（变异时冒充成发生日）
+        int negativeDay = mutate ? item.Day : item.Day - 1;
+        deniedRows++;
+        WorldFactQueryResult before = Ask(negativeDay, WorldFactSelectionPolicy.RecentDynamics);
+        bool leaked = Has(before, item.FactId);
+        string reason = ReasonOf(before, item.FactId);
+        if (leaked)
+        {
+            deniedLeaks++;
+            Console.WriteLine($"  ✗ ①泄漏：{item.FactId}（第 {item.Day} 天发生）在当下=第 {negativeDay} 天时已被当成已知");
+        }
+        else if (!StringComparer.Ordinal.Equals(reason, "excluded_outside_window"))
+        {
+            wrongReason++;
+            Console.WriteLine($"  ✗ ①被挡但理由不对：{item.FactId} 理由={reason}（应为 excluded_outside_window）");
+        }
+        else
+        {
+            Console.WriteLine($"  ✓ ①未来不泄漏：{item.FactId} 在当下=第 {negativeDay} 天时被挡（理由 {reason}）");
+        }
+
+        // ② 到了就会出现（阳性对照）
+        shouldKnowRows++;
+        WorldFactQueryResult at = Ask(item.Day, WorldFactSelectionPolicy.RecentDynamics);
+        bool hit = Has(at, item.FactId);
+        if (hit) shouldKnowHit++;
+        else Console.WriteLine($"  ✗ ②阳性对照失败：当下=第 {item.Day} 天时 {item.FactId} 仍拿不到");
+
+        // ③ 老料不回流：当下 = 发生日 + 7 ⇒ 窗 [发生日+1, 发生日+7]，它必须已被排除
+        staleRows++;
+        WorldFactQueryResult later = Ask(item.Day + 7, WorldFactSelectionPolicy.RecentDynamics);
+        bool staleLeaked = Has(later, item.FactId);
+        if (staleLeaked)
+        {
+            staleLeaks++;
+            Console.WriteLine($"  ✗ ③老料回流：{item.FactId}（第 {item.Day} 天）出现在当下=第 {item.Day + 7} 天的近期里");
+        }
+
+        detail.Add(new JObject
+        {
+            ["factId"] = item.FactId,
+            ["occurredDay"] = item.Day,
+            ["negativeDay"] = negativeDay,
+            ["leaked"] = leaked,
+            ["negativeReason"] = reason,
+            ["positiveHit"] = hit,
+            ["staleWindowStart"] = later.WindowStartDay,
+            ["staleLeaked"] = staleLeaked
+        });
+    }
+
+    // ④ 周窗形状：当下 D ⇒ 窗口恰为 [D-6, D]
+    int windowDay = 14;
+    WorldFactQueryResult weekly = Ask(windowDay, WorldFactSelectionPolicy.WeeklyDynamics);
+    bool windowOk = weekly.WindowStartDay == windowDay - 6 && weekly.WindowEndDay == windowDay;
+    Console.WriteLine($"  {(windowOk ? "✓" : "✗")} ④周窗形状：当下=第 {windowDay} 天 ⇒ 窗 [{weekly.WindowStartDay}, {weekly.WindowEndDay}]（应 [{windowDay - 6}, {windowDay}]）");
+
+    bool vacuous = deniedRows == 0 || shouldKnowRows == 0 || shouldKnowHit == 0 || staleRows == 0;
+    bool pass = deniedLeaks == 0 && wrongReason == 0 && staleLeaks == 0 && windowOk && !vacuous;
+
+    var report = new JObject
+    {
+        ["mutate"] = mutate,
+        ["factCount"] = truth.Count,
+        ["deniedRows"] = deniedRows,
+        ["deniedLeaks"] = deniedLeaks,
+        ["wrongReasonRows"] = wrongReason,
+        ["shouldKnowRows"] = shouldKnowRows,
+        ["shouldKnowHit"] = shouldKnowHit,
+        ["staleRows"] = staleRows,
+        ["staleLeaks"] = staleLeaks,
+        ["weeklyWindowDay"] = windowDay,
+        ["weeklyWindowOk"] = windowOk,
+        ["vacuous"] = vacuous,
+        ["facts"] = detail
+    };
+    File.WriteAllText(outPath, report.ToString(Newtonsoft.Json.Formatting.Indented));
+
+    Console.WriteLine();
+    Console.WriteLine($"扫描：阴性行 {deniedRows}（泄漏 {deniedLeaks}、理由错 {wrongReason}）；阳性行 {shouldKnowRows}（真拿到 {shouldKnowHit}）；老料行 {staleRows}（回流 {staleLeaks}）");
+    if (vacuous) Console.WriteLine("⚠️ 空转：没有产生任何有效行 ⇒ 恒 PASS 不算证据（「恒 True＝没测」）");
+    Console.WriteLine($"TIME_GATE {(pass ? "PASS" : "FAIL")} need leaks=0 wrongReason=0 staleLeaks=0 windowOk 且非空转");
     Console.WriteLine("报告已导出: " + outPath);
     return pass ? 0 : 1;
 }

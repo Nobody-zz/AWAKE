@@ -1,0 +1,61 @@
+补「何时知道」这道闸 + 首轮读数（09-19 22:4x）
+
+起因：甲方问「回路你觉得呢」，我按设计初衷三轴重算，发现五路绿的全是同一根轴
+（「谁知道」），「何时知道」有管道、一道闸都没有。甲方「可以，做」⇒ 架这道闸。
+
+## 闸本身
+
+`tools/worldbook-runtime-sim` 新增 `time-gate` 子命令（与 identity-gate 同形）。
+零替身：事实由真件 `WorldFactCapture` 现造，查询走真件 `WorldFactQuery`。
+
+判据五条（硬）：
+  ① 未来不泄漏 —— 事实发生在第 d 天，把「当下」设成 d-1，它不得出现，
+     **且决策理由必须是 `excluded_outside_window`**（偶然被别的通道挡不算挡住）；
+  ② 到了就会出现（阳性对照）—— 没有它，①可能是恒真（"查询恒返空"也满足①）；
+  ③ 老料不回流 —— 「当下」= d+7 时它必须已被排除；
+  ④ 周窗形状 —— WeeklyDynamics 在当下 D 的窗口恰为 [D-6, D]；
+  ⑤ 空转护栏 —— 阴性/阳性/命中都不许为 0。
+
+变异检验 `AWAKE_GATE_MUTATE_FORGE_DAY=1`：把「当下」冒充成事实发生那天
+（＝从输入侧模拟"窗界失效"），地面真值仍是"这一刻它还不该被知道"⇒ ① 必须判红。
+
+## 读数（七路，读数档已更新）
+
+TIME_GATE PASS：阴性 3/泄漏 0、理由错 0；阳性 3/真拿到 3；老料 3/回流 0；周窗 [8,14] 对。
+TIME_GATE[变异] FAIL（应然）：泄漏 0 → 3 ⇒ **这道闸有分辨力，不是全绿空转**。
+
+## 三条侦察发现（都带出处）
+
+1. ★ **作者层的时间/状态字段进不了包**：authoring schema 顶层有 `era`／`lifecycle`／
+   `status`（含 `future`）／`universe`／`content_tier`／`related_domains`，
+   编译产物三份（runtime/index/manifest）里**各 0 命中**。
+   ⇒ 「何时知道」在内容侧不是"没写"，是"写了也进不了包"。
+2. `awake.worldbook.state-predicate.v1` 声明完整（算子/24 个布尔字段/enum/优先级），
+   但代码里 **0 消费者**（src/tools/framework 全 grep）。⚠️ 别和事件规则的 `condition`
+   混 —— `AwakeEventDataLoader`＋`AwakeEventEngine.ConditionMet` 那套是活的。
+3. 纠我自己档里一句：REVIEW §1.2 说「subdomain／entityRefs 埋在 extensions、不在顶层」
+   **只对编译产物成立**——作者层 schema 里它们本来就是顶层，是编译器投影进去的。
+   ⇒ 说"字段在哪"必须先说是哪一层。
+
+## 现场：生产闸有一条偶发红（不是我这两笔碰出来的）
+
+连跑 4 次：RC=1/0/1/0（红绿各半），恒定同一条
+`FAIL store-switch-blocks-old-load :: campaign reset must invalidate the old store`
+（判据在 `ProductionSmokeTestsMore.cs:128`；可核线索：reset 只在 `_worldStateStore != null`
+时才 retire，`src/AwakeRuntime.cs:973-976` ⇒ 指向"谁在 reset 之前把它置空/换掉了"。
+**根因未判，标待验证**。）⇒ 这条闸现在的绿不值钱，读第 7 路时须知。
+
+## 建造中修的坑（值得记）
+
+控制台编码会**静默吃掉判阅证据**：新闸不显式 `Console.OutputEncoding = UTF8` 时，
+中文与 ✓／✗／① 落到管道被按 GBK 编码 ⇒ 读数档里变成乱码/问号。
+症状＝PASS/FAIL 字样还在、逐行证据全成 `?`。已在该闸首行钉死；其余验台**未逐个体检**。
+
+## 本笔内容
+
+- `docs/AUDIT-20260919-何时知道闸.md`（新，主档）
+- `docs/REVIEW-MY-OBJECTS-20260919.md`（改：§3.4「何时知道」由"无门禁"改并指向新档）
+- `tools/worldbook-runtime-sim/Program.cs`（改：新增 time-gate）
+- `tools/_run_gates_20260919.py`（改：五路 → 七路）
+- `tools/_gates_now_20260919.txt`（改：七路读数）
+- `tools/out/time-gate{,−mutant}.json`（新：闸的机器可读判阅）
