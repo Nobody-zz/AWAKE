@@ -1,0 +1,20 @@
+gitignore 兜底：拉黑下载物与可再生本地产物（防 2.3 GB 误入库）
+
+缘起：本仓有公开镜像，而工作区里躺着几处「一 `add` 就是灾难」的东西。
+「绝不 `git add -A`」这条纪律目前全靠人记；本笔把它变成机器兜底。
+
+新增忽略（5 条）：
+- `AWAKE/tools/_reranker_survey/dl/`    —— 9 个 ONNX 重排器候选，**2.2 GB** 下载缓存
+- `AWAKE/tools/*/native/`               —— 一次性探针落下的 onnxruntime 原生运行库
+- `AWAKE/artifacts/`                    —— assemble / 游戏目录部署备份，可再生
+- `AWAKE/_backup_dist_runtime_*/`        —— 部署前的 dist 快照，可再生
+- `_wtest_ps/`                          —— PowerShell 写入探针的 .bin 草稿
+
+⚠️ 特意**没有**写成 `**/native/`：`AWAKE/framework/MarcusAwakeStorage/native/` 那 3 个
+原生库是 09-17 框架线故意入库的随包依赖，写宽了会把它一起拉黑。已在注释里写明这条边界。
+
+入前核验：上述 5 处路径下**已跟踪文件数均为 0**（`git ls-files <path> | wc -l`），不会误伤。
+入后核验：5 处 `git check-ignore` 全部命中；`AWAKE/framework/.../native/` 未被命中、仍 3 个在库；
+未跟踪条目由 367 降到 14。
+
+说明：忽略**不等于删除**。这些文件原地不动，只是 git 不再看它们。

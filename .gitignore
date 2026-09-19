@@ -104,3 +104,20 @@ AWAKE/workspace/
 # Python bytecode caches left behind by the tooling scripts.
 __pycache__/
 *.py[cod]
+
+# Downloaded payloads and regenerable local outputs sitting next to real sources.
+# These are the ones a careless `git add` would sweep in -- and this repo has a
+# public mirror, so a 2.3 GB accident is not a private mistake.
+# Ignoring does NOT delete anything: the files stay on disk untouched.
+#   * tools/_reranker_survey/dl/     -- 9 ONNX reranker candidates, 2.2 GB download cache
+#   * tools/*/native/                -- onnxruntime native runtimes staged by one-off probes
+#     NOTE: do NOT widen this to **/native/ -- AWAKE/framework/MarcusAwakeStorage/native/
+#     holds the framework's shipped native libraries and IS tracked on purpose.
+#   * AWAKE/artifacts/               -- assemble / game-dir-deploy backups, fully regenerable
+#   * AWAKE/_backup_dist_runtime_*/  -- pre-deploy dist snapshots of the runtime service
+#   * _wtest_ps/                     -- PowerShell write-probe scratch (.bin)
+AWAKE/tools/_reranker_survey/dl/
+AWAKE/tools/*/native/
+AWAKE/artifacts/
+AWAKE/_backup_dist_runtime_*/
+_wtest_ps/
