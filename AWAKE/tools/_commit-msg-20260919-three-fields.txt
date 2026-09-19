@@ -1,0 +1,48 @@
+三个字段（status／era／lifecycle）的含义与实际内容 + 探针脚本
+
+起因：甲方问「这三个字段的含义和对应内容？」
+做法：读 schema 的 `$defs` 拿含义；用脚本扫 482 份作者层 yaml 拿实际值；
+      再回生成器确认这些值是**人填的**还是**脚本写死的**（这一步最关键）。
+
+## 含义（来自 `docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json`）
+
+- `status`：条目的**权威等级**，7 档 —— canon／accepted_variant／rumor／reference_only／
+  **future**／needs_review／rejected。
+- `era`：条目的**时代** —— 对象 `{key, start_year?, end_year?, certainty}`；
+  `certainty ∈ exact／bounded／approximate／unknown`。
+- `lifecycle`：条目的**沿革与有效期** —— `supersedes[]`／`split_from[]`／`merged_into`／
+  `event_id`／`revision`／**`valid_from`**／**`valid_to`**；
+  且有条件约束：只要写了沿革（supersedes/split_from/merged_into）或有效期（valid_from/valid_to），
+  **就必须同时给 `event_id` + `revision`**（沿革要有出处与修订号）。
+
+## 实际内容（482 份 yaml，脚本 `tools/_probe_three_fields_20260919.py`）
+
+| 字段 | 实际 | 结论 |
+|---|---|---|
+| `status` | **482/482 全是 `needs_review`** | 零区分度；**且是生成器写死的** |
+| `era` | 全填了，但 `key='current'` 477／`historical` 5；`certainty='bounded'` 476／unknown 3／approximate 3；**带年份的 0 条** | 有字段、无信息；**也是模板写死** |
+| `lifecycle` | **482/482 一条都没用** | 唯一带真时间的那支完全空着 |
+
+## ★ 写死的证据（这是本笔最关键的一步）
+
+在镜像目录的生成脚本里直接搜到了硬编码：
+
+- `"status": "needs_review"` —— `_gen_batch1_20260912.py`／`_gen_batch3_geography_20260913.py:159,160,180`／
+  `_rollout_armor_gen_20260918.py:195` 等 9 个 `_gen_*`／`_rollout_*` 脚本各一行。
+- `"era": {"key": "current", "certainty": "bounded"}` —— `_gen_batch3_geography_20260913.py:182,187`、
+  `_rollout_armor_gen_20260918.py:107`。
+- （旁证：`_rollout_castles1_gen_20260914.py:75` 那版写的是字符串 `"era": "current"`，
+  与现行 schema 要求的对象形状不符 —— 说明这批档后来被 `_apply_*` 脚本归一过，不是同一代形状。）
+
+⇒ **这两个值不是内容作者的判断，是产线盖的同一个戳。**
+
+## 对上一轮建议的修正
+
+上一轮我说"要不要让编译器把 `era`／`status`／`lifecycle` 投影进包"——**顺序错了**。
+就算改了编译器，投影出来的也只是**三个常量**（`current` / `needs_review` / 无）。
+⇒ 真正该先动的是"**让这三个字段先有信息**"：`era` 的年份、`lifecycle.valid_from/valid_to`，
+以及 `status` 从一个写死的戳变成真判断。**否则接进运行时只是把常量搬了个家。**
+
+## 本笔内容
+
+- `tools/_probe_three_fields_20260919.py`（新，可重跑：读 schema 不读，只扫 482 份 yaml 出分布）
