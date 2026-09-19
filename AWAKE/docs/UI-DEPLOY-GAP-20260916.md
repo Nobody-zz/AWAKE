@@ -74,3 +74,39 @@
   它引用的 Brush（`Awake.Panel.Main960` 等）在游戏里一律解析不到，贴图也读不到
   ⇒ 推上去只会得到一块**没有底、没有框、没有字色**的东西，比现在那版更难看出问题。
   **顺序应是：先补清单 ＋ 出 `.tpac`，再推面板，再开游戏看。**
+
+---
+
+## 5. 追加（2026-09-19）：§2 的缺口 2 被证伪了一半，另一半更硬了
+
+本条**不改写上面任何一句**，只追加后来的取证结论。全文见
+`docs/UI-SPRITE-ATLAS-LOOKUP-20260919.md`。
+
+**背景**：另一条线（Leverage）判定「图集放错目录」，把图集从 `AssetSources/` 摆到
+`GUI/SpriteSheets/<分类名>/`，并据此认为「Import 出 `.tpac` 不是必需的」。
+**复检结论：命名规则对，落点结论错。**
+
+**追加的三条硬事实**：
+
+1. **摆完没有生效**。目录 mtime 17:14，17:21 启动、现在还在跑的那一局
+   （`rgl_log_33016`）报的还是 `Cannot find texture: ui_leverage_1`。
+   09-19 那 5 次启动全部同句。文件本身合法（128×128，与声明对上）。
+2. **原版根本不从 `GUI/SpriteSheets/` 读**。`Modules/Native/GUI/` **没有这个目录**；
+   而 `Native/AssetPackages/gauntlet_ui.tpac`（323 MB）里搜得到
+   `ui_conversation_1` / `ui_barter_1` / `ui_bannericons_1` / `ui_bannerbuilder_1`。
+   **名字在包里。**
+3. **全机 108 个模块，29 个有 `AssetPackages/`，只有 2 个有 `GUI/SpriteSheets/`，
+   这 2 个没有任何成功记录。** 唯一资产管线齐全的样本 `SimpleBank` 走的是
+   `AssetPackages/pack0.tpac`（内含 `Bank_1` ＋ `$BASE/…/AssetSources/GauntletUI/Bank_1.png` 源路径）。
+   ⇒ **`AssetSources/` 是源、不是运行时落点；AWAKE 现在放的就是那里，这一点是对的。**
+
+**修正 §2 的表述**（原句「Import 出 `.tpac`…全链唯一不能脚本化的一步」）：
+
+- 「必须要有 tpac」这个方向，**今天的证据是加强的**，不是推翻。
+- 但「**只能**手点 Import」这句**收窄**：`SimpleBank` 那张 `_tex.tpac` 只有 **479 字节**，
+  内容就是「名字 ＋ 源路径 ＋ 格式」。若这种壳能被运行时接受，这一步就能脚本化。
+  **未验，别当结论。**
+
+**给 AWAKE 侧的动作**：`GUI/SpriteSheets/` 现在**是空的，别往里放东西**；
+三张图集（`ui_awake_button_1` / `frame_1` / `ornament_1`）已在 `AssetSources/GauntletUI/`
+且尺寸与声明逐一对上，**保持原位**。

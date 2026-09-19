@@ -1,0 +1,18 @@
+UI 线产出入库（09-19）：图集落点复检 + 两条探针
+
+内容（4 项，落库归档；不表示由本线撰写）：
+- docs/UI-SPRITE-ATLAS-LOOKUP-20260919.md（新）—— 复检「图集放错目录」这一判定的取证全文。
+  四条一手证据：① 摆到 GUI/SpriteSheets/ 当场没生效（09-19 五次启动全报 Cannot find texture）；
+  ② 原版 Modules/Native/GUI/ 根本没有 SpriteSheets 目录，而 AssetPackages/gauntlet_ui.tpac
+  （323 MB）里搜得到 ui_conversation_1 / ui_barter_1 等名字；③ 全机 108 个模块只有 2 个用
+  SpriteSheets，且这 2 个都没有成功记录；④ 唯一「四件套齐全」的样本 SimpleBank 走的是 tpac。
+  附 §7 给 Leverage 的可粘贴交接。
+- tools/awake-ui-lab/_probe_sprite_sheet_path_20260919.py（新）—— DLL 字面量探针
+- tools/awake-ui-lab/_probe_sprite_tpac_20260919.py（新）—— tpac 内容对比探针
+- docs/UI-DEPLOY-GAP-20260916.md（追加 §5，不改写旧文）—— 指向新档；
+  并把旧句「Import 出 tpac 是全链唯一不能脚本化的一步」收窄：方向「必须要有 tpac」加强，
+  「只能手点」待验（479 字节纯元数据壳 tpac 是否被运行时接受，未验）。
+
+AWAKE 侧现状（该档一手读数）：Modules/AWAKE/GUI/SpriteSheets/ 存在但是空 ⇒ 别往里放；
+三张图集在 AssetSources/GauntletUI/ 且尺寸对得上 ⇒ 保持原位；
+缺的是 Modules/AWAKE/AssetPackages/*.tpac。
