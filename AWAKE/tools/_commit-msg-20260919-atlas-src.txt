@@ -1,0 +1,19 @@
+美术源图入库：AWAKE 三张 UI 图集（AssetSources）
+
+内容（AWAKE/AssetSources/GauntletUI/，3 张 png，2.8 MB）：
+- ui_awake_button_1.png    2048×64    RGBA8   49,642 B
+- ui_awake_frame_1.png     4096×1024  RGBA8   2,720,078 B
+- ui_awake_ornament_1.png  4096×128   RGBA8   54,906 B
+
+入前已验：PNG 8 字节魔数 + IHDR 合法；尺寸与包内 <SpriteSheetSize> 声明逐一对上；
+字节数与 09-19 取证档记的三个值完全一致。
+
+**本笔更正 09-18 的一次判断（方向反转）**：
+这三张此前被我排除在入库之外，理由写的是「疑为上游暂存，待美术线确认」
+（见 `tools/_bucket_excluded.txt`，370 项之一）。
+09-19 UI 线查清：**AssetSources/ 是图的源、不是运行时的落点**
+（运行时读模块内 AssetPackages/*.tpac；SimpleBank 那份四件套齐全的样本，
+tpac 里读出的就是 `$BASE/Modules/SimpleBank/AssetSources/GauntletUI/Bank_1.png`）。
+⇒ 源图本就该留在版本管理里，**该排除作废**。
+
+按项目「追加修正、不改写历史」的惯例：`_bucket_excluded.txt` 保持原样不动，以本笔为准。
