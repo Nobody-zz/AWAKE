@@ -1237,17 +1237,41 @@ private static void RunMessengerHistorySmoke()
 		PersonaTagRegistry registry = new PersonaTagRegistry(registryDocument);
 		PersonaDefinition definition;
 		if (!PersonaDataLoader.TryParseDefinition(
-			JObject.Parse("{\"id\":\"persona.test\",\"status\":\"approved\",\"templateVersion\":\"persona-load.v2\",\"sourcePackId\":\"free-experiment\",\"core\":\"稳定核心\",\"summary\":\"角色摘要\",\"publicDescription\":\"对外保持从容。\",\"privateDescription\":\"私下容易失措。\",\"contradictionDescription\":\"坚强与脆弱并存。\",\"foodPreference\":\"武陵炒饭\",\"selfClaimRules\":[\"对外只自称我。\"],\"realSelfBehaviors\":[\"独处时放下戒备。\"],\"selfClaimExamples\":[\"我会如何回应？\"],\"bundles\":[\"bundle.test\"]}"),
+			JObject.Parse("{\"id\":\"persona.test\",\"status\":\"approved\",\"templateVersion\":\"persona-load.v2\",\"sourcePackId\":\"free-experiment\",\"core\":\"稳定核心\",\"summary\":\"角色摘要\",\"publicDescription\":\"对外保持从容。\",\"privateDescription\":\"私下容易失措。\",\"contradictionDescription\":\"坚强与脆弱并存。\",\"foodPreference\":\"武陵炒饭\",\"selfClaimRules\":[\"对外只自称我。\"],\"realSelfBehaviors\":[\"独处时放下戒备。\"],\"selfClaimExamples\":[\"我会如何回应？\"],\"tags\":[{\"id\":\"trait.test\"},{\"id\":\"boundary.test\"}],\"bundles\":[\"bundle.test\"]}"),
 			"fallback",
 			"smoke",
 			out definition)) throw new InvalidOperationException("persona definition should parse");
 		PersonaContext context = new PersonaContext { CharacterId = "hero_test", HeroName = "测试角色", Role = "hero" };
 		PersonaGenerationResult first = PersonaDslGenerator.Generate(definition, registry, context, "", "", 4096);
 		PersonaGenerationResult second = PersonaDslGenerator.Generate(definition, registry, context, "", "", 4096);
-		if (!first.IsUsable || first.UsedLegacyFallback || !first.Dsl.Contains("[PERSONA_LOAD]") || !first.Dsl.Contains("TEMPLATE_VERSION=\"persona-load.v2\"") || !first.Dsl.Contains("STATUS=\"approved\"") || !first.Dsl.Contains("SOURCE_PACK_ID=\"free-experiment\"") || !first.Dsl.Contains("[PERSONA_CONSTRAINTS]") || !first.Dsl.Contains("TRAIT_TEST") || !first.Dsl.Contains("BOUNDARY_TEST") || !first.Dsl.Contains("[PERSONA_IDENTITY]") || !first.Dsl.Contains("[PERSONALITY_PUBLIC]") || !first.Dsl.Contains("DATA_CN=\"对外保持从容。\"") || !first.Dsl.Contains("DATA_CN=\"对外只自称我。\"") || !first.Dsl.Contains("DATA_CN=\"我会如何回应？\"") || !first.Dsl.Contains("DATA_CN=\"独处时放下戒备。\"") || first.Dsl.Contains("[PERSONALITY_SUMMARY]") || first.Dsl.Contains("[SELF_IDENTITY]") || first.Dsl.Contains("[FOOD_PREFERENCE]") || first.Dsl.Contains("武陵炒饭") || first.Dsl.Contains("<persona:v1"))
-		if (!first.IsUsable || first.UsedLegacyFallback || !first.Dsl.Contains("[PERSONA_LOAD]") || !first.Dsl.Contains("TEMPLATE_VERSION=\"persona-load.v2\"") || !first.Dsl.Contains("STATUS=\"approved\"") || !first.Dsl.Contains("SOURCE_PACK_ID=\"free-experiment\"") || !first.Dsl.Contains("[PERSONA_CONSTRAINTS]") || !first.Dsl.Contains("TRAIT_TEST") || !first.Dsl.Contains("BOUNDARY_TEST") || !first.Dsl.Contains("[PERSONA_IDENTITY]") || !first.Dsl.Contains("[PERSONALITY_PUBLIC]") || !first.Dsl.Contains("DATA_CN=\"对外保持从容。\"") || !first.Dsl.Contains("DATA_CN=\"对外只自称我。\"") || !first.Dsl.Contains("DATA_CN=\"我会如何回应？\"") || !first.Dsl.Contains("DATA_CN=\"独处时放下戒备。\"") || first.Dsl.Contains("[PERSONALITY_SUMMARY]") || first.Dsl.Contains("[SELF_IDENTITY]") || first.Dsl.Contains("[FOOD_PREFERENCE]") || first.Dsl.Contains("武陵炒饭") || first.Dsl.Contains("<persona:v1"))
+		// 原先是一条约 22 项的 || 链，失败只说“整条不成立”，不说是哪一项（见
+		// docs/REPORT-OFFLINE-GATE-FULLCHAIN-20260915.md 第 2 条“诊断粒度不足”）。
+		// 这里逐项记录，异常消息直接列出未满足项，并附上真实 DSL 便于金标比对。
+		List<string> templateFailures = new List<string>();
+		Action<string, bool> require = (label, satisfied) => { if (!satisfied) templateFailures.Add(label); };
+		require("usable", first.IsUsable && !first.UsedLegacyFallback);
+		require("contains:[PERSONA_LOAD]", first.Dsl.Contains("[PERSONA_LOAD]"));
+		require("contains:TEMPLATE_VERSION=\"persona-load.v2\"", first.Dsl.Contains("TEMPLATE_VERSION=\"persona-load.v2\""));
+		require("contains:STATUS=\"approved\"", first.Dsl.Contains("STATUS=\"approved\""));
+		require("contains:SOURCE_PACK_ID=\"free-experiment\"", first.Dsl.Contains("SOURCE_PACK_ID=\"free-experiment\""));
+		require("contains:[PERSONA_CONSTRAINTS]", first.Dsl.Contains("[PERSONA_CONSTRAINTS]"));
+		require("contains:TRAIT_TEST", first.Dsl.Contains("TRAIT_TEST"));
+		require("contains:BOUNDARY_TEST", first.Dsl.Contains("BOUNDARY_TEST"));
+		require("contains:[PERSONA_IDENTITY]", first.Dsl.Contains("[PERSONA_IDENTITY]"));
+		require("contains:[PERSONALITY_PUBLIC]", first.Dsl.Contains("[PERSONALITY_PUBLIC]"));
+		require("contains:publicDescription", first.Dsl.Contains("DATA_CN=\"对外保持从容。\""));
+		require("contains:selfClaimRules", first.Dsl.Contains("DATA_CN=\"对外只自称我。\""));
+		require("contains:selfClaimExamples", first.Dsl.Contains("DATA_CN=\"我会如何回应？\""));
+		require("contains:realSelfBehaviors", first.Dsl.Contains("DATA_CN=\"独处时放下戒备。\""));
+		require("excludes:[PERSONALITY_SUMMARY]", !first.Dsl.Contains("[PERSONALITY_SUMMARY]"));
+		require("excludes:[SELF_IDENTITY]", !first.Dsl.Contains("[SELF_IDENTITY]"));
+		require("excludes:[FOOD_PREFERENCE]", !first.Dsl.Contains("[FOOD_PREFERENCE]"));
+		require("excludes:foodPreference-value", !first.Dsl.Contains("武陵炒饭"));
+		require("excludes:<persona:v1", !first.Dsl.Contains("<persona:v1"));
+		if (templateFailures.Count > 0)
 		{
-			throw new InvalidOperationException("approved persona should generate canonical authored DSL");
+			Console.WriteLine("TEMPLATE_ACTUAL_DSL " + Newtonsoft.Json.JsonConvert.ToString(first.Dsl));
+			throw new InvalidOperationException("approved persona should generate canonical authored DSL: failed=" + string.Join(", ", templateFailures));
 		}
 		if (!StringComparer.Ordinal.Equals(first.Dsl, second.Dsl) || !StringComparer.Ordinal.Equals(first.Fingerprint, second.Fingerprint))
 			throw new InvalidOperationException("persona generation should be deterministic");
@@ -1283,8 +1307,33 @@ private static void RunMessengerHistorySmoke()
 		};
 		PersonaGenerationResult result = PersonaDslGenerator.Generate(definition, registry, context, "", "", 4096);
 		string expected = (string)fixture["expectedDsl"] ?? string.Empty;
-		if (!result.IsUsable || result.UsedLegacyFallback || !StringComparer.Ordinal.Equals(expected, result.Dsl)) throw new InvalidOperationException("AWAKE output must match the shared canonical fixture");
+		if (!result.IsUsable || result.UsedLegacyFallback || !StringComparer.Ordinal.Equals(expected, result.Dsl))
+		{
+			Console.WriteLine("FIXTURE_ACTUAL_DSL " + Newtonsoft.Json.JsonConvert.ToString(result.Dsl));
+			throw new InvalidOperationException("AWAKE output must match the shared canonical fixture: " + DescribeFixtureDivergence(expected, result.Dsl));
+		}
 		Console.WriteLine("PASS shared Persona golden fixture smoke");
+	}
+	/// <summary>
+	/// 逐行比对金标与现实输出，报出前若干处分歧。
+	/// 原先只抛一句 "must match the shared canonical fixture"，看不出差在段序还是差在令牌，
+	/// 导致该红长期无法一眼定位；这里把分歧点直接带进异常消息。
+	/// </summary>
+	private static string DescribeFixtureDivergence(string expected, string actual)
+	{
+		string[] expectedLines = (expected ?? string.Empty).Split('\n');
+		string[] actualLines = (actual ?? string.Empty).Split('\n');
+		List<string> divergences = new List<string>();
+		int count = Math.Max(expectedLines.Length, actualLines.Length);
+		for (int index = 0; index < count && divergences.Count < 5; index++)
+		{
+			string left = index < expectedLines.Length ? expectedLines[index] : "<missing line>";
+			string right = index < actualLines.Length ? actualLines[index] : "<missing line>";
+			if (!StringComparer.Ordinal.Equals(left, right))
+				divergences.Add("line " + (index + 1).ToString() + " fixture=[" + left + "] actual=[" + right + "]");
+		}
+		if (divergences.Count == 0) return "no line divergence, lines=" + expectedLines.Length + "/" + actualLines.Length;
+		return "divergences=" + divergences.Count.ToString() + " | " + string.Join(" | ", divergences);
 	}
 	/// <summary>
 	/// 定位共享 Persona 金标样本。2026-09-11 工作区拆分后，样本位于权威副本
@@ -1308,7 +1357,7 @@ private static void RunMessengerHistorySmoke()
 	{
 		PersonaPersistenceEnvelope envelope = new PersonaPersistenceEnvelope
 		{
-			CharacterId = "hero_test",
+			CharacterId = "hero:test",
 			Timeline = new PersonaTimelineIdentity
 			{
 				CampaignId = "campaign_test",
@@ -1329,6 +1378,13 @@ private static void RunMessengerHistorySmoke()
 		if (!PersonaPersistenceValidator.TryValidateEnvelope(envelope, out error)) throw new InvalidOperationException(error);
 		string storageKey;
 		if (!PersonaStorageKey.TryBuild(envelope.Timeline, envelope.CharacterId, out storageKey, out error) || !storageKey.Contains("branch_root")) throw new InvalidOperationException("persona storage key should include branch");
+		string rejectedKey;
+		if (PersonaStorageKey.TryBuild(envelope.Timeline, "hero_test", out rejectedKey, out error)
+			|| !StringComparer.Ordinal.Equals(error, "persona.storage.subject_key_invalid"))
+			throw new InvalidOperationException("persona storage key must reject a subject id without the hero: prefix");
+		if (PersonaStorageKey.TryBuild(envelope.Timeline, "hero:", out rejectedKey, out error)
+			|| !StringComparer.Ordinal.Equals(error, "persona.storage.subject_key_invalid"))
+			throw new InvalidOperationException("persona storage key must reject an empty subject id after the hero: prefix");
 		if (!PersonaPersistenceValidator.IsAcceptedForProjection(envelope, 2, 2)
 			|| PersonaPersistenceValidator.IsAcceptedForProjection(envelope, 2, 3))
 			throw new InvalidOperationException("projection watermark gate should be per projection");
@@ -1477,11 +1533,19 @@ private static void RunMessengerHistorySmoke()
 		}
 		Console.WriteLine("PASS persona.anchor.snapshot_fail_closed");
 
-		if (Array.IndexOf(AiTaskConstants.StorageNamespaceIds, AiTaskConstants.PersonaStateNamespace) >= 0)
+		// G3-B D-4 要求 PersonaStateNamespace 纳入默认 required namespace 集合，
+		// 且不得以“只打开 Persona namespace”替换既有 store；session ready 时由既有
+		// AwakeRuntime readiness path 一次性打开完整集合。
+		// 依据：docs/PLAN-AWAKE-G3-B-PERSONA-PERSISTENCE-20260911.md（status=revision_4_1_implemented_approved_e2，
+		// plan_sha256=3E8DCCB6…856F）、docs/evidence/AWAKE-G3-B-IMPLEMENTATION-E2-20260911.md、
+		// docs/review-state/AWAKE-G3-B-PERSONA-PERSISTENCE-IMPLEMENTATION-20260911.review.json（verdict=APPROVED）。
+		// 此前的反断言出自 2026-09-10 旧设计（PLAN-AWAKE-PERSONA-PERSISTENCE-20260910.md:179），
+		// 已被 09-11 的 G3-B 决策取代，属陈旧不变量记录，故在此反转。
+		if (Array.IndexOf(AiTaskConstants.StorageNamespaceIds, AiTaskConstants.PersonaStateNamespace) < 0)
 		{
-			throw new InvalidOperationException("persona state namespace must not be in the default storage open list.");
+			throw new InvalidOperationException("persona state namespace must be in the default storage open list.");
 		}
-		Console.WriteLine("PASS persona.anchor.namespace_not_default");
+		Console.WriteLine("PASS persona.anchor.namespace_default_required");
 
 		Console.WriteLine("PASS persona anchor smoke");
 	}
