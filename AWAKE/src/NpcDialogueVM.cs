@@ -53,6 +53,17 @@ internal sealed class NpcDialogueVM : ViewModel
     private bool _isLoading;
     private bool _closed;
 
+    /// <summary>
+    /// P1-3：本次发送的取消源。关面板、或玩家又发了一条时取消它，让这一回合的**前置阶段**
+    /// （存储读、状态刷新、提示词构建）当场停下，而不是任它跑完。
+    /// 服务侧 `SendAsync` 对取消已有完整路径
+    /// （`catch (OperationCanceledException)` → `ClearActive()` → 返回 `npc_dialogue.cancelled`），
+    /// 所以这里只负责把取消信号递进去、再兜住"取消不是错误"。
+    /// ⚠ 与 `AwakeMessengerVM` 对齐：信使面板一开始就往 `SendAsync` 传会话 token（`AwakeMessengerVM.cs:788`），
+    /// 本面板原来传 `CancellationToken.None`，两侧不一致。
+    /// </summary>
+    private CancellationTokenSource _sendCts;
+
     [DataSourceProperty]
     public string TitleText
     {
@@ -698,7 +709,15 @@ internal sealed class NpcDialogueVM : ViewModel
         StreamingText = string.Empty;
         AddChatRow(AwakeLocalization.Resolve("awake.ui.you", "你"), text);
         IsLoading = true;
-        _ = SendAsyncSafe(text);
+        // 新一条先立自己的取消源，再取消上一条 —— 顺序反了会把刚建的也取消掉。
+        CancellationTokenSource previousSend = _sendCts;
+        _sendCts = new CancellationTokenSource();
+        _ = SendAsyncSafe(text, _sendCts.Token);
+        if (previousSend != null)
+        {
+            try { previousSend.Cancel(); }
+            catch (ObjectDisposedException) { }
+        }
     }
 
     public void ExecuteSetChatMode()
@@ -714,14 +733,27 @@ internal sealed class NpcDialogueVM : ViewModel
     internal new void OnFinalize()
     {
         _closed = true;
+        CancellationTokenSource sendCts = _sendCts;
+        if (sendCts != null)
+        {
+            try { sendCts.Cancel(); }
+            catch (ObjectDisposedException) { }
+        }
         _service?.CancelActiveAsync();
     }
 
-    private async Task SendAsyncSafe(string text)
+    private async Task SendAsyncSafe(string text, CancellationToken cancellationToken)
     {
         try
         {
-            await _service.SendAsync(text, CancellationToken.None).ConfigureAwait(false);
+            await _service.SendAsync(text, cancellationToken).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            // 关面板、或玩家又发了一条 ⇒ 正常取消路径，不是错误。
+            // （服务侧通常已把取消转成 `npc_dialogue.cancelled` 返回值，这里只是兜底。）
+            AwakeLog.Write("npc_dialogue_vm_send_cancelled");
+            AwakeUiDispatcher.Enqueue(() => IsLoading = false);
         }
         catch (Exception ex)
         {

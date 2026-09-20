@@ -876,6 +876,11 @@ internal static class AwakeRuntime
                 AwakeLog.Write("world_state_storage_open_failed required=" + string.Join(",", targetNamespaces));
                 await RetireStandaloneWorldStateStoreAsync(candidate).ConfigureAwait(false);
                 candidate = null;
+                // 本次要求的命名空间凑不齐 ⇒ 那个**同样凑不齐**的旧 owner 也不得继续对外发布，
+                // 否则调用方会拿到一个"连本次要求都覆盖不了"的世界状态，并按"已就绪"对待它。
+                // 判据 `g3-s0-focused-readiness`（`AWAKE.Tests/Program.cs:3795`）明文要求：
+                // 「Missing required namespace must not reuse the stale owner.」
+                await RetireUnsatisfiedExistingWorldStateStoreAsync(existing, sessionGeneration).ConfigureAwait(false);
                 return false;
             }
 
@@ -1191,6 +1196,28 @@ internal static class AwakeRuntime
                 RetiredWorldStateDrains.RemoveAt(i);
             }
         }
+    }
+
+    /// <summary>
+    /// 本次要求的命名空间没凑齐时，把那个**同样凑不齐**的旧 owner 也退役掉（清发布 ＋ 异步 drain），
+    /// 不留着它对外冒充"世界状态已就绪"。
+    /// 只在它仍是当前发布的 owner、且会话代次未变时动手 —— 否则说明别人已经换过，不归这里管。
+    /// </summary>
+    private static async Task RetireUnsatisfiedExistingWorldStateStoreAsync(WorldStateStore existing, int sessionGeneration)
+    {
+        if (existing == null) return;
+        lock (StaticGate)
+        {
+            if (_sessionEnded
+                || _worldStateDrainFailed
+                || _sessionGeneration != sessionGeneration
+                || !ReferenceEquals(_worldStateStore, existing))
+            {
+                return;
+            }
+            _worldStateStore = null;
+        }
+        await RetireStandaloneWorldStateStoreAsync(existing).ConfigureAwait(false);
     }
 
     private static async Task RetireStandaloneWorldStateStoreAsync(WorldStateStore store)

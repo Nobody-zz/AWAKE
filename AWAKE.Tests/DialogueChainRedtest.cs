@@ -218,12 +218,25 @@ internal static class DialogueChainRedtest
         Require(deployed != null,
             "deployed worldbook manifest not found; expected <game>\\Modules\\AWAKE\\ModuleData\\Worldbook\\manifest.json");
         JObject deployedParsed = JObject.Parse(File.ReadAllText(deployed));
-        Require(StringComparer.Ordinal.Equals((string)deployedParsed["schemaVersion"], "awake.worldbook.v2"),
-            "deployed manifest schemaVersion must be awake.worldbook.v2, got=" + (string)deployedParsed["schemaVersion"]);
+        // 形态以 `docs/worldbook-studio-plan/RUNTIME-MAPPING-CONTRACT.md`〈仓库侧包形态〉为准：
+        // 09-14 拍板并落地的是 **registry.v1 存根 ＋ packages/<universe>/ 三件套**，
+        // 仓库侧与游戏目录两侧都按此形态投送过（09-14 23:39／09-15 16:57）。
+        // 本行原写 `awake.worldbook.v2`（更早的试点形态）—— 判据没跟着决定走，属**判据陈旧**，不是实现回退。
+        Require(StringComparer.Ordinal.Equals((string)deployedParsed["schemaVersion"], "awake.worldbook.registry.v1"),
+            "deployed manifest schemaVersion must be awake.worldbook.registry.v1, got=" + (string)deployedParsed["schemaVersion"]);
+        // `registry.v1` 是**存根**，它指向 `packages/<universe>/` 三件套 ⇒ 校验必须走两步：
+        // 「Load 存根 → Select 选包（顺带重算三 hash）→ LoadVerified」。
+        // 原实现拿存根直接 `ReadAndVerify`，会报 `WB2-SCHEMA-UNSUPPORTED:manifest`
+        // —— 那是把存根当包 manifest 用，属**判据用错入口**，不是包坏了。
+        WorldbookPackageRegistry deployedRegistry = WorldbookPackageRegistry.Load(deployed);
+        WorldbookActivationState deployedActivation = deployedRegistry.Select();
+        Require(deployedRegistry.LastSelectedPackage != null,
+            "deployed registry must select a universe package; packageId=" + deployedActivation.PackageId);
         WorldKnowledgeSnapshot deployedSnapshot =
-            WorldKnowledgeLoader.LoadVerified(WorldbookPackageIntegrity.ReadAndVerify(deployed));
+            WorldKnowledgeLoader.LoadVerified(deployedRegistry.LastSelectedPackage);
         Require(deployedSnapshot.Entries.Count > 0, "deployed package must expose at least one entry");
-        Console.WriteLine("PASS dialogue chain worldbook deployed redtest entries=" + deployedSnapshot.Entries.Count);
+        Console.WriteLine("PASS dialogue chain worldbook deployed redtest entries=" + deployedSnapshot.Entries.Count
+            + " package=" + deployedActivation.PackageId);
     }
 
     private static string ResolvePilotManifest()
