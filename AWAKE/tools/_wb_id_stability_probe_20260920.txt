@@ -1,0 +1,30 @@
+============================================================================
+世界书条目 id 稳定性探针 · 2026-09-20
+同源规则：RuntimePackageCompiler.cs:504 / :508（StableEntry + Sanitize）
+============================================================================
+
+[1] 产物侧（真包）
+    entries 总数            = 482
+    带 awake:entry: 前缀     = 482
+    前缀不符（异形 id）      = 0 []
+    非规范形（sanitize 会改写它） = 0 []
+    域分布 top: geography=411, war=37, economy=21, politics=7, culture=6
+
+[2] 源侧（authoring 档）
+    档数（有 id: 的 .yaml） = 558
+    前缀分布: doc=558
+
+[3] 对照（产物 ← 源，按同源规则复算尾串）
+    交集（源与产物对得上）  = 482
+    产物有 / 源侧算不出     = 0
+    源有 / 产物没有（未编译）= 76
+
+[4] 危险样本：源档 id 里含会被规则改写的内容
+    会被 sanitize 改写的源 id = 0
+
+[5] 若改 slug / 改 domain，谁跟着动（示例）
+    产物 awake:entry:culture.tales-charas-origins  ⇔ 源 doc.culture.tales-charas-origins
+    产物 awake:entry:culture.tales-dawn-taboo  ⇔ 源 doc.culture.tales-dawn-taboo
+    产物 awake:entry:culture.tales-husn-fulq  ⇔ 源 doc.culture.tales-husn-fulq
+    ⇒ 改 slug（点号后那段）或改 domain（点号前那段），两边同一串一起变，id 随之变。
+    ⇒ 改 title / aliases / summary / assertions：不在这条链上，id 不变。
