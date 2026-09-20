@@ -100,6 +100,34 @@
 
 ---
 
+## 六、A 批次执行结果（09-20 14:4x 补 · 甲方令「做离线A批次」）
+
+### ✅ 做完 3 件（提交 `3db0917`；测试套件 **64/64 全绿**，`PASS ALL Awake.SdkSmoke`，退出码 0）
+
+| 项 | 结果 |
+|---|---|
+| **A2** `g3-s0-focused-readiness` 红 | ✅ 已修。真因：候选打开失败时，那个**同样凑不齐**的旧 owner 没被退役、继续对外冒充"已就绪"。新增 `RetireUnsatisfiedExistingWorldStateStoreAsync`（清发布 ＋ 异步 drain，仅在"仍是当前 owner 且会话代次未变"时动手）。**变异检验通过**（注释掉调用 ⇒ 重回红） |
+| **A3** P1-3 | ✅ 已修。`NpcDialogueVM` 增 `_sendCts`：`ExecuteSend` 先立新的再取消旧的、`OnFinalize` 取消、`SendAsyncSafe` 接 token 且把取消与错误分开记日志。**服务侧无需改**（`SendAsync` 本就 `catch (OperationCanceledException)` → `ClearActive()` → 返回 `npc_dialogue.cancelled`）。**无回归** |
+| **A6** `dialogue-chain-redtest` | ✅ 已修。**判据陈旧两处，均非实现回退**：① `:221` 期望写 `awake.worldbook.v2`，09-14 定案落地的是 `registry.v1`；② `registry.v1` 是**存根**，原实现拿存根直接 `ReadAndVerify` ⇒ 报 `WB2-SCHEMA-UNSUPPORTED:manifest`，应走「Load 存根 → Select 选包（重算三 hash）→ LoadVerified」。**变异检验通过**（`Select` 传不存在的包 id ⇒ 红 `WB2-WORLD-CONFLICT:requested_package_missing`） |
+
+### ❌ 另 3 件经实测证明**不在 A 档范围内**（原判断有误，此处更正）
+
+| 项 | 实测结论 |
+|---|---|
+| **A1 事件落盘** | ❌ **不是"搬一个文件"**。① `marcus_repo` 全树**没有** durable/spool 源文件（`find -iname '*durable*' -o -iname '*spool*'` 零命中）；② `InMemoryEventService`（`HostApi.cs:909`）本身就是**进程内 pub/sub**（`Dictionary<string, List<Action<EventEnvelope>>>`），要"Durable"等于**新写一个框架层组件**（落盘 ＋ 重放）；③ 玩法侧只有 **1 处**调用（`WorldStateStore.cs:2502`）。⇒ **升级为独立项**，须先定"落盘形态"（走 storage 面？新开 spool 文件？） |
+| **A4 工具候选** | ❌ **不是"接一行"**。框架件是 `IToolCandidateService.Validate(candidate, allowedToolIds, context, currentTurn, …)`（`HostApi.cs:672`）—— 接它的前提是**玩法侧先有"工具候选"这条流程**（什么算候选、允许哪些工具、校验过了怎么执行）。⇒ 属**功能开发**，要先设计再接线 |
+| **A5 写信入口** | ⚠️ **不是 bug**。`CanWriteLetter = … && !contact.IsNearby` ⇒「**当面谈／远方写信**」是**有意设计**（UI 文案就写着「远方联系人；可写信。」`AwakeMessengerVM.cs:701`）。且 09-13 记的那条依据 `DeliveryDelayFor` 在**现行 `src` 检索零命中** ⇒ 该记录已过时，**不据此动手** |
+
+### ⚠ 额外更正（本次实测）
+
+游戏目录那份世界书包当前是 **482 档**（红测输出：`entries=482 package=awake:worldbook.calradia`）
+⇒ **roadmap 现状节与本文 §四 C1 记的"游戏目录那份还停 448"已过时**。
+⇒ C1 的选项应改写为：**要不要把 09-20 新编的 558 档（军事 25 ＋ 经济 40 ＋ 暗面 11 ＋ 互引边 1286 条）投上去**。
+
+**B 档（必开一次游戏）与 C 档（等甲方一句话）其余项不变。**
+
+---
+
 ## 附 · 本次实测的证据出处
 
 - 测试读数：09-20 14:04 重编（`build.ps1 -Configuration Debug`）后实跑 `AWAKE.Tests/bin/Debug/net472/Awake.SdkSmoke.exe`，`total=64 passed=62 failed=2`，退出码 1

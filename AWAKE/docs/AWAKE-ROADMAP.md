@@ -126,7 +126,7 @@
 |---|---|---|
 | 主干 · 运行时 | 构建 0 错 0 警；production-smoke 31/31；`AWAKE.Tests` 61 例（2 条跨线红） | **✅ 已进游戏**（09-14 23:14，见上「真机第一次跑」）。**09-15 已移交状态**；本轮＝① 收口四个缺陷 → ② 工具候选（A）→ ③ 四面加注入口（同构）；见上「09-15 代码线移交」 |
 | 角色卡 | 76/76 五道门；红队 0/17；盲评脱名 77% | 断在**投送**：游戏目录只有 **1 张**卡、**8 条**标签（仓库侧 39）；审批 **76 张全 draft** |
-| 世界书 | 448 档（**⚠️ 09-18 凌晨已为 482，见上方时点格**）；矩阵 133/133；编译包 `Valid: true`；仓库侧包已组出 | 只差**真机确认**：游戏目录已是 registry ＋ `packages/calradia/`，进游戏看 `Awake.log` 的 `worldbook_runtime_initialized … entries=`**（读今天的包应是 482；判法见下方「四个断点」第 3 条末尾的注）**。<br>⚠️ **09-18 实测：游戏目录那份还是 `448`**（`packages/calradia/*` mtime 09-17 17:05，`contentHash aa3795ad…`）—— v13f(451)／v14(461)／v15(482) **都没再投送**；要真机看到 482，得先跑 `tools/deploy_worldbook_to_game.ps1 -ConfirmDeploy` |
+| 世界书 | 448 档（**⚠️ 09-18 凌晨已为 482，见上方时点格**）；矩阵 133/133；编译包 `Valid: true`；仓库侧包已组出 | 只差**真机确认**：游戏目录已是 registry ＋ `packages/calradia/`，进游戏看 `Awake.log` 的 `worldbook_runtime_initialized … entries=`**（读今天的包应是 482；判法见下方「四个断点」第 3 条末尾的注）**。<br>✅ **09-20 14:4x 实纠正：游戏目录那份已是 `482`** —— 红测直读（`DialogueChainRedtest` 走 registry 选包 ＋ 重算三 hash）：`entries=482 package=awake:worldbook.calradia`。⇒ 上面那句"09-18 实测仍是 448"**已过时**。真机确认时 `entries=` 应是 **482**；而 09-20 新编的 **558 档**（军事 25 ＋ 经济 40 ＋ 暗面 11 ＋ 互引边 1286 条）**尚未投送**，要上须跑 `tools/deploy_worldbook_to_game.ps1 -ConfirmDeploy` |
 | UI 编辑层 | 框架 / Prefab / Brush 落地；Lab 6 面板 0 error | **部分上屏**：运行时肖像纹理已上屏（212×360，09-14）；面板与图标待验 |
 | 美术资产（**现役会话＝「本地生图」**） | 产线跑通；官方 UI 贴图已从 `.tpac` 抠出；**09-15 交付 4 件 UI 控件资产**（画位人形／画位框／按钮三态／busy 图标，甲方已验收） | 三件事挡着：**Import 出 `.tpac`**（全链唯一不能脚本化）；**28 张图标做完了没接线**；**`ui_awake_frame` 图集已满**（4088/4096），212×360 画位框装不下 |
 
