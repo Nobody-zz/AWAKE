@@ -73,6 +73,15 @@
 >   图集**必须走 `AssetPackages/*.tpac`**；AWAKE 现在**没有** `AssetPackages/`。原句「Import 出 tpac 是**唯一**不能脚本化的
 >   一步」中的"**只能**手点"要**收窄**（479 字节的纯元数据壳 tpac 是否被运行时接受＝**未验**）。依据
 >   `docs/UI-SPRITE-ATLAS-LOOKUP-20260919.md`。09-19 的完整实测与卡点见 `docs/REVIEW-ALL-LINES-20260919.md`。
+> - **✅ 09-22 10:2x 补：「6 条红」又过时了一次 —— 现在全绿。**
+>   重编（`tools/build.ps1 -Configuration Debug`，smoke exe mtime **09-22 10:28**）后实跑：
+>   **`RESULT total=64 passed=64 failed=0`，`EXIT=0`**。
+>   ⇒ 上面 :63-68 那整段（6 条红的名单 ＋ 「要准数须重编」那个疑点）**只对到 09-20 14:19 之前成立**；
+>   `3db0917`（09-20 14:19，离线 A 批次三件）收口后**判红名单为空**，**别再照它动手**。
+>   同一格的世界书读数一并更正：游戏目录那份 **`entries=482`**（用例 `dialogue chain worldbook deployed redtest` 直读，
+>   `package=awake:worldbook.calradia`）；仓库侧 **558 档已编好、尚未投送**。
+>   ⚠️ **全绿 ≠ 真机缺陷已修**：那四个缺陷是游戏内发生的，离线测不到 —— 见下「下一步」第 0 条。
+>   09-22 的完整实测、未入库三档与卡点五组见 `docs/REVIEW-ALL-LINES-20260922.md`。
 
 ### 一句话
 
@@ -124,7 +133,7 @@
 
 | 线 | 离线层（已自证） | 距离"游戏内生效" |
 |---|---|---|
-| 主干 · 运行时 | 构建 0 错 0 警；production-smoke 31/31；`AWAKE.Tests` 61 例（2 条跨线红） | **✅ 已进游戏**（09-14 23:14，见上「真机第一次跑」）。**09-15 已移交状态**；本轮＝① 收口四个缺陷 → ② 工具候选（A）→ ③ 四面加注入口（同构）；见上「09-15 代码线移交」 |
+| 主干 · 运行时 | 构建 0 错 0 警；production-smoke 31/31；`AWAKE.Tests` **64 例全绿**（09-22 10:28 重编后实跑 `failed=0` ⇒ ⚠️ **本节旧的「61 例 2 条跨线红」已过时**，见上方 09-22 补注） | **✅ 已进游戏**（09-14 23:14，见上「真机第一次跑」）。**09-15 已移交状态**；本轮＝① 收口四个缺陷 → ② 工具候选（A）→ ③ 四面加注入口（同构）；见上「09-15 代码线移交」 |
 | 角色卡 | 76/76 五道门；红队 0/17；盲评脱名 77% | 断在**投送**：游戏目录只有 **1 张**卡、**8 条**标签（仓库侧 39）；审批 **76 张全 draft** |
 | 世界书 | 448 档（**⚠️ 09-18 凌晨已为 482，见上方时点格**）；矩阵 133/133；编译包 `Valid: true`；仓库侧包已组出 | 只差**真机确认**：游戏目录已是 registry ＋ `packages/calradia/`，进游戏看 `Awake.log` 的 `worldbook_runtime_initialized … entries=`**（读今天的包应是 482；判法见下方「四个断点」第 3 条末尾的注）**。<br>✅ **09-20 14:4x 实纠正：游戏目录那份已是 `482`** —— 红测直读（`DialogueChainRedtest` 走 registry 选包 ＋ 重算三 hash）：`entries=482 package=awake:worldbook.calradia`。⇒ 上面那句"09-18 实测仍是 448"**已过时**。真机确认时 `entries=` 应是 **482**；而 09-20 新编的 **558 档**（军事 25 ＋ 经济 40 ＋ 暗面 11 ＋ 互引边 1286 条）**尚未投送**，要上须跑 `tools/deploy_worldbook_to_game.ps1 -ConfirmDeploy` |
 | UI 编辑层 | 框架 / Prefab / Brush 落地；Lab 6 面板 0 error | **部分上屏**：运行时肖像纹理已上屏（212×360，09-14）；面板与图标待验 |
@@ -191,8 +200,9 @@
 1. **入库**（最高优先，且与真机无关，现在就能做）：美术线的**源图与工具**（`AssetSources/`、`GUI/SpriteParts/`、
    `tools/awake-art-lab/`）**仍未入库**——交付产物在 `out/` 是被 `.gitignore` 有意排除，那是另一回事；
    世界书线亦压着未提交产物。**当轮成果当轮提交**（精确 pathspec，勿 `add -A`）。
-2. **修 `AWAKE.Tests` 两条跨线红**：根因已坐实——`docs/fixtures/persona-load-v2-golden.json` 的 `expectedDsl`
-   未跟随 `PersonaDslGenerator` 的段序改动（`PUBLIC` 已后置）。**不需要游戏**；修好后运行期闸口自动复活。
+2. ✅ **~~修 `AWAKE.Tests` 两条跨线红~~（09-20 14:19 `3db0917` 已收口，09-22 实跑 64/64 全绿）**。
+   原根因记录：`docs/fixtures/persona-load-v2-golden.json` 的 `expectedDsl` 未跟随 `PersonaDslGenerator` 的段序改动
+   （`PUBLIC` 已后置）。**不需要游戏**；修好后运行期闸口自动复活。⇒ 本条**已完成，不再排期**。
 4. **美术接线 ＋ 色值复核**（详见上第 4 断点）：先新开 `ui_awake_slot` category（`ui_awake_frame` 已满），
    再把 `ui_awake_icon` 那 28 张里**有效的一批**登记进 `AWAKESpriteData.xml`；
    同时用 D 盘现行 `gauntlet_ui.tpac` 复测官方纸/石色值——变了则已交付 4 件资产重校准。
