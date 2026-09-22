@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-marin
 title:
   zh-CN: 马林
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 马林
-  en:
-  - Marin
-  - castle_village_V8_2
+entity_ids:
+- entity.settlement.castle_village_v8_2
 summary:
   zh-CN: 马林位于奥克斯湖以西的缓坡上；南来的洋流让薄雾清晨格外凉爽，温暖的午后则让当地的葡萄长势很好。
 registry_bindings:

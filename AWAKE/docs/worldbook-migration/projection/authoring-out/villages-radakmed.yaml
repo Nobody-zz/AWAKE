@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-radakmed
 title:
   zh-CN: 拉达克梅德
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 拉达克梅德
-  en:
-  - Radakmed
-  - village_S6_2
+entity_ids:
+- entity.settlement.village_s6_2
 summary:
   zh-CN: 拉达克梅德坐落于车尔特格山脉中的一片盆地；当地崎岖的荒野盛产狐狸、貂和兔子一类的毛皮动物。
 registry_bindings:

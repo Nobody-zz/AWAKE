@@ -116,6 +116,60 @@ pattern 是**两段** `^[a-z][a-z0-9_-]*:[a-z][a-z0-9_.-]*$` —— **只允许�
 | `/assertions[*]/expressions[*]/fallback_referral_ids` | `expressions[].grants[].referral_ids` | `WorldKnowledgeRule.ReferralIds` | only public-askable registry targets; deny/disabled/unknown paths emit none |
 | `/lifecycle` / `/aliases` / `/redirects` | `identity.*` | 无稳定字段 | unsupported_for_v1 |
 | `/author_created` / audit event | `provenance.review` | 无字段 | unsupported_for_v1 |
+| ⚠️ **非档内字段**：`link-registry.v1.json`（工作区级输入文件，见下节） | `entries[].extensions.links[]` | 无字段 | unsupported_for_v1 |
+
+> ⚠️ 末行**不是** authoring JSON Pointer —— 互引边表不属于任何一篇档，它是**工作区级的编译输入文件**。
+> 列在这张表里只是为了「一个地方能查全所有进包的东西」，形状与另做一节说明见〈编译输入：互引边表〉。
+
+## 编译输入：互引边表（2026-09-20 新增）
+
+**一句话**：条目正文里点了谁的名字，编译成 `entries[].extensions.links[]`，运行时拿它做**第二趟扩召回**。
+
+### 三件东西别混（每次讨论这张表都要先分清）
+
+| 东西 | 在哪 | 是什么 | 进部署吗 |
+|---|---|---|---|
+| `content-graph.json` | 编译产物 | **结构图**，`edge_type` 只有 `index_entry`/`references_source`/`contains` | ❌ 不进 |
+| `runtime.json` 顶层 `referrals`（**仅 4 条**） | 包内 | **指路**：「我不知道，你去问 X」 | ✅ 进（不是互引边） |
+| **互引边表 `link-registry.v1.json`** | 工作区 ＋ `docs/` | **A 条正文点名了 B 条的名字**，`viaName` ＋ `evidence` 可逐条人工否掉 | ✅ 经 `extensions.links` 进 |
+
+### 文件与形状
+
+| 项 | 值 |
+|---|---|
+| 编译输入（**权威件**） | `docs/worldbook-studio-plan/link-registry.v1.json` |
+| 其 schema | `docs/worldbook-studio-plan/link-registry.v1.schema.json`（`additionalProperties:false`） |
+| 审计件（带 `evidence`，**不进编译**） | `docs/mappings/worldbook-should-link/<日期>/should-link.v3.json` |
+| `registry_version` | `awake.worldbook.link-registry.v1` |
+| 边字段 | `from` / `to` / `viaName` / `strength` / `bucket` / `usableAs` |
+| `bucket` 只允许 | `proper` / `hubproper`（**`star` 类别星形边在生成时就被剔除**，它是检索噪声不是互引） |
+| `strength` | `strong` / `weak`（专名边＝strong，高频真地名边＝weak） |
+| `usableAs` | `forward` 必有；**只有互提（`mutual`）才带 `backward`** —— 单向边禁反向用 |
+
+### 编译规则（三条硬约束）
+
+1. **它是编译输入，必须登记进 `Workspace.EnumerateSchemaInputFiles`。** 快照有「声明的输入闭包 == 实际读入清单」这条不变量（测试 **F73**）⇒ 读了却没声明，那条断言就红；反之文件不存在时 `Where(File.Exists)` 自动跳过。
+2. **文件缺失时一律不报诊断** —— 只在 `source-report.json` 记 `link_edges: 0`。理由：报 warning 会把既有诊断金标打红，而「没有边表」本来就是合法状态（等于今天的现役行为）。可见性由**产物**给，不由诊断给。
+3. **不并进 `registry_bindings` / `RegistrySnapshot`** —— 那个快照有金标基线按 `CanonicalJson.Hash` 逐字节比对，加字段会打红。故单开 `LinkRegistryService`，挂在 `ValidatedSnapshot.Links`。
+4. **只在有边时才写 `entryExtensions["links"]`** —— 不写空数组，免得包变大、diff 变吵。
+5. **加字段不破包校验**：`src/WorldbookPackageIntegrity.cs:124-135` `ValidateIndex` 只比三样（`entryIds`／`keywordToEntryIds`／`domainToEntryIds`）⇒ 往 `entries[]` 加 `extensions.links` 校验照过；但 **contentHash 覆盖 runtime ＋ index ⇒ 每改一次边表都要重编重签**。
+
+### 部署形态
+
+**边表不能新开第四个文件。** `tools/assemble_worldbook_package.ps1:35` 写死 `$requiredEntryFiles = @('runtime.json','index.json')`、`:202-204` 要求包里**恰好**三件套 ⇒ 边表**只能塞进 `runtime.json`（本方案）或 `index.json`**。
+
+### 隔离验收
+
+判据＝`tools/_link_recall_probe_20260920.py` 四对照（**缺一不可**）：
+
+| 对照 | 要证什么 | 09-20 读数 |
+|---|---|---|
+| A 阳性 | 有出边的档，拿它自己的标题问 ⇒ `match_mode` 带 `+link`、`link_ids` 非空 | **439**／445 带 `+link`，其中 **430** 真送到嘴边 |
+| B 阴性① | 同一批问话跑**上一包**（一点边都没有）⇒ `+link` 必须 0 | **0** ✅ |
+| C 阴性②**变异检验** | 把带边包的边**全清空**、其余一字不动，喂**同一份代码**再跑 | **0** ✅；且 **变异包 hits 与上一包逐条相同（0 条不同）** ⇒ 边表是唯一变量 |
+| D 回归 | 旧包 `hits` 必须是新包 `hits` 的**前缀**（只许往末尾追加，不许改动既有位次） | 破坏 **0** 条；末尾多出 **461** 条 |
+
+⚠️ **阴性②不能用「问没有出边的档」代替** —— 扩召回的种子是**候选表**，不是被问的那一档；候选里坐着别的有边条目时照样会扩（09-20 实测：113 条无出边问话里仍有 31 条带 `+link`，那是机制正常，不是反例）。**必须做变异检验。**
 
 ## 编译规则
 
@@ -124,6 +178,7 @@ pattern 是**两段** `^[a-z][a-z0-9_-]*:[a-z][a-z0-9_.-]*$` —— **只允许�
 - `lossy` 必须列出丢失风险和源字段；`unsupported_for_v1` 必须列出阻断原因。
 - 候选包写入独立目录并带 `awake.worldbook.v2.incompatible_with_v1=true` 标记，marker 只作为诊断信息。
 - 文件名、数组下标和显示名称不能参与 ID 生成。
+- **互引边表另有一套规则**（它是工作区级编译输入，不是档内字段）：见〈编译输入：互引边表〉——缺席不报诊断、单开服务不并进 registry 快照、只在有边时写 `extensions.links`。
 
 ## 隔离验收
 

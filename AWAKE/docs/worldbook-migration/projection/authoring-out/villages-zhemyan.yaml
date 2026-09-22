@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-zhemyan
 title:
   zh-CN: 哲米扬
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 哲米扬
-  en:
-  - Zhemyan
-  - castle_village_S1_2
+entity_ids:
+- entity.settlement.castle_village_s1_2
 summary:
   zh-CN: 哲米扬位于卡恰尔半岛北岸；这里草木葱茏，是当地地主养马的好地方。
 registry_bindings:

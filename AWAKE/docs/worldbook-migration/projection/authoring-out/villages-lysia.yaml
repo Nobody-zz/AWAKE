@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-lysia
 title:
   zh-CN: 吕西亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 吕西亚
-  en:
-  - Lysia
-  - castle_village_EW1_2
+entity_ids:
+- entity.settlement.castle_village_ew1_2
 summary:
   zh-CN: 珀拉斯内海汇入西海所经的狭长海峡以吕西亚为名，此地位于珀拉斯海一侧，附近宽阔的海滩用于建设盐田。
 registry_bindings:

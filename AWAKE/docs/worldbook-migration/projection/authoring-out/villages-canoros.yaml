@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-canoros
 title:
   zh-CN: 卡诺洛斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 卡诺洛斯
-  en:
-  - Canoros
-  - village_ES3_1
+entity_ids:
+- entity.settlement.village_es3_1
 summary:
   zh-CN: 卡诺洛斯位于吕卡里亚平原平坦的南端；早在帝国入侵前，该地便是养马区，为吕卡里亚骑手供应追逐卡拉德人的骏马，直至其最终战败并入帝国骑兵。
 registry_bindings:

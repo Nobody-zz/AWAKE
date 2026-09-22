@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-abghan
 title:
   zh-CN: 阿卜甘
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿卜甘
-  en:
-  - Abghan
-  - village_A8_2
+entity_ids:
+- entity.settlement.village_a8_2
 summary:
   zh-CN: 阿卜甘位于「拜赫尔·耶什姆」（翡翠之海）南岸的一处小潟湖边，村民捕捞金枪鱼、沙丁鱼、鲣鱼与鲨鱼。
 registry_bindings:

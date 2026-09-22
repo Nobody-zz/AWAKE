@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-ulaan
 title:
   zh-CN: 乌兰
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 乌兰
-  en:
-  - Ulaan
-  - village_K1_2
+entity_ids:
+- entity.settlement.village_k1_2
 summary:
   zh-CN: 乌兰坐落于喀拉卡孜河的河谷中；村民是被可汗下令定居不久的游牧人，已学会在这片低洼泥泞的地上种植亚麻。
 registry_bindings:

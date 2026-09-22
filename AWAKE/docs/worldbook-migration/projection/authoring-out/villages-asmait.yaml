@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-asmait
 title:
   zh-CN: 阿斯麦特
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿斯麦特
-  en:
-  - Asmait
-  - castle_village_A2_2
+entity_ids:
+- entity.settlement.castle_village_a2_2
 summary:
   zh-CN: 阿斯麦特位于阿沙卜山脉角落、毗邻沙漠深处，村民在罕见暴雨时截住山洪，用以浇灌椰枣园。
 registry_bindings:

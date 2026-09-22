@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-gymos
 title:
   zh-CN: 居摩斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 居摩斯
-  en:
-  - Gymos
-  - village_EN1_3
+entity_ids:
+- entity.settlement.village_en1_3
 summary:
   zh-CN: 居摩斯位于拉科尼斯湖以西很远处，是狄亚特马湾旁的一座僻静渔村；村民在海湾的深水区捕捞梭子鱼。
 registry_bindings:

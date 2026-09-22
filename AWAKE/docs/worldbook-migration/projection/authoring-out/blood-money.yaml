@@ -1,0 +1,160 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.politics.blood-money
+title:
+  zh-CN: 赎罪金
+  en: Blood Money
+status: needs_review
+domain: politics
+subdomain: law
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 卡拉迪亚的律法许人用一笔钱抵命，叫赎罪金；罚金交不出，才受别的处置。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.z4RgNBkq
+  quote_hash: 04E09BC8D8812462A0B9E2BFBA9628CF104EC0826DC53FCA1C5D7E39C5556D4D
+  quote: 当你离开村庄时，长老带着一伙人拦住了你。他们指着你队伍中的{TROOP_TYPE}——一名骁勇善战但性格孤僻的士兵。村民们声称他曾是这个村子的农夫，但在一次因界碑而引发的争端中杀害了邻居，随后便逃之夭夭。士兵突然激动地反驳道，那个骗子死有余辜。根据法律，杀人者需偿命，但在当地也可用赎罪金抵命。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.ETKyjOkJ
+  quote_hash: 88F2EE9C99544740504F3F74483E54EC3A60E7D2DFB51582398BEBFD621EC3BD
+  quote: 你没有足够的第纳尔支付罚金。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.t01zXDvG
+  quote_hash: D762D410C8CF95CC8A8B86BEF0E0E7D546CE9474EE324386391B27A4D33A0F92
+  quote: 在{FACTION}的犯罪度{?AMOUNT &gt; 0}增加{?}减少{\?}{ABS(AMOUNT)}
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.hwq0RMRN
+  quote_hash: C9791306854D53221621DE84C144C62C25F3BAAD929EE99393043293E6833C00
+  quote: 你在{FACTION_NAME}的犯罪等级{?IS_INCREASED}增加{?}减少{\?}了{CHANGE}，变为{NEW_RATING}
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.blood-money-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 卡拉迪亚的律法允许用一笔钱抵命，这笔钱叫赎罪金。判下的罚金也一样——交不出第纳尔，才轮到别的处置。
+  sources:
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.z4RgNBkq
+    quote_hash: 04E09BC8D8812462A0B9E2BFBA9628CF104EC0826DC53FCA1C5D7E39C5556D4D
+    quote: 当你离开村庄时，长老带着一伙人拦住了你。他们指着你队伍中的{TROOP_TYPE}——一名骁勇善战但性格孤僻的士兵。村民们声称他曾是这个村子的农夫，但在一次因界碑而引发的争端中杀害了邻居，随后便逃之夭夭。士兵突然激动地反驳道，那个骗子死有余辜。根据法律，杀人者需偿命，但在当地也可用赎罪金抵命。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.ETKyjOkJ
+    quote_hash: 88F2EE9C99544740504F3F74483E54EC3A60E7D2DFB51582398BEBFD621EC3BD
+    quote: 你没有足够的第纳尔支付罚金。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.t01zXDvG
+    quote_hash: D762D410C8CF95CC8A8B86BEF0E0E7D546CE9474EE324386391B27A4D33A0F92
+    quote: 在{FACTION}的犯罪度{?AMOUNT &gt; 0}增加{?}减少{\?}{ABS(AMOUNT)}
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.hwq0RMRN
+    quote_hash: C9791306854D53221621DE84C144C62C25F3BAAD929EE99393043293E6833C00
+    quote: 你在{FACTION_NAME}的犯罪等级{?IS_INCREASED}增加{?}减少{\?}了{CHANGE}，变为{NEW_RATING}
+  expressions:
+  - id: expr.blood-money-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 有钱能使鬼推磨，这话在镇子上最灵。看门的、断案的，哪一处都有一道价码。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.z4RgNBkq
+      quote_hash: 04E09BC8D8812462A0B9E2BFBA9628CF104EC0826DC53FCA1C5D7E39C5556D4D
+      quote: 当你离开村庄时，长老带着一伙人拦住了你。他们指着你队伍中的{TROOP_TYPE}——一名骁勇善战但性格孤僻的士兵。村民们声称他曾是这个村子的农夫，但在一次因界碑而引发的争端中杀害了邻居，随后便逃之夭夭。士兵突然激动地反驳道，那个骗子死有余辜。根据法律，杀人者需偿命，但在当地也可用赎罪金抵命。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.ETKyjOkJ
+      quote_hash: 88F2EE9C99544740504F3F74483E54EC3A60E7D2DFB51582398BEBFD621EC3BD
+      quote: 你没有足够的第纳尔支付罚金。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    denies: []
+  - id: expr.blood-money-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 这笔账是按王国分开记的：在哪个王国犯的事，就要向哪个王国交代。清账的法子不止一种——有人掏第纳尔，有人拿另外的东西出来抵。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.z4RgNBkq
+      quote_hash: 04E09BC8D8812462A0B9E2BFBA9628CF104EC0826DC53FCA1C5D7E39C5556D4D
+      quote: 当你离开村庄时，长老带着一伙人拦住了你。他们指着你队伍中的{TROOP_TYPE}——一名骁勇善战但性格孤僻的士兵。村民们声称他曾是这个村子的农夫，但在一次因界碑而引发的争端中杀害了邻居，随后便逃之夭夭。士兵突然激动地反驳道，那个骗子死有余辜。根据法律，杀人者需偿命，但在当地也可用赎罪金抵命。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.t01zXDvG
+      quote_hash: D762D410C8CF95CC8A8B86BEF0E0E7D546CE9474EE324386391B27A4D33A0F92
+      quote: 在{FACTION}的犯罪度{?AMOUNT &gt; 0}增加{?}减少{\?}{ABS(AMOUNT)}
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.hwq0RMRN
+      quote_hash: C9791306854D53221621DE84C144C62C25F3BAAD929EE99393043293E6833C00
+      quote: 你在{FACTION_NAME}的犯罪等级{?IS_INCREASED}增加{?}减少{\?}了{CHANGE}，变为{NEW_RATING}
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

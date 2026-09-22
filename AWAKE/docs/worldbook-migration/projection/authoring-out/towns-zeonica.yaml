@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-zeonica
 title:
   zh-CN: 泽翁尼卡
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 泽翁尼卡
-  en:
-  - Zeonica
-  - town_EW2
+entity_ids:
+- entity.settlement.town_ew2
 summary:
   zh-CN: 泽翁尼卡踞滨海的伊勒塔尔丘陵，盛产美酒谷物骏马，得名于女摄政泽翁娜；夏季北吹的“泽翁娜之风”自沙漠越海而来。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.towns-qasira
 title:
   zh-CN: 加西拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 加西拉
-  en:
-  - Qasira
-  - town_A8
+entity_ids:
+- entity.settlement.town_a8
 summary:
   zh-CN: 加西拉的泉眼相传由女王埃什乌拉刻八芒星封印、罚神灵运水而成，几个世纪来灌溉全城与周边椰枣园。
 registry_bindings:
@@ -38,9 +34,9 @@ authority:
 assertions:
 - id: assertion.town-qasira-1
   revision: 1
-  kind: fact
+  kind: rumor
   text:
-    zh-CN: 加西拉的泉眼相传由女王埃什乌拉刻八芒星封印、罚神灵运水而成，几个世纪来灌溉全城与周边椰枣园。
+    zh-CN: 据说，传奇女王埃什乌拉惩罚了那些骚扰其子民、被她囚在加西拉上方山洞里的神灵；她在岩石上刻下传说中的八芒星，将神灵封印于此，罚他们去地底深处运水，滋养泉眼，使活水不断从岩缝喷出。
   sources:
   - source_id: source.calradia.game.settlements-desc
     source_version: bannerlord-1.3.15.110062
@@ -48,12 +44,18 @@ assertions:
     locator: bannerlord.settlements#town_A8
     quote_hash: F913A5B974967777F4AE6F74186A630CE82C90ECE2E0A6B844C1FB8C6A733344
     quote: 据说，传奇女王埃什乌拉狠狠地惩罚了那些骚扰她的子民并将其囚禁在加西拉上方山洞里的神灵，她在岩石上刻下了传说中的八芒星，将这些神灵封印于此。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_A8
+    quote_hash: 91026369A01F6A02B739EFC289519FA2219E6D6DB470B004A951315BA61AE42B
+    quote: 她判罚这些神灵去地底深处运水，用以滋养泉眼，使其不断地从岩缝中喷出活水。
   expressions:
-  - id: expr.town-qasira-rumor
+  - id: expr.town-qasira-1-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 山洞里刻着女王画下的八芒星，把坏神仙压在底下运水。加西拉的枣甜，全指着那股泉水。
+      zh-CN: 老话说，从前有位女王埃什乌拉，把祸害百姓的神仙关在加西拉上头山洞里，石头上刻了个八芒星镇着，罚他们到地底下挑水，泉水这才一直冒。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +95,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.town-qasira-detail
+  - id: expr.town-qasira-1-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 加西拉的活水是稀罕产业——泉眼稳定灌溉椰枣园，枣品与泉源护卫是两头进项；埃什乌拉封印传说是乡民的头等忌讳，动泉水的人先过民俗这一关。
+      zh-CN: 加西拉的八芒星是一桩旧题：说是镇神的记号，也说是水脉的记号。两说都落在这块石头上，谁也说服不了谁。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -105,6 +107,45 @@ assertions:
       locator: bannerlord.settlements#town_A8
       quote_hash: F913A5B974967777F4AE6F74186A630CE82C90ECE2E0A6B844C1FB8C6A733344
       quote: 据说，传奇女王埃什乌拉狠狠地惩罚了那些骚扰她的子民并将其囚禁在加西拉上方山洞里的神灵，她在岩石上刻下了传说中的八芒星，将这些神灵封印于此。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-qasira-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 几个世纪以来，泉水一直灌溉着加西拉与周边村庄的椰枣园。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_A8
+    quote_hash: 41243487CBDD1B11899501A601D6D0C0AA28DFDBAF21DBBEB7A9F05701F67331
+    quote: 几个世纪以来，泉水一直灌溉着加西拉与周边村庄的椰枣园。
+  expressions:
+  - id: expr.town-qasira-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 加西拉的泉养着周边的椰枣园，几百年没断过；园子是本地最稳的一宗收成。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_A8
+      quote_hash: 41243487CBDD1B11899501A601D6D0C0AA28DFDBAF21DBBEB7A9F05701F67331
+      quote: 几个世纪以来，泉水一直灌溉着加西拉与周边村庄的椰枣园。
     grants:
     - profile_id: profile.headman
       scope: national

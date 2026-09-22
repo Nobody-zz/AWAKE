@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-gainseth
 title:
   zh-CN: 盖恩塞斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 盖恩塞斯
-  en:
-  - Gainseth
-  - village_B5_2
+entity_ids:
+- entity.settlement.village_b5_2
 summary:
   zh-CN: 盖恩塞斯位于乌卡利翁地块的东部边界、莱恩诺丘陵之下一座阴暗的林谷中；村民在湿地里取泥，卖给彭·坎诺克的陶工。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-ostican
 title:
   zh-CN: 奥斯蒂港
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 奥斯蒂港
-  en:
-  - Ostican
-  - town_V8
+entity_ids:
+- entity.settlement.town_v8
 summary:
   zh-CN: 奥斯蒂港原为帝国小港，今为北海海民的庇护所，多身怀长技的海盗；内战各方轮番雇佣，首批瓦兰迪亚移民即定居于此传话引军。
 registry_bindings:

@@ -1,0 +1,143 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-date-fruit
+title:
+  zh-CN: 枣
+  en: Date Fruit
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en:
+  - dates
+summary:
+  zh-CN: 枣是沙漠绿洲的命根子，耐碱耐旱，别处不长它偏长。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.NtsdmmW9
+  quote_hash: E73D1CE0771C99790B477EDEEAAE7F0EA0486F28561B6AD669ECDC3D2B5EACE9
+  quote: 枣{@Plural}成袋的枣{\@}
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_阿塞莱地理__阿塞莱地理.json#/Variants/0/Content
+  quote_hash: A537DFF345B1D283F8EABB8D4D21596DF06AF8A389E5DE4D4C4FD3D82CD9A436
+  quote: 我们这儿就不一样了，水金贵，一棵椰枣死了全家心疼
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_温吉德__温吉德.json#/Variants/5/Content
+  quote_hash: 6A65759991FB58B59B17257A8C9399CDB34D811BF34C3EE27A1B344E1B66FE32
+  quote: 我们绿洲边上的人挑担椰枣去撒那拉卖，路上比以前安全
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-date-fruit-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 枣是沙漠绿洲的主要出产，基准价 50 第纳尔，论袋买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.NtsdmmW9
+    quote_hash: E73D1CE0771C99790B477EDEEAAE7F0EA0486F28561B6AD669ECDC3D2B5EACE9
+    quote: 枣{@Plural}成袋的枣{\@}
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_阿塞莱地理__阿塞莱地理.json#/Variants/0/Content
+    quote_hash: A537DFF345B1D283F8EABB8D4D21596DF06AF8A389E5DE4D4C4FD3D82CD9A436
+    quote: 我们这儿就不一样了，水金贵，一棵椰枣死了全家心疼
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_温吉德__温吉德.json#/Variants/5/Content
+    quote_hash: 6A65759991FB58B59B17257A8C9399CDB34D811BF34C3EE27A1B344E1B66FE32
+    quote: 我们绿洲边上的人挑担椰枣去撒那拉卖，路上比以前安全
+  expressions:
+  - id: expr.goods-date-fruit-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 沙漠里一块能长草的地比黄金还金贵，枣树是唯一熬得住咸土的东西。一棵枣树死了，全家都心疼。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.NtsdmmW9
+      quote_hash: E73D1CE0771C99790B477EDEEAAE7F0EA0486F28561B6AD669ECDC3D2B5EACE9
+      quote: 枣{@Plural}成袋的枣{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_阿塞莱地理__阿塞莱地理.json#/Variants/0/Content
+      quote_hash: A537DFF345B1D283F8EABB8D4D21596DF06AF8A389E5DE4D4C4FD3D82CD9A436
+      quote: 我们这儿就不一样了，水金贵，一棵椰枣死了全家心疼
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-date-fruit-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 枣 50 一件，九个椰枣园出产，全在沙漠边上。绿洲的人挑担枣去口岸卖，路上安不安全全看那阵子谁在管商路。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.NtsdmmW9
+      quote_hash: E73D1CE0771C99790B477EDEEAAE7F0EA0486F28561B6AD669ECDC3D2B5EACE9
+      quote: 枣{@Plural}成袋的枣{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_温吉德__温吉德.json#/Variants/5/Content
+      quote_hash: 6A65759991FB58B59B17257A8C9399CDB34D811BF34C3EE27A1B344E1B66FE32
+      quote: 我们绿洲边上的人挑担椰枣去撒那拉卖，路上比以前安全
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-drapand
 title:
   zh-CN: 德拉庞
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 德拉庞
-  en:
-  - Drapand
-  - castle_village_V3_1
+entity_ids:
+- entity.settlement.castle_village_v3_1
 summary:
   zh-CN: 德拉庞位于特朗河口正南方的法尔海角角尖；村民冒险远渡重洋，追捕随北方寒流而来的鳕鱼群。
 registry_bindings:

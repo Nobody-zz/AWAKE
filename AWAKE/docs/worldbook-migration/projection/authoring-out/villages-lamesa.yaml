@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-lamesa
 title:
   zh-CN: 拉迈萨
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 拉迈萨
-  en:
-  - Lamesa
-  - castle_village_A6_2
+entity_ids:
+- entity.settlement.castle_village_a6_2
 summary:
   zh-CN: 拉迈萨位于耶什姆海东岸的开阔平原，附近有稀疏的金合欢树林，阿塞莱最好的马匹在此放养。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-baq
 title:
   zh-CN: 巴格
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 巴格
-  en:
-  - Baq
-  - village_A1_2
+entity_ids:
+- entity.settlement.village_a1_2
 summary:
   zh-CN: 巴格位于塔玛尔山巨大的花岗岩露头山脚下，海风带来的高地雨水刚好够种橄榄树。
 registry_bindings:

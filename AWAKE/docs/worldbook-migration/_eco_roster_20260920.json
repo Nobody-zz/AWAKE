@@ -1,0 +1,942 @@
+{
+ "total": 547,
+ "domain": {
+  "culture": 6,
+  "economy": 61,
+  "geography": 411,
+  "politics": 7,
+  "war": 62
+ },
+ "subdomain": {
+  "culture/faith": 2,
+  "culture/arts": 1,
+  "culture/identity": 1,
+  "culture/customs": 2,
+  "economy/goods": 39,
+  "economy/items": 22,
+  "geography/rivers": 7,
+  "geography/settlements": 396,
+  "geography/terrain": 7,
+  "geography/resources": 1,
+  "politics/clans": 1,
+  "politics/territories": 4,
+  "politics/throne": 2,
+  "war/military": 12,
+  "war/troops": 10,
+  "war/war_history": 1,
+  "war/weapons": 39
+ },
+ "economy": [
+  {
+   "id": "economy.goods-beer",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "啤酒",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-butter",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "黄油",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-charcoal",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "木炭",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-cheese",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "奶酪",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-clay",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "黏土",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-cotton",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "生丝",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-date-fruit",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "枣",
+   "keywords": 3,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-deriat",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "德里亚特·毛皮生计",
+   "keywords": 5,
+   "expressions": 3,
+   "assertions": 3
+  },
+  {
+   "id": "economy.goods-felt",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "毛毡",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-fish",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "鱼",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-flax",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "亚麻",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-fur",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "毛皮",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-grain",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "谷物",
+   "keywords": 3,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-grape",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "葡萄",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-hardwood",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "硬木",
+   "keywords": 3,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-hides",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "兽皮",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "铁矿石",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron-ingot-crude",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "粗铁",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron-ingot-fine-steel",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "优质钢",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron-ingot-iron",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "铁",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron-ingot-steel",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "钢",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron-ingot-thamaskene",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "精炼钢",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron-ingot-wrought",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "熟铁",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-jewelry",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "贵重品",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-leather",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "皮革",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-linen",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "亚麻布",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-meat",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "肉",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-oil",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "油",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-olives",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "橄榄",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-planks",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "板材",
+   "keywords": 3,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-pottery",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "陶器",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-salt",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "盐",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-silver",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "银矿石",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-spice",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "香料",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-stolen-goods",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "被盗的货物",
+   "keywords": 3,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-tools",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "工具",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-velvet",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "天鹅绒",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-wine",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "葡萄酒",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-wool",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "羊毛",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-battania_mercenary_armor",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "奢华布面铁甲",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-battania_warlord_boots",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "鳞甲靴",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-battania_warlord_bracers",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "鳞甲军阀护腕",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-cat",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "猫",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-chicken",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "鸡",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-cow",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "牛",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-crossbow_c",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "劲弩",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-desert_lamellar",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "轻型扎甲",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-dog",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "狗",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-goose",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "鹅",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-heavy_round_shield",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "重型圆盾",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-hog",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "肉猪",
+   "keywords": 3,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-mule",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "骡子",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-old-horse",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "役马",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-pack_camel",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "驮运骆驼",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-saddle_horse",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "旅行马",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-scale_shoulder_armor",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "鳞甲护肩",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-sheep",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "羊",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-steppe_war_bow",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "草原战弓",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-sturgian_helmet_closed",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "闭面军阀盔",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-sumpter-horse",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "驮马",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-western_plated_helmet",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "侧护覆板盔",
+   "keywords": 4,
+   "expressions": 2,
+   "assertions": 1
+  }
+ ],
+ "batch_40": [
+  {
+   "id": "economy.goods-beer",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "啤酒",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-butter",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "黄油",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-charcoal",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "木炭",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-cheese",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "奶酪",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-clay",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "黏土",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-cotton",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "生丝",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-date-fruit",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "枣",
+   "keywords": 3,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-felt",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "毛毡",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-fish",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "鱼",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-flax",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "亚麻",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-grain",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "谷物",
+   "keywords": 3,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-grape",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "葡萄",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-hardwood",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "硬木",
+   "keywords": 3,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-hides",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "兽皮",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "铁矿石",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron-ingot-crude",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "粗铁",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron-ingot-fine-steel",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "优质钢",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron-ingot-iron",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "铁",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron-ingot-steel",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "钢",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron-ingot-thamaskene",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "精炼钢",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-iron-ingot-wrought",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "熟铁",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-jewelry",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "贵重品",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-leather",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "皮革",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-linen",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "亚麻布",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-meat",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "肉",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-oil",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "油",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-olives",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "橄榄",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-planks",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "板材",
+   "keywords": 3,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-pottery",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "陶器",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-stolen-goods",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "被盗的货物",
+   "keywords": 3,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-tools",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "工具",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-wine",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "葡萄酒",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.goods-wool",
+   "domain": "economy",
+   "subdomain": "goods",
+   "title_zh": "羊毛",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-cat",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "猫",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-chicken",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "鸡",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-dog",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "狗",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-goose",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "鹅",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-hog",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "肉猪",
+   "keywords": 3,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-old-horse",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "役马",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  },
+  {
+   "id": "economy.items-sumpter-horse",
+   "domain": "economy",
+   "subdomain": "items",
+   "title_zh": "驮马",
+   "keywords": 2,
+   "expressions": 2,
+   "assertions": 1
+  }
+ ]
+}

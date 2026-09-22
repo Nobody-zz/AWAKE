@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-amycon
 title:
   zh-CN: 阿密孔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿密孔
-  en:
-  - Amycon
-  - castle_village_ES6_2
+entity_ids:
+- entity.settlement.castle_village_es6_2
 summary:
   zh-CN: 阿密孔坐落于奥兰石山与阿里斯河谷之间逶迤嶙峋的山脊上，居民是牧羊人，以制作加孜然的咸味干酪而闻名。
 registry_bindings:

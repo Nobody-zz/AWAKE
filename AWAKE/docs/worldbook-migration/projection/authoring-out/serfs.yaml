@@ -1,0 +1,192 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.culture.serfs
+title:
+  zh-CN: 农奴
+  en: Serfs
+status: needs_review
+domain: culture
+subdomain: identity
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 卡拉迪亚的乡下有一类人叫农奴，依附在土地上。他们的日子到底怎么样，说法差得很远。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.8FPCRv5L
+  quote_hash: BC834716EDB56C320CB1951D33FF02B6BAA2C02724755752D6C5BC47EC32A4C3
+  quote: 农奴制
+- source_id: source.calradia.chronicle.animusforge.dark
+  source_version: animusforge-20260913
+  source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+  locator: rules/rule_农奴__农奴.json#/Variants/1/Content
+  quote_hash: B00A9B47E19DE93068E73D5AF4D09AD516ED1068537DA4C1094FF0A86C502DE1
+  quote: 我们就是所谓的农奴，其实我们过的都挺好的
+- source_id: source.calradia.chronicle.animusforge.dark
+  source_version: animusforge-20260913
+  source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+  locator: rules/rule_农奴__农奴.json#/Variants/0/Content
+  quote_hash: 06DE0520ACA935EAECB072D0D85F82E0CD3A10B85F9BFE6A67AAC0A440B72F79
+  quote: 瓦兰迪亚人真惨，他们的老百姓无法离开土地，永生永世都是贵族的奴隶
+- source_id: source.calradia.chronicle.animusforge.dark
+  source_version: animusforge-20260913
+  source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+  locator: rules/rule_农奴__农奴.json#/Variants/3/Content
+  quote_hash: 7DA0ED409CFCE8B69AFAFEC191EEACF88FE2FD62F66003E8D1693D261E8A3295
+  quote: 毕竟君君臣臣，都是有契约的
+- source_id: source.calradia.chronicle.animusforge.dark
+  source_version: animusforge-20260913
+  source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+  locator: rules/rule_农奴__农奴.json#/Variants/2/Content
+  quote_hash: 04EFCAA93FF949E884D1572E79E80E5FE3C756EE404854764A1D27FCBD815725
+  quote: 我们一般直接管他们叫屁民，群氓，交税工具，后备兵源
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.serfs-1
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 卡拉迪亚的乡下有一类人叫农奴，依附在土地上。他们过的是什么日子，从不同的人嘴里说出来，完全是两件事。
+  sources:
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.8FPCRv5L
+    quote_hash: BC834716EDB56C320CB1951D33FF02B6BAA2C02724755752D6C5BC47EC32A4C3
+    quote: 农奴制
+  - source_id: source.calradia.chronicle.animusforge.dark
+    source_version: animusforge-20260913
+    source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+    locator: rules/rule_农奴__农奴.json#/Variants/1/Content
+    quote_hash: B00A9B47E19DE93068E73D5AF4D09AD516ED1068537DA4C1094FF0A86C502DE1
+    quote: 我们就是所谓的农奴，其实我们过的都挺好的
+  - source_id: source.calradia.chronicle.animusforge.dark
+    source_version: animusforge-20260913
+    source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+    locator: rules/rule_农奴__农奴.json#/Variants/0/Content
+    quote_hash: 06DE0520ACA935EAECB072D0D85F82E0CD3A10B85F9BFE6A67AAC0A440B72F79
+    quote: 瓦兰迪亚人真惨，他们的老百姓无法离开土地，永生永世都是贵族的奴隶
+  - source_id: source.calradia.chronicle.animusforge.dark
+    source_version: animusforge-20260913
+    source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+    locator: rules/rule_农奴__农奴.json#/Variants/3/Content
+    quote_hash: 7DA0ED409CFCE8B69AFAFEC191EEACF88FE2FD62F66003E8D1693D261E8A3295
+    quote: 毕竟君君臣臣，都是有契约的
+  - source_id: source.calradia.chronicle.animusforge.dark
+    source_version: animusforge-20260913
+    source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+    locator: rules/rule_农奴__农奴.json#/Variants/2/Content
+    quote_hash: 04EFCAA93FF949E884D1572E79E80E5FE3C756EE404854764A1D27FCBD815725
+    quote: 我们一般直接管他们叫屁民，群氓，交税工具，后备兵源
+  expressions:
+  - id: expr.serfs-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 我们就是所谓的农奴。其实我们过得挺好的——一周也就去领主老人家的地里干一两天，其余时间都是自己的；老爷还给我们份地，交完公粮剩下的都归自己。每个月还能进城一次，多自由？
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.8FPCRv5L
+      quote_hash: BC834716EDB56C320CB1951D33FF02B6BAA2C02724755752D6C5BC47EC32A4C3
+      quote: 农奴制
+    - source_id: source.calradia.chronicle.animusforge.dark
+      source_version: animusforge-20260913
+      source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+      locator: rules/rule_农奴__农奴.json#/Variants/1/Content
+      quote_hash: B00A9B47E19DE93068E73D5AF4D09AD516ED1068537DA4C1094FF0A86C502DE1
+      quote: 我们就是所谓的农奴，其实我们过的都挺好的
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []
+  - id: expr.serfs-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 说起他们，城里人各有各的口吻。有人叹一句「瓦兰迪亚人真惨，他们的老百姓离不开土地，生生世世都是贵族的奴隶」；也有人把手一摆，说这有什么稀奇——毕竟君君臣臣，都是有契约的。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.8FPCRv5L
+      quote_hash: BC834716EDB56C320CB1951D33FF02B6BAA2C02724755752D6C5BC47EC32A4C3
+      quote: 农奴制
+    - source_id: source.calradia.chronicle.animusforge.dark
+      source_version: animusforge-20260913
+      source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+      locator: rules/rule_农奴__农奴.json#/Variants/0/Content
+      quote_hash: 06DE0520ACA935EAECB072D0D85F82E0CD3A10B85F9BFE6A67AAC0A440B72F79
+      quote: 瓦兰迪亚人真惨，他们的老百姓无法离开土地，永生永世都是贵族的奴隶
+    - source_id: source.calradia.chronicle.animusforge.dark
+      source_version: animusforge-20260913
+      source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+      locator: rules/rule_农奴__农奴.json#/Variants/3/Content
+      quote_hash: 7DA0ED409CFCE8B69AFAFEC191EEACF88FE2FD62F66003E8D1693D261E8A3295
+      quote: 毕竟君君臣臣，都是有契约的
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    denies: []
+  - id: expr.serfs-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 换个场合，同一批人又换了称呼：农奴？依附民？太文绉绉了。他们一般直接叫他们屁民、群氓、交税工具、后备兵源。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.8FPCRv5L
+      quote_hash: BC834716EDB56C320CB1951D33FF02B6BAA2C02724755752D6C5BC47EC32A4C3
+      quote: 农奴制
+    - source_id: source.calradia.chronicle.animusforge.dark
+      source_version: animusforge-20260913
+      source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+      locator: rules/rule_农奴__农奴.json#/Variants/2/Content
+      quote_hash: 04EFCAA93FF949E884D1572E79E80E5FE3C756EE404854764A1D27FCBD815725
+      quote: 我们一般直接管他们叫屁民，群氓，交税工具，后备兵源
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

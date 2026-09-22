@@ -1,0 +1,213 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-crossbow-ironbound
+title:
+  zh-CN: 包铁弩
+  en: Iron-Bound Crossbow
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 杰屈朗包铁弩
+  en:
+  - Jelek Crossbow
+summary:
+  zh-CN: 包铁弩：瓦兰迪亚杰屈朗产的一种强弩，弩身外包铁、拉力极高，是当地狙击弩手的标配，价格不菲（约八千第纳尔）。它的名声只在懂弩的地方传得开——在草原与林中的民族那里，这个词本身就不成立，「啥是弩？」。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.TBW9E2ao
+  quote_hash: 5006C3A7D92E612F76DD14BFE84ED63485C4DF4CD81B304EE8F86497601755A1
+  quote: 包铁弩
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_包铁弩__包铁弩.json#/Variants/2/Content
+  quote_hash: 5FE072BCF5D5C3E412C38ACD191A73DAF4002C7462BCA28C53C2B2DCB4F6A952
+  quote: 包铁弩是我们这边杰屈朗产的一种极其强大的弩，这种弩外面包铁，拉力极高，是我们这边狙击弩手的标配
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_包铁弩__包铁弩.json#/Variants/2/Content
+  quote_hash: 26A618B3476826FE47266BDB01E7A2C5C957E7252CD7AE9DB255E6ECC108BB21
+  quote: 一把也是很贵的，应该可以卖到8000第纳尔左右
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_包铁弩__包铁弩.json#/Variants/0/Content
+  quote_hash: 9A32FA7E8AE39748529D1E482E44C26329ABC04409BDBBAFBA0D4E3B9FC3506E
+  quote: 包铁弩？弩上还能包铁吗？那一定很强了
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_包铁弩__包铁弩.json#/Variants/1/Content
+  quote_hash: 38E9BE79A8E9C1B9668D112E2EAC7F2FC8C9F04CB90475AF5C6BA8AA9E4EF362
+  quote: 啥是弩？
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.ironbound-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 包铁弩是瓦兰迪亚杰屈朗产的一种弩：弩身外面包铁，拉力极高，是当地狙击弩手的标配；价格不菲，约八千第纳尔一把。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.TBW9E2ao
+    quote_hash: 5006C3A7D92E612F76DD14BFE84ED63485C4DF4CD81B304EE8F86497601755A1
+    quote: 包铁弩
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_包铁弩__包铁弩.json#/Variants/2/Content
+    quote_hash: 5FE072BCF5D5C3E412C38ACD191A73DAF4002C7462BCA28C53C2B2DCB4F6A952
+    quote: 包铁弩是我们这边杰屈朗产的一种极其强大的弩，这种弩外面包铁，拉力极高，是我们这边狙击弩手的标配
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_包铁弩__包铁弩.json#/Variants/2/Content
+    quote_hash: 26A618B3476826FE47266BDB01E7A2C5C957E7252CD7AE9DB255E6ECC108BB21
+    quote: 一把也是很贵的，应该可以卖到8000第纳尔左右
+  expressions:
+  - id: expr.ironbound-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 包铁弩是瓦兰迪亚杰屈朗产的一种弩，弩身外面包着铁，拉力极高，是他们那边狙击弩手的标配。这东西不便宜，一把大约八千第纳尔。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.TBW9E2ao
+      quote_hash: 5006C3A7D92E612F76DD14BFE84ED63485C4DF4CD81B304EE8F86497601755A1
+      quote: 包铁弩
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_包铁弩__包铁弩.json#/Variants/2/Content
+      quote_hash: 5FE072BCF5D5C3E412C38ACD191A73DAF4002C7462BCA28C53C2B2DCB4F6A952
+      quote: 包铁弩是我们这边杰屈朗产的一种极其强大的弩，这种弩外面包铁，拉力极高，是我们这边狙击弩手的标配
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.ironbound-soldier-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 包铁弩是我们这边杰屈朗产的，弩身外面包铁，拉力极高，是狙击弩手的标配。一把也很贵，应该可以卖到八千第纳尔左右。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_包铁弩__包铁弩.json#/Variants/2/Content
+      quote_hash: 26A618B3476826FE47266BDB01E7A2C5C957E7252CD7AE9DB255E6ECC108BB21
+      quote: 一把也是很贵的，应该可以卖到8000第纳尔左右
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+- id: assertion.ironbound-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 在弩不流行的地方，包铁弩的名声是两种反应：一种是听说过但没见过——弩上还能包铁吗？那一定很强了；另一种是连概念都不成立——啥是弩？
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_包铁弩__包铁弩.json#/Variants/0/Content
+    quote_hash: 9A32FA7E8AE39748529D1E482E44C26329ABC04409BDBBAFBA0D4E3B9FC3506E
+    quote: 包铁弩？弩上还能包铁吗？那一定很强了
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_包铁弩__包铁弩.json#/Variants/1/Content
+    quote_hash: 38E9BE79A8E9C1B9668D112E2EAC7F2FC8C9F04CB90475AF5C6BA8AA9E4EF362
+    quote: 啥是弩？
+  expressions:
+  - id: expr.ironbound-strong-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 包铁弩？弩上还能包铁吗？那一定很强了。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_包铁弩__包铁弩.json#/Variants/0/Content
+      quote_hash: 9A32FA7E8AE39748529D1E482E44C26329ABC04409BDBBAFBA0D4E3B9FC3506E
+      quote: 包铁弩？弩上还能包铁吗？那一定很强了
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.aserai
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.empire
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.nord
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []
+  - id: expr.ironbound-what-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 啥是弩？
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_包铁弩__包铁弩.json#/Variants/1/Content
+      quote_hash: 38E9BE79A8E9C1B9668D112E2EAC7F2FC8C9F04CB90475AF5C6BA8AA9E4EF362
+      quote: 啥是弩？
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.battania
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.khuzait
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.darshi
+    denies: []

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-visibrot
 title:
   zh-CN: 维西布罗特
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 维西布罗特
-  en:
-  - Visibrot
-  - village_S5_1
+entity_ids:
+- entity.settlement.village_s5_1
 summary:
   zh-CN: 维西布罗特是伊勒坦山缓坡上的一座养羊村，正好在人称伊勒坦运输线的冰湖网络下方；这一带虽然寒冷偏僻，但因它处在拉科尼斯湖与塔奈西斯湖之间、帝国与草原之间，是重要的买卖节点，人口反而比较稠密。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-abu-khih
 title:
   zh-CN: 艾布·希
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 艾布·希
-  en:
-  - Abu Khih
-  - village_A2_2
+entity_ids:
+- entity.settlement.village_a2_2
 summary:
   zh-CN: 艾布·希位于凯勒斯河畔、该河流向南方不毛之地；此地原为古河床，土地贫瘠碱化，唯椰枣树仍能生长。
 registry_bindings:

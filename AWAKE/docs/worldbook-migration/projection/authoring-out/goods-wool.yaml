@@ -1,0 +1,142 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-wool
+title:
+  zh-CN: 羊毛
+  en: Wool
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 羊毛是牧羊场的主产出，剪一季收一次，城里收毛的来得晚就没了。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.WVqaRKUm
+  quote_hash: 99CDF4C1C915E7AD9C834F814202E8F7F71C527CCD4B2E9D7F4BC3B3E7541063
+  quote: 羊毛{@Plural}成车的羊毛{\@}
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_诺格伦__诺格伦.json#/Variants/2/Content
+  quote_hash: 70CF75896F84571A6A3085DE1C9CCF6B01005F93A08DE5B0AF1BE333DF24E62B
+  quote: 每年剪羊毛的季节，加伦的商人都会跑去诺格伦收羊毛，去晚了就没了
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_塔奈西斯湖__塔奈西斯湖.json#/Variants/4/Content
+  quote_hash: E041F97A5D95752514472A71E5B73F81D60ABA4CBBAA6CE1E9FADAE7CC0CBA18
+  quote: 载着兽皮、羊毛和盐
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-wool-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 羊毛是织毛毡与做毡衣的原料，基准价 22 第纳尔，论车买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.WVqaRKUm
+    quote_hash: 99CDF4C1C915E7AD9C834F814202E8F7F71C527CCD4B2E9D7F4BC3B3E7541063
+    quote: 羊毛{@Plural}成车的羊毛{\@}
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_诺格伦__诺格伦.json#/Variants/2/Content
+    quote_hash: 70CF75896F84571A6A3085DE1C9CCF6B01005F93A08DE5B0AF1BE333DF24E62B
+    quote: 每年剪羊毛的季节，加伦的商人都会跑去诺格伦收羊毛，去晚了就没了
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_塔奈西斯湖__塔奈西斯湖.json#/Variants/4/Content
+    quote_hash: E041F97A5D95752514472A71E5B73F81D60ABA4CBBAA6CE1E9FADAE7CC0CBA18
+    quote: 载着兽皮、羊毛和盐
+  expressions:
+  - id: expr.goods-wool-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 每年剪羊毛就那么一阵子，收毛的商人赶得晚一天，圈里就空了。羊多的村子，一季的毛比一整年的粮还值钱。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.WVqaRKUm
+      quote_hash: 99CDF4C1C915E7AD9C834F814202E8F7F71C527CCD4B2E9D7F4BC3B3E7541063
+      quote: 羊毛{@Plural}成车的羊毛{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_诺格伦__诺格伦.json#/Variants/2/Content
+      quote_hash: 70CF75896F84571A6A3085DE1C9CCF6B01005F93A08DE5B0AF1BE333DF24E62B
+      quote: 每年剪羊毛的季节，加伦的商人都会跑去诺格伦收羊毛，去晚了就没了
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-wool-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 羊毛 22 一件，出在十七个牧羊场，跟羊一头一头的产出走。这东西季节性太强，收毛要卡在剪毛那几天，压库就是压本钱。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.WVqaRKUm
+      quote_hash: 99CDF4C1C915E7AD9C834F814202E8F7F71C527CCD4B2E9D7F4BC3B3E7541063
+      quote: 羊毛{@Plural}成车的羊毛{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_塔奈西斯湖__塔奈西斯湖.json#/Variants/4/Content
+      quote_hash: E041F97A5D95752514472A71E5B73F81D60ABA4CBBAA6CE1E9FADAE7CC0CBA18
+      quote: 载着兽皮、羊毛和盐
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

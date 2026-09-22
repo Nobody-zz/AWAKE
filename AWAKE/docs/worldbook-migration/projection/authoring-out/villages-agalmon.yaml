@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-agalmon
 title:
   zh-CN: 阿加尔蒙
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿加尔蒙
-  en:
-  - Agalmon
-  - castle_village_EN9_2
+entity_ids:
+- entity.settlement.castle_village_en9_2
 summary:
   zh-CN: 阿加尔蒙紧挨伽尔喀斯河与弥戎河的汇流处，多林村庄的居民世代与相邻的斯特吉亚人通婚；战争的爆发令双方关系趋于紧张。
 registry_bindings:

@@ -1,0 +1,302 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.troops-ghulam
+title:
+  zh-CN: 古拉姆
+  en: Ghulam
+status: needs_review
+domain: war
+subdomain: troops
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 达西武士
+  - 古拉姆骑兵
+  en:
+  - Ghulam Cavalry
+summary:
+  zh-CN: 古拉姆：卡拉迪亚南部的雇佣骑兵，出身是亡国的达西武士。达西的君主称「帕提沙」，被兀儿浑可汗西征夺去与帝国接壤的领土后向东退却。流散的武士组成古拉姆，契约是「自我卖身、共同拥有」；以鲜衣怒马闻名，靠黄金而战，但记得自己来自哪里。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.4TiYXBqK
+  quote_hash: 0DD94166CDB2557FB4C4E0FF7586743C0F594D8E6AAC3C2D6F1AB5F76FF487F9
+  quote: 古拉姆是一群雇佣兵，他们来自卡拉迪亚南部的部落和远东地区。从法理上来说，他们既是自己的奴隶也是自己的主人：每个人都把自己“卖”给组织，并逐渐成为组织的共同所有者。他们以鲜衣怒马而闻名。但不能因为他们精心打理的头发、身上的香水味和孔雀羽毛饰品，而误以为他们更专注于打扮而非训练。他们的骑射技术无人能及，而使用骑枪的本领仅次于瓦兰迪亚人和帝国具装骑兵。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_古拉姆__古拉姆.json#/Variants/0/Content
+  quote_hash: 39945769B9BFC4ADBC47D418547A9A950E840675D570490DD44A2637A49E3984
+  quote: 既是自己卖给组织的奴隶，又是组织共同的主人
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.Dxnj5JQE
+  quote_hash: F4D5B530DA6476CBF4ACEEF5BF6E1A8A324AF1229C2ABE8376848B9307854E90
+  quote: 奥通加德坐落于干燥的德夫赛格高原中央，当地常年干旱，但在春天十分适合放牧。此城由讲达西语的商人建立，商人们从周边的牧民村庄购置马匹、绵羊、牛，并在防备草原掠袭队的护卫陪同下，将其成群结队地赶到西边的帝国市场贩卖，以此获取大量财富。然而，无论是城墙还是雇佣军都没能抵挡住兀儿浑汗的大军，后者将此城授予库吉特部族，以表彰他们的英勇作战。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_古拉姆__古拉姆.json#/Variants/2/Content
+  quote_hash: 8B1A5F6661F9962CB1FB01A94B5ED501B48CBE9A17A351C24B09F8AA0D6F1C5E
+  quote: 说来讽刺，曾经的敌人，如今成了战场上最可靠的佣兵
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_古拉姆__古拉姆.json#/Variants/4/Content
+  quote_hash: 51B42F2FA974FB42F08EDD6F05EC538E9CA9B2F187C21D54F33D17CCF0457994
+  quote: 但他们的骑枪冲锋——说来奇怪——颇有我们方旗骑士的风范
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_古拉姆__古拉姆.json#/Variants/7/Content
+  quote_hash: 7F55F3E0028CD49D744DB5DDF58BBB61D58C82053DE6A140289905CD4A6D3C44
+  quote: 古拉姆的骑射是我们调教出来的——或者说，是我们打出来的
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_古拉姆__古拉姆.json#/Variants/5/Content
+  quote_hash: 22FE6231F9FFEBFD38B44DFE66636B21B20708E8470621D24B46036FC15D56DF
+  quote: 到了北方的雪地里，他们的马受不了，他们自己也冻得缩成一团
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_古拉姆__古拉姆.json#/Variants/1/Content
+  quote_hash: B00B22CDD155734B64F715A52EBB58E331F913095CEF9D9D617EEB8F25E1E9CD
+  quote: 身上的香水味老远就能闻到，帽子上还插着孔雀毛，在林子里藏不住
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_古拉姆__古拉姆.json#/Variants/9/Content
+  quote_hash: BAAF7D47786F80C5B973361D67FA017C72071FA679D809791092ADA41F68E665
+  quote: 我们为黄金打仗，但黄金不是目的，只是手段。只要我们还在马背上，达西就没有亡
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.ghulam-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 古拉姆是卡拉迪亚南部的一支雇佣骑兵，出身是亡国的达西武士。达西曾是与帝国南部接壤的古老王国，其君主称「帕提沙」；库赛特西征夺走其与帝国接壤的领土、又从帝国手中取走远东行省，达西被向东驱赶，从此与帝国不再接壤。不愿臣服库赛特的武士流散四方，组成了古拉姆——契约形式是「自我卖身、共同拥有」：每个人都把自己卖给组织，并逐渐成为组织的共同所有者。他们以鲜衣怒马闻名，头发打理得整齐，身上飘着香水味，帽上插孔雀羽毛。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.4TiYXBqK
+    quote_hash: 0DD94166CDB2557FB4C4E0FF7586743C0F594D8E6AAC3C2D6F1AB5F76FF487F9
+    quote: 古拉姆是一群雇佣兵，他们来自卡拉迪亚南部的部落和远东地区。从法理上来说，他们既是自己的奴隶也是自己的主人：每个人都把自己“卖”给组织，并逐渐成为组织的共同所有者。他们以鲜衣怒马而闻名。但不能因为他们精心打理的头发、身上的香水味和孔雀羽毛饰品，而误以为他们更专注于打扮而非训练。他们的骑射技术无人能及，而使用骑枪的本领仅次于瓦兰迪亚人和帝国具装骑兵。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_古拉姆__古拉姆.json#/Variants/0/Content
+    quote_hash: 39945769B9BFC4ADBC47D418547A9A950E840675D570490DD44A2637A49E3984
+    quote: 既是自己卖给组织的奴隶，又是组织共同的主人
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.Dxnj5JQE
+    quote_hash: F4D5B530DA6476CBF4ACEEF5BF6E1A8A324AF1229C2ABE8376848B9307854E90
+    quote: 奥通加德坐落于干燥的德夫赛格高原中央，当地常年干旱，但在春天十分适合放牧。此城由讲达西语的商人建立，商人们从周边的牧民村庄购置马匹、绵羊、牛，并在防备草原掠袭队的护卫陪同下，将其成群结队地赶到西边的帝国市场贩卖，以此获取大量财富。然而，无论是城墙还是雇佣军都没能抵挡住兀儿浑汗的大军，后者将此城授予库吉特部族，以表彰他们的英勇作战。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_古拉姆__古拉姆.json#/Variants/2/Content
+    quote_hash: 8B1A5F6661F9962CB1FB01A94B5ED501B48CBE9A17A351C24B09F8AA0D6F1C5E
+    quote: 说来讽刺，曾经的敌人，如今成了战场上最可靠的佣兵
+  expressions:
+  - id: expr.ghulam-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 古拉姆是一群雇佣骑兵，来自卡拉迪亚南部的部落和远东地区。从法理上说，他们既是自己的奴隶也是自己的主人——每个人都把自己「卖」给组织，并逐渐成为组织的共同所有者。他们以鲜衣怒马闻名，但别因为那身打扮就以为他们只顾着好看。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.4TiYXBqK
+      quote_hash: 0DD94166CDB2557FB4C4E0FF7586743C0F594D8E6AAC3C2D6F1AB5F76FF487F9
+      quote: 古拉姆是一群雇佣兵，他们来自卡拉迪亚南部的部落和远东地区。从法理上来说，他们既是自己的奴隶也是自己的主人：每个人都把自己“卖”给组织，并逐渐成为组织的共同所有者。他们以鲜衣怒马而闻名。但不能因为他们精心打理的头发、身上的香水味和孔雀羽毛饰品，而误以为他们更专注于打扮而非训练。他们的骑射技术无人能及，而使用骑枪的本领仅次于瓦兰迪亚人和帝国具装骑兵。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_古拉姆__古拉姆.json#/Variants/0/Content
+      quote_hash: 39945769B9BFC4ADBC47D418547A9A950E840675D570490DD44A2637A49E3984
+      quote: 既是自己卖给组织的奴隶，又是组织共同的主人
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    denies: []
+  - id: expr.ghulam-empire-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 古拉姆的故乡达西，曾经是我们的邻居。在库赛特人还没崛起的时候，达西的帕提沙统治着一个与帝国南部接壤的强大王国，他们的骑兵让帝国的边防军吃过不少苦头。但库赛特人来了，把达西的土地一块一块抢走，那些地方如今变成了库赛特汗国的南部行省，夹在我们和阿塞莱之间。那些不愿臣服的达西武士流落四方，组建了古拉姆，靠当雇佣兵维生。说来讽刺，曾经的敌人，如今成了战场上最可靠的佣兵。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.Dxnj5JQE
+      quote_hash: F4D5B530DA6476CBF4ACEEF5BF6E1A8A324AF1229C2ABE8376848B9307854E90
+      quote: 奥通加德坐落于干燥的德夫赛格高原中央，当地常年干旱，但在春天十分适合放牧。此城由讲达西语的商人建立，商人们从周边的牧民村庄购置马匹、绵羊、牛，并在防备草原掠袭队的护卫陪同下，将其成群结队地赶到西边的帝国市场贩卖，以此获取大量财富。然而，无论是城墙还是雇佣军都没能抵挡住兀儿浑汗的大军，后者将此城授予库吉特部族，以表彰他们的英勇作战。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_古拉姆__古拉姆.json#/Variants/2/Content
+      quote_hash: 8B1A5F6661F9962CB1FB01A94B5ED501B48CBE9A17A351C24B09F8AA0D6F1C5E
+      quote: 说来讽刺，曾经的敌人，如今成了战场上最可靠的佣兵
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+- id: assertion.ghulam-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 「古拉姆的骑射无人能及、使骑枪的本领仅次于瓦兰迪亚人与帝国具装骑兵」——这是他们最通行的名声，也是他们自己认的身份。各族对这份名声的反应不一：瓦兰迪亚人在意的是他们的骑枪，说颇有自家方旗骑士的风范、马虽不高大但纪律好过某些愣头青骑士；斯特吉亚人说他们在北方接不到活，装备是给南方暖地做的；库赛特人说得更直白——古拉姆的骑射「是我们打出来的」。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_古拉姆__古拉姆.json#/Variants/4/Content
+    quote_hash: 51B42F2FA974FB42F08EDD6F05EC538E9CA9B2F187C21D54F33D17CCF0457994
+    quote: 但他们的骑枪冲锋——说来奇怪——颇有我们方旗骑士的风范
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_古拉姆__古拉姆.json#/Variants/7/Content
+    quote_hash: 7F55F3E0028CD49D744DB5DDF58BBB61D58C82053DE6A140289905CD4A6D3C44
+    quote: 古拉姆的骑射是我们调教出来的——或者说，是我们打出来的
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_古拉姆__古拉姆.json#/Variants/5/Content
+    quote_hash: 22FE6231F9FFEBFD38B44DFE66636B21B20708E8470621D24B46036FC15D56DF
+    quote: 到了北方的雪地里，他们的马受不了，他们自己也冻得缩成一团
+  expressions:
+  - id: expr.ghulam-vlandia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 古拉姆的骑枪比他们的弓更让我们在意。这些南方来的雇佣兵，骑射不如库赛特人，但他们的骑枪冲锋——说来奇怪——颇有我们方旗骑士的风范。听说他们的祖先曾经统治过一个叫达西的大国，和帝国打过好几代人的仗，从帝国骑兵身上偷师了骑枪冲锋。后来达西被库赛特人打残了，这些武士就流落出来当了雇佣兵。他们的马没有我们的竞技马高大，冲锋的时候没有那种摧枯拉朽的气势，但纪律很好，该冲的时候冲，该停的时候停。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_古拉姆__古拉姆.json#/Variants/4/Content
+      quote_hash: 51B42F2FA974FB42F08EDD6F05EC538E9CA9B2F187C21D54F33D17CCF0457994
+      quote: 但他们的骑枪冲锋——说来奇怪——颇有我们方旗骑士的风范
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+  - id: expr.ghulam-khuzait-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 古拉姆的骑射是我们调教出来的——或者说，是我们打出来的。他们的老家达西当年就在我们库赛特南边，兀儿浑可汗西进的时候从达西手里抢了大片草场。达西人被赶到了东边，但他们的武士没走，有些人留下来当了古拉姆。他们会骑枪，这是向帝国和瓦兰迪亚人学的，我们库赛特人不用那玩意。现在他们拿着弓和枪，给钱就打仗，不挑雇主也不记仇。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_古拉姆__古拉姆.json#/Variants/7/Content
+      quote_hash: 7F55F3E0028CD49D744DB5DDF58BBB61D58C82053DE6A140289905CD4A6D3C44
+      quote: 古拉姆的骑射是我们调教出来的——或者说，是我们打出来的
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    denies: []
+  - id: expr.ghulam-sturgia-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 古拉姆在北方接不到多少活。他们的装备是为了南方暖地设计的——轻甲、快马、花哨的打扮。到了北方的雪地里，他们的马受不了，他们自己也冻得缩成一团。但他们能在卡拉迪亚当这么多年雇佣兵还没散伙，说明本事是有的。听说他们的国家被库赛特人抢了，他们不想给库赛特人当奴隶，就自己出来卖命。这一点我们斯特吉亚人倒是能理解。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_古拉姆__古拉姆.json#/Variants/5/Content
+      quote_hash: 22FE6231F9FFEBFD38B44DFE66636B21B20708E8470621D24B46036FC15D56DF
+      quote: 到了北方的雪地里，他们的马受不了，他们自己也冻得缩成一团
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []
+- id: assertion.ghulam-3
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 在异乡人眼里，古拉姆身上最显眼的不是本事，是那身打扮：香水味老远就能闻到，帽子上插着孔雀毛，在林子里藏不住。而他们自己说，打扮不是为了好看，是为了记住自己是谁——「我们为黄金打仗，但黄金不是目的，只是手段。只要我们还在马背上，达西就没有亡」。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_古拉姆__古拉姆.json#/Variants/1/Content
+    quote_hash: B00B22CDD155734B64F715A52EBB58E331F913095CEF9D9D617EEB8F25E1E9CD
+    quote: 身上的香水味老远就能闻到，帽子上还插着孔雀毛，在林子里藏不住
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_古拉姆__古拉姆.json#/Variants/9/Content
+    quote_hash: BAAF7D47786F80C5B973361D67FA017C72071FA679D809791092ADA41F68E665
+    quote: 我们为黄金打仗，但黄金不是目的，只是手段。只要我们还在马背上，达西就没有亡
+  expressions:
+  - id: expr.ghulam-merc-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 古拉姆是雇佣兵里的上等货，收费不低，但物有所值。他们的骑射功夫和库赛特人有一拼，骑枪也能耍得有模有样。身上的香水味老远就能闻到，帽子上还插着孔雀毛，在林子里藏不住——但他们不在乎，反正他们不是来打伏击的，是来正面冲阵的。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_古拉姆__古拉姆.json#/Variants/1/Content
+      quote_hash: B00B22CDD155734B64F715A52EBB58E331F913095CEF9D9D617EEB8F25E1E9CD
+      quote: 身上的香水味老远就能闻到，帽子上还插着孔雀毛，在林子里藏不住
+    grants:
+    - profile_id: profile.merchant
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.ghulam-ghilman-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 我们来自达西。在草原的狼群还没壮大之前，达西是这片土地上最强的王国之一。然后库赛特人来了，他们像蝗虫一样涌过来，一茬一茬地收割我们的草场和城镇。有些人投降了，成了库赛特的臣属。我们没有——我们把自己卖给了古拉姆，成了自己的主人，也是自己的奴隶。我们依然用达西人的方式打扮，不是为了好看，是为了记住我们是谁。我们为黄金打仗，但黄金不是目的，只是手段。只要我们还在马背上，达西就没有亡。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_古拉姆__古拉姆.json#/Variants/9/Content
+      quote_hash: BAAF7D47786F80C5B973361D67FA017C72071FA679D809791092ADA41F68E665
+      quote: 我们为黄金打仗，但黄金不是目的，只是手段。只要我们还在马背上，达西就没有亡
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.darshi
+    denies: []

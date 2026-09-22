@@ -1,0 +1,294 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 2
+id: doc.war.troops-cataphract
+title:
+  zh-CN: 具装骑兵
+  en: Cataphract
+status: needs_review
+domain: war
+subdomain: troops
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 帝国具装骑兵
+  - 铁甲骑兵
+  - 皇家具装骑兵
+  en:
+  - Imperial Cataphract
+  - Elite Cataphract
+summary:
+  zh-CN: 具装骑兵：帝国最精锐的重装骑兵，人马俱披铁甲，领取皇家军饷的职业兵，与职业步兵并列为帝国军队两大核心；「战无不胜」之名遍传卡拉迪亚，敌方亲历者称其无视箭雨撕开阵列；行家则指出其机动不及轻骑、硬撞密集阵会被截停，且养护极贵。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+  locator: bannerlord.db#localization.0dnD9cR4
+  quote_hash: 19AB610122FDAC9084A5748B4FB8E8F4260C8408A8E02009A5D7A1DA6792D8FA
+  quote: 帝国军团步兵的主导地位早已不复存在。如今，当人们想起帝国的精英部队时，就会联想到那些声名远扬的具装骑兵，他们全身上下都包覆着帝国锻造厂所能锻造出的最精良的钢铁。作为领取皇家军饷的全职士兵，这些职业骑兵别无他业，终日操练剑、斧、骑枪与复合弓。
+- source_id: source.calradia.game.lore.war2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+  locator: bannerlord.db#localization.Mpu7rab1
+  quote_hash: 2827A60AA20454B2F40824D8022DED01565D7C8387AD6A14A0940D305245D94A
+  quote: 帝国军队的核心为其职业步兵和具装骑兵，但如今手头拮据的帝国指挥官们通常会征召一支规模可观的志愿辅助兵部队来凑数。他们需要避开近战，从侧翼包抄敌人并倾泻标枪雨。
+- source_id: source.calradia.game.lore.war2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+  locator: bannerlord.db#localization.X0kKBzsW
+  quote_hash: 9782E0A61707C02862A3C318EE4C64BE6F8734220F1860D9141ABA6C3E12D13B
+  quote: 卡拉德人是帝国的人民。如今卡拉德人已经用自己的名字命名了他们主宰的整个大陆。一千年前，他们还只是一个不起眼的部落，生活在南方之海和巴旦尼亚森林间的山区中，有着和邻居截然不同的传统——所谓的“卡拉德人没有君主” 。他们的公民总是对两件事情抱有强烈的兴趣，即自治之道，以及在保护个人自由和国家需求之间求得平衡。也许这就是卡拉德人能在城镇之间无休止的战争中略胜一筹的原因，军队在战场上能坚持得更久一点，从战败中恢复的速度也更快一点。一些邻居和他们结成联盟，其余的则被征服。最终，卡拉德人建立起一个帝国，一个有实无名的君主政体。他们的领袖不再是杰出的民粹元老，而是散布在大陆上的大地主；军队的中坚力量不再是公民步兵，而是富人扈从们组成的具装骑兵队。不过他们依旧十分看重民粹传统，坚信只要疆域之外的“野蛮人”也同意接受卡拉德理想，整个大陆就能和平统一。
+- source_id: source.calradia.game.lore.war2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+  locator: bannerlord.db#localization.ammEPFoq
+  quote_hash: 23D288301DF86507414F4E36CB6C30EF9350E560C8A5F33FAC41FF84C107AB3F
+  quote: 我是一名退役的帝国具装骑兵，至于我的战斗力与荣誉，无需多言。但我负担不起自己的战马与盔甲，所以我之前给商人当雇佣兵。
+- source_id: source.calradia.chronicle.animusforge.war2
+  source_version: animusforge-20260913
+  source_content_hash: cd49137efe05ba8744b54efcad204a80993373be4cdd7af95fca3c4e2b84ea8a
+  locator: rules/rule_具装骑兵__具装骑兵.json#/Variants/0/Content
+  quote_hash: CB84CEBC7FDD0848974BD6CC1A97C2F108A9B9D2E7A404242C2348DA10901A5A
+  quote: 具装骑兵是帝国的大杀器，他们人马具装呀，战无不胜
+- source_id: source.calradia.game.lore.war2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+  locator: bannerlord.db#localization.BleybhsD
+  quote_hash: 427C3117D2EEEA607A91E0F0EDF9F5038CAA02AA8EE0A7F1A4DD42AC7A7D9218
+  quote: 帝国的具装骑兵出现了，人马具甲，铁铠从头包到脚。他们完全无视我们的射击，直接撕开了我军部队。我被撤退的败军给卷走，不知道战斗后续的发展。德泰尔国王的计划不错，可那些男爵们——因加泰尔、阿尔德里克，等等——一如既往地根本没有理会他。
+- source_id: source.calradia.game.lore.war2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+  locator: bannerlord.db#localization.aT2qskIk
+  quote_hash: 267258731619DC50EC51450CFF1D626C2FC339243D4906677E8AE5EC3D3CD7D2
+  quote: 这些骑兵被称为“掠袭者”，精于一击脱离的战术。作为优秀的骑手，他们通常在军队里充当斥候的角色。在战场上，他们被部署在侧翼，用于掩护友军或包抄敌人。而其他时候，他们则奉命追杀溃兵以及追赶敌人的轻骑兵，因为轻骑兵的速度对于具装骑兵而言，实在是太快了。
+- source_id: source.calradia.game.lore.war2
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+  locator: bannerlord.db#localization.7H5RG3fS
+  quote_hash: 8C5938A9D57290174534E2E2588A7255DE1E8E2740B7EFEB95F5372E434A746B
+  quote: 近战骑兵大多是贵族和小贵族，尽管牧民和游牧民有时也会拥有自己的马匹，并骑着进行训练。他们进攻猛烈，可以轻易击垮分散的步兵。然而，如果他们跟密集阵型硬碰硬，就可能被截停、打倒。有些骑兵会装备标枪，能让他们在冲锋陷阵之前兼任骑射手。
+- source_id: source.calradia.chronicle.animusforge.war2
+  source_version: animusforge-20260913
+  source_content_hash: cd49137efe05ba8744b54efcad204a80993373be4cdd7af95fca3c4e2b84ea8a
+  locator: rules/rule_具装骑兵__具装骑兵.json#/Variants/2/Content
+  quote_hash: B099C4F1AAD6B8E4DEA09DC945FBBB9B01FB08AE077F032C4EF4591B97A70523
+  quote: 我们帝国军队里的具装骑兵就是战无不胜的，他们人马具装，无视一切攻击，胯下一匹帕尔马廷马赋予了他们极大的机动能力，没有什么可以阻止具装骑兵们的冲锋，除了他们自己
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.troop-cataphract-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 具装骑兵是帝国最精锐的职业重装骑兵：人马俱披甲，全身上下包覆帝国锻造厂所能锻造出的最精良钢铁；作为领取皇家军饷的全职士兵，他们别无他业，终日操练剑、斧、骑枪与复合弓，与职业步兵并列为帝国军队的两大核心。其地位有一部转变史——卡拉德军队的中坚早先由公民步兵充当，后变为富人扈从组成的具装骑兵队，与帝国由民粹共和转向大地主寡头同步。不过这份荣耀并不总是养得住人：退役的具装骑兵未必负担得起自己的战马与盔甲，有人只得去给商人当雇佣兵。
+  sources:
+  - source_id: source.calradia.game.lore.war2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+    locator: bannerlord.db#localization.0dnD9cR4
+    quote_hash: 19AB610122FDAC9084A5748B4FB8E8F4260C8408A8E02009A5D7A1DA6792D8FA
+    quote: 帝国军团步兵的主导地位早已不复存在。如今，当人们想起帝国的精英部队时，就会联想到那些声名远扬的具装骑兵，他们全身上下都包覆着帝国锻造厂所能锻造出的最精良的钢铁。作为领取皇家军饷的全职士兵，这些职业骑兵别无他业，终日操练剑、斧、骑枪与复合弓。
+  - source_id: source.calradia.game.lore.war2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+    locator: bannerlord.db#localization.Mpu7rab1
+    quote_hash: 2827A60AA20454B2F40824D8022DED01565D7C8387AD6A14A0940D305245D94A
+    quote: 帝国军队的核心为其职业步兵和具装骑兵，但如今手头拮据的帝国指挥官们通常会征召一支规模可观的志愿辅助兵部队来凑数。他们需要避开近战，从侧翼包抄敌人并倾泻标枪雨。
+  - source_id: source.calradia.game.lore.war2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+    locator: bannerlord.db#localization.X0kKBzsW
+    quote_hash: 9782E0A61707C02862A3C318EE4C64BE6F8734220F1860D9141ABA6C3E12D13B
+    quote: 卡拉德人是帝国的人民。如今卡拉德人已经用自己的名字命名了他们主宰的整个大陆。一千年前，他们还只是一个不起眼的部落，生活在南方之海和巴旦尼亚森林间的山区中，有着和邻居截然不同的传统——所谓的“卡拉德人没有君主” 。他们的公民总是对两件事情抱有强烈的兴趣，即自治之道，以及在保护个人自由和国家需求之间求得平衡。也许这就是卡拉德人能在城镇之间无休止的战争中略胜一筹的原因，军队在战场上能坚持得更久一点，从战败中恢复的速度也更快一点。一些邻居和他们结成联盟，其余的则被征服。最终，卡拉德人建立起一个帝国，一个有实无名的君主政体。他们的领袖不再是杰出的民粹元老，而是散布在大陆上的大地主；军队的中坚力量不再是公民步兵，而是富人扈从们组成的具装骑兵队。不过他们依旧十分看重民粹传统，坚信只要疆域之外的“野蛮人”也同意接受卡拉德理想，整个大陆就能和平统一。
+  - source_id: source.calradia.game.lore.war2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+    locator: bannerlord.db#localization.ammEPFoq
+    quote_hash: 23D288301DF86507414F4E36CB6C30EF9350E560C8A5F33FAC41FF84C107AB3F
+    quote: 我是一名退役的帝国具装骑兵，至于我的战斗力与荣誉，无需多言。但我负担不起自己的战马与盔甲，所以我之前给商人当雇佣兵。
+  expressions:
+  - id: expr.troop-cataphract-overview-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 具装骑兵是帝国最拿得出手的兵：人和马都裹着铁，从头包到脚。他们是领皇家军饷的职业兵，不干别的，天天操练剑、斧、骑枪和复合弓——帝国军队的两根柱子，一根是职业步兵，另一根就是他们。
+    sources:
+    - source_id: source.calradia.game.lore.war2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+      locator: bannerlord.db#localization.0dnD9cR4
+      quote_hash: 19AB610122FDAC9084A5748B4FB8E8F4260C8408A8E02009A5D7A1DA6792D8FA
+      quote: 帝国军团步兵的主导地位早已不复存在。如今，当人们想起帝国的精英部队时，就会联想到那些声名远扬的具装骑兵，他们全身上下都包覆着帝国锻造厂所能锻造出的最精良的钢铁。作为领取皇家军饷的全职士兵，这些职业骑兵别无他业，终日操练剑、斧、骑枪与复合弓。
+    - source_id: source.calradia.game.lore.war2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+      locator: bannerlord.db#localization.Mpu7rab1
+      quote_hash: 2827A60AA20454B2F40824D8022DED01565D7C8387AD6A14A0940D305245D94A
+      quote: 帝国军队的核心为其职业步兵和具装骑兵，但如今手头拮据的帝国指挥官们通常会征召一支规模可观的志愿辅助兵部队来凑数。他们需要避开近战，从侧翼包抄敌人并倾泻标枪雨。
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.troop-cataphract-elite-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帝国的家底是从公民步兵换成具装骑兵的：早先卡拉德人靠自耕农拿枪站阵，后来站在阵前的成了大户人家的扈从，人马具甲。这一步换下来，帝国也就从一个推举执政官的共和，变成了大地主说了算的朝廷。名头归名头——退役下来的具装骑兵，付不起自己那副甲和那匹马的大有人在，最后只能去给商人牵马押货。
+    sources:
+    - source_id: source.calradia.game.lore.war2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+      locator: bannerlord.db#localization.X0kKBzsW
+      quote_hash: 9782E0A61707C02862A3C318EE4C64BE6F8734220F1860D9141ABA6C3E12D13B
+      quote: 卡拉德人是帝国的人民。如今卡拉德人已经用自己的名字命名了他们主宰的整个大陆。一千年前，他们还只是一个不起眼的部落，生活在南方之海和巴旦尼亚森林间的山区中，有着和邻居截然不同的传统——所谓的“卡拉德人没有君主” 。他们的公民总是对两件事情抱有强烈的兴趣，即自治之道，以及在保护个人自由和国家需求之间求得平衡。也许这就是卡拉德人能在城镇之间无休止的战争中略胜一筹的原因，军队在战场上能坚持得更久一点，从战败中恢复的速度也更快一点。一些邻居和他们结成联盟，其余的则被征服。最终，卡拉德人建立起一个帝国，一个有实无名的君主政体。他们的领袖不再是杰出的民粹元老，而是散布在大陆上的大地主；军队的中坚力量不再是公民步兵，而是富人扈从们组成的具装骑兵队。不过他们依旧十分看重民粹传统，坚信只要疆域之外的“野蛮人”也同意接受卡拉德理想，整个大陆就能和平统一。
+    - source_id: source.calradia.game.lore.war2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+      locator: bannerlord.db#localization.ammEPFoq
+      quote_hash: 23D288301DF86507414F4E36CB6C30EF9350E560C8A5F33FAC41FF84C107AB3F
+      quote: 我是一名退役的帝国具装骑兵，至于我的战斗力与荣誉，无需多言。但我负担不起自己的战马与盔甲，所以我之前给商人当雇佣兵。
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.troop-cataphract-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 「战无不胜」是具装骑兵在卡拉迪亚最通行的名声：民间直呼其为帝国的大杀器，敌方亲历者也作此印象——「人马具甲，铁铠从头包到脚。他们完全无视我们的射击，直接撕开了我军部队」。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war2
+    source_version: animusforge-20260913
+    source_content_hash: cd49137efe05ba8744b54efcad204a80993373be4cdd7af95fca3c4e2b84ea8a
+    locator: rules/rule_具装骑兵__具装骑兵.json#/Variants/0/Content
+    quote_hash: CB84CEBC7FDD0848974BD6CC1A97C2F108A9B9D2E7A404242C2348DA10901A5A
+    quote: 具装骑兵是帝国的大杀器，他们人马具装呀，战无不胜
+  - source_id: source.calradia.game.lore.war2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+    locator: bannerlord.db#localization.BleybhsD
+    quote_hash: 427C3117D2EEEA607A91E0F0EDF9F5038CAA02AA8EE0A7F1A4DD42AC7A7D9218
+    quote: 帝国的具装骑兵出现了，人马具甲，铁铠从头包到脚。他们完全无视我们的射击，直接撕开了我军部队。我被撤退的败军给卷走，不知道战斗后续的发展。德泰尔国王的计划不错，可那些男爵们——因加泰尔、阿尔德里克，等等——一如既往地根本没有理会他。
+  expressions:
+  - id: expr.troop-cataphract-levy-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 帝国那些铁人又来了——人和马都包着铁，箭射上去叮当响，跟没事一样。老话讲他们是帝国的大杀器，战无不胜。真撞上他们的队，能躲就躲。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war2
+      source_version: animusforge-20260913
+      source_content_hash: cd49137efe05ba8744b54efcad204a80993373be4cdd7af95fca3c4e2b84ea8a
+      locator: rules/rule_具装骑兵__具装骑兵.json#/Variants/0/Content
+      quote_hash: CB84CEBC7FDD0848974BD6CC1A97C2F108A9B9D2E7A404242C2348DA10901A5A
+      quote: 具装骑兵是帝国的大杀器，他们人马具装呀，战无不胜
+    - source_id: source.calradia.game.lore.war2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+      locator: bannerlord.db#localization.BleybhsD
+      quote_hash: 427C3117D2EEEA607A91E0F0EDF9F5038CAA02AA8EE0A7F1A4DD42AC7A7D9218
+      quote: 帝国的具装骑兵出现了，人马具甲，铁铠从头包到脚。他们完全无视我们的射击，直接撕开了我军部队。我被撤退的败军给卷走，不知道战斗后续的发展。德泰尔国王的计划不错，可那些男爵们——因加泰尔、阿尔德里克，等等——一如既往地根本没有理会他。
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []
+- id: assertion.troop-cataphract-3
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 行家点出具装骑兵的战场短板：机动性不及轻骑——「轻骑兵的速度对于具装骑兵而言，实在是太快了」，追击乏力；硬撞结好阵的密集步兵则可能被截停、打倒；此外这兵种养护极贵，帝国一旦手头拮据，只能征召规模可观的志愿辅助兵来凑数。
+  sources:
+  - source_id: source.calradia.game.lore.war2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+    locator: bannerlord.db#localization.aT2qskIk
+    quote_hash: 267258731619DC50EC51450CFF1D626C2FC339243D4906677E8AE5EC3D3CD7D2
+    quote: 这些骑兵被称为“掠袭者”，精于一击脱离的战术。作为优秀的骑手，他们通常在军队里充当斥候的角色。在战场上，他们被部署在侧翼，用于掩护友军或包抄敌人。而其他时候，他们则奉命追杀溃兵以及追赶敌人的轻骑兵，因为轻骑兵的速度对于具装骑兵而言，实在是太快了。
+  - source_id: source.calradia.game.lore.war2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+    locator: bannerlord.db#localization.7H5RG3fS
+    quote_hash: 8C5938A9D57290174534E2E2588A7255DE1E8E2740B7EFEB95F5372E434A746B
+    quote: 近战骑兵大多是贵族和小贵族，尽管牧民和游牧民有时也会拥有自己的马匹，并骑着进行训练。他们进攻猛烈，可以轻易击垮分散的步兵。然而，如果他们跟密集阵型硬碰硬，就可能被截停、打倒。有些骑兵会装备标枪，能让他们在冲锋陷阵之前兼任骑射手。
+  - source_id: source.calradia.game.lore.war2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+    locator: bannerlord.db#localization.Mpu7rab1
+    quote_hash: 2827A60AA20454B2F40824D8022DED01565D7C8387AD6A14A0940D305245D94A
+    quote: 帝国军队的核心为其职业步兵和具装骑兵，但如今手头拮据的帝国指挥官们通常会征召一支规模可观的志愿辅助兵部队来凑数。他们需要避开近战，从侧翼包抄敌人并倾泻标枪雨。
+  expressions:
+  - id: expr.troop-cataphract-drill-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 见识过的人才知道具装骑兵不是没法对付。他们追不上轻骑——轻骑跑得快，他们只能在后头吃土；硬撞结好阵、站得密的步兵，照样能被截停、打倒。再就是贵：帝国手头一紧，就只能拿征召来的辅助兵凑数。这兵种，养得起才算本事。
+    sources:
+    - source_id: source.calradia.game.lore.war2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+      locator: bannerlord.db#localization.aT2qskIk
+      quote_hash: 267258731619DC50EC51450CFF1D626C2FC339243D4906677E8AE5EC3D3CD7D2
+      quote: 这些骑兵被称为“掠袭者”，精于一击脱离的战术。作为优秀的骑手，他们通常在军队里充当斥候的角色。在战场上，他们被部署在侧翼，用于掩护友军或包抄敌人。而其他时候，他们则奉命追杀溃兵以及追赶敌人的轻骑兵，因为轻骑兵的速度对于具装骑兵而言，实在是太快了。
+    - source_id: source.calradia.game.lore.war2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+      locator: bannerlord.db#localization.7H5RG3fS
+      quote_hash: 8C5938A9D57290174534E2E2588A7255DE1E8E2740B7EFEB95F5372E434A746B
+      quote: 近战骑兵大多是贵族和小贵族，尽管牧民和游牧民有时也会拥有自己的马匹，并骑着进行训练。他们进攻猛烈，可以轻易击垮分散的步兵。然而，如果他们跟密集阵型硬碰硬，就可能被截停、打倒。有些骑兵会装备标枪，能让他们在冲锋陷阵之前兼任骑射手。
+    - source_id: source.calradia.game.lore.war2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: d26cb9927f8ee92580ef35a0fb815b5681be35dcd02a5b6ea9c8384df99e07a0
+      locator: bannerlord.db#localization.Mpu7rab1
+      quote_hash: 2827A60AA20454B2F40824D8022DED01565D7C8387AD6A14A0940D305245D94A
+      quote: 帝国军队的核心为其职业步兵和具装骑兵，但如今手头拮据的帝国指挥官们通常会征召一支规模可观的志愿辅助兵部队来凑数。他们需要避开近战，从侧翼包抄敌人并倾泻标枪雨。
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    denies: []
+- id: assertion.troop-cataphract-4
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 帝国军人对具装骑兵的另一套说法则全然是自家荣耀：宣称他们人马具装、无视一切攻击，胯下帕尔马廷马赋予极大机动，「没有什么可以阻止具装骑兵们的冲锋，除了他们自己」。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war2
+    source_version: animusforge-20260913
+    source_content_hash: cd49137efe05ba8744b54efcad204a80993373be4cdd7af95fca3c4e2b84ea8a
+    locator: rules/rule_具装骑兵__具装骑兵.json#/Variants/2/Content
+    quote_hash: B099C4F1AAD6B8E4DEA09DC945FBBB9B01FB08AE077F032C4EF4591B97A70523
+    quote: 我们帝国军队里的具装骑兵就是战无不胜的，他们人马具装，无视一切攻击，胯下一匹帕尔马廷马赋予了他们极大的机动能力，没有什么可以阻止具装骑兵们的冲锋，除了他们自己
+  expressions:
+  - id: expr.troop-cataphract-honor-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帝国官面上一提精兵就提具装骑兵。他们自己说：人马具装，什么攻击都挨得住，胯下那匹帕尔马廷马跑起来还灵活得不像话——「没有什么可以阻止具装骑兵们的冲锋，除了他们自己」。这话你信几成，看你站哪儿听。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war2
+      source_version: animusforge-20260913
+      source_content_hash: cd49137efe05ba8744b54efcad204a80993373be4cdd7af95fca3c4e2b84ea8a
+      locator: rules/rule_具装骑兵__具装骑兵.json#/Variants/2/Content
+      quote_hash: B099C4F1AAD6B8E4DEA09DC945FBBB9B01FB08AE077F032C4EF4591B97A70523
+      quote: 我们帝国军队里的具装骑兵就是战无不胜的，他们人马具装，无视一切攻击，胯下一匹帕尔马廷马赋予了他们极大的机动能力，没有什么可以阻止具装骑兵们的冲锋，除了他们自己
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    denies: []

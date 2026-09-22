@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-omor
 title:
   zh-CN: 奥莫尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 奥莫尔
-  en:
-  - Omor
-  - town_S3
+entity_ids:
+- entity.settlement.town_s3
 summary:
   zh-CN: 奥莫尔位于拉科尼斯湖东岸，原为森林部落的橡树圣地，今为毛皮猎人与樵夫的集市，荒原猎产与湖港卸货同喧。
 registry_bindings:

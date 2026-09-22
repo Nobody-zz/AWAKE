@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.towns-onira
 title:
   zh-CN: 俄尼拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 俄尼拉
-  en:
-  - Onira
-  - town_ES5
+entity_ids:
+- entity.settlement.town_es5
 summary:
   zh-CN: 俄尼拉以萨尔培娅史诗为东部边事的著名底本，今为东部平原的养马业中心。
 registry_bindings:
@@ -38,29 +34,74 @@ authority:
 assertions:
 - id: assertion.town-onira-1
   revision: 1
-  kind: fact
+  kind: interpretation
   text:
-    zh-CN: 俄尼拉以萨尔培娅史诗为东部边事的著名底本，今为东部平原的养马业中心。
+    zh-CN: 俄尼拉的萨尔培娅传说是东部边境的史诗之一；与其他许多史诗一样，它似乎是为正义化帝国的征服而作。
   sources:
   - source_id: source.calradia.game.settlements-desc
     source_version: bannerlord-1.3.15.110062
     source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
     locator: bannerlord.settlements#town_ES5
-    quote_hash: 0DD948D8F1BC52988506E74A98FB2E464BECA28945E77FB624550081F1295112
-    quote: 俄尼拉的萨尔培娅传说是东部边境的史诗之一。
+    quote_hash: C5C497DDD32903C79300F3A663979721CCB6C77587CF0F3C1A51BF7044D67AFD
+    quote: 和其他的许多史诗一样，它似乎是为正义化帝国的征服而著。
   expressions:
-  - id: expr.town-onira-rumor
+  - id: expr.town-onira-1-detail
     revision: 1
-    layer: rumor
+    layer: detail
     text:
-      zh-CN: 俄尼拉的马好，那是有名的。城里的老史诗讲一个被掳的姑娘和她弑父的儿子，说书人一年讲到头。
+      zh-CN: 俄尼拉这出史诗，读着读着就觉出味来——许多同类都像是替帝国那场征服做说辞的。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
       source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
       locator: bannerlord.settlements#town_ES5
-      quote_hash: 0DD948D8F1BC52988506E74A98FB2E464BECA28945E77FB624550081F1295112
-      quote: 俄尼拉的萨尔培娅传说是东部边境的史诗之一。
+      quote_hash: C5C497DDD32903C79300F3A663979721CCB6C77587CF0F3C1A51BF7044D67AFD
+      quote: 和其他的许多史诗一样，它似乎是为正义化帝国的征服而著。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-onira-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 萨尔培娅是元老之女，被一位帕拉酋长掳回此地的要塞；数年后帝国军兵临城下，她因襁褓中的儿子而请求撤军——她那可怕的丈夫扬言宁可把孩子摔下城墙。故事说军团退了，而那男孩长大后加入帝国，弑杀了生父。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_ES5
+    quote_hash: 97C5F44005A5F789850FA32AD048B5EA3CAE31CF048B33C11CEC3B18F1E0891B
+    quote: 萨尔培娅是一位元老的女儿，她被一位帕拉酋长掳走，带回到他在此处的要塞。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_ES5
+    quote_hash: 7AB6D24493D934B50EDE417C61B6BD03C44FF9F2DD1B19D623A0AE595DCF7471
+    quote: 故事中说军团撤退了，但那男孩成长为一名战士后加入了帝国，并弑杀了自己的生父。
+  expressions:
+  - id: expr.town-onira-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 都说萨尔培娅是元老的闺女，叫帕拉酋长抢到这座要塞里。后来帝国兵来救她，她反倒求他们退——她男人说了，宁可把孩子从城墙上扔下去。故事说兵真退了，那孩子长大后进了帝国，把他亲爹杀了。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_ES5
+      quote_hash: 97C5F44005A5F789850FA32AD048B5EA3CAE31CF048B33C11CEC3B18F1E0891B
+      quote: 萨尔培娅是一位元老的女儿，她被一位帕拉酋长掳走，带回到他在此处的要塞。
     grants:
     - profile_id: profile.commoner
       scope: local
@@ -93,18 +134,57 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.town-onira-detail
+  - id: expr.town-onira-2-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 俄尼拉是东部军马的户口本——养马业中心的血统与行情在此；史诗是本地的脸面，夸马先懂史诗，价钱都藏在典故里。
+      zh-CN: 萨尔培娅这一折的关节在母亲身上：她要的不是救，是把儿子留在世上。史诗把这选择写成帝国的体面，读起来难受的是她。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
       source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
       locator: bannerlord.settlements#town_ES5
-      quote_hash: 0DD948D8F1BC52988506E74A98FB2E464BECA28945E77FB624550081F1295112
-      quote: 俄尼拉的萨尔培娅传说是东部边境的史诗之一。
+      quote_hash: 97C5F44005A5F789850FA32AD048B5EA3CAE31CF048B33C11CEC3B18F1E0891B
+      quote: 萨尔培娅是一位元老的女儿，她被一位帕拉酋长掳走，带回到他在此处的要塞。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-onira-3
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 如今这里是东部平原的养马业中心。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_ES5
+    quote_hash: C7BBFE08CC5D8965B403090A6220115DFAA4965BA4A38CFA725B36A5C5AD37D5
+    quote: 如今，这里是东部平原的养马业中心。
+  expressions:
+  - id: expr.town-onira-3-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 俄尼拉如今是东部平原的马市所在；马价一动，这一带的行情跟着动。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_ES5
+      quote_hash: C7BBFE08CC5D8965B403090A6220115DFAA4965BA4A38CFA725B36A5C5AD37D5
+      quote: 如今，这里是东部平原的养马业中心。
     grants:
     - profile_id: profile.headman
       scope: national

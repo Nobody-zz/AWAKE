@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-andurn
 title:
   zh-CN: 安杜恩
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 安杜恩
-  en:
-  - Andurn
-  - village_B4_2
+entity_ids:
+- entity.settlement.village_b4_2
 summary:
   zh-CN: 安杜恩坐落于俯瞰“林·泰瓦尔”也就是暗湖的山上裂口处；这一带的村民种树，采伐山毛榉、橡树和紫杉，再卖到各城镇去。
 registry_bindings:

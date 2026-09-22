@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-parasemnos
 title:
   zh-CN: 帕拉森诺斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 帕拉森诺斯
-  en:
-  - Parasemnos
-  - village_ES5_3
+entity_ids:
+- entity.settlement.village_es5_3
 summary:
   zh-CN: 帕拉森诺斯坐落于连通塔尼平原与卡勒萨河的低矮隘口旁；村民从山口卡勒萨一侧山脊下的矿床采盐。
 registry_bindings:

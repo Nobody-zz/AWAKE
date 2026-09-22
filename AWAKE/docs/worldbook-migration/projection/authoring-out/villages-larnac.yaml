@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-larnac
 title:
   zh-CN: 拉尔纳克
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 拉尔纳克
-  en:
-  - Larnac
-  - village_V3_3
+entity_ids:
+- entity.settlement.village_v3_3
 summary:
   zh-CN: 拉尔纳克坐落于特朗河谷下游的平缓山丘上；村民种植黑麦、大麦与小麦，出售给帕拉汶德附近缺粮的城镇居民。
 registry_bindings:

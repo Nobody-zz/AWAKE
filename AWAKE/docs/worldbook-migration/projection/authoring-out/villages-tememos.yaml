@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-tememos
 title:
   zh-CN: 特美摩斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 特美摩斯
-  en:
-  - Tememos
-  - castle_village_EN8_2
+entity_ids:
+- entity.settlement.castle_village_en8_2
 summary:
   zh-CN: 特美摩斯坐落于塔奈西斯湖北端树木繁茂的丘陵地，许多村民以林为业，采伐橡树、山毛榉和松树销往湖边城镇。
 registry_bindings:

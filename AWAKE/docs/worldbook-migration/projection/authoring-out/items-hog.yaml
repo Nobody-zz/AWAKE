@@ -1,0 +1,143 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-hog
+title:
+  zh-CN: 肉猪
+  en: Hog
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en:
+  - pig
+summary:
+  zh-CN: 肉猪是养猪场养的肥猪，养它就是为了肉，橡果喂大的最抢手。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.ZbsGBv10
+  quote_hash: C5F05CF450369FAB68814916AB2114F2E7877471E293D38DFA43F4E632B37A94
+  quote: 肉猪
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_卡南克__卡南克.json#/Variants/1/Content
+  quote_hash: 57F4984C9306CEA3649ACCF523CB3A217E4891C7F8D63B069147285E22CE766F
+  quote: 卡南克的猪肉在奥斯蒂港是抢手货
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_部尔纳__部尔纳.json#/Variants/2/Content
+  quote_hash: EF16BE5CFE21C795FB126E61847D16549583A810DFB9EA7948A7E72CAE97F7A2
+  quote: 纳尔谷出口的猪肉比别处的好吃，懂行的一尝就知道是橡树林里养出来的
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.items-hog-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 肉猪是养猪场养的家畜，基准价 60 第纳尔，论口买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.ZbsGBv10
+    quote_hash: C5F05CF450369FAB68814916AB2114F2E7877471E293D38DFA43F4E632B37A94
+    quote: 肉猪
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_卡南克__卡南克.json#/Variants/1/Content
+    quote_hash: 57F4984C9306CEA3649ACCF523CB3A217E4891C7F8D63B069147285E22CE766F
+    quote: 卡南克的猪肉在奥斯蒂港是抢手货
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_部尔纳__部尔纳.json#/Variants/2/Content
+    quote_hash: EF16BE5CFE21C795FB126E61847D16549583A810DFB9EA7948A7E72CAE97F7A2
+    quote: 纳尔谷出口的猪肉比别处的好吃，懂行的一尝就知道是橡树林里养出来的
+  expressions:
+  - id: expr.items-hog-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 猪是拿来吃肉的，越肥越值钱。林子里放养的猪，肉紧、膘少，比圈养的卖得贵。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.ZbsGBv10
+      quote_hash: C5F05CF450369FAB68814916AB2114F2E7877471E293D38DFA43F4E632B37A94
+      quote: 肉猪
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_卡南克__卡南克.json#/Variants/1/Content
+      quote_hash: 57F4984C9306CEA3649ACCF523CB3A217E4891C7F8D63B069147285E22CE766F
+      quote: 卡南克的猪肉在奥斯蒂港是抢手货
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.items-hog-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 肉猪 60 一件，比羊贱、比鹅贵，九个猪场出。买它的多是屠户和赶集的商人，猪一变肉，价就往上走一大截。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.ZbsGBv10
+      quote_hash: C5F05CF450369FAB68814916AB2114F2E7877471E293D38DFA43F4E632B37A94
+      quote: 肉猪
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_部尔纳__部尔纳.json#/Variants/2/Content
+      quote_hash: EF16BE5CFE21C795FB126E61847D16549583A810DFB9EA7948A7E72CAE97F7A2
+      quote: 纳尔谷出口的猪肉比别处的好吃，懂行的一尝就知道是橡树林里养出来的
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-barihal
 title:
   zh-CN: 巴里哈勒
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 巴里哈勒
-  en:
-  - Barihal
-  - castle_village_A9_1
+entity_ids:
+- entity.settlement.castle_village_a9_1
 summary:
   zh-CN: 巴里哈勒是杰尔贾赖峭壁台地旱谷边的绿洲村，以短命而肥美的春草饲养马匹闻名。
 registry_bindings:

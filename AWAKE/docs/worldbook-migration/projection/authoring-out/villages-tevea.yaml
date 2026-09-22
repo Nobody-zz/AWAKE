@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-tevea
 title:
   zh-CN: 特维亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 特维亚
-  en:
-  - Tevea
-  - village_ES3_2
+entity_ids:
+- entity.settlement.village_es3_2
 summary:
   zh-CN: 特维亚坐落于吕卡里亚谷中平地缓慢爬向奥尼石山基底的中间地带；奥尼石山得名自栖于峭壁、俯瞰雾蒙蒙平原的秃鹫。石山阴面下的洼地常年湿润，是种植亚麻的良田。
 registry_bindings:

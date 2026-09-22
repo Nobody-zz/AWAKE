@@ -1,0 +1,106 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-cat
+title:
+  zh-CN: 猫
+  en: Cat
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 猫是农家的抓鼠牲口，也能当宠物养，价不贵。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.b6JvcSiQ
+  quote_hash: A810BF845A307382118E6E6AEF21A79F6A26B1B3AD2225FE97B7EE4C125E3380
+  quote: 猫
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.items-cat-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 猫是家养的抓鼠动物，基准价 20 第纳尔，论只买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.b6JvcSiQ
+    quote_hash: A810BF845A307382118E6E6AEF21A79F6A26B1B3AD2225FE97B7EE4C125E3380
+    quote: 猫
+  expressions:
+  - id: expr.items-cat-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 粮仓边上没只猫，一冬的麦子就叫老鼠啃了。抓鼠的猫比好看的值钱。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.b6JvcSiQ
+      quote_hash: A810BF845A307382118E6E6AEF21A79F6A26B1B3AD2225FE97B7EE4C125E3380
+      quote: 猫
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.items-cat-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 猫 20 一件，是牲畜里最便宜的一档，跟狗同价。买它的多是粮商和城里住户，一买一对，防鼠用。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.b6JvcSiQ
+      quote_hash: A810BF845A307382118E6E6AEF21A79F6A26B1B3AD2225FE97B7EE4C125E3380
+      quote: 猫
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

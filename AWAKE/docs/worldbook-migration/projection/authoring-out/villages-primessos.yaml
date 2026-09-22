@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-primessos
 title:
   zh-CN: 普里墨索斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 普里墨索斯
-  en:
-  - Primessos
-  - village_EW1_1
+entity_ids:
+- entity.settlement.village_ew1_1
 summary:
   zh-CN: 普里墨索斯位于伽维斯河谷树木繁茂的上游；当地气候适合饲养以南方橡树的橡子为食的猪。
 registry_bindings:

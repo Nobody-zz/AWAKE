@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-tasheba
 title:
   zh-CN: 塔舍巴
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 塔舍巴
-  en:
-  - Tasheba
-  - village_A1_1
+entity_ids:
+- entity.settlement.village_a1_1
 summary:
   zh-CN: 塔舍巴坐落于耶什姆海西岸，渔民全年大多可在风平浪静的保护水域捕捞金枪鱼与沙丁鱼。
 registry_bindings:

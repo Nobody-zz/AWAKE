@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-myzea
 title:
   zh-CN: 密泽亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 密泽亚
-  en:
-  - Myzea
-  - town_EN5
+entity_ids:
+- entity.settlement.town_en5
 summary:
   zh-CN: 密泽亚得名于帝国中东部富饶的山峦之乡，元老李图曾率帕拉人和平归附；共和派在本地民间素有天然好感。
 registry_bindings:

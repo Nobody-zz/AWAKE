@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-stathymos
 title:
   zh-CN: 斯塔堤摩斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 斯塔堤摩斯
-  en:
-  - Stathymos
-  - village_EN1_2
+entity_ids:
+- entity.settlement.village_en1_2
 summary:
   zh-CN: 斯塔堤摩斯位于德律亚山脉高耸山脊下的一条狭长山谷中；高地溪流灌溉着山坡上的沃土，使该地区成为帝国北方的粮仓之一。
 registry_bindings:

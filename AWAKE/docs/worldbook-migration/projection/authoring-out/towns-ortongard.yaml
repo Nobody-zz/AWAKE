@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-ortongard
 title:
   zh-CN: 奥通加德
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 奥通加德
-  en:
-  - Ortongard
-  - town_K4
+entity_ids:
+- entity.settlement.town_k4
 summary:
   zh-CN: 奥通加德坐落干燥的德夫赛格高原中央，春牧适时；由达西语商人建城贩畜西售帝国，后陷于兀儿浑汗，赐予库吉特部。
 registry_bindings:

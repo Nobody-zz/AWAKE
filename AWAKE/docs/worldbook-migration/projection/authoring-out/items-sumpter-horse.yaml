@@ -1,0 +1,142 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-sumpter-horse
+title:
+  zh-CN: 驮马
+  en: Sumpter Horse
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 驮马是专门驮货的牲口，不骑只拉，商队的命脉。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.P1rL28RT
+  quote_hash: 2BF997026EB5CC86C443ADFECEB7840260100933E0E2991B02226C21D11C62F9
+  quote: 驮马
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_商队__商队.json#/Variants/0/Content
+  quote_hash: 607585173D65F5400BDA7B6B2807E0F4F27D4461EB4A7CC9C3207C3A3A16D131
+  quote: 商队就是把一城的货驮到另一城去卖
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_商队__商队.json#/Variants/0/Content
+  quote_hash: F5F52918F7E3ADF44292F09E1D3C735434DD2D2C3CE1FF7B0922D07B6CFC7ED7
+  quote: 头一次上路开销不小：驮畜、装备、随行人员、护卫、货物
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.items-sumpter-horse-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 驮马是商队用来驮货的牲口，基准价 110 第纳尔，负重 430，论匹买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.P1rL28RT
+    quote_hash: 2BF997026EB5CC86C443ADFECEB7840260100933E0E2991B02226C21D11C62F9
+    quote: 驮马
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_商队__商队.json#/Variants/0/Content
+    quote_hash: 607585173D65F5400BDA7B6B2807E0F4F27D4461EB4A7CC9C3207C3A3A16D131
+    quote: 商队就是把一城的货驮到另一城去卖
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_商队__商队.json#/Variants/0/Content
+    quote_hash: F5F52918F7E3ADF44292F09E1D3C735434DD2D2C3CE1FF7B0922D07B6CFC7ED7
+    quote: 头一次上路开销不小：驮畜、装备、随行人员、护卫、货物
+  expressions:
+  - id: expr.items-sumpter-horse-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 驮马跑不快，可它扛得住。商队一趟能带多少货，全队看驮马有多少匹。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.P1rL28RT
+      quote_hash: 2BF997026EB5CC86C443ADFECEB7840260100933E0E2991B02226C21D11C62F9
+      quote: 驮马
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_商队__商队.json#/Variants/0/Content
+      quote_hash: 607585173D65F5400BDA7B6B2807E0F4F27D4461EB4A7CC9C3207C3A3A16D131
+      quote: 商队就是把一城的货驮到另一城去卖
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.items-sumpter-horse-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 驮马 110 一件，是马匹里最便宜的一档，可它是商队的骨头。头一次拉商队，驮畜这一项就得先垫进去一大笔。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.P1rL28RT
+      quote_hash: 2BF997026EB5CC86C443ADFECEB7840260100933E0E2991B02226C21D11C62F9
+      quote: 驮马
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_商队__商队.json#/Variants/0/Content
+      quote_hash: F5F52918F7E3ADF44292F09E1D3C735434DD2D2C3CE1FF7B0922D07B6CFC7ED7
+      quote: 头一次上路开销不小：驮畜、装备、随行人员、护卫、货物
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

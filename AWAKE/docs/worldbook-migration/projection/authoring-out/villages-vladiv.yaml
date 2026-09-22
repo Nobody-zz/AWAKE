@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-vladiv
 title:
   zh-CN: 弗拉基夫
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 弗拉基夫
-  en:
-  - Vladiv
-  - castle_village_S8_1
+entity_ids:
+- entity.settlement.castle_village_s8_1
 summary:
   zh-CN: 弗拉基夫坐落于伊勒坦山脚下寒冷阴暗的林谷中；这一带的耐寒牛在冬天会刨开厚厚的积雪找草吃，就这样熬到春天。
 registry_bindings:

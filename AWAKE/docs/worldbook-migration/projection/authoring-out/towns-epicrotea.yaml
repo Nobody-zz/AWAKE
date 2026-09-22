@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-epicrotea
 title:
   zh-CN: 厄庇克洛忒亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 厄庇克洛忒亚
-  en:
-  - Epicrotea
-  - town_EN1
+entity_ids:
+- entity.settlement.town_en1
 summary:
   zh-CN: 厄庇克洛忒亚意为“战无不胜”，得名于击溃巴旦尼亚大军的将军萨拉庇俄斯；塔楼遥望弥戎河，常是北军南犯的第一站。
 registry_bindings:

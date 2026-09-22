@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-verecsand
 title:
   zh-CN: 韦雷克桑
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 韦雷克桑
-  en:
-  - Verecsand
-  - castle_village_V8_1
+entity_ids:
+- entity.settlement.castle_village_v8_1
 summary:
   zh-CN: 韦雷克桑位于小而深的内陆湖奥克斯湖的水域旁；村民在湖边平坦的草原上种植小麦。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-kamshar
 title:
   zh-CN: 喀木沙
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 喀木沙
-  en:
-  - Kamshar
-  - castle_village_K2_2
+entity_ids:
+- entity.settlement.castle_village_k2_2
 summary:
   zh-CN: 喀木沙位于库赛特人称作达那孜海的塔奈西斯湖畔；当地渔业不盛，村民在湖边收集黏土，卖给柴坎及其他城镇的陶工。
 registry_bindings:

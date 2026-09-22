@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-mareiven
 title:
   zh-CN: 马雷汶
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 马雷汶
-  en:
-  - Mareiven
-  - village_V2_1
+entity_ids:
+- entity.settlement.village_v2_1
 summary:
   zh-CN: 马雷汶坐落于莱恩诺山脉密林覆盖的陡坡上，俯瞰着整个奥克斯湖；村民采伐高大的树木，卖到沿海城市。
 registry_bindings:

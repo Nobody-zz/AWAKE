@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.towns-balgard
 title:
   zh-CN: 巴尔加德
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 巴尔加德
-  en:
-  - Balgard
-  - town_S2
+entity_ids:
+- entity.settlement.town_s2
 summary:
   zh-CN: 巴尔加德位于冰冷的马佐波尔湾，由诺德移民所建；贡达尔公平分派亡者兵甲赢得统治权，其后裔与斯特吉亚通婚成列位王公。
 registry_bindings:
@@ -40,7 +36,7 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 巴尔加德位于冰冷的马佐波尔湾，由诺德移民所建；贡达尔公平分派亡者兵甲赢得统治权，其后裔与斯特吉亚通婚成列位王公。
+    zh-CN: 巴尔加德在冰冷的马佐波尔湾边，由诺德的移民所建。
   sources:
   - source_id: source.calradia.game.settlements-desc
     source_version: bannerlord-1.3.15.110062
@@ -49,11 +45,11 @@ assertions:
     quote_hash: 8675913513BAD8D9A931683CBC92BBAD60566BD9956C9447D70B4208594A3C1C
     quote: 巴尔加德位于冰冷的马佐波尔湾边，由诺德的移民们建立。
   expressions:
-  - id: expr.town-balgard-rumor
+  - id: expr.town-balgard-1-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 巴尔加德人说起老祖宗贡达尔都竖大拇指——把死去乡亲的刀甲公平分给本地人，才换来这份基业。
+      zh-CN: 巴尔加德在海湾边上，冷。建它的是打北边来的诺德人。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +89,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.town-balgard-detail
+  - id: expr.town-balgard-1-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 巴尔加德是湾港军市——马佐波尔湾的渔获、海防与北地雇佣兵生意三足；贡达尔法统是王公谱系的根，本地人论出身认这个。
+      zh-CN: 巴尔加德据马佐波尔湾，是诺德移民的落点；湾水寒，一年能走船的月份不多，做货要掐着日子。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -105,6 +101,89 @@ assertions:
       locator: bannerlord.settlements#town_S2
       quote_hash: 8675913513BAD8D9A931683CBC92BBAD60566BD9956C9447D70B4208594A3C1C
       quote: 巴尔加德位于冰冷的马佐波尔湾边，由诺德的移民们建立。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-balgard-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 根据传说，第一批到此的诺德人傲慢地要瓦肯与斯特吉亚部落纳贡，被两家结盟赶回长船；后来胜者因分赃不均起争执，直到精明的诺德人贡达尔登陆，把死去族人的武器甲胄公平分给当地人，因此被认作该地之主，其后代与斯特吉亚人不断通婚，成了今日斯特吉亚的列位王公。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_S2
+    quote_hash: 5D6827A854B48A964555F15C9857C069134BFB8B9A9FCED8DFBA119A5B1D4867
+    quote: 根据传说，第一批前来此地的诺德人傲慢地要求附近的瓦肯和斯特吉亚部落纳贡，而后者结成同盟将这群新来者赶回了自己的长船上。然而，胜利者们因为分赃不均爆发了争执，直到一位精明的诺德人贡达尔登陆此地，将自己死去族人的武器和盔甲公平地分给了当地人。当地人认可贡达尔对该地区的统治权，而他的后代和斯特吉亚人不断通婚，成为了如今斯特吉亚的列位王公。
+  expressions:
+  - id: expr.town-balgard-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 老一辈讲，最早来的诺德人太横，叫瓦肯人和斯特吉亚人一块儿赶回船上去了。后来他们自己为分东西打起来，是贡达尔把死人的刀甲分匀了，众人才服他。如今斯特吉亚那些王公，都说是他的后人。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_S2
+      quote_hash: 5D6827A854B48A964555F15C9857C069134BFB8B9A9FCED8DFBA119A5B1D4867
+      quote: 根据传说，第一批前来此地的诺德人傲慢地要求附近的瓦肯和斯特吉亚部落纳贡，而后者结成同盟将这群新来者赶回了自己的长船上。然而，胜利者们因为分赃不均爆发了争执，直到一位精明的诺德人贡达尔登陆此地，将自己死去族人的武器和盔甲公平地分给了当地人。当地人认可贡达尔对该地区的统治权，而他的后代和斯特吉亚人不断通婚，成为了如今斯特吉亚的列位王公。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-balgard-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 巴尔加德的开国故事里，贡达尔的功劳不在打，在分——他把死者遗下的武器甲胄均分给当地人，以此换得认可。这故事的底子是：谁分得公平，谁就坐得稳。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_S2
+      quote_hash: 5D6827A854B48A964555F15C9857C069134BFB8B9A9FCED8DFBA119A5B1D4867
+      quote: 根据传说，第一批前来此地的诺德人傲慢地要求附近的瓦肯和斯特吉亚部落纳贡，而后者结成同盟将这群新来者赶回了自己的长船上。然而，胜利者们因为分赃不均爆发了争执，直到一位精明的诺德人贡达尔登陆此地，将自己死去族人的武器和盔甲公平地分给了当地人。当地人认可贡达尔对该地区的统治权，而他的后代和斯特吉亚人不断通婚，成为了如今斯特吉亚的列位王公。
     grants:
     - profile_id: profile.headman
       scope: national

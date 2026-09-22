@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-alatys
 title:
   zh-CN: 阿拉堤斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿拉堤斯
-  en:
-  - Alatys
-  - village_EN4_2
+entity_ids:
+- entity.settlement.village_en4_2
 summary:
   zh-CN: 阿拉堤斯位于拉科尼斯湖平坦的南端、涅维斯河冲出的三角低地上；浅浑湖水中多比目鱼与小龙虾，涅维斯河上游还能捕到鳟鱼。
 registry_bindings:

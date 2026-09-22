@@ -1,0 +1,124 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-hides
+title:
+  zh-CN: 兽皮
+  en: Hides
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 兽皮是没鞣过的生皮，猎户与牲口多的地方都出，论车往镇上传。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.4kvKQuXM
+  quote_hash: 14A8BF4945B7912DC2BC5353404EDEB097FD2946061DC10CCFF5223EA142168C
+  quote: 兽皮{@Plural}成车的兽皮{\@}
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_塔奈西斯湖__塔奈西斯湖.json#/Variants/4/Content
+  quote_hash: 8D7E448E894C04605AF62EE567CF65C744E36C3F51CD3C119F04B83DDC1500B3
+  quote: 湖上漂满了小船，载着兽皮、羊毛和盐
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-hides-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 兽皮是未经鞣制的生皮，基准价 50 第纳尔，论车买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.4kvKQuXM
+    quote_hash: 14A8BF4945B7912DC2BC5353404EDEB097FD2946061DC10CCFF5223EA142168C
+    quote: 兽皮{@Plural}成车的兽皮{\@}
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_塔奈西斯湖__塔奈西斯湖.json#/Variants/4/Content
+    quote_hash: 8D7E448E894C04605AF62EE567CF65C744E36C3F51CD3C119F04B83DDC1500B3
+    quote: 湖上漂满了小船，载着兽皮、羊毛和盐
+  expressions:
+  - id: expr.goods-hides-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 生皮是猎户顺手的东西，打来的、养死的，剥下来就是一张。放久了会坏，得赶紧卖给皮匠。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.4kvKQuXM
+      quote_hash: 14A8BF4945B7912DC2BC5353404EDEB097FD2946061DC10CCFF5223EA142168C
+      quote: 兽皮{@Plural}成车的兽皮{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_塔奈西斯湖__塔奈西斯湖.json#/Variants/4/Content
+      quote_hash: 8D7E448E894C04605AF62EE567CF65C744E36C3F51CD3C119F04B83DDC1500B3
+      quote: 湖上漂满了小船，载着兽皮、羊毛和盐
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-hides-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 兽皮 50 一件，比皮革低一大截，差的就是鞣这道工。收生皮要快、要趁着没坏，压库压久了就是一堆废料。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.4kvKQuXM
+      quote_hash: 14A8BF4945B7912DC2BC5353404EDEB097FD2946061DC10CCFF5223EA142168C
+      quote: 兽皮{@Plural}成车的兽皮{\@}
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

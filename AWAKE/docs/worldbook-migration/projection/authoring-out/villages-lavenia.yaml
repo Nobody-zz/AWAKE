@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-lavenia
 title:
   zh-CN: 拉文尼亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 拉文尼亚
-  en:
-  - Lavenia
-  - castle_village_ES4_1
+entity_ids:
+- entity.settlement.castle_village_es4_1
 summary:
   zh-CN: 拉文尼亚是珀拉斯海东北岸的一座渔村，附近的城堡守卫着通往阿塞莱领土的关口要道；这些湖泊与咸水湖构成的交通网络被称为卡勒萨。
 registry_bindings:

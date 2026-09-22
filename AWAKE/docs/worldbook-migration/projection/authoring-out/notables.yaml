@@ -1,0 +1,178 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.culture.notables
+title:
+  zh-CN: 要人
+  en: Notables
+status: needs_review
+domain: culture
+subdomain: identity
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 城镇和村庄里有一类「要人」——不是贵族，可能是商人、地主，也可能是帮派头目。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.DaE0N37L
+  quote_hash: 277123EB2215AD0A0ACCFB8BEECFA56BCE8BD300C7F556817F9C865FAD90D7DA
+  quote: 要人
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.2Af5HRJU
+  quote_hash: 8FAB6D0F67750592237A12FBFD9F9D403AECFC6A2FB505EA3360F52A743F108E
+  quote: 村庄要人
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.RTCjRw3I
+  quote_hash: 702B9BB654C28B4027433090EB402787D491BF9C9DF3AD7C3FAC976BE39A6E15
+  quote: 要人即{TOWNS_LINK}和{VILLAGES_LINK}中的著名居民，他们并非贵族。他们可能是商人、地主、帮派头目或是其他人。他们会为玩家提供任务，与要人的良好关系能够让玩家招募到更多、更好的士兵。与要人的良好关系也能给{CLANS_LINK}带来好处，可以提高其{INFLUENCE_LINK}，同时更加方便地管理{SETTLEMENTS_LINK}。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.0h5BrVdA
+  quote_hash: 82926BA4C3212208E5C4E7546D289D847907D681846FCD2BEC8C5E0E5BC4410C
+  quote: 由于高忠诚度，你与你某些定居点内的要人关系增进了
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.9YHjPkb8
+  quote_hash: D8FDC4F3EC1176457D3863DFDE0C48FE88C0F71D996D3D0150A6AEACF4B41607
+  quote: 强迫要人为你募兵。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.notables-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 城镇和村庄里都有「要人」：他们是当地有名望的居民，不是贵族。可能是商人、地主，也可能是帮派头目。与他们交好，能招到更多、更好的兵。
+  sources:
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.DaE0N37L
+    quote_hash: 277123EB2215AD0A0ACCFB8BEECFA56BCE8BD300C7F556817F9C865FAD90D7DA
+    quote: 要人
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.2Af5HRJU
+    quote_hash: 8FAB6D0F67750592237A12FBFD9F9D403AECFC6A2FB505EA3360F52A743F108E
+    quote: 村庄要人
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.RTCjRw3I
+    quote_hash: 702B9BB654C28B4027433090EB402787D491BF9C9DF3AD7C3FAC976BE39A6E15
+    quote: 要人即{TOWNS_LINK}和{VILLAGES_LINK}中的著名居民，他们并非贵族。他们可能是商人、地主、帮派头目或是其他人。他们会为玩家提供任务，与要人的良好关系能够让玩家招募到更多、更好的士兵。与要人的良好关系也能给{CLANS_LINK}带来好处，可以提高其{INFLUENCE_LINK}，同时更加方便地管理{SETTLEMENTS_LINK}。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.0h5BrVdA
+    quote_hash: 82926BA4C3212208E5C4E7546D289D847907D681846FCD2BEC8C5E0E5BC4410C
+    quote: 由于高忠诚度，你与你某些定居点内的要人关系增进了
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.9YHjPkb8
+    quote_hash: D8FDC4F3EC1176457D3863DFDE0C48FE88C0F71D996D3D0150A6AEACF4B41607
+    quote: 强迫要人为你募兵。
+  expressions:
+  - id: expr.notables-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 谁在镇上说话算数，去集市上转几圈就知道了。要办事，找他们比找官老爷管用。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.DaE0N37L
+      quote_hash: 277123EB2215AD0A0ACCFB8BEECFA56BCE8BD300C7F556817F9C865FAD90D7DA
+      quote: 要人
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.2Af5HRJU
+      quote_hash: 8FAB6D0F67750592237A12FBFD9F9D403AECFC6A2FB505EA3360F52A743F108E
+      quote: 村庄要人
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.RTCjRw3I
+      quote_hash: 702B9BB654C28B4027433090EB402787D491BF9C9DF3AD7C3FAC976BE39A6E15
+      quote: 要人即{TOWNS_LINK}和{VILLAGES_LINK}中的著名居民，他们并非贵族。他们可能是商人、地主、帮派头目或是其他人。他们会为玩家提供任务，与要人的良好关系能够让玩家招募到更多、更好的士兵。与要人的良好关系也能给{CLANS_LINK}带来好处，可以提高其{INFLUENCE_LINK}，同时更加方便地管理{SETTLEMENTS_LINK}。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    denies: []
+  - id: expr.notables-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 跟要人处得好，换来的是兵，也是声望——那份声望还能记在家族的账上，变成殿上说话的分量。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.RTCjRw3I
+      quote_hash: 702B9BB654C28B4027433090EB402787D491BF9C9DF3AD7C3FAC976BE39A6E15
+      quote: 要人即{TOWNS_LINK}和{VILLAGES_LINK}中的著名居民，他们并非贵族。他们可能是商人、地主、帮派头目或是其他人。他们会为玩家提供任务，与要人的良好关系能够让玩家招募到更多、更好的士兵。与要人的良好关系也能给{CLANS_LINK}带来好处，可以提高其{INFLUENCE_LINK}，同时更加方便地管理{SETTLEMENTS_LINK}。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.0h5BrVdA
+      quote_hash: 82926BA4C3212208E5C4E7546D289D847907D681846FCD2BEC8C5E0E5BC4410C
+      quote: 由于高忠诚度，你与你某些定居点内的要人关系增进了
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.9YHjPkb8
+      quote_hash: D8FDC4F3EC1176457D3863DFDE0C48FE88C0F71D996D3D0150A6AEACF4B41607
+      quote: 强迫要人为你募兵。
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

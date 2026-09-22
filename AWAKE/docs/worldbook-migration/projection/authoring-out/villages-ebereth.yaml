@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-ebereth
 title:
   zh-CN: 埃贝雷斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 埃贝雷斯
-  en:
-  - Ebereth
-  - village_B1_2
+entity_ids:
+- entity.settlement.village_b1_2
 summary:
   zh-CN: 埃贝雷斯坐落于一处鞍状山脊上，一边是泰瓦尔湖，另一边通往卡瓦尔谷的隘口；当地村民种葡萄，酿出巴旦尼亚地方甘甜的白葡萄酒。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-crios
 title:
   zh-CN: 克里俄斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 克里俄斯
-  en:
-  - Crios
-  - village_EN3_3
+entity_ids:
+- entity.settlement.village_en3_3
 summary:
   zh-CN: 克里俄斯位于德律亚山脉东边的石灰岩山脊上；高地土壤适合生长优质马草，是一处养马地。
 registry_bindings:

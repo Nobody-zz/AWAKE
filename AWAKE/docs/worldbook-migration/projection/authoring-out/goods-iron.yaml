@@ -1,0 +1,160 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-iron
+title:
+  zh-CN: 铁矿石
+  en: Iron Ore
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 铁矿石是铁矿里挖出来的料，兵器铠甲农具全从它身上起头。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.Kw6BkhIf
+  quote_hash: 99D202A520F4F895BEBC267D591F4D446FFFCF26A360275639C4493DBB3C8331
+  quote: 铁矿石{@Plural}成车的铁矿石{\@}
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.rHcVKSbA
+  quote_hash: 590D39A561F249CA14471377163DA17E26C8125B9F9F6ED5AC114D070534F35E
+  quote: 铁矿
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_德律亚山__德律亚山.json#/Variants/0/Content
+  quote_hash: A2DA77F02704FE576851B8E0E6693F227321E29AC2C1B71CAA030866A2587A9B
+  quote: 山中的铁矿是帝国北方最重要的金属产地之一
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_阿兰塔斯__阿兰塔斯.json#/Variants/1/Content
+  quote_hash: CF7B690E5922BA95CA3F1238600A42ADCEC1A2AE8BBABCB38F3A08BA7E9DCB41
+  quote: 阿兰塔斯的铁矿石在瓦兰迪亚是出了名的好
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-iron-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 铁矿石是铁矿的产出，基准价 50 第纳尔，论车买卖，是全部铁器的起点。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.Kw6BkhIf
+    quote_hash: 99D202A520F4F895BEBC267D591F4D446FFFCF26A360275639C4493DBB3C8331
+    quote: 铁矿石{@Plural}成车的铁矿石{\@}
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.rHcVKSbA
+    quote_hash: 590D39A561F249CA14471377163DA17E26C8125B9F9F6ED5AC114D070534F35E
+    quote: 铁矿
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_德律亚山__德律亚山.json#/Variants/0/Content
+    quote_hash: A2DA77F02704FE576851B8E0E6693F227321E29AC2C1B71CAA030866A2587A9B
+    quote: 山中的铁矿是帝国北方最重要的金属产地之一
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_阿兰塔斯__阿兰塔斯.json#/Variants/1/Content
+    quote_hash: CF7B690E5922BA95CA3F1238600A42ADCEC1A2AE8BBABCB38F3A08BA7E9DCB41
+    quote: 阿兰塔斯的铁矿石在瓦兰迪亚是出了名的好
+  expressions:
+  - id: expr.goods-iron-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 矿山上的人一辈子跟石头打交道，一车一车地往下运。山里的铁矿出得好的地方，铁匠铺能连着开好几家。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.Kw6BkhIf
+      quote_hash: 99D202A520F4F895BEBC267D591F4D446FFFCF26A360275639C4493DBB3C8331
+      quote: 铁矿石{@Plural}成车的铁矿石{\@}
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.rHcVKSbA
+      quote_hash: 590D39A561F249CA14471377163DA17E26C8125B9F9F6ED5AC114D070534F35E
+      quote: 铁矿
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_德律亚山__德律亚山.json#/Variants/0/Content
+      quote_hash: A2DA77F02704FE576851B8E0E6693F227321E29AC2C1B71CAA030866A2587A9B
+      quote: 山中的铁矿是帝国北方最重要的金属产地之一
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-iron-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 铁矿石 50 一件，十一个铁矿出，是整条铁链的第一环。好矿的价不按基准走——阿兰塔斯那种出名的矿，买家愿意加价抢。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.Kw6BkhIf
+      quote_hash: 99D202A520F4F895BEBC267D591F4D446FFFCF26A360275639C4493DBB3C8331
+      quote: 铁矿石{@Plural}成车的铁矿石{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_阿兰塔斯__阿兰塔斯.json#/Variants/1/Content
+      quote_hash: CF7B690E5922BA95CA3F1238600A42ADCEC1A2AE8BBABCB38F3A08BA7E9DCB41
+      quote: 阿兰塔斯的铁矿石在瓦兰迪亚是出了名的好
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

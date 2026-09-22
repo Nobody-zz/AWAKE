@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-masangara
 title:
   zh-CN: 马珊加拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 马珊加拉
-  en:
-  - Masangara
-  - castle_village_EN5_2
+entity_ids:
+- entity.settlement.castle_village_en5_2
 summary:
   zh-CN: 马珊加拉坐落于涅维斯河岸，这里曾是沼地树林，人们把水排干，将其变为牧牛地。
 registry_bindings:

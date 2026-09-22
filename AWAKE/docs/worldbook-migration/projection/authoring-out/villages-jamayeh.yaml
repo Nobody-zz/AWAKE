@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-jamayeh
 title:
   zh-CN: 贾迈耶
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 贾迈耶
-  en:
-  - Jamayeh
-  - castle_village_A5_1
+entity_ids:
+- entity.settlement.castle_village_a5_1
 summary:
   zh-CN: 贾迈耶位于「拜赫尔·耶什姆」（翡翠之海）南岸，雨季短暂但气候很适合橄榄树生长。
 registry_bindings:

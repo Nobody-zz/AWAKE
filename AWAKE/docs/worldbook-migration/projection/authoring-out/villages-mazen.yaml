@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-mazen
 title:
   zh-CN: 马津
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 马津
-  en:
-  - Mazen
-  - village_K3_3
+entity_ids:
+- entity.settlement.village_k3_3
 summary:
   zh-CN: 渔村马津坐落于库赛特人称作达那孜海的塔奈西斯湖北端；村民在喀拉卡孜河附近布下渔网，捕捉往返湖中的各种鱼。
 registry_bindings:

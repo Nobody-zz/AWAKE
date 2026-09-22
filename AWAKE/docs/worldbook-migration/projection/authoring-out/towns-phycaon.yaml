@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-phycaon
 title:
   zh-CN: 费卡翁
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 费卡翁
-  en:
-  - Phycaon
-  - town_ES6
+entity_ids:
+- entity.settlement.town_es6
 summary:
   zh-CN: 费卡翁位于塞堤斯山谷起始处，是帝国中部重要的谷物生产中心；曾为最大的帕拉城市之一，后和平归帝国，民风严肃可靠。
 registry_bindings:

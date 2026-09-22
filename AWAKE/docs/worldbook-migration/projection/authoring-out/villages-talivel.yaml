@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-talivel
 title:
   zh-CN: 塔利维尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 塔利维尔
-  en:
-  - Talivel
-  - castle_village_V7_1
+entity_ids:
+- entity.settlement.castle_village_v7_1
 summary:
   zh-CN: 塔利维尔坐落在卡拉迪亚腹地的特朗河谷中段，村民在山坡上种植橄榄。
 registry_bindings:

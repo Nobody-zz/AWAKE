@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-dradios
 title:
   zh-CN: 得拉狄俄斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 得拉狄俄斯
-  en:
-  - Dradios
-  - village_EW3_3
+entity_ids:
+- entity.settlement.village_ew3_3
 summary:
   zh-CN: 得拉狄俄斯坐落于自高地奔流而下的阿米尼斯河的支流小阿米尼斯河畔；村民将山上的径流改道，用以灌溉肥沃的麦地。
 registry_bindings:

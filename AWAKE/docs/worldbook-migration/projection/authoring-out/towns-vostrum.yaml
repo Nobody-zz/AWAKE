@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-vostrum
 title:
   zh-CN: 沃斯特鲁姆
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 沃斯特鲁姆
-  en:
-  - Vostrum
-  - town_ES2
+entity_ids:
+- entity.settlement.town_es2
 summary:
   zh-CN: 沃斯特鲁姆由叛逃指挥官阿耳卡科斯建立，其家系以神王之制统治数代，兵败政倾；本地家族至今背负君主主义嫌疑。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-yangutum
 title:
   zh-CN: 扬古图姆
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 扬古图姆
-  en:
-  - Yangutum
-  - village_S4_4
+entity_ids:
+- entity.settlement.village_s4_4
 summary:
   zh-CN: 扬古图姆位于拉科尼斯湖北岸、车尔特格山脉的一处角落里；林务员在山腰上砍伐橡树、榆树和其他硬木。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-melion
 title:
   zh-CN: 墨利翁
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 墨利翁
-  en:
-  - Melion
-  - castle_village_ES3_1
+entity_ids:
+- entity.settlement.castle_village_es3_1
 summary:
   zh-CN: 墨利翁位于密泽亚德中央附近的一道狭窄山谷，当地丝线既受衣着朝服的帝国贵族珍爱，也被牧民边民穿在铠甲下作为对箭矢的额外防护。
 registry_bindings:

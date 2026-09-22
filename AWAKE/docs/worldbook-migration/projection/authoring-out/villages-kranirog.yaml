@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-kranirog
 title:
   zh-CN: 克拉尼罗格
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 克拉尼罗格
-  en:
-  - Kranirog
-  - castle_village_S4_1
+entity_ids:
+- entity.settlement.castle_village_s4_1
 summary:
   zh-CN: 克拉尼罗格位于俯瞰加尔察河的开阔林谷内；此地的村民是捕猎的好手，猎取貂、狐狸和兔子的毛皮，供应南方的大量需求。
 registry_bindings:

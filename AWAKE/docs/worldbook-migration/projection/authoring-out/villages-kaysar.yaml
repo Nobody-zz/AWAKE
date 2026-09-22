@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-kaysar
 title:
   zh-CN: 开撒尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 开撒尔
-  en:
-  - Kaysar
-  - castle_village_K9_1
+entity_ids:
+- entity.settlement.castle_village_k9_1
 summary:
   zh-CN: 开撒尔位于库赛特领土的东北方，在喀拉卡孜河谷里；这里几乎终年积雪，村民仍饲养着扛得住顺流自北方刮来的寒风的牛群。
 registry_bindings:

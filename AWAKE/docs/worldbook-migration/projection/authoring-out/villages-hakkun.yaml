@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-hakkun
 title:
   zh-CN: 哈坤
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 哈坤
-  en:
-  - Hakkun
-  - castle_village_K3_1
+entity_ids:
+- entity.settlement.castle_village_k3_1
 summary:
   zh-CN: 哈坤坐落于阿克坎丘陵的悬崖之上；人们在这里采银已久，库赛特征服此地后，历代可汗对这行当也乐于支持。
 registry_bindings:

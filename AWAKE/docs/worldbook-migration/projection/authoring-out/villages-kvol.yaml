@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-kvol
 title:
   zh-CN: 克沃尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 克沃尔
-  en:
-  - Kvol
-  - village_S6_1
+entity_ids:
+- entity.settlement.village_s6_1
 summary:
   zh-CN: 克沃尔的村民在车尔特格山脚下放养一些好养活的小牛；这些人里，有不少是卡拉迪亚各地难民和失意人的后代，他们就在这寒气凛冽的北方森林中过着避世的隐居日子。
 registry_bindings:

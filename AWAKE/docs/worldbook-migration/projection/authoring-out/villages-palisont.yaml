@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-palisont
 title:
   zh-CN: 帕利松
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 帕利松
-  en:
-  - Palisont
-  - village_V3_4
+entity_ids:
+- entity.settlement.village_v3_4
 summary:
   zh-CN: 特朗河以北草绿色的丘陵被一道峻峭峡谷分割，帕利松就坐落于峡谷口；这一带地薄，但上游吹来的凉海风与温暖的午后，正宜于酿酒用葡萄。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-husn-fulq
 title:
   zh-CN: 侯森·富勒格
@@ -14,12 +14,10 @@ era:
 content_tier: base
 aliases:
   zh-CN:
-  - 侯森·富勒格
   - 卡尔得亚
   - 侯森·富勒格·卡尔得亚边上的城
   - 卡尔得亚边上的城
   en:
-  - Husn Fulq
   - Caldea
 entity_ids:
 - entity.settlement.town_a2
@@ -57,27 +55,27 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 侯森·富勒格在卡尔得亚的东南边缘，那片河与咸水潟湖连成的水网把帝国和阿塞莱的土地相连。
+    zh-CN: 侯森·富勒格位于卡尔得亚的东南边缘——那片由河流与咸水潟湖织成的网络，把帝国与阿塞莱的土地连在一起。
   sources:
   - source_id: source.calradia.game.settlements
     source_version: bannerlord-1.3.15.110062
     source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
     locator: bannerlord.db#settlements.town_A2.descriptionText
-    quote_hash: 74860F1580F330E69E2E9ABE085E14DF03045A2C144544366E058AA5266EEC9F
-    quote: 侯森·富勒格位于卡尔得亚的东南边缘，卡尔得亚是一片由河流和咸水潟湖构成的网络，它将帝国和阿塞莱的土地相连
+    quote_hash: BD46A34A622BDF5BC78FC3721B0022144774FD1AB7F67B49ECFB78412F15A076
+    quote: 侯森·富勒格位于卡尔得亚的东南边缘，卡尔得亚是一片由河流和咸水潟湖构成的网络，它将帝国和阿塞莱的土地相连。
   expressions:
   - id: expr.town-husn-fulq-1-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 侯森·富勒格在卡尔得亚的东南边缘，那片河与咸水潟湖连成的水网把帝国和阿塞莱的土地相连。
+      zh-CN: 侯森·富勒格夹在两家中间，一边是帝国，一边是阿塞莱，中间尽是河汊和咸水湖。
     sources:
     - source_id: source.calradia.game.settlements
       source_version: bannerlord-1.3.15.110062
       source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
       locator: bannerlord.db#settlements.town_A2.descriptionText
-      quote_hash: 74860F1580F330E69E2E9ABE085E14DF03045A2C144544366E058AA5266EEC9F
-      quote: 侯森·富勒格位于卡尔得亚的东南边缘，卡尔得亚是一片由河流和咸水潟湖构成的网络，它将帝国和阿塞莱的土地相连
+      quote_hash: BD46A34A622BDF5BC78FC3721B0022144774FD1AB7F67B49ECFB78412F15A076
+      quote: 侯森·富勒格位于卡尔得亚的东南边缘，卡尔得亚是一片由河流和咸水潟湖构成的网络，它将帝国和阿塞莱的土地相连。
     grants:
     - profile_id: profile.commoner
       scope: local
@@ -110,108 +108,107 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.town-husn-fulq-1-summary
+  - id: expr.town-husn-fulq-1-detail
     revision: 1
-    layer: summary
+    layer: detail
     text:
-      zh-CN: 侯森·富勒格在卡尔得亚的东南边缘，那片河与咸水潟湖连成的水网把帝国和阿塞莱的土地相连。
+      zh-CN: 侯森·富勒格踞卡尔得亚东南缘；河汊加咸水潟湖，把帝国与阿塞莱连成一条水路廊道，谁站住这里谁收过路钱。
     sources:
     - source_id: source.calradia.game.settlements
       source_version: bannerlord-1.3.15.110062
       source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
       locator: bannerlord.db#settlements.town_A2.descriptionText
-      quote_hash: 74860F1580F330E69E2E9ABE085E14DF03045A2C144544366E058AA5266EEC9F
-      quote: 侯森·富勒格位于卡尔得亚的东南边缘，卡尔得亚是一片由河流和咸水潟湖构成的网络，它将帝国和阿塞莱的土地相连
+      quote_hash: BD46A34A622BDF5BC78FC3721B0022144774FD1AB7F67B49ECFB78412F15A076
+      quote: 侯森·富勒格位于卡尔得亚的东南边缘，卡尔得亚是一片由河流和咸水潟湖构成的网络，它将帝国和阿塞莱的土地相连。
     grants:
-    - profile_id: profile.townsfolk
-      scope: regional
-      min_detail: summary
     - profile_id: profile.notable
       scope: regional
-      min_detail: summary
+      min_detail: detail
     - profile_id: profile.merchant
       scope: faction
-      min_detail: summary
+      min_detail: detail
     - profile_id: profile.headman
       scope: national
-      min_detail: summary
+      min_detail: detail
     - profile_id: profile.soldier
       scope: national
-      min_detail: summary
-    - profile_id: profile.noble
-      scope: elite
-      min_detail: summary
+      min_detail: detail
     denies: []
 - id: assertion.town-husn-fulq-2
   revision: 1
   kind: fact
   text:
-    zh-CN: 雇佣兵酋长富勒格在此地筑起一座堡垒，城因他得名。
+    zh-CN: 富勒格又名法耳科斯，是极南之地来的雇佣兵酋长；他在此筑堡，靠堡的位置两头收贿、随时选边。近二十年之后他带着满船黄金还乡，而许多阿塞莱氏族至今仍骄傲地自称是他的后裔。
   sources:
   - source_id: source.calradia.game.settlements
     source_version: bannerlord-1.3.15.110062
     source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
     locator: bannerlord.db#settlements.town_A2.descriptionText
-    quote_hash: 06D76F5290304B1C79495A33AFBB299AAD36F4C5FDB7DE3564E23620508B1E31
-    quote: 他在此地建立了一座堡垒
+    quote_hash: B653A98031BF79A58C14DAA031CAC0967801A83BF2716868F549B71A4EFBA618
+    quote: 富勒格，又名法耳科斯，是一位来自于极南之地的黑面孔雇佣兵酋长。
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_A2.descriptionText
+    quote_hash: E4D04E619DC1313FB95766CA5193D3E13D4700E4BBF8F0FCF0ED45E1CF44B71E
+    quote: 在玩了将近二十年的换队游戏之后，他驾着一艘满载黄金的船驶回了家，但许多阿塞莱的氏族仍然骄傲地自称是他的后裔。
   expressions:
-  - id: expr.town-husn-fulq-2-summary
+  - id: expr.town-husn-fulq-2-rumor
     revision: 1
-    layer: summary
+    layer: rumor
     text:
-      zh-CN: 雇佣兵酋长富勒格在此地筑起一座堡垒，城因他得名。
+      zh-CN: 这城的底子是外乡人打的——南边来的雇佣兵头子，两头讨钱，哪边给得多就帮哪边。攒够了金子坐船回家，这边还有好些氏族自称是他的种。
     sources:
     - source_id: source.calradia.game.settlements
       source_version: bannerlord-1.3.15.110062
       source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
       locator: bannerlord.db#settlements.town_A2.descriptionText
-      quote_hash: 06D76F5290304B1C79495A33AFBB299AAD36F4C5FDB7DE3564E23620508B1E31
-      quote: 他在此地建立了一座堡垒
+      quote_hash: B653A98031BF79A58C14DAA031CAC0967801A83BF2716868F549B71A4EFBA618
+      quote: 富勒格，又名法耳科斯，是一位来自于极南之地的黑面孔雇佣兵酋长。
     grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
     - profile_id: profile.townsfolk
       scope: regional
-      min_detail: summary
+      min_detail: rumor
     - profile_id: profile.notable
       scope: regional
-      min_detail: summary
+      min_detail: rumor
     - profile_id: profile.merchant
       scope: faction
-      min_detail: summary
+      min_detail: rumor
     - profile_id: profile.headman
       scope: national
-      min_detail: summary
+      min_detail: rumor
     - profile_id: profile.soldier
       scope: national
-      min_detail: summary
+      min_detail: rumor
     - profile_id: profile.noble
       scope: elite
-      min_detail: summary
+      min_detail: rumor
     denies: []
-- id: assertion.town-husn-fulq-3
-  revision: 1
-  kind: fact
-  text:
-    zh-CN: 堡垒卡在两大势力之间，富勒格靠两边收贿赂、随时选边站队发财。
-  sources:
-  - source_id: source.calradia.game.settlements
-    source_version: bannerlord-1.3.15.110062
-    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
-    locator: bannerlord.db#settlements.town_A2.descriptionText
-    quote_hash: A1D2789A2D8D1E7E6CE5007F9273B7745FCBE6D0FB4B4A573B2AC0C7E25EFBE3
-    quote: 从帝国和阿塞莱两边收取贿赂，并随时准备着选边站队
-  expressions:
-  - id: expr.town-husn-fulq-3-detail
+  - id: expr.town-husn-fulq-2-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 堡垒卡在两大势力之间，富勒格靠两边收贿赂、随时选边站队发财。
+      zh-CN: 富勒格的生意不是打仗，是站位：两头收贿、随时倒戈，近二十年后满载而归。如今自称其后裔的氏族不少——认这门亲戚，认的是那份精明。
     sources:
     - source_id: source.calradia.game.settlements
       source_version: bannerlord-1.3.15.110062
       source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
       locator: bannerlord.db#settlements.town_A2.descriptionText
-      quote_hash: A1D2789A2D8D1E7E6CE5007F9273B7745FCBE6D0FB4B4A573B2AC0C7E25EFBE3
-      quote: 从帝国和阿塞莱两边收取贿赂，并随时准备着选边站队
+      quote_hash: B653A98031BF79A58C14DAA031CAC0967801A83BF2716868F549B71A4EFBA618
+      quote: 富勒格，又名法耳科斯，是一位来自于极南之地的黑面孔雇佣兵酋长。
     grants:
     - profile_id: profile.notable
       scope: regional
@@ -225,4 +222,61 @@ assertions:
     - profile_id: profile.soldier
       scope: national
       min_detail: detail
+    denies: []
+- id: assertion.town-husn-fulq-3
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 关于富勒格的种种巧计，成了集市说书人长讲不衰的段子。
+  sources:
+  - source_id: source.calradia.game.settlements
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+    locator: bannerlord.db#settlements.town_A2.descriptionText
+    quote_hash: 4268734C43B7128649F77BE0819B16F01B401D9992FB0789C50643AF1008A1EE
+    quote: “富勒格的鬼点子”也成为了许多集市说书人口中经久不衰的故事桥段。
+  expressions:
+  - id: expr.town-husn-fulq-3-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 集市上说书的还爱讲“富勒格的鬼点子”，一套一套的，讲了几十年还有人听。
+    sources:
+    - source_id: source.calradia.game.settlements
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: E8F7E5F0AB96CE249D4108ED663FAFF81706A2647066FF30E9816631F0AC0AD3
+      locator: bannerlord.db#settlements.town_A2.descriptionText
+      quote_hash: 4268734C43B7128649F77BE0819B16F01B401D9992FB0789C50643AF1008A1EE
+      quote: “富勒格的鬼点子”也成为了许多集市说书人口中经久不衰的故事桥段。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
     denies: []

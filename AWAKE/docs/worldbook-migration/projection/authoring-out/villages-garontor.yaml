@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-garontor
 title:
   zh-CN: 加隆托
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 加隆托
-  en:
-  - Garontor
-  - castle_village_EW1_1
+entity_ids:
+- entity.settlement.castle_village_ew1_1
 summary:
   zh-CN: 沙拉斯湾与珀拉斯内海之间的海角以加隆托为名，沿海草甸茂盛，较高的草对海水盐质耐受性不错，可用来饲养优良的马匹。
 registry_bindings:

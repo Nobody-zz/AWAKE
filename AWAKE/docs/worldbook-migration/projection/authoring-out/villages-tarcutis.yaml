@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-tarcutis
 title:
   zh-CN: 塔耳库提斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 塔耳库提斯
-  en:
-  - Tarcutis
-  - castle_village_EW3_2
+entity_ids:
+- entity.settlement.castle_village_ew3_2
 summary:
   zh-CN: 塔耳库提斯坐落于珀拉斯海岸，近海岛屿冲来的沙壤与晨雾，让俯瞰沙滩的地方得以建起葡萄园。
 registry_bindings:

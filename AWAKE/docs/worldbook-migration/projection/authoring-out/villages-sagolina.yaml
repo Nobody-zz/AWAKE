@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-sagolina
 title:
   zh-CN: 萨戈利那
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 萨戈利那
-  en:
-  - Sagolina
-  - castle_village_ES3_2
+entity_ids:
+- entity.settlement.castle_village_es3_2
 summary:
   zh-CN: 萨戈利那坐落于密泽亚德的一道狭窄山谷底，附近山上开采的银矿解释了帝国为何在过去几个世纪耗费人力物力征服并守卫此地。
 registry_bindings:

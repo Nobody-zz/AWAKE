@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-jeracos
 title:
   zh-CN: 耶拉科斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 耶拉科斯
-  en:
-  - Jeracos
-  - village_EN2_2
+entity_ids:
+- entity.settlement.village_en2_2
 summary:
   zh-CN: 耶拉科斯坐落于德律亚山脉北部山麓的草场上；已被开采了几个世纪的矿井至今仍蕴藏丰富矿石，人们用巧妙技艺从中提取银。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-sanala
 title:
   zh-CN: 撒纳拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 撒纳拉
-  en:
-  - Sanala
-  - town_A6
+entity_ids:
+- entity.settlement.town_a6
 summary:
   zh-CN: 撒纳拉港是达玛尔下游谷物运往海外的门户，帝国多次南征争夺未果，今为卡拉迪亚规模最大的都会之一。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-lochana
 title:
   zh-CN: 罗卡那
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 罗卡那
-  en:
-  - Lochana
-  - castle_village_EN2_1
+entity_ids:
+- entity.settlement.castle_village_en2_1
 summary:
   zh-CN: 罗卡那位于拉科尼斯湖的东岸，湖水缓和了北方冬季的寒冷，为种植桑树、产出蚕丝提供了条件。
 registry_bindings:

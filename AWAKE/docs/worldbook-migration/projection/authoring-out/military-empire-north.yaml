@@ -1,0 +1,216 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.military-empire-north
+title:
+  zh-CN: 北帝国的军事实力
+  en: Northern Empire's Military Strength
+status: needs_review
+domain: war
+subdomain: military
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 北帝国军力
+  - 北帝国军事实力
+  en:
+  - Northern Empire Military
+summary:
+  zh-CN: 北帝国的军事实力：建立在元老院控制下的贵族私兵体系之上。北方的执政官是废除常备军后最快完成转型的一批——家族几代人在元老院斗来斗去，早习惯了自掏腰包养亲兵。世代面对斯特吉亚与库赛特的双线压力，如今又得防西帝国和南帝国。纸面实力不弱，但极长的战线让军队疲于奔命，武将出身的元老又少，因而长于防守、短于进攻。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/1/Content
+  quote_hash: 03B2894560A2A6442D08240993ADEF872CD78769CA5DED3EB9EC585B2B8520B4
+  quote: 我们北帝国的军力还是很强大的，我们世代得面对斯特吉亚与库赛特的双线作战，现在又得防御西帝国和南帝国
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/3/Content
+  quote_hash: 3538B7E8FAB672618FACDD88F90F9CEEB708F9B7D5E5C0EC1FF4F59BE17B2FF1
+  quote: 但是极长的战线让它的军队总是疲于奔命，顾首不顾尾
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/2/Content
+  quote_hash: 5E42CAACD212478E390B9590A50A37BE436BB46748B283EE38240520450C6A76
+  quote: 北帝国就是一个披着虎皮的绵羊
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/2/Content
+  quote_hash: 0D76A9563E6E3747A0918CA8869C73B2A4532711C6B32093D10D5A4204CB9357
+  quote: 我们应该积极谋求与北帝国开战，以获得最大利益
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/3/Content
+  quote_hash: 66AD40641E7E3EB8EC36BA0C94A0DC5343F7D35585F3425E837E53D8EA60A55E
+  quote: 而且他们都是些文官，武将出身的元老只有一两个，所以他们在打仗时十分吃亏
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/0/Content
+  quote_hash: 2D0D15CE53A9EC1B72FD2866195367BD6496A7785D73870C9C99060D126F6952
+  quote: 北帝国似乎不太强吧，不太清楚，他们都是些文官，哪有懂得打仗的呢
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.north-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 北帝国的军力建立在贵族私兵体系与多年双线作战的锻炼之上：我们世代得面对斯特吉亚与库赛特的双线作战，如今又得防御西帝国和南帝国，锻炼出来的能力是很强的。但它同时承受着极长战线的压力——纸面数据不弱，实际却常常顾首不顾尾。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/1/Content
+    quote_hash: 03B2894560A2A6442D08240993ADEF872CD78769CA5DED3EB9EC585B2B8520B4
+    quote: 我们北帝国的军力还是很强大的，我们世代得面对斯特吉亚与库赛特的双线作战，现在又得防御西帝国和南帝国
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/3/Content
+    quote_hash: 3538B7E8FAB672618FACDD88F90F9CEEB708F9B7D5E5C0EC1FF4F59BE17B2FF1
+    quote: 但是极长的战线让它的军队总是疲于奔命，顾首不顾尾
+  expressions:
+  - id: expr.north-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 北帝国的军力不弱，但处境难看：世代要面对斯特吉亚与库赛特的双线作战，现在又得防西帝国和南帝国。纸面看还行，可战线太长，军队总是疲于奔命，顾首不顾尾。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/1/Content
+      quote_hash: 03B2894560A2A6442D08240993ADEF872CD78769CA5DED3EB9EC585B2B8520B4
+      quote: 我们北帝国的军力还是很强大的，我们世代得面对斯特吉亚与库赛特的双线作战，现在又得防御西帝国和南帝国
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/3/Content
+      quote_hash: 3538B7E8FAB672618FACDD88F90F9CEEB708F9B7D5E5C0EC1FF4F59BE17B2FF1
+      quote: 但是极长的战线让它的军队总是疲于奔命，顾首不顾尾
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+      culture_ids:
+      - entity.culture.empire
+      kingdom_ids:
+      - entity.kingdom.empire
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: summary
+      culture_ids:
+      - entity.culture.empire
+      kingdom_ids:
+      - entity.kingdom.empire
+    denies: []
+- id: assertion.north-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 对邻国而言，北帝国是块值得下手的肉：有人说它补给线漫长、后备兵力不足，三线压力都很大，防守兵力将将够用，进攻就别想了，所以应该积极谋求与北帝国开战以获最大利益；也有人说它说强不强、说弱不弱，纸面数据还是很强，但极长的战线让军队疲于奔命，而且他们都是些文官，武将出身的元老只有一两个，打仗时十分吃亏。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/2/Content
+    quote_hash: 5E42CAACD212478E390B9590A50A37BE436BB46748B283EE38240520450C6A76
+    quote: 北帝国就是一个披着虎皮的绵羊
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/2/Content
+    quote_hash: 0D76A9563E6E3747A0918CA8869C73B2A4532711C6B32093D10D5A4204CB9357
+    quote: 我们应该积极谋求与北帝国开战，以获得最大利益
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/3/Content
+    quote_hash: 66AD40641E7E3EB8EC36BA0C94A0DC5343F7D35585F3425E837E53D8EA60A55E
+    quote: 而且他们都是些文官，武将出身的元老只有一两个，所以他们在打仗时十分吃亏
+  expressions:
+  - id: expr.north-neighbor-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 北帝国就是一个披着虎皮的绵羊。他们补给线漫长，后备兵力不足，而且三线压力都很大，防守兵力将将够用，但是进攻就别想了。我们应该积极谋求与北帝国开战，以获得最大利益。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/2/Content
+      quote_hash: 5E42CAACD212478E390B9590A50A37BE436BB46748B283EE38240520450C6A76
+      quote: 北帝国就是一个披着虎皮的绵羊
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/2/Content
+      quote_hash: 0D76A9563E6E3747A0918CA8869C73B2A4532711C6B32093D10D5A4204CB9357
+      quote: 我们应该积极谋求与北帝国开战，以获得最大利益
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+    denies: []
+  - id: expr.north-officer-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 北帝国说强不强，说弱不弱。纸面数据还是很强的，但是极长的战线让它的军队总是疲于奔命，顾首不顾尾；而且他们都是些文官，武将出身的元老只有一两个，所以他们在打仗时十分吃亏。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/3/Content
+      quote_hash: 66AD40641E7E3EB8EC36BA0C94A0DC5343F7D35585F3425E837E53D8EA60A55E
+      quote: 而且他们都是些文官，武将出身的元老只有一两个，所以他们在打仗时十分吃亏
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    denies: []
+- id: assertion.north-3
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 在远方人嘴里，北帝国到底是强是弱根本没个准信——北帝国似乎不太强吧，不太清楚，他们都是些文官，哪有懂得打仗的呢？
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/0/Content
+    quote_hash: 2D0D15CE53A9EC1B72FD2866195367BD6496A7785D73870C9C99060D126F6952
+    quote: 北帝国似乎不太强吧，不太清楚，他们都是些文官，哪有懂得打仗的呢
+  expressions:
+  - id: expr.north-far-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 北帝国似乎不太强吧，不太清楚。他们都是些文官，哪有懂得打仗的呢？倒是听说他们北边的边界一直不太平，跟斯特吉亚人、跟草原上那些骑马的都打过。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_北帝国的军事实力__北帝国的军事实力.json#/Variants/0/Content
+      quote_hash: 2D0D15CE53A9EC1B72FD2866195367BD6496A7785D73870C9C99060D126F6952
+      quote: 北帝国似乎不太强吧，不太清楚，他们都是些文官，哪有懂得打仗的呢
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []

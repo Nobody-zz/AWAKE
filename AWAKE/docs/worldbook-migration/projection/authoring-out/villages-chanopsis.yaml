@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-chanopsis
 title:
   zh-CN: 卡诺普西斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 卡诺普西斯
-  en:
-  - Chanopsis
-  - castle_village_ES8_1
+entity_ids:
+- entity.settlement.castle_village_es8_1
 summary:
   zh-CN: 卡诺普西斯依着密泽亚德高原上塞堤斯河的源头而建，小麦在这片阳光充足的平原上长势喜人。
 registry_bindings:

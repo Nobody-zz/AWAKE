@@ -1,0 +1,333 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.troops-legion-of-the-betrayed
+title:
+  zh-CN: 被弃者军团
+  en: Legion of the Betrayed
+status: needs_review
+domain: war
+subdomain: troops
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 摒弃者军团
+  - 被弃者
+  en:
+  - Legion of the Betrayed
+summary:
+  zh-CN: 被弃者军团：阿雷尼科斯废除最后一支帝国常备军之后成立的雇佣军团，由厌恶这场变化的人组成——他们偏爱昔日的军团及其规矩、历史与军营生活，指责新制度正在摧毁帝国。无饷不成军，因此同时与帝国领主和外国领主签约。战力来自纪律，归属感不在雇主身上，而在军团本身。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.bhxVA9w7
+  quote_hash: C844C912B02C36044764F52975B6861CB5EF007E92DAB1EDEC7E31BCACC0F326
+  quote: 皇帝阿雷尼科斯在潘德拉克战役的惨败之后废除了最后一支帝国常备军，转而依赖开销更少、更适合控制领土的执政官私兵，被弃者军团在这样的局势下成立。而这支军团则是由厌恶这种变化的人所组成：他们偏爱昔日的军团，及其规矩、历史与军营生活，他们指责新制度正在摧毁帝国。但无饷不成军，所以他们会同时与帝国领主和外国领主签订契约。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/0/Content
+  quote_hash: 6C5C5EB4E0242817CD534F9F573A202EFA3D2E1277CB7BDF71DB55FD512E710A
+  quote: 除了打仗我什么都不会。军团解散那年我还年轻，没家，没地，没手艺
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/0/Content
+  quote_hash: 84C0A0E022AECB069ACD0EB69FB74F27B2C885CF7C10478801AD4ED63C2BF2A4
+  quote: 我们给钱就打仗，雇主的旗号换来换去，我们只认军团的规矩
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/2/Content
+  quote_hash: 2D497C1EF91EF17D8A1494CFE2400B81272C0B3F25351004ABF86D6143B69B26
+  quote: 用他们是一笔交易：我们出钱，他们出力，仅此而已
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/4/Content
+  quote_hash: A0D2B6499082D4AAD9428C86D9E23E273ED007E550A494738C42D9DD2DBB1599
+  quote: 我敬他们三分，但不信任他们五分
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/4/Content
+  quote_hash: 84DE8C102B1148441660A80876582AAB3A38D407875FCD4DEE308E5DF7DC80AC
+  quote: 这样的人，你用得起，但你靠不住
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/3/Content
+  quote_hash: 8F5BC875CCF7DBCC27ECEFC8449AA325112EBB62D35B002261BF7C3557CD0F63
+  quote: 看着还是军团的样子，但已经不是帝国的兵了
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/1/Content
+  quote_hash: 9DEBE11159D326612F3ED067A696FB9D0FF43AF77822845B7A9107C6754E4CAD
+  quote: 他们为佣金而战，但他们的魂魄属于那个已经消失的旧日军团
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/1/Content
+  quote_hash: 18FA76E7FD70C61F7F92A85A3A7281627A19A8B8C1AC7F4508BB9F7FE2DCA4DB
+  quote: 他们的长处是纪律和战阵，短处是只认自己的规矩，不认雇主的
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/5/Content
+  quote_hash: C16C6A9ED12C68881CA04FBB23AC86C434677AFFD9F226D6F93EB9AA333CA814
+  quote: 规矩比别的雇佣兵严，不太祸害百姓，但也跟谁都不亲近
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.betrayed-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 被弃者军团是皇帝阿雷尼科斯在潘德拉克战役惨败之后、废除最后一支帝国常备军的局势下成立的雇佣军团，由厌恶这场变化的人组成：他们偏爱昔日的军团，及其规矩、历史与军营生活，指责新制度正在摧毁帝国。但无饷不成军——他们会同时与帝国领主和外国领主签订契约。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.bhxVA9w7
+    quote_hash: C844C912B02C36044764F52975B6861CB5EF007E92DAB1EDEC7E31BCACC0F326
+    quote: 皇帝阿雷尼科斯在潘德拉克战役的惨败之后废除了最后一支帝国常备军，转而依赖开销更少、更适合控制领土的执政官私兵，被弃者军团在这样的局势下成立。而这支军团则是由厌恶这种变化的人所组成：他们偏爱昔日的军团，及其规矩、历史与军营生活，他们指责新制度正在摧毁帝国。但无饷不成军，所以他们会同时与帝国领主和外国领主签订契约。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/0/Content
+    quote_hash: 6C5C5EB4E0242817CD534F9F573A202EFA3D2E1277CB7BDF71DB55FD512E710A
+    quote: 除了打仗我什么都不会。军团解散那年我还年轻，没家，没地，没手艺
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/0/Content
+    quote_hash: 84C0A0E022AECB069ACD0EB69FB74F27B2C885CF7C10478801AD4ED63C2BF2A4
+    quote: 我们给钱就打仗，雇主的旗号换来换去，我们只认军团的规矩
+  expressions:
+  - id: expr.betrayed-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 被弃者军团是常备军被废之后出现的一支雇佣兵。组成它的人偏偏是反对这场改革的那批人——他们认昔日的军团，认那套规矩、历史和军营生活，觉得新制度正在毁掉帝国。但没饷就没军，所以他们既接帝国领主的活，也接外国领主的活。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.bhxVA9w7
+      quote_hash: C844C912B02C36044764F52975B6861CB5EF007E92DAB1EDEC7E31BCACC0F326
+      quote: 皇帝阿雷尼科斯在潘德拉克战役的惨败之后废除了最后一支帝国常备军，转而依赖开销更少、更适合控制领土的执政官私兵，被弃者军团在这样的局势下成立。而这支军团则是由厌恶这种变化的人所组成：他们偏爱昔日的军团，及其规矩、历史与军营生活，他们指责新制度正在摧毁帝国。但无饷不成军，所以他们会同时与帝国领主和外国领主签订契约。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/0/Content
+      quote_hash: 6C5C5EB4E0242817CD534F9F573A202EFA3D2E1277CB7BDF71DB55FD512E710A
+      quote: 除了打仗我什么都不会。军团解散那年我还年轻，没家，没地，没手艺
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.betrayed-own-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 除了打仗我什么都不会。军团解散那年我还年轻，没家，没地，没手艺。被弃者军团收了我。我们给钱就打仗，雇主的旗号换来换去，我们只认军团的规矩。早晨吹号，按时操练，犯了错挨军棍。这些规矩还在，我们就还是一支军团。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.bhxVA9w7
+      quote_hash: C844C912B02C36044764F52975B6861CB5EF007E92DAB1EDEC7E31BCACC0F326
+      quote: 皇帝阿雷尼科斯在潘德拉克战役的惨败之后废除了最后一支帝国常备军，转而依赖开销更少、更适合控制领土的执政官私兵，被弃者军团在这样的局势下成立。而这支军团则是由厌恶这种变化的人所组成：他们偏爱昔日的军团，及其规矩、历史与军营生活，他们指责新制度正在摧毁帝国。但无饷不成军，所以他们会同时与帝国领主和外国领主签订契约。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/0/Content
+      quote_hash: 84C0A0E022AECB069ACD0EB69FB74F27B2C885CF7C10478801AD4ED63C2BF2A4
+      quote: 我们给钱就打仗，雇主的旗号换来换去，我们只认军团的规矩
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    denies: []
+- id: assertion.betrayed-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 帝国领主对它的态度是「用得起，靠不住」：北边算的是交易——战力可靠，远胜大多数执政官私兵，纪律和阵战经验是旧军团留下的底子，但他们也接外国人的合同，不能完全当作自己人看待；西边算的是信任——敬三分是因为他们能打，不信任五分是因为他们心里装的是记忆里那个早就没了的老帝国，只关心合同写没写清楚、饷银能不能按时发，「今天你给钱他们替你打，明天别人给更多钱他们就替别人打你」。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/2/Content
+    quote_hash: 2D497C1EF91EF17D8A1494CFE2400B81272C0B3F25351004ABF86D6143B69B26
+    quote: 用他们是一笔交易：我们出钱，他们出力，仅此而已
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/4/Content
+    quote_hash: A0D2B6499082D4AAD9428C86D9E23E273ED007E550A494738C42D9DD2DBB1599
+    quote: 我敬他们三分，但不信任他们五分
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/4/Content
+    quote_hash: 84DE8C102B1148441660A80876582AAB3A38D407875FCD4DEE308E5DF7DC80AC
+    quote: 这样的人，你用得起，但你靠不住
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/3/Content
+    quote_hash: 8F5BC875CCF7DBCC27ECEFC8449AA325112EBB62D35B002261BF7C3557CD0F63
+    quote: 看着还是军团的样子，但已经不是帝国的兵了
+  expressions:
+  - id: expr.betrayed-empire-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 被弃者军团战力可靠，远胜大多数执政官私兵。他们的纪律和阵战经验是旧军团留下的底子。但他们也接外国人的合同，不能完全当作自己人看待。用他们是一笔交易：我们出钱，他们出力，仅此而已。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/2/Content
+      quote_hash: 2D497C1EF91EF17D8A1494CFE2400B81272C0B3F25351004ABF86D6143B69B26
+      quote: 用他们是一笔交易：我们出钱，他们出力，仅此而已
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+      kingdom_ids:
+      - entity.kingdom.empire
+    denies: []
+  - id: expr.betrayed-west-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 被弃者军团？那群抱着旧军团规矩不放的老顽固。我敬他们三分，但不信任他们五分。敬他们是因为他们能打——队列推进和阵型转换，现在新招的那些兵练十年都赶不上，战场上有一支被弃者军团顶在正面，你心里踏实。不信任他们是因为他们心里装的是帝国，不是我们的帝国，是他们记忆里那个早就没了的老帝国。这样的人，你用得起，但你靠不住。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/4/Content
+      quote_hash: A0D2B6499082D4AAD9428C86D9E23E273ED007E550A494738C42D9DD2DBB1599
+      quote: 我敬他们三分，但不信任他们五分
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/4/Content
+      quote_hash: 84DE8C102B1148441660A80876582AAB3A38D407875FCD4DEE308E5DF7DC80AC
+      quote: 这样的人，你用得起，但你靠不住
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+      kingdom_ids:
+      - entity.kingdom.empire_w
+    denies: []
+  - id: expr.betrayed-street-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 听说他们是以前军团的人。现在帝国没有常备军了，他们就自己凑在一起当雇佣兵。谁给钱替谁打。看着还是军团的样子，但已经不是帝国的兵了。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/3/Content
+      quote_hash: 8F5BC875CCF7DBCC27ECEFC8449AA325112EBB62D35B002261BF7C3557CD0F63
+      quote: 看着还是军团的样子，但已经不是帝国的兵了
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+- id: assertion.betrayed-3
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 被弃者军团自己给出一条更冷的答案：他们为佣金而战，但魂魄属于那个已经消失的旧日军团——活着是为了打仗，打仗是为了活着，而活着的意义，在于不忘记自己曾经是一个真正的军团士兵。雇主的旗子换来换去，旁人看得出他们规矩比别的雇佣兵严，不太祸害百姓，却也跟谁都不亲近。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/1/Content
+    quote_hash: 9DEBE11159D326612F3ED067A696FB9D0FF43AF77822845B7A9107C6754E4CAD
+    quote: 他们为佣金而战，但他们的魂魄属于那个已经消失的旧日军团
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/1/Content
+    quote_hash: 18FA76E7FD70C61F7F92A85A3A7281627A19A8B8C1AC7F4508BB9F7FE2DCA4DB
+    quote: 他们的长处是纪律和战阵，短处是只认自己的规矩，不认雇主的
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/5/Content
+    quote_hash: C16C6A9ED12C68881CA04FBB23AC86C434677AFFD9F226D6F93EB9AA333CA814
+    quote: 规矩比别的雇佣兵严，不太祸害百姓，但也跟谁都不亲近
+  expressions:
+  - id: expr.betrayed-self-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 在被弃者军团自己看来，这个问题的答案很简单：他们为佣金而战，但他们的魂魄属于那个已经消失的旧日军团。他们活着是为了打仗，打仗是为了活着，而活着的意义，在于不忘记自己曾经是一个真正的军团士兵。我手下的兵都是旧军团出来的。他们的长处是纪律和战阵，短处是只认自己的规矩，不认雇主的。只要佣金公道，合同清楚，我们就打。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/1/Content
+      quote_hash: 9DEBE11159D326612F3ED067A696FB9D0FF43AF77822845B7A9107C6754E4CAD
+      quote: 他们为佣金而战，但他们的魂魄属于那个已经消失的旧日军团
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/1/Content
+      quote_hash: 18FA76E7FD70C61F7F92A85A3A7281627A19A8B8C1AC7F4508BB9F7FE2DCA4DB
+      quote: 他们的长处是纪律和战阵，短处是只认自己的规矩，不认雇主的
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+      role_ids:
+      - entity.role.lord
+    denies: []
+  - id: expr.betrayed-passby-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 见过他们路过。规矩比别的雇佣兵严，不太祸害百姓，但也跟谁都不亲近。雇主的旗子换得勤，看不出他们到底算哪边的人。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_被弃者军团__被弃者军团.json#/Variants/5/Content
+      quote_hash: C16C6A9ED12C68881CA04FBB23AC86C434677AFFD9F226D6F93EB9AA333CA814
+      quote: 规矩比别的雇佣兵严，不太祸害百姓，但也跟谁都不亲近
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []

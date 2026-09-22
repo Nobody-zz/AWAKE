@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-inveth
 title:
   zh-CN: 因韦斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 因韦斯
-  en:
-  - Inveth
-  - castle_village_B1_2
+entity_ids:
+- entity.settlement.castle_village_b1_2
 summary:
   zh-CN: 因韦斯位于特朗河与埃蒂尔河从乌卡利翁地块翻滚而出、汇入瓦兰迪亚中央平原之处；周围的丘陵宜种小麦。
 registry_bindings:

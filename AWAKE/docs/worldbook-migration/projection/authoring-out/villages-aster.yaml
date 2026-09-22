@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-aster
 title:
   zh-CN: 阿斯特
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿斯特
-  en:
-  - Aster
-  - castle_village_B7_1
+entity_ids:
+- entity.settlement.castle_village_b7_1
 summary:
   zh-CN: 阿斯特坐落于乌卡利翁东北部山丘与格兰尼斯山之间的浅谷中；当地人比起打仗更重贸易，氏族长老鼓励大家种葡萄，酿出特别醇厚的葡萄酒。
 registry_bindings:

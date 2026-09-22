@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-durn
 title:
   zh-CN: 杜恩
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 杜恩
-  en:
-  - Durn
-  - village_B5_1
+entity_ids:
+- entity.settlement.village_b5_1
 summary:
   zh-CN: 杜恩位于特朗河上游峡谷的下方；水势平缓时，村民从河边的水洼泥塘里刮取淤泥，再沿着蜿蜒小路把泥背到头顶悬崖上的彭·坎诺克城。
 registry_bindings:

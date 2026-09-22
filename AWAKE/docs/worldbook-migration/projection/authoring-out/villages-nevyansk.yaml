@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-nevyansk
 title:
   zh-CN: 涅夫扬斯克
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 涅夫扬斯克
-  en:
-  - Nevyansk
-  - castle_village_S3_1
+entity_ids:
+- entity.settlement.castle_village_s3_1
 summary:
   zh-CN: 涅夫扬斯克坐落于俯瞰瓦尔切格湾的一处平坦山角上；当地气候寒冷，但从山上淌下来的水带来了肥土，村民便种黑麦、大麦一类耐寒的作物。
 registry_bindings:

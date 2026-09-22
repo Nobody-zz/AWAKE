@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-nahlan
 title:
   zh-CN: 纳赫兰
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 纳赫兰
-  en:
-  - Nahlan
-  - village_A6_4
+entity_ids:
+- entity.settlement.village_a6_4
 summary:
   zh-CN: 纳赫兰坐落于杰尔贾赖峭壁被达玛尔河分割形成的冲积平原，土壤每年靠洪流淤泥恢复肥力，小麦产量很高。
 registry_bindings:

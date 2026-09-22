@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-alebat
 title:
   zh-CN: 阿莱巴特
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿莱巴特
-  en:
-  - Alebat
-  - village_S6_3
+entity_ids:
+- entity.settlement.village_s6_3
 summary:
   zh-CN: 阿莱巴特坐落于斯特吉亚东北部的森林深处；这片偏远之地长久以来都是北方各地躲避压迫、债务与世仇之人的藏身处，当地口音受森林民族瓦尼人的影响很大。
 registry_bindings:

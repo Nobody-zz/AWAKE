@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.villages-diantogmail
 title:
   zh-CN: 迪安托格麦尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 迪安托格麦尔
-  en:
-  - Diantogmail
-  - village_B2_1
+entity_ids:
+- entity.settlement.village_b2_1
 summary:
   zh-CN: 迪安托格麦尔位于“林·泰瓦尔”也就是“暗湖”之畔；此地名字的解释有好几种传说，意思是“白鼬之翔”，却没有两个版本对得上；村民从湖边收集黏土，供附近的工匠使用。
 registry_bindings:
@@ -40,7 +36,7 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 迪安托格麦尔位于“林·泰瓦尔”也就是“暗湖”之畔；此地名字的解释有好几种传说，意思是“白鼬之翔”，却没有两个版本对得上；村民从湖边收集黏土，供附近的工匠使用。
+    zh-CN: 迪安托格麦尔在“林·泰瓦尔”，也就是暗湖之畔；村民自湖岸取黏土，供附近的工匠制器。
   sources:
   - source_id: source.calradia.game.villages-desc-battania
     source_version: bannerlord-1.3.15.110062
@@ -48,12 +44,18 @@ assertions:
     locator: bannerlord.villages#village_B2_1
     quote_hash: 7014E3615700B35B894EFBCA0ED031F5055E7C634A6FF3655F2420853EDB47ED
     quote: 迪安托格麦尔位于“林·泰瓦尔”，即“暗湖”之畔。
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#village_B2_1
+    quote_hash: 1521BDEDEE9FF1D4D622FDCA5A28DC14D4AD938C8FCA9DC986D51F65815D42B5
+    quote: 这里的村民会从湖边收集黏土，供附近的工匠使用。
   expressions:
-  - id: expr.village-diantogmail-rumor
+  - id: expr.village-diantogmail-1-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 迪安托格麦尔的人自己也说不清村名。村里人说祖宗留下的名字，意思记不全了——反正泥是真的，拿来有用。
+      zh-CN: 暗湖边上就是我们村，走一段滩就到。滩上有挖泥的坑，谁家要烧罐子就下来挑。
     sources:
     - source_id: source.calradia.game.villages-desc-battania
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +95,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.village-diantogmail-detail
+  - id: expr.village-diantogmail-1-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 迪安托格麦尔以湖泥为业——岸滩淤土、细而耐烧；泥按细粗分等，供附近匠人制器，村名传说争执不休，倒成了外人打听的由头。
+      zh-CN: 迪安托格麦尔以湖泥为业——岸滩淤土、细而耐烧；泥按细粗分等，供附近匠人制器，一年到头有外村人来挑。
     sources:
     - source_id: source.calradia.game.villages-desc-battania
       source_version: bannerlord-1.3.15.110062
@@ -105,6 +107,89 @@ assertions:
       locator: bannerlord.villages#village_B2_1
       quote_hash: 7014E3615700B35B894EFBCA0ED031F5055E7C634A6FF3655F2420853EDB47ED
       quote: 迪安托格麦尔位于“林·泰瓦尔”，即“暗湖”之畔。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.village-diantogmail-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: “白鼬之翔”是村名的通行解，但本地说法有好几种，没有两种的细节能彼此对上。
+  sources:
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#village_B2_1
+    quote_hash: 73E82B935C0EF8EEA43F5842C9DDB5AC5D6A0D820BDF9C4BEB7354691077361B
+    quote: 有数种本地传说解释该地名字的由来——意为“白鼬之翔”，但没有任意两种版本的细节能对得上。
+  expressions:
+  - id: expr.village-diantogmail-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 迪安托格麦尔的人自己也说不清村名。村里人说祖宗留下的名字，意思记不全了——反正泥是真的，拿来有用。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B2_1
+      quote_hash: 73E82B935C0EF8EEA43F5842C9DDB5AC5D6A0D820BDF9C4BEB7354691077361B
+      quote: 有数种本地传说解释该地名字的由来——意为“白鼬之翔”，但没有任意两种版本的细节能对得上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-diantogmail-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 村名解作“白鼬之翔”，说法却不止一种，讲的人各执一词。外人来打听，本地人也乐意各讲各的。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B2_1
+      quote_hash: 73E82B935C0EF8EEA43F5842C9DDB5AC5D6A0D820BDF9C4BEB7354691077361B
+      quote: 有数种本地传说解释该地名字的由来——意为“白鼬之翔”，但没有任意两种版本的细节能对得上。
     grants:
     - profile_id: profile.headman
       scope: national

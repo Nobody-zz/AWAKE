@@ -1,0 +1,832 @@
+{
+ "_note": "经济批 A1：XML 里的贸易货物 18 档。A=官方本地化 stringId；B=[文件, 变体号, 引文]；正文待写。",
+ "docs": [
+  {
+   "slug": "goods-fish",
+   "title_zh": "鱼",
+   "title_en": "Fish",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "鱼是湖畔渔村的主产出，腌过装桶能运远，城里人的日常吃食。",
+   "assertions": [
+    {
+     "id": "goods-fish-1",
+     "kind": "fact",
+     "text": "鱼是卡拉迪亚的交易货物，基准价 12 第纳尔，论桶买卖。",
+     "expressions": [
+      {
+       "id": "goods-fish-rumor",
+       "layer": "rumor",
+       "text": "湖边人家天不亮就出船，打上来的鱼当天就得腌上，不然烂得快。桶装的鱼往内陆走，越走越金贵。",
+       "A": [
+        "QGaIYQpg"
+       ],
+       "B": [
+        [
+         "rule_塔奈西斯湖__塔奈西斯湖.json",
+         0,
+         "湖中盛产鲈鱼和鲷鱼"
+        ]
+       ]
+      },
+      {
+       "id": "goods-fish-detail",
+       "layer": "detail",
+       "text": "鱼是货里最贱的一档，一件 12 第纳尔，赚头全在量上。塔奈西斯湖那片出产最盛，收鱼的走的是往内地城镇的路线——靠湖吃鱼不值钱，进了山就翻。",
+       "A": [
+        "QGaIYQpg"
+       ],
+       "B": [
+        [
+         "rule_塔奈西斯湖__塔奈西斯湖.json",
+         0,
+         "湖中盛产鲈鱼和鲷鱼"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-flax",
+   "title_zh": "亚麻",
+   "title_en": "Flax",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "亚麻是织布的原料，湿地村子种得多，收上来论捆卖到城里去。",
+   "assertions": [
+    {
+     "id": "goods-flax-1",
+     "kind": "fact",
+     "text": "亚麻是织亚麻布的原料，基准价 15 第纳尔，论捆买卖。",
+     "expressions": [
+      {
+       "id": "goods-flax-rumor",
+       "layer": "rumor",
+       "text": "湿谷底的村子种亚麻，秋后收上来一捆一捆地扎好。这东西自家织不完，多半卖给进村收布的商人。",
+       "A": [
+        "xsu6bPTv"
+       ],
+       "B": [
+        [
+         "rule_卡利奥克__卡利奥克.json",
+         0,
+         "这里的居民在湿润的谷底种植亚麻"
+        ]
+       ]
+      },
+      {
+       "id": "goods-flax-detail",
+       "layer": "detail",
+       "text": "亚麻 15 一件，是半成品，赚头在加工不在转手。卡利奥克和弗雷吉昂那两个谷底村是主产地，收原料的多半也收成品布，一趟车能配齐。",
+       "A": [
+        "xsu6bPTv"
+       ],
+       "B": [
+        [
+         "rule_卡利奥克__卡利奥克.json",
+         1,
+         "纳尔谷的谷底湿度刚好，种出来的亚麻纤维长、韧劲足"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-clay",
+   "title_zh": "黏土",
+   "title_en": "Clay",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "黏土是烧陶器的料，黏土矿坑挖出来论车运，价贱量重。",
+   "assertions": [
+    {
+     "id": "goods-clay-1",
+     "kind": "fact",
+     "text": "黏土是烧陶的原料，基准价 18 第纳尔，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-clay-rumor",
+       "layer": "rumor",
+       "text": "黏土矿坑里刨出来的土，又沉又不值钱。除了烧陶的，没人愿意驮这东西跑远路——运费比货贵。",
+       "A": [
+        "Zwb65ufG",
+        "myuzMhOn"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-clay-detail",
+       "layer": "detail",
+       "text": "黏土 18 一件，全卡拉迪亚十六个矿坑出。这东西重、价贱，只能就近卖给烧陶的作坊，跑长途必亏——所以它的行情从来只看隔壁那座城。",
+       "A": [
+        "Zwb65ufG",
+        "myuzMhOn"
+       ],
+       "B": [
+        [
+         "rule_罗瓦尔山地__罗瓦尔山地.json",
+         0,
+         "盛产陶器"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-grape",
+   "title_zh": "葡萄",
+   "title_en": "Grapes",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "葡萄是酿酒和直接吃的果子，石缝里也长，收成看水土。",
+   "assertions": [
+    {
+     "id": "goods-grape-1",
+     "kind": "fact",
+     "text": "葡萄是酿酒与鲜食的果子，基准价 20 第纳尔，论袋买卖。",
+     "expressions": [
+      {
+       "id": "goods-grape-rumor",
+       "layer": "rumor",
+       "text": "坡地上石头多，别的不爱长，葡萄藤倒喜欢。收葡萄那阵子全村下地，摘下来一半送酒坊、一半挑去集市。",
+       "A": [
+        "ZgVVPGTb"
+       ],
+       "B": [
+        [
+         "rule_帕利松__帕利松.json",
+         3,
+         "土看着不怎么样，可葡萄藤从石头缝里长出来，结的果子反而甜"
+        ]
+       ]
+      },
+      {
+       "id": "goods-grape-detail",
+       "layer": "detail",
+       "text": "葡萄 20 一件，十六个葡萄园出产，是全大陆最集中的一类。酒坊就在产区边上，所以鲜葡萄很少走出本区——真要走货，走的是酒不是果。",
+       "A": [
+        "ZgVVPGTb"
+       ],
+       "B": [
+        [
+         "rule_菲尔贝克__菲尔贝克.json",
+         2,
+         "每年秋天收葡萄的时候，酒商们从各地赶来，跟过节一样热闹"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-wool",
+   "title_zh": "羊毛",
+   "title_en": "Wool",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "羊毛是牧羊场的主产出，剪一季收一次，城里收毛的来得晚就没了。",
+   "assertions": [
+    {
+     "id": "goods-wool-1",
+     "kind": "fact",
+     "text": "羊毛是织毛毡与做毡衣的原料，基准价 22 第纳尔，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-wool-rumor",
+       "layer": "rumor",
+       "text": "每年剪羊毛就那么一阵子，收毛的商人赶得晚一天，圈里就空了。羊多的村子，一季的毛比一整年的粮还值钱。",
+       "A": [
+        "WVqaRKUm"
+       ],
+       "B": [
+        [
+         "rule_诺格伦__诺格伦.json",
+         2,
+         "每年剪羊毛的季节，加伦的商人都会跑去诺格伦收羊毛，去晚了就没了"
+        ]
+       ]
+      },
+      {
+       "id": "goods-wool-detail",
+       "layer": "detail",
+       "text": "羊毛 22 一件，出在十七个牧羊场，跟羊一头一头的产出走。这东西季节性太强，收毛要卡在剪毛那几天，压库就是压本钱。",
+       "A": [
+        "WVqaRKUm"
+       ],
+       "B": [
+        [
+         "rule_塔奈西斯湖__塔奈西斯湖.json",
+         4,
+         "载着兽皮、羊毛和盐"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-butter",
+   "title_zh": "黄油",
+   "title_en": "Butter",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "黄油是牧场和羊场做出来的乳品，与奶酪同出一路车。",
+   "assertions": [
+    {
+     "id": "goods-butter-1",
+     "kind": "fact",
+     "text": "黄油是牧场、羊场、猪场都会出的乳品，基准价 25 第纳尔，论桶买卖。",
+     "expressions": [
+      {
+       "id": "goods-butter-rumor",
+       "layer": "rumor",
+       "text": "奶子多的日子做不完，就打成黄油装桶。这东西冬天能存，山里的人拿它换粮食。",
+       "A": [
+        "VbL6GFmy",
+        "bW3csuSZ"
+       ],
+       "B": [
+        [
+         "rule_库赛特风土人情__库赛特风土人情.json",
+         1,
+         "拿马皮和奶酪换他们的麦子"
+        ]
+       ]
+      },
+      {
+       "id": "goods-butter-detail",
+       "layer": "detail",
+       "text": "黄油 25 一件，产地是牧场、羊场、猪场三类，凡是养牲口的地方都有。它跟奶酪总是一起出、一起走，收货的时候按车配，单要一样不划算。",
+       "A": [
+        "VbL6GFmy",
+        "bW3csuSZ",
+        "QbKbGu2h"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-olives",
+   "title_zh": "橄榄",
+   "title_en": "Olives",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "橄榄是榨油的果子，产地小而精，收油的人会专程绕道去。",
+   "assertions": [
+    {
+     "id": "goods-olives-1",
+     "kind": "fact",
+     "text": "橄榄是榨橄榄油的果子，基准价 30 第纳尔，论桶买卖。",
+     "expressions": [
+      {
+       "id": "goods-olives-rumor",
+       "layer": "rumor",
+       "text": "收橄榄那几天，全村老小都在树下忙，掉地上的果子也有人捡。榨出来的油黄澄澄的，比北边运来的牛油香。",
+       "A": [
+        "45kZUyjh"
+       ],
+       "B": [
+        [
+         "rule_塔利维尔__塔利维尔.json",
+         3,
+         "我在那儿的时候正赶上收橄榄，全村人都在树下忙活"
+        ]
+       ]
+      },
+      {
+       "id": "goods-olives-detail",
+       "layer": "detail",
+       "text": "橄榄 30 一件，十二个橄榄树村出。产量都不大，但油好，商人愿意绕路去收——价可比大产区稍贵，走的是「少而精」的路子。",
+       "A": [
+        "45kZUyjh"
+       ],
+       "B": [
+        [
+         "rule_于桑克__于桑克.json",
+         2,
+         "沙拉斯湾一带的商人偶尔会绕道过去收油，价钱比大产区稍贵一点，但油香"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-cheese",
+   "title_zh": "奶酪",
+   "title_en": "Cheese",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "奶酪是能放住的乳品，牧区与羊场都做，与黄油同路走。",
+   "assertions": [
+    {
+     "id": "goods-cheese-1",
+     "kind": "fact",
+     "text": "奶酪是牧场、羊场、猪场都会出的乳品，基准价 40 第纳尔，论桶买卖。",
+     "expressions": [
+      {
+       "id": "goods-cheese-rumor",
+       "layer": "rumor",
+       "text": "奶酪比黄油耐放，走远路也坏不了。草原上的人拿它和皮子来换我们的麦子。",
+       "A": [
+        "WSk5Sibs",
+        "bW3csuSZ"
+       ],
+       "B": [
+        [
+         "rule_库赛特风土人情__库赛特风土人情.json",
+         1,
+         "拿马皮和奶酪换他们的麦子"
+        ]
+       ]
+      },
+      {
+       "id": "goods-cheese-detail",
+       "layer": "detail",
+       "text": "奶酪 40 一件，比黄油贵一档，产地与黄油完全重合。这两样一起收最省事，分开跑一趟车就白费。",
+       "A": [
+        "WSk5Sibs",
+        "vqSHB7mJ"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-date-fruit",
+   "title_zh": "枣",
+   "title_en": "Date Fruit",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [
+    "dates"
+   ],
+   "summary": "枣是沙漠绿洲的命根子，耐碱耐旱，别处不长它偏长。",
+   "assertions": [
+    {
+     "id": "goods-date-fruit-1",
+     "kind": "fact",
+     "text": "枣是沙漠绿洲的主要出产，基准价 50 第纳尔，论袋买卖。",
+     "expressions": [
+      {
+       "id": "goods-date-fruit-rumor",
+       "layer": "rumor",
+       "text": "沙漠里一块能长草的地比黄金还金贵，枣树是唯一熬得住咸土的东西。一棵枣树死了，全家都心疼。",
+       "A": [
+        "NtsdmmW9"
+       ],
+       "B": [
+        [
+         "rule_阿塞莱地理__阿塞莱地理.json",
+         0,
+         "我们这儿就不一样了，水金贵，一棵椰枣死了全家心疼"
+        ]
+       ]
+      },
+      {
+       "id": "goods-date-fruit-detail",
+       "layer": "detail",
+       "text": "枣 50 一件，九个椰枣园出产，全在沙漠边上。绿洲的人挑担枣去口岸卖，路上安不安全全看那阵子谁在管商路。",
+       "A": [
+        "NtsdmmW9"
+       ],
+       "B": [
+        [
+         "rule_温吉德__温吉德.json",
+         5,
+         "我们绿洲边上的人挑担椰枣去撒那拉卖，路上比以前安全"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-beer",
+   "title_zh": "啤酒",
+   "title_en": "Beer",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "啤酒是粮仓边上的酒，粮食有余的地方才酿得起。",
+   "assertions": [
+    {
+     "id": "goods-beer-1",
+     "kind": "fact",
+     "text": "啤酒是粮食酿的低度酒，基准价 50 第纳尔，论桶买卖。",
+     "expressions": [
+      {
+       "id": "goods-beer-rumor",
+       "layer": "rumor",
+       "text": "粮多得吃不完的地方才舍得拿来酿酒。一桶啤酒不值什么，可酒馆里天天要进货。",
+       "A": [
+        "HiSzYWeh"
+       ],
+       "B": [
+        [
+         "rule_斯瓦迪亚丘陵__斯瓦迪亚丘陵.json",
+         0,
+         "该地区粮食富余，盛产啤酒"
+        ]
+       ]
+      },
+      {
+       "id": "goods-beer-detail",
+       "layer": "detail",
+       "text": "啤酒 50 一件，跟粮食一个产区的货——粮贱的地方酒就贱。量走得比葡萄酒快，单价却压不上来，做的是回头客的生意。",
+       "A": [
+        "HiSzYWeh"
+       ],
+       "B": [
+        [
+         "rule_斯瓦迪亚丘陵__斯瓦迪亚丘陵.json",
+         0,
+         "盛产啤酒，而帕拉汶德作为北部政治中心，盛产葡萄酒，陶器"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-cotton",
+   "title_zh": "生丝",
+   "title_en": "Raw Silk",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "生丝是蚕饲养场出的丝料，八处桑园产，是织天鹅绒的本钱。",
+   "assertions": [
+    {
+     "id": "goods-cotton-1",
+     "kind": "fact",
+     "text": "生丝是养蚕缫出来的丝料，基准价 80 第纳尔，论卷买卖。",
+     "expressions": [
+      {
+       "id": "goods-cotton-rumor",
+       "layer": "rumor",
+       "text": "养蚕是个细致活，桑叶得新鲜，蚕房不能进风。八处桑园才出得起的料，价比羊毛高一大截。",
+       "A": [
+        "Vqu67a3b",
+        "wTyq7LaM"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-cotton-detail",
+       "layer": "detail",
+       "text": "生丝 80 一件，出在蚕饲养场，全大陆只有八个。它是天鹅绒的上游——想在天鹅绒上赚，先得看桑园那年的收成。",
+       "A": [
+        "Vqu67a3b",
+        "wTyq7LaM"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-wine",
+   "title_zh": "葡萄酒",
+   "title_en": "Wine",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "葡萄酒是葡萄园的成品，讲究水土，名产地的价钱能翻番。",
+   "assertions": [
+    {
+     "id": "goods-wine-1",
+     "kind": "fact",
+     "text": "葡萄酒是葡萄酿成的酒，基准价 90 第纳尔，论罐买卖。",
+     "expressions": [
+      {
+       "id": "goods-wine-rumor",
+       "layer": "rumor",
+       "text": "同样是葡萄，换个湖边的坡地酿出来味道就不一样。收酒那阵子，商人们从各处赶来，跟过节一样。",
+       "A": [
+        "ELsDFwAD"
+       ],
+       "B": [
+        [
+         "rule_马林__马林.json",
+         2,
+         "马林的葡萄酒有一种清爽的果香，奥克斯湖的水汽养出来的"
+        ]
+       ]
+      },
+      {
+       "id": "goods-wine-detail",
+       "layer": "detail",
+       "text": "葡萄酒 90 一件，比啤酒贵一倍，产地看葡萄园的水土。名产地的酒能卖出高过基准的价，认牌子的买家只认那一处，不认价钱。",
+       "A": [
+        "ELsDFwAD"
+       ],
+       "B": [
+        [
+         "rule_菲尔贝克__菲尔贝克.json",
+         2,
+         "那里的葡萄园在比斯坎海岸的巨岩上，结出来的葡萄又大又甜"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-pottery",
+   "title_zh": "陶器",
+   "title_en": "Pottery",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "陶器是黏土烧出来的家什，价中量重，卖的是就近的城。",
+   "assertions": [
+    {
+     "id": "goods-pottery-1",
+     "kind": "fact",
+     "text": "陶器是黏土烧成的器物，基准价 210 第纳尔，论箱买卖。",
+     "expressions": [
+      {
+       "id": "goods-pottery-rumor",
+       "layer": "rumor",
+       "text": "陶器是家家要用的东西，可它又沉又易碎，驮着走远路碎一路。烧陶的作坊就开在矿坑边上。",
+       "A": [
+        "awQrcrt2",
+        "myuzMhOn"
+       ],
+       "B": [
+        [
+         "rule_罗瓦尔山地__罗瓦尔山地.json",
+         0,
+         "盛产陶器，麻布，铁器"
+        ]
+       ]
+      },
+      {
+       "id": "goods-pottery-detail",
+       "layer": "detail",
+       "text": "陶器 210 一件，是中价位的货。它跟黏土是一条链上的两头——黏土贱得运不动，陶器价够了却能走货，赚的就是这道加工的差。",
+       "A": [
+        "awQrcrt2"
+       ],
+       "B": [
+        [
+         "rule_斯瓦迪亚丘陵__斯瓦迪亚丘陵.json",
+         0,
+         "盛产葡萄酒，陶器，以及木盾"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-leather",
+   "title_zh": "皮革",
+   "title_en": "Leather",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "皮革是鞣好的牲口皮，猎户与牲口多的地方都出。",
+   "assertions": [
+    {
+     "id": "goods-leather-1",
+     "kind": "fact",
+     "text": "皮革是鞣制过的牲口皮，基准价 230 第纳尔，论箱买卖。",
+     "expressions": [
+      {
+       "id": "goods-leather-rumor",
+       "layer": "rumor",
+       "text": "生皮不鞣就是块烂皮子，鞣好了才值钱。山里的猎户打来的皮，多半先卖到镇上给皮匠处理。",
+       "A": [
+        "ufnnUxKb",
+        "RREyouKr"
+       ],
+       "B": [
+        [
+         "rule_勒芒塔尔__勒芒塔尔.json",
+         2,
+         "山里的猎人设陷阱，一张好貂皮能卖不少第纳尔"
+        ]
+       ]
+      },
+      {
+       "id": "goods-leather-detail",
+       "layer": "detail",
+       "text": "皮革 230 一件，比毛皮低一档，因为它是加工品不是原料。收购的时候要分清：毛皮论张算，皮革论箱算，混着报价容易被压。",
+       "A": [
+        "ufnnUxKb"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-linen",
+   "title_zh": "亚麻布",
+   "title_en": "Linen",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "亚麻布是织好的粗布，耐穿实在，矿区和军营里用得多。",
+   "assertions": [
+    {
+     "id": "goods-linen-1",
+     "kind": "fact",
+     "text": "亚麻布是亚麻织成的布匹，基准价 245 第纳尔，论卷买卖。",
+     "expressions": [
+      {
+       "id": "goods-linen-rumor",
+       "layer": "rumor",
+       "text": "谷底村子织的亚麻布厚实，价钱不贵，胜在耐穿。北边矿区和军营里成卷地要，波耶有时候也派人来收。",
+       "A": [
+        "DvGueBrU"
+       ],
+       "B": [
+        [
+         "rule_弗雷吉昂__弗雷吉昂.json",
+         1,
+         "弗雷吉昂的亚麻布耐穿，北边那些斯特吉亚的波耶有时候也会派人来买"
+        ]
+       ]
+      },
+      {
+       "id": "goods-linen-detail",
+       "layer": "detail",
+       "text": "亚麻布 245 一件，是布里的低价档。卡利奥克那边矿区和军营成批要，走的是量、是常年的单子，不是一次性的好价钱。",
+       "A": [
+        "DvGueBrU"
+       ],
+       "B": [
+        [
+         "rule_卡利奥克__卡利奥克.json",
+         2,
+         "卡利奥克的亚麻布厚实耐用，北边那些矿区和军营里用得多。价钱不算贵，胜在结实"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-oil",
+   "title_zh": "油",
+   "title_en": "Oil",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "油是橄榄榨的食用油，产地小而精，收油的愿意绕路。",
+   "assertions": [
+    {
+     "id": "goods-oil-1",
+     "kind": "fact",
+     "text": "油是橄榄榨出的食油，基准价 290 第纳尔，论罐买卖。",
+     "expressions": [
+      {
+       "id": "goods-oil-rumor",
+       "layer": "rumor",
+       "text": "北边的人吃惯了牛油，可一尝橄榄油就认了。到收油那阵子，堡里的守军会下山来换。",
+       "A": [
+        "lULBZ714"
+       ],
+       "B": [
+        [
+         "rule_塔利维尔__塔利维尔.json",
+         1,
+         "塔利维尔堡的守军吃腻了北边运来的牛油，一到收橄榄的季节就下山来换油"
+        ]
+       ]
+      },
+      {
+       "id": "goods-oil-detail",
+       "layer": "detail",
+       "text": "油 290 一件，是橄榄的下游成品，价钱差了近十倍。产量都不大，走的是精品路子：量少价高，挑买家不挑价。",
+       "A": [
+        "lULBZ714"
+       ],
+       "B": [
+        [
+         "rule_于桑克__于桑克.json",
+         3,
+         "城堡就在上面不远，守军有时候会下来跟村民们买油买酒"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-jewelry",
+   "title_zh": "贵重品",
+   "title_en": "Jewelry",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "贵重品是全大陆最贵的一件货，银矿下游的精细活，只有大买家碰得起。",
+   "assertions": [
+    {
+     "id": "goods-jewelry-1",
+     "kind": "fact",
+     "text": "贵重品是金银细工做成的值钱物件，基准价 675 第纳尔，是全部货物里最贵的一档。",
+     "expressions": [
+      {
+       "id": "goods-jewelry-rumor",
+       "layer": "rumor",
+       "text": "贵重品不是咱平头百姓买得起的，见都不太见着。多半是城里的大户、领主的亲眷在置办。",
+       "A": [
+        "yQTBY9ie",
+        "aJLQz9iZ"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-jewelry-detail",
+       "layer": "detail",
+       "text": "贵重品 675 一件，是货里最贵的一档，比天鹅绒还高出百来块。它跟银矿是一条线上的——银矿出的料越足，这门细工才越好做。",
+       "A": [
+        "yQTBY9ie",
+        "aJLQz9iZ"
+       ],
+       "B": [
+        [
+         "rule_吕卡隆__吕卡隆.json",
+         7,
+         "吕卡隆的银矿在整个卡拉迪亚都有名"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-stolen-goods",
+   "title_zh": "被盗的货物",
+   "title_en": "Stolen Goods",
+   "subdomain": "goods",
+   "aliases_zh": [
+    "赃物"
+   ],
+   "aliases_en": [],
+   "summary": "被盗的货物是来路不正的赃物，买家要担风险，价钱也就压得低。",
+   "assertions": [
+    {
+     "id": "goods-stolen-goods-1",
+     "kind": "fact",
+     "text": "被盗的货物是转手的赃物，来路不正，没有公开的基准价。",
+     "expressions": [
+      {
+       "id": "goods-stolen-goods-rumor",
+       "layer": "rumor",
+       "text": "赃物这东西，敢收的人不多。货是真货，价也真便宜，可万一查到你头上，赔进去的比赚的多。",
+       "A": [
+        "vPAHwC3X"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-stolen-goods-detail",
+       "layer": "detail",
+       "text": "赃物没有公开行情，因为它压根不该在明面上流通。想收的人知道它比行价低——低出来的那部分，就是买家担的风险钱。",
+       "A": [
+        "vPAHwC3X"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

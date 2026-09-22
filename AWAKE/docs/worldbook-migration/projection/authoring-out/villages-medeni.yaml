@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-medeni
 title:
   zh-CN: 迈代尼
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 迈代尼
-  en:
-  - Medeni
-  - castle_village_A4_1
+entity_ids:
+- entity.settlement.castle_village_a4_1
 summary:
   zh-CN: 迈代尼坐落在耶什姆海与杰尔贾赖峭壁之间的低地，村民以水井和旱谷小堤坝收集雨季地表水，灌溉岸边椰枣园。
 registry_bindings:

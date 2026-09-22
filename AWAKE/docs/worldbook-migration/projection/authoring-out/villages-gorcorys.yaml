@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-gorcorys
 title:
   zh-CN: 戈耳科律斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 戈耳科律斯
-  en:
-  - Gorcorys
-  - village_ES2_2
+entity_ids:
+- entity.settlement.village_es2_2
 summary:
   zh-CN: 戈耳科律斯坐落于歌里亚河畔——那是塞堤斯河流经三河河谷最南端的支流；水量充沛的黑土使这片地区成为帝国粮仓。
 registry_bindings:

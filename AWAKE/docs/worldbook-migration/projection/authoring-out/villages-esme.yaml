@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-esme
 title:
   zh-CN: 埃斯梅
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 埃斯梅
-  en:
-  - Esme
-  - castle_village_K1_2
+entity_ids:
+- entity.settlement.castle_village_k1_2
 summary:
   zh-CN: 埃斯梅及周围村落位于阿克坎丘陵向陆一侧的德夫赛格高原上；这里是库赛特及其盟友的主要放牧地。
 registry_bindings:

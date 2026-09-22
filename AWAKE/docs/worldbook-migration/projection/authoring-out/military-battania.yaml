@@ -1,0 +1,361 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.military-battania
+title:
+  zh-CN: 巴旦尼亚军事制度
+  en: Battanian Military System
+status: needs_review
+domain: war
+subdomain: military
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 巴旦尼亚军制
+  - 部落召唤制
+  en:
+  - Battanian Host
+summary:
+  zh-CN: 巴旦尼亚军事制度：没有常备中央军队——战时至高王向各部落发出召唤，各部落依古老盟约派出战士。联军制度根植于氏族自治，也导致行动常因部落宿怨而迟缓。核心是森林弓箭手，重装步兵称长镰兵，以战镰在箭雨打乱敌阵后突击；最令人畏惧的是全体涂战纹、齐声战吼的「狂啸冲锋」。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.Ax9OkgL5
+  quote_hash: 5A023FD1760A7C963B6A6F6538F47AEED155B6F9C36F938B382BC2ABC1F3BF85
+  quote: 卡拉迪亚西北部云雾缭绕的山区由巴旦尼亚的诸部族统治着，他们是这块大陆大部分地区的原始居民。他们位于山顶的堡垒见证了无数次抵抗外来侵略者的战争：起初是帝国的军团，最近还加上新崛起的斯特吉亚和瓦兰迪亚王国。他们精通长弓、夜袭、林中闪击。他们崇尚勇武精神，但更喜欢糅合一点狡黠——将一群牛赶入雾中的偷牛人；往敌方部落赴宴的冠军勇士，能讲讲战斗趣事取悦东道主，并从包里拎出自己的纪念品：同族的头盖骨。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/0/Content
+  quote_hash: 1F7FCCCA577EEB344F2FA90878D64ABCEE1C774CCFA6FCCEAEE2CEA3EB265EE8
+  quote: 巴旦尼亚没有常备的中央军队。战争来临时，至高王向各部落发出召唤，各部落依照古老盟约派出战士
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/0/Content
+  quote_hash: AEF60B1461281348861314CABF3DD79F07F70759827C05D7CDA80DAE9AC36BAB
+  quote: 重装步兵被称为长镰兵，手持战镰，在敌军阵型被箭雨打乱后从侧翼或后方杀出
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/2/Content
+  quote_hash: 419CAC91F4D3B7788B2F465BD9CA9092073718265ACF4AF79F4FDA27E42482AF
+  quote: 部落里的男人都是兵。平时他们种地打猎，战时他们扛着弓就来了
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/2/Content
+  quote_hash: 39ED7B0E40A77B209E079570B9AECADD1B8313D2ACF93F8B71351E3A74CA562A
+  quote: 这是我们的权利，也是联军最大的软肋
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/3/Content
+  quote_hash: 70C2F50F206866D10E5E784D48F33ED411239A588895D4CA57F012A27D85F772
+  quote: 长镰兵是我们中间最猛的——他们用的战镰比帝国的重剑还沉，挥起来能把人从肩膀劈到腰
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/4/Content
+  quote_hash: A2DBD6BA6C23A36E3EDCCE8FA90B8C5C1D31F5903602926249C47886F0DA2777
+  quote: 他们的弓箭手在林子里神出鬼没，我们的重步兵一进森林就被射成刺猬
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/4/Content
+  quote_hash: 61A5484D654A826679AD3A05B483496F4086EC0B44CEAC22009A40A1BA27158D
+  quote: 潘德拉克那天，长镰兵进入战斗后我们的阵线就崩溃了
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/5/Content
+  quote_hash: 87B8186B9C612D524F4253572FD328D563E109E3C9B01FF3FCC3CFE13197AC75
+  quote: 他们最大的软肋是部落之间的协调——巴旦尼亚的伯爵们要是互相之间有仇，至高王喊破嗓子他们也不来
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/6/Content
+  quote_hash: ECE57CBD96E8E5A5939E4B601E15F825C9A1A2253C0EF8EE5A9B8AB709E9F185
+  quote: 巴旦尼亚人没有骑兵，这是他们最大的弱点
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/1/Content
+  quote_hash: 4EAAD289EF42050B0C4B8B6D80185042D6A75C3E2D98939CAA5629B8E8086DFC
+  quote: 战争动员令一下，森林里所有能拉弓的男人都会扛着自己的猎弓从村子里走出来，跟着年长的猎人组成战团
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/1/Content
+  quote_hash: 2407121FE6752A22DA22D5635539879F7EBE5AD38B739A464DCE63E62C5792C2
+  quote: 他们从小在林子里追鹿，知道每一棵树的位置，知道哪片灌木丛后面能藏人
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.battania-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 巴旦尼亚没有常备的中央军队：战争来临时，至高王向各部落发出召唤，各部落依照古老盟约派出战士。这种联军制度根植于氏族自治的传统，但也导致各部落常因宿怨或利益分歧而行动迟缓——这是每一位至高王都试图解决的核心问题。军队的核心是弓箭手，他们自幼在森林中狩猎，箭术精准，擅长利用地形进行伏击；重装步兵被称为长镰兵，手持战镰，在敌军阵型被箭雨打乱后从侧翼或后方杀出。巴旦尼亚人最令人畏惧的战术是「狂啸冲锋」——在所有战士同时发出的骇人战吼中，全体冲向敌阵，冲锋前会用战纹涂抹身体以威慑敌人。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.Ax9OkgL5
+    quote_hash: 5A023FD1760A7C963B6A6F6538F47AEED155B6F9C36F938B382BC2ABC1F3BF85
+    quote: 卡拉迪亚西北部云雾缭绕的山区由巴旦尼亚的诸部族统治着，他们是这块大陆大部分地区的原始居民。他们位于山顶的堡垒见证了无数次抵抗外来侵略者的战争：起初是帝国的军团，最近还加上新崛起的斯特吉亚和瓦兰迪亚王国。他们精通长弓、夜袭、林中闪击。他们崇尚勇武精神，但更喜欢糅合一点狡黠——将一群牛赶入雾中的偷牛人；往敌方部落赴宴的冠军勇士，能讲讲战斗趣事取悦东道主，并从包里拎出自己的纪念品：同族的头盖骨。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/0/Content
+    quote_hash: 1F7FCCCA577EEB344F2FA90878D64ABCEE1C774CCFA6FCCEAEE2CEA3EB265EE8
+    quote: 巴旦尼亚没有常备的中央军队。战争来临时，至高王向各部落发出召唤，各部落依照古老盟约派出战士
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/0/Content
+    quote_hash: AEF60B1461281348861314CABF3DD79F07F70759827C05D7CDA80DAE9AC36BAB
+    quote: 重装步兵被称为长镰兵，手持战镰，在敌军阵型被箭雨打乱后从侧翼或后方杀出
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/2/Content
+    quote_hash: 419CAC91F4D3B7788B2F465BD9CA9092073718265ACF4AF79F4FDA27E42482AF
+    quote: 部落里的男人都是兵。平时他们种地打猎，战时他们扛着弓就来了
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/2/Content
+    quote_hash: 39ED7B0E40A77B209E079570B9AECADD1B8313D2ACF93F8B71351E3A74CA562A
+    quote: 这是我们的权利，也是联军最大的软肋
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/3/Content
+    quote_hash: 70C2F50F206866D10E5E784D48F33ED411239A588895D4CA57F012A27D85F772
+    quote: 长镰兵是我们中间最猛的——他们用的战镰比帝国的重剑还沉，挥起来能把人从肩膀劈到腰
+  expressions:
+  - id: expr.battania-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 巴旦尼亚没有常备的中央军队。战争来临时，至高王向各部落发出召唤，各部落依照古老盟约派出战士。这套联军制度根植于氏族自治，但也让他们的行动常常因为部落之间的宿怨拖延。他们最能打的是森林里的弓箭手，重装步兵叫长镰兵，拿的是战镰。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.Ax9OkgL5
+      quote_hash: 5A023FD1760A7C963B6A6F6538F47AEED155B6F9C36F938B382BC2ABC1F3BF85
+      quote: 卡拉迪亚西北部云雾缭绕的山区由巴旦尼亚的诸部族统治着，他们是这块大陆大部分地区的原始居民。他们位于山顶的堡垒见证了无数次抵抗外来侵略者的战争：起初是帝国的军团，最近还加上新崛起的斯特吉亚和瓦兰迪亚王国。他们精通长弓、夜袭、林中闪击。他们崇尚勇武精神，但更喜欢糅合一点狡黠——将一群牛赶入雾中的偷牛人；往敌方部落赴宴的冠军勇士，能讲讲战斗趣事取悦东道主，并从包里拎出自己的纪念品：同族的头盖骨。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/0/Content
+      quote_hash: 1F7FCCCA577EEB344F2FA90878D64ABCEE1C774CCFA6FCCEAEE2CEA3EB265EE8
+      quote: 巴旦尼亚没有常备的中央军队。战争来临时，至高王向各部落发出召唤，各部落依照古老盟约派出战士
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/0/Content
+      quote_hash: AEF60B1461281348861314CABF3DD79F07F70759827C05D7CDA80DAE9AC36BAB
+      quote: 重装步兵被称为长镰兵，手持战镰，在敌军阵型被箭雨打乱后从侧翼或后方杀出
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.battania-lord-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 炉卫是我亲手组建的。每一个炉卫都跪在我的火炉前发过誓，我把剑放在他们肩上，他们把命放在我手里。平时他们护卫我的厅堂，战时他们站在我身边，组成盾墙最核心的那几排。部落里的男人都是兵：平时他们种地打猎，战时他们扛着弓就来了。他们不领军饷，不当职业兵，但他们保卫的是自己的林子和自己的族人。至高王有权召唤我们，但各部落出兵的速度和规模，全看我们自己的意愿——这是我们的权利，也是联军最大的软肋。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/2/Content
+      quote_hash: 419CAC91F4D3B7788B2F465BD9CA9092073718265ACF4AF79F4FDA27E42482AF
+      quote: 部落里的男人都是兵。平时他们种地打猎，战时他们扛着弓就来了
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/2/Content
+      quote_hash: 39ED7B0E40A77B209E079570B9AECADD1B8313D2ACF93F8B71351E3A74CA562A
+      quote: 这是我们的权利，也是联军最大的软肋
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.battania
+    denies: []
+  - id: expr.battania-warrior-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我的弓是我爹传给我的，紫杉木，弓弦换了好几根，弓身还是原来那把。我们从小在林子里跟着长辈打猎，射鹿、射山鸡、射一切在林子里跑的东西。帝国人的弩也能射远，但他们装一支箭的功夫我们射了三支。长镰兵是我们中间最猛的——他们用的战镰比帝国的重剑还沉，挥起来能把人从肩膀劈到腰。冲锋前我们往脸上抹战纹，蓝的，用湖边的泥调出来的。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/3/Content
+      quote_hash: 70C2F50F206866D10E5E784D48F33ED411239A588895D4CA57F012A27D85F772
+      quote: 长镰兵是我们中间最猛的——他们用的战镰比帝国的重剑还沉，挥起来能把人从肩膀劈到腰
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.battania
+    denies: []
+- id: assertion.battania-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 外族对巴旦尼亚这套原始动员的评价并不轻视：帝国人吃过亏——他们的重步兵一进森林就被射成刺猬，潘德拉克那天长镰兵进入战斗后帝国阵线就崩溃了，很多帝国老兵至今还会做噩梦；斯特吉亚人认它跟自己有点像，都是部落出兵、步兵为主，但巴旦尼亚更信弓箭和森林，最大软肋是部落之间的协调——伯爵们要是互相有仇，至高王喊破嗓子他们也不来；瓦兰迪亚人点出它没有骑兵这一最大弱点，但也承认它聪明，从不在平原上正面打。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/4/Content
+    quote_hash: A2DBD6BA6C23A36E3EDCCE8FA90B8C5C1D31F5903602926249C47886F0DA2777
+    quote: 他们的弓箭手在林子里神出鬼没，我们的重步兵一进森林就被射成刺猬
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/4/Content
+    quote_hash: 61A5484D654A826679AD3A05B483496F4086EC0B44CEAC22009A40A1BA27158D
+    quote: 潘德拉克那天，长镰兵进入战斗后我们的阵线就崩溃了
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/5/Content
+    quote_hash: 87B8186B9C612D524F4253572FD328D563E109E3C9B01FF3FCC3CFE13197AC75
+    quote: 他们最大的软肋是部落之间的协调——巴旦尼亚的伯爵们要是互相之间有仇，至高王喊破嗓子他们也不来
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/6/Content
+    quote_hash: ECE57CBD96E8E5A5939E4B601E15F825C9A1A2253C0EF8EE5A9B8AB709E9F185
+    quote: 巴旦尼亚人没有骑兵，这是他们最大的弱点
+  expressions:
+  - id: expr.battania-empire-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 巴旦尼亚的军事制度在我们看来就是原始的部落动员。他们没有常备军团，没有统一的后勤补给，打起仗来全靠至高王的面子去请各个部落出兵。但就是这种原始制度，在潘德拉克让我们吃了大亏。他们的弓箭手在林子里神出鬼没，我们的重步兵一进森林就被射成刺猬。他们还有一种叫长镰兵的突击步兵，等我们阵型被箭雨打乱后从侧翼冲上来，杀伤力极强。潘德拉克那天，长镰兵进入战斗后我们的阵线就崩溃了。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/4/Content
+      quote_hash: A2DBD6BA6C23A36E3EDCCE8FA90B8C5C1D31F5903602926249C47886F0DA2777
+      quote: 他们的弓箭手在林子里神出鬼没，我们的重步兵一进森林就被射成刺猬
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/4/Content
+      quote_hash: 61A5484D654A826679AD3A05B483496F4086EC0B44CEAC22009A40A1BA27158D
+      quote: 潘德拉克那天，长镰兵进入战斗后我们的阵线就崩溃了
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+  - id: expr.battania-sturgia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 巴旦尼亚人的军队和我们有点像，都是部落出兵，都是步兵为主。但他们不像我们那么依赖盾墙，他们更信他们的弓箭和森林。他们的长镰兵拿着那种弯曲的长镰，在近战中确实厉害。不过他们最大的软肋是部落之间的协调——巴旦尼亚的伯爵们要是互相之间有仇，至高王喊破嗓子他们也不来。这一点我们斯特吉亚人倒是比他们强：我们的波耶们虽然也互相看不顺眼，但大公一声令下，至少人都会到。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/5/Content
+      quote_hash: 87B8186B9C612D524F4253572FD328D563E109E3C9B01FF3FCC3CFE13197AC75
+      quote: 他们最大的软肋是部落之间的协调——巴旦尼亚的伯爵们要是互相之间有仇，至高王喊破嗓子他们也不来
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []
+  - id: expr.battania-vlandia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 巴旦尼亚人没有骑兵，这是他们最大的弱点。他们的弓箭手在森林里确实厉害，长镰兵在近战中也够狠，那个什么「狂啸冲锋」虽然听着唬人，但在平原上我们的方旗骑士一个冲锋就能让他们闭嘴。问题是他们很聪明，从来不在平原上跟我们正面打，躲在林子里，等你进去了才动手。所以瓦兰迪亚和巴旦尼亚打了这么多年，谁也占不了谁的大便宜。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/6/Content
+      quote_hash: ECE57CBD96E8E5A5939E4B601E15F825C9A1A2253C0EF8EE5A9B8AB709E9F185
+      quote: 巴旦尼亚人没有骑兵，这是他们最大的弱点
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+- id: assertion.battania-3
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 对巴旦尼亚人自己来说，战争动员令一下，森林里所有能拉弓的男人都会扛着自己的猎弓从村子里走出来，跟着年长的猎人组成战团。他们的装备比不上帝国的军团步兵，但他们从小在林子里追鹿，知道每一棵树的位置，知道哪片灌木丛后面能藏人——这不是吹嘘。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/1/Content
+    quote_hash: 4EAAD289EF42050B0C4B8B6D80185042D6A75C3E2D98939CAA5629B8E8086DFC
+    quote: 战争动员令一下，森林里所有能拉弓的男人都会扛着自己的猎弓从村子里走出来，跟着年长的猎人组成战团
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/1/Content
+    quote_hash: 2407121FE6752A22DA22D5635539879F7EBE5AD38B739A464DCE63E62C5792C2
+    quote: 他们从小在林子里追鹿，知道每一棵树的位置，知道哪片灌木丛后面能藏人
+  expressions:
+  - id: expr.battania-home-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 我们的军队不属于某一个人，它属于每一个部落。至高王发出召唤，伯爵们带着自己的战士前来，这是从蒙王时代就传下来的规矩。战争动员令一下，森林里所有能拉弓的男人都会扛着自己的猎弓从村子里走出来，跟着年长的猎人组成战团。他们的装备比不上帝国的军团步兵，但他们从小在林子里追鹿，知道每一棵树的位置，知道哪片灌木丛后面能藏人。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/1/Content
+      quote_hash: 4EAAD289EF42050B0C4B8B6D80185042D6A75C3E2D98939CAA5629B8E8086DFC
+      quote: 战争动员令一下，森林里所有能拉弓的男人都会扛着自己的猎弓从村子里走出来，跟着年长的猎人组成战团
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_巴旦尼亚军事制度__巴旦尼亚军事制度.json#/Variants/1/Content
+      quote_hash: 2407121FE6752A22DA22D5635539879F7EBE5AD38B739A464DCE63E62C5792C2
+      quote: 他们从小在林子里追鹿，知道每一棵树的位置，知道哪片灌木丛后面能藏人
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.battania
+    denies: []

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-zestea
 title:
   zh-CN: 泽斯特亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 泽斯特亚
-  en:
-  - Zestea
-  - village_ES3_3
+entity_ids:
+- entity.settlement.village_es3_3
 summary:
   zh-CN: 泽斯特亚位于吕卡里亚平原与海边伊勒塔尔丘陵的交界处；猪群在俯瞰薄雾平地的缓坡上放牧。
 registry_bindings:

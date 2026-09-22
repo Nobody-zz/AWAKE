@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-galend
 title:
   zh-CN: 加伦
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 加伦
-  en:
-  - Galend
-  - town_V5
+entity_ids:
+- entity.settlement.town_v5
 summary:
   zh-CN: 加伦遥望浪蚀的比斯坎海岸，无畏渔民出西海、绵羊散雾山；当今瓦兰迪亚王族一脉即出自“铁壁”奥斯里克时代定居此地的家族。
 registry_bindings:

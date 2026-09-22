@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-tepes
 title:
   zh-CN: 泰佩斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 泰佩斯
-  en:
-  - Tepes
-  - castle_village_K4_1
+entity_ids:
+- entity.settlement.castle_village_k4_1
 summary:
   zh-CN: 泰佩斯俯瞰着喀拉卡孜河的一条支流——那河自北方流入帝国人称作塔奈西斯的达那孜海；该地盛产木材，人们顺流放木，销往湖边城镇。
 registry_bindings:

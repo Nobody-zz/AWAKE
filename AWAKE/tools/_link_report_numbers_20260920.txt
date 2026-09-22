@@ -1,0 +1,35 @@
+== source-report ==
+{
+  "format": "awake.worldbook.source-report.v1",
+  "link_edges": 1286,
+  "link_registry_hash": "3B249A4EDD615E4BA590AE0EB8FAC1D9AFAFCD3BE5197C978B93C5C9EBD698FD",
+  "registry_count": 37,
+  "registry_hash": "CF1F72BC5A715B76906922F692808ECC9DC9B9A1A5A82AB2749668B16EF4A2A4"
+}
+
+== validation ==
+total=21 error=0 warning=21
+codes: ['WB-INDEX-AMBIGUOUS']
+Valid=True
+
+== entries ==
+cur=558 prev=558
+带 extensions.links 的条目 = 445
+包内 links 边总数 = 1286
+端点不在包内的边 = 0
+
+== 与 v21-dark 逐条比 ==
+除 extensions 外有变化的条目 = 0 []
+id 集合相同 = True
+新增 id=0 消失 id=0
+
+== link-registry.v1.json ==
+registry_version=awake.worldbook.link-registry.v1 edges=1286
+bucket 分布: {'proper': 770, 'hubproper': 516}
+usableAs 分布: {'forward': 1286, 'backward': 415}
+strength 分布: {'strong': 1119, 'weak': 167}
+有出边的档 = 445
+
+== should-link.v3.json ==
+top keys: ['schema_version', 'supersedes', 'generated_at_utc', 'method', 'params', 'usage', 'counts', 'edges']
+边数（自动探测）= 1394

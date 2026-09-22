@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-skorin
 title:
   zh-CN: 斯科林
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 斯科林
-  en:
-  - Skorin
-  - village_S3_2
+entity_ids:
+- entity.settlement.village_s3_2
 summary:
   zh-CN: 斯科林坐落于把佳托姆湾与拉科尼斯湖分开的一个海角上；村民在狭窄的海湾水里捕淡水比目鱼，还在主湖里捉梭鱼一类更大的鱼。
 registry_bindings:

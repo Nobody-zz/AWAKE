@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-themys
 title:
   zh-CN: 忒密斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 忒密斯
-  en:
-  - Themys
-  - castle_village_EN4_2
+entity_ids:
+- entity.settlement.castle_village_en4_2
 summary:
   zh-CN: 忒密斯位于帝国腹地密泽亚德的石灰岩峭壁之下，当地丘陵上生长的草非常适合养羊。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-simira
 title:
   zh-CN: 西米拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 西米拉
-  en:
-  - Simira
-  - castle_village_K7_1
+entity_ids:
+- entity.settlement.castle_village_k7_1
 summary:
   zh-CN: 西米拉位于德夫赛格高原的东侧，再往东便进入大草海；当地村民饲养能耐受寒冬酷暑的牛。
 registry_bindings:

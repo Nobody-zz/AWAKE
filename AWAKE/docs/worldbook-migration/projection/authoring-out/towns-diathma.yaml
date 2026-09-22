@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.towns-diathma
 title:
   zh-CN: 狄亚特马
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 狄亚特马
-  en:
-  - Diathma
-  - town_EN2
+entity_ids:
+- entity.settlement.town_en2
 summary:
   zh-CN: 狄亚特马为圣裁之城，建于俯瞰拉科尼斯湖的德律亚神殿废墟上；最北的帕拉人德律亚部在此最后一战覆灭。
 registry_bindings:
@@ -40,7 +36,7 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 狄亚特马为圣裁之城，建于俯瞰拉科尼斯湖的德律亚神殿废墟上；最北的帕拉人德律亚部在此最后一战覆灭。
+    zh-CN: 狄亚特马称圣裁之城，由一位帝国将军建于俯瞰拉科尼斯湖的德律亚神殿废墟之上；德律亚人——最北的帕拉人——在此打了最后一战，叛乱起而复被剿灭。
   sources:
   - source_id: source.calradia.game.settlements-desc
     source_version: bannerlord-1.3.15.110062
@@ -48,12 +44,18 @@ assertions:
     locator: bannerlord.settlements#town_EN2
     quote_hash: CBAF3F1CEC424DF3AB9351A2C3A7B796E1B974753C37D847BF96069C1819369D
     quote: 狄亚特马，圣裁之城，一位帝国将军在能俯瞰拉科尼斯湖的德律亚神殿的废墟之上建立了这座城市。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EN2
+    quote_hash: 86F759B7CEFC8F8F3997E084719389682CF0614C0B2AA322CC30D58929D61376
+    quote: 德律亚人——最北边的帕拉人——在此地打了最后一战，他们掀起了反抗帝国的叛乱，随后又被剿灭。
   expressions:
-  - id: expr.town-diathma-rumor
+  - id: expr.town-diathma-1-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 狄亚特马叫圣裁之城，老辈人打官司都往那儿去。听说城底下的湖水里还沉着古时候整支的部落。
+      zh-CN: 狄亚特马是帝国将军在德律亚人的神殿废墟上盖的。德律亚人是帕拉人里最北的一支，在这儿打了最后一仗，反了，然后被平了。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +95,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.town-diathma-detail
+  - id: expr.town-diathma-1-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 狄亚特马的“圣裁”是块招牌——公断与公证的行当在此有传统；神殿废墟与古战场引来凭吊客，德律亚覆灭的旧事让本地人对外乡的刨根问底半迎半拒。
+      zh-CN: 狄亚特马建于拉科尼斯湖岸的德律亚神殿废墟之上，故称圣裁之城；城址本身就是一段收尾——德律亚人最北一支在此断的。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -105,6 +107,89 @@ assertions:
       locator: bannerlord.settlements#town_EN2
       quote_hash: CBAF3F1CEC424DF3AB9351A2C3A7B796E1B974753C37D847BF96069C1819369D
       quote: 狄亚特马，圣裁之城，一位帝国将军在能俯瞰拉科尼斯湖的德律亚神殿的废墟之上建立了这座城市。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-diathma-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 据传，德律亚人退守湖畔浅滩，战至最后一人，血把湖水染红了。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EN2
+    quote_hash: 6A609CD03B4AD2D185A62A8F57E095AAC0E3972D410CBA0BC7EE72B662E5F065
+    quote: 根据传说，他们被包围在湖的浅滩处，勇敢地战至最后一人，猩红的湖水将他们接连吞没。
+  expressions:
+  - id: expr.town-diathma-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 都说德律亚人最后退到湖边的浅滩上，一个没降，血把水都染红了。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EN2
+      quote_hash: 6A609CD03B4AD2D185A62A8F57E095AAC0E3972D410CBA0BC7EE72B662E5F065
+      quote: 根据传说，他们被包围在湖的浅滩处，勇敢地战至最后一人，猩红的湖水将他们接连吞没。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-diathma-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 德律亚人覆灭的收场，记述里只留下湖这一节：浅滩、最后一人、红水。战事怎么写都有，唯有这个结局传得最齐。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EN2
+      quote_hash: 6A609CD03B4AD2D185A62A8F57E095AAC0E3972D410CBA0BC7EE72B662E5F065
+      quote: 根据传说，他们被包围在湖的浅滩处，勇敢地战至最后一人，猩红的湖水将他们接连吞没。
     grants:
     - profile_id: profile.headman
       scope: national

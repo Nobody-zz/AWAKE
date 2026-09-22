@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-danustica
 title:
   zh-CN: 达努斯提卡
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 达努斯提卡
-  en:
-  - Danustica
-  - town_ES1
+entity_ids:
+- entity.settlement.town_es1
 summary:
   zh-CN: 边疆城达努斯提卡主导卡勒萨湖潟运输网，长年守卫帝国南疆防范阿塞莱与达西诸王，军民相谑而共处。
 registry_bindings:

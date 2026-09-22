@@ -1,0 +1,169 @@
+{
+  "_note": "试点判层 · 第 3 组（镇 2 档 + 村 5 档）。rhotae 是「假阳性」实例：原文的『听说』是酋长的动作，不是未证实的说法。",
+  "towns-revyl.yaml": {
+    "why": "阿基娜那一折自成一个「根据传说」；首尾两句（位置／后来的和解与憎恨）无标记。",
+    "asserts": [
+      {"id": "assertion.town-revyl-1", "kind": "fact",
+       "text": "雷维尔是卡恰尔半岛怪石之间的一座重要城镇，也是巴尔加德的传统对手。",
+       "quotes": ["雷维尔是怪石嶙峋的卡恰尔半岛上的一座重要城镇，同时也是巴尔加德的传统对手。"],
+       "exprs": [
+         {"id": "expr.town-revyl-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "雷维尔在卡恰尔半岛上，石头多。跟巴尔加德是老对头。"},
+         {"id": "expr.town-revyl-1-detail", "layer": "detail", "grants": "high",
+          "text": "雷维尔踞卡恰尔半岛，石多路险；与巴尔加德的对峙是这半岛上的老题目，行商过此要算两家的脸色。"}
+       ]},
+      {"id": "assertion.town-revyl-2", "kind": "rumor",
+       "text": "根据传说，巴尔加德公主阿基娜的丈夫被雷维尔人所杀；她接受敌国国王的提议与其结为连理，却在新婚之夜堵住厅堂大门，把国王和他的一百名族人勇士活活烧死在里面。",
+       "quotes": ["根据传说，巴尔加德公主阿基娜的丈夫被雷维尔人杀死，但她接受了敌国国王的提议，与其结为连理以解决这一争端。",
+                  "然而，在新婚之夜，她堵住了厅堂的大门，将国王和他的一百名族人与勇士活活烧死在里面。"],
+       "exprs": [
+         {"id": "expr.town-revyl-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "老话说，巴尔加德的阿基娜公主男人叫雷维尔人杀了，她转头答应了仇家国王的亲事。新婚那晚她把厅门堵死，一把火烧了国王和他一百号人。"},
+         {"id": "expr.town-revyl-2-detail", "layer": "detail", "grants": "high",
+          "text": "阿基娜这一折是两家之间最狠的一段旧账：和亲的壳子，火杀的里子。讲的人多半要提那句『一百人』——数越齐，听着越像真的。"}
+       ]},
+      {"id": "assertion.town-revyl-3", "kind": "fact",
+       "text": "这场争端后经条约与联姻了结，结局算是和乐；但雷维尔人至今仍憎恨巴尔加德扶摇直上的贡达罗夫王朝。",
+       "quotes": ["这场争端后来通过一系列的条约和联姻解决了，也迎来了其乐融融的结局，但雷维尔人依旧对巴尔加德扶摇直上的贡达罗夫王朝心怀憎恨。"],
+       "exprs": [
+         {"id": "expr.town-revyl-3-detail", "layer": "detail", "grants": "high",
+          "text": "雷维尔与巴尔加德后来是和了——条约、联姻，账面上都清了。可逢着贡达罗夫家又往上走一步，这边的脸色就不好看。"}
+       ]}
+    ]
+  },
+  "towns-rhotae.yaml": {
+    "why": "⚠️ 假阳性：原文的「听说邻国发生的事情」是那位酋长听到消息，不是『这是未证实的说法』⇒ 整段按事实判。真正的解释层在末句——将军的自述。",
+    "asserts": [
+      {"id": "assertion.town-rhotae-1", "kind": "fact",
+       "text": "洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又名洛塔什；继拉革塔之后，洛塔什也很快落入帝国之手。当地帕拉酋长在得知邻国之事后，屠戮了他所庇护的数十名帝国公民；性情古怪的长发将军萨拉庇俄斯率惩戒部队攻下洛塔什，将其夷为平地。",
+       "quotes": ["洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。",
+                  "在拉革塔之后，洛塔什也很快落入帝国手中。",
+                  "当地的帕拉酋长在听说邻国发生的事情后，屠戮了受他保护的几十名帝国公民。",
+                  "性格古怪的长发将军萨拉庇俄斯率领着惩戒部队攻下了洛塔什，并将其夷为平地。"],
+       "exprs": [
+         {"id": "expr.town-rhotae-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "洛泰从前叫洛塔什，是帕拉人的山堡，后来跟拉革塔一样落到帝国手里。那地方的头人听说邻边出了事，把手下护着的几十个帝国人杀了；帝国派来个长发将军，把洛塔什平了。"},
+         {"id": "expr.town-rhotae-1-detail", "layer": "detail", "grants": "high",
+          "text": "洛泰的旧账三步连走：山堡易主、头人屠戮受其庇护的帝国公民、惩戒部队夷平全城。中间的余地不大，谁也别想在这里找体面。"}
+       ]},
+      {"id": "assertion.town-rhotae-2", "kind": "interpretation",
+       "text": "将军事后自陈：卑劣地拿下拉革塔却未曾流血，光荣地攻下洛塔什却让此地流血漂橹；这两件事都将成为名誉的污点——胜者取走战利品，也总得背负污名。",
+       "quotes": ["“我们卑劣地拿下了拉革塔，却没有流什么血；我们光荣地攻下了洛塔什，却让这里流血漂橹。”他在事后这么说道，“这两件事将会成为我们名誉的污点，胜利者将拿走战利品，但也总要背负污名。”"],
+       "exprs": [
+         {"id": "expr.town-rhotae-2-detail", "layer": "detail", "grants": "high",
+          "text": "萨拉庇俄斯自己把话说透了：拉革塔拿得不体面却没死人，洛塔什打得体面却血流成河。他是个怪人——胜仗打完，先记下的是自己那笔污名。"}
+       ]}
+    ]
+  },
+  "villages-diantogmail.yaml": {
+    "why": "原文第二句自带「有数种本地传说……没有任意两种版本的细节能对得上」——说法不一，是原文自己承认的。",
+    "asserts": [
+      {"id": "assertion.village-diantogmail-1", "kind": "fact",
+       "text": "迪安托格麦尔在“林·泰瓦尔”，也就是暗湖之畔；村民自湖岸取黏土，供附近的工匠制器。",
+       "quotes": ["迪安托格麦尔位于“林·泰瓦尔”，即“暗湖”之畔。",
+                  "这里的村民会从湖边收集黏土，供附近的工匠使用。"],
+       "exprs": [
+         {"id": "expr.village-diantogmail-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "暗湖边上就是我们村，走一段滩就到。滩上有挖泥的坑，谁家要烧罐子就下来挑。"},
+         {"id": "expr.village-diantogmail-1-detail", "layer": "detail", "grants": "high",
+          "text": "迪安托格麦尔以湖泥为业——岸滩淤土、细而耐烧；泥按细粗分等，供附近匠人制器，一年到头有外村人来挑。"}
+       ]},
+      {"id": "assertion.village-diantogmail-2", "kind": "rumor",
+       "text": "“白鼬之翔”是村名的通行解，但本地说法有好几种，没有两种的细节能彼此对上。",
+       "quotes": ["有数种本地传说解释该地名字的由来——意为“白鼬之翔”，但没有任意两种版本的细节能对得上。"],
+       "exprs": [
+         {"id": "expr.village-diantogmail-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "迪安托格麦尔的人自己也说不清村名。村里人说祖宗留下的名字，意思记不全了——反正泥是真的，拿来有用。"},
+         {"id": "expr.village-diantogmail-2-detail", "layer": "detail", "grants": "high",
+          "text": "村名解作“白鼬之翔”，说法却不止一种，讲的人各执一词。外人来打听，本地人也乐意各讲各的。"}
+       ]}
+    ]
+  },
+  "villages-enoisa.yaml": {
+    "why": "「传说此处是古帕拉人的圣地」明写是传说；湖与降水那句无标记。",
+    "asserts": [
+      {"id": "assertion.village-enoisa-1", "kind": "fact",
+       "text": "“大地之眼”俄佛堤斯是德律亚山脉南部的一片深湖，岸边就是厄诺伊萨；从北方来的充足降水润泽着这里的小麦。",
+       "quotes": ["“大地之眼”俄佛堤斯，德律亚山脉南部山区的一片深湖，岸边就是厄诺伊萨。",
+                  "从北方来的充足降水润泽着这里的小麦。"],
+       "exprs": [
+         {"id": "expr.village-enoisa-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "厄诺伊萨挨着一片大湖，叫“大地之眼”，水又黑又深。北边来的雨水多，这儿的小麦长得好。"},
+         {"id": "expr.village-enoisa-1-detail", "layer": "detail", "grants": "high",
+          "text": "厄诺伊萨倚“大地之眼”俄佛堤斯，湖在德律亚山脉南段；北来的湿气足，麦子是本地的主收。"}
+       ]},
+      {"id": "assertion.village-enoisa-2", "kind": "rumor",
+       "text": "传说俄佛堤斯是古帕拉人的圣地，他们视此湖为通往另一个世界的门户。",
+       "quotes": ["传说此处是古帕拉人的圣地，他们认为这片湖是通往另一个世界的门户。"],
+       "exprs": [
+         {"id": "expr.village-enoisa-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "老话说这片湖是古帕拉人的圣地，他们说湖底下就是通另一个世界的门。"}
+       ]}
+    ]
+  },
+  "villages-geunat-nal.yaml": {
+    "why": "首句自带「巴旦尼亚传说中」＋「据传」；护林那一句无标记。",
+    "asserts": [
+      {"id": "assertion.village-geunat-nal-1", "kind": "fact",
+       "text": "格纳特·纳尔在卡·班塞斯要塞附近；当地村民以护林之能闻名，助要塞抵御斯特吉亚人与掠夺者，护着巴旦尼亚的腹地。",
+       "quotes": ["当地村民们以出色的护林人技能而闻名，他们帮助附近悬崖上的卡·班塞斯要塞抵御斯特吉亚人和其他掠夺者的攻击，保护着巴旦尼亚的腹地。"],
+       "exprs": [
+         {"id": "expr.village-geunat-nal-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "格纳特·纳尔的人会看林子。卡·班塞斯那边的崖子全仗着他们盯着，斯特吉亚人和零散抢匪来一趟都得绕。"},
+         {"id": "expr.village-geunat-nal-1-detail", "layer": "detail", "grants": "high",
+          "text": "格纳特·纳尔的看家本事是林：这一带的斥候与伏路都出自村中猎户，卡·班塞斯要塞的耳目就落在这儿。"}
+       ]},
+      {"id": "assertion.village-geunat-nal-2", "kind": "rumor",
+       "text": "据传，格纳特·纳尔是巴旦尼亚传说中决斗之地附近的村庄，纳尔在此留下了他的头颅。",
+       "quotes": ["格纳特·纳尔是巴旦尼亚传说中决斗之地附近的一座村庄，据传纳尔在此留下了他的头颅。"],
+       "exprs": [
+         {"id": "expr.village-geunat-nal-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "说是从前那个纳尔，脑袋就丢在格纳特·纳尔这一带——巴旦尼亚讲决斗的老段子里有他。"}
+       ]}
+    ]
+  },
+  "villages-horsger.yaml": {
+    "why": "「传说中战士奥尔萨」明写是传说；马匹那句无标记。",
+    "asserts": [
+      {"id": "assertion.village-horsger-1", "kind": "fact",
+       "text": "奥尔斯热以马匹闻名——马儿在缀着报春花与水仙花的岩石海岸斜坡上吃草。",
+       "quotes": ["如今，该地以马匹闻名，马儿们在点缀着报春花和水仙花的岩石海岸斜坡上吃草。"],
+       "exprs": [
+         {"id": "expr.village-horsger-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "奥尔斯热出马。坡上石头多，可草好，春天开满报春花和水仙。"},
+         {"id": "expr.village-horsger-1-detail", "layer": "detail", "grants": "high",
+          "text": "奥尔斯热的马在岩石海岸的斜坡上放；春花季草最好的那几段坡就是马场。本地出马，也出骑手。"}
+       ]},
+      {"id": "assertion.village-horsger-2", "kind": "rumor",
+       "text": "传说战士奥尔萨就是在奥尔斯热登陆，并把长矛插在了海滩上。",
+       "quotes": ["传说中战士奥尔萨就是在奥尔斯热登陆，并将长矛插在了海滩上。"],
+       "exprs": [
+         {"id": "expr.village-horsger-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "老话说有个战士叫奥尔萨，就是从奥尔斯热上的岸，长矛往沙滩上一插，就算占了地方。"}
+       ]}
+    ]
+  },
+  "villages-lartusys.yaml": {
+    "why": "「让人们相信这就是传说中……门户」是原文自己标出的信念；位置与盐矿那一句事实与信念同句，整句按流言判。",
+    "asserts": [
+      {"id": "assertion.village-lartusys-1", "kind": "fact",
+       "text": "拉耳图绪斯位于塔奈西斯湖的南端。",
+       "quotes": ["拉耳图绪斯位于塔奈西斯湖的南端。"],
+       "exprs": [
+         {"id": "expr.village-lartusys-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "拉耳图绪斯在塔奈西斯湖的南头。出盐，泉眼有时冒水。"},
+         {"id": "expr.village-lartusys-1-detail", "layer": "detail", "grants": "high",
+          "text": "拉耳图绪斯据塔奈西斯湖南端；湖路与盐路在此交汇，是本地的转运点。"}
+       ]},
+      {"id": "assertion.village-lartusys-2", "kind": "rumor",
+       "text": "村旁有盐矿，盐泉偶尔涌出水面——当地人因此相信，这就是传说中通往鬼怪聚集的地下海的门户。",
+       "quotes": ["村庄附近有座盐矿，盐泉偶尔会探出水面，让人们相信这就是传说中通往鬼怪聚集的地下海的门户。"],
+       "exprs": [
+         {"id": "expr.village-lartusys-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "拉耳图绪斯的盐泉一冒头，村里就说那是底下海的门口，里头聚着鬼怪。常年没人往泉边上多站。"},
+         {"id": "expr.village-lartusys-2-detail", "layer": "detail", "grants": "high",
+          "text": "拉耳图绪斯的盐是命脉：盐泉时涌时歇，采盐看水色、看天时。泉眼在他们嘴里是『门』，进出都得有个敬法。"}
+       ]}
+    ]
+  }
+}

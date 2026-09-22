@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-morihig
 title:
   zh-CN: 莫里希格
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 莫里希格
-  en:
-  - Morihig
-  - village_B2_3
+entity_ids:
+- entity.settlement.village_b2_3
 summary:
   zh-CN: 莫里希格坐落于乌卡利翁地块中部的一块盆地中；这一带以盛产小麦和大麦闻名。
 registry_bindings:

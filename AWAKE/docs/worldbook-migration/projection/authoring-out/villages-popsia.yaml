@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-popsia
 title:
   zh-CN: 波普西亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 波普西亚
-  en:
-  - Popsia
-  - castle_village_ES8_2
+entity_ids:
+- entity.settlement.castle_village_es8_2
 summary:
   zh-CN: 波普西亚坐落于奥尼石山与俄佛堤斯湖域之间窄窄的峡谷内，山间阴凉处的树木生得高大，村民们砍伐松树并将木材卖出。
 registry_bindings:

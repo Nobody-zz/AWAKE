@@ -1,0 +1,142 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-flax
+title:
+  zh-CN: 亚麻
+  en: Flax
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 亚麻是织布的原料，湿地村子种得多，收上来论捆卖到城里去。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.xsu6bPTv
+  quote_hash: 2BE6F21C03345D9AB6B264E4123B7CBF2AAADD5938BD5304EE60F925913DD3B9
+  quote: 亚麻{@Plural}成袋的亚麻{\@}
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_卡利奥克__卡利奥克.json#/Variants/0/Content
+  quote_hash: 399E8CAC43F8C0DDF068012D99A3CF317D5EBA11F94AEF1A9CF9D33C8C6CE157
+  quote: 这里的居民在湿润的谷底种植亚麻
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_卡利奥克__卡利奥克.json#/Variants/1/Content
+  quote_hash: 392D1DAC26CB959CEDF95FDACCBAAEA599B8AF33797267C95D7F06478D4D0A0B
+  quote: 纳尔谷的谷底湿度刚好，种出来的亚麻纤维长、韧劲足
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-flax-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 亚麻是织亚麻布的原料，基准价 15 第纳尔，论捆买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.xsu6bPTv
+    quote_hash: 2BE6F21C03345D9AB6B264E4123B7CBF2AAADD5938BD5304EE60F925913DD3B9
+    quote: 亚麻{@Plural}成袋的亚麻{\@}
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_卡利奥克__卡利奥克.json#/Variants/0/Content
+    quote_hash: 399E8CAC43F8C0DDF068012D99A3CF317D5EBA11F94AEF1A9CF9D33C8C6CE157
+    quote: 这里的居民在湿润的谷底种植亚麻
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_卡利奥克__卡利奥克.json#/Variants/1/Content
+    quote_hash: 392D1DAC26CB959CEDF95FDACCBAAEA599B8AF33797267C95D7F06478D4D0A0B
+    quote: 纳尔谷的谷底湿度刚好，种出来的亚麻纤维长、韧劲足
+  expressions:
+  - id: expr.goods-flax-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 湿谷底的村子种亚麻，秋后收上来一捆一捆地扎好。这东西自家织不完，多半卖给进村收布的商人。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.xsu6bPTv
+      quote_hash: 2BE6F21C03345D9AB6B264E4123B7CBF2AAADD5938BD5304EE60F925913DD3B9
+      quote: 亚麻{@Plural}成袋的亚麻{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_卡利奥克__卡利奥克.json#/Variants/0/Content
+      quote_hash: 399E8CAC43F8C0DDF068012D99A3CF317D5EBA11F94AEF1A9CF9D33C8C6CE157
+      quote: 这里的居民在湿润的谷底种植亚麻
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-flax-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 亚麻 15 一件，是半成品，赚头在加工不在转手。卡利奥克和弗雷吉昂那两个谷底村是主产地，收原料的多半也收成品布，一趟车能配齐。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.xsu6bPTv
+      quote_hash: 2BE6F21C03345D9AB6B264E4123B7CBF2AAADD5938BD5304EE60F925913DD3B9
+      quote: 亚麻{@Plural}成袋的亚麻{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_卡利奥克__卡利奥克.json#/Variants/1/Content
+      quote_hash: 392D1DAC26CB959CEDF95FDACCBAAEA599B8AF33797267C95D7F06478D4D0A0B
+      quote: 纳尔谷的谷底湿度刚好，种出来的亚麻纤维长、韧劲足
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

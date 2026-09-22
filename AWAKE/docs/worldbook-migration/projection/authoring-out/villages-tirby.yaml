@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-tirby
 title:
   zh-CN: 蒂尔比
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 蒂尔比
-  en:
-  - Tirby
-  - castle_village_V5_1
+entity_ids:
+- entity.settlement.castle_village_v5_1
 summary:
   zh-CN: 蒂尔比位于埃博半岛附近寒冷多雾的水域旁；埃博以北的低洼地带适宜种植亚麻。
 registry_bindings:

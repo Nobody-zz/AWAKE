@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-aegosca
 title:
   zh-CN: 埃戈斯卡
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 埃戈斯卡
-  en:
-  - Aegosca
-  - village_EW3_2
+entity_ids:
+- entity.settlement.village_ew3_2
 summary:
   zh-CN: 埃戈斯卡位于卡拉迪亚南部宽阔山谷特美亚的起始端；该地虽得名自过去漫步于此的山羊，地主们却已在这片草场改养利润更丰厚的马匹。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-varagos
 title:
   zh-CN: 瓦拉戈斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 瓦拉戈斯
-  en:
-  - Varagos
-  - castle_village_EN1_1
+entity_ids:
+- entity.settlement.castle_village_en1_1
 summary:
   zh-CN: 瓦拉戈斯坐落在阿里斯河畔，高地的细小河流由此汇入深邃的俄佛堤斯湖；当地土壤并不十分肥沃，但足够饲养绵羊。
 registry_bindings:

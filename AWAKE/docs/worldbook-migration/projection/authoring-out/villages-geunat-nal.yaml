@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.villages-geunat-nal
 title:
   zh-CN: 格纳特·纳尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 格纳特·纳尔
-  en:
-  - Geunat Nal
-  - village_B3_2
+entity_ids:
+- entity.settlement.village_b3_2
 summary:
   zh-CN: 格纳特·纳尔是巴旦尼亚传说中决斗之地附近的一座村庄，据传纳尔在此留下自己的头颅；村民以出众的护林本领闻名，帮着附近悬崖上的卡·班塞斯要塞抵挡斯特吉亚人和其他掠夺者，守着巴旦尼亚的腹地。
 registry_bindings:
@@ -40,7 +36,90 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 格纳特·纳尔是巴旦尼亚传说中决斗之地附近的一座村庄，据传纳尔在此留下自己的头颅；村民以出众的护林本领闻名，帮着附近悬崖上的卡·班塞斯要塞抵挡斯特吉亚人和其他掠夺者，守着巴旦尼亚的腹地。
+    zh-CN: 格纳特·纳尔在卡·班塞斯要塞附近；当地村民以护林之能闻名，助要塞抵御斯特吉亚人与掠夺者，护着巴旦尼亚的腹地。
+  sources:
+  - source_id: source.calradia.game.villages-desc-battania
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+    locator: bannerlord.villages#village_B3_2
+    quote_hash: D98644EAD2F3749E47F7110E714590EBF3D913081314F1CDA2183D01AF7AFBE0
+    quote: 当地村民们以出色的护林人技能而闻名，他们帮助附近悬崖上的卡·班塞斯要塞抵御斯特吉亚人和其他掠夺者的攻击，保护着巴旦尼亚的腹地。
+  expressions:
+  - id: expr.village-geunat-nal-1-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 格纳特·纳尔的人会看林子。卡·班塞斯那边的崖子全仗着他们盯着，斯特吉亚人和零散抢匪来一趟都得绕。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B3_2
+      quote_hash: D98644EAD2F3749E47F7110E714590EBF3D913081314F1CDA2183D01AF7AFBE0
+      quote: 当地村民们以出色的护林人技能而闻名，他们帮助附近悬崖上的卡·班塞斯要塞抵御斯特吉亚人和其他掠夺者的攻击，保护着巴旦尼亚的腹地。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-geunat-nal-1-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 格纳特·纳尔的看家本事是林：这一带的斥候与伏路都出自村中猎户，卡·班塞斯要塞的耳目就落在这儿。
+    sources:
+    - source_id: source.calradia.game.villages-desc-battania
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
+      locator: bannerlord.villages#village_B3_2
+      quote_hash: D98644EAD2F3749E47F7110E714590EBF3D913081314F1CDA2183D01AF7AFBE0
+      quote: 当地村民们以出色的护林人技能而闻名，他们帮助附近悬崖上的卡·班塞斯要塞抵御斯特吉亚人和其他掠夺者的攻击，保护着巴旦尼亚的腹地。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.village-geunat-nal-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 据传，格纳特·纳尔是巴旦尼亚传说中决斗之地附近的村庄，纳尔在此留下了他的头颅。
   sources:
   - source_id: source.calradia.game.villages-desc-battania
     source_version: bannerlord-1.3.15.110062
@@ -49,11 +128,11 @@ assertions:
     quote_hash: D30B129541A3318824DF44B436D23B792D8E95714BCFB49B4251835A94BA4B9E
     quote: 格纳特·纳尔是巴旦尼亚传说中决斗之地附近的一座村庄，据传纳尔在此留下了他的头颅。
   expressions:
-  - id: expr.village-geunat-nal-rumor
+  - id: expr.village-geunat-nal-2-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 格纳特·纳尔的人走在林子里没声。村里人说外人进谷先看见树，我们进谷先看见人——守的是那道崖。
+      zh-CN: 说是从前那个纳尔，脑袋就丢在格纳特·纳尔这一带——巴旦尼亚讲决斗的老段子里有他。
     sources:
     - source_id: source.calradia.game.villages-desc-battania
       source_version: bannerlord-1.3.15.110062
@@ -92,30 +171,4 @@ assertions:
     - profile_id: profile.noble
       scope: elite
       min_detail: rumor
-    denies: []
-  - id: expr.village-geunat-nal-detail
-    revision: 1
-    layer: detail
-    text:
-      zh-CN: 格纳特·纳尔以护林据险为业——熟林道、善设伏；族人按村落编伍轮流守崖，报警用号角与烟，林货与山货是常产，战时先顾要塞。
-    sources:
-    - source_id: source.calradia.game.villages-desc-battania
-      source_version: bannerlord-1.3.15.110062
-      source_content_hash: 3A9E1641DAFB70CAEDE9E6EFF11D2A9981C2F4256ECFB28DB7C1E591DE58CEEE
-      locator: bannerlord.villages#village_B3_2
-      quote_hash: D30B129541A3318824DF44B436D23B792D8E95714BCFB49B4251835A94BA4B9E
-      quote: 格纳特·纳尔是巴旦尼亚传说中决斗之地附近的一座村庄，据传纳尔在此留下了他的头颅。
-    grants:
-    - profile_id: profile.headman
-      scope: national
-      min_detail: detail
-    - profile_id: profile.merchant
-      scope: faction
-      min_detail: detail
-    - profile_id: profile.soldier
-      scope: national
-      min_detail: detail
-    - profile_id: profile.noble
-      scope: elite
-      min_detail: detail
     denies: []

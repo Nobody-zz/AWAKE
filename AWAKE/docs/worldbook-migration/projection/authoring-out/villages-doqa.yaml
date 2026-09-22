@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-doqa
 title:
   zh-CN: 多加
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 多加
-  en:
-  - Doqa
-  - village_A4_4
+entity_ids:
+- entity.settlement.village_a4_4
 summary:
   zh-CN: 多加是耶什姆海岸边的渔村，村民乘三桅小帆船捕捞可长过人身的鲈鱼，并需提防海湾与沼泽里的咸水鳄。
 registry_bindings:

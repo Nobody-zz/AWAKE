@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-phasos
 title:
   zh-CN: 法索斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 法索斯
-  en:
-  - Phasos
-  - village_EW5_2
+entity_ids:
+- entity.settlement.village_ew5_2
 summary:
   zh-CN: 法索斯位于特美亚与阿里斯河谷之间高地起伏的白垩山丘中；低处肥美的牧草使这里成为帝国最好的养马地之一。
 registry_bindings:

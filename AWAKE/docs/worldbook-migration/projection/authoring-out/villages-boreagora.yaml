@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-boreagora
 title:
   zh-CN: 玻瑞阿戈拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 玻瑞阿戈拉
-  en:
-  - Boreagora
-  - village_EN6_2
+entity_ids:
+- entity.settlement.village_en6_2
 summary:
   zh-CN: 玻瑞阿戈拉位于帝国寒冷的北方，被伊勒坦运输线的冰湖网络所环绕；附近帝国堡垒在水路上若隐若现，监视着斯特吉亚与库赛特的劫掠者。这里的低地很适合种植亚麻。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-alov
 title:
   zh-CN: 阿洛夫
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿洛夫
-  en:
-  - Alov
-  - castle_village_S7_2
+entity_ids:
+- entity.settlement.castle_village_s7_2
 summary:
   zh-CN: 阿洛夫位于名叫伊勒坦运输线的冰湖网络的边缘处；村民在俯瞰湖泊的高地上种黑麦和大麦，肥沃的黑土补偿了当地漫长的冬季和短暂的生长期。
 registry_bindings:

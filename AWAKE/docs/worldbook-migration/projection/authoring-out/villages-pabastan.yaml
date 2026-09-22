@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-pabastan
 title:
   zh-CN: 帕巴斯坦
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 帕巴斯坦
-  en:
-  - Pabastan
-  - village_K5_4
+entity_ids:
+- entity.settlement.village_k5_4
 summary:
   zh-CN: 帕巴斯坦坐落于阿克坎丘陵与库赛特人称作达那孜海的塔奈西斯湖之间的狭长平原上；这里是种小麦的好地方。
 registry_bindings:

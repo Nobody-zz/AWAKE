@@ -1,0 +1,204 @@
+{
+  "_note": "试点判层 · 第 1 组（镇 7 档）。quotes 必须是官方来源文件的连续子串；kind 只按原文口气判。",
+  "towns-amitatys.yaml": {
+    "why": "原文自己写明两处不是事实：开头说暴君之名是「极为糟糕的名声」；末句说归咎天怒是「帝国在该地区站稳脚跟的主流宣传说法」。",
+    "asserts": [
+      {"id": "assertion.town-amitatys-1", "kind": "fact",
+       "text": "阿弥塔堤斯原为帕拉酋长所据；他与帝国军队起冲突，围城时地震震塌城墙，城破后遭烧杀抢掠，死者多于该酋长亲手所杀。",
+       "quotes": ["他不可避免地和帝国的军队发生了冲突，在围城期间，一场地震震塌了城墙，帝国士兵得以进入城内。",
+                  "在接下来的烧杀抢掠中，死去的民众比这位暴君亲手杀的还要多，但这就是战争。"],
+       "exprs": [
+         {"id": "expr.town-amitatys-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "阿弥塔堤斯的城墙是叫地震震塌的，兵从缺口进去。这一场下来，死的人比那酋长生前杀的还多。"},
+         {"id": "expr.town-amitatys-1-detail", "layer": "detail", "grants": "high",
+          "text": "阿弥塔堤斯城防重建百年后，市面以农牧与零工为主；做买卖不碰旧账，提地震与围城都算犯忌。"}
+       ]},
+      {"id": "assertion.town-amitatys-2", "kind": "interpretation",
+       "text": "该城帕拉酋长以暴君之名载于记述——说他为求永生而屠戮百姓，以取悦冥界诸神。",
+       "quotes": ["阿弥塔堤斯的帕拉酋长有着极为糟糕的名声，他是一名暴君，为了追求永生，他不惜屠戮无辜的百姓，只为取悦冥界诸神。"],
+       "exprs": [
+         {"id": "expr.town-amitatys-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "都说这城的旧主是个狠人，杀人不眨眼，为的是求长生。这名声传了几代，谁也不细问。"},
+         {"id": "expr.town-amitatys-2-detail", "layer": "detail", "grants": "high",
+          "text": "阿弥塔堤斯的旧主在记述里是暴君——求永生、屠百姓、祭冥神。这三样在纸上连成一串，读的人自己掂量。"}
+       ]},
+      {"id": "assertion.town-amitatys-3", "kind": "interpretation",
+       "text": "有人把这场屠掠归咎于上天降下的怒火；这也是帝国在当地站稳脚跟的主流宣传说法。",
+       "quotes": ["有人将此结果归咎于上天降下的怒火，而这也是帝国在该地区站稳脚跟的主流宣传说法。"],
+       "exprs": [
+         {"id": "expr.town-amitatys-3-detail", "layer": "detail", "grants": "high",
+          "text": "阿弥塔堤斯有一说叫“天罚说”：屠掠是上天降的怒火。这说法在帝国站脚的当口传得最顺。"}
+       ]}
+    ]
+  },
+  "towns-balgard.yaml": {
+    "why": "原文用一个「根据传说」统领整句开国故事；位置与建立者那一句无标记，是事实。",
+    "asserts": [
+      {"id": "assertion.town-balgard-1", "kind": "fact",
+       "text": "巴尔加德在冰冷的马佐波尔湾边，由诺德的移民所建。",
+       "quotes": ["巴尔加德位于冰冷的马佐波尔湾边，由诺德的移民们建立。"],
+       "exprs": [
+         {"id": "expr.town-balgard-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "巴尔加德在海湾边上，冷。建它的是打北边来的诺德人。"},
+         {"id": "expr.town-balgard-1-detail", "layer": "detail", "grants": "high",
+          "text": "巴尔加德据马佐波尔湾，是诺德移民的落点；湾水寒，一年能走船的月份不多，做货要掐着日子。"}
+       ]},
+      {"id": "assertion.town-balgard-2", "kind": "rumor",
+       "text": "根据传说，第一批到此的诺德人傲慢地要瓦肯与斯特吉亚部落纳贡，被两家结盟赶回长船；后来胜者因分赃不均起争执，直到精明的诺德人贡达尔登陆，把死去族人的武器甲胄公平分给当地人，因此被认作该地之主，其后代与斯特吉亚人不断通婚，成了今日斯特吉亚的列位王公。",
+       "quotes": ["根据传说，第一批前来此地的诺德人傲慢地要求附近的瓦肯和斯特吉亚部落纳贡，而后者结成同盟将这群新来者赶回了自己的长船上。然而，胜利者们因为分赃不均爆发了争执，直到一位精明的诺德人贡达尔登陆此地，将自己死去族人的武器和盔甲公平地分给了当地人。当地人认可贡达尔对该地区的统治权，而他的后代和斯特吉亚人不断通婚，成为了如今斯特吉亚的列位王公。"],
+       "exprs": [
+         {"id": "expr.town-balgard-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "老一辈讲，最早来的诺德人太横，叫瓦肯人和斯特吉亚人一块儿赶回船上去了。后来他们自己为分东西打起来，是贡达尔把死人的刀甲分匀了，众人才服他。如今斯特吉亚那些王公，都说是他的后人。"},
+         {"id": "expr.town-balgard-2-detail", "layer": "detail", "grants": "high",
+          "text": "巴尔加德的开国故事里，贡达尔的功劳不在打，在分——他把死者遗下的武器甲胄均分给当地人，以此换得认可。这故事的底子是：谁分得公平，谁就坐得稳。"}
+       ]}
+    ]
+  },
+  "towns-car-banseth.yaml": {
+    "why": "原文中间一句自带「据说」，是等蒙王船队的信念；首尾两句都是无标记的地理与现状。",
+    "asserts": [
+      {"id": "assertion.town-car-banseth-1", "kind": "fact",
+       "text": "卡·班塞斯位于艾塔·德鲁因的峭壁之上；晴日北望，越过旧属巴旦尼亚、今为瓦兰迪亚人与斯特吉亚人所据之地，可望见瓦尔切格湾的波光。",
+       "quotes": ["卡·班塞斯位于艾塔·德鲁因的峭壁之上。",
+                  "如果有人在明朗的晴天向北望去，目光越过那片曾经属于巴旦尼亚，现在却被瓦兰迪亚人和斯特吉亚人占领的土地，就能看到瓦尔切格湾的粼粼波光。"],
+       "exprs": [
+         {"id": "expr.town-car-banseth-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "卡·班塞斯搭在峭壁上。天晴的时候朝北看，能望见瓦尔切格湾那边亮晃晃的水。"},
+         {"id": "expr.town-car-banseth-1-detail", "layer": "detail", "grants": "high",
+          "text": "卡·班塞斯扼艾塔·德鲁因的崖线，北望可及瓦尔切格湾；这一段地平是巴旦尼亚旧地，如今换了两家旗号，晴日里看得最清楚。"}
+       ]},
+      {"id": "assertion.town-car-banseth-2", "kind": "rumor",
+       "text": "据传，心怀信念之人终有一日会从此望见已逝至高王蒙的船队——他将重返人间，拯救子民于水火。",
+       "quotes": ["据说，心怀信念之人会在某一天从这里看到已逝至高王蒙的船队，他将重返人间，拯救自己的子民于水火之中。"],
+       "exprs": [
+         {"id": "expr.town-car-banseth-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "老辈人讲，心诚的人能望见蒙王的船队从湾里开回来。等的人不少，见着的没听说。"},
+         {"id": "expr.town-car-banseth-2-detail", "layer": "detail", "grants": "high",
+          "text": "卡·班塞斯的崖顶上，等蒙王船队是一桩旧信；信的人不提日子，只说心要到。"}
+       ]},
+      {"id": "assertion.town-car-banseth-3", "kind": "fact",
+       "text": "如今崖下多见诺德的冒险者与雇佣兵，他们替外邦蚕食巴旦尼亚的土地。",
+       "quotes": ["但如今，在这更可能看到的是诺德的冒险者和雇佣兵，他们来这的目的是帮助外国人不断蚕食巴旦尼亚的土地。"],
+       "exprs": [
+         {"id": "expr.town-car-banseth-3-detail", "layer": "detail", "grants": "high",
+          "text": "如今望下去，湾里来的多半是诺德的冒险者和雇佣兵，替外邦人一寸寸吃掉巴旦尼亚的地。等船队的人还在崖上，看的是别家的帆。"}
+       ]}
+    ]
+  },
+  "towns-diathma.yaml": {
+    "why": "建城与德律亚人覆灭那一句无标记；但「战至最后一人、血染湖水」自成一个「根据传说」。",
+    "asserts": [
+      {"id": "assertion.town-diathma-1", "kind": "fact",
+       "text": "狄亚特马称圣裁之城，由一位帝国将军建于俯瞰拉科尼斯湖的德律亚神殿废墟之上；德律亚人——最北的帕拉人——在此打了最后一战，叛乱起而复被剿灭。",
+       "quotes": ["狄亚特马，圣裁之城，一位帝国将军在能俯瞰拉科尼斯湖的德律亚神殿的废墟之上建立了这座城市。",
+                  "德律亚人——最北边的帕拉人——在此地打了最后一战，他们掀起了反抗帝国的叛乱，随后又被剿灭。"],
+       "exprs": [
+         {"id": "expr.town-diathma-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "狄亚特马是帝国将军在德律亚人的神殿废墟上盖的。德律亚人是帕拉人里最北的一支，在这儿打了最后一仗，反了，然后被平了。"},
+         {"id": "expr.town-diathma-1-detail", "layer": "detail", "grants": "high",
+          "text": "狄亚特马建于拉科尼斯湖岸的德律亚神殿废墟之上，故称圣裁之城；城址本身就是一段收尾——德律亚人最北一支在此断的。"}
+       ]},
+      {"id": "assertion.town-diathma-2", "kind": "rumor",
+       "text": "据传，德律亚人退守湖畔浅滩，战至最后一人，血把湖水染红了。",
+       "quotes": ["根据传说，他们被包围在湖的浅滩处，勇敢地战至最后一人，猩红的湖水将他们接连吞没。"],
+       "exprs": [
+         {"id": "expr.town-diathma-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "都说德律亚人最后退到湖边的浅滩上，一个没降，血把水都染红了。"},
+         {"id": "expr.town-diathma-2-detail", "layer": "detail", "grants": "high",
+          "text": "德律亚人覆灭的收场，记述里只留下湖这一节：浅滩、最后一人、红水。战事怎么写都有，唯有这个结局传得最齐。"}
+       ]}
+    ]
+  },
+  "towns-dunglanys.yaml": {
+    "why": "名源那一句自带「据传说」（王后嫁五王）；位置与圣地两句无标记。",
+    "asserts": [
+      {"id": "assertion.town-dunglanys-1", "kind": "fact",
+       "text": "邓格拉尼斯意为格拉尼斯之岩，矗立高山之巅，俯瞰巴旦尼亚腹地的幽暗湖泊泰瓦尔湖。",
+       "quotes": ["邓格拉尼斯，意为“格拉尼斯之岩”，矗立于高山之巅，俯瞰着巴旦尼亚腹地的幽暗湖泊——泰瓦尔湖。"],
+       "exprs": [
+         {"id": "expr.town-dunglanys-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "邓格拉尼斯在最高的山尖上，底下的泰瓦尔湖又深又暗。"},
+         {"id": "expr.town-dunglanys-1-detail", "layer": "detail", "grants": "high",
+          "text": "邓格拉尼斯踞巴旦尼亚腹地的制高点，脚下就是泰瓦尔湖；这地方看水、看路、看人都便当。"}
+       ]},
+      {"id": "assertion.town-dunglanys-2", "kind": "rumor",
+       "text": "其名出自一位古代王后；据传她先后嫁给五任巴旦尼亚至高王，位分更在他们之上。",
+       "quotes": ["据传说，她先后嫁给了五任巴旦尼亚至高王，地位甚至在他们之上。"],
+       "exprs": [
+         {"id": "expr.town-dunglanys-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "老话说邓格拉尼斯这名字是个古代王后留下的。那位王后嫁过五位至高王，说话比他们还管用。"},
+         {"id": "expr.town-dunglanys-2-detail", "layer": "detail", "grants": "high",
+          "text": "邓格拉尼斯的名源是一位古代王后——据传她历任五王之后而位在其上。这故事在巴旦尼亚是讲王权分量的一段旧料。"}
+       ]},
+      {"id": "assertion.town-dunglanys-3", "kind": "fact",
+       "text": "此地是巴旦尼亚的密仪圣地，象征王权；并非每位至高王都在此治政，但诸王都渴望掌控它。",
+       "quotes": ["此地是巴旦尼亚的一处密仪圣地，象征着巴旦尼亚的王权，因此尽管并非每一位巴旦尼亚至高王都在此地进行统治，但他们都渴望掌控这里。"],
+       "exprs": [
+         {"id": "expr.town-dunglanys-3-detail", "layer": "detail", "grants": "high",
+          "text": "邓格拉尼斯是巴旦尼亚的密仪圣地，王权的象征——不必在此坐镇，但必须握在手里。"}
+       ]}
+    ]
+  },
+  "towns-hubyar.yaml": {
+    "why": "建城那一句自带「据说」；「这段记忆或许能解释」是原文自陈的推断；其余两句无标记。",
+    "asserts": [
+      {"id": "assertion.town-hubyar-1", "kind": "fact",
+       "text": "胡比亚是内陆城市，如今由巴努·吉勒德掌控；英雄尼姆尔在此落难，被捉后囚死在集市的吊笼里。",
+       "quotes": ["如今他们掌控着该城，且厌恶一切轻浮的事物。",
+                  "英雄尼姆尔就是在此地落难的，他在一名吉勒德少女的闺房中被捉住，关死在了集市上吊着的笼子里。"],
+       "exprs": [
+         {"id": "expr.town-hubyar-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "胡比亚如今是吉勒德家的城。从前那位英雄尼姆尔，就是在这一带栽的——在人家闺房里被堵住，最后吊在集市的笼子里。"},
+         {"id": "expr.town-hubyar-1-detail", "layer": "detail", "grants": "high",
+          "text": "胡比亚是内陆城，现归巴努·吉勒德；市集上的吊笼就是尼姆尔的下场所在，如今行商过此，多半会听人指一指。"}
+       ]},
+      {"id": "assertion.town-hubyar-2", "kind": "rumor",
+       "text": "据说，胡比亚建在堕落残暴的图兰王那座奢华狩猎小屋的遗址之上；他奴役了阿塞莱族长的家人，被后者复仇所杀。",
+       "quotes": ["内陆城市胡比亚据说建立在堕落残暴的图兰王的一座奢华的狩猎小屋遗址之上，他奴役了阿塞莱族长的家人，被后者复仇杀死。"],
+       "exprs": [
+         {"id": "expr.town-hubyar-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "都说胡比亚底下压着从前图兰王的一座猎屋。那王又奢又狠，把人家的家小当成奴仆使，末了叫仇家给杀了。"},
+         {"id": "expr.town-hubyar-2-detail", "layer": "detail", "grants": "high",
+          "text": "胡比亚的城基有一说：压在图兰王狩猎小屋的旧址上。那位王的结局是自己种下的——役使阿塞莱族长的家小，换来一刀。"}
+       ]},
+      {"id": "assertion.town-hubyar-3", "kind": "interpretation",
+       "text": "这段旧事或许能解释巴努·吉勒德严酷的脾性——他们如今据有该城，厌恶一切轻浮之物。",
+       "quotes": ["这段记忆或许能解释凶狠严酷的巴努·吉勒德的世界观"],
+       "exprs": [
+         {"id": "expr.town-hubyar-3-detail", "layer": "detail", "grants": "high",
+          "text": "吉勒德家为什么这么硬？有人说是记着图兰王那笔旧账。这说法未必坐实，但城里的规矩确实不留轻浮。"}
+       ]}
+    ]
+  },
+  "towns-husn-fulq.yaml": {
+    "why": "只有末句自带「故事桥段」（说书人的段子）；建堡、两头收贿、自称后裔三段都是无标记叙述。",
+    "asserts": [
+      {"id": "assertion.town-husn-fulq-1", "kind": "fact",
+       "text": "侯森·富勒格位于卡尔得亚的东南边缘——那片由河流与咸水潟湖织成的网络，把帝国与阿塞莱的土地连在一起。",
+       "quotes": ["侯森·富勒格位于卡尔得亚的东南边缘，卡尔得亚是一片由河流和咸水潟湖构成的网络，它将帝国和阿塞莱的土地相连。"],
+       "exprs": [
+         {"id": "expr.town-husn-fulq-1-rumor", "layer": "rumor", "grants": "low",
+          "text": "侯森·富勒格夹在两家中间，一边是帝国，一边是阿塞莱，中间尽是河汊和咸水湖。"},
+         {"id": "expr.town-husn-fulq-1-detail", "layer": "detail", "grants": "high",
+          "text": "侯森·富勒格踞卡尔得亚东南缘；河汊加咸水潟湖，把帝国与阿塞莱连成一条水路廊道，谁站住这里谁收过路钱。"}
+       ]},
+      {"id": "assertion.town-husn-fulq-2", "kind": "fact",
+       "text": "富勒格又名法耳科斯，是极南之地来的雇佣兵酋长；他在此筑堡，靠堡的位置两头收贿、随时选边。近二十年之后他带着满船黄金还乡，而许多阿塞莱氏族至今仍骄傲地自称是他的后裔。",
+       "quotes": ["富勒格，又名法耳科斯，是一位来自于极南之地的黑面孔雇佣兵酋长。",
+                  "在玩了将近二十年的换队游戏之后，他驾着一艘满载黄金的船驶回了家，但许多阿塞莱的氏族仍然骄傲地自称是他的后裔。"],
+       "exprs": [
+         {"id": "expr.town-husn-fulq-2-rumor", "layer": "rumor", "grants": "low",
+          "text": "这城的底子是外乡人打的——南边来的雇佣兵头子，两头讨钱，哪边给得多就帮哪边。攒够了金子坐船回家，这边还有好些氏族自称是他的种。"},
+         {"id": "expr.town-husn-fulq-2-detail", "layer": "detail", "grants": "high",
+          "text": "富勒格的生意不是打仗，是站位：两头收贿、随时倒戈，近二十年后满载而归。如今自称其后裔的氏族不少——认这门亲戚，认的是那份精明。"}
+       ]},
+      {"id": "assertion.town-husn-fulq-3", "kind": "rumor",
+       "text": "关于富勒格的种种巧计，成了集市说书人长讲不衰的段子。",
+       "quotes": ["“富勒格的鬼点子”也成为了许多集市说书人口中经久不衰的故事桥段。"],
+       "exprs": [
+         {"id": "expr.town-husn-fulq-3-rumor", "layer": "rumor", "grants": "low",
+          "text": "集市上说书的还爱讲“富勒格的鬼点子”，一套一套的，讲了几十年还有人听。"}
+       ]}
+    ]
+  }
+}

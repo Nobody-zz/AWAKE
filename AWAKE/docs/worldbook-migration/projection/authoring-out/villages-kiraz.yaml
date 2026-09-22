@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-kiraz
 title:
   zh-CN: 基拉兹
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 基拉兹
-  en:
-  - Kiraz
-  - castle_village_K3_2
+entity_ids:
+- entity.settlement.castle_village_k3_2
 summary:
   zh-CN: 基拉兹位于德夫赛格高原南端的一处盆地内；不久前这片土地还由游牧者支配，如今当地人仍靠饲养绵羊谋生。
 registry_bindings:

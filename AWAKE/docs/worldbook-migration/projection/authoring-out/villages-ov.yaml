@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-ov
 title:
   zh-CN: 奥夫
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 奥夫
-  en:
-  - Ov
-  - castle_village_S5_1
+entity_ids:
+- entity.settlement.castle_village_s5_1
 summary:
   zh-CN: 奥夫是伊卡拉荒原——拉科尼斯湖西北方的森林——里一处较新的斯特吉亚垦殖地；村民起初靠打猎取皮为生，但猎物大多被赶到了森林深处，如今他们改在沼泽林地里种亚麻。
 registry_bindings:

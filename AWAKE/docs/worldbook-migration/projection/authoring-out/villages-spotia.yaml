@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-spotia
 title:
   zh-CN: 斯珀提亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 斯珀提亚
-  en:
-  - Spotia
-  - village_ES6_2
+entity_ids:
+- entity.settlement.village_es6_2
 summary:
   zh-CN: 斯珀提亚坐落于缓缓流淌的塞堤斯河畔；这里起伏的丘陵构成了帝国的粮仓之一。
 registry_bindings:

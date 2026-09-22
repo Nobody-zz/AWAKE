@@ -1,0 +1,208 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.politics.town-gangs
+title:
+  zh-CN: 帮派
+  en: Town Gangs
+status: needs_review
+domain: politics
+subdomain: law
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 帮派头目是城镇里的「要人」之一。他们管着后街、移民棚户区和滨水区这些不信任官府的地方。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.3MJSuB8G
+  quote_hash: 5D5BD1D7DDCFC773ACE8A6527EBCF0B244798BA4F5B4661B480359A83B664BDF
+  quote: 所以……在我们的地盘上，想受到保护就得交税，除非你想打一架。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.YzBDQ8J3
+  quote_hash: 0610BD6B41FBC1D3D9CDAE7DB738FCCB583CF913A5405895EF8C4E99AC3249E3
+  quote: 那么……先把话说明，这里是我的地盘。好了，你是哪位？
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.rgTGzfzI
+  quote_hash: CE249AB6420639D6DA11694E53800A18FC4A377DD4F862A4C4BA376BA97665F7
+  quote: 是啊，我的确有件麻烦事。{?TARGET_NOTABLE.GENDER}此人{?}此人{\?}名叫{TARGET_NOTABLE.LINK}，{?TARGET_NOTABLE.GENDER}她的{?}他的{\?}手下骚扰我们罩着的店主，索要钱财，还威胁恐吓。另外再告诉你一件事，那些店主是我的韭菜，其他人不准割。我已经准备好给这些手痒的家伙一点教训了，但多个人手也挺好。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.DIuI1moW
+  quote_hash: 6FD73D464C20B6D10E364204E2A7C3BFFB1F860D87E0A019F2C0B1E0C71CFAC6
+  quote: 帮派头目
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.nQOf27Rx
+  quote_hash: 723F3FF0CAF9840E3BD151932F079D4EB8340617C3C4D09C42B3948384547BF4
+  quote: 秘密之手是一伙黑帮，他们控制着帝国南部的乡村地区，甚至一些城镇。他们通过为当局效力而壮大：镇压动乱，压制讨人厌的传教士，抢掠他们主顾的竞争对手。他们中的许多人过着两面生活：在城里体面，在乡间犯罪。一位秘密之手的成员每年会花两三个月的时间在山野之中充当土匪，其余时间则会回到城镇，作为打手和售卖赃物的“商人”——他们自然深知没有人会问太多的问题。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.InFseOAA
+  quote_hash: C4F942151296BF6B91570CFD55E86EBB4CD752C06BA59D164A2349E1392B155A
+  quote: 这限制了地方执政官给嫌犯定罪的速度。虽然能够防止职权的滥用，但土地所有者或帮派头目有时也能利用威逼利诱对其进行操控。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.1SUTcF0J
+  quote_hash: 1CFAFCC057ADEB5601B6069847C9734B85D477BF754F8D9E33A18CE55B4F5D7B
+  quote: 在卡拉迪亚城市的贫民窟中，那些负责看守的帮派头目总是需要贫穷的年轻人来传递消息，并在地盘争夺战中为他们提供支援。与此同时，一些寻求刺激的商人之子或女儿有时也会与他们混在一起，体验贫民窟的生活。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-gangs-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 帮派头目是城镇里的「要人」之一，跟商人、地主并列。他们控制着后街、移民棚户区、滨水区，以及那些不信任官府的社区。
+  sources:
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.3MJSuB8G
+    quote_hash: 5D5BD1D7DDCFC773ACE8A6527EBCF0B244798BA4F5B4661B480359A83B664BDF
+    quote: 所以……在我们的地盘上，想受到保护就得交税，除非你想打一架。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.YzBDQ8J3
+    quote_hash: 0610BD6B41FBC1D3D9CDAE7DB738FCCB583CF913A5405895EF8C4E99AC3249E3
+    quote: 那么……先把话说明，这里是我的地盘。好了，你是哪位？
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.rgTGzfzI
+    quote_hash: CE249AB6420639D6DA11694E53800A18FC4A377DD4F862A4C4BA376BA97665F7
+    quote: 是啊，我的确有件麻烦事。{?TARGET_NOTABLE.GENDER}此人{?}此人{\?}名叫{TARGET_NOTABLE.LINK}，{?TARGET_NOTABLE.GENDER}她的{?}他的{\?}手下骚扰我们罩着的店主，索要钱财，还威胁恐吓。另外再告诉你一件事，那些店主是我的韭菜，其他人不准割。我已经准备好给这些手痒的家伙一点教训了，但多个人手也挺好。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.DIuI1moW
+    quote_hash: 6FD73D464C20B6D10E364204E2A7C3BFFB1F860D87E0A019F2C0B1E0C71CFAC6
+    quote: 帮派头目
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.nQOf27Rx
+    quote_hash: 723F3FF0CAF9840E3BD151932F079D4EB8340617C3C4D09C42B3948384547BF4
+    quote: 秘密之手是一伙黑帮，他们控制着帝国南部的乡村地区，甚至一些城镇。他们通过为当局效力而壮大：镇压动乱，压制讨人厌的传教士，抢掠他们主顾的竞争对手。他们中的许多人过着两面生活：在城里体面，在乡间犯罪。一位秘密之手的成员每年会花两三个月的时间在山野之中充当土匪，其余时间则会回到城镇，作为打手和售卖赃物的“商人”——他们自然深知没有人会问太多的问题。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.InFseOAA
+    quote_hash: C4F942151296BF6B91570CFD55E86EBB4CD752C06BA59D164A2349E1392B155A
+    quote: 这限制了地方执政官给嫌犯定罪的速度。虽然能够防止职权的滥用，但土地所有者或帮派头目有时也能利用威逼利诱对其进行操控。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.1SUTcF0J
+    quote_hash: 1CFAFCC057ADEB5601B6069847C9734B85D477BF754F8D9E33A18CE55B4F5D7B
+    quote: 在卡拉迪亚城市的贫民窟中，那些负责看守的帮派头目总是需要贫穷的年轻人来传递消息，并在地盘争夺战中为他们提供支援。与此同时，一些寻求刺激的商人之子或女儿有时也会与他们混在一起，体验贫民窟的生活。
+  expressions:
+  - id: expr.town-gangs-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 在别人的地盘上，想受保护就得交钱——他们管这叫税。那些店主是他们的韭菜，别人不许割。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.3MJSuB8G
+      quote_hash: 5D5BD1D7DDCFC773ACE8A6527EBCF0B244798BA4F5B4661B480359A83B664BDF
+      quote: 所以……在我们的地盘上，想受到保护就得交税，除非你想打一架。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.YzBDQ8J3
+      quote_hash: 0610BD6B41FBC1D3D9CDAE7DB738FCCB583CF913A5405895EF8C4E99AC3249E3
+      quote: 那么……先把话说明，这里是我的地盘。好了，你是哪位？
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.rgTGzfzI
+      quote_hash: CE249AB6420639D6DA11694E53800A18FC4A377DD4F862A4C4BA376BA97665F7
+      quote: 是啊，我的确有件麻烦事。{?TARGET_NOTABLE.GENDER}此人{?}此人{\?}名叫{TARGET_NOTABLE.LINK}，{?TARGET_NOTABLE.GENDER}她的{?}他的{\?}手下骚扰我们罩着的店主，索要钱财，还威胁恐吓。另外再告诉你一件事，那些店主是我的韭菜，其他人不准割。我已经准备好给这些手痒的家伙一点教训了，但多个人手也挺好。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.DIuI1moW
+      quote_hash: 6FD73D464C20B6D10E364204E2A7C3BFFB1F860D87E0A019F2C0B1E0C71CFAC6
+      quote: 帮派头目
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    denies: []
+  - id: expr.town-gangs-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 这些人多半有两副面孔：在城里是体面商人，出了城就换了装束去当土匪。手上有钱，还能拿去撬动地方官断案的口子。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.nQOf27Rx
+      quote_hash: 723F3FF0CAF9840E3BD151932F079D4EB8340617C3C4D09C42B3948384547BF4
+      quote: 秘密之手是一伙黑帮，他们控制着帝国南部的乡村地区，甚至一些城镇。他们通过为当局效力而壮大：镇压动乱，压制讨人厌的传教士，抢掠他们主顾的竞争对手。他们中的许多人过着两面生活：在城里体面，在乡间犯罪。一位秘密之手的成员每年会花两三个月的时间在山野之中充当土匪，其余时间则会回到城镇，作为打手和售卖赃物的“商人”——他们自然深知没有人会问太多的问题。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.InFseOAA
+      quote_hash: C4F942151296BF6B91570CFD55E86EBB4CD752C06BA59D164A2349E1392B155A
+      quote: 这限制了地方执政官给嫌犯定罪的速度。虽然能够防止职权的滥用，但土地所有者或帮派头目有时也能利用威逼利诱对其进行操控。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.1SUTcF0J
+      quote_hash: 1CFAFCC057ADEB5601B6069847C9734B85D477BF754F8D9E33A18CE55B4F5D7B
+      quote: 在卡拉迪亚城市的贫民窟中，那些负责看守的帮派头目总是需要贫穷的年轻人来传递消息，并在地盘争夺战中为他们提供支援。与此同时，一些寻求刺激的商人之子或女儿有时也会与他们混在一起，体验贫民窟的生活。
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

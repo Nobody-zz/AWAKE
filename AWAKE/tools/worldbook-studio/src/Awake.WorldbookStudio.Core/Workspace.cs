@@ -417,6 +417,11 @@ public sealed class WorkspaceService
             "referral-registry.v1.json",
             "profile-registry.v1.schema.json",
             "referral-registry.v1.schema.json",
+            // 互引边表（2026-09-20）：**编译输入**，不是审计附件。
+            // ⚠️ 必须进这张名单 —— 快照有「声明的输入闭包 == 实际读入清单」这条不变量（测试 F73），
+            //    编译器读了它却没声明，那条断言就会红。反之文件不存在时 `Where(File.Exists)` 自动跳过。
+            "link-registry.v1.json",
+            "link-registry.v1.schema.json",
             "audit-event.v1.schema.json",
             "id-ledger.v1.schema.json",
             "content-graph.v1.schema.json",

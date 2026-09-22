@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-karbur
 title:
   zh-CN: 卡布尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 卡布尔
-  en:
-  - Karbur
-  - village_S7_2
+entity_ids:
+- entity.settlement.village_s7_2
 summary:
   zh-CN: 卡布尔坐落于卡恰尔半岛的高原上，多少得到北边高耸山脊的一些庇护；当地村民种大麦和谷物。
 registry_bindings:

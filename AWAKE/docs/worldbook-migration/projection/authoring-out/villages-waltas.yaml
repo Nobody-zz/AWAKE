@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-waltas
 title:
   zh-CN: 瓦勒塔斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 瓦勒塔斯
-  en:
-  - Waltas
-  - village_A5_3
+entity_ids:
+- entity.settlement.village_a5_3
 summary:
   zh-CN: 瓦勒塔斯傍着「拜赫尔·耶什姆」（翡翠之海），低地非常适合种植亚麻。
 registry_bindings:

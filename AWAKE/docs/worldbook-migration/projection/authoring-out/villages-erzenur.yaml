@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-erzenur
 title:
   zh-CN: 埃泽努尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 埃泽努尔
-  en:
-  - Erzenur
-  - castle_village_K8_1
+entity_ids:
+- entity.settlement.castle_village_k8_1
 summary:
   zh-CN: 埃泽努尔位于当地方言称作帖牙合的蒂亚具斯河畔；村民在河岸的裸岩上采铁，河水也因此泛着微红。
 registry_bindings:

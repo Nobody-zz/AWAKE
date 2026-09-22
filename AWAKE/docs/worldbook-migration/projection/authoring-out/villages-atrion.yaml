@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-atrion
 title:
   zh-CN: 阿特里翁
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿特里翁
-  en:
-  - Atrion
-  - castle_village_EN5_1
+entity_ids:
+- entity.settlement.castle_village_en5_1
 summary:
   zh-CN: 阿特里翁坐落于涅维斯谷中，冰冷的缓流由此汇入拉科尼斯湖，当地土地适合种植桑树、用于生产蚕丝。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-arromanc
 title:
   zh-CN: 阿罗曼克
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿罗曼克
-  en:
-  - Arromanc
-  - village_V6_1
+entity_ids:
+- entity.settlement.village_v6_1
 summary:
   zh-CN: 阿罗曼克坐落于穿过比斯坎山脉与埃皮尔山脉的纳尔谷中；这片瓦兰迪亚南部的温暖土地很宜种植橄榄树。
 registry_bindings:

@@ -25,7 +25,7 @@ public static class RuntimePackageCompiler
         var entityAnchorNames = ResolveEntityAnchorNames(snapshot);
         foreach (var item in documents.OrderBy(x => x.Document["id"]?.GetValue<string>(), StringComparer.Ordinal))
         {
-            entries.Add(BuildEntry(item.Document, snapshot.Registries, entityAnchorNames));
+            entries.Add(BuildEntry(item.Document, snapshot.Registries, entityAnchorNames, snapshot.Links));
         }
 
         var identities = new JsonArray();
@@ -105,7 +105,7 @@ public static class RuntimePackageCompiler
         return new RuntimePackageCompilation(runtime, index, manifest, manifestHash, contentHash, packageHash);
     }
 
-    private static JsonObject BuildEntry(JsonObject document, RegistrySnapshot registries, IReadOnlyDictionary<string, IReadOnlyList<string>> entityAnchorNames)
+    private static JsonObject BuildEntry(JsonObject document, RegistrySnapshot registries, IReadOnlyDictionary<string, IReadOnlyList<string>> entityAnchorNames, LinkRegistrySnapshot links)
     {
         var sourceId = document["id"]?.GetValue<string>() ?? "doc.unknown";
         var entryId = StableEntry(sourceId);
@@ -161,6 +161,27 @@ public static class RuntimePackageCompiler
         var domain = document["domain"]?.GetValue<string>();
         if (string.IsNullOrWhiteSpace(domain))
             throw new InvalidOperationException("WB-DOC-002: 知识档案缺少主分类，不能编译运行包。");
+
+        // 互引边（2026-09-20）：本档正文点名过谁。运行时拿它做**第二趟低权重扩召回**
+        // （见 src/WorldKnowledgeQueryService.cs 的 LinkExpand* 常量）。
+        // 边表按 entryId 挂（边表是用编译产物的条目 id 生成的），所以只在有边时才写这个字段 ——
+        // 全是空数组只会让包变大、让 diff 变吵。
+        if (links.OutgoingByEntry.TryGetValue(entryId, out var outgoing) && outgoing.Count > 0)
+        {
+            var linkArray = new JsonArray();
+            foreach (var edge in outgoing)
+            {
+                linkArray.Add(new JsonObject
+                {
+                    ["to"] = edge["to"]?.GetValue<string>() ?? "",
+                    ["viaName"] = edge["viaName"]?.GetValue<string>() ?? "",
+                    ["strength"] = edge["strength"]?.GetValue<string>() ?? "weak",
+                    ["bucket"] = edge["bucket"]?.GetValue<string>() ?? "proper",
+                    ["usableAs"] = Clone(edge["usableAs"] as JsonArray ?? new JsonArray("forward"))
+                });
+            }
+            entryExtensions["links"] = linkArray;
+        }
 
         return new JsonObject
         {

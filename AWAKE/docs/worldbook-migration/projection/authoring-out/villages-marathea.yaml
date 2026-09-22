@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-marathea
 title:
   zh-CN: 马拉忒亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 马拉忒亚
-  en:
-  - Marathea
-  - village_EN1_1
+entity_ids:
+- entity.settlement.village_en1_1
 summary:
   zh-CN: 马拉忒亚坐落于弥戎河与德律亚山脉最高峰阿拉卡托斯山之间的狭长土地上；当地村民是熟练矿工，从附近悬崖边开采铁矿石。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-nogrent
 title:
   zh-CN: 诺格伦
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 诺格伦
-  en:
-  - Nogrent
-  - village_V5_3
+entity_ids:
+- entity.settlement.village_v5_3
 summary:
   zh-CN: 诺格伦坐落于瓦兰迪亚中部比斯坎丘陵的一处斜坡上；村民在沿海树林与高山峭壁之间的牧场上放羊。
 registry_bindings:

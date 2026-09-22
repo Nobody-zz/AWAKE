@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-veron
 title:
   zh-CN: 维戎
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 维戎
-  en:
-  - Veron
-  - castle_village_EW5_1
+entity_ids:
+- entity.settlement.castle_village_ew5_1
 summary:
   zh-CN: 维戎位于乌卡利翁地块的丘陵地带、靠近伽律斯河的源头处，山丘上的葡萄在排水良好的沙质土壤上茁壮成长。
 registry_bindings:

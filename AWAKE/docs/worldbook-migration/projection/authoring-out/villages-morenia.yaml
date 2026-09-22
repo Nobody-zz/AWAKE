@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-morenia
 title:
   zh-CN: 摩雷尼亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 摩雷尼亚
-  en:
-  - Morenia
-  - castle_village_ES5_1
+entity_ids:
+- entity.settlement.castle_village_es5_1
 summary:
   zh-CN: 摩雷尼亚俯瞰塞堤斯河，位于通往吕卡里亚谷的低矮入口处，村民在河畔收集黏土，供应帝国南方的窑炉。
 registry_bindings:

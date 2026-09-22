@@ -1,0 +1,142 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-iron-ingot-crude
+title:
+  zh-CN: 粗铁
+  en: Crude Iron
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 粗铁是铁矿石炼出的第一道锭子，杂质多、最贱，打粗活用。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.gOpodlt1
+  quote_hash: E958BB6C1741A9F5530FF3AD826F4F3FE55BE9BD93621174197FDD999FD22F98
+  quote: 粗铁{@Plural}成车的粗铁{\@}
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.rHcVKSbA
+  quote_hash: 590D39A561F249CA14471377163DA17E26C8125B9F9F6ED5AC114D070534F35E
+  quote: 铁矿
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.iQadPYNe
+  quote_hash: D7B9D7D070C8F28C7BD5E3FE275EEEB29A87338E036E4C798C5E619FE7B22513
+  quote: 木炭{@Plural}成车的木炭{\@}
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-iron-ingot-crude-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 粗铁是铁矿石炼出的最粗的锭，基准价 20 第纳尔，论车买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.gOpodlt1
+    quote_hash: E958BB6C1741A9F5530FF3AD826F4F3FE55BE9BD93621174197FDD999FD22F98
+    quote: 粗铁{@Plural}成车的粗铁{\@}
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.rHcVKSbA
+    quote_hash: 590D39A561F249CA14471377163DA17E26C8125B9F9F6ED5AC114D070534F35E
+    quote: 铁矿
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.iQadPYNe
+    quote_hash: D7B9D7D070C8F28C7BD5E3FE275EEEB29A87338E036E4C798C5E619FE7B22513
+    quote: 木炭{@Plural}成车的木炭{\@}
+  expressions:
+  - id: expr.goods-iron-ingot-crude-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 矿里挖出来的石头不能直接打铁，得先烧成锭。头一道出来的东西又脆又糙，只能做粗活。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.gOpodlt1
+      quote_hash: E958BB6C1741A9F5530FF3AD826F4F3FE55BE9BD93621174197FDD999FD22F98
+      quote: 粗铁{@Plural}成车的粗铁{\@}
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.rHcVKSbA
+      quote_hash: 590D39A561F249CA14471377163DA17E26C8125B9F9F6ED5AC114D070534F35E
+      quote: 铁矿
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-iron-ingot-detail-crude
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 粗铁 20 一件，比铁矿石还便宜——矿挖出来就能卖，炼成锭反倒要搭柴搭工。想赚这道钱，得炉子大、炭便宜，靠的是规模不是价钱。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.gOpodlt1
+      quote_hash: E958BB6C1741A9F5530FF3AD826F4F3FE55BE9BD93621174197FDD999FD22F98
+      quote: 粗铁{@Plural}成车的粗铁{\@}
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.iQadPYNe
+      quote_hash: D7B9D7D070C8F28C7BD5E3FE275EEEB29A87338E036E4C798C5E619FE7B22513
+      quote: 木炭{@Plural}成车的木炭{\@}
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

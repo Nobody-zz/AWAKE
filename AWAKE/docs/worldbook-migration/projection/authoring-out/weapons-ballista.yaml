@@ -1,0 +1,254 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-ballista
+title:
+  zh-CN: 弩砲
+  en: Ballista
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 弩炮
+  en:
+  - Siege Ballista
+summary:
+  zh-CN: 弩砲：围城战中最务实、最经济的扭力投射器械——结构就三部分（扭力束、箭槽、扳机），制造门槛低，损耗部件可现场替换。能压制城头弓箭手，也可从远处狙杀单兵；但火力密度不够，箭矢质量太大、一百五十米后动能断崖式下跌，对攻城器械的结构破坏更是可以忽略。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.atA20r4C
+  quote_hash: 8A2D4F9BA6F5878921D0F22C3BF6E634B553AFCAEA5A4E4866A513D6715E2BB3
+  quote: 弩砲在对抗敌方远程器械时很有效，亦可从远处狙杀敌军单兵。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_弩砲__弩砲.json#/Variants/1/Content
+  quote_hash: 697C22AB53E4F14D2CA4F2E0D35B63C41AF6F4908E6692E368E73B66F8B521D8
+  quote: 弩炮是围城战中最务实的器械选择
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_弩砲__弩砲.json#/Variants/1/Content
+  quote_hash: EE010D441FA3F1417EE2CA7581DDDF07BA84A0A176970E8FBFACBE9379A49018
+  quote: 想摧毁冲车还是得靠火或者靠人冲出城去烧
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_弩砲__弩砲.json#/Variants/1/Content
+  quote_hash: AF18AA51C1072853AE4DE4AB28818C294364E3527D4AC3077A95B8B6C2C371BA
+  quote: 弩炮最大的价值在于压制城头的弓箭手，给己方步兵登城争取窗口
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_弩砲__弩砲.json#/Variants/1/Content
+  quote_hash: 6A47055D374EBFAEA7A3F70299F5D037090FCED17073B9F9257C4AAF148F29A4
+  quote: 它便宜，好用，但指望它单打独斗是不行的
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_弩砲__弩砲.json#/Variants/2/Content
+  quote_hash: 5AB66D19ED74A4AD5292ECB269103811C9770947B1F5758FF1012200C9C96F8F
+  quote: 弩炮是最经济的扭力投射武器。结构上就三部分：扭力束、箭槽、扳机
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_弩砲__弩砲.json#/Variants/2/Content
+  quote_hash: 85F108D93E11C5F40482DDD10D3D5ACA4E5A274FE2B1ED5EF5BEB2708D18CCD8
+  quote: 一百五十米后动能断崖式下跌，打到第四个人基本就停在地上了，效率不如排弩齐射
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_弩砲__弩砲.json#/Variants/0/Content
+  quote_hash: 3758AEE480940576D4E98937D448BE585A4B166B99752DC57B336699EECC62F2
+  quote: 我们村有个去守城的回来说，那东西一箭能穿透三个人
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_弩砲__弩砲.json#/Variants/0/Content
+  quote_hash: 913D0FD68DBF98DFA3F12964D9A5AB0AE8F4861B5EB280E795E0F30B3972F486
+  quote: 不过他说那东西射完了也就射完了，箭飞不远，打到后面就没劲了
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.ballista-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 弩炮是围城战中的扭力投射武器，结构就三部分：扭力束、箭槽、扳机——扭力束用畜力筋腱或发绳绞紧，蓄能效率稳定，扳机释放结构简单可靠。优点是制造门槛低，损耗部件可现场替换：扭力束断了用备用的绞绳重上一遍就行，箭槽开裂找块硬木刨平了接着用。它能以致命的效率发射弩矢，对士兵很有效，在对抗敌方远程器械时很有效，亦可从远处狙杀敌军单兵；局限是火力密度不够，杀伤效率比不上弓箭手齐射，而且对攻城器械的结构破坏可以忽略不计。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.atA20r4C
+    quote_hash: 8A2D4F9BA6F5878921D0F22C3BF6E634B553AFCAEA5A4E4866A513D6715E2BB3
+    quote: 弩砲在对抗敌方远程器械时很有效，亦可从远处狙杀敌军单兵。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_弩砲__弩砲.json#/Variants/1/Content
+    quote_hash: 697C22AB53E4F14D2CA4F2E0D35B63C41AF6F4908E6692E368E73B66F8B521D8
+    quote: 弩炮是围城战中最务实的器械选择
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_弩砲__弩砲.json#/Variants/1/Content
+    quote_hash: EE010D441FA3F1417EE2CA7581DDDF07BA84A0A176970E8FBFACBE9379A49018
+    quote: 想摧毁冲车还是得靠火或者靠人冲出城去烧
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_弩砲__弩砲.json#/Variants/1/Content
+    quote_hash: AF18AA51C1072853AE4DE4AB28818C294364E3527D4AC3077A95B8B6C2C371BA
+    quote: 弩炮最大的价值在于压制城头的弓箭手，给己方步兵登城争取窗口
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_弩砲__弩砲.json#/Variants/1/Content
+    quote_hash: 6A47055D374EBFAEA7A3F70299F5D037090FCED17073B9F9257C4AAF148F29A4
+    quote: 它便宜，好用，但指望它单打独斗是不行的
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_弩砲__弩砲.json#/Variants/2/Content
+    quote_hash: 5AB66D19ED74A4AD5292ECB269103811C9770947B1F5758FF1012200C9C96F8F
+    quote: 弩炮是最经济的扭力投射武器。结构上就三部分：扭力束、箭槽、扳机
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_弩砲__弩砲.json#/Variants/2/Content
+    quote_hash: 85F108D93E11C5F40482DDD10D3D5ACA4E5A274FE2B1ED5EF5BEB2708D18CCD8
+    quote: 一百五十米后动能断崖式下跌，打到第四个人基本就停在地上了，效率不如排弩齐射
+  expressions:
+  - id: expr.ballista-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 弩砲是围城里最务实的一种器械：扭力束、箭槽、扳机，就三部分。造起来门槛低，坏了现场换件就能接着用。它射出来的箭跟人胳膊那么粗，对士兵很有效，也能从远处狙杀单兵；但它火力不算密，箭飞不远，想靠它把对面的冲车打烂是不行的。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.atA20r4C
+      quote_hash: 8A2D4F9BA6F5878921D0F22C3BF6E634B553AFCAEA5A4E4866A513D6715E2BB3
+      quote: 弩砲在对抗敌方远程器械时很有效，亦可从远处狙杀敌军单兵。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_弩砲__弩砲.json#/Variants/1/Content
+      quote_hash: 697C22AB53E4F14D2CA4F2E0D35B63C41AF6F4908E6692E368E73B66F8B521D8
+      quote: 弩炮是围城战中最务实的器械选择
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_弩砲__弩砲.json#/Variants/1/Content
+      quote_hash: EE010D441FA3F1417EE2CA7581DDDF07BA84A0A176970E8FBFACBE9379A49018
+      quote: 想摧毁冲车还是得靠火或者靠人冲出城去烧
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.ballista-lord-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 弩炮是围城战中最务实的器械选择。我从军需官那里看过账目：一架弩炮的铁件用量不到投石机的三分之一，木料就地几小时就能装好一架。攻城时前锋刚扎下营寨，弩炮阵地已经可以开始压制城头了。但我也清楚它的局限：火力密度不够，杀伤效率比不上弓箭手齐射；对攻城器械的结构破坏更是可以忽略不计——弩箭钉进冲车的橡木板里拔不出来，但它不会让那辆车停下。弩炮最大的价值在于压制城头的弓箭手，给己方步兵登城争取窗口。它便宜，好用，但指望它单打独斗是不行的。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_弩砲__弩砲.json#/Variants/1/Content
+      quote_hash: AF18AA51C1072853AE4DE4AB28818C294364E3527D4AC3077A95B8B6C2C371BA
+      quote: 弩炮最大的价值在于压制城头的弓箭手，给己方步兵登城争取窗口
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_弩砲__弩砲.json#/Variants/1/Content
+      quote_hash: 6A47055D374EBFAEA7A3F70299F5D037090FCED17073B9F9257C4AAF148F29A4
+      quote: 它便宜，好用，但指望它单打独斗是不行的
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+  - id: expr.ballista-engineer-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 弩炮是最经济的扭力投射武器。结构上就三部分：扭力束、箭槽、扳机。扭力束用畜力筋腱或发绳绞紧，蓄能效率稳定，扳机释放结构简单可靠。优点是制造门槛低，损耗部件可现场替换。缺点是弹道衰减快，弩箭虽然初速高但质量太大，一百五十米后动能断崖式下跌，打到第四个人基本就停在地上了，效率不如排弩齐射。对建筑结构的破坏也有限——箭矢动能主要转化为贯穿而非冲击，打中木梁就是插进去，不会造成结构断裂。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_弩砲__弩砲.json#/Variants/2/Content
+      quote_hash: 5AB66D19ED74A4AD5292ECB269103811C9770947B1F5758FF1012200C9C96F8F
+      quote: 弩炮是最经济的扭力投射武器。结构上就三部分：扭力束、箭槽、扳机
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_弩砲__弩砲.json#/Variants/2/Content
+      quote_hash: 85F108D93E11C5F40482DDD10D3D5ACA4E5A274FE2B1ED5EF5BEB2708D18CCD8
+      quote: 一百五十米后动能断崖式下跌，打到第四个人基本就停在地上了，效率不如排弩齐射
+    grants:
+    - profile_id: profile.noble_high_steward
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.ballista-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 在守城的人嘴里，弩炮是那种「吓人但指望不上」的东西：一箭能穿透三个人，可射完了也就射完了，箭飞不远，打到后面就没劲了；射进木头上拔都拔不出来，车还是照样往前推。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_弩砲__弩砲.json#/Variants/0/Content
+    quote_hash: 3758AEE480940576D4E98937D448BE585A4B166B99752DC57B336699EECC62F2
+    quote: 我们村有个去守城的回来说，那东西一箭能穿透三个人
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_弩砲__弩砲.json#/Variants/0/Content
+    quote_hash: 913D0FD68DBF98DFA3F12964D9A5AB0AE8F4861B5EB280E795E0F30B3972F486
+    quote: 不过他说那东西射完了也就射完了，箭飞不远，打到后面就没劲了
+  expressions:
+  - id: expr.ballista-villager-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 弩砲？见过，城头上那种大弓架子。攻城的时候守城的一方从垛口后面往外射，箭跟人胳膊那么粗，嗖一下过来，木盾根本挡不住。我们村有个去守城的回来说，那东西一箭能穿透三个人，跟串鱼似的。不过他说那东西射完了也就射完了，箭飞不远，打到后面就没劲了，想靠它把对面的冲车打烂是不行的。真正把城守住还得靠人往上填。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_弩砲__弩砲.json#/Variants/0/Content
+      quote_hash: 3758AEE480940576D4E98937D448BE585A4B166B99752DC57B336699EECC62F2
+      quote: 我们村有个去守城的回来说，那东西一箭能穿透三个人
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_弩砲__弩砲.json#/Variants/0/Content
+      quote_hash: 913D0FD68DBF98DFA3F12964D9A5AB0AE8F4861B5EB280E795E0F30B3972F486
+      quote: 不过他说那东西射完了也就射完了，箭飞不远，打到后面就没劲了
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []

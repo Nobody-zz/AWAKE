@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-wadar
 title:
   zh-CN: 瓦达尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 瓦达尔
-  en:
-  - Wadar
-  - castle_village_A9_2
+entity_ids:
+- entity.settlement.castle_village_a9_2
 summary:
   zh-CN: 瓦达尔坐落于杰尔贾赖峭壁向陆侧的干河谷，紧邻沙砾平原与沙丘；春冬海云降下最后的水，勉强滋养养马草地。
 registry_bindings:

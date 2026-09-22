@@ -1,0 +1,143 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-planks
+title:
+  zh-CN: 板材
+  en: Planks
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 木板
+  en: []
+summary:
+  zh-CN: 板材是硬木锯成的板子，盖房造船修弩炮都等着它。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.5ac8Boz1
+  quote_hash: 1DD839317AC865F2FAC1F8ECE61AD8A97B51A0200624671A8FF9C34FFC24CCE2
+  quote: 板材{@Plural}成车的板材{\@}
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.YYl1W2jU
+  quote_hash: DD8BB51373E35613FA3808798B04B2D78EF060F721D9B2670D4035EF7F3EF7AB
+  quote: 森民
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_悲伤的肖农__悲伤的肖农.json#/Variants/5/Content
+  quote_hash: E9D912075880D9FAFF558BB42901A3C26B898A625FB785079D19A31CD08BF01F
+  quote: 加上水力资源充足，冶铁业得以持续发展
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-planks-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 板材是硬木加工成的木板，基准价 180 第纳尔，论车买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.5ac8Boz1
+    quote_hash: 1DD839317AC865F2FAC1F8ECE61AD8A97B51A0200624671A8FF9C34FFC24CCE2
+    quote: 板材{@Plural}成车的板材{\@}
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.YYl1W2jU
+    quote_hash: DD8BB51373E35613FA3808798B04B2D78EF060F721D9B2670D4035EF7F3EF7AB
+    quote: 森民
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_悲伤的肖农__悲伤的肖农.json#/Variants/5/Content
+    quote_hash: E9D912075880D9FAFF558BB42901A3C26B898A625FB785079D19A31CD08BF01F
+    quote: 加上水力资源充足，冶铁业得以持续发展
+  expressions:
+  - id: expr.goods-planks-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 原木不值钱，切成板子就值钱了。修城门、造攻城车、盖房子，哪一样都缺不了板子。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.5ac8Boz1
+      quote_hash: 1DD839317AC865F2FAC1F8ECE61AD8A97B51A0200624671A8FF9C34FFC24CCE2
+      quote: 板材{@Plural}成车的板材{\@}
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.YYl1W2jU
+      quote_hash: DD8BB51373E35613FA3808798B04B2D78EF060F721D9B2670D4035EF7F3EF7AB
+      quote: 森民
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-planks-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 板材 180 一件，比硬木贵了七倍。它是木料链上最值钱的一环，因为锯板要人手、要场地——有林场又有水力的地方才做得起这门生意。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.5ac8Boz1
+      quote_hash: 1DD839317AC865F2FAC1F8ECE61AD8A97B51A0200624671A8FF9C34FFC24CCE2
+      quote: 板材{@Plural}成车的板材{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_悲伤的肖农__悲伤的肖农.json#/Variants/5/Content
+      quote_hash: E9D912075880D9FAFF558BB42901A3C26B898A625FB785079D19A31CD08BF01F
+      quote: 加上水力资源充足，冶铁业得以持续发展
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

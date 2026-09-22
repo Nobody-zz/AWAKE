@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.villages-enoisa
 title:
   zh-CN: 厄诺伊萨
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 厄诺伊萨
-  en:
-  - Enoisa
-  - village_EN3_1
+entity_ids:
+- entity.settlement.village_en3_1
 summary:
   zh-CN: 厄诺伊萨坐落在德律亚山脉南部深湖俄佛堤斯——人称大地之眼——的岸边；北方来的充足降水润泽着这里的小麦。传说此处是古帕拉人的圣地，他们视这片湖为通往另一个世界的门户。
 registry_bindings:
@@ -40,7 +36,7 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 厄诺伊萨坐落在德律亚山脉南部深湖俄佛堤斯——人称大地之眼——的岸边；北方来的充足降水润泽着这里的小麦。传说此处是古帕拉人的圣地，他们视这片湖为通往另一个世界的门户。
+    zh-CN: “大地之眼”俄佛堤斯是德律亚山脉南部的一片深湖，岸边就是厄诺伊萨；从北方来的充足降水润泽着这里的小麦。
   sources:
   - source_id: source.calradia.game.villages-desc-emp2
     source_version: bannerlord-1.3.15.110062
@@ -48,12 +44,18 @@ assertions:
     locator: bannerlord.villages#village_EN3_1
     quote_hash: B9D8AF7C6BBC664B9485DFC807CD09932FDBECD543941998DB7A354B95841111
     quote: “大地之眼”俄佛堤斯，德律亚山脉南部山区的一片深湖，岸边就是厄诺伊萨。
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EN3_1
+    quote_hash: 50E8CF05260793829C78A7455E220BBFBEC4C42070BC04F12F09EEC5FACC564C
+    quote: 从北方来的充足降水润泽着这里的小麦。
   expressions:
-  - id: expr.village-enoisa-rumor
+  - id: expr.village-enoisa-1-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 厄诺伊萨人守着那汪深湖，管它叫大地之眼。老人说湖里有门户，宁可绕道也不下水——麦子倒年年吃雨吃饱。
+      zh-CN: 厄诺伊萨挨着一片大湖，叫“大地之眼”，水又黑又深。北边来的雨水多，这儿的小麦长得好。
     sources:
     - source_id: source.calradia.game.villages-desc-emp2
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +95,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.village-enoisa-detail
+  - id: expr.village-enoisa-1-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 厄诺伊萨的麦靠湖带来的一方湿气——产量看雨季早晚；因湖名在外，外来行商与香客多，粮与香火一并买卖，收粮得赶在朝圣旺季前。
+      zh-CN: 厄诺伊萨倚“大地之眼”俄佛堤斯，湖在德律亚山脉南段；北来的湿气足，麦子是本地的主收。
     sources:
     - source_id: source.calradia.game.villages-desc-emp2
       source_version: bannerlord-1.3.15.110062
@@ -118,4 +120,61 @@ assertions:
     - profile_id: profile.noble
       scope: elite
       min_detail: detail
+    denies: []
+- id: assertion.village-enoisa-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 传说俄佛堤斯是古帕拉人的圣地，他们视此湖为通往另一个世界的门户。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_EN3_1
+    quote_hash: 4563504AA3156FAC69AAEFFF2AFF96CF029D459BF8B61A0ED2C33C61A18B46B4
+    quote: 传说此处是古帕拉人的圣地，他们认为这片湖是通往另一个世界的门户。
+  expressions:
+  - id: expr.village-enoisa-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 老话说这片湖是古帕拉人的圣地，他们说湖底下就是通另一个世界的门。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_EN3_1
+      quote_hash: 4563504AA3156FAC69AAEFFF2AFF96CF029D459BF8B61A0ED2C33C61A18B46B4
+      quote: 传说此处是古帕拉人的圣地，他们认为这片湖是通往另一个世界的门户。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
     denies: []

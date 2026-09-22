@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-quyaz
 title:
   zh-CN: 古亚兹
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 古亚兹
-  en:
-  - Quyaz
-  - town_A1
+entity_ids:
+- entity.settlement.town_a1
 summary:
   zh-CN: 古亚兹曾是主导西海与珀拉斯海贸易的商业共和国，帝国霸权挤压其商路后商权旁落纳哈撒商人，今为巴努·胡勒延部族的重要领地。
 registry_bindings:

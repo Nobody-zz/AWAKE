@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-onica
 title:
   zh-CN: 俄尼卡
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 俄尼卡
-  en:
-  - Onica
-  - castle_village_EW3_1
+entity_ids:
+- entity.settlement.castle_village_ew3_1
 summary:
   zh-CN: 俄尼卡坐落于珀拉斯海北岸，山丘上遍布梯田葡萄园，出产的干型葡萄酒在帝国各地广受欢迎。
 registry_bindings:

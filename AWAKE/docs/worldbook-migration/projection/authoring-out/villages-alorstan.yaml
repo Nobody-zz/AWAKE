@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-alorstan
 title:
   zh-CN: 阿洛斯唐
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿洛斯唐
-  en:
-  - Alorstan
-  - village_V6_3
+entity_ids:
+- entity.settlement.village_v6_3
 summary:
   zh-CN: 阿洛斯唐坐落于比斯坎山脚下一块可以俯瞰海洋的巨岩上；这片瓦兰迪亚南部的温暖土地很宜种植橄榄树。
 registry_bindings:

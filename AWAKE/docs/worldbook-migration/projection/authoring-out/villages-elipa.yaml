@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-elipa
 title:
   zh-CN: 厄利帕
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 厄利帕
-  en:
-  - Elipa
-  - village_EW5_1
+entity_ids:
+- entity.settlement.village_ew5_1
 summary:
   zh-CN: 厄利帕坐落于阿里斯河谷上游；这片光照充足、水源丰沛的高地是帝国重要的粮仓之一。
 registry_bindings:

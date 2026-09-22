@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-vargornis
 title:
   zh-CN: 瓦耳戈尼斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 瓦耳戈尼斯
-  en:
-  - Vargornis
-  - village_ES7_2
+entity_ids:
+- entity.settlement.village_es7_2
 summary:
   zh-CN: 瓦耳戈尼斯是塔奈西斯湖畔的一座渔村；湖中有时能发现巨型梭鱼，更常见的是鲈鱼与鲷鱼。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-halisvust
 title:
   zh-CN: 阿利斯维斯特
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿利斯维斯特
-  en:
-  - Halisvust
-  - village_V9_2
+entity_ids:
+- entity.settlement.village_v9_2
 summary:
   zh-CN: 阿利斯维斯特原是一片荒沼，瓦兰迪亚定居者将水排干，在山谷里种起了小麦与黑麦。
 registry_bindings:

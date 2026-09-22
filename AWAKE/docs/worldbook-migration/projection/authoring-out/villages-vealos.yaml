@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-vealos
 title:
   zh-CN: 威亚罗斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 威亚罗斯
-  en:
-  - Vealos
-  - village_EN5_1
+entity_ids:
+- entity.settlement.village_en5_1
 summary:
   zh-CN: 威亚罗斯坐落于帝国东边德律亚山脉东侧的缓坡上；山坡多覆山毛榉与橡树林，却能产优质马草，自古便是帝国军马育种地。
 registry_bindings:

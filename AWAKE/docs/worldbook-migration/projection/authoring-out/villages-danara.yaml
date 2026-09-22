@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-danara
 title:
   zh-CN: 达纳拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 达纳拉
-  en:
-  - Danara
-  - village_K6_3
+entity_ids:
+- entity.settlement.village_k6_3
 summary:
   zh-CN: 达纳拉位于库赛特人称作昌尕淖尔的那片不解渴的盐湖旁；村民从苦涩的湖水里取盐。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-askar
 title:
   zh-CN: 阿斯凯尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿斯凯尔
-  en:
-  - Askar
-  - town_A7
+entity_ids:
+- entity.settlement.town_a7
 summary:
   zh-CN: 阿斯凯尔扼达玛尔河中段，数千年来人口稠密；河流每隔几百年决堤一次抹去旧迹，今城为帝国旧营地经阿塞莱部落占领而来。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-savinth
 title:
   zh-CN: 萨万特
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 萨万特
-  en:
-  - Savinth
-  - village_V7_1
+entity_ids:
+- entity.settlement.village_v7_1
 summary:
   zh-CN: 萨万特坐落于沙拉斯湾以北温暖的草原上；这片土地是瓦兰迪亚公认的优质马场。
 registry_bindings:

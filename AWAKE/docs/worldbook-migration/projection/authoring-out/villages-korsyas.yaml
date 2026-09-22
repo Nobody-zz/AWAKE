@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-korsyas
 title:
   zh-CN: 科尔夏斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 科尔夏斯
-  en:
-  - Korsyas
-  - village_S7_1
+entity_ids:
+- entity.settlement.village_s7_1
 summary:
   zh-CN: 科尔夏斯位于瓦尔切格湾最窄处的旁边；村民出海向西，捕捞鳕鱼、鲑鱼和其他冒险游进湾里的冷水鱼。
 registry_bindings:

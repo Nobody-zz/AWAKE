@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-khimli
 title:
   zh-CN: 希木利
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 希木利
-  en:
-  - Khimli
-  - castle_village_K5_1
+entity_ids:
+- entity.settlement.castle_village_k5_1
 summary:
   zh-CN: 希木利位于德夫赛格高原的一处盆地内；这里几乎终年干旱，却仍有冬雪与泥泞的春天；雪化雨停留下的水坑边，能挖到上好的黏土。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-odrysa
 title:
   zh-CN: 俄德律萨
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 俄德律萨
-  en:
-  - Odrysa
-  - castle_village_ES1_1
+entity_ids:
+- entity.settlement.castle_village_es1_1
 summary:
   zh-CN: 俄德律萨坐落于帝国遥远的东部边境，蒂亚具斯河对岸即是库赛特汗国领土；当地气候干旱，橡树等仍生长于峡谷角落，支撑小规模的木材业。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-lindorn
 title:
   zh-CN: 林杜恩
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 林杜恩
-  en:
-  - Lindorn
-  - castle_village_B4_2
+entity_ids:
+- entity.settlement.castle_village_b4_2
 summary:
   zh-CN: 林杜恩坐落于“林·泰瓦尔”——即暗湖——的西北面绿色山丘上；周围的农田里种着小麦和大麦。
 registry_bindings:

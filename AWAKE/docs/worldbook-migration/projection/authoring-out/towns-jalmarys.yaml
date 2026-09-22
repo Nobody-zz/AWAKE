@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-jalmarys
 title:
   zh-CN: 贾尔马律斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 贾尔马律斯
-  en:
-  - Jalmarys
-  - town_EW3
+entity_ids:
+- entity.settlement.town_ew3
 summary:
   zh-CN: 贾尔马律斯是帝国最早的内陆殖民地之一，素以居民迂腐守旧被嘲，直到将军卡尔索斯以一句“那你听得懂这个吗”的政变扭转讥名。
 registry_bindings:

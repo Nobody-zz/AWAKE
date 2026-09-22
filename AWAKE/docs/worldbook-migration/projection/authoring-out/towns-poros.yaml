@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.towns-poros
 title:
   zh-CN: 波罗斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 波罗斯
-  en:
-  - Poros
-  - town_ES3
+entity_ids:
+- entity.settlement.town_es3
 summary:
   zh-CN: 波罗斯踞珀拉斯海北岸，温暖山峦宜牧羊驯马；牧民强悍，列奥尼帕得斯家族尊重其自治、只在两造相邀时裁决。
 registry_bindings:
@@ -40,7 +36,7 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 波罗斯踞珀拉斯海北岸，温暖山峦宜牧羊驯马；牧民强悍，列奥尼帕得斯家族尊重其自治、只在两造相邀时裁决。
+    zh-CN: 波罗斯位于珀拉斯海的北面海岸；温暖绵延的山峦宜于驯养绵羊与马匹；嘶鸣的牲畜与流血的斗殴在此地常见。
   sources:
   - source_id: source.calradia.game.settlements-desc
     source_version: bannerlord-1.3.15.110062
@@ -48,12 +44,24 @@ assertions:
     locator: bannerlord.settlements#town_ES3
     quote_hash: 3AC20E62D638ACBAF8068BA79412D400654A1F20B83DEC51659866E3E469CAF9
     quote: 波罗斯城位于珀拉斯海的北面海岸。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_ES3
+    quote_hash: 17921F5A8C688B18053AD4B01B8FBA4C43A87D71CBD322676EFAEF2018DEF8B7
+    quote: 此地温暖而绵延的山峦非常适合驯养绵羊和马匹。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_ES3
+    quote_hash: 4A203FF8B7A6C68F6BC7411196DE8A5E73CBFDDE5E6FEDA009CDB7230AB40198
+    quote: 嘶鸣的牲畜和流血的斗殴在此地成了一道靓丽的风景线。
   expressions:
-  - id: expr.town-poros-rumor
+  - id: expr.town-poros-1-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 波罗斯的山坡上全是羊和马，那边的人拳头硬脾气冲。老爷们从不平白管闲事，可一旦评了理，输赢都认。
+      zh-CN: 波罗斯在珀拉斯海北岸，山好，养羊养马都成。那边的人脾气冲，打架是常事。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +101,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.town-poros-detail
+  - id: expr.town-poros-1-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 波罗斯是牲口市场的高地——绵羊与马匹产地直出；本地规矩：械斗不由官面由仲裁，跟牧民做买卖先约好裁决人再谈价。
+      zh-CN: 波罗斯靠珀拉斯海北岸，山地宜牧；畜与马是本地大宗，市面上的规矩也围着牲口转。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -105,6 +113,134 @@ assertions:
       locator: bannerlord.settlements#town_ES3
       quote_hash: 3AC20E62D638ACBAF8068BA79412D400654A1F20B83DEC51659866E3E469CAF9
       quote: 波罗斯城位于珀拉斯海的北面海岸。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-poros-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 牧民们以骄傲而暴力闻名；统治此地的列奥尼帕得斯家族，贵族们小心地尊重他们的自治。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_ES3
+    quote_hash: ED64CAAA3D3BDE1CD38688AE634EC311650665DF905D2FEF0481D268FBCBECD4
+    quote: 牧民们有着骄傲而暴力的名声，而统治当地的列奥尼帕得斯家族的贵族们也小心地尊重他们的自治。
+  expressions:
+  - id: expr.town-poros-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 列奥尼帕得斯家在波罗斯不硬来——牧民的名声摆在那儿，硬来的代价他们算得清。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_ES3
+      quote_hash: ED64CAAA3D3BDE1CD38688AE634EC311650665DF905D2FEF0481D268FBCBECD4
+      quote: 牧民们有着骄傲而暴力的名声，而统治当地的列奥尼帕得斯家族的贵族们也小心地尊重他们的自治。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-poros-3
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 据人们说，列奥尼帕得斯从不干涉纷争，除非争斗双方都请他们裁决；而一旦裁决下达，人人服从。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_ES3
+    quote_hash: AA99EC3B6C96D948560482B56A5A3BEF491A97BE04FD0B7A27ED1FFF494C01D3
+    quote: 据人们说，列奥尼帕得斯从不会干涉这样的纷争，除非争斗的双方都邀请他们进行裁决。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_ES3
+    quote_hash: C01F61A75C1DFB4E99F3B7A00CC32D927D1170B30FA6A66E4B8E142320CFAF9A
+    quote: 然而一旦他们下达了裁决，所有人都会对其表示服从。
+  expressions:
+  - id: expr.town-poros-3-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 都说波罗斯的贵族不管打架，除非两边都请他们断。可断下来的话，没人不认。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_ES3
+      quote_hash: AA99EC3B6C96D948560482B56A5A3BEF491A97BE04FD0B7A27ED1FFF494C01D3
+      quote: 据人们说，列奥尼帕得斯从不会干涉这样的纷争，除非争斗的双方都邀请他们进行裁决。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-poros-3-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 波罗斯的秩序靠一句口碑撑着：不请不裁，裁了必服。这话传得久了，本身就成了规矩。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_ES3
+      quote_hash: AA99EC3B6C96D948560482B56A5A3BEF491A97BE04FD0B7A27ED1FFF494C01D3
+      quote: 据人们说，列奥尼帕得斯从不会干涉这样的纷争，除非争斗的双方都邀请他们进行裁决。
     grants:
     - profile_id: profile.headman
       scope: national

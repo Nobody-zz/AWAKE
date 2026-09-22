@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-swenryn
 title:
   zh-CN: 斯温林
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 斯温林
-  en:
-  - Swenryn
-  - village_B4_4
+entity_ids:
+- entity.settlement.village_b4_4
 summary:
   zh-CN: 斯温林俯瞰着一道岩石大瀑布——它拦下泰瓦尔湖的暗水，在乌卡利翁中央汇成湖；马匹在激流与瀑布之上的草地上吃草。
 registry_bindings:

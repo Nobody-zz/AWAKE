@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-tubilis
 title:
   zh-CN: 突比力斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 突比力斯
-  en:
-  - Tubilis
-  - castle_village_A1_1
+entity_ids:
+- entity.settlement.castle_village_a1_1
 summary:
   zh-CN: 突比力斯是沙拉斯湾的渔村，阿塞莱人亦称此湾为沙瑞兹；村民驾船在岛屿间的浅滩捕捞金枪鱼、沙丁鱼与鲨鱼。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-beglomuar
 title:
   zh-CN: 贝格洛米艾
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 贝格洛米艾
-  en:
-  - Beglomuar
-  - village_B1_3
+entity_ids:
+- entity.settlement.village_b1_3
 summary:
   zh-CN: 贝格洛米艾位于乌卡利翁地块南边峭壁的一处角落里；除山上的矿床和沼泽里的沼铁矿外，此地并无别的长处。
 registry_bindings:

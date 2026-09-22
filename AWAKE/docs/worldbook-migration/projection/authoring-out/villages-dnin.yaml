@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-dnin
 title:
   zh-CN: 德宁
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 德宁
-  en:
-  - Dnin
-  - castle_village_S3_2
+entity_ids:
+- entity.settlement.castle_village_s3_2
 summary:
   zh-CN: 德宁位于俯瞰瓦尔切格湾狭窄处的牧草地上；马儿在高地上吃草，偶尔瞧一眼下面经过的长船和小渔船。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-ortysia
 title:
   zh-CN: 俄耳堤西亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 俄耳堤西亚
-  en:
-  - Ortysia
-  - town_EW4
+entity_ids:
+- entity.settlement.town_ew4
 summary:
   zh-CN: 俄耳堤西亚是卡拉德人在珀拉斯海的第一块殖民地，名取自泽地鹌鹑；高耸的灯塔为穿雾而来的船只标定帝国海巡的安全水域。
 registry_bindings:

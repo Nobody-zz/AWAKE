@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-gamardan
 title:
   zh-CN: 伽玛耳丹
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 伽玛耳丹
-  en:
-  - Gamardan
-  - castle_village_EW4_2
+entity_ids:
+- entity.settlement.castle_village_ew4_2
 summary:
   zh-CN: 伽玛耳丹位于沙拉斯湾分出的一片小海湾的头端，金枪鱼在近海聚集产卵，当地渔民先用渔网将鱼群围住，再用钩具拖拽上船。
 registry_bindings:

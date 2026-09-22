@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-samatha
 title:
   zh-CN: 萨马塔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 萨马塔
-  en:
-  - Samatha
-  - village_EN5_4
+entity_ids:
+- entity.settlement.village_en5_4
 summary:
   zh-CN: 萨马塔位于阳光普照的密泽亚德高地的一处斜坡上；山坡被改造成梯田以种植桑树，人们采桑叶入桶喂蚕。
 registry_bindings:

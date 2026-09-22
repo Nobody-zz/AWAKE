@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-ferkh
 title:
   zh-CN: 费赫
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 费赫
-  en:
-  - Ferkh
-  - castle_village_S5_2
+entity_ids:
+- entity.settlement.castle_village_s5_2
 summary:
   zh-CN: 费赫位于伊卡拉荒原——拉科尼斯湖西北方森林——的北部边缘处；它是冒险深入森林的商贩落脚之处，那些人要面对严寒与狼群，还要应付寻毛皮的、脾性难料的林中居民，以及北地的赏金猎人。
 registry_bindings:

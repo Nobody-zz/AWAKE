@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-dinar
 title:
   zh-CN: 迪纳尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 迪纳尔
-  en:
-  - Dinar
-  - castle_village_K6_1
+entity_ids:
+- entity.settlement.castle_village_k6_1
 summary:
   zh-CN: 迪纳尔位于库赛特部落联盟的极北之地，沿喀拉卡孜河而建；这里几乎没有树木与山丘，挡不住自东北草原沿冰冻河面刮来的寒风，出产的羊毛因此异常浓密。
 registry_bindings:

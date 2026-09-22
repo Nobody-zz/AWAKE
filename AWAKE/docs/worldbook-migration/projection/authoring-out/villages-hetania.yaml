@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-hetania
 title:
   zh-CN: 赫塔尼亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 赫塔尼亚
-  en:
-  - Hetania
-  - village_EN4_4
+entity_ids:
+- entity.settlement.village_en4_4
 summary:
   zh-CN: 赫塔尼亚坐落于德律亚山脉东北部的一个山嘴下；同附近的许多村庄一样，当地林农至今仍说着帕拉语——在帝国入侵之前，那是这里各部落的语言。
 registry_bindings:

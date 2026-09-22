@@ -1,0 +1,399 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.military-legion-modern
+title:
+  zh-CN: 现代军团
+  en: Modern Legion
+status: needs_review
+domain: war
+subdomain: military
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 执政官私兵
+  - 贵族私军
+  - 新军
+  en:
+  - Consular Retinue
+summary:
+  zh-CN: 现代军团：阿雷尼科斯军制改革之后的帝国军队——废除原有常备军，改用执政官与贵族自行组建、开销更低、更适合控制领地的私兵。军费大幅削减，军队却从国家手中转到地方领主手中。皇帝省了钱，执政官们多了实权；士兵则从此看雇主的脸色吃饭。改革为后来的三帝内战提供了武力基础。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.9qAWNBvA
+  quote_hash: F63E0CC5F2FAAC9B817DBA279B7722B7A7E87DBBEC417A13053CF58D6C977A9F
+  quote: 自由民，又名厄琉忒耳，生活在帝国边缘的大草原上。他们最初是逃亡奴隶和负债者的后代，但很快因为对边境地区的了解而受到当地帝国指挥官的高度重视。他们的领袖被授予头衔，年轻人也被招募为执政官和皇帝们的私兵。但是，尽管他们现在非常忠诚于帝国的理念，对于帝国的实际权威却仍充满敌意。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_现代军团__现代军团.json#/Variants/0/Content
+  quote_hash: 84073E47D638F2F03D5F2AAF4AA7F009B5A286F2DEB82FEB5F001C2BA1ECC2FB
+  quote: 这一改革大幅削减了军费，但让军队从国家手中转移到了地方领主手中
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_现代军团__现代军团.json#/Variants/2/Content
+  quote_hash: F714E56BCB4B3F879CDE0EAEAC63EE9C1C4D4CDCBCC4431FE64CD32A54A251D4
+  quote: 谁手里有兵，谁说话就硬气
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_现代军团__现代军团.json#/Variants/3/Content
+  quote_hash: D9B5E7BAA86175A64E38FCC06779EA2C01989A3363DA757921325A22B9A9A249
+  quote: 上面是哪个大老爷，你就得看哪个大老爷的脸色
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_现代军团__现代军团.json#/Variants/7/Content
+  quote_hash: 52AA131BC818F66603D05524AE90B4506310290E0759AF278C6C1FB811E2BD14
+  quote: 但人家至少是男爵养兵，国王号令。帝国倒好，执政官们各自养兵，三个皇帝互相打，连个统一号令都没有
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_现代军团__现代军团.json#/Variants/9/Content
+  quote_hash: 46D788868BAE91462427FEE4B3B740AFFCD5103FD269E28A1215D46252E140A4
+  quote: 皇帝亲手把兵权分给了自己任命的人，然后又管不住他们，这才是最可笑的地方
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_现代军团__现代军团.json#/Variants/11/Content
+  quote_hash: 50777B62185108D4BFF68AE39CD077FB40CDB44388EAE4840D44391F92089B12
+  quote: 帝国人的皇帝把兵权分了，却没能让那些执政官继续听他的话，这算什么改革
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_现代军团__现代军团.json#/Variants/4/Content
+  quote_hash: D22E55473942E87A34092D90788387BD907ED7175448D9F58FD38A342ACC14E3
+  quote: 说白了就是让有钱的老爷们自己养打手
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_现代军团__现代军团.json#/Variants/4/Content
+  quote_hash: C5DA7428A8E426F789A2B39850EC6819CB4BCD73B8EA04FAF7A1087EB84F9414
+  quote: 坏处是这些老爷们手里的刀越来越快
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_现代军团__现代军团.json#/Variants/5/Content
+  quote_hash: D05651F827F245433834491576446E5B9ADE50D964C08CC79752D703DED0B063
+  quote: 当每个执政官都拥有只听命于自己的军队时，皇权就成了一个空壳
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_现代军团__现代军团.json#/Variants/6/Content
+  quote_hash: D8EAAA717585EFE8F785C9F311A74820D6DCF1917BE9A4AE5CF0C2C7A750211D
+  quote: 改革省下来的钱，最后都变成了内战的军费
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_现代军团__现代军团.json#/Variants/12/Content
+  quote_hash: F28975CEA7CBB8761E7B6CED3D69E8CA78A978C7984A929099D9813DFBB71696
+  quote: 现在执政官们互相打仗，谁都需要人手，只要你有兵，不愁没雇主
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.modern-legion-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 现代军团指的是阿雷尼科斯皇帝改革军制之后的帝国军队：潘德拉克战役惨败后，皇帝废除了原有的帝国常备军，改用由执政官和贵族自行组建、开销更低、更适合控制领地的私兵。这一改革大幅削减了军费，但让军队从国家手中转移到了地方领主手中。此外，帝国边缘大草原上的自由民（厄琉忒耳）最初是逃亡奴隶和负债者的后代，因熟悉边境而受帝国指挥官重视，其年轻人也被招募为执政官和皇帝们的私兵。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.9qAWNBvA
+    quote_hash: F63E0CC5F2FAAC9B817DBA279B7722B7A7E87DBBEC417A13053CF58D6C977A9F
+    quote: 自由民，又名厄琉忒耳，生活在帝国边缘的大草原上。他们最初是逃亡奴隶和负债者的后代，但很快因为对边境地区的了解而受到当地帝国指挥官的高度重视。他们的领袖被授予头衔，年轻人也被招募为执政官和皇帝们的私兵。但是，尽管他们现在非常忠诚于帝国的理念，对于帝国的实际权威却仍充满敌意。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_现代军团__现代军团.json#/Variants/0/Content
+    quote_hash: 84073E47D638F2F03D5F2AAF4AA7F009B5A286F2DEB82FEB5F001C2BA1ECC2FB
+    quote: 这一改革大幅削减了军费，但让军队从国家手中转移到了地方领主手中
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_现代军团__现代军团.json#/Variants/2/Content
+    quote_hash: F714E56BCB4B3F879CDE0EAEAC63EE9C1C4D4CDCBCC4431FE64CD32A54A251D4
+    quote: 谁手里有兵，谁说话就硬气
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_现代军团__现代军团.json#/Variants/3/Content
+    quote_hash: D9B5E7BAA86175A64E38FCC06779EA2C01989A3363DA757921325A22B9A9A249
+    quote: 上面是哪个大老爷，你就得看哪个大老爷的脸色
+  expressions:
+  - id: expr.modern-legion-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 现代军团指的是阿雷尼科斯改革之后的帝国军队：皇帝把原来的常备军废了，改用执政官和贵族自己出钱组建的私兵——开销更低，也更适合控制边边角角的领地。军费是省下来了，但军队从国家手里转到了地方领主手里。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.9qAWNBvA
+      quote_hash: F63E0CC5F2FAAC9B817DBA279B7722B7A7E87DBBEC417A13053CF58D6C977A9F
+      quote: 自由民，又名厄琉忒耳，生活在帝国边缘的大草原上。他们最初是逃亡奴隶和负债者的后代，但很快因为对边境地区的了解而受到当地帝国指挥官的高度重视。他们的领袖被授予头衔，年轻人也被招募为执政官和皇帝们的私兵。但是，尽管他们现在非常忠诚于帝国的理念，对于帝国的实际权威却仍充满敌意。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_现代军团__现代军团.json#/Variants/0/Content
+      quote_hash: 84073E47D638F2F03D5F2AAF4AA7F009B5A286F2DEB82FEB5F001C2BA1ECC2FB
+      quote: 这一改革大幅削减了军费，但让军队从国家手中转移到了地方领主手中
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.modern-legion-noble-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 现代军团说白了就是我们的私兵。皇帝把养兵的责任推给了我们，我们出钱出人，兵自然就听我们的。这对皇帝来说省了钱，对我们来说却多了实权。以前帝国的将军们靠国家拨饷，现在他们靠我们这些执政官养着。谁手里有兵，谁说话就硬气。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_现代军团__现代军团.json#/Variants/2/Content
+      quote_hash: F714E56BCB4B3F879CDE0EAEAC63EE9C1C4D4CDCBCC4431FE64CD32A54A251D4
+      quote: 谁手里有兵，谁说话就硬气
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+      role_ids:
+      - entity.role.lord
+    denies: []
+  - id: expr.modern-legion-soldier-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿雷尼科斯改革之后，我们这些当兵的就看运气了。跟对了执政官，军饷照发，待遇还不错；要是你的雇主穷了或者倒了霉，你就得另寻门路。不像以前，大家都是帝国兵，上面是皇帝和元老院。现在嘛，上面是哪个大老爷，你就得看哪个大老爷的脸色。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_现代军团__现代军团.json#/Variants/3/Content
+      quote_hash: D9B5E7BAA86175A64E38FCC06779EA2C01989A3363DA757921325A22B9A9A249
+      quote: 上面是哪个大老爷，你就得看哪个大老爷的脸色
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+- id: assertion.modern-legion-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 外族对这场改革的看法一致地不看好：瓦兰迪亚人说这跟自家男爵私兵差不多，但人家至少是男爵养兵、国王号令，帝国倒好，执政官们各自养兵，三个皇帝互相打，连个统一号令都没有；巴旦尼亚人说皇帝亲手把兵权分给自己任命的人，然后又管不住他们，这才是最可笑的地方；库赛特人说可汗的权威来自所有部落的效忠，帝国皇帝把兵权分了，却没能让执政官继续听他的话，这算什么改革。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_现代军团__现代军团.json#/Variants/7/Content
+    quote_hash: 52AA131BC818F66603D05524AE90B4506310290E0759AF278C6C1FB811E2BD14
+    quote: 但人家至少是男爵养兵，国王号令。帝国倒好，执政官们各自养兵，三个皇帝互相打，连个统一号令都没有
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_现代军团__现代军团.json#/Variants/9/Content
+    quote_hash: 46D788868BAE91462427FEE4B3B740AFFCD5103FD269E28A1215D46252E140A4
+    quote: 皇帝亲手把兵权分给了自己任命的人，然后又管不住他们，这才是最可笑的地方
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_现代军团__现代军团.json#/Variants/11/Content
+    quote_hash: 50777B62185108D4BFF68AE39CD077FB40CDB44388EAE4840D44391F92089B12
+    quote: 帝国人的皇帝把兵权分了，却没能让那些执政官继续听他的话，这算什么改革
+  expressions:
+  - id: expr.modern-legion-vlandia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帝国人的现代军团？哼，就是他们皇帝把军队卖给了贵族。听起来和我们瓦兰迪亚的男爵私兵差不多，但人家至少是男爵养兵，国王号令。帝国倒好，执政官们各自养兵，三个皇帝互相打，连个统一号令都没有。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_现代军团__现代军团.json#/Variants/7/Content
+      quote_hash: 52AA131BC818F66603D05524AE90B4506310290E0759AF278C6C1FB811E2BD14
+      quote: 但人家至少是男爵养兵，国王号令。帝国倒好，执政官们各自养兵，三个皇帝互相打，连个统一号令都没有
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+  - id: expr.modern-legion-battania-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帝国人的现代军团，就是让有钱的贵族自己招兵买马。这和我们巴旦尼亚的氏族兵差不多，每个伯爵都有自己的战士。但我们的伯爵是氏族推选的，他们的执政官是皇帝任命的。皇帝亲手把兵权分给了自己任命的人，然后又管不住他们，这才是最可笑的地方。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_现代军团__现代军团.json#/Variants/9/Content
+      quote_hash: 46D788868BAE91462427FEE4B3B740AFFCD5103FD269E28A1215D46252E140A4
+      quote: 皇帝亲手把兵权分给了自己任命的人，然后又管不住他们，这才是最可笑的地方
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.battania
+    denies: []
+  - id: expr.modern-legion-khuzait-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帝国人的皇帝把军队裁了，让下面的领主自己养兵。在我们草原上，可汗的权威来自于所有部落的效忠，每个部落都有自己的战士，但打仗时都听可汗的。帝国人的皇帝把兵权分了，却没能让那些执政官继续听他的话，这算什么改革？
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_现代军团__现代军团.json#/Variants/11/Content
+      quote_hash: 50777B62185108D4BFF68AE39CD077FB40CDB44388EAE4840D44391F92089B12
+      quote: 帝国人的皇帝把兵权分了，却没能让那些执政官继续听他的话，这算什么改革
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    denies: []
+- id: assertion.modern-legion-3
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 在帝国境内，这场改革各有各的算法：市井的说法是「让有钱的老爷们自己养打手」——皇帝不用再征那么高的税去养常备军，坏处是这些老爷们手里的刀越来越快；幕僚的说法是「把军事力量从中央集权转向地方分权」，短期缓解了财政危机，长远为内战埋下伏笔，皇权成了一个空壳；而被遣散的老兵恨之入骨——以前当兵是为了帝国，现在当兵是为了某个大老爷的钱袋子，改革省下来的钱，最后都变成了内战的军费。雇佣兵那边倒是另一番光景：执政官们互相打仗，谁都需要人手，只要你有兵，不愁没雇主。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_现代军团__现代军团.json#/Variants/4/Content
+    quote_hash: D22E55473942E87A34092D90788387BD907ED7175448D9F58FD38A342ACC14E3
+    quote: 说白了就是让有钱的老爷们自己养打手
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_现代军团__现代军团.json#/Variants/4/Content
+    quote_hash: C5DA7428A8E426F789A2B39850EC6819CB4BCD73B8EA04FAF7A1087EB84F9414
+    quote: 坏处是这些老爷们手里的刀越来越快
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_现代军团__现代军团.json#/Variants/5/Content
+    quote_hash: D05651F827F245433834491576446E5B9ADE50D964C08CC79752D703DED0B063
+    quote: 当每个执政官都拥有只听命于自己的军队时，皇权就成了一个空壳
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_现代军团__现代军团.json#/Variants/6/Content
+    quote_hash: D8EAAA717585EFE8F785C9F311A74820D6DCF1917BE9A4AE5CF0C2C7A750211D
+    quote: 改革省下来的钱，最后都变成了内战的军费
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_现代军团__现代军团.json#/Variants/12/Content
+    quote_hash: F28975CEA7CBB8761E7B6CED3D69E8CA78A978C7984A929099D9813DFBB71696
+    quote: 现在执政官们互相打仗，谁都需要人手，只要你有兵，不愁没雇主
+  expressions:
+  - id: expr.modern-legion-town-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 现代军团这套东西，说白了就是让有钱的老爷们自己养打手。好处是帝国不用再征那么高的税去养常备军了，坏处是这些老爷们手里的刀越来越快。以前帝国只有一支军队，现在每个执政官都有自己的军队，打起内战时比以前还凶。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_现代军团__现代军团.json#/Variants/4/Content
+      quote_hash: D22E55473942E87A34092D90788387BD907ED7175448D9F58FD38A342ACC14E3
+      quote: 说白了就是让有钱的老爷们自己养打手
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_现代军团__现代军团.json#/Variants/4/Content
+      quote_hash: C5DA7428A8E426F789A2B39850EC6819CB4BCD73B8EA04FAF7A1087EB84F9414
+      quote: 坏处是这些老爷们手里的刀越来越快
+    grants:
+    - profile_id: profile.merchant
+      scope: regional
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+  - id: expr.modern-legion-steward-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿雷尼科斯的军制改革，本质上是将帝国的军事力量从中央集权转向地方分权。他废除了最后一支常备军团，改由执政官以个人财力组建私兵。这在短期内缓解了帝国的财政危机，但从长远来看，却为后来的内战埋下了伏笔——当每个执政官都拥有只听命于自己的军队时，皇权就成了一个空壳。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_现代军团__现代军团.json#/Variants/5/Content
+      quote_hash: D05651F827F245433834491576446E5B9ADE50D964C08CC79752D703DED0B063
+      quote: 当每个执政官都拥有只听命于自己的军队时，皇权就成了一个空壳
+    grants:
+    - profile_id: profile.noble_high_steward
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+  - id: expr.modern-legion-vet-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 我认识几个老军团兵，他们对阿雷尼科斯的所谓改革恨之入骨。他们说，以前当兵是为了帝国，现在当兵是为了某个大老爷的钱袋子。那些被遣散的老兵，有的沦落成了强盗，有的组成了被弃者军团，靠给别人卖命过活。改革省下来的钱，最后都变成了内战的军费。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_现代军团__现代军团.json#/Variants/6/Content
+      quote_hash: D8EAAA717585EFE8F785C9F311A74820D6DCF1917BE9A4AE5CF0C2C7A750211D
+      quote: 改革省下来的钱，最后都变成了内战的军费
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    denies: []
+  - id: expr.modern-legion-merc-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 现代军团让雇佣兵的日子好过了不少。以前帝国常备军在的时候，我们只能打打边角料。现在执政官们互相打仗，谁都需要人手，只要你有兵，不愁没雇主。那些被遣散的老军团兵，有的混得比我们还好，毕竟人家是正规军出身，雇主更信任。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_现代军团__现代军团.json#/Variants/12/Content
+      quote_hash: F28975CEA7CBB8761E7B6CED3D69E8CA78A978C7984A929099D9813DFBB71696
+      quote: 现在执政官们互相打仗，谁都需要人手，只要你有兵，不愁没雇主
+    grants:
+    - profile_id: profile.ransom_broker
+      scope: regional
+      min_detail: rumor
+    denies: []

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-mijayit
 title:
   zh-CN: 米贾伊特
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 米贾伊特
-  en:
-  - Mijayit
-  - village_A6_1
+entity_ids:
+- entity.settlement.village_a6_1
 summary:
   zh-CN: 米贾伊特坐落在达玛尔河入海口旁。河水到这儿缓下劲，一路驮来的淤泥撂在岸上，积出阿塞莱数一数二的肥地。
 registry_bindings:

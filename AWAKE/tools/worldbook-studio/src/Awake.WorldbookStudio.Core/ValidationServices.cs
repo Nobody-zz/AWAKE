@@ -62,9 +62,94 @@ public sealed class RegistryService
 
 }
 
-public sealed class SourceRegistryService
+// ── 互引边表（2026-09-20）────────────────────────────────────────────────────
+//
+// 边表是「A 条正文点名了 B 条的名字」这条判据的产物（判据与生成器见
+// `tools/_link_registry_20260920.py`，审计件见 `docs/mappings/worldbook-should-link/20260920/`）。
+// 它进包是为了**召回**：问 A 时，A 点过名的 B 可以低权重地捎带出来。
+//
+// ⚠️ 为什么单开一个服务、不并进 `RegistrySnapshot`：
+//   · `RegistrySnapshot` 的投影有一份**金标基线**（`tests/fixtures/a3-4-registry-snapshot-golden.v1.json`，
+//     按 `CanonicalJson.Hash` 逐字节比对）—— 往里加字段就会把它打红；
+//   · 边表的消费者是**编译器的 entry 构建**，不是身份/权限判定；挂在编译入口上更窄。
+//
+// ⚠️ 文件缺失 == **不报诊断**，只在编译产物 `source-report.json` 里记 `link_edges: 0`。
+//    两个理由：
+//      · 其它工作区（fixtures / smoke / authoring-test）本来就没有这份表，报 error 会连带打断那些链路；
+//      · 报 warning 会把**既有诊断金标**打红（`a3-2-content-graph-golden` 按 code/path/order 逐条比对），
+//        而这份表在正式 schema 根里一定存在 —— 为一个「只在测试夹具里发生」的情形付金标代价不划算。
+//    可见性由**产物**给：`source-report.json` 是「本次编译整合了哪些输入」的既有出处。
+public sealed class LinkRegistrySnapshot
+{
+    /// entryId → 该条的出边（已排序：强→弱、专名→枢纽、to）。运行时要的顺序就是它。
+    public Dictionary<string, List<JsonObject>> OutgoingByEntry { get; } = new(StringComparer.Ordinal);
+
+    public int EdgeCount { get; internal set; }
+
+    public string Hash { get; internal set; } = string.Empty;
+
+    public bool Present { get; internal set; }
+}
+
+public sealed class LinkRegistryService
 {
     private readonly WorkspaceService _workspace;
+    private readonly SchemaValidator _schema;
+
+    public LinkRegistryService(WorkspaceService workspace, SchemaValidator schema)
+    {
+        _workspace = workspace;
+        _schema = schema;
+    }
+
+    public LinkRegistrySnapshot LoadAndValidate(ValidationReport report, SnapshotInputStore? snapshot = null)
+    {
+        var result = new LinkRegistrySnapshot();
+        var path = Path.Combine(_workspace.SchemaRoot, "link-registry.v1.json");
+        if (!File.Exists(path)) return result;      // 见类头注释：缺失不报诊断，由 source-report 记账
+
+        var bytes = snapshot?.GetBytes(path) ?? File.ReadAllBytes(path);
+        var document = JsonNode.Parse(bytes)?.AsObject();
+        if (document is null)
+        {
+            report.Error("WB-LINK-001", "互引边表无法解析为 JSON 对象。", path);
+            return result;
+        }
+
+        _schema.Validate(document, Path.Combine(_workspace.SchemaRoot, "link-registry.v1.schema.json"), report, snapshot);
+        if (!report.Valid) return result;
+
+        foreach (var edge in document["edges"]?.AsArray().OfType<JsonObject>() ?? [])
+        {
+            var from = edge["from"]?.GetValue<string>();
+            if (string.IsNullOrWhiteSpace(from)) continue;
+            if (!result.OutgoingByEntry.TryGetValue(from!, out var list))
+                result.OutgoingByEntry[from!] = list = [];
+            list.Add(edge);
+        }
+        // 排序：强边在前（正文点名了它的真名），专名在前（类别枢纽边信息量低），最后按目标 id。
+        foreach (var list in result.OutgoingByEntry.Values)
+            list.Sort((a, b) =>
+            {
+                int byStrength = StrengthRank(b).CompareTo(StrengthRank(a));
+                if (byStrength != 0) return byStrength;
+                int byBucket = BucketRank(b).CompareTo(BucketRank(a));
+                if (byBucket != 0) return byBucket;
+                return string.CompareOrdinal(b["to"]?.GetValue<string>() ?? "", a["to"]?.GetValue<string>() ?? "");
+            });
+
+        result.EdgeCount = document["edges"]?.AsArray().Count ?? 0;
+        result.Present = true;
+        result.Hash = Hashing.Sha256Bytes(bytes);
+        return result;
+
+        static int StrengthRank(JsonObject edge) => edge["strength"]?.GetValue<string>() == "strong" ? 1 : 0;
+        static int BucketRank(JsonObject edge) => edge["bucket"]?.GetValue<string>() == "proper" ? 1 : 0;
+    }
+}
+
+public sealed class SourceRegistryService
+{    private readonly WorkspaceService _workspace;
     private readonly SchemaValidator _schema;
     public SourceRegistryService(WorkspaceService workspace, SchemaValidator schema) { _workspace = workspace; _schema = schema; }
 

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-karakalat
 title:
   zh-CN: 喀拉卡拉特
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 喀拉卡拉特
-  en:
-  - Karakalat
-  - village_K2_1
+entity_ids:
+- entity.settlement.village_k2_1
 summary:
   zh-CN: 喀拉卡拉特位于德夫赛格高原东部平缓边缘的一处盆地内；不久前这片土地还由游牧者支配，当地如今仍以繁育良马闻名。
 registry_bindings:

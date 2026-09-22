@@ -1,0 +1,142 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-iron-ingot-wrought
+title:
+  zh-CN: 熟铁
+  en: Wrought Iron
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 熟铁是粗铁再炼一道的锭子，韧了些，能打趁手的家具和兵器。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.7HvtT8bm
+  quote_hash: 8680B1473B263F4A1C394350614666BF273B301FF8C2455EB2701F7FB4CF5670
+  quote: 熟铁{@Plural}成车的熟铁{\@}
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.rHcVKSbA
+  quote_hash: 590D39A561F249CA14471377163DA17E26C8125B9F9F6ED5AC114D070534F35E
+  quote: 铁矿
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.iQadPYNe
+  quote_hash: D7B9D7D070C8F28C7BD5E3FE275EEEB29A87338E036E4C798C5E619FE7B22513
+  quote: 木炭{@Plural}成车的木炭{\@}
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-iron-ingot-wrought-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 熟铁是粗铁精炼一道的锭，基准价 30 第纳尔，论车买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.7HvtT8bm
+    quote_hash: 8680B1473B263F4A1C394350614666BF273B301FF8C2455EB2701F7FB4CF5670
+    quote: 熟铁{@Plural}成车的熟铁{\@}
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.rHcVKSbA
+    quote_hash: 590D39A561F249CA14471377163DA17E26C8125B9F9F6ED5AC114D070534F35E
+    quote: 铁矿
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.iQadPYNe
+    quote_hash: D7B9D7D070C8F28C7BD5E3FE275EEEB29A87338E036E4C798C5E619FE7B22513
+    quote: 木炭{@Plural}成车的木炭{\@}
+  expressions:
+  - id: expr.goods-iron-ingot-wrought-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 多烧一道，杂质就少一分，打出来的东西也趁手一分。铁匠挑料，头一眼看的就是纯度。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.7HvtT8bm
+      quote_hash: 8680B1473B263F4A1C394350614666BF273B301FF8C2455EB2701F7FB4CF5670
+      quote: 熟铁{@Plural}成车的熟铁{\@}
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.rHcVKSbA
+      quote_hash: 590D39A561F249CA14471377163DA17E26C8125B9F9F6ED5AC114D070534F35E
+      quote: 铁矿
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-iron-ingot-detail-wrought
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 熟铁 30 一件，是粗铁的上一档，价钱多一半。整条铁链从矿石到精炼钢翻十几倍，每一道都在赚加工钱——手里有炉子，不如手里有炭。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.7HvtT8bm
+      quote_hash: 8680B1473B263F4A1C394350614666BF273B301FF8C2455EB2701F7FB4CF5670
+      quote: 熟铁{@Plural}成车的熟铁{\@}
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.iQadPYNe
+      quote_hash: D7B9D7D070C8F28C7BD5E3FE275EEEB29A87338E036E4C798C5E619FE7B22513
+      quote: 木炭{@Plural}成车的木炭{\@}
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

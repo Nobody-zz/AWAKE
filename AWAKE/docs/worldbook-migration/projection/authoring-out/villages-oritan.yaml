@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-oritan
 title:
   zh-CN: 奥里唐
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 奥里唐
-  en:
-  - Oritan
-  - village_V2_2
+entity_ids:
+- entity.settlement.village_v2_2
 summary:
   zh-CN: 奥里唐位于一条小河旁——那河发源于埃博半岛的群山，最终汇入奥克斯湖；水流到附近一处拐角便缓下来，村民得以从河岸掘取陶工所需的黏土。
 registry_bindings:

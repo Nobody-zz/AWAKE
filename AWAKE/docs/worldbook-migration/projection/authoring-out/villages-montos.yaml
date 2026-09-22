@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-montos
 title:
   zh-CN: 蒙托斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 蒙托斯
-  en:
-  - Montos
-  - village_EW1_2
+entity_ids:
+- entity.settlement.village_ew1_2
 summary:
   zh-CN: 蒙托斯坐落于库耳西翁峭壁的底端，靠近巴旦尼亚边境；当地林农密切关注着邻人，防备那些试图自东向西跨过弥戎河的劫掠者。
 registry_bindings:

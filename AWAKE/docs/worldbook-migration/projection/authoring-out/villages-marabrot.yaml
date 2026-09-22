@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-marabrot
 title:
   zh-CN: 马拉布罗特
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 马拉布罗特
-  en:
-  - Marabrot
-  - village_S2_2
+entity_ids:
+- entity.settlement.village_s2_2
 summary:
   zh-CN: 马拉布罗特坐落于马佐波尔湾与比亚里海之间高耸的多岩山脊上；这片苦寒之地要不是山上有丰富的铁矿，怕是没人会来定居。
 registry_bindings:

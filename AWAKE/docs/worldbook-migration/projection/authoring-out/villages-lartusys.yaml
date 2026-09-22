@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.villages-lartusys
 title:
   zh-CN: 拉耳图绪斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 拉耳图绪斯
-  en:
-  - Lartusys
-  - village_ES5_2
+entity_ids:
+- entity.settlement.village_es5_2
 summary:
   zh-CN: 拉耳图绪斯位于塔奈西斯湖的南端；村附近有盐矿，盐泉偶尔探出水面，当地人相信那是传说中通往鬼怪聚集的地下海的门户。
 registry_bindings:
@@ -40,7 +36,7 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 拉耳图绪斯位于塔奈西斯湖的南端；村附近有盐矿，盐泉偶尔探出水面，当地人相信那是传说中通往鬼怪聚集的地下海的门户。
+    zh-CN: 拉耳图绪斯位于塔奈西斯湖的南端。
   sources:
   - source_id: source.calradia.game.villages-desc-emp2
     source_version: bannerlord-1.3.15.110062
@@ -49,11 +45,11 @@ assertions:
     quote_hash: BAF75F20F2550E423D98A651672F2271C03C581E7FEEF8356A6094434C435AA7
     quote: 拉耳图绪斯位于塔奈西斯湖的南端。
   expressions:
-  - id: expr.village-lartusys-rumor
+  - id: expr.village-lartusys-1-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 拉耳图绪斯的泉眼会自己冒上来。村里人说那不是泉，是地底那口海在喘气——别往下看，盐是它吐出来的。
+      zh-CN: 拉耳图绪斯在塔奈西斯湖的南头。出盐，泉眼有时冒水。
     sources:
     - source_id: source.calradia.game.villages-desc-emp2
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +89,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.village-lartusys-detail
+  - id: expr.village-lartusys-1-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 拉耳图绪斯靠盐矿与盐泉取盐——泉眼水位不定、时隐时现；盐货因传说在外有市，收盐看粒色与苦味，泉上来的盐细，矿井的盐粗。
+      zh-CN: 拉耳图绪斯据塔奈西斯湖南端；湖路与盐路在此交汇，是本地的转运点。
     sources:
     - source_id: source.calradia.game.villages-desc-emp2
       source_version: bannerlord-1.3.15.110062
@@ -105,6 +101,89 @@ assertions:
       locator: bannerlord.villages#village_ES5_2
       quote_hash: BAF75F20F2550E423D98A651672F2271C03C581E7FEEF8356A6094434C435AA7
       quote: 拉耳图绪斯位于塔奈西斯湖的南端。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.village-lartusys-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 村旁有盐矿，盐泉偶尔涌出水面——当地人因此相信，这就是传说中通往鬼怪聚集的地下海的门户。
+  sources:
+  - source_id: source.calradia.game.villages-desc-emp2
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+    locator: bannerlord.villages#village_ES5_2
+    quote_hash: F0959F8BA7C6CCD100AF6B9F7A355447262154DFD97EADAB2557CC8ABE8CB5FC
+    quote: 村庄附近有座盐矿，盐泉偶尔会探出水面，让人们相信这就是传说中通往鬼怪聚集的地下海的门户。
+  expressions:
+  - id: expr.village-lartusys-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 拉耳图绪斯的盐泉一冒头，村里就说那是底下海的门口，里头聚着鬼怪。常年没人往泉边上多站。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_ES5_2
+      quote_hash: F0959F8BA7C6CCD100AF6B9F7A355447262154DFD97EADAB2557CC8ABE8CB5FC
+      quote: 村庄附近有座盐矿，盐泉偶尔会探出水面，让人们相信这就是传说中通往鬼怪聚集的地下海的门户。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.village-lartusys-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 拉耳图绪斯的盐是命脉：盐泉时涌时歇，采盐看水色、看天时。泉眼在他们嘴里是『门』，进出都得有个敬法。
+    sources:
+    - source_id: source.calradia.game.villages-desc-emp2
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: C53B4DB67CFF30C5D8AF13EFF09F8B79B0FC0381FEA3A20B8B4BBD4CDFC40072
+      locator: bannerlord.villages#village_ES5_2
+      quote_hash: F0959F8BA7C6CCD100AF6B9F7A355447262154DFD97EADAB2557CC8ABE8CB5FC
+      quote: 村庄附近有座盐矿，盐泉偶尔会探出水面，让人们相信这就是传说中通往鬼怪聚集的地下海的门户。
     grants:
     - profile_id: profile.headman
       scope: national

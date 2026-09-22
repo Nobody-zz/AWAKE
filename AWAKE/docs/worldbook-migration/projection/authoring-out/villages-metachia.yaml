@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-metachia
 title:
   zh-CN: 墨塔基亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 墨塔基亚
-  en:
-  - Metachia
-  - castle_village_ES2_2
+entity_ids:
+- entity.settlement.castle_village_es2_2
 summary:
   zh-CN: 墨塔基亚坐落于塔奈西斯湖南岸越过蒂亚具斯河的边境地带，这座建于和平时期的帝国殖民地是丝织业所需的桑树种植中心。
 registry_bindings:

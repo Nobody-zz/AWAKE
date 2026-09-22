@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-atphynia
 title:
   zh-CN: 阿特费尼亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿特费尼亚
-  en:
-  - Atphynia
-  - castle_village_ES5_2
+entity_ids:
+- entity.settlement.castle_village_es5_2
 summary:
   zh-CN: 阿特费尼亚村靠近塞堤斯河口，河水在下游分为三支形成三河河谷；在河流汇入珀拉斯海的河口附近，村民们开出了盐田。
 registry_bindings:

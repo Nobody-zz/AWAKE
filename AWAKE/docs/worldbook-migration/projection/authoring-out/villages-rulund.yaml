@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-rulund
 title:
   zh-CN: 鲁兰德
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 鲁兰德
-  en:
-  - Rulund
-  - village_V3_2
+entity_ids:
+- entity.settlement.village_v3_2
 summary:
   zh-CN: 鲁兰德位于特朗河中部的一处林谷中；村民以橡树林地的橡子作饲料养猪。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-elvania
 title:
   zh-CN: 厄尔凡尼亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 厄尔凡尼亚
-  en:
-  - Elvania
-  - castle_village_EW7_2
+entity_ids:
+- entity.settlement.castle_village_ew7_2
 summary:
   zh-CN: 厄尔凡尼亚位于俄耳堤西亚湾旁、西大洋与珀拉斯海间的航路经过之地，附近山坡上生长的橄榄树享受着南方的暖阳。
 registry_bindings:

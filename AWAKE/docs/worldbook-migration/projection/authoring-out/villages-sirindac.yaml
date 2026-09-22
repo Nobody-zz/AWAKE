@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-sirindac
 title:
   zh-CN: 西岚达克
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 西岚达克
-  en:
-  - Sirindac
-  - castle_village_V5_2
+entity_ids:
+- entity.settlement.castle_village_v5_2
 summary:
   zh-CN: 西岚达克坐落于埃博半岛的高山脚下，山势略挡西北刮来的刺骨寒风；村民从山间溪流里挖出一种细腻的浅色黏土。
 registry_bindings:

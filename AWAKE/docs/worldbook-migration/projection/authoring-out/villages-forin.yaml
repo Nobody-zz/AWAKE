@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-forin
 title:
   zh-CN: 福林
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 福林
-  en:
-  - Forin
-  - castle_village_S2_2
+entity_ids:
+- entity.settlement.castle_village_s2_2
 summary:
   zh-CN: 福林坐落于伊卡拉荒原边上、加尔察河附近的黑麦和大麦田旁；这里的地主把林地改成了牧马的草场。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-hiblet
 title:
   zh-CN: 希卜莱特
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 希卜莱特
-  en:
-  - Hiblet
-  - village_A1_4
+entity_ids:
+- entity.settlement.village_a1_4
 summary:
   zh-CN: 希卜莱特坐落于塔玛尔山脚下，村民将花岗岩石缝中积蓄的雨水引入村里的椰枣园。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.towns-revyl
 title:
   zh-CN: 雷维尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 雷维尔
-  en:
-  - Revyl
-  - town_S7
+entity_ids:
+- entity.settlement.town_s7
 summary:
   zh-CN: 雷维尔是卡恰尔半岛的重镇、巴尔加德的传统对手；阿基娜公主新婚夜焚杀国王及百勇士的传说系两地旧怨，条约联姻后憎恨仍存。
 registry_bindings:
@@ -40,7 +36,7 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 雷维尔是卡恰尔半岛的重镇、巴尔加德的传统对手；阿基娜公主新婚夜焚杀国王及百勇士的传说系两地旧怨，条约联姻后憎恨仍存。
+    zh-CN: 雷维尔是卡恰尔半岛怪石之间的一座重要城镇，也是巴尔加德的传统对手。
   sources:
   - source_id: source.calradia.game.settlements-desc
     source_version: bannerlord-1.3.15.110062
@@ -49,11 +45,11 @@ assertions:
     quote_hash: 78258B24E95E07EB0FB824248BA6E7ECBB9DE6DABF7EE3BEE9348062973BF3C9
     quote: 雷维尔是怪石嶙峋的卡恰尔半岛上的一座重要城镇，同时也是巴尔加德的传统对手。
   expressions:
-  - id: expr.town-revyl-rumor
+  - id: expr.town-revyl-1-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 雷维尔人跟巴尔加德人是几百年的死对头。说书的讲那位公主一把火烧了新郎和一百个勇士，这事雷维尔人至今当英雄传。
+      zh-CN: 雷维尔在卡恰尔半岛上，石头多。跟巴尔加德是老对头。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +89,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.town-revyl-detail
+  - id: expr.town-revyl-1-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 雷维尔与巴尔加德的宿怨是商业地理——两地分吃卡恰尔半岛的航路，选边站即税费差；本地对贡达罗夫王朝的恨是公开话题，避讳反显外行。
+      zh-CN: 雷维尔踞卡恰尔半岛，石多路险；与巴尔加德的对峙是这半岛上的老题目，行商过此要算两家的脸色。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -105,6 +101,134 @@ assertions:
       locator: bannerlord.settlements#town_S7
       quote_hash: 78258B24E95E07EB0FB824248BA6E7ECBB9DE6DABF7EE3BEE9348062973BF3C9
       quote: 雷维尔是怪石嶙峋的卡恰尔半岛上的一座重要城镇，同时也是巴尔加德的传统对手。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-revyl-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 根据传说，巴尔加德公主阿基娜的丈夫被雷维尔人所杀；她接受敌国国王的提议与其结为连理，却在新婚之夜堵住厅堂大门，把国王和他的一百名族人勇士活活烧死在里面。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_S7
+    quote_hash: A0E4B2D030A8D7800C3148FE32AF9A8CF187E8423597445AE1571B63F44BEA58
+    quote: 根据传说，巴尔加德公主阿基娜的丈夫被雷维尔人杀死，但她接受了敌国国王的提议，与其结为连理以解决这一争端。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_S7
+    quote_hash: 97286500000EA65E6F79D1A2B538424CBFD030E0C166808AF724ED3AA944FCA2
+    quote: 然而，在新婚之夜，她堵住了厅堂的大门，将国王和他的一百名族人与勇士活活烧死在里面。
+  expressions:
+  - id: expr.town-revyl-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 老话说，巴尔加德的阿基娜公主男人叫雷维尔人杀了，她转头答应了仇家国王的亲事。新婚那晚她把厅门堵死，一把火烧了国王和他一百号人。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_S7
+      quote_hash: A0E4B2D030A8D7800C3148FE32AF9A8CF187E8423597445AE1571B63F44BEA58
+      quote: 根据传说，巴尔加德公主阿基娜的丈夫被雷维尔人杀死，但她接受了敌国国王的提议，与其结为连理以解决这一争端。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-revyl-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿基娜这一折是两家之间最狠的一段旧账：和亲的壳子，火杀的里子。讲的人多半要提那句『一百人』——数越齐，听着越像真的。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_S7
+      quote_hash: A0E4B2D030A8D7800C3148FE32AF9A8CF187E8423597445AE1571B63F44BEA58
+      quote: 根据传说，巴尔加德公主阿基娜的丈夫被雷维尔人杀死，但她接受了敌国国王的提议，与其结为连理以解决这一争端。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-revyl-3
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 这场争端后经条约与联姻了结，结局算是和乐；但雷维尔人至今仍憎恨巴尔加德扶摇直上的贡达罗夫王朝。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_S7
+    quote_hash: 6972A341043BD34556A9040C786FC6D81410A53C0BB60FD8D4F12EF24AF98649
+    quote: 这场争端后来通过一系列的条约和联姻解决了，也迎来了其乐融融的结局，但雷维尔人依旧对巴尔加德扶摇直上的贡达罗夫王朝心怀憎恨。
+  expressions:
+  - id: expr.town-revyl-3-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 雷维尔与巴尔加德后来是和了——条约、联姻，账面上都清了。可逢着贡达罗夫家又往上走一步，这边的脸色就不好看。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_S7
+      quote_hash: 6972A341043BD34556A9040C786FC6D81410A53C0BB60FD8D4F12EF24AF98649
+      quote: 这场争端后来通过一系列的条约和联姻解决了，也迎来了其乐融融的结局，但雷维尔人依旧对巴尔加德扶摇直上的贡达罗夫王朝心怀憎恨。
     grants:
     - profile_id: profile.headman
       scope: national

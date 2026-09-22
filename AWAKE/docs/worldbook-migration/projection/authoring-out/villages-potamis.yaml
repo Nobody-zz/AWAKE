@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-potamis
 title:
   zh-CN: 珀塔米斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 珀塔米斯
-  en:
-  - Potamis
-  - castle_village_EN6_2
+entity_ids:
+- entity.settlement.castle_village_en6_2
 summary:
   zh-CN: 珀塔米斯坐落在德律亚山脉的一处低谷，人们自前卡拉德时代就在此养牛，过往商旅很容易买到牛奶和黄油。
 registry_bindings:

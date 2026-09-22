@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-erebulos
 title:
   zh-CN: 厄瑞玻洛斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 厄瑞玻洛斯
-  en:
-  - Erebulos
-  - village_ES1_4
+entity_ids:
+- entity.settlement.village_es1_4
 summary:
   zh-CN: 厄瑞玻洛斯位于一片潟湖旁——那里在被新形成的沙嘴封闭前曾是珀拉斯海的一部分；村民从溪底挖出黏土，卖给达努提斯卡及附近城镇的陶窑。
 registry_bindings:

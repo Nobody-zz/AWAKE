@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-dyopalis
 title:
   zh-CN: 底俄帕利斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 底俄帕利斯
-  en:
-  - Dyopalis
-  - castle_village_EN3_2
+entity_ids:
+- entity.settlement.castle_village_en3_2
 summary:
   zh-CN: 底俄帕利斯位于德律亚山脉的一座山谷中，冬季虽寒冷，肥沃的土壤使其成为北帝国重要的粮仓之一。
 registry_bindings:

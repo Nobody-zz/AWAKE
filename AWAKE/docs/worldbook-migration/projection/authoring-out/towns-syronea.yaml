@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-syronea
 title:
   zh-CN: 席隆尼亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 席隆尼亚
-  en:
-  - Syronea
-  - town_ES7
+entity_ids:
+- entity.settlement.town_es7
 summary:
   zh-CN: 席隆尼亚曾为帝国丝绸生产中心与外塔奈西亚商品集散地，奢靡之名远播；库赛特夺走外塔奈西亚后，元老贵族重拾兵刃。
 registry_bindings:

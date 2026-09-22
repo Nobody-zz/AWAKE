@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-alsasos
 title:
   zh-CN: 阿尔萨索斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿尔萨索斯
-  en:
-  - Alsasos
-  - village_EW2_3
+entity_ids:
+- entity.settlement.village_ew2_3
 summary:
   zh-CN: 阿尔萨索斯位于珀拉斯海北边宽阔山谷特美亚的西部；尽管当地气候相对干旱，农民依靠自流井水仍能获得很好的小麦收成。
 registry_bindings:

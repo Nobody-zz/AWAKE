@@ -1,0 +1,907 @@
+{
+ "_note": "经济批 A2 + B：DefaultItems.cs 里的货物 15 档 + 牲畜驮畜 7 档。A=官方本地化 stringId；B=[文件, 变体号, 引文]。",
+ "docs": [
+  {
+   "slug": "goods-grain",
+   "title_zh": "谷物",
+   "title_en": "Grain",
+   "subdomain": "goods",
+   "aliases_zh": [
+    "粮食"
+   ],
+   "aliases_en": [],
+   "summary": "谷物是全大陆最贱也最要紧的一件货，四十九个麦田村出，养兵养城都靠它。",
+   "assertions": [
+    {
+     "id": "goods-grain-1",
+     "kind": "fact",
+     "text": "谷物是磨面吃的粮食，基准价 10 第纳尔，是全部货物里最贱的一档，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-grain-rumor",
+       "layer": "rumor",
+       "text": "麦子是命根子，便宜是便宜，可断了它谁都活不了。运粮的车队一年到头在路上跑，从河谷往城里送。",
+       "A": [
+        "Itv3fgJm"
+       ],
+       "B": [
+        [
+         "rule_厄吕特律斯山__厄吕特律斯山.json",
+         1,
+         "阿米尼斯河谷是帝国最重要的产粮区之一"
+        ]
+       ]
+      },
+      {
+       "id": "goods-grain-detail",
+       "layer": "detail",
+       "text": "谷物 10 一件，垫底的最贱价，可全大陆四十九个麦田村都在出，量最大。军队和城镇天天要吃，这货不愁卖，只愁运。",
+       "A": [
+        "Itv3fgJm"
+       ],
+       "B": [
+        [
+         "rule_伊勒坦山__伊勒坦山.json",
+         2,
+         "著名的伊勒坦运输线就是从这里发源，向帝国源源不断地运输牛羊和谷物"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-meat",
+   "title_zh": "肉",
+   "title_en": "Meat",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "肉是牲口身上的出产，产猪产牛的地方才有，做得好能卖成招牌。",
+   "assertions": [
+    {
+     "id": "goods-meat-1",
+     "kind": "fact",
+     "text": "肉是宰杀牲口得来的吃食，基准价 30 第纳尔，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-meat-rumor",
+       "layer": "rumor",
+       "text": "同样是猪肉，橡树林里跑大的就比圈养的香。镇上的人尝得出来，认了某处的肉就只买那一处的。",
+       "A": [
+        "LmwhFv5p"
+       ],
+       "B": [
+        [
+         "rule_部尔纳__部尔纳.json",
+         2,
+         "橡果喂出来的猪，肉紧实，肥膘少"
+        ]
+       ]
+      },
+      {
+       "id": "goods-meat-detail",
+       "layer": "detail",
+       "text": "肉 30 一件，产在养猪养牛的地方。这行讲的是名气：同一个产区，挂上出名村子的名头，价钱能翻一倍。",
+       "A": [
+        "LmwhFv5p"
+       ],
+       "B": [
+        [
+         "rule_部尔纳__部尔纳.json",
+         1,
+         "杰屈朗那边的宴会上，烤猪肉要是标注了部尔纳产的，价格翻一番"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-hides",
+   "title_zh": "兽皮",
+   "title_en": "Hides",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "兽皮是没鞣过的生皮，猎户与牲口多的地方都出，论车往镇上传。",
+   "assertions": [
+    {
+     "id": "goods-hides-1",
+     "kind": "fact",
+     "text": "兽皮是未经鞣制的生皮，基准价 50 第纳尔，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-hides-rumor",
+       "layer": "rumor",
+       "text": "生皮是猎户顺手的东西，打来的、养死的，剥下来就是一张。放久了会坏，得赶紧卖给皮匠。",
+       "A": [
+        "4kvKQuXM"
+       ],
+       "B": [
+        [
+         "rule_塔奈西斯湖__塔奈西斯湖.json",
+         4,
+         "湖上漂满了小船，载着兽皮、羊毛和盐"
+        ]
+       ]
+      },
+      {
+       "id": "goods-hides-detail",
+       "layer": "detail",
+       "text": "兽皮 50 一件，比皮革低一大截，差的就是鞣这道工。收生皮要快、要趁着没坏，压库压久了就是一堆废料。",
+       "A": [
+        "4kvKQuXM"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-hardwood",
+   "title_zh": "硬木",
+   "title_en": "Hardwood",
+   "subdomain": "goods",
+   "aliases_zh": [
+    "木材"
+   ],
+   "aliases_en": [],
+   "summary": "硬木是林场砍出来的原木，是烧炭与造弩炮的料。",
+   "assertions": [
+    {
+     "id": "goods-hardwood-1",
+     "kind": "fact",
+     "text": "硬木是林场砍出来的木料，基准价 25 第纳尔，论段买卖，也是烧木炭的原料。",
+     "expressions": [
+      {
+       "id": "goods-hardwood-rumor",
+       "layer": "rumor",
+       "text": "林子里的活是常年干的，砍下来扎成排顺水漂下去。烧炭的、打弩炮的、盖房子的，都拿它当料。",
+       "A": [
+        "ExjMoUiT",
+        "YYl1W2jU"
+       ],
+       "B": [
+        [
+         "rule_悲伤的肖农__悲伤的肖农.json",
+         0,
+         "周边村子出硬木，出铁矿"
+        ]
+       ]
+      },
+      {
+       "id": "goods-hardwood-detail",
+       "layer": "detail",
+       "text": "硬木 25 一件，十六个林场出。它是木料的源头，往下走是木炭和板材——想在这条链上赚钱，看的是林场离城多远，运费吃掉一半利润。",
+       "A": [
+        "ExjMoUiT",
+        "YYl1W2jU"
+       ],
+       "B": [
+        [
+         "rule_悲伤的肖农__悲伤的肖农.json",
+         5,
+         "肖农周边出产硬木与优质铁矿"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-charcoal",
+   "title_zh": "木炭",
+   "title_en": "Charcoal",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "木炭是硬木烧出来的燃料，铁匠炉子离不开它，比原木轻也好运。",
+   "assertions": [
+    {
+     "id": "goods-charcoal-1",
+     "kind": "fact",
+     "text": "木炭是硬木烧成的燃料，基准价 50 第纳尔，论车买卖，供铁匠打铁用。",
+     "expressions": [
+      {
+       "id": "goods-charcoal-rumor",
+       "layer": "rumor",
+       "text": "烧炭的把木头堆起来封上土，焖几天就成炭。这东西比木头轻、比木头耐烧，铁匠炉子里烧的就是它。",
+       "A": [
+        "iQadPYNe",
+        "YYl1W2jU"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-charcoal-detail",
+       "layer": "detail",
+       "text": "木炭 50 一件，是硬木烧出来的，价钱翻了一倍——烧这道工本身就值钱。买它的多是铁匠铺，所以林场边上要是没有铁矿，炭也不好卖。",
+       "A": [
+        "iQadPYNe",
+        "rHcVKSbA"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-iron",
+   "title_zh": "铁矿石",
+   "title_en": "Iron Ore",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "铁矿石是铁矿里挖出来的料，兵器铠甲农具全从它身上起头。",
+   "assertions": [
+    {
+     "id": "goods-iron-1",
+     "kind": "fact",
+     "text": "铁矿石是铁矿的产出，基准价 50 第纳尔，论车买卖，是全部铁器的起点。",
+     "expressions": [
+      {
+       "id": "goods-iron-rumor",
+       "layer": "rumor",
+       "text": "矿山上的人一辈子跟石头打交道，一车一车地往下运。山里的铁矿出得好的地方，铁匠铺能连着开好几家。",
+       "A": [
+        "Kw6BkhIf",
+        "rHcVKSbA"
+       ],
+       "B": [
+        [
+         "rule_德律亚山__德律亚山.json",
+         0,
+         "山中的铁矿是帝国北方最重要的金属产地之一"
+        ]
+       ]
+      },
+      {
+       "id": "goods-iron-detail",
+       "layer": "detail",
+       "text": "铁矿石 50 一件，十一个铁矿出，是整条铁链的第一环。好矿的价不按基准走——阿兰塔斯那种出名的矿，买家愿意加价抢。",
+       "A": [
+        "Kw6BkhIf"
+       ],
+       "B": [
+        [
+         "rule_阿兰塔斯__阿兰塔斯.json",
+         1,
+         "阿兰塔斯的铁矿石在瓦兰迪亚是出了名的好"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-planks",
+   "title_zh": "板材",
+   "title_en": "Planks",
+   "subdomain": "goods",
+   "aliases_zh": [
+    "木板"
+   ],
+   "aliases_en": [],
+   "summary": "板材是硬木锯成的板子，盖房造船修弩炮都等着它。",
+   "assertions": [
+    {
+     "id": "goods-planks-1",
+     "kind": "fact",
+     "text": "板材是硬木加工成的木板，基准价 180 第纳尔，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-planks-rumor",
+       "layer": "rumor",
+       "text": "原木不值钱，切成板子就值钱了。修城门、造攻城车、盖房子，哪一样都缺不了板子。",
+       "A": [
+        "5ac8Boz1",
+        "YYl1W2jU"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-planks-detail",
+       "layer": "detail",
+       "text": "板材 180 一件，比硬木贵了七倍。它是木料链上最值钱的一环，因为锯板要人手、要场地——有林场又有水力的地方才做得起这门生意。",
+       "A": [
+        "5ac8Boz1"
+       ],
+       "B": [
+        [
+         "rule_悲伤的肖农__悲伤的肖农.json",
+         5,
+         "加上水力资源充足，冶铁业得以持续发展"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-felt",
+   "title_zh": "毛毡",
+   "title_en": "Felt",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "毛毡是羊毛压成的厚布，挡风挡雪，北边的人穿得多。",
+   "assertions": [
+    {
+     "id": "goods-felt-1",
+     "kind": "fact",
+     "text": "毛毡是羊毛压制成的布，基准价 230 第纳尔，论卷买卖。",
+     "expressions": [
+      {
+       "id": "goods-felt-rumor",
+       "layer": "rumor",
+       "text": "羊毛不值钱，压成毡就值钱了。北边风大，毡子缝成毡衣、铺成毡帐，比什么都实在。",
+       "A": [
+        "hNwjpCVP",
+        "QbKbGu2h"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-felt-detail",
+       "layer": "detail",
+       "text": "毛毡 230 一件，跟亚麻布一个价位，产地是牧羊场。它是羊毛的去处——羊多的地方，羊毛贱毛毡却不贱，差价就在压毡这道工上。",
+       "A": [
+        "hNwjpCVP",
+        "QbKbGu2h"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-tools",
+   "title_zh": "工具",
+   "title_en": "Tools",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "工具是铁打的家伙什，矿上、地里、作坊里都缺不了，钝了就换新的。",
+   "assertions": [
+    {
+     "id": "goods-tools-1",
+     "kind": "fact",
+     "text": "工具是铁制的家伙什，基准价 250 第纳尔，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-tools-rumor",
+       "layer": "rumor",
+       "text": "镐头、锄头、锤子，都是铁打的。钝了磨，磨秃了换，谁家也少不了一把趁手的。",
+       "A": [
+        "n3cjEB0X",
+        "rHcVKSbA"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-tools-detail",
+       "layer": "detail",
+       "text": "工具 250 一件，铁器里销量最稳的一样，矿区和农田两头都要。它跟铁矿石同产地——有矿有炉的地方，工具才做得便宜。",
+       "A": [
+        "n3cjEB0X",
+        "rHcVKSbA"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-iron-ingot-crude",
+   "title_zh": "粗铁",
+   "title_en": "Crude Iron",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "粗铁是铁矿石炼出的第一道锭子，杂质多、最贱，打粗活用。",
+   "assertions": [
+    {
+     "id": "goods-iron-ingot-crude-1",
+     "kind": "fact",
+     "text": "粗铁是铁矿石炼出的最粗的锭，基准价 20 第纳尔，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-iron-ingot-crude-rumor",
+       "layer": "rumor",
+       "text": "矿里挖出来的石头不能直接打铁，得先烧成锭。头一道出来的东西又脆又糙，只能做粗活。",
+       "A": [
+        "gOpodlt1",
+        "rHcVKSbA"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-iron-ingot-detail-crude",
+       "layer": "detail",
+       "text": "粗铁 20 一件，比铁矿石还便宜——矿挖出来就能卖，炼成锭反倒要搭柴搭工。想赚这道钱，得炉子大、炭便宜，靠的是规模不是价钱。",
+       "A": [
+        "gOpodlt1",
+        "iQadPYNe"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-iron-ingot-wrought",
+   "title_zh": "熟铁",
+   "title_en": "Wrought Iron",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "熟铁是粗铁再炼一道的锭子，韧了些，能打趁手的家具和兵器。",
+   "assertions": [
+    {
+     "id": "goods-iron-ingot-wrought-1",
+     "kind": "fact",
+     "text": "熟铁是粗铁精炼一道的锭，基准价 30 第纳尔，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-iron-ingot-wrought-rumor",
+       "layer": "rumor",
+       "text": "多烧一道，杂质就少一分，打出来的东西也趁手一分。铁匠挑料，头一眼看的就是纯度。",
+       "A": [
+        "7HvtT8bm",
+        "rHcVKSbA"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-iron-ingot-detail-wrought",
+       "layer": "detail",
+       "text": "熟铁 30 一件，是粗铁的上一档，价钱多一半。整条铁链从矿石到精炼钢翻十几倍，每一道都在赚加工钱——手里有炉子，不如手里有炭。",
+       "A": [
+        "7HvtT8bm",
+        "iQadPYNe"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-iron-ingot-iron",
+   "title_zh": "铁",
+   "title_en": "Iron",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "铁是炼到家常档的锭子，打农具、打甲片都够用，是铁器行的正货。",
+   "assertions": [
+    {
+     "id": "goods-iron-ingot-iron-1",
+     "kind": "fact",
+     "text": "铁是炼到中等的铁锭，基准价 60 第纳尔，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-iron-ingot-iron-rumor",
+       "layer": "rumor",
+       "text": "到了这一档才算正经的铁，打农具、打甲片都够使。铁匠铺里成垛码着的就是它。",
+       "A": [
+        "XHmmbnbB",
+        "rHcVKSbA"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-iron-ingot-detail-iron",
+       "layer": "detail",
+       "text": "铁 60 一件，是铁锭里卖得最多的一档，兵器农具两头通吃。它也是好钢的原料——往上再走两道，价钱就是另一个数了。",
+       "A": [
+        "XHmmbnbB"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-iron-ingot-steel",
+   "title_zh": "钢",
+   "title_en": "Steel",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "钢是炼得够硬的铁锭，刀剑刃口和好甲用的就是它。",
+   "assertions": [
+    {
+     "id": "goods-iron-ingot-steel-1",
+     "kind": "fact",
+     "text": "钢是精炼过的铁锭，基准价 100 第纳尔，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-iron-ingot-steel-rumor",
+       "layer": "rumor",
+       "text": "好刀好剑的刃口都是钢的，铁不够硬。会炼钢的匠人在哪都吃得开，炉子前站一辈子也值。",
+       "A": [
+        "UfuLKuaI",
+        "rHcVKSbA"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-iron-ingot-detail-steel",
+       "layer": "detail",
+       "text": "钢 100 一件，比铁贵了六成多，卖的是打刀剑的匠人。这一档往下就分叉了：好钢做刃，次一点的做甲片，怎么配料全看买家出什么价。",
+       "A": [
+        "UfuLKuaI"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-iron-ingot-fine-steel",
+   "title_zh": "优质钢",
+   "title_en": "Fine Steel",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "优质钢是炼到上等的锭子，甲胄和名器的料，价已经不便宜。",
+   "assertions": [
+    {
+     "id": "goods-iron-ingot-fine-steel-1",
+     "kind": "fact",
+     "text": "优质钢是炼到上等的铁锭，基准价 160 第纳尔，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-iron-ingot-fine-steel-rumor",
+       "layer": "rumor",
+       "text": "到了这一档的料，寻常铁匠一辈子也摸不着几回。领主家的甲、名匠手里的剑，用的才是它。",
+       "A": [
+        "azjMBa86",
+        "rHcVKSbA"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-iron-ingot-detail-fine-steel",
+       "layer": "detail",
+       "text": "优质钢 160 一件，比钢还贵六成。这档料的买家不是村口铁匠，是领主的军械官和城里的名匠——问价的人少，问一次就是大单。",
+       "A": [
+        "azjMBa86"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "goods-iron-ingot-thamaskene",
+   "title_zh": "精炼钢",
+   "title_en": "Thamaskene Steel",
+   "subdomain": "goods",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "精炼钢是铁链最顶上的一档，全大陆最贵的材料，只配给最好的兵器和甲。",
+   "assertions": [
+    {
+     "id": "goods-iron-ingot-thamaskene-1",
+     "kind": "fact",
+     "text": "精炼钢是最高档的铁锭，基准价 260 第纳尔，是铁料里最贵的一档，论车买卖。",
+     "expressions": [
+      {
+       "id": "goods-iron-ingot-thamaskene-rumor",
+       "layer": "rumor",
+       "text": "最上等的钢，听说是从很远的地方传过来的法子炼的。寻常人见不着料，只见过用它打的刀。",
+       "A": [
+        "vLVAfcta",
+        "rHcVKSbA"
+       ],
+       "B": []
+      },
+      {
+       "id": "goods-iron-ingot-detail-thamaskene",
+       "layer": "detail",
+       "text": "精炼钢 260 一件，从粗铁的 20 算起，翻到十几倍。这么贵还卖得动，是因为它没替代：最好的兵器甲胄只认这一档料。",
+       "A": [
+        "vLVAfcta"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "items-cat",
+   "title_zh": "猫",
+   "title_en": "Cat",
+   "subdomain": "items",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "猫是农家的抓鼠牲口，也能当宠物养，价不贵。",
+   "assertions": [
+    {
+     "id": "items-cat-1",
+     "kind": "fact",
+     "text": "猫是家养的抓鼠动物，基准价 20 第纳尔，论只买卖。",
+     "expressions": [
+      {
+       "id": "items-cat-rumor",
+       "layer": "rumor",
+       "text": "粮仓边上没只猫，一冬的麦子就叫老鼠啃了。抓鼠的猫比好看的值钱。",
+       "A": [
+        "b6JvcSiQ"
+       ],
+       "B": []
+      },
+      {
+       "id": "items-cat-detail",
+       "layer": "detail",
+       "text": "猫 20 一件，是牲畜里最便宜的一档，跟狗同价。买它的多是粮商和城里住户，一买一对，防鼠用。",
+       "A": [
+        "b6JvcSiQ"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "items-dog",
+   "title_zh": "狗",
+   "title_en": "Dog",
+   "subdomain": "items",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "狗是看家护院的牲口，牧羊的也离不了它，贱而实用。",
+   "assertions": [
+    {
+     "id": "items-dog-1",
+     "kind": "fact",
+     "text": "狗是看家与放牧用的家畜，基准价 20 第纳尔，论只买卖。",
+     "expressions": [
+      {
+       "id": "items-dog-rumor",
+       "layer": "rumor",
+       "text": "放羊的离不了狗，狼来了它能先嚷起来。看家的也养一条，比雇人便宜。",
+       "A": [
+        "f2O1XjYd"
+       ],
+       "B": []
+      },
+      {
+       "id": "items-dog-detail",
+       "layer": "detail",
+       "text": "狗 20 一件，跟猫一样是陪衬货。牧区买得多——羊群一大，狗就是必需品，一买好几条。",
+       "A": [
+        "f2O1XjYd"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "items-goose",
+   "title_zh": "鹅",
+   "title_en": "Goose",
+   "subdomain": "items",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "鹅是农家养的家禽，又下蛋又长肉，还能拿羽毛换钱。",
+   "assertions": [
+    {
+     "id": "items-goose-1",
+     "kind": "fact",
+     "text": "鹅是农家养的家禽，基准价 50 第纳尔，论只买卖。",
+     "expressions": [
+      {
+       "id": "items-goose-rumor",
+       "layer": "rumor",
+       "text": "鹅好养，给点草料就长。下蛋、吃肉、拔毛，一样都不浪费。谁家院里都得放几只。",
+       "A": [
+        "FhTUc64z"
+       ],
+       "B": []
+      },
+      {
+       "id": "items-goose-detail",
+       "layer": "detail",
+       "text": "鹅 50 一件，与鸡同价，是家禽里的中档。村里人自己养自己吃，买的人多是城里的小户——量不大，走的是集市散卖。",
+       "A": [
+        "FhTUc64z"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "items-chicken",
+   "title_zh": "鸡",
+   "title_en": "Chicken",
+   "subdomain": "items",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "鸡是农家最省事的家禽，天天下蛋，年节还能添一盘肉。",
+   "assertions": [
+    {
+     "id": "items-chicken-1",
+     "kind": "fact",
+     "text": "鸡是农家养的家禽，基准价 50 第纳尔，论只买卖。",
+     "expressions": [
+      {
+       "id": "items-chicken-rumor",
+       "layer": "rumor",
+       "text": "鸡最好养，院里撒把谷子就行。蛋攒着卖，过节杀一只，穷人家也是这么过的。",
+       "A": [
+        "8el5a3sF"
+       ],
+       "B": []
+      },
+      {
+       "id": "items-chicken-detail",
+       "layer": "detail",
+       "text": "鸡 50 一件，是家禽里最普遍的一样。它不走商路——太重、太贱、容易死，多是本村本镇就地买卖。",
+       "A": [
+        "8el5a3sF"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "items-hog",
+   "title_zh": "肉猪",
+   "title_en": "Hog",
+   "subdomain": "items",
+   "aliases_zh": [],
+   "aliases_en": [
+    "pig"
+   ],
+   "summary": "肉猪是养猪场养的肥猪，养它就是为了肉，橡果喂大的最抢手。",
+   "assertions": [
+    {
+     "id": "items-hog-1",
+     "kind": "fact",
+     "text": "肉猪是养猪场养的家畜，基准价 60 第纳尔，论口买卖。",
+     "expressions": [
+      {
+       "id": "items-hog-rumor",
+       "layer": "rumor",
+       "text": "猪是拿来吃肉的，越肥越值钱。林子里放养的猪，肉紧、膘少，比圈养的卖得贵。",
+       "A": [
+        "ZbsGBv10"
+       ],
+       "B": [
+        [
+         "rule_卡南克__卡南克.json",
+         1,
+         "卡南克的猪肉在奥斯蒂港是抢手货"
+        ]
+       ]
+      },
+      {
+       "id": "items-hog-detail",
+       "layer": "detail",
+       "text": "肉猪 60 一件，比羊贱、比鹅贵，九个猪场出。买它的多是屠户和赶集的商人，猪一变肉，价就往上走一大截。",
+       "A": [
+        "ZbsGBv10"
+       ],
+       "B": [
+        [
+         "rule_部尔纳__部尔纳.json",
+         2,
+         "纳尔谷出口的猪肉比别处的好吃，懂行的一尝就知道是橡树林里养出来的"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "items-sumpter-horse",
+   "title_zh": "驮马",
+   "title_en": "Sumpter Horse",
+   "subdomain": "items",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "驮马是专门驮货的牲口，不骑只拉，商队的命脉。",
+   "assertions": [
+    {
+     "id": "items-sumpter-horse-1",
+     "kind": "fact",
+     "text": "驮马是商队用来驮货的牲口，基准价 110 第纳尔，负重 430，论匹买卖。",
+     "expressions": [
+      {
+       "id": "items-sumpter-horse-rumor",
+       "layer": "rumor",
+       "text": "驮马跑不快，可它扛得住。商队一趟能带多少货，全队看驮马有多少匹。",
+       "A": [
+        "P1rL28RT"
+       ],
+       "B": [
+        [
+         "rule_商队__商队.json",
+         0,
+         "商队就是把一城的货驮到另一城去卖"
+        ]
+       ]
+      },
+      {
+       "id": "items-sumpter-horse-detail",
+       "layer": "detail",
+       "text": "驮马 110 一件，是马匹里最便宜的一档，可它是商队的骨头。头一次拉商队，驮畜这一项就得先垫进去一大笔。",
+       "A": [
+        "P1rL28RT"
+       ],
+       "B": [
+        [
+         "rule_商队__商队.json",
+         0,
+         "头一次上路开销不小：驮畜、装备、随行人员、护卫、货物"
+        ]
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "items-old-horse",
+   "title_zh": "役马",
+   "title_en": "Work Horse",
+   "subdomain": "items",
+   "aliases_zh": [],
+   "aliases_en": [],
+   "summary": "役马是干粗活的马，拉车犁地都行，卖相不好可耐使。",
+   "assertions": [
+    {
+     "id": "items-old-horse-1",
+     "kind": "fact",
+     "text": "役马是干农活拉车的马，基准价 130 第纳尔，负重 490，论匹买卖。",
+     "expressions": [
+      {
+       "id": "items-old-horse-rumor",
+       "layer": "rumor",
+       "text": "役马不挑草料，拉犁拉车都肯出力。骑出去不好看，可用它干活，没人说二话。",
+       "A": [
+        "U3SWNkFt"
+       ],
+       "B": []
+      },
+      {
+       "id": "items-old-horse-detail",
+       "layer": "detail",
+       "text": "役马 130 一件，比驮马贵一点，胜在能拉重。买它的是农庄和车队——上不了战场，可地里的活全指着它。",
+       "A": [
+        "U3SWNkFt"
+       ],
+       "B": []
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

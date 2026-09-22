@@ -1,0 +1,560 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.military-empire-system
+title:
+  zh-CN: 帝国军事制度
+  en: Imperial Military System
+status: needs_review
+domain: war
+subdomain: military
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 帝国军制
+  - 帝国军事
+  en:
+  - Imperial Military Reform
+summary:
+  zh-CN: 帝国军事制度：以潘德拉克战役为分界——此前是国家财政供养、统一训练指挥的常备军团，此后是执政官与贵族自掏腰包组建的私兵。这一刀缓解了财政压力，却让军队不再是皇帝的军队，而是大大小小执政官和贵族各自的军队；三个帝国沿用同一套制度，但在维持私兵凝聚力上各有各的办法，共同弱点是缺乏可持续的中央财政与制度化兵源。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.bhxVA9w7
+  quote_hash: C844C912B02C36044764F52975B6861CB5EF007E92DAB1EDEC7E31BCACC0F326
+  quote: 皇帝阿雷尼科斯在潘德拉克战役的惨败之后废除了最后一支帝国常备军，转而依赖开销更少、更适合控制领土的执政官私兵，被弃者军团在这样的局势下成立。而这支军团则是由厌恶这种变化的人所组成：他们偏爱昔日的军团，及其规矩、历史与军营生活，他们指责新制度正在摧毁帝国。但无饷不成军，所以他们会同时与帝国领主和外国领主签订契约。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/0/Content
+  quote_hash: 2952894C27FCC50F03FF08621B3EE971DEE8361BD7723566D6778F622A224860
+  quote: 阿雷尼科斯皇帝上位后做了一个冷酷而务实的决定：废除常备军，改由执政官和贵族自行组建私兵，谁的地盘谁养兵，谁的兵谁带去打仗
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/0/Content
+  quote_hash: 65F559485125F3C2E0EE529352838730095BD22592BE6B18FFCDAA2DDD22104F
+  quote: 帝国分裂成三块，军队改革不一定是根本原因，但它一定是那根点燃引线的火柴
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/1/Content
+  quote_hash: BCC776EFBB2CCB2AA77636AE15042612DD8E9A91CC7562FD50D833BEC8760624
+  quote: 以前士兵是为帝国打仗，现在是给他们的领主打仗
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/1/Content
+  quote_hash: 7CF6086C2DF3A821827AABFD4D9047630699A62D19CF0945E3366FFA75ED7CBB
+  quote: 领主出钱养的兵，凭什么对皇帝比对领主更忠诚
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/3/Content
+  quote_hash: FA09D214CF303796AF613602A3CAD4E948EC6AB68689E9F50BD287DEA2BFB325
+  quote: 我在乎的是发饷的那个人能不能赢。他赢了，我的饷就继续发；他输了，我得赶紧换个雇主
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/2/Content
+  quote_hash: 0C9CC977E1700808BF3D72EB7F577CEE0D3C1183509F9686645629D541EF39A0
+  quote: 南方的执政官们各自组建了自己的私兵，我们的军费来自奥尼石山的银矿和吕卡里亚平原的粮食
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/2/Content
+  quote_hash: 3F0B698EB4EA288F0F34FCE454860236F852596ADF44353D5C0434C2227FEFB8
+  quote: 只要银矿还在，只要坎特里翁军马还在吕卡里亚平原上奔跑，南帝国的军队就不会散
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/4/Content
+  quote_hash: 20B51F3B20E586CEE7EA1FB996029F27DC6F3D86266F3E9E6F854C8E9E8C500B
+  quote: 我们依赖的是元老院家族之间的默契和制衡
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/4/Content
+  quote_hash: 52CD557291693387DE89EFBEDDD0084363B24CB7E26794694949EAE6D7355FF1
+  quote: 但优点是一旦达成一致，北方各家族的兵力汇合起来，不输给任何人
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/6/Content
+  quote_hash: F8D457F0D61F06C87B36F7E05DFB6CA986F4726575983C7E0008D91CC951BF46
+  quote: 西帝国的军事制度骨子里就是老兵政治
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/6/Content
+  quote_hash: 3B67C8799AD7641F0AF801BD1FB0AFA51631349B2B777CB0ED7153033B6F2AB1
+  quote: 老兵们对加里俄斯的忠诚是基于个人威望，不是制度
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/7/Content
+  quote_hash: 2D240515A307396D824410C27850D78AE115390C17759E2C6D33EEFA86B346A8
+  quote: 等我们这批人打不动了，谁知道西帝国会怎样
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/8/Content
+  quote_hash: B75E01F337F271A7D3905F270628E8570357E3883B2DA157DA92AD460D7AF5BB
+  quote: 帝国人的军事改革在我们瓦兰迪亚人看来就是自废武功
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/9/Content
+  quote_hash: 65899B26F358FE459F9DB3BE4D92ADD4C16E8968704F302AB1DB4534A740FA69
+  quote: 但他们的持久力不行了。贵族养兵养不了太久，打仗时间一长，军饷就开始拖欠，士兵就开始开小差
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/10/Content
+  quote_hash: 31D58C359C07270A9508E632501B43C13ECBE3B1A778751A7D6CDEC61F84F1DB
+  quote: 改革之后，每个省自己管自己的防区，防区之间全是漏洞
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/11/Content
+  quote_hash: 1E1ED8B88EDA7FEAD3DD7E1ECACCC0B2D38CD688258948C1AC7F508A65612E6F
+  quote: 一个帝国没有自己的军队，要靠贵族们各自出钱养兵，这算什么帝国？这就是部落联盟
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/12/Content
+  quote_hash: 2B4F99F4A99440C72AE869808D31A3899712E6B89D2F03B01944EA2E64B43F5E
+  quote: 将军事改革定性为帝国分裂的'催化剂'比'根本原因'更为准确
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/12/Content
+  quote_hash: 71835B295ED3A8155948FACF3C65D605A0CCDE00A78E042BDA0FA5EFF132A679
+  quote: 军事改革以极快的速度为分裂各方提供了武力基础
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.empire-system-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 帝国的军事制度经历过一场伤筋动骨的变革。潘德拉克战役之前，帝国依靠的是常备军团——由国家财政供养、统一训练、统一指挥的大兵团，那支军队曾征服卡拉迪亚大半土地。潘德拉克耗尽了一切：国库被掏空，精锐军团损失惨重，兵源与财政双双枯竭。阿雷尼科斯皇帝上位后做出一个冷酷而务实的决定：废除常备军，改由执政官和贵族自行组建私兵，谁的地盘谁养兵，谁的兵谁带去打仗。这一刀砍下去，帝国的财政压力确实缓解了；但从此以后，帝国军队不再是皇帝的军队——它是大大小小的执政官和贵族们各自的军队。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.bhxVA9w7
+    quote_hash: C844C912B02C36044764F52975B6861CB5EF007E92DAB1EDEC7E31BCACC0F326
+    quote: 皇帝阿雷尼科斯在潘德拉克战役的惨败之后废除了最后一支帝国常备军，转而依赖开销更少、更适合控制领土的执政官私兵，被弃者军团在这样的局势下成立。而这支军团则是由厌恶这种变化的人所组成：他们偏爱昔日的军团，及其规矩、历史与军营生活，他们指责新制度正在摧毁帝国。但无饷不成军，所以他们会同时与帝国领主和外国领主签订契约。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/0/Content
+    quote_hash: 2952894C27FCC50F03FF08621B3EE971DEE8361BD7723566D6778F622A224860
+    quote: 阿雷尼科斯皇帝上位后做了一个冷酷而务实的决定：废除常备军，改由执政官和贵族自行组建私兵，谁的地盘谁养兵，谁的兵谁带去打仗
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/0/Content
+    quote_hash: 65F559485125F3C2E0EE529352838730095BD22592BE6B18FFCDAA2DDD22104F
+    quote: 帝国分裂成三块，军队改革不一定是根本原因，但它一定是那根点燃引线的火柴
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/1/Content
+    quote_hash: BCC776EFBB2CCB2AA77636AE15042612DD8E9A91CC7562FD50D833BEC8760624
+    quote: 以前士兵是为帝国打仗，现在是给他们的领主打仗
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/1/Content
+    quote_hash: 7CF6086C2DF3A821827AABFD4D9047630699A62D19CF0945E3366FFA75ED7CBB
+    quote: 领主出钱养的兵，凭什么对皇帝比对领主更忠诚
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/3/Content
+    quote_hash: FA09D214CF303796AF613602A3CAD4E948EC6AB68689E9F50BD287DEA2BFB325
+    quote: 我在乎的是发饷的那个人能不能赢。他赢了，我的饷就继续发；他输了，我得赶紧换个雇主
+  expressions:
+  - id: expr.empire-system-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 帝国军队分前后两截：潘德拉克战役之前是常备军团——国家发饷、统一训练、统一指挥，曾经征服了卡拉迪亚大半土地；潘德拉克把国库和精锐都打光了，阿雷尼科斯皇帝只能废掉常备军，改让执政官和贵族自己出钱养兵。财政压力是下来了，但军队从此不再是皇帝的军队。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.bhxVA9w7
+      quote_hash: C844C912B02C36044764F52975B6861CB5EF007E92DAB1EDEC7E31BCACC0F326
+      quote: 皇帝阿雷尼科斯在潘德拉克战役的惨败之后废除了最后一支帝国常备军，转而依赖开销更少、更适合控制领土的执政官私兵，被弃者军团在这样的局势下成立。而这支军团则是由厌恶这种变化的人所组成：他们偏爱昔日的军团，及其规矩、历史与军营生活，他们指责新制度正在摧毁帝国。但无饷不成军，所以他们会同时与帝国领主和外国领主签订契约。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/0/Content
+      quote_hash: 2952894C27FCC50F03FF08621B3EE971DEE8361BD7723566D6778F622A224860
+      quote: 阿雷尼科斯皇帝上位后做了一个冷酷而务实的决定：废除常备军，改由执政官和贵族自行组建私兵，谁的地盘谁养兵，谁的兵谁带去打仗
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/0/Content
+      quote_hash: 65F559485125F3C2E0EE529352838730095BD22592BE6B18FFCDAA2DDD22104F
+      quote: 帝国分裂成三块，军队改革不一定是根本原因，但它一定是那根点燃引线的火柴
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.empire-system-noble-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我们的军队曾经是整个卡拉迪亚的噩梦。鹰旗下，常备军团像一台精密的机器，重步兵在前，具装骑兵在两翼，弩手在后排轮番射击。但潘德拉克把这一切都毁了。阿雷尼科斯皇帝没得选——继续维持常备军，帝国就要破产。他把养兵的责任推给了各地的执政官和贵族，战时由皇帝统一征调。听起来和以前差不多，但骨子里全变了：以前士兵是为帝国打仗，现在是给他们的领主打仗；以前军饷是国库发的，现在是领主自己掏腰包。领主出钱养的兵，凭什么对皇帝比对领主更忠诚？阿雷尼科斯在世的时候，没人敢问这个问题。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/1/Content
+      quote_hash: BCC776EFBB2CCB2AA77636AE15042612DD8E9A91CC7562FD50D833BEC8760624
+      quote: 以前士兵是为帝国打仗，现在是给他们的领主打仗
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/1/Content
+      quote_hash: 7CF6086C2DF3A821827AABFD4D9047630699A62D19CF0945E3366FFA75ED7CBB
+      quote: 领主出钱养的兵，凭什么对皇帝比对领主更忠诚
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+  - id: expr.empire-system-soldier-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我给执政官老爷当兵，他给我发饷。以前我爹那一代是给帝国当兵，军饷是国库发的，上面是皇帝和鹰旗。现在上面是执政官，他出钱我就替他打仗。说实话，我不在乎谁是皇帝——拉盖娅在吕卡隆，卢孔在北边，加里俄斯在西边，他们谁当皇帝跟我有什么关系？我在乎的是发饷的那个人能不能赢。他赢了，我的饷就继续发；他输了，我得赶紧换个雇主。潘德拉克之后，帝国兵都学会了这一条。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/3/Content
+      quote_hash: FA09D214CF303796AF613602A3CAD4E948EC6AB68689E9F50BD287DEA2BFB325
+      quote: 我在乎的是发饷的那个人能不能赢。他赢了，我的饷就继续发；他输了，我得赶紧换个雇主
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+- id: assertion.empire-system-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 三个帝国沿用同一套贵族私兵制度，却各有各的活法：南帝国靠银矿财政和世袭认同维持私兵凝聚力——军费来自奥尼石山的银矿和吕卡里亚平原的粮食，只要银矿还在、坎特里翁军马还在平原上奔跑，南帝国的军队就不会散；北帝国靠元老院家族之间的默契和制衡协调多方兵力，人都会到，但动员速度不如另外两家，好处是很少打没有准备的仗；西帝国靠加里俄斯个人威望和退伍老兵为核心——老兵会老、会死，而他们儿子的忠诚未必像父辈，这是这套办法的隐忧。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/2/Content
+    quote_hash: 0C9CC977E1700808BF3D72EB7F577CEE0D3C1183509F9686645629D541EF39A0
+    quote: 南方的执政官们各自组建了自己的私兵，我们的军费来自奥尼石山的银矿和吕卡里亚平原的粮食
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/2/Content
+    quote_hash: 3F0B698EB4EA288F0F34FCE454860236F852596ADF44353D5C0434C2227FEFB8
+    quote: 只要银矿还在，只要坎特里翁军马还在吕卡里亚平原上奔跑，南帝国的军队就不会散
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/4/Content
+    quote_hash: 20B51F3B20E586CEE7EA1FB996029F27DC6F3D86266F3E9E6F854C8E9E8C500B
+    quote: 我们依赖的是元老院家族之间的默契和制衡
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/4/Content
+    quote_hash: 52CD557291693387DE89EFBEDDD0084363B24CB7E26794694949EAE6D7355FF1
+    quote: 但优点是一旦达成一致，北方各家族的兵力汇合起来，不输给任何人
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/6/Content
+    quote_hash: F8D457F0D61F06C87B36F7E05DFB6CA986F4726575983C7E0008D91CC951BF46
+    quote: 西帝国的军事制度骨子里就是老兵政治
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/6/Content
+    quote_hash: 3B67C8799AD7641F0AF801BD1FB0AFA51631349B2B777CB0ED7153033B6F2AB1
+    quote: 老兵们对加里俄斯的忠诚是基于个人威望，不是制度
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/7/Content
+    quote_hash: 2D240515A307396D824410C27850D78AE115390C17759E2C6D33EEFA86B346A8
+    quote: 等我们这批人打不动了，谁知道西帝国会怎样
+  expressions:
+  - id: expr.empire-system-south-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我们的军队是在吕卡隆的废墟上重建的。阿雷尼科斯皇帝改革之后，南方的执政官们各自组建了自己的私兵，我们的军费来自奥尼石山的银矿和吕卡里亚平原的粮食。拉盖娅女皇沿用了这套制度，她没法恢复常备军，因为南帝国的财政养不起。但她比另外两个皇帝都更擅长一件事：让手下的执政官们相信，她的利益就是他们的利益。只要银矿还在，只要坎特里翁军马还在吕卡里亚平原上奔跑，南帝国的军队就不会散。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/2/Content
+      quote_hash: 0C9CC977E1700808BF3D72EB7F577CEE0D3C1183509F9686645629D541EF39A0
+      quote: 南方的执政官们各自组建了自己的私兵，我们的军费来自奥尼石山的银矿和吕卡里亚平原的粮食
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/2/Content
+      quote_hash: 3F0B698EB4EA288F0F34FCE454860236F852596ADF44353D5C0434C2227FEFB8
+      quote: 只要银矿还在，只要坎特里翁军马还在吕卡里亚平原上奔跑，南帝国的军队就不会散
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+      kingdom_ids:
+      - entity.kingdom.empire_s
+    denies: []
+  - id: expr.empire-system-north-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 北帝国的军事力量建立在元老院控制下的贵族私兵体系之上。阿雷尼科斯废除常备军后，北方的执政官们是最快完成转型的——我们的家族几代人在元老院里斗来斗去，早就习惯了自掏腰包养亲兵。卢孔陛下本人就出身元老院，他对这套规则再熟悉不过。北帝国的军队不像南帝国那样依赖银矿，也不像西帝国那样依赖老兵，我们依赖的是元老院家族之间的默契和制衡。缺点是动员速度不如另外两家快——元老院的决策嘛。但优点是一旦达成一致，北方各家族的兵力汇合起来，不输给任何人。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/4/Content
+      quote_hash: 20B51F3B20E586CEE7EA1FB996029F27DC6F3D86266F3E9E6F854C8E9E8C500B
+      quote: 我们依赖的是元老院家族之间的默契和制衡
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/4/Content
+      quote_hash: 52CD557291693387DE89EFBEDDD0084363B24CB7E26794694949EAE6D7355FF1
+      quote: 但优点是一旦达成一致，北方各家族的兵力汇合起来，不输给任何人
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+      kingdom_ids:
+      - entity.kingdom.empire
+    denies: []
+  - id: expr.empire-system-west-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 加里俄斯皇帝是靠老兵起家的，西帝国的军事制度骨子里就是老兵政治。阿雷尼科斯废除常备军之后，那些被遣散的军团老兵无处可去，是加里俄斯收留了他们。西帝国的军队可能是三个帝国里最能打的——因为我们的核心是一群打了半辈子仗的职业军人，他们不需要训练，只需要一个值得追随的统帅。缺点也很明显：老兵会老，会死，而他们的儿子未必像父辈一样能打；而且老兵们对加里俄斯的忠诚是基于个人威望，不是制度。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/6/Content
+      quote_hash: F8D457F0D61F06C87B36F7E05DFB6CA986F4726575983C7E0008D91CC951BF46
+      quote: 西帝国的军事制度骨子里就是老兵政治
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/6/Content
+      quote_hash: 3B67C8799AD7641F0AF801BD1FB0AFA51631349B2B777CB0ED7153033B6F2AB1
+      quote: 老兵们对加里俄斯的忠诚是基于个人威望，不是制度
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+      kingdom_ids:
+      - entity.kingdom.empire_w
+    denies: []
+  - id: expr.empire-system-west-vet-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 我是跟着加里俄斯皇帝的老兵。以前在常备军团服役，潘德拉克之后军团解散了，我回老家种了两年地，后来听说加里俄斯在西边招人，又扛着剑去了。我这种人西帝国有很多——打过潘德拉克，见过鹰旗倒在泥里，不信任元老院，不信任吕卡隆，只信任带我们活下来的将军。加里俄斯说阿雷尼科斯改革是为了省钱，但省钱省掉了帝国兵的魂。等我们这批人打不动了，谁知道西帝国会怎样。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/7/Content
+      quote_hash: 2D240515A307396D824410C27850D78AE115390C17759E2C6D33EEFA86B346A8
+      quote: 等我们这批人打不动了，谁知道西帝国会怎样
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.empire
+      kingdom_ids:
+      - entity.kingdom.empire_w
+    denies: []
+- id: assertion.empire-system-3
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 外族看这场改革，看法高度一致：帝国人废掉常备军是自废武功。瓦兰迪亚人指出，帝国曾拥有卡拉迪亚最可怕的常备军团，如今变成跟他们差不多的贵族私兵体系，区别在于瓦兰迪亚的男爵们几百年来都是这么打仗的，有继承规则、有写进誓言的效忠关系，帝国突然一改，什么都没有；斯特吉亚人认为这是好事——帝国人的战力还在，但持久力不行了，军饷一拖欠，士兵就开始开小差；阿塞莱商人是最早感觉到变化的——以前帝国巡逻队会剿灭商路上的匪帮，改革之后每个省自己管自己的防区，防区之间全是漏洞，商路比以前危险了好几倍；库赛特人则说这算什么帝国，这就是部落联盟。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/8/Content
+    quote_hash: B75E01F337F271A7D3905F270628E8570357E3883B2DA157DA92AD460D7AF5BB
+    quote: 帝国人的军事改革在我们瓦兰迪亚人看来就是自废武功
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/9/Content
+    quote_hash: 65899B26F358FE459F9DB3BE4D92ADD4C16E8968704F302AB1DB4534A740FA69
+    quote: 但他们的持久力不行了。贵族养兵养不了太久，打仗时间一长，军饷就开始拖欠，士兵就开始开小差
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/10/Content
+    quote_hash: 31D58C359C07270A9508E632501B43C13ECBE3B1A778751A7D6CDEC61F84F1DB
+    quote: 改革之后，每个省自己管自己的防区，防区之间全是漏洞
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/11/Content
+    quote_hash: 1E1ED8B88EDA7FEAD3DD7E1ECACCC0B2D38CD688258948C1AC7F508A65612E6F
+    quote: 一个帝国没有自己的军队，要靠贵族们各自出钱养兵，这算什么帝国？这就是部落联盟
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/12/Content
+    quote_hash: 2B4F99F4A99440C72AE869808D31A3899712E6B89D2F03B01944EA2E64B43F5E
+    quote: 将军事改革定性为帝国分裂的'催化剂'比'根本原因'更为准确
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/12/Content
+    quote_hash: 71835B295ED3A8155948FACF3C65D605A0CCDE00A78E042BDA0FA5EFF132A679
+    quote: 军事改革以极快的速度为分裂各方提供了武力基础
+  expressions:
+  - id: expr.empire-system-vlandia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帝国人的军事改革在我们瓦兰迪亚人看来就是自废武功。他们曾经拥有卡拉迪亚最可怕的常备军团，现在却变成了跟我们差不多的贵族私兵体系。区别在于，我们瓦兰迪亚的男爵们几百年来都是这么打仗的，我们早就习惯了这套规矩，有继承规则，有国王和男爵之间写进誓言的效忠关系。帝国人突然这么一改，什么都没有。阿雷尼科斯活着的时候，他的威望可以代替制度；他一死，威望没了，制度又没有，军队就变成了各个私兵头子的私人武装。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/8/Content
+      quote_hash: B75E01F337F271A7D3905F270628E8570357E3883B2DA157DA92AD460D7AF5BB
+      quote: 帝国人的军事改革在我们瓦兰迪亚人看来就是自废武功
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+  - id: expr.empire-system-sturgia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帝国人把常备军废了，这对我们斯特吉亚来说是好事。以前他们的军团北上，后勤有保障，兵力有补充，一打就是好几年。现在改成贵族私兵，帝国人的战力还在——那些执政官养的具装骑兵还是很能打——但他们的持久力不行了。贵族养兵养不了太久，打仗时间一长，军饷就开始拖欠，士兵就开始开小差。我们斯特吉亚人早就习惯了波耶带私兵的模式，但我们是几百年来一直这么玩，有默契；帝国人是突然从常备军转向私兵，磨合还差得远。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/9/Content
+      quote_hash: 65899B26F358FE459F9DB3BE4D92ADD4C16E8968704F302AB1DB4534A740FA69
+      quote: 但他们的持久力不行了。贵族养兵养不了太久，打仗时间一长，军饷就开始拖欠，士兵就开始开小差
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []
+  - id: expr.empire-system-aserai-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帝国人废掉常备军这件事，我们阿塞莱商人是最早感觉到的。以前帝国军团驻扎在边境的时候，商路是安全的，帝国的巡逻队会剿灭沿途的匪帮。改革之后，每个省自己管自己的防区，防区之间全是漏洞，从吕卡隆到撒纳拉的商路比以前危险了好几倍。不过从另一个角度说，帝国人的军事改革也让他们的执政官们成了独立的军事力量，其中有些人愿意跟我们单独谈生意——以前跟帝国谈贸易要经过三层官僚，现在直接找当地手握重兵的执政官就行。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/10/Content
+      quote_hash: 31D58C359C07270A9508E632501B43C13ECBE3B1A778751A7D6CDEC61F84F1DB
+      quote: 改革之后，每个省自己管自己的防区，防区之间全是漏洞
+    grants:
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    denies: []
+  - id: expr.empire-system-khuzait-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 帝国人把常备军废了，这在我们草原上看来就是自己砍了自己的腿。一个帝国没有自己的军队，要靠贵族们各自出钱养兵，这算什么帝国？这就是部落联盟。草原上的部落联盟是什么样子我们最清楚——有共同敌人的时候能站在一起，没有共同敌人的时候互相咬。阿雷尼科斯活着的时候帝国人还有共同敌人，他一死，共同敌人就变成了彼此。现在三个皇帝各管各的军队，谁也不服谁。这对我们来说是好事。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/11/Content
+      quote_hash: 1E1ED8B88EDA7FEAD3DD7E1ECACCC0B2D38CD688258948C1AC7F508A65612E6F
+      quote: 一个帝国没有自己的军队，要靠贵族们各自出钱养兵，这算什么帝国？这就是部落联盟
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.khuzait
+    denies: []
+  - id: expr.empire-system-steward-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 帝国的军事制度改革是卡拉迪亚大陆军事史上最重大的转折之一。它的核心逻辑是财政减压——将军费负担从中央转移到地方。短期效果确实缓解了帝国的财政危机，让帝国在潘德拉克惨败后仍能维持基本防务；但从长期看，改革彻底改变了军队的权力归属：士兵不再对帝国宣誓效忠，而是对出钱养兵的领主效忠。这种效忠结构在阿雷尼科斯在世时还能依靠个人威望维持统一，在他遇刺后立即崩溃，手握私兵的执政官们分别支持不同的皇位继承人，帝国在不到一年的时间内分裂为三个独立政权。将军事改革定性为帝国分裂的催化剂比根本原因更为准确——帝国分裂的根子在于继承制度说不清，但军事改革以极快的速度为分裂各方提供了武力基础。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/12/Content
+      quote_hash: 2B4F99F4A99440C72AE869808D31A3899712E6B89D2F03B01944EA2E64B43F5E
+      quote: 将军事改革定性为帝国分裂的'催化剂'比'根本原因'更为准确
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_帝国军事制度__帝国军事制度.json#/Variants/12/Content
+      quote_hash: 71835B295ED3A8155948FACF3C65D605A0CCDE00A78E042BDA0FA5EFF132A679
+      quote: 军事改革以极快的速度为分裂各方提供了武力基础
+    grants:
+    - profile_id: profile.noble_high_steward
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []

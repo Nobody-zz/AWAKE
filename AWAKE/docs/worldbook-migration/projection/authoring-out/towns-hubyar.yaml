@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.towns-hubyar
 title:
   zh-CN: 胡比亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 胡比亚
-  en:
-  - Hubyar
-  - town_A5
+entity_ids:
+- entity.settlement.town_a5
 summary:
   zh-CN: 内陆城胡比亚相传建于暴君图兰王的狩猎行宫遗址上，统治者巴努·吉勒德以严苛厌浮著称，英雄尼姆尔即殒命于此。
 registry_bindings:
@@ -40,7 +36,96 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 内陆城胡比亚相传建于暴君图兰王的狩猎行宫遗址上，统治者巴努·吉勒德以严苛厌浮著称，英雄尼姆尔即殒命于此。
+    zh-CN: 胡比亚是内陆城市，如今由巴努·吉勒德掌控；英雄尼姆尔在此落难，被捉后囚死在集市的吊笼里。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_A5
+    quote_hash: 506C3EC360F33D9926100D6A0D9D883A14BC5BA0AB55ADF35908CC49AF766BD1
+    quote: 如今他们掌控着该城，且厌恶一切轻浮的事物。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_A5
+    quote_hash: CB57C14C4C8971EA0E67C55A617F056DC73A6E985364B8BD4D7BF5AED604F7C0
+    quote: 英雄尼姆尔就是在此地落难的，他在一名吉勒德少女的闺房中被捉住，关死在了集市上吊着的笼子里。
+  expressions:
+  - id: expr.town-hubyar-1-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 胡比亚如今是吉勒德家的城。从前那位英雄尼姆尔，就是在这一带栽的——在人家闺房里被堵住，最后吊在集市的笼子里。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_A5
+      quote_hash: 506C3EC360F33D9926100D6A0D9D883A14BC5BA0AB55ADF35908CC49AF766BD1
+      quote: 如今他们掌控着该城，且厌恶一切轻浮的事物。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-hubyar-1-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 胡比亚是内陆城，现归巴努·吉勒德；市集上的吊笼就是尼姆尔的下场所在，如今行商过此，多半会听人指一指。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_A5
+      quote_hash: 506C3EC360F33D9926100D6A0D9D883A14BC5BA0AB55ADF35908CC49AF766BD1
+      quote: 如今他们掌控着该城，且厌恶一切轻浮的事物。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-hubyar-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 据说，胡比亚建在堕落残暴的图兰王那座奢华狩猎小屋的遗址之上；他奴役了阿塞莱族长的家人，被后者复仇所杀。
   sources:
   - source_id: source.calradia.game.settlements-desc
     source_version: bannerlord-1.3.15.110062
@@ -49,11 +134,11 @@ assertions:
     quote_hash: 81E737A85C679A70A614D5C1E56956E15774457DE01833492B0BA14B091B1EFE
     quote: 内陆城市胡比亚据说建立在堕落残暴的图兰王的一座奢华的狩猎小屋遗址之上，他奴役了阿塞莱族长的家人，被后者复仇杀死。
   expressions:
-  - id: expr.town-hubyar-rumor
+  - id: expr.town-hubyar-2-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 听说胡比亚底下压着个暴王的宫殿。城里那家人最恨轻浮做派，可城里的晚风还是香的——茉莉花味儿。
+      zh-CN: 都说胡比亚底下压着从前图兰王的一座猎屋。那王又奢又狠，把人家的家小当成奴仆使，末了叫仇家给杀了。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +178,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.town-hubyar-detail
+  - id: expr.town-hubyar-2-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 胡比亚的规矩大——吉勒德家族治城厌恶轻浮，买卖人衣着言行都收着点；城建于旧王宫遗址是本地身份政治的一部分，谈生意见面先讲体统再谈价。
+      zh-CN: 胡比亚的城基有一说：压在图兰王狩猎小屋的旧址上。那位王的结局是自己种下的——役使阿塞莱族长的家小，换来一刀。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -105,6 +190,45 @@ assertions:
       locator: bannerlord.settlements#town_A5
       quote_hash: 81E737A85C679A70A614D5C1E56956E15774457DE01833492B0BA14B091B1EFE
       quote: 内陆城市胡比亚据说建立在堕落残暴的图兰王的一座奢华的狩猎小屋遗址之上，他奴役了阿塞莱族长的家人，被后者复仇杀死。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-hubyar-3
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 这段旧事或许能解释巴努·吉勒德严酷的脾性——他们如今据有该城，厌恶一切轻浮之物。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_A5
+    quote_hash: 2F4F0C14606937B1748F1DCCDD0767F68D6D7E860A7DD4C2B26E929EBDE18DD6
+    quote: 这段记忆或许能解释凶狠严酷的巴努·吉勒德的世界观
+  expressions:
+  - id: expr.town-hubyar-3-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 吉勒德家为什么这么硬？有人说是记着图兰王那笔旧账。这说法未必坐实，但城里的规矩确实不留轻浮。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_A5
+      quote_hash: 2F4F0C14606937B1748F1DCCDD0767F68D6D7E860A7DD4C2B26E929EBDE18DD6
+      quote: 这段记忆或许能解释凶狠严酷的巴努·吉勒德的世界观
     grants:
     - profile_id: profile.headman
       scope: national

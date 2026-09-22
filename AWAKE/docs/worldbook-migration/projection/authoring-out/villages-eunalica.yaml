@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-eunalica
 title:
   zh-CN: 优纳利卡
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 优纳利卡
-  en:
-  - Eunalica
-  - castle_village_ES7_2
+entity_ids:
+- entity.settlement.castle_village_es7_2
 summary:
   zh-CN: 优纳利卡坐落于塔奈西斯湖西岸，这片洼地是种植亚麻的好地方。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-fanab
 title:
   zh-CN: 法纳卜
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 法纳卜
-  en:
-  - Fanab
-  - castle_village_A1_2
+entity_ids:
+- entity.settlement.castle_village_a1_2
 summary:
   zh-CN: 法纳卜坐落在沙瑞兹湾与耶什姆内海之间的低矮海角上，海风携带的雨水刚好支撑一片橄榄园。
 registry_bindings:

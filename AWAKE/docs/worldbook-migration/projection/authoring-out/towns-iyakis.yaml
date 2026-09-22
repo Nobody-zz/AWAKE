@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-iyakis
 title:
   zh-CN: 以亚基斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 以亚基斯
-  en:
-  - Iyakis
-  - town_A3
+entity_ids:
+- entity.settlement.town_a3
 summary:
   zh-CN: 以亚基斯坐落于杰尔贾赖峭壁的裂谷中，靠积攒偶发的暴雨灌溉；卡拉兹家族以与纳哈撒部落联姻起家，如今跻身苏丹御前会议。
 registry_bindings:

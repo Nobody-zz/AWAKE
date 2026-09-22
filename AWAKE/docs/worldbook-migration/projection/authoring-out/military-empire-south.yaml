@@ -1,0 +1,267 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.military-empire-south
+title:
+  zh-CN: 南帝国的军事实力
+  en: Southern Empire's Military Strength
+status: needs_review
+domain: war
+subdomain: military
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 南帝国军力
+  - 南帝国军事实力
+  en:
+  - Southern Empire Military
+summary:
+  zh-CN: 南帝国的军事实力：控制着卡拉迪亚最富庶的区域，易守难攻；兵力较多，马场多、骑兵也多，具装骑兵相对另外两个帝国更多。压力同样不小——东边要防库赛特，西边和北边要防两个「僭越者」。对阿塞莱方向则谋求战争以获取新领土。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/1/Content
+  quote_hash: CFEA40E4A60E23D57622110BAEC3A80144A387FA4CAB1173147B7EED2D7EBCC3
+  quote: 我们南帝国控制着卡拉迪亚最富庶的区域，而且还是比较易守难攻的
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/1/Content
+  quote_hash: 2675AF91181BF2A2CD7CB78FBF3454B85C677150DAE645B98DB8301F83A45E53
+  quote: 我们会谋求与阿塞莱的战争，以获得新的领土
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/1/Content
+  quote_hash: 6BD1B31C6231F5E5E1725460D2A8B44682BDF4303ABA5AD6401B1C4CC05093BC
+  quote: 所以我们的压力还是蛮大的，虽然我们兵力多
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/2/Content
+  quote_hash: B8C36A956DD1FAF138B0C9263A81799D0A320B3F75D59AC2D9FFA8FF9FB80721
+  quote: 他们那帮养尊处优的城主们根本不知道如何打仗
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/3/Content
+  quote_hash: 9D21CFCF7E7702ADCBEC8AE1B671F4F82E8ADDF51AEF7886CE99664C811CE576
+  quote: 毕竟谁也不愿意陷入双线作战，同时招惹两个帝国不是明智的选择
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/4/Content
+  quote_hash: BA23D4004FE4D357F799FCD62C7D924153F9257EFCBAE20A46EF8187AF2F075D
+  quote: 我们抗击南帝国的侵略，保证他们不击穿我们的防线即可，进攻就别想了
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/0/Content
+  quote_hash: 31E816C67C5BEA43616FE185163F393EC8F768DBBF54CAC2A02A1F1D2964148E
+  quote: 我们只知道南帝国似乎比较强，他们马场多，骑兵也多，具装骑兵相对其它两个帝国多些
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.south-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 南帝国控制着卡拉迪亚最富庶的区域，而且比较易守难攻；兵力较多，马场多，骑兵也多，具装骑兵相对另外两个帝国更多。但它的压力同样不小：得防御东边的库赛特，以及西部北部的僭越者（西帝国、北帝国）。在战略取向上，它更倾向于对阿塞莱方向用兵，以获得新的领土。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/1/Content
+    quote_hash: CFEA40E4A60E23D57622110BAEC3A80144A387FA4CAB1173147B7EED2D7EBCC3
+    quote: 我们南帝国控制着卡拉迪亚最富庶的区域，而且还是比较易守难攻的
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/1/Content
+    quote_hash: 2675AF91181BF2A2CD7CB78FBF3454B85C677150DAE645B98DB8301F83A45E53
+    quote: 我们会谋求与阿塞莱的战争，以获得新的领土
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/1/Content
+    quote_hash: 6BD1B31C6231F5E5E1725460D2A8B44682BDF4303ABA5AD6401B1C4CC05093BC
+    quote: 所以我们的压力还是蛮大的，虽然我们兵力多
+  expressions:
+  - id: expr.south-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 南帝国手里是卡拉迪亚最富庶的地方，易守难攻，兵多，马场多，骑兵也多——具装骑兵比另外两个帝国都多些。压力也不小：东边防库赛特，西边北边防那两个僭越者。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/1/Content
+      quote_hash: CFEA40E4A60E23D57622110BAEC3A80144A387FA4CAB1173147B7EED2D7EBCC3
+      quote: 我们南帝国控制着卡拉迪亚最富庶的区域，而且还是比较易守难攻的
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.south-lord-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我们南帝国控制着卡拉迪亚最富庶的区域，而且还是比较易守难攻的，我们的实力比阿塞莱强，我们会谋求与阿塞莱的战争，以获得新的领土。我们不愿意打仗，但有的时候战争是不得不打的。而我们也得防御东边的库赛特以及西部北部的僭越者，所以我们的压力还是蛮大的，虽然我们兵力多。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/1/Content
+      quote_hash: 2675AF91181BF2A2CD7CB78FBF3454B85C677150DAE645B98DB8301F83A45E53
+      quote: 我们会谋求与阿塞莱的战争，以获得新的领土
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/1/Content
+      quote_hash: 6BD1B31C6231F5E5E1725460D2A8B44682BDF4303ABA5AD6401B1C4CC05093BC
+      quote: 所以我们的压力还是蛮大的，虽然我们兵力多
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+      kingdom_ids:
+      - entity.kingdom.empire_s
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+      kingdom_ids:
+      - entity.kingdom.empire_s
+    denies: []
+- id: assertion.south-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 邻国对南帝国的评价集中在「兵多而将弱」：有人直接嘲笑那帮养尊处优的城主根本不知道如何打仗，像俄洛斯与图里亚多斯这样的将领完全不懂军事却还掌握着兵权，女皇本人管理能力尚可、用兵打仗太差；库赛特人说接壤归接壤，主要还是以防御为主，谁也不愿意陷入双线作战；阿塞莱人说南帝国比自己强大，但也没有强大多少，抗击它的侵略、保证防线不被击穿即可，进攻就别想了。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/2/Content
+    quote_hash: B8C36A956DD1FAF138B0C9263A81799D0A320B3F75D59AC2D9FFA8FF9FB80721
+    quote: 他们那帮养尊处优的城主们根本不知道如何打仗
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/3/Content
+    quote_hash: 9D21CFCF7E7702ADCBEC8AE1B671F4F82E8ADDF51AEF7886CE99664C811CE576
+    quote: 毕竟谁也不愿意陷入双线作战，同时招惹两个帝国不是明智的选择
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/4/Content
+    quote_hash: BA23D4004FE4D357F799FCD62C7D924153F9257EFCBAE20A46EF8187AF2F075D
+    quote: 我们抗击南帝国的侵略，保证他们不击穿我们的防线即可，进攻就别想了
+  expressions:
+  - id: expr.south-west-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 南帝国算什么东西？他们那帮养尊处优的城主们根本不知道如何打仗。像他们的俄洛斯与图里亚多斯，简直就是完全不懂军事，却还掌握着兵权，真是可笑。拉盖娅本人也不懂军事，她管理能力尚可，但是用兵打仗太差了。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/2/Content
+      quote_hash: B8C36A956DD1FAF138B0C9263A81799D0A320B3F75D59AC2D9FFA8FF9FB80721
+      quote: 他们那帮养尊处优的城主们根本不知道如何打仗
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+      kingdom_ids:
+      - entity.kingdom.empire_w
+    denies: []
+  - id: expr.south-khuzait-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我们与南帝国接壤，但是我们主要还是以防御为主。毕竟谁也不愿意陷入双线作战，同时招惹两个帝国不是明智的选择。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/3/Content
+      quote_hash: 9D21CFCF7E7702ADCBEC8AE1B671F4F82E8ADDF51AEF7886CE99664C811CE576
+      quote: 毕竟谁也不愿意陷入双线作战，同时招惹两个帝国不是明智的选择
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    denies: []
+  - id: expr.south-aserai-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 南帝国比我们强大，但是也没有强大多少。我们抗击南帝国的侵略，保证他们不击穿我们的防线即可，进攻就别想了。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/4/Content
+      quote_hash: BA23D4004FE4D357F799FCD62C7D924153F9257EFCBAE20A46EF8187AF2F075D
+      quote: 我们抗击南帝国的侵略，保证他们不击穿我们的防线即可，进攻就别想了
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    denies: []
+- id: assertion.south-3
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 远方对南帝国的军力只有模糊的传闻：只知道它似乎比较强，马场多，骑兵也多，具装骑兵相对其它两个帝国多些——再多的就说不上来了。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/0/Content
+    quote_hash: 31E816C67C5BEA43616FE185163F393EC8F768DBBF54CAC2A02A1F1D2964148E
+    quote: 我们只知道南帝国似乎比较强，他们马场多，骑兵也多，具装骑兵相对其它两个帝国多些
+  expressions:
+  - id: expr.south-far-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 南帝国的军事力量？我们其实不太清楚。我们只知道南帝国似乎比较强，他们马场多，骑兵也多，具装骑兵相对其它两个帝国多些。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_南帝国的军事实力__南帝国的军事实力.json#/Variants/0/Content
+      quote_hash: 31E816C67C5BEA43616FE185163F393EC8F768DBBF54CAC2A02A1F1D2964148E
+      quote: 我们只知道南帝国似乎比较强，他们马场多，骑兵也多，具装骑兵相对其它两个帝国多些
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []

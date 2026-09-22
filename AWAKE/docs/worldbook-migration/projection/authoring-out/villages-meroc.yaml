@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-meroc
 title:
   zh-CN: 梅罗克
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 梅罗克
-  en:
-  - Meroc
-  - village_V5_2
+entity_ids:
+- entity.settlement.village_v5_2
 summary:
   zh-CN: 梅罗克是一座小渔村，俯瞰比斯坎海岸上的小海湾；村民向西出海捕近岸的鲻鱼与鲈鱼，并在南边岛屿附近寻获金枪鱼与沙丁鱼。
 registry_bindings:

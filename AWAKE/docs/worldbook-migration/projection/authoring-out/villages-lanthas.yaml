@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-lanthas
 title:
   zh-CN: 兰塔斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 兰塔斯
-  en:
-  - Lanthas
-  - village_ES5_1
+entity_ids:
+- entity.settlement.village_es5_1
 summary:
   zh-CN: 兰塔斯躺在塔奈西斯湖以南的广阔平原上；这里是优质绵羊之乡，但常被帝国逃犯、自由民骑手与草原游牧民扫荡，村民因此学会了看紧羊群。
 registry_bindings:

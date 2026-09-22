@@ -1,0 +1,26 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"awake.worldbook.link-registry.v1",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["registry_version","edges"],
+  "properties": {
+    "registry_version":{"const":"awake.worldbook.link-registry.v1"},
+    "generated_at_utc":{"type":"string"},
+    "judge":{"type":"string"},
+    "source_entries":{"type":"integer","minimum":0},
+    "note":{"type":"string"},
+    "edges":{"type":"array","items":{
+      "type":"object","additionalProperties":false,
+      "required":["from","to","viaName","strength","bucket","usableAs"],
+      "properties":{
+        "from":{"type":"string","minLength":1},
+        "to":{"type":"string","minLength":1},
+        "viaName":{"type":"string","minLength":1},
+        "strength":{"enum":["strong","weak"]},
+        "bucket":{"enum":["proper","hubproper"]},
+        "usableAs":{"type":"array","minItems":1,"items":{"enum":["forward","backward"]}}
+      }
+    }}
+  }
+}

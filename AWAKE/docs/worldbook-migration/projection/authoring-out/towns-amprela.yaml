@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-amprela
 title:
   zh-CN: 安普雷拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 安普雷拉
-  en:
-  - Amprela
-  - town_EN6
+entity_ids:
+- entity.settlement.town_en6
 summary:
   zh-CN: 安普雷拉踞帝国极北，高塔警哨四境，具装骑兵自此出击，同斯特吉亚争夺伊勒坦运输线的贸易控制权。
 registry_bindings:

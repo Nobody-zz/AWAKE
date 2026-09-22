@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-abba
 title:
   zh-CN: 阿卜巴
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿卜巴
-  en:
-  - Abba
-  - village_A3_1
+entity_ids:
+- entity.settlement.village_a3_1
 summary:
   zh-CN: 阿卜巴坐落在沙漠深处边缘、杰尔贾赖峭壁向陆侧山脚下，山体径流在地下积蓄成泉，小麦在绿洲耕地里生长。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-hertogea
 title:
   zh-CN: 赫托该亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 赫托该亚
-  en:
-  - Hertogea
-  - castle_village_EW6_1
+entity_ids:
+- entity.settlement.castle_village_ew6_1
 summary:
   zh-CN: 赫托该亚位于拔地而起的玄武岩巨山厄里特律斯山附近，村民在山坡上种植橄榄树，所产橄榄油以清淡芬芳而闻名。
 registry_bindings:

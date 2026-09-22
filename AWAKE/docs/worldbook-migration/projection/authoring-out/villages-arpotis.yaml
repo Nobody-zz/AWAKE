@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-arpotis
 title:
   zh-CN: 阿耳波提斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿耳波提斯
-  en:
-  - Arpotis
-  - village_EW4_1
+entity_ids:
+- entity.settlement.village_ew4_1
 summary:
   zh-CN: 阿耳波提斯坐落于高崖之上，俯瞰阿米尼斯河、伽维斯河与泽俄斯河的交汇处；山的两侧是梯田，并建有蓄水池，收集海洋雨云携来的淡水。
 registry_bindings:

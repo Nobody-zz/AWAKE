@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-hongard
 title:
   zh-CN: 翁加尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 翁加尔
-  en:
-  - Hongard
-  - castle_village_V2_1
+entity_ids:
+- entity.settlement.castle_village_v2_1
 summary:
   zh-CN: 翁加尔位于蜿蜒的特朗河附近的温暖林地；这片盛产小麦的土地曾是帝国腹地，如今是瓦兰迪亚王国的中心地带。
 registry_bindings:

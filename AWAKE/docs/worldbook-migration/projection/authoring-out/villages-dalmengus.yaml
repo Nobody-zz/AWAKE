@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-dalmengus
 title:
   zh-CN: 达尔门格斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 达尔门格斯
-  en:
-  - Dalmengus
-  - village_B1_1
+entity_ids:
+- entity.settlement.village_b1_1
 summary:
   zh-CN: 达尔门格斯位于泰瓦尔湖——也就是乌卡利翁地块中央的暗湖——之畔；这里土地平坦肥沃、雨水丰沛，宜种小麦与大麦。
 registry_bindings:

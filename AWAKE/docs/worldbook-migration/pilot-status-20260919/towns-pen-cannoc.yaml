@@ -1,0 +1,243 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.geography.towns-pen-cannoc
+title:
+  zh-CN: 彭·坎诺克
+  en: Pen Cannoc
+status: needs_review
+domain: geography
+subdomain: settlements
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 彭·坎诺克
+  en:
+  - Pen Cannoc
+  - town_B5
+summary:
+  zh-CN: 彭·坎诺克高山俯瞰特朗河奔向瓦兰迪亚低地，水之女神暗池的传说源自对湍流的真实敬畏。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.settlements-desc
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+  locator: bannerlord.settlements#town_B5
+  quote_hash: E382C0A9D2AAA96F3764F843F35B404518C2AEFD7F82B7DD9FD392E2CF1B15B6
+  quote: 彭·坎诺克坐落于高山之巅，注视着特朗河自乌卡利翁高原奔腾涌向瓦兰迪亚的低地。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.town-pen-cannoc-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 彭·坎诺克坐落于高山之巅，俯瞰特朗河自乌卡利翁高原直奔瓦兰迪亚的低地。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_B5
+    quote_hash: E382C0A9D2AAA96F3764F843F35B404518C2AEFD7F82B7DD9FD392E2CF1B15B6
+    quote: 彭·坎诺克坐落于高山之巅，注视着特朗河自乌卡利翁高原奔腾涌向瓦兰迪亚的低地。
+  expressions:
+  - id: expr.town-pen-cannoc-1-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 彭·坎诺克在顶上，往下看就是特朗河。河打高原上下来，水急，翻白花。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_B5
+      quote_hash: E382C0A9D2AAA96F3764F843F35B404518C2AEFD7F82B7DD9FD392E2CF1B15B6
+      quote: 彭·坎诺克坐落于高山之巅，注视着特朗河自乌卡利翁高原奔腾涌向瓦兰迪亚的低地。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-pen-cannoc-1-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 彭·坎诺克扼特朗河上游——山地水路的龙头，放排下行的货在此集结；滩口窄，枯水期是抢运的关口。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_B5
+      quote_hash: E382C0A9D2AAA96F3764F843F35B404518C2AEFD7F82B7DD9FD392E2CF1B15B6
+      quote: 彭·坎诺克坐落于高山之巅，注视着特朗河自乌卡利翁高原奔腾涌向瓦兰迪亚的低地。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-pen-cannoc-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 据传说，山岩下的暗池里住着水之女神，她把旅人与闯入者诱入死地；极少数时候她与某个英雄相恋，赐他胜利与福分。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_B5
+    quote_hash: 1AA2F0455A3336E9735E9AA394C33388123CDF212BA317712DAA8870F33AF777
+    quote: 据传说，水之女神生活在山岩之下的暗池里面，诱惑着旅行者和闯入者踏入死地，只有很少的情况下女神会和一位英雄坠入爱河，赠予他胜利和赐福。
+  expressions:
+  - id: expr.town-pen-cannoc-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 山底下暗池里住着水娘娘，贪心的旅人会被拖下去。渔夫们说那不是神怪，是那条河真吃人。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_B5
+      quote_hash: 1AA2F0455A3336E9735E9AA394C33388123CDF212BA317712DAA8870F33AF777
+      quote: 据传说，水之女神生活在山岩之下的暗池里面，诱惑着旅行者和闯入者踏入死地，只有很少的情况下女神会和一位英雄坠入爱河，赠予他胜利和赐福。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-pen-cannoc-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 女神的故事有讲究：落水的、失足的，都记在她名下。行船的人敬她，说敬过河的人少翻船。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_B5
+      quote_hash: 1AA2F0455A3336E9735E9AA394C33388123CDF212BA317712DAA8870F33AF777
+      quote: 据传说，水之女神生活在山岩之下的暗池里面，诱惑着旅行者和闯入者踏入死地，只有很少的情况下女神会和一位英雄坠入爱河，赠予他胜利和赐福。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-pen-cannoc-3
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 渔人之间这套传言，出自对特朗河上游的敬畏——石面滑腻，一步踩错便落入急流。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_B5
+    quote_hash: EF6E3AF971A84043C819E85D573944CF854A3CFD33F573EDD802A08858CF4FE3
+    quote: 当然，这些渔人口里的传言只是出于对特朗河上游的敬畏，因为在滑腻的石子上着错一步脚，人就会掉落到湍急的水里。
+  expressions:
+  - id: expr.town-pen-cannoc-3-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 彭·坎诺克的女神传说，是行船人的规矩来源——雇船先敬河，纠纷少一半。这层说法的底子是：石面滑，人下去就上不来。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_B5
+      quote_hash: EF6E3AF971A84043C819E85D573944CF854A3CFD33F573EDD802A08858CF4FE3
+      quote: 当然，这些渔人口里的传言只是出于对特朗河上游的敬畏，因为在滑腻的石子上着错一步脚，人就会掉落到湍急的水里。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

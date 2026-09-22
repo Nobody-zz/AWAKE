@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-mecalovea
 title:
   zh-CN: 墨卡罗维亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 墨卡罗维亚
-  en:
-  - Mecalovea
-  - castle_village_EN9_1
+entity_ids:
+- entity.settlement.castle_village_en9_1
 summary:
   zh-CN: 墨卡罗维亚俯瞰伽尔喀斯大瀑布，村庄筑于峭壁之上以免受强盗侵扰；飞流直下的瀑布拍过峭壁，将许多矿石暴露出来，村民以此为生。
 registry_bindings:

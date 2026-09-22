@@ -1,0 +1,142 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-wine
+title:
+  zh-CN: 葡萄酒
+  en: Wine
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 葡萄酒是葡萄园的成品，讲究水土，名产地的价钱能翻番。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.ELsDFwAD
+  quote_hash: 4299FD22782E7EFC1CDC0CFBA2EE0C8F27E0AD6B59148916797F494405344E7F
+  quote: 葡萄酒{@Plural}成罐的葡萄酒{\@}
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_马林__马林.json#/Variants/2/Content
+  quote_hash: 6A176F8C8B45D67466CD89B58FE40BECA691F4628E2C989C100B9C25D15D8CA9
+  quote: 马林的葡萄酒有一种清爽的果香，奥克斯湖的水汽养出来的
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_菲尔贝克__菲尔贝克.json#/Variants/2/Content
+  quote_hash: 60AC33A220F50BE9C63D4B0C6115FE09DDED59F29C3FE8F828E4A4386911A663
+  quote: 那里的葡萄园在比斯坎海岸的巨岩上，结出来的葡萄又大又甜
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-wine-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 葡萄酒是葡萄酿成的酒，基准价 90 第纳尔，论罐买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.ELsDFwAD
+    quote_hash: 4299FD22782E7EFC1CDC0CFBA2EE0C8F27E0AD6B59148916797F494405344E7F
+    quote: 葡萄酒{@Plural}成罐的葡萄酒{\@}
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_马林__马林.json#/Variants/2/Content
+    quote_hash: 6A176F8C8B45D67466CD89B58FE40BECA691F4628E2C989C100B9C25D15D8CA9
+    quote: 马林的葡萄酒有一种清爽的果香，奥克斯湖的水汽养出来的
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_菲尔贝克__菲尔贝克.json#/Variants/2/Content
+    quote_hash: 60AC33A220F50BE9C63D4B0C6115FE09DDED59F29C3FE8F828E4A4386911A663
+    quote: 那里的葡萄园在比斯坎海岸的巨岩上，结出来的葡萄又大又甜
+  expressions:
+  - id: expr.goods-wine-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 同样是葡萄，换个湖边的坡地酿出来味道就不一样。收酒那阵子，商人们从各处赶来，跟过节一样。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.ELsDFwAD
+      quote_hash: 4299FD22782E7EFC1CDC0CFBA2EE0C8F27E0AD6B59148916797F494405344E7F
+      quote: 葡萄酒{@Plural}成罐的葡萄酒{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_马林__马林.json#/Variants/2/Content
+      quote_hash: 6A176F8C8B45D67466CD89B58FE40BECA691F4628E2C989C100B9C25D15D8CA9
+      quote: 马林的葡萄酒有一种清爽的果香，奥克斯湖的水汽养出来的
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-wine-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 葡萄酒 90 一件，比啤酒贵一倍，产地看葡萄园的水土。名产地的酒能卖出高过基准的价，认牌子的买家只认那一处，不认价钱。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.ELsDFwAD
+      quote_hash: 4299FD22782E7EFC1CDC0CFBA2EE0C8F27E0AD6B59148916797F494405344E7F
+      quote: 葡萄酒{@Plural}成罐的葡萄酒{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_菲尔贝克__菲尔贝克.json#/Variants/2/Content
+      quote_hash: 60AC33A220F50BE9C63D4B0C6115FE09DDED59F29C3FE8F828E4A4386911A663
+      quote: 那里的葡萄园在比斯坎海岸的巨岩上，结出来的葡萄又大又甜
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

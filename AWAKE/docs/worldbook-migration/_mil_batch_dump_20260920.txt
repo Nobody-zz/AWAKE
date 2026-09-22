@@ -1,0 +1,842 @@
+
+##############################################################################
+# 兵种·军团
+##############################################################################
+==========================================================================
+【方旗骑士】找到
+  Id: rule_方旗骑士
+  Keywords: ["方旗骑士"]
+  RagShortTexts: ["方旗骑士装备昂贵，重甲骑兵冲锋威慑力强。"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  方旗骑士？扈从熬资历，挣战功，运气好被哪个男爵看中，册封的时候骑枪上挂一面方旗，这辈子就算站稳了。方旗骑士的装备钱可不是小数目——全覆盔、布面铁甲、链铠衬里、战马马铠，一套下来够养一队弩手好几年。但值。一个方旗骑士在阵前把骑枪放平，马蹄刨地，斗篷在背后绷成一面墙，对面步兵看着腿就软了。不过我也得说句实话：方旗骑士不好管。他们太傲。每个人都是打出来的，每个人腰间挂的不是剑是战绩，你让他列队他列了，但你让他别冲他未必听。因加泰尔在潘德拉克就是带着一帮方旗骑士追轻步兵，追到最后被帝国具装骑兵反冲，折了多少人。方旗骑士是瓦兰迪亚最锋利的刀，但刀太快了容易割自己手。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  方旗骑士？那跟我们没关系。我们村要是出个方旗骑士，全村祖坟冒青烟了。当方旗骑士首先得当扈从，扈从得有人给你担保，担保你的人至少得是个骑士，我们家往上数八辈全是种地的，连担保人的马夫都攀不上。我在集市上见过一次方旗骑士，骑在那高头大马上，浑身铁片子，脸都看不见，只能看见盔沿底下一条缝，那缝里透出来的光就够让人不敢喘气。他们那马也吓人，马铠比我的房子还值钱，马蹄子有我脑袋大。方旗骑士过街的时候没人敢正眼看，不是怕他抽你，是那铁蹄子万一磕着你，一下就没了。不过话说回来，打仗还得靠他们。弩手射箭射得好，但真要把对面阵线冲垮，还得这帮铁人压上去。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": ["char:vlandian_banner_knight"], "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我年轻时当扈从，不久前在城下受封。册封那天男爵大人亲手把方旗递给我，说旗在人在。我没说话。事后我的扈从说那面旗太小，跟别家那些大旗比寒碜。我跟他说，旗不是给你丈量布匹的，旗是挂在你骑枪上的命。对面弓箭手瞄的就是这面旗，我挂着它冲锋，就是告诉对面我在这儿，来打我。能挂方旗的人不躲不藏，冲锋的时候我们第一波撞进去，撤出来的时候最后一个走。帝国人说他们具装骑兵比我们强，我不争辩。他们纪律好，我们拼得凶。纪律好的人在阵列里不死，拼得凶的人在混战里活。我们瓦兰迪亚方旗骑士从来不跟人比纪律，我们比谁先撞碎对面的盾墙。但说实话，有时候冲得太深，回头看支援没跟上来，心里也是凉半截。这种话不能跟扈从讲，只能在心里闷着。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": ["char:vlandian_crossbowman", "char:vlandian_footman", "char:vlandian_infantry", "char:vlandian_levy_crossbowman", "char:vlandian_marine_t5", "char:vlandian_militia_archer", "char:vlandian_militia_spearman", "char:vlandian_recruit", "char:vlandian_sergeant", "char:vlandian_sharpshooter", "char:vlandian_spearman", "char:vlandian_swordsman", "char:vlandian_voulgier"], "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我在弩手阵里蹲了六年，最怕的不是对面冲骑，是我前方的方旗骑士突然决定不等命令就冲锋。他们一动，整条阵线就露了破绽，我们弩手就得赶紧收弩往侧翼撤，慢一步就被对面轻骑咬上。但我也服他们。有一回对面帝国重步压上来，我们的步兵线已经撑不住了，往后退了两步。然后右翼的方旗骑士不声不响就把骑枪放平了，没人下命令，他们自己整的队，马蹄声一起，我们这边所有人都松了口气。他们冲出去的时候旗子绷得噼啪响，撞进对面阵里的声音像铁砸铁，刚才还在往前压的帝国兵一下就乱了。方旗骑士冲完没恋战，拨马就回来了。回来的时候少了几个人，马背上挂着空蹬子，但活着回来的还在，骑枪断了换剑继续列队。我说不上喜欢他们——他们太傲了，对步兵说话眼皮都不抬，但我认他们。有他们在前面，我装填弩的时候手不抖。
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  瓦兰迪亚方旗骑士是大陆上唯一一支能在重骑兵对决中和帝国具装骑兵互冲的部队。装备精良，马术一流，个人勇武无可置疑。他们的弱点在于纪律——瓦兰迪亚人的骑士传统强调个人荣誉，导致方旗骑士在阵列中倾向自由发挥而非协同作战。这一点帝国具装骑兵做得更好。在大型会战中，一队列阵整齐的具装骑兵可以来回冲穿方旗骑士的队形，因为方旗骑士冲锋时会不自觉地散开，各找各的目标。但在混战和边境冲突中，方旗骑士往往占上风——他们更习惯小规模、高强度的独立战斗，不依赖号令就能自行组织突破。从军费角度看，方旗骑士的装备和维护成本高得离谱，瓦兰迪亚能养活这么多重装骑兵，全靠弩手阵的低成本补了他们的坑。如果他们的国王哪天把方旗骑士的预算砍了，瓦兰迪亚的军力一夜之间腰斩。
+
+  --- V5  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  方旗骑士？瓦兰迪亚的铁骑兵。我在商路上远远见过一回。当时我们商队停在山坡上等路卡放行，底下平地上他们正在操练。那些骑兵从头到脚全是铁，马也是铁装裹着，跑起来地面都在震。我数了数，骑枪末梢都挂着小方旗，花花绿绿的，风一吹啪嗒嗒响。他们冲的时候真跟山塌下来一样，我站在山坡上都腿软。向导说在下面得叫声“方旗老爷”才行，叫错了要挨鞭子。我问他们打仗厉不厉害。他说，骑兵里排第二。第一是谁？帝国骑兵。
+
+  --- V6  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  跟方旗骑士打过一场，他们没正眼看我们，集中冲中路。那一次我才知道什么叫重骑兵——我们的人从侧面射箭过去，箭打在他们甲上弹开了，他们理都不理，只顾往前碾。马撞进步兵阵里的时候，我感觉地面往下沉了一下，然后就是断枪杆子和惨叫。我们的轻骑没敢接，撤了。回去长官拍桌子骂，说我们怂。我说那帮方旗骑士的甲比我们的盾都厚，冲起来骑枪快如闪电，你让我们怎么接？帝国人说方旗骑士纪律差，我看是屁话。冲锋纪律差能把我中路砸穿？他们差的是冲完以后的纪律——冲过去就开始各自找人杀，队形就散了。真要接他们，得趁他们散开的时候，在他们重新整队之前咬上去。但咬上去的代价也不小，那帮铁人短兵刃使起来一样要命。
+
+  --- V7  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": ["char:imperial_cataphract", "char:imperial_elite_cataphract"], "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  瓦兰迪亚方旗骑士？大陆上唯一配得上我们正眼看的骑兵。他们的装备和我们差不太多，布面甲对我们的扎甲，链铠衬底对鳞甲托底，竞技马对我们的帕尔马廷马，两边冲起来谁也别说谁比谁更扛揍。他们的马术不在我们之下，枪法也不差，单拿出来看，方旗骑士的个人素质不比我们任何一个人弱。但他们有个致命的毛病：纪律。在阵列对冲的时候，我们是按号令整体踏进，矛尖平齐，速度一致，节奏统一。方旗骑士冲起来比我们猛，但也比我们乱。他们的速度不是整体节奏，是各人看情况自己加的。冲到后半段，队形就散了，散的缝隙就是我们的突破口。我们打他们，靠的不是更快的枪，是更整齐的纵队后劲。冲完第一波之后，我们还能掉头再冲第二波——前提是能有骑兵掩护，方旗骑士就不太能。不是我笑话瓦兰迪亚的骑兵，他们的方旗骑士单挑是真不弱。但打仗不是单挑，是阵形和纪律的比拼。在这一点上，他们还得再多练几百年。
+
+  --- 游戏本体 CN 命中 1 条 ---
+  [bTApMxWr] 瓦兰迪亚方旗骑士
+
+==========================================================================
+【可汗亲卫】找到
+  Id: rule_可汗亲卫
+  Keywords: ["可汗亲卫"]
+  RagShortTexts: ["可汗亲卫是库赛特汗国最顶尖的精锐骑射手，担任可汗护卫，擅长在全速奔驰中精准射击。"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  可汗亲卫是库赛特汗国最顶尖的战士，也是整个卡拉迪亚唯一一支以骑射为核心的精锐骑兵。他们不是普通的草原骑手，而是可汗本人的护卫，是从各部落中万里挑一的猛士。他们的弓能在全速奔驰中精准命中目标，他们的刀能在错身而过的瞬间收割敌人的首级。在库赛特，每一个年轻战士的梦想都是成为可汗亲卫——但那需要十年以上的弓马功夫和不止一次在战场上证明自己的勇气。他们是草原上的鹰，来去如风，箭无虚发，敌人往往还没看清他们的脸，就已经倒在了箭雨之下。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  可汗亲卫是我们库赛特的骄傲，是草原上最锋利的刀。他们每一个都是从各部族里挑出来的顶尖射手——能在全速奔驰的马背上射中三百步外的草靶，能在马镫上转身射箭，能在暴风雪里辨别方向。可汗走到哪里，他们就跟着到哪里，既是护卫，也是先锋，更是传令。他们的弓是草原上最好的弓，用牛角和马鬃制成，拉满一张需要普通战士两倍的臂力。他们的刀是弯的，抽出来的时候像一道银月。草原上的人都知道，见到可汗亲卫的旗帜，要么下马行礼，要么赶紧逃命。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  可汗亲卫不是一般的兵，他们是被选中的人。我手下最顶尖的骑射手，练了十几年才有资格去参加可汗亲卫的选拔，选拔的时候要在马背上射完一整壶箭，箭箭都要中靶，还要在马刀对决中胜过不止一个对手。选上之后，他们就不再属于部落了，只属于可汗。他们的弓马比我们最好的骑射手还要快三分，准五分。在草原上打仗，我们那颜们在前面指挥，可汗亲卫就是可汗手里的鞭子，抽到哪，哪就倒下。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": ["soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我这辈子最大的念想，就是有朝一日能被选进可汗亲卫。他们的弓比我们的长，他们的箭比我们的轻，他们的马比我们的快。同样的距离，我放三箭，他们能放五箭，还箭箭咬肉。但我也知道，就算练一辈子，大多数人还是选不上。他们不光要射得准，还要能在马上用刀近战——骑射手最怕被追上来贴身，可汗亲卫不怕，他们近战的刀法比有些步兵还狠。
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我们在东线和库赛特人打了这么多年，最让我们头疼的不是他们的骑射手，而是可汗亲卫。普通的库赛特骑射手你还能用盾墙和弩手逼退，可汗亲卫根本不给你这个机会。他们的箭太准了，能在我们弩手装填的间隙里射出两轮。而且他们不像普通骑射手那样一味地绕着圈放风筝，他们敢于贴近到让人胆寒的距离，用精准的射击打乱阵型，然后在步兵冲上来之前像风一样消散。更可怕的是，他们近战也不弱——我们用骑兵追过他们一次，他们跑着跑着忽然回头拔刀，把我们的骑兵削了个干净。
+
+  --- V5  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  可汗亲卫是我们在草原上最不想遇到的敌人。我们的方旗骑士在平地上能碾碎任何骑兵，但前提是能追上他们。可汗亲卫根本不跟你正面冲，他们在你面前像烟雾一样散开，一边跑一边回头射箭，我们的骑士追不上，弩手的射速也没他们快。但我们发现，他们的弓在雨天和潮湿天气里会受影响，弓弦松了之后准头就差一些。这是我们目前找到的唯一破绽。
+
+  --- V6  Priority=0  When={"HeroIds": null, "Cultures": ["battania"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  可汗亲卫在森林里施展不开。他们的骑射需要开阔地，林子里马跑不起来，弓的射程优势也被树木遮挡。但我们不会因此小看他们——只要巴旦尼亚的战士踏出森林一步，那些草原上的鹰就会从地平线上扑过来。我们有林子保护，他们有什么？有整个草原。在草原上，他们就是神。
+
+  --- V7  Priority=0  When={"HeroIds": null, "Cultures": ["aserai"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  可汗亲卫的骑射术和我们某些沙漠部落的骑兵有相似的渊源，毕竟草原和沙漠有时候会共用同一种马背上的语言。但他们的弓比我们的长，射程更远；他们的纪律比我们的部落骑兵更好，毕竟是可汗亲选的人。我们在纳哈撒沙漠里不怕他们——他们的马在沙地里跑不久，但在草原上，他们是最危险的对手。
+
+  --- V8  Priority=0  When={"HeroIds": null, "Cultures": ["nord"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  可汗亲卫的箭射不穿我们的盾墙，但能在盾墙上打出窟窿——一个兄弟倒下，旁边的兄弟就得补位，补位的瞬间就是破绽。他们就是靠这种办法慢慢咬，一层一层地剥。我们诺德人更喜欢冲上去用斧头说话，但他们不给你冲的机会。在草原上遇到可汗亲卫，唯一的活路就是别在草原上遇到他们。
+
+  --- V9  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"steward": 150}} ---
+  可汗亲卫是库赛特汗国军事力量的巅峰，也是卡拉迪亚唯一一支以骑射为专精的顶级精锐骑兵。他们的选拔制度高度精英化，从各部落中筛选技艺最精湛的骑射手，再经过严格的考核——包括移动靶射击、马背刀术和耐力测试——才能成为可汗的直属护卫。在战术层面，可汗亲卫代表了草原游牧军事传统的最高成就：全速奔驰中的精准射击、与步兵和轻骑兵的协同袭扰、利用速度和射程优势进行“打带跑”的消耗战术，以及必要时用弯刀进行近身收割的决断力。他们的弓制作工艺极为复杂，使用牛角、马鬃和木材复合制成，拉满所需的臂力是普通弓的两倍，射程和穿透力远超一般的骑射弓。在卡拉迪亚的兵种体系中，可汗亲卫的定位是独一无二的：他们既是远程输出，也是机动突击力量，更是可汗权威在战场上的直接象征
+
+  --- 游戏本体 CN 命中 0 条 ---
+
+==========================================================================
+【古拉姆】找到
+  Id: rule_古拉姆
+  Keywords: ["古拉姆"]
+  RagShortTexts: ["古拉姆来自一个叫达西的古老王国，库赛特西侵后达西战败，国土被吞并，流散的武士组成了古拉姆雇佣兵组织。", "古拉姆采用\"自我卖身、共同拥有\"的契约形式，保持着达西人的传统——鲜衣怒马、精心打扮、佩戴孔雀羽毛。", "古拉姆是卡拉迪亚唯一同时精通骑射和骑枪冲锋的雇佣兵单位，为黄金而战，但骨子里记得自己来自达西。"]
+
+  --- V0  Priority=0  When=null ---
+  古拉姆是一支来自南方的雇佣兵武装，他们的故乡是一个曾经强盛的国家——达西。在库赛特崛起之前，达西与帝国的南部接壤，是一个拥有悠久历史和强大军队的古老王国。但库赛特人的西侵改变了一切：他们从达西手中夺走了大片领土，又从帝国手中抢走了远东行省，建立了今天的库赛特汗国。达西在那场战争中失败了，被向东驱赶，从此与帝国不再接壤。如今库赛特的南部地区，曾经就是达西的土地——那片区域夹在帝国和阿塞莱之间，西北是帝国的边境，东南是阿塞莱的商路，现在却飘着库赛特的旗。而那些失去家园的达西武士，有些人选择了留下，成了古拉姆——既是自己卖给组织的奴隶，又是组织共同的主人。他们依然保持着达西人的骄傲：鲜衣怒马，头发精心打理，身上飘着香水味，帽子上插着孔雀羽毛。但别被这些打扮骗了，他们的骑射术天下闻名，骑枪冲锋的本领也仅次于瓦兰迪亚方旗骑士和帝国具装骑兵。他们为黄金而战，但骨子里记得自己来自哪里。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["battania"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  古拉姆是雇佣兵里的上等货，收费不低，但物有所值。他们那个故乡达西，听说曾经是个了不起的国家，后来被库赛特人吞了大半，剩下的被赶到了东边。这些古拉姆就是没了家园的武士，聚在一起继续卖命讨生活。他们的骑射功夫和库赛特人有一拼，骑枪也能耍得有模有样。身上的香水味老远就能闻到，帽子上还插着孔雀毛，在林子里藏不住，但他们不在乎——反正他们不是来打伏击的，是来正面冲阵的。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  古拉姆的故乡达西，曾经是我们的邻居。在库赛特人还没崛起的时候，达西的帕提沙统治着一个与帝国南部接壤的强大王国。他们的骑兵让帝国的边防军吃过不少苦头。但库赛特人来了，把达西的土地一块一块抢走，现在那些地方变成了库赛特汗国的南部行省，夹在我们和阿塞莱之间。那些不愿臣服于库赛特的达西武士，流落四方，组建了古拉姆，靠当雇佣兵维生。他们的骑射继承了草原传统，他们的骑枪阵法则向我们帝国人学了不少。说来讽刺，曾经的敌人，如今成了战场上最可靠的佣兵。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  达西的历史在帝国档案中有着零星记载。在库赛特西进之前，达西是一个与帝国南部接壤的古老王国，其统治者被称为'帕提沙'，而非草原部落的'可汗'或'酋长'。帝国的边防记录显示，达西骑兵曾多次与帝国边防军发生冲突，互有胜负。但库赛特的崛起改变了南方的格局：蒙楚格的祖父兀儿浑可汗在西征中从达西手中夺取了与帝国接壤的领土，同时从帝国手中夺取了远东行省，将这些碎片拼成了库赛特汗国。达西战败后向东退却，与帝国不再接壤。古拉姆正是达西溃败后流散在外的武士群体，他们的组织形式——将自己卖给组织以成为共同所有者——也许正是达西在亡国危机中催生出的独特生存模式。
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  古拉姆的骑枪比他们的弓更让我们在意。这些南方来的雇佣兵，骑射不如库赛特人，但他们的骑枪冲锋——说来奇怪——颇有我们方旗骑士的风范。听说他们的祖先曾经统治过一个叫达西的大国，和帝国打过好几代人的仗，从帝国骑兵身上偷师了骑枪冲锋。后来达西被库赛特人打残了，国土被吞了大半，这些武士就流落出来当了雇佣兵。他们的马没有我们的竞技马高大，冲锋的时候没有那种摧枯拉朽的气势，但纪律很好，该冲的时候冲，该停的时候停，比有些男爵家的愣头青骑士强多了。
+
+  --- V5  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  古拉姆在北方接不到多少活。他们的装备是为了南方暖地设计的——轻甲、快马、花哨的打扮。到了北方的雪地里，他们的马受不了，他们自己也冻得缩成一团。但他们能在卡拉迪亚当这么多年的雇佣兵还没散伙，说明本事是有的。听说他们的国家被库赛特人抢了，他们不想给库赛特人当奴隶，就自己出来卖命。这一点我们斯特吉亚人倒是能理解——宁可在刀尖上讨生活，也不在别人的屋檐下低头。
+
+  --- V6  Priority=0  When={"HeroIds": null, "Cultures": ["aserai"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  古拉姆的故乡达西，我们的商队最熟悉。在库赛特人还没打过来的时候，达西是阿塞莱东边最大的贸易伙伴。他们的帕提沙控制着通往远东的商路，我们的香料和丝绸都要经过他们的关卡。后来库赛特人把达西打垮了，那片土地现在归了库赛特，我们的商队还得和草原上的新主人打交道。那些不愿被库赛特统治的达西武士，有的流落到了阿塞莱，在撒纳拉的雇佣兵市场上挂了牌。他们带来了达西的骑射术和骑枪术，在沙漠里干得不错。
+
+  --- V7  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  古拉姆的骑射是我们调教出来的——或者说，是我们打出来的。他们的老家达西，当年就在我们库赛特南边。兀儿浑可汗西进的时候，从达西手里抢了大片草场，又从帝国手里拿了远东行省。达西人被赶到了东边，但他们的武士没走——有些人留下来当了古拉姆。他们的骑射术和我们有得一比，虽然不如我们正宗，但比帝国人强得多。他们还会骑枪，这是向帝国和瓦兰迪亚人学的，我们库赛特人不用那玩意。现在他们拿着弓和枪，给钱就打仗，不挑雇主也不记仇。连蒙楚格大汗有时候都会说，这些人比有些部落的那颜还可靠。
+
+  --- V8  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"steward": 150}} ---
+  古拉姆是卡拉迪亚南方雇佣兵体系中最具历史深度的势力。他们的母国达西，在库赛特汗国崛起前曾是与帝国南部接壤的区域性强权，其统治者'帕提沙'的地位远高于部落酋长，是一个拥有完整官僚体系和军事传统的王国。兀儿浑可汗的西征是达西命运的转折点：库赛特人从达西手中夺取了与帝国接壤的领土，同时从帝国手中夺得远东行省，将两者整合为库赛特汗国的南部疆域。如今这片区域夹在帝国和阿塞莱之间，是卡拉迪亚大陆的战略要冲，但主人已经从达西的帕提沙变成了库赛特的可汗。古拉姆正是达西亡国后流散的军事精英所组建的雇佣兵组织，其'自我奴役以共有'的契约模式，很可能是在亡国危机中形成的独特制度——既保证组织的凝聚力，又避免了传统封建依附关系在流亡状态下的不可持续性。在军事层面，古拉姆是卡拉迪亚唯一同时精通骑射和骑枪冲锋的雇佣兵单位，其复合型的骑兵战术反映了达西文明曾经同时面向草原和农耕文明的独特地理位置。
+
+  --- V9  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": ["ghilman"], "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我们来自达西。在草原的狼群还没壮大之前，达西是这片土地上最强的王国之一，我们的帕提沙统治着从帝国边境到东方群山之间的广袤土地。然后库赛特人来了。他们像蝗虫一样涌过来，一茬一茬地收割我们的草场和城镇。我们的帕提沙抵抗过，但最终被赶到了东方。有些人投降了，成了库赛特的臣属。我们没有。我们把自己卖给了古拉姆，成了自己的主人，也是自己的奴隶。我们依然用达西人的方式打扮——头发编得整整齐齐，衣服熏得香喷喷的，帽子上插着孔雀羽毛。不是为了好看，是为了记住我们是谁。我们的弓是达西的弓，我们的骑枪是从帝国人那里学来的。我们为黄金打仗，但黄金不是目的，只是手段。只要我们还在马背上，达西就没有亡。
+
+  --- 游戏本体 CN 命中 7 条 ---
+  [4TiYXBqK] 古拉姆是一群雇佣兵，他们来自卡拉迪亚南部的部落和远东地区。从法理上来说，他们既是自己的奴隶也是自己的主人：每个人都把自己“卖”给组织，并逐渐成为组织的共同所有者。他们以鲜衣怒马而闻名。但不能因为他们精心打理的头发、身上的香水味和孔雀羽毛饰品，而误以为他们更专注于打扮而非训练。他们的骑射技术无人能及，而使用骑枪的本领仅次于瓦兰迪亚人和帝国具装骑兵。
+  [6UBdsXlo] 也许有朝一日我们会在战场上兵戎相见。要知道我们古拉姆兵强马壮、披坚执锐。如果你我并肩作战，你尽可欢欣鼓舞。如果你我为敌，那你最好在开打之前就逃走，好省去不必要的麻烦。
+  [7EUhAv8b] 精锐古拉姆骑兵
+  [IgOTjF4i] 古拉姆兵
+  [KnhpjA7Y] 古拉姆新兵
+  [ghilmanClanName] 古拉姆
+  [ghilmanUnit] 古拉姆骑兵
+
+==========================================================================
+【维基亚卫队】找到
+  Id: rule_维基亚卫队
+  Keywords: ["维基亚卫队", "维吉亚卫队", "瓦兰吉卫队", "皇帝亲卫", "阿雷尼科斯亲卫", "皇宫卫队"]
+  RagShortTexts: ["外族维基亚卫队只效忠皇帝一人"]
+
+  --- V0  Priority=0  When=null ---
+  维基亚卫队是阿雷尼科斯皇帝的亲卫部队，但和普通军团不同，这支部队主要由外族雇佣兵组成——诺德人、斯特吉亚人，还有来自北方冰原的各路猛士。他们拿皇帝的第纳尔，用性命守卫皇宫。皇帝信任这些外族人，因为他们在帝国内部没有根基，除了忠诚别无依靠。当然，那是皇帝活着的时候。皇帝一死，一切都变了。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  维基亚卫队是帝国最特殊的一支部队。说来讽刺——皇帝最信任的护卫，竟然全是从北方招募来的外族蛮子。但这也正是他们的价值所在：帝国的将军们各有派系，元老们各怀鬼胎，只有这些拿钱卖命的外族人，除了皇帝本人之外谁也不认。先皇阿雷尼科斯深谙此道，所以他走到哪里都带着他们。但先皇遇刺那天，这个精妙的安排变成了灾难。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "notable"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  维基亚卫队的覆灭是帝国政治的必然结果。他们太依赖皇帝了——皇帝活着，他们是帝国最精锐的利刃；皇帝死了，他们就成了无主之剑。更糟糕的是，他们全是外族人。吕卡隆的市民本来就不信任这些北方来的蛮子，先皇一死，所有人立刻把矛头指向了他们。他们本可以列阵突围，凭他们的战力，没人拦得住。但他们中的一些人选择了发泄——在城里烧杀抢掠，彻底坐实了'弑君蛮族'的骂名。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": ["soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我年轻时在吕卡隆见过维基亚卫队换岗。那些北方大汉，一个个高得像铁塔，胡子编成辫子，手里攥着长斧。说实话，站在他们旁边，我们这些帝国兵就像没长大的孩子。但你不能不服——他们步伐整齐，盔甲锃亮，比任何一支帝国军团都精神。先皇信任他们是有道理的。只可惜……后来的事你也听说了。
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": ["merchant", "townsfolk"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  维基亚卫队？那些北方蛮子！先皇在的时候，他们在吕卡隆城里横着走，谁都不敢惹。先皇一死，他们就在城里烧杀抢掠，我姑母家的店铺就是被他们烧掉的。他们说先皇不是他们杀的？也许吧。但他们在城里干的那些事，比弑君也好不到哪去。
+
+  --- V5  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": ["scholar"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  维基亚卫队沿袭了古帝国的一项传统——从边疆以外的蛮族中招募最精锐的战士充任皇帝亲卫。这种做法的逻辑在于：外族人在帝国没有家族根基和政治牵连，他们的忠诚只属于皇帝一人，不会卷入元老院或军团的派系斗争。先皇阿雷尼科斯将这一制度发挥到极致，他的维基亚卫队主要由诺德人和斯特吉亚人组成，个个都是从北方部落中精挑细选的勇士。但这种模式的致命缺陷也显而易见：当皇帝本人消失，这些外族护卫既失去了效忠的对象，也失去了存在的合法性，迅速沦为众矢之的。
+
+  --- V6  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  维基亚卫队里有很多我们斯特吉亚的勇士。在南方的帝国人看来，他们是拿钱卖命的雇佣兵；但在我们北方，能在皇帝身边持斧而立，是一种荣耀。许多年轻人南下去吕卡隆服役，攒够第纳尔再回来买地娶妻。但先皇死后，一切都变了。有些人在暴乱中死了，有些人回来了，还有一些人……至今不知道下落。
+
+  --- V7  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "notable"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  你知道吗？诺德王国的开国君主——'饿人'沃尔比约恩——年轻时就曾在维基亚卫队服役。他在吕卡隆待了整整十年，攒下了巨额财富，回到北方后用第纳尔和刀剑驯服了那些桀骜不驯的酋长，建立了自己的王国。维基亚卫队就是这样一支部队：它能让一个外族人接触到帝国最高层的权力和财富，然后带着这些东西回到故乡，改变整个北方的格局。
+
+  --- V8  Priority=0  When={"HeroIds": null, "Cultures": ["nord"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我们的先王——'饿人'沃尔比约恩——就是从维基亚卫队起家的。他在南方的帝国皇帝身边持斧十年，见识了真正的权力是什么样子，也攒下了数不清的第纳尔。当他回到诺德维格，他已经不再是当年那个穷小子了。他用从帝国学来的手段和从皇帝手里赚来的黄金，把四分五裂的北方部落统一在了自己的旗下。维基亚卫队对我们诺德人来说，是一段值得骄傲的历史。
+
+  --- V9  Priority=0  When={"HeroIds": null, "Cultures": ["nord"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "notable"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  维基亚卫队的传统在我们诺德人中依然有回响。虽然先皇死后那支部队已经烟消云散，但那些曾在吕卡隆服役过的老兵们，把帝国的军事纪律和战术带回了北方。沃尔比约恩王就是最成功的那个。其他一些没那么幸运的，成了流浪的雇佣兵，或者加入了“护盾兄弟会”这样的佣兵团。
+
+  --- V10  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  维基亚卫队？帝国人用北方蛮子当亲卫，最后被反噬的故事。说实话，我们瓦兰迪亚人不太理解这种做法。国王的护卫当然应该从最忠诚的封臣家族中选拔，怎么能交给一群拿钱办事的外族人？先皇的死，某种程度上也是自食其果。
+
+  --- V11  Priority=0  When={"HeroIds": null, "Cultures": ["battania"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  维基亚卫队的故事告诉我们一件事：把性命托付给外人，终究是靠不住的。巴旦尼亚的伯爵们虽然时常争吵，但我们绝不会让外族人来守卫我们的至高王。
+
+  --- V12  Priority=0  When={"HeroIds": null, "Cultures": ["aserai"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  阿塞莱也有类似的传统——马穆鲁克，那些从小被买来训练成战士的奴隶。但马穆鲁克从小在阿塞莱长大，已经是阿塞莱的一部分。而帝国的维基亚卫队全是成年的外族战士，他们从来没有真正融入帝国。皇帝活着的时候，这没问题；皇帝一死，他们就变成了没有锚的船。
+
+  --- V13  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  用外族雇佣兵当亲卫，我们库赛特人不会这么干。可汗的护卫是他的那可儿——从小一起长大的兄弟，战场上生死与共的伙伴。那不是金钱能买到的东西。
+
+  --- V14  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"leadership": 150}} ---
+  维基亚卫队是研究帝国军事制度的一个经典案例。从表面看，以无根基的外族精英组建皇帝亲卫，是规避内部派系渗透的绝佳策略。诺德王国的开国君主从这支部队中崛起，也证明了维基亚卫队确实为外族人才提供了通往权力的通道。但这种制度需要一个绝对前提——皇帝本人必须活着。阿雷尼科斯遇刺后，指挥核心消失，这支以外族人为主体的部队既失去了效忠对象，又遭到了帝国社会的全面排斥。部分成员的暴行彻底败坏了整个卫队的名声。但如果我们客观评价：维基亚卫队在它存在的年代里，确实是卡拉迪亚最精锐的步兵单位之一。它的悲剧更多是制度的悲剧，而非战士本身的失败。
+
+  --- 游戏本体 CN 命中 0 条 ---
+
+==========================================================================
+【斯特吉亚亲卫骑兵】找到
+  Id: rule_斯特吉亚亲卫骑兵
+  Keywords: ["斯特吉亚亲卫骑兵"]
+  RagShortTexts: ["斯特吉亚亲卫骑兵是瓦良格步兵晋升的顶点，是波耶最倚重的精锐力量"]
+
+  --- V0  Priority=0  When=null ---
+  斯特吉亚亲卫骑兵是波耶麾下最精锐的战士，也是瓦良格之路的顶点。一个战士从普通的瓦良格起步，在战场上历经无数厮杀，最终才有资格骑上战马。他们骑着北方特有的矮脚马，手持长矛和盾牌，腰佩单手斧，依旧保留着掷飞斧的传统。他们是波耶最倚重的力量，也是大公能调动的最强精锐。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  亲卫骑兵是我们斯特吉亚战士的巅峰。能从瓦良格熬上来的，百里挑一。他们骑的不是南方那种高头大马，是我们北方自己的矮脚马——跑得不快，但耐力好，雪地和烂泥里稳得很。最重要的是，他们是从步兵升上来的，下了马照样能打，不像那些南方骑士，一落马就成了被盔甲压住的废物。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我手下的亲卫骑兵，每一个都是从我的瓦良格里一步步升上来的。从步兵到骑兵的跨越不只是身份上的，也是本事上的。我亲手把缰绳交给他们，因为他们在战场上证明了自己。他们的装备是我出钱置办的，战马是我马场里最好的。在战场上，他们就是我最硬的拳头。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": ["sturgia"], "SettlementIds": null, "Roles": null, "IdentityIds": ["char:druzhinnik", "char:druzhinnik_champion", "char:varyag", "char:varyag_veteran"], "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我从瓦良格做起，当了几年步兵，又在资深瓦良格的位置上磨了几年，才有资格骑上这匹马。上马那天，波耶亲手把缰绳交到我手里。我们骑马不是为了好看，是为了更快地冲到需要我们的地方。但骨子里我们还是步兵——下了马，架起盾，照样能打。这是我们和南方骑士最大的区别。
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": ["soldier", "townsfolk", "villager"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  亲卫骑兵大人从街上走过，我们都会让到路边。他们是从瓦良格一路打上来的，不是靠出身，是靠战功。听说他们下了马还能列盾墙，跟步兵一样硬。他们骑的马虽然不高大，但在北方的雪地里稳得很。
+
+  --- V5  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  斯特吉亚的亲卫骑兵比他们的重步兵灵活，能在侧翼制造麻烦。不过他们的马矮小，冲锋没有那种碾碎一切的气势。但有一点值得警惕：这些骑兵是从瓦良格升上来的，下马之后照样能打。我们的重骑兵要是落了马，基本就完了；斯特吉亚的亲卫骑兵落了马，捡起斧头还是战士。在北方那种地形里，这种素质很要命。
+
+  --- V6  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  斯特吉亚的亲卫骑兵骑的那种矮脚马，我们的方旗骑士看了就想笑。在平原上，一个冲锋就能把他们撞飞。但在北方的雪地和林地里，我们的竞技马跑不动，他们的矮脚马却灵活得很。而且他们下了马还能打，我们落马的骑士可没那个本事。
+
+  --- V7  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  斯特吉亚的亲卫骑兵马太慢了，我们的骑射手能绕他们放箭放到天黑。但他们从步兵打上来的底子厚，不像帝国骑兵一落马就废了。而且他们手里还有飞斧，靠太近了冷不防挨一下可就不好玩了。
+
+  --- 游戏本体 CN 命中 1 条 ---
+  [CRzrHomf] 斯特吉亚亲卫骑兵
+
+==========================================================================
+【黄金野猪兵团】找到
+  Id: rule_黄金野猪兵团
+  Keywords: ["黄金野猪兵团"]
+  RagShortTexts: ["黄金野猪兵团是瓦兰迪亚退伍士兵雇佣兵团。"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "notable"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  黄金野猪兵团是一支主要由瓦兰迪亚人构成的雇佣兵团，其成员绝大多数为退伍士兵。这些人无法重新适应和平时期的平民生活，因而选择以雇佣兵身份继续留驻于战事之中，在长期的作战状态下寻求生存。
+
+该兵团在卡拉迪亚各雇佣兵团体中以纪律涣散和行为卑劣著称。当战事间隙、雇主允许其自由活动时，兵团成员往往成为驻地周边乡村的一大祸患，对平民财产与日常生活造成严重侵扰。然而，与多数雇佣兵组织相似，黄金野猪兵团深知自身声誉直接关乎未来的雇佣价格与合同机会。因此，在受雇期间他们通常会严格履行合同条款，并勤于操练作战技能，尤其注重弓弩射击方面的训练，以确保雇主认为付出的佣金物有所值。
+
+
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  黄金野猪？那不就是咱瓦兰迪亚自家的后生嘛。当兵的回来种地种不住，出去卖命换钱，有什么好说的。他们闹是闹了点，可哪回打完仗不是他们先回镇子上喝酒花钱？酒馆老板、铁匠铺、妓院，谁不赚他们的银子？至于糟蹋庄稼、打伤几个人，那又不是天天有的事。再说了，他们在外头打的是咱们的旗号，名声越凶，别国的人就越怕咱们瓦兰迪亚人，有什么不好？
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  瓦兰迪亚那帮野猪？一群披着人皮的畜生。当兵当傻了，除了杀人放火什么都不会。听说他们连自己家乡都待不住，被赶出来才当的雇佣兵。到处跑，稍不顺心就掀摊子揍人。那些老爷还花钱请他们打仗，打完仗就撒在乡里不管了，遭殃的还不是咱们这些种地的。要我说，瓦兰迪亚尽出这种货色，那地方能是什么好地方？他们自相残杀才好，别来祸害别人。
+
+  --- 游戏本体 CN 命中 2 条 ---
+  [UmVjzPI4] 黄金野猪兵团
+  [tae3lhXh] 黄金野猪兵团的成员都是瓦兰迪亚人，主要是当地的退伍兵。这些人适应不好和平时期，因此选择活在长久的战争里。他们可能是全卡拉迪亚纪律最差、行径最为卑劣的一支雇佣兵。在被允许自由活动时，这些人就是乡间的一大祸害。但就像所有雇佣兵一样，他们知道要靠自己的名声来赚钱，所以他们会履行合同，勤习武艺，尤其是弓弩射击，以确保雇主的开销物有所值。
+
+==========================================================================
+【被弃者军团】找到
+  Id: rule_被弃者军团
+  Keywords: ["被弃者军团", "摒弃者军团"]
+  RagShortTexts: ["被弃者军团纪律严明，战力可靠，为佣金而战。"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": ["char:legion_of_the_betrayed_tier_1", "char:legion_of_the_betrayed_tier_2", "char:legion_of_the_betrayed_tier_3"], "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  除了打仗我什么都不会。军团解散那年我还年轻，没家，没地，没手艺。被弃者军团收了我。我们给钱就打仗，雇主的旗号换来换去，我们只认军团的规矩。早晨吹号，按时操练，犯了错挨军棍。这些规矩还在，我们就还是一支军团。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": ["legion_of_the_betrayed"], "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  在被弃者军团自己看来，这个问题的答案很简单：他们为佣金而战，但他们的魂魄属于那个已经消失的旧日军团。他们活着是为了打仗，打仗是为了活着，而活着的意义，在于不忘记自己曾经是一个真正的军团士兵。
+
+我手下的兵都是旧军团出来的。他们的长处是纪律和战阵，短处是只认自己的规矩，不认雇主的。我们靠合同吃饭，帝国的活接，外国的活也接。只要佣金公道，合同清楚，我们就打。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  被弃者军团战力可靠，远胜大多数执政官私兵。他们的纪律和阵战经验是旧军团留下的底子。但他们也接外国人的合同，不能完全当作自己人看待。用他们是一笔交易：我们出钱，他们出力，仅此而已。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  听说他们是以前军团的人。现在帝国没有常备军了，他们就自己凑在一起当雇佣兵。谁给钱替谁打。看着还是军团的样子，但已经不是帝国的兵了。
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": ["clan_empire_west_1", "clan_empire_west_2", "clan_empire_west_3", "clan_empire_west_4", "clan_empire_west_6", "clan_empire_west_7", "clan_empire_west_8", "clan_empire_west_9"], "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  被弃者军团？那群抱着旧军团规矩不放的老顽固。我敬他们三分，但不信任他们五分。
+
+敬他们是因为他们能打。西帝国的地盘跟蛮族接壤最多，边境上从来没消停过。我们雇被弃者军团打过几仗，他们的队列推进和阵型转换，现在新招的那些兵练十年都赶不上。老军团的底子不是白给的。战场上有一支被弃者军团顶在正面，你心里踏实。
+
+不信任他们是因为他们心里装的是帝国，不是我们的帝国——是他们记忆里那个早就没了的老帝国。他们不关心卢孔和拉盖娅谁正统，也不关心加里俄斯将军是不是该当皇帝。他们只关心雇主的合同写没写清楚，饷银能不能按时发，打完仗有没有地方让他们按老规矩操练。这样的人，你用得起，但你靠不住。今天你给钱他们替你打，明天别人给更多钱他们就替别人打你。这不是猜测，已经发生过。
+
+说到底，他们是一群没有归属的人。我们这些跟加里俄斯起事的，图的是一份地盘、一个名分、一个将来。他们有吗？他们什么都没有，只有一堆旧规矩和一个“被弃者”的名号。这种人最可怕的地方在于，他们除了打仗什么都不在乎。而我们这些在乎地盘和名分的人，总归要跟他们在乎的事情上互相算计。我们算不过他们，因为我们有想要的东西，他们没有。
+
+  --- V5  Priority=0  When=null ---
+  见过他们路过。规矩比别的雇佣兵严，不太祸害百姓，但也跟谁都不亲近。雇主的旗子换得勤，看不出他们到底算哪边的人。
+
+  --- V6  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  被弃者军团是一支靠旧军团规矩维持的雇佣兵。他们的战力来自纪律，但他们的归属感不在雇主身上，而在军团本身。这意味着他们只忠于合同，不忠于人。
+
+  --- 游戏本体 CN 命中 2 条 ---
+  [LqTTchsa] 被弃者军团
+  [bhxVA9w7] 皇帝阿雷尼科斯在潘德拉克战役的惨败之后废除了最后一支帝国常备军，转而依赖开销更少、更适合控制领土的执政官私兵，被弃者军团在这样的局势下成立。而这支军团则是由厌恶这种变化的人所组成：他们偏爱昔日的军团，及其规矩、历史与军营生活，他们指责新制度正在摧毁帝国。但无饷不成军，所以他们会同时与帝国领主和外国领主签订契约。
+
+==========================================================================
+【旧式军团】找到
+  Id: rule_旧式军团
+  Keywords: ["旧式军团"]
+  RagShortTexts: ["旧式军团是帝国常备军时代的精锐职业军队，由国家财政统一供养"]
+
+  --- V0  Priority=0  When=null ---
+  旧式军团是帝国常备军时代的骄傲，是卡拉迪亚大陆曾经最强大的军事机器。在潘德拉克战役之前，帝国的每一次胜利背后都站着这些纪律严明的职业士兵。他们由国家财政统一供养，穿着制式盔甲，举着统一的盾牌，在鹰旗下组成一道又一道不可逾越的阵线。一个满编的旧式军团是一台精密的战争机器：重步兵组成盾墙向前推进，弩手在后方轮番射击，具装骑兵在两翼伺机冲锋。每一个士兵都经过严格的训练，每一个百夫长都是从战场上打出来的老兵。他们不是为了黄金打仗的雇佣兵，也不是被临时征召的农民——他们是帝国的职业军人，战争是他们唯一的职业。潘德拉克战役中，旧式军团流干了最后一滴血。阿雷尼科斯皇帝上位后，废除了这支他再也养不起的军队。旧式军团消失了，但他们留下的标准——纪律、战术、荣誉——至今仍然是帝国每一个士兵的标尺。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  旧式军团是我们的祖父辈。他们说那支军队打仗的方式和现在完全不一样。以前一个军团从吕卡隆出发，后勤是帝国统一调配的，军饷是国库按时发的，士兵只需要操心一件事：怎么打赢下一仗。军团里有专门负责修路的工兵，有负责架桥的工程队，有随军的医生和铁匠。那不是一支军队，是一座移动的城市。潘德拉克把最好的军团全葬送了。阿雷尼科斯废除了常备军之后，那些从战场上活着回来的老兵，有人回了老家种地，有人成了执政官的私兵教官，有人在酒馆里喝醉了就骂现在的年轻人不懂什么叫真正的军团纪律。现在帝国的军队也不差，但跟旧式军团比起来，总少了那种令人窒息的压迫感——那种一整个军团踩着同一种步伐往前推进时地面都在颤抖的感觉。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": ["soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我服役的时候，旧式军团还在。我们每天天亮前起来列队，百夫长拿着藤条在队列里走，谁的盔甲没擦亮，谁的盾牌没举到位，劈头盖脸就是一下。训练的时候我们扛着比实战重一倍的石块跑步，跑到吐了再继续跑，跑到不吐为止。当时觉得苦，现在想想，那些苦就是旧式军团的魂。一支军队如果连训练都受不了，上了战场能撑多久？我们在战场上从来没崩过，因为阵型是我们的骨头，纪律是我们的呼吸。前排的人倒下了，后排的人自动补位，不需要长官喊，这是练到肌肉里的本能。潘德拉克那天我们的军团被冲散了，我不知道有多少人活了下来。我只知道，从那以后再也没有见过那样的军队。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": ["empire_s"], "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  旧式军团的编制和战术至今还在影响我们。阿雷尼科斯虽然废除了常备军，但他把旧式军团的训练方法保留了下来。我们南方的私兵之所以还能保持不错的战斗力，很大程度上是因为我们花大价钱请了那些还在世的老军团兵来当教官。他们教我们的年轻人怎么用盾，怎么保持阵型，怎么在箭雨中不乱。但有一件事他们教不了：旧式军团的灵魂是鹰旗。那面旗在的时候，所有军团兵都知道自己属于谁。现在鹰旗裂成了三块，再好的教官也教不出那种归属感。
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": ["empire"], "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  北帝国的军队里有不少旧式军团的后代。他们的父辈曾经在潘德拉克之前服役，军团的传统在家族里传下来——怎么行军、怎么扎营、怎么在战场上轮换前线士兵、怎么用弩手和步兵配合——这些在我们北方的私兵里还能看到影子。但旧式军团有一个无法复制的优势：后勤。以前的军团打仗，后面有一整套帝国官僚系统在运转，粮食、武器、马匹、医药，一样不少。现在我们的私兵出去打仗，每个家族自己管自己的后勤，有时候连统一的军粮标准都没有。旧式军团是一台完整的机器，我们现在是用这台机器的零件拼起来的。
+
+  --- V5  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": ["empire_w"], "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  加里俄斯皇帝手下最能打的老兵，几乎全是旧式军团出身。潘德拉克之后他们被遣散了，有些人沦落成了佣兵，有些人当了土匪，有些人就是喝酒等死。加里俄斯把他们一个一个找回来，重新编成了军队。所以西帝国的军队在骨子里最像旧式军团——不是因为制度像，是因为人像。那些老兵把旧式军团的纪律和战术带了过来。但他们也越来越老了。等最后一批旧式军团的老兵打不动了，西帝国就得靠他们的儿子了。他们的儿子没经历过常备军时代，不知道一个真正的军团是什么样子。
+
+  --- V6  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  旧式军团是我们瓦兰迪亚骑士在平原上最尊重的对手。我们的方旗骑士正面冲锋几乎无人能挡，但碰上旧式军团的盾墙，也得掂量掂量。他们的步兵在平原上能把盾牌锁成一个整体，从正面冲过去就像撞在一面铁墙上。弩手躲在盾墙后面一排一排地放箭，我们的骑手在冲锋路上就已经折了不少。帝国人废掉旧式军团之后，他们的步兵就再也没能达到那个高度了。现在帝国的私兵也能打，但那是散兵能打，不是军团能打。我们瓦兰迪亚人最清楚其中的区别——单个战士的勇武和一支军团的压迫感是两回事。
+
+  --- V7  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  旧式军团是我们北方人最头疼的敌人。我们的盾墙也很硬，但帝国军团的盾墙不只是硬，它还灵活——他们能在行军中变换阵型，能从行军队列迅速转成战斗队形，能在被我们冲锋的时候不退反进。这种纪律不是天生的，是练出来的。潘德拉克我们帮巴旦尼亚人打帝国，那次帝国军团的侧翼被巴旦尼亚的弓箭手撕开了，我们趁机冲进去，砍了他们的鹰旗。那是我们第一次在正面战斗中把旧式军团打垮。但说实话，如果那天帝国皇帝不是把军团放在了最不利的地形上，我们赢不了。
+
+  --- V8  Priority=0  When={"HeroIds": null, "Cultures": ["aserai"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  旧式军团的传说在撒纳拉的雇佣兵市场里流传甚广。帝国人废除了那支军队之后，有些老军团兵流落到南方，成了我们阿塞莱一些埃米尔的军事顾问。他们教会了我们一些帝国的战术——怎么用重步兵和弩手配合，怎么在战场上保护侧翼，怎么扎营防夜袭。但旧式军团真正的核心不是战术，是后勤。他们的军团后面有一整套国家机器在运转，我们阿塞莱的部落联盟做不到那种程度的统一供给。所以我们的埃米尔学了帝国的战术，但只能在小规模上用——没有帝国的财政，就养不起帝国的军团。
+
+  --- V9  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  旧式军团在草原上打过几场硬仗。他们的重步兵在平地上列阵的时候，我们的骑射手只能绕着他们转，箭射在他们的大盾上叮叮当当响，伤不到多少人。但旧式军团有一个致命的弱点——他们太慢了。在草原上，他们的步兵永远追不上我们的马，他们的补给线拉得越长越脆弱。我们对付旧式军团的战术很简单：不理他们，烧他们的补给线，等他们饿得走不动了再回来。帝国废除常备军之后，新来的那些执政官私兵更不会打草原战了。旧式军团至少还知道怎么在草原上行军，现在的帝国军队连怎么在草原上找水都不知道。
+
+  --- V10  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"steward": 150}} ---
+  旧式军团是卡拉迪亚军事史上最有章法的职业军队，其组织模式、战术体系和后勤制度代表了帝国军事力量的巅峰。一个标准旧式军团以重步兵为核心，配备弩手提供远程火力，具装骑兵负责两翼突击和追击，各兵种之间有严格的协同训练和标准化的战术手册。军团内部实行严密的等级制度，从普通士兵到百夫长再到军团指挥官，每一级都有明确的职责范围和晋升标准。后勤方面，帝国为每个军团配备了专门的工兵、医疗和补给单位，使得军团能够在远离本土的战场上维持长期作战能力。旧式军团的战术核心是阵型纪律——盾墙的紧密程度、行军与战斗阵型的转换速度、前线士兵的轮换机制，都是通过反复训练达到近乎本能的程度。这种训练强度需要稳定的财政支持和充足的训练时间，只有在国家统一供养的常备军体制下才能实现。阿雷尼科斯废除常备军后，旧式军团的制度遗产通过退伍老兵流向各地执政官的私兵体系，但失去了中央财政和统一后勤的支撑，旧式军团的完整形态再也无法复制。在卡拉迪亚军事对比中，旧式军团的正面阵地战能力至今无人超越，但其在复杂地形和非对称作战中暴露出的机动性不足，也为后来的军事改革提供了反面经验。
+
+  --- 游戏本体 CN 命中 0 条 ---
+
+==========================================================================
+【现代军团】找到
+  Id: rule_现代军团
+  Keywords: ["现代军团", "阿雷尼科斯改革", "执政官私兵", "贵族私军", "新军"]
+  RagShortTexts: ["阿雷尼科斯改革废除常备军，改用执政官私兵削减军费。"]
+
+  --- V0  Priority=0  When=null ---
+  现代军团指的是阿雷尼科斯皇帝改革军制之后的帝国军队。在潘德拉克战役惨败后，皇帝废除了原有的帝国常备军，改用由执政官和贵族自行组建、开销更低、更适合控制领地的私兵。这一改革大幅削减了军费，但让军队从国家手中转移到了地方领主手中。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  阿雷尼科斯皇帝的改革，把帝国从军费的无底洞里拉了出来。以前那些常备军团，光是军饷就能拖垮国库。现在让执政官们自己养兵，谁的地盘谁负责，开销小多了，也更适合控制那些边边角角的领地。当然，那些被遣散的老兵肯定不满意，但帝国的财政确实喘过了一口气。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "notable"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  现代军团说白了就是我们的私兵。皇帝把养兵的责任推给了我们，我们出钱出人，兵自然就听我们的。这对皇帝来说省了钱，对我们来说却多了实权。以前帝国的将军们靠国家拨饷，现在他们靠我们这些执政官养着。谁手里有兵，谁说话就硬气。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": ["soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  阿雷尼科斯改革之后，我们这些当兵的就看运气了。跟对了执政官，军饷照发，待遇还不错；要是你的雇主穷了或者倒了霉，你就得另寻门路。不像以前，大家都是帝国兵，上面是皇帝和元老院。现在嘛，上面是哪个大老爷，你就得看哪个大老爷的脸色。
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": ["merchant", "townsfolk"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  现代军团这套东西，说白了就是让有钱的老爷们自己养打手。好处是帝国不用再征那么高的税去养常备军了，坏处是这些老爷们手里的刀越来越快。以前帝国只有一支军队，现在每个执政官都有自己的军队，打起内战时比以前还凶。
+
+  --- V5  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": ["scholar"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  阿雷尼科斯的军制改革，本质上是将帝国的军事力量从中央集权转向地方分权。他废除了最后一支常备军团，改由执政官以个人财力组建私兵。这在短期内缓解了帝国的财政危机，但从长远来看，却为后来的内战埋下了伏笔——当每个执政官都拥有只听命于自己的军队时，皇权就成了一个空壳。
+
+  --- V6  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": ["wanderer"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我认识几个老军团兵，他们对阿雷尼科斯的所谓改革恨之入骨。他们说，以前当兵是为了帝国，现在当兵是为了某个大老爷的钱袋子。那些被遣散的老兵，有的沦落成了强盗，有的组成了被弃者军团，靠给别人卖命过活。改革省下来的钱，最后都变成了内战的军费。
+
+  --- V7  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  帝国人的现代军团？哼，就是他们皇帝把军队卖给了贵族。听起来和我们瓦兰迪亚的男爵私兵差不多，但人家至少是男爵养兵，国王号令。帝国倒好，执政官们各自养兵，三个皇帝互相打，连个统一号令都没有。
+
+  --- V8  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  南边的帝国人搞了什么现代军团，让大领主们自己养兵。在我们斯特吉亚，波耶们本来就有自己的亲兵，大公一声令下，所有波耶都得带兵来。帝国人那套改革，不过是把已经烂掉的东西换了个名字罢了。
+
+  --- V9  Priority=0  When={"HeroIds": null, "Cultures": ["battania"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  帝国人的现代军团，就是让有钱的贵族自己招兵买马。这和我们巴旦尼亚的氏族兵差不多，每个伯爵都有自己的战士。但我们的伯爵是氏族推选的，他们的执政官是皇帝任命的。皇帝亲手把兵权分给了自己任命的人，然后又管不住他们，这才是最可笑的地方。
+
+  --- V10  Priority=0  When={"HeroIds": null, "Cultures": ["aserai"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  阿雷尼科斯的改革，在我们阿塞莱人看来就是自废武功。埃米尔们有自己的部落兵，但苏丹的号令是绝对的。帝国皇帝倒好，把国家的军队裁了，让执政官自己养兵，然后指望这些执政官还能听他的话？
+
+  --- V11  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  帝国人的皇帝把军队裁了，让下面的领主自己养兵。在我们草原上，可汗的权威来自于所有部落的效忠，每个部落都有自己的战士，但打仗时都听可汗的。帝国人的皇帝把兵权分了，却没能让那些执政官继续听他的话，这算什么改革？
+
+  --- V12  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["wanderer", "mercenary"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  现代军团让雇佣兵的日子好过了不少。以前帝国常备军在的时候，我们只能打打边角料。现在执政官们互相打仗，谁都需要人手，只要你有兵，不愁没雇主。那些被遣散的老军团兵，有的混得比我们还好，毕竟人家是正规军出身，雇主更信任。
+
+  --- V13  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"steward": 150}} ---
+  阿雷尼科斯的军制改革，是帝国从中央集权走向封建割据的关键转折点。废除常备军、代之以执政官私兵，表面上是财政考量，实则将军事权力从皇帝手中分散到了地方贵族手中。这一改革在短期内缓解了帝国的财政压力，但长期来看，它摧毁了帝国对军队的直接控制，使得后来的三帝内战成为可能。
+
+  --- 游戏本体 CN 命中 0 条 ---
+
+==========================================================================
+【库由格】找到
+  Id: rule_库由格
+  Keywords: ["库由格"]
+  RagShortTexts: ["库由格趁库吉特元气大伤夺取奥通加德。"]
+
+  --- V0  Priority=0  When=null ---
+  库由格是阿契特家族的前任族长，突剌格的父亲。他这一生大起大落——作为曾经的长子部落后裔，他带着族人在西迁中试图另立汗国，却没能守住；转而趁库吉特部落在潘德拉克战役中元气大伤，夺了他们的奥通加德。最终他选定的接班人温都勒死在那场失败的联姻里，库由格本人则活到1083年，终年七十一岁。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  库由格是个有野心的人，但运气实在不算好。阿契特部族在我们库赛特人里是老资格——当年在东方草原上他们才是长子部落，兀儿浑乃特不过是后来居上。库由格不甘心屈居人下，带着部众在西边搞了个小汗国，结果没守住，被踢了回来。后来潘德拉克会战的时候，库吉特人为了赚帝国的第纳尔跑去给帝国当佣兵，结果男人几乎全交代在了战场上。库由格就趁着这个机会占了奥通加德。说实话，这事儿办得不怎么地道——库吉特人好歹也是可汗的臣属，趁人家男丁打光了去抢地，这吃相确实难看了点。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "notable"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  库由格这个人，我跟他打过交道。他有草原首领的胆魄，但也有没落贵族的那股酸劲儿——总觉得自己是长子部落的后人，兀儿浑可汗的家族不过是篡了他们的位。他带着阿契特部族西迁，在瓦尔诺瓦波尔建了个小汗国，想证明自己也能称汗。可汗国没撑多久就垮了。后来潘德拉克那场大战，蒙楚格大汗根本没有参战，是库吉特人自己贪图帝国的黄金，去给帝国当了雇佣兵。结果他们被打残了，库由格就趁机夺了奥通加德。从一个汗国的失败者变成抢死人地盘的投机者——这就是库由格的一生。不过话说回来，他选定的接班人温都勒死在斯特吉亚人的阴谋里，阿契特也算是遭了报应。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": ["soldier", "warrior"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  库由格老族长，说他什么好呢。他带我们从瓦尔诺瓦波尔南下夺了奥通加德，那一仗打得确实漂亮。但后来他跟斯特吉亚人联姻，想把边境稳下来，结果把他选定的接班人温都勒搭了进去。他这辈子最大的本事就是趁别人病要别人命——库吉特人给帝国当完雇佣兵回来，家里就剩女人和老人了，他就是这么把奥通加德吞了的。可他没想到，政治联姻也能变成催命符。
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": ["merchant", "townsfolk"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  库由格老族长在奥通加德的时候，库吉特人恨他恨得咬牙。他们是给帝国当佣兵才把男人打光的，结果回家一看，老窝被阿契特人占了。不过阿契特部族的人倒是觉得他挺有本事——至少他抢到了。
+
+  --- V5  Priority=0  When={"HeroIds": ["clan_achit"], "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  库由格老族长是我们阿契特人的魂。他不甘心我们被兀儿浑乃特压着，带着我们一路西行，在瓦尔诺瓦波尔建起了自己的汗国。虽然汗国没能守住，但他没有灰心。潘德拉克会战的时候，库吉特人自己跑去给帝国卖命，结果男人全死在了战场上。库由格老族长抓住了这个机会，带着我们夺下了奥通加德，让我们有了安身之地。他选定的接班人温都勒死在斯特吉亚人的阴谋里，这仇我们到现在还没报完。
+
+  --- V6  Priority=0  When={"HeroIds": ["clan_achit"], "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "notable"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  库由格是我们阿契特家族的脊梁。在兀儿浑乃特崛起之后，我们原本身为长子部落的地位一落千丈。是他站出来说，我们阿契特人不该屈居人下。他在瓦尔诺瓦波尔立汗国，虽然没守住，但那段时间我们至少是自己的主人。后来他带着我们南下，趁着库吉特人为帝国卖命而实力大损的机会拿下了奥通加德。外人说他是趁火打劫，可草原上的规矩从来都是弱肉强食——库吉特人自己选错了雇主，怪得了谁？
+
+  --- V7  Priority=0  When={"HeroIds": ["clan_achit"], "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["soldier", "warrior"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  库由格老族长带着我们从北边的瓦尔诺瓦波尔一路南下，打下奥通加德的时候我就在他身后。他骑在马上喊话的样子我现在还记得。他对我们说，阿契特人哪怕没了汗国的名号，骨头也不会弯。库吉特人给帝国当佣兵，男人都死在了潘德拉克，这是他们自己的选择。我们趁机拿下奥通加德，是天赐的机会。他这辈子不服任何人——不服兀儿浑可汗的子孙，不服那些跟着兀儿浑崛起的新贵部落，也不服那些看不起我们的斯特吉亚人。他活到七十一岁，于1083年才离世。
+
+  --- V8  Priority=0  When={"HeroIds": ["clan_kujit"], "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  库由格？那个趁人之危的贼。我们库吉特的男人在潘德拉克战场上为帝国的第纳尔流干了血，他倒好，趁着我们家里只剩下女人和老人，带着阿契特人把奥通加德抢走了。我们是被帝国雇佣的，是为黄金而战的勇士，不是被可汗遗弃的弃子。他趁我们最虚弱的时候从背后捅刀子，也好意思自称长子部落后裔？他选定的接班人温都勒最后死在斯特吉亚女人手里，这就是腾格里的报应。
+
+  --- V9  Priority=0  When={"HeroIds": ["clan_kujit"], "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "notable"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  库由格是我们库吉特人心头的一根刺。在草原上，趁对方男丁在外征战身亡而夺人领地，是最不齿的行径。阿契特人自诩为长子部落的正统，可干出来的事连草原上的盗马贼都不如。我们库吉特人受帝国雇佣去潘德拉克打仗，是为了第纳尔，也是为了在汗国内部争一份荣耀。可我们付出了几乎全部男人的代价，回来却发现奥通加德插上了阿契特的旗。蒙楚格大汗没有参战，也就没有为我们做主。库由格就是看准了这一点才敢下手。他选定的接班人温都勒死在斯特吉亚人的阴谋里，这份屈辱才算是有了个了结。
+
+  --- V10  Priority=0  When={"HeroIds": ["clan_kujit"], "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["soldier", "warrior"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  库由格死的时候我们在巴尔塔罕喝酒庆贺。不是我们库吉特人心狠，是他先做绝的。潘德拉克会战，我们库吉特的男人收了帝国的黄金，冲得比谁都猛，回来的人不到十分之一。那时候他就带着阿契特人来了，不是来帮忙照顾寡妇和孤儿的，是来抢房子和牧场的。听说后来他选定的接班人温都勒被斯特吉亚女人杀死，我爷爷说了句：腾格里在上面看着呢，不是不报，时候未到。
+
+  --- V11  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  阿契特家的老族长库由格，是个投机了一辈子最后死于非命的人。他趁库吉特人在潘德拉克给帝国当佣兵被打残了，夺了人家的地。转头又想跟我们斯特吉亚人联姻换和平。结果呢？联姻把温都勒搭了进去。他儿子突剌格现在还在找西加，但这仇说到底，是库由格自己赌输了。
+
+  --- V12  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "notable"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  库由格选定的接班人温都勒死在库洛夫家的西加手里，但说实话，库由格生前干过的事也不怎么光彩。抢库吉特人的奥通加德，那是趁人之危；建小汗国又守不住，那是志大才疏。朗瓦德大公愿意跟他联姻已经给足面子了，偏偏他运气差到极点——碰上了西加。
+
+  --- V13  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  库由格是草原上典型的投机者。他带着部族从东方来，建了个小汗国没守住。后来潘德拉克会战的时候，我们帝国雇佣了库吉特人当打手，结果他们几乎全灭。库由格就趁着这个机会抢了库吉特人的奥通加德。他的发家史就是一连串的赌博——有赢有输。最后他赌了最大的一把：用接班人的婚事跟斯特吉亚人换和平。结果这把赌输了，把温都勒搭了进去。
+
+  --- V14  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["wanderer", "mercenary"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  草原上对库由格的评价两边倒。阿契特部族的人说他是个有骨气的首领，不甘心被兀儿浑可汗的子孙压着，自己闯出了一片天。库吉特人提起他就啐口水，说他们给帝国当佣兵，男人都死在了潘德拉克，库由格却趁他们家里没人抢了地盘，不是好汉。至于斯特吉亚人——他们知道温都勒怎么死的，但谁也不会说自己人不对。不管怎么说，库由格这辈子够精彩：从长子部落的继承人混成小汗国的失败者，又从失败者混成奥通加德的主人，最后，他选定的接班人温都勒死在了那场联姻的火里。
+
+  --- V15  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"steward": 150}} ---
+  库由格的生平和决策反映了库赛特汗国内部部落政治的复杂性。阿契特部族作为曾经的长子部落，在西迁过程中被兀儿浑乃特部超越，这种地位落差成为了库由格政治野心的驱动力。他在瓦尔诺瓦波尔短暂立国的失败表明其缺乏持久的政权建设能力。而他对库吉特家族领地的夺取，则利用了潘德拉克战役后的特殊时机：彼时蒙楚格大汗并未亲自参战，而库吉特部落作为帝国的雇佣兵损失惨重，才给了他趁虚而入的机会。库吉特家族本非库赛特原生部落，是被征服后加入的，因此阿契特对库吉特的蚕食在草原道义上既有争议又不乏先例。库由格选定的接班人温都勒死于联姻失败，库由格本人则在1083年以七十一岁之龄离世。
+
+  --- 游戏本体 CN 命中 2 条 ---
+  [CCfjl9eU] 库由格是库赛特的阿契特部的大那颜。
+  [GRjLT63Z] 库由格
+
+##############################################################################
+# 军制·军力
+##############################################################################
+==========================================================================
+【帝国军事制度】找到
+  Id: rule_帝国军事制度
+  Keywords: ["帝国军事制度"]
+  RagShortTexts: ["潘德拉克战役后帝国精锐损失惨重、国库空虚，阿雷尼科斯皇帝废除常备军团，改由执政官和贵族自行组建私兵，以缓解财政压力。"]
+
+  --- V0  Priority=0  When=null ---
+  帝国的军事制度经历过一场伤筋动骨的变革。在潘德拉克战役之前，帝国依靠的是常备军团——由国家财政供养、统一训练、统一指挥的大兵团。那支军队曾经征服了卡拉迪亚大半的土地，将帝国的鹰旗插到了大陆的每一个角落。但潘德拉克耗尽了一切。国库被掏空，精锐军团损失惨重，后继的兵源和财政双双枯竭。阿雷尼科斯皇帝上位后做了一个冷酷而务实的决定：废除常备军，改由执政官和贵族自行组建私兵，谁的地盘谁养兵，谁的兵谁带去打仗。这一刀砍下去，帝国的财政压力确实缓解了，但从此以后，帝国军队不再是皇帝的军队——它是大大小小的执政官和贵族们各自的军队。阿雷尼科斯活着的时候还能压住这些人，他一死，那些手握私兵的贵族们就像挣脱了笼子的狼。帝国分裂成三块，军队改革不一定是根本原因，但它一定是那根点燃引线的火柴。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我们的军队曾经是整个卡拉迪亚的噩梦。鹰旗下，常备军团像一台精密的机器，重步兵在前，具装骑兵在两翼，弩手在后排轮番射击，没有任何一个蛮族能在正面对抗中站住脚。但潘德拉克把这一切都毁了。精锐打光了，国库打空了，阿雷尼科斯皇帝没得选——继续维持常备军，帝国就要破产。他把养兵的责任推给了各地的执政官和贵族，每个省自己出钱养兵，战时由皇帝统一征调。听起来和以前差不多，但骨子里全变了。以前士兵是为帝国打仗，现在是给他们的领主打仗。以前军饷是国库发的，现在是领主自己掏腰包。这导致了一个问题：领主出钱养的兵，凭什么对皇帝比对领主更忠诚？阿雷尼科斯在世的时候，没人敢问这个问题。他死了之后，答案就写在帝国分裂的那条线上。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": ["empire_s"], "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我们的军队是在吕卡隆的废墟上重建的。阿雷尼科斯皇帝改革之后，南方的执政官们各自组建了自己的私兵，我们的军费来自奥尼石山的银矿和吕卡里亚平原的粮食。拉盖娅女皇沿用了这套制度——她没有办法恢复常备军，因为南帝国的财政养不起。但她比另外两个皇帝都更擅长一件事：让手下的执政官们相信，她的利益就是他们的利益。我们的军队虽然名义上是私兵，但珀特洛斯家族的血脉和南方的富庶把这些私兵粘在了一起。只要银矿还在，只要坎特里翁军马还在吕卡里亚平原上奔跑，南帝国的军队就不会散。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": ["empire_s"], "SettlementIds": null, "Roles": ["soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我给执政官老爷当兵，他给我发饷。以前我爹那一代是给帝国当兵，军饷是国库发的，上面是皇帝和鹰旗。现在上面是执政官，他出钱我就替他打仗。说实话，我不在乎谁是皇帝。拉盖娅在吕卡隆，卢孔在北边，加里俄斯在西边——他们谁当皇帝跟我有什么关系？我在乎的是发饷的那个人能不能赢。他赢了，我的饷就继续发；他输了，我得赶紧换个雇主。潘德拉克之后，帝国兵都学会了这一条。
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": ["empire"], "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  北帝国的军事力量建立在元老院控制下的贵族私兵体系之上。阿雷尼科斯废除常备军后，北方的执政官们是最快完成转型的——我们的家族几代人在元老院里斗来斗去，早就习惯了自掏腰包养亲兵。卢孔陛下本人就出身元老院，他对这套规则再熟悉不过。北帝国的军队不像南帝国那样依赖银矿，也不像西帝国那样依赖老兵，我们依赖的是元老院家族之间的默契和制衡。缺点是动员速度不如另外两家快——元老院的决策嘛，你知道的。但优点是一旦达成一致，北方各家族的兵力汇合起来，不输给任何人。
+
+  --- V5  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": ["empire"], "SettlementIds": null, "Roles": ["soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我在北帝国的军队里当兵，我的雇主是个元老院家族的执政官。说实话，在北边当兵规矩最多——元老院的老爷们喜欢给军队定各种条例，行军路线要报批，军饷发放要签三份文书，连营地里的帐篷间距都有规定。好处是军饷准时发，不会像南边那样有时候用实物抵；坏处是打仗的时候手脚被捆得死死的，等元老院开完会批准出击，敌人早跑了。但这也意味着北帝国的军队很少打没有准备的仗——老爷们惜命，不轻易押注。
+
+  --- V6  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": ["empire_w"], "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  加里俄斯皇帝是靠老兵起家的，西帝国的军事制度骨子里就是老兵政治。阿雷尼科斯废除常备军之后，那些被遣散的军团老兵无处可去，是加里俄斯收留了他们，把他们编入了自己和忠于他的贵族私兵之中。西帝国的军队可能是三个帝国里最能打的——因为我们的核心是一群打了半辈子仗的职业军人，他们不需要训练，只需要一个值得追随的统帅。加里俄斯就是那个人。我们的缺点也很明显：老兵会老，会死，而他们的儿子未必像父辈一样能打。而且老兵们对加里俄斯的忠诚是基于个人威望，不是制度。一旦加里俄斯不在了，谁能让那些老兵服气？
+
+  --- V7  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": ["empire_w"], "SettlementIds": null, "Roles": ["soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我是跟着加里俄斯皇帝的老兵。以前在常备军团服役，潘德拉克之后军团解散了，我回老家种了两年地，后来听说加里俄斯在西边招人，又扛着剑去了。我这种人西帝国有很多——打过潘德拉克，见过鹰旗倒在泥里，不信任元老院，不信任吕卡隆，只信任带我们活下来的将军。加里俄斯说阿雷尼科斯改革是为了省钱，但省钱省掉了帝国兵的魂。他说西帝国的魂就是老兵。我们这些老兵信他。等我们这批人打不动了，谁知道西帝国会怎样。
+
+  --- V8  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  帝国人的军事改革在我们瓦兰迪亚人看来就是自废武功。他们曾经拥有卡拉迪亚最可怕的常备军团，现在却变成了跟我们差不多的贵族私兵体系——区别在于，我们瓦兰迪亚的男爵们几百年来都是这么打仗的，我们早就习惯了这套规矩，有继承规则，有国王和男爵之间写进誓言的效忠关系。帝国人突然这么一改，什么都没有。阿雷尼科斯活着的时候，他的威望可以代替制度；他一死，威望没了，制度又没有，军队就变成了各个私兵头子的私人武装。不出事才怪。
+
+  --- V9  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  帝国人把常备军废了，这对我们斯特吉亚来说是好事。以前他们的军团北上，后勤有保障，兵力有补充，一打就是好几年。现在改成贵族私兵，帝国人的战力还在——那些执政官养的具装骑兵还是很能打——但他们的持久力不行了。贵族养兵养不了太久，打仗时间一长，军饷就开始拖欠，士兵就开始开小差。我们斯特吉亚人早就习惯了波耶带私兵的模式，但我们是几百年来一直这么玩，有默契。帝国人是突然从常备军转向私兵，磨合还差得远。
+
+  --- V10  Priority=0  When={"HeroIds": null, "Cultures": ["aserai"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  帝国人废掉常备军这件事，我们阿塞莱商人是最早感觉到的。以前帝国军团驻扎在边境的时候，商路是安全的，帝国的巡逻队会剿灭沿途的匪帮。改革之后，每个省自己管自己的防区，防区之间全是漏洞。从吕卡隆到撒纳拉的商路比以前危险了好几倍。不过从另一个角度说，帝国人的军事改革也让他们的执政官们成了独立的军事力量，其中有些人愿意跟我们单独谈生意——以前跟帝国谈贸易要经过三层官僚，现在直接找当地手握重兵的执政官就行。
+
+  --- V11  Priority=0  When={"HeroIds": null, "Cultures": ["khuzait"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  帝国人把常备军废了，这在我们草原上看来就是自己砍了自己的腿。一个帝国没有自己的军队，要靠贵族们各自出钱养兵，这算什么帝国？这就是部落联盟。草原上的部落联盟是什么样子我们最清楚——有共同敌人的时候能站在一起，没有共同敌人的时候互相咬。阿雷尼科斯活着的时候帝国人还有共同敌人，他一死，共同敌人就变成了彼此。现在三个皇帝各管各的军队，谁也不服谁。这对我们来说是好事。
+
+  --- V12  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"steward": 150}} ---
+  帝国的军事制度改革是卡拉迪亚大陆军事史上最重大的转折之一。在潘德拉克战役之前，帝国依靠的是由国家财政统一供养的常备军团，以重步兵-弩手-具装骑兵的协同战术闻名于世。潘德拉克战役掏空了帝国的财政和兵源，阿雷尼科斯皇帝被迫推行军事改革，废除了常备军制度，改由执政官和地方贵族自行组建私兵。这一改革的核心逻辑是财政减压——将军费负担从中央转移到地方。从短期效果来看，改革确实缓解了帝国的财政危机，让帝国在潘德拉克惨败后仍能维持基本防务。但从长期来看，改革彻底改变了帝国军队的权力归属：士兵不再对帝国宣誓效忠，而是对出钱养兵的领主效忠。这种效忠结构在阿雷尼科斯在世时还能依靠他的个人威望维持统一，但在他遇刺后立即崩溃。手握私兵的执政官们分别支持不同的皇位继承人，帝国在不到一年的时间内分裂为三个独立政权。将军事改革定性为帝国分裂的'催化剂'比'根本原因'更为准确：帝国分裂的根子在于继承制度说不清，元老院、军队、皇室又斗了几十年，但军事改革以极快的速度为分裂各方提供了武力基础。分裂后的三个帝国各自沿用了这套贵族私兵体系，但在具体运作上产生了差异：南帝国依靠银矿财政和世袭认同维持私兵凝聚力，北帝国通过元老院家族的制衡机制协调多方兵力，西帝国则以加里俄斯个人威望和退伍老兵为核心构建军队。三者的共同弱点是缺乏可持续的中央财政支持和制度化的兵源补充机制，这意味着任何一方发动大规模持久战都将面临严重的后勤和财政压力。
+
+  --- 游戏本体 CN 命中 0 条 ---
+
+==========================================================================
+【巴旦尼亚军事制度】找到
+  Id: rule_巴旦尼亚军事制度
+  Keywords: ["巴旦尼亚军事制度"]
+  RagShortTexts: ["巴旦尼亚没有常备中央军队，战争时至高王向各部落发出召唤，各部落依照古老盟约派出战士，这种联军制度导致行动常因部落宿怨而迟缓。"]
+
+  --- V0  Priority=0  When=null ---
+  巴旦尼亚没有常备的中央军队。战争来临时，至高王向各部落发出召唤，各部落依照古老盟约派出战士。这种联军制度根植于氏族自治的传统，但也导致各部落常因宿怨或利益分歧而行动迟缓——这是每一位至高王都试图解决的核心问题。巴旦尼亚军队的核心是弓箭手，他们自幼在森林中狩猎，箭术精准，擅长利用地形进行伏击。重装步兵被称为长镰兵，手持战镰，在敌军阵型被箭雨打乱后从侧翼或后方杀出。巴旦尼亚人最令人畏惧的战术是'狂啸冲锋'——在所有战士同时发出的骇人战吼中，全体冲向敌阵，冲锋前会用战纹涂抹身体以威慑敌人。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["battania"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我们的军队不属于某一个人，它属于每一个部落。至高王发出召唤，伯爵们带着自己的战士前来，这是从蒙王时代就传下来的规矩。每个伯爵身边都有一队炉卫——那是他亲自挑选、亲手赐予炉边之誓的最精锐战士。他们的命和伯爵的命绑在一起，伯爵倒下之前，炉卫不会后退一步。战争动员令一下，森林里所有能拉弓的男人都会扛着自己的猎弓从村子里走出来，跟着年长的猎人组成战团。他们的装备比不上帝国的军团步兵，但他们从小在林子里追鹿，知道每一棵树的位置，知道哪片灌木丛后面能藏人。我们的弓箭手是世界上最好的——这不是吹嘘。我们能在密林里快速移动，在敌人必经之路上设伏，等他们进入伏击圈，箭从四面八方同时射过来，他们连盾牌该举向哪边都不知道。当箭雨把敌人的阵型打散了，长镰兵就上去了。他们是部落里最强壮、最勇猛的汉子，手里的战镰能把帝国的重甲劈开。潘德拉克那天，长镰兵冲进去的时候，帝国人溃不成军。最后是狂啸冲锋——所有人都吼出自己部落的战吼，脸上涂着战纹，像森林里所有的野兽同时冲出来。那一刻敌人往往还没接战就垮了，因为他们听到的不是人的声音，是整片森林在怒吼。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": ["battania"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  炉卫是我亲手组建的。每一个炉卫都跪在我的火炉前发过誓，我把剑放在他们肩上，他们把命放在我手里。平时他们护卫我的厅堂，战时他们站在我身边，组成盾墙最核心的那几排。部落里的男人都是兵。平时他们种地打猎，战时他们扛着弓就来了。他们不领军饷，不当职业兵，但他们保卫的是自己的林子和自己的族人。至高王有权召唤我们，但各部落出兵的速度和规模，全看我们自己的意愿。这是我们的权利，也是联军最大的软肋。卡拉多格一直在想办法让联军更听指挥，但氏族自治的传统不是一天两天能改的。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": ["battania"], "KingdomIds": null, "SettlementIds": null, "Roles": ["soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我的弓是我爹传给我的，紫杉木，弓弦换了好几根，弓身还是原来那把。我们从小在林子里跟着长辈打猎，射鹿、射山鸡、射一切在林子里跑的东西。帝国人的弩也能射远，但他们装一支箭的功夫我们射了三支。长镰兵是我们中间最猛的——他们用的战镰比帝国的重剑还沉，挥起来能把人从肩膀劈到腰。潘德拉克那天我亲眼看着长镰兵冲进帝国人的阵型里，那场面就像镰刀割麦子。冲锋前我们往脸上抹战纹，蓝的，用湖边的泥调出来的。老德鲁伊说战纹能让祖灵在彼界认出我们，就算战死了也有人引路。
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": ["empire"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  巴旦尼亚的军事制度在我们看来就是原始的部落动员。他们没有常备军团，没有统一的后勤补给，打起仗来全靠至高王的面子去请各个部落出兵。但就是这种原始制度，在潘德拉克让我们吃了大亏。他们的弓箭手在林子里神出鬼没，我们的重步兵一进森林就被射成刺猬。他们还有一种叫长镰兵的突击步兵，手持一种弯曲的长柄战镰，等我们阵型被箭雨打乱后从侧翼冲上来，杀伤力极强。潘德拉克那天，长镰兵进入战斗后我们的阵线就崩溃了。他们最后还会搞一种'狂啸冲锋'——所有人一起发出那种让人头皮发麻的吼叫，脸上涂着蓝色战纹，像一群从地狱里冲出来的鬼怪。那场景，很多帝国老兵到现在还会做噩梦。
+
+  --- V5  Priority=0  When={"HeroIds": null, "Cultures": ["sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  巴旦尼亚人的军队和我们有点像，都是部落出兵，都是步兵为主。但他们不像我们那么依赖盾墙，他们更信他们的弓箭和森林。他们的长镰兵拿着那种弯曲的长镰，在近战中确实厉害，潘德拉克的时候帝国人被他们砍得人仰马翻。不过他们最大的软肋是部落之间的协调——巴旦尼亚的伯爵们要是互相之间有仇，至高王喊破嗓子他们也不来。这一点我们斯特吉亚人倒是比他们强——我们的波耶们虽然也互相看不顺眼，但大公一声令下，至少人都会到。
+
+  --- V6  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  巴旦尼亚人没有骑兵，这是他们最大的弱点。他们的弓箭手在森林里确实厉害，长镰兵在近战中也够狠，那个什么'狂啸冲锋'虽然听着唬人，但在平原上我们的方旗骑士一个冲锋就能让他们闭嘴。问题是他们很聪明，从来不在平原上跟我们正面打。他们躲在林子里，等你进去了才动手。所以瓦兰迪亚和巴旦尼亚打了这么多年，谁也占不了谁的大便宜。
+
+  --- V7  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"steward": 150}} ---
+  巴旦尼亚的军事制度是一种典型的部落联邦征召体系，以氏族武装为基础单位，通过至高王与各部落之间的盟约关系进行战时动员。其核心兵种包括：炉卫——部落酋长亲选的精锐护卫，承担领袖安全与仪仗职能；民兵弓箭手——由成年男性自由民组成，携带自备猎弓，依托森林地形进行伏击作战；长镰兵——部落中最强壮的重装步兵，使用特色战镰作为突击力量，在潘德拉克战役中对帝国联军造成了毁灭性打击。战术体系围绕森林伏击展开：弓箭手在敌军必经之路设伏，以密集箭雨打乱阵型，长镰兵从侧翼或后方发起突击，最终以'狂啸冲锋'——全体战士发出战吼并涂抹战纹进行威慑性总攻——终结战斗。这种军事体系的最大优势在于地形适应性和单兵素质，最大弱点在于联军结构的松散性：各部落是否出兵、出多少兵，取决于氏族首领的个人意愿和部落间的复杂关系，至高王缺乏强制手段。这也是卡拉多格试图强化的核心问题。
+
+  --- 游戏本体 CN 命中 0 条 ---
+
+==========================================================================
+【北帝国的军事实力】找到
+  Id: rule_北帝国的军事实力
+  Keywords: ["北帝国的军事实力"]
+  RagShortTexts: ["北帝国纸面实力强，但进攻能力受限"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  北帝国似乎不太强吧，不太清楚，他们都是些文官，哪有懂得打仗的呢？A
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": ["empire"], "SettlementIds": null, "Roles": ["soldier", "townsfolk"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我们北帝国的军力还是很强大的，我们世代得面对斯特吉亚与库赛特的双线作战，现在又得防御西帝国和南帝国，我们锻炼出来的能力是很强的。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": ["battania", "empire_s", "empire_w", "khuzait", "sturgia", "vlandia"], "SettlementIds": null, "Roles": ["lord", "soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  北帝国就是一个披着虎皮的绵羊，他们补给线漫长，后备兵力不足，而且三线压力都很大，防守兵力将将够用，但是进攻就别想了，我们应该积极谋求与北帝国开战，以获得最大利益.A
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  北帝国说强不强，说弱不弱，纸面数据还是很强的，但是极长的战线让它的军队总是疲于奔命，顾首不顾尾，而且他们都是些文官，武将出身的元老只有一两个，所以他们在打仗时十分吃亏。A
+
+  --- 游戏本体 CN 命中 0 条 ---
+
+==========================================================================
+【南帝国的军事实力】找到
+  Id: rule_南帝国的军事实力
+  Keywords: ["南帝国的军事实力", "南帝国军力"]
+  RagShortTexts: ["南帝国兵力较多，但需防库赛特及西北帝国"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  南帝国的军事力量？我们其实不太清楚的，我们只知道南帝国似乎比较强，他们马场多，骑兵也多，具装骑兵相对其它两个帝国多些
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": ["empire_s"], "SettlementIds": null, "Roles": ["lord", "soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我们南帝国控制着卡拉迪亚最富庶的区域，而且还是比较易守难攻的，我们的实力比阿塞莱强，我们会谋求与阿塞莱的战争，以获得新的领土。我们不愿意打仗，但有的时候战争是不得不打的，但是我们也得防御东边的库赛特以及西部北部的僭越者（西帝国，北帝国），所以我们的压力还是蛮大的，虽然我们兵力多。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": ["empire", "empire_w"], "SettlementIds": null, "Roles": ["lord", "soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  南帝国算什么东西？他们那帮养尊处优的城主们根本不知道如何打仗，像他们的俄洛斯与图里亚多斯，简直就是完全不懂军事，却还掌握着兵权，真是可笑。拉盖娅本人也不懂军事，她管理能力尚可，但是用兵打仗太差了。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": ["khuzait"], "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我们与南帝国接壤，但是我们主要还是以防御为主，毕竟谁也不愿意陷入双线作战，同时招惹两个帝国不是明智的选择
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": ["aserai"], "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  南帝国比我们强大，但是也没有强大多少，我们抗击南帝国的侵略，保证他们不击穿我们的防线即可，进攻就别想了
+
+  --- 游戏本体 CN 命中 0 条 ---
+
+==========================================================================
+【西帝国的军事实力】找到
+  Id: rule_西帝国的军事实力
+  Keywords: ["西帝国的军事实力"]
+  RagShortTexts: ["西帝国军事实力：军力最强，粮食兵源充足。", "西帝国将领：加里俄斯、萨拉提斯等将才济济。", "西帝国军事短板：将领武艺弱，多线作战压力。"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  西帝国是帝国三分后军力最强的一支。根基在产粮区，粮食充沛，兵源充足，马匹供应稳定，冶铁稍弱但商路畅通可弥补。将才济济，分工明确：加里俄斯统御全局，萨拉提斯守城，得斯里波翁机动策应，阿喀俄斯管骑兵，维彭管指挥与后勤，克洛托耳年迈但经验丰富。短板是多数将领长于统兵而短于个人武艺，但帝国体系本就不靠将领的剑术取胜。多线作战是持续压力。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  西帝国？就是A那边。他们粮食多，兵多，马也多。打仗靠人多堆上去，不像巴旦尼亚人那样一个能打好几个，也不像瓦兰迪亚人那样冲起来不要命。但他们将领多，分工细，你打不进去就是打不进去。听说他们当兵管饭还给地，中原那边的人抢着参军。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"tactics": 40}} ---
+  西帝国是帝国三分后军事力量最为雄厚的一支，其战争潜力植根于中原。
+
+中原是全大陆首屈一指的粮食产区，三片平原连成帝国最大的粮仓。粮食意味着人口，人口意味着兵源。西帝国征兵几乎不存在配额压力，中原农家有多子的传统，参军是土地之外的第二条出路。这使得西帝国在持续内战中能够承受其他两方难以承受的消耗。马匹产量同样可观，乌卡利昂高原南麓与平原牧场提供的坐骑以耐力见长，适合重装骑兵的反复冲击。冶铁业稍显不足，但产地分散不易被切断，加上西海岸商路畅通，铁料补给总体够用。
+
+西帝国真正的优势在于将领的统兵能力，以及将领之间各有所长的分工配合。加里俄斯本人从潘德拉克的溃败中收拢残兵、一步步打出西帝国基业，靠的不是个人剑术，而是让一支溃散的军队重新愿意跟着他走的本事。他麾下的将领各司其职，形成了一套高效的指挥体系：萨拉提斯是帝国公认的守城专家，凡他坐镇的城池，敌军极少能从正面攻克；得斯里波翁擅长指挥小规模军团，执行策应大军与机动防御任务，能在主力展开之前争取关键时间；阿喀俄斯是骑兵专家，对骑兵的战场调度和冲击时机把握精准；维彭则是不可多得的指挥与后勤双重人才，既能统筹大军行进，又能把补给线安排得有条不紊。其中最特殊的是克洛托耳——他年事已高，却是西帝国诸将中少有的文武双全者，年轻时以个人武艺闻名，同时又有统率大军的经验，是帝国将帅中罕见的能同时胜任帐中谋略与阵前搏杀的人物。可惜岁月不饶人，他的剑如今更多时候挂在帐中而不是腰间。
+
+帝国将领的通病在西帝国同样存在：他们大多数是优秀的大脑，却不是锋利的刀刃。除克洛托耳之外，西帝国将领的个人战力普遍平平。这与巴旦尼亚的军事传统形成两极对照——巴旦尼亚酋长们多是武艺高强的战士，单打独斗锐不可当，但指挥千人以上的部队便乱了章法。帝国体系培养出来的是幕僚而不是武士，在西帝国，加里俄斯本人的剑术在军营中只能算中游，萨拉提斯常年坐镇城头几乎不参与野战格斗，得斯里波翁与维彭更是典型的帐中将帅。在帝国人看来这不是缺点——将领该做的事是看地图和算补给，阵前单挑是蛮族才当成荣誉的事。
+
+战略层面，西帝国占据中原腹地，地势平坦，利于大军团展开，但也有防线过长的隐忧：西面与瓦兰迪亚接壤，北面直面巴旦尼亚的山地侵袭，东面则是南北帝国的角逐场。应对多线压力靠的是中原的粮食与人口，维持一支数量庞大的常备野战军，随时能在任一方向集结优势兵力。萨拉提斯守城、得斯里波翁策应、阿喀俄斯与维彭主攻、克洛托耳坐镇统筹——这套指挥架构经过多年磨合已相当成熟。只要中原的麦子还在收，西帝国的战争机器就不会停转。
+
+
+
+  --- 游戏本体 CN 命中 0 条 ---
+
+==========================================================================
+【诺德军事力量】找到
+  Id: rule_诺德军事力量
+  Keywords: ["诺德军事力量"]
+  RagShortTexts: ["诺德军队以盾墙战术为核心，双手斧战士近战爆发力惊人。"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": ["nord"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我们的军队？那得看你怎么算。要是把每个雅尔手下的战士加在一起，诺德维格能拉出来的步兵不比谁少。重装步兵是盾墙的骨头，我的亲兵都是锁子甲配圆盾，站在前排不退半步。铩戟兵站第二排，专治对面冲过来的骑兵和重步兵，长柄家伙往人腿马腿上招呼，一钩一个准。投斧手在开打前往对面扔一轮，打散他们的阵型。双手斧战士是我最喜欢看的——大块头抡圆了斧子劈进去，碎盾断骨，痛快。弓箭手差点意思，诺德林子不长好制弓的木料，弓软，射不远。至于骑兵？没有。我们没有马，也不稀罕。马在船上站不稳。我们的仗是在滩头和峡湾里打的，不是在大平原上列队冲锋的。护盾兄弟会那帮雇佣兵不是我们的主力，他们吃合同饭，谁出钱替谁打，跟王国没绑在一起。我们真正的本钱是船。长船能把整支军队送到敌人屁股后面，等他们反应过来，滩头已经站满了拿斧子的人。这才是诺德人的打法。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["nord"], "KingdomIds": null, "SettlementIds": null, "Roles": ["soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我站在盾墙里，左手扣着圆盾的边缘，右手握剑，肩膀顶着前面兄弟的背，后面的人也在推着我。铩戟从我们头顶上探出去，长柄一晃一晃的，等着对面的人撞上来。投斧从我们缝隙里飞过去的时候没什么声音，但对面有人喊了一声，有人倒了。然后他们撞上来。盾墙震了一下，我顶住，往前推。铩戟兵从我们头上往下劈，长柄家伙劈在铁甲上响声刺耳朵。我听见双手斧战士从我们右边绕出去了，他们冲的时候从来不大喊，只有斧子在喘。弓箭手在后面放箭，不多，但每支都从头顶过去，准不准看运气。我不知道这场仗叫什么名字，也不记得我们为什么要打。我只记得我旁边的人喊了一声“盾墙别散”，然后我继续推。盾墙要是散了，我就是个拿短剑的孤鬼。盾墙不散，我就还在。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  诺德人的军事力量，说实话，缺陷和优势一样扎眼。步兵分五种，盾墙配铩戟的打法在步战里相当扎实，正面很难一口气打穿。他们的双手斧战士近战爆发力惊人，但几乎没有防御，纯粹依赖盾墙掩护和一次性冲锋。投斧手的投掷距离不如弓箭，在开阔地带作用有限，但在林地或登陆战中确实能制造混乱。弓箭手是他们的软肋，射程密度都比不上我们。最关键的是没有骑兵。没有骑兵，就没有追击能力，也没有在开阔地迎击我方重骑兵的底气。他们靠盾墙和铩戟勉强能扛住第一次冲锋，但扛不住反复冲。瓦兰迪亚骠骑的连续冲击或者帝国具装骑兵的碾压式进攻，诺德人除了拿人命填，没有更好的办法。不过说句实话，他们的长处不在陆地。诺德人的长船能把整支军队悄无声息地送到任何一个海岸，这种战略机动性大陆上没有第二家。你用骑兵控制平原，他们用舰队绕过你的防线。跟诺德人打仗，最难的不是打赢他们，是找到他们。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  诺德人？北方佬，船上来的。我没跟他们打过，但营里有人打过，讲起来一套一套的。
+
+说他们不打旗号，不擂鼓，船头直接冲上滩，人跳下来就往你这边推。前排全是大盾，推不动，头顶上还飞斧子，不知道从哪儿甩过来的。盾墙后面藏着拿长柄戟的，专往人腿脚上招呼，你站都站不稳。最吓人的是那些光膀子抡双手斧的——你阵型被顶出缝，他们就冲进来，劈甲跟劈柴一样。
+
+但说归说，他们也有怕的东西。诺德人没骑兵，一匹马都没有。你只要不跟他们挤在滩头硬碰硬，拉开距离用骑射绕，他们就只能站在原地干瞪眼。他们弓箭软，射回来稀稀拉拉的，你多绕几轮他们阵型就开始乱。没马的军队就这样，你动起来打，他们追不上。
+
+  --- V4  Priority=0  When={"HeroIds": null, "Cultures": ["nord"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  当兵的？我儿子今年跟雅尔的船走了，夏天走的，现在还没回来。他拿的是双手斧，那个最危险，站在第一排旁边冲进去砍，甲都不穿。我不懂什么盾墙什么铩戟，我只知道他爹当年也是这么走的，也是夏天，也没回来。诺德维格的军队厉害不厉害？我们打鱼的不懂，但我知道来村里征兵的人每次都挑最壮的。他们说北境的男人不死在床上。那死在哪？死在盾墙的缝里，死在滩涂上，死在铩戟柄断了的泥地里。这就叫厉害？我不懂。
+
+  --- V5  Priority=0  When=null ---
+  诺德军队？跑商的人一提到就当笑话说：“他们连马都没有。”但这笑话别人讲，我们不笑。我住在海岸边上的村里，爷爷那辈经历过诺德人登陆。半夜船靠岸，天亮前把半个村都烧了。没马怎么了？人家根本不用在岸上跟你追，抢完就上船走了。我爷爷说他们打仗的样子跟普通人不一样，前排的人推盾，后排的人拿长戟往下劈，还有那种不穿甲、两只手举大斧子的，吼起来岛上的鸟全飞了。后来官府在沿海修了瞭望塔，诺德人抢的次数少了。但我还是怕。不是怕他们赢，是怕他们突然来。你永远不知道他们从哪片雾里冒出来。
+
+  --- 游戏本体 CN 命中 0 条 ---
+
+==========================================================================
+【阿塞莱军事力量】找到
+  Id: rule_阿塞莱军事力量
+  Keywords: ["阿塞莱军事力量"]
+  RagShortTexts: ["阿塞莱军事力量由贵族兵、平民兵、奴隶兵组成"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": ["aserai"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  我们的兵？法里斯是老爷们，骑高头大马，披铜甲，路过集市的时候从来不低头看人。他们那些标枪能扎穿铁甲，但跟我们没关系——那是他们贵族自家练的。马穆鲁克是买来的兵，从小养大就为杀人，看着挺吓人，但没仗打的时候他们也蹲在营里没事干。真正跟我们一样的是步兵与弓手们，他们出身平民但仍不可小觑
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  阿塞莱苏丹国的军队由贵族兵、平民兵与奴隶兵三大支柱构成，骑兵是作战体系的核心。
+
+法里斯是贵族骑兵，身披重型铜甲，骑乘阿斯凯尔马，使进口钢材锻造的马穆鲁克骑枪与部落长剑。他们的标志性武器是阿塞莱标枪——全卡拉迪亚最长、最重的投掷武器，带倒刺，破甲极强，投出后几乎拔不出来。弱点是杏仁形小盾又薄又小，防不住远程箭矢。
+
+马穆鲁克是自幼购入的奴隶骑兵，全身铜甲，弓马娴熟，箭射完后拔刀与圆盾投入近战。分为持双手锤斧的重输出兵和来回游射的骑射手，装备略逊于法里斯，但纪律严明，不溃不退，只听主人命令。
+
+平民兵是步兵基础，包括持大盾长矛的重装步兵和沙漠硬木弓弓箭手，就地征召便利，但战斗力不及帝国重步或瓦兰迪亚弩手。
+
+整体战术以骑兵两翼包抄为核心：标枪先发，骑枪随后，步兵正面牵制。弱点是缺乏重骑兵正面冲击力，步兵线韧性不足，且贵族骑兵纪律松散，未必愿为奴隶兵冒险接应。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  阿塞莱的兵？跑商的人说他们那边的骑兵分两种：一种是贵族老爷，骑好马，披铜甲，扔的标枪跟投矛似的，扎进肉里拔都拔不出来；另一种是买来的奴隶兵，从小养大就为打仗，骑射厉害，箭射完了拔刀就砍，不怕死。他们步兵不行，两条腿扛盾的就跟我们这边的征召兵差不多，挡挡箭还行，真打起来骑兵一冲就散。最让人发怵的是那些奴隶兵——不是他们多能打，是他们便宜，死了主人再买，跟买马似的。我们这边死个人家里哭半年，他们那边死个奴隶兵，主人心疼钱不心疼命。
+
+  --- V3  Priority=0  When={"HeroIds": null, "Cultures": ["aserai"], "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "soldier"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  阿塞莱苏丹国的军队由贵族兵、平民兵与奴隶兵三大支柱构成，骑兵是作战体系的核心。
+
+法里斯是贵族骑兵，身披重型铜甲，骑乘阿斯凯尔马，使进口钢材锻造的马穆鲁克骑枪与部落长剑。他们的标志性武器是阿塞莱标枪——全卡拉迪亚最长、最重的投掷武器，带倒刺，破甲极强，投出后几乎拔不出来。弱点是杏仁形小盾又薄又小，防不住远程箭矢。
+
+马穆鲁克是自幼购入的奴隶骑兵，全身铜甲，弓马娴熟，箭射完后拔刀与圆盾投入近战。分为持双手锤斧的重输出兵和来回游射的骑射手，装备略逊于法里斯，但纪律严明，不溃不退，只听主人命令。
+
+平民兵是步兵基础，包括持大盾长矛的重装步兵和沙漠硬木弓弓箭手，就地征召便利，但战斗力不及帝国重步或瓦兰迪亚弩手。
+
+整体战术以骑兵两翼包抄为核心：标枪先发，骑枪随后，步兵正面牵制。弱点是缺乏重骑兵正面冲击力，步兵线韧性不足，且贵族骑兵纪律松散，未必愿为奴隶兵冒险接应。
+
+  --- 游戏本体 CN 命中 0 条 ---
+
+##############################################################################
+# 弓弩·攻城器械
+##############################################################################
+==========================================================================
+【包铁弩】找到
+  Id: rule_包铁弩
+  Keywords: ["包铁弩"]
+  RagShortTexts: ["包铁弩是狙击弩手的标配吗？"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": ["aserai", "empire", "nord", "sturgia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  包铁弩？弩上还能包铁吗？那一定很强了
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": ["battania", "darshi", "khuzait", "vakken"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  啥是弩？
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": ["vlandia"], "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  包铁弩是我们这边杰屈朗产的一种极其强大的弩，这种弩外面包铁，拉力极高，是我们这边狙击弩手的标配，一把也是很贵的，应该可以卖到8000第纳尔左右
+
+  --- 游戏本体 CN 命中 1 条 ---
+  [TBW9E2ao] 包铁弩
+
+==========================================================================
+【弩砲】找到
+  Id: rule_弩砲
+  Keywords: ["弩砲", "弩炮"]
+  RagShortTexts: ["弩砲箭矢能穿透多人，但射程有限无法摧毁冲车。"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  弩炮？见过，城头上那种大弓架子。攻城的时候守城的一方从垛口后面往外射，箭跟人胳膊那么粗，嗖一下过来，木盾根本挡不住。我们村有个去守城的回来说，那东西一箭能穿透三个人，第一个人直接钉在地上，第二第三个穿在箭杆子上，跟串鱼似的。听着就瘆人。不过他说那东西射完了也就射完了，箭飞不远，打到后面就没劲了，想靠它把对面的冲车打烂是不行的——箭扎在木头上拔都拔不出来，车还是照样往前推。我们老百姓不懂什么扭力什么结构，我们就知道那东西吓人，但指望它救命不一定好使。真正把城守住还得靠人往上填。弩炮打完了还得有人站城头。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  弩炮是围城战中最务实的器械选择。我从军需官那里看过账目：一架弩炮的铁件用量不到投石机的三分之一，木料就地几小时就能装好一架。攻城时前锋刚扎下营寨，弩炮阵地已经可以开始压制城头了。但我也清楚它的局限。弩炮的火力密度不够，杀伤效率比不上弓箭手齐射，对攻城器械的结构破坏更是可以忽略不计——弩箭钉进冲车的橡木板里拔不出来，但它不会让那辆车停下。想摧毁冲车还是得靠火或者靠人冲出城去烧。弩炮最大的价值在于压制城头的弓箭手，给己方步兵登城争取窗口。它便宜，好用，但指望它单打独斗是不行的。围城战到最后还是靠人。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "wanderer"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"engineering": 50}} ---
+  弩炮是最经济的扭力投射武器。结构上就三部分：扭力束、箭槽、扳机。扭力束用畜力筋腱或发绳绞紧，蓄能效率稳定，扳机释放结构简单可靠。优点是制造门槛低，损耗部件可现场替换——扭力束断了用备用的绞绳重上一遍就行，箭槽开裂找块硬木刨平了接着用。缺点是弹道衰减快，弩箭虽然初速高但质量太大，一百五十米后动能断崖式下跌，打到第四个人基本就停在地上了，效率不如排弩齐射。对建筑结构的破坏也有限，箭矢动能主要转化为贯穿而非冲击，打中木梁就是插进去，不会造成结构断裂。战场上弩炮该退的时候就要退，它不是决定性武器，但它是围城里不可或缺的一部分。
+
+  --- 游戏本体 CN 命中 11 条 ---
+  [32v8ryKV] 围城开始时弩砲+{BONUS_AMOUNT}
+  [4lS8cX6c] 火焰弩炮和普通弩砲相似，但前者发射燃火弩矢，对抗敌方围城器械时更加有效。
+  [5WMHiC9P] 瓦兰迪亚的军阀们发现，虽然征召农民是不得已而为之的恶行，但通过弩的列装和系统训练，还是能够让他们发挥作用。这种武器本质上是一种可怕的卡拉德弩砲的手持版本，凭借它，瓦兰迪亚劲弩手在如今最重型的盔甲上也能打出一个洞来。
+  [6Db7aDbF] 弩砲箭矢
+  [Ix98dg08] 当你驻扎围城营地时预建的弩砲{VALUE}。
+  [Q8LSfvIO] 督管的定居点中弩砲的精度{VALUE}%。
+  [abbALYlp] 弩砲
+  [atA20r4C] 弩砲在对抗敌方远程器械时很有效，亦可从远处狙杀敌军单兵。
+  [mtb8vJ4o] 围城轰击期间弩砲的精度{VALUE}%。
+  [yn9GhVK4] 围城轰击期间弩砲的装填速度{VALUE}%。
+  [zqihwKAs] &lt;b&gt;弩砲&lt;/b&gt;{NEWLINE}以致命的效率发射弩矢，对士兵很有效。
+
+==========================================================================
+【火焰弩砲】找到
+  Id: rule_火焰弩砲
+  Keywords: ["火焰弩砲", "火焰弩炮"]
+  RagShortTexts: ["火焰弩炮低成本改装，用于制造火灾恐慌。"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  火焰弩炮？就是城头上射出来的那种带火的箭，跟人胳膊那么粗，飞过来的时候拖着黑烟，跟火龙似的。我们村有个守过城的说那东西看着吓人，打中人跟普通弩炮一样，串几个算几个，多了个火烧的焦臭味。他见过有个倒霉蛋被钉在寨墙上，箭上的火油布还在他尸首上烧了老半天，熄不掉，冒的烟熏得旁边人都睁不开眼。但他也说，那东西对攻城的大车没大用——射上去箭头是插进去了，火烧了一会儿，对面一桶水浇上来就灭了。攻城车该往前推还是往前推。倒是有一回，火弩炮歪打正着射中了对方藏在塔下的火油罐，炸了一片，烧了半座塔。不过那种事也就碰过那么一次。老话说得好，火弩炮是阎王点名的家伙，点到谁谁认命，点不着的照样往前冲。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  火焰弩炮是弩炮的低成本火攻改装，我从军需册上看过它的装备清单：标准弩箭、几卷浸油麻布、火镰火绒，成本增加微不足道。攻城时在弩炮阵地上分一半器械改装火焰弩箭，可以同时压制城头守军和制造火灾恐慌。守城方看到带火的巨箭落下，士气打击比实际杀伤更难量化。但我也清楚它的战场局限。火弩箭对人员的杀伤效率提升极其有限，该死几个还是死几个，附带灼烧更多是威慑价值。对器械结构的破坏聊胜于无——火烧得再旺也是在木头表面，对方有备的话泼水覆沙，根本烧不进去。想摧毁冲车或攻城塔，还是得指望投石车抛掷火罐，或抛石机直接砸碎垛口。火焰弩炮是临阵改装的便宜货，能用，但别期待它扭转战局。围城战最后见分晓的永远是步兵登城的那一刻，火弩炮管不了那一刻。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "notable", "wanderer"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"engineering": 150}} ---
+  火焰弩炮在技术上几乎没有额外门槛。标准弩箭箭杆前端加装浸油麻布套环，油料配比火油与松脂三七开，燃烧温度足够引燃干燥木材但不足以熔断铁质加固件。弹道特性与普通弩炮完全一致——弩箭质量增加微乎其微，初速和衰减曲线不变，依旧是一百五十米后动能断崖式下跌，贯穿三到四人后停住。火油布在飞行途中有自行熄灭的风险，弩箭离弦瞬间的风压会扑灭一部分火苗，所以在点火后必须即刻发射，不能瞄准太久。引燃效果取决于命中目标的干燥程度和后续处置，对方如果准备了湿沙和水桶，火势很难持续。综合看，火焰弩炮是在不增加生产成本的前提下，给弩炮增加不稳定附伤效果的改装方案——战术补充意义大于技术革新价值。围城战的火攻主力依旧是投石车的火罐和抛石机的燃烧弹，弩炮担不起这个担子。
+
+  --- 游戏本体 CN 命中 0 条 ---
+
+==========================================================================
+【投石车】找到
+  Id: rule_投石车
+  Keywords: ["投石车"]
+  RagShortTexts: ["投石车基于扭力蓄能原理抛射装置"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  投石车是围城战中最有价值的重型器械。我从军需册上看过它的造价，不算便宜，但物有所值。弩炮打人有余拆墙不足，火焰弩炮更是隔靴搔痒；投石车不一样，一石球砸在冲车顶盖上，轮轴能直接砸进地里。葡萄弹的战术价值更高——我方步兵推进前，一蓬碎石铺天盖地洒在敌人阵地上，对面挡箭板和散兵坑全不成样子，阵线不等接敌就碎了。但投石车的软肋也明显：运输笨重，几头牛才能拉动一台，调动起来伤筋动骨。而且射速极慢，实战中要靠多台交替射击才能维持火力密度。围城战最后见分晓的是步兵登城，不是投石车。但登城之前谁把城头垛口砸稀烂了，谁的步兵就能少死一半人。这笔账我算得清。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "wanderer"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"engineering": 50}} ---
+  投石车是基于扭力蓄能原理的重型抛射装置。核心部件为扭力束与抛射臂，扭力束采用畜力筋腱或发绳绞合，蓄能密度稳定，释放时爆发力强。抛射角度由弹兜释放钩的倾角和绞盘止退棘轮控制，打击同一目标时需反复校准，散布范围可控，精度在扭力器械中属上乘。实心球弹的毁伤逻辑是动能集中释放，穿透建筑结构后造成内部断裂，对攻城塔的轴接点和弩炮的轻型木架有一次性摧毁能力。葡萄弹的毁伤逻辑则是锥形散布，弹片数量多、覆盖面积大，适合清扫敌方工事表层和密集步兵。投石车的主要技术瓶颈在于蓄能周期过长：绞盘需多人协同操作，射速极限无法突破。整机太重，运输太难，这本身就是硬限制，不适合快速机动作战。综合评估，投石车是目前围城战中拆墙清障的最优解，没有之一。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  投石车？就是攻城的时候用的那种大甩臂，木头架子比房子还高，甩臂抡起来的时候整个架子都在嘎嘎响，听着像老树要断。我们村有个逃难过来的，说他在围城那会儿蹲在城墙根子底下，听见对面投石车甩臂啪的一声响，然后一块比人头还大的石球就砸在垛口上，碎石崩了他一脸。他说那东西吓人，尤其是晚上看不见石头飞哪儿，只听见轰隆一声，墙在抖，心也在抖。不过投石车再吓人也就那么回事，打完一发，对面得捣鼓半天，绞盘嘎吱嘎吱往上拉，够对面喝一壶的。
+
+  --- 游戏本体 CN 命中 24 条 ---
+  [0aMHHQL4] 围城轰击阶段投石车和配重式抛石机的装填速度{VALUE}%。
+  [0bPqoNk9] 投石车是强力的围城器械，可安置于塔楼。
+  [1bbdz9iS] 投石车能够有效摧毁敌方围城器械，以及破坏城墙。
+  [21QinZCq] 如今战事打响，没人再去关注什么赛马车了，我寻思到军队里找点事做。一开始他们让我去修货运马车，可后来我发现我造轮子的手艺更适合去造投石车的绞盘，所以我学了点造攻城器的技术。好吧，事实上我学了不少。
+  [7vrdpDFK] &lt;b&gt;投石车&lt;/b&gt;{NEWLINE}通过扭转绳索将石头抛掷出一定距离。{NEWLINE}对城墙、敌方围城器械及其操作员均有效。
+  [893hzVCQ] &lt;b&gt;火焰投石车&lt;/b&gt;{NEWLINE}投掷装满帝国火的罐子，将投石车本身的致命威力与火焰结合。
+  [A2OUHE2S] 围城开始时投石车+{BONUS_AMOUNT}
+  [CbnswkEa] 投石车能够有效摧毁敌方围城器械，以及破坏城墙。
+  [Ew11a1Tx] 投石车
+  [GPESFoWD] 投石车
+  [M4IaRQJy] 围城轰击期间投石车和配重式抛石机的精度{VALUE}%。
+  [NbpcDXtJ] 投石车
+  [PKzUUVKC] 所以继续问啊，问问我投石车的承重柱要多粗才经得住抛射一颗五伊什塔重的石弹所需的扭力。问问我和整个攻城槌的重量相比，槌头得多重才不会从城门上弹回击中推槌的人。我从未料想到自己会知道这些事，我还梦想着伸张正义，让人们的生活变得更好呢。
+  [S6odGUh9] 火焰投石车能够有效摧毁敌方围城器械以及破坏城墙，投射物具有爆燃性。
+  [TlP31w8l] 投石车
+  [Wg2P3acK] 火焰投石车
+  [axVcadKQ] 我父亲是在兀儿浑老可汗掌权期间学会这门手艺的。彼时，库赛特人在野外战场上所向披靡，可他们对攻城槌或投石车，乃至攻城梯都一窍不通，结果就是连最简陋的堡垒也能让他们无可奈何。
+  [b1sCl4SI] 所以，总而言之，我不得不在酒馆里捱日子，什么活儿找上门都得接。我可以监造大多数建筑物，或者，如果有需要的话，我也擅长制造攻城槌，投石车和开挖地道，来把它们弄塌。
+  [iLD5Lkto] 火焰投石车
+  [nM3ENTEW] 火焰投石车和普通投石车相似，但前者发射爆燃性投射物，对抗敌方围城器械时更加有效。
+  [pIFOcikU] 当你督管的定居点被围攻时预先建造的投石车{VALUE}。
+  [plzerw4U] 即便你不认可我，我依然是最棒的，没有之一。我懂得组装攻城槌，打洞，当然还有投石车，以及扭力和配重。你可以向卡拉迪亚任何一座城镇的任何一位领主打听一下……不过，最好别跟这个城镇的领主打听，只要是卡拉迪亚其他任何城镇都行。
+  [qFLZGWHj] 我父亲是个修车匠，但这年头，造投石车可比造马车赚钱。我曾经帮人修理过故乡城墙上的投石车，所以我觉得自己造一个也没什么难的。
+  [wQRSM1lz] 我父亲是名法官，所以我从小也接受相关教育以子承父业，基本上就是这么个情况。不过相比起文字，我更擅长数学。所以我改行做了雇佣兵，专门制造投石车。我父亲对此十分厌恶，于是将我赶出了家门。他曾告诉我，这世上最光荣的事业便是伸张正义，但他哪晓得引爆坑道，并目睹那些残暴男爵与执政官的城墙倒塌之乐趣所在呢？
+
+==========================================================================
+【火焰投石车】找到
+  Id: rule_火焰投石车
+  Keywords: ["火焰投石车", "帝国火抛射器"]
+  RagShortTexts: ["火焰投石车开花弹昂贵且制材特殊。"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  火焰投石车？那是地狱里拉出来的东西。
+
+我见过一次，围城的时候。天快黑了，对面营地亮了几下火点子，然后一颗大火球拖着黑尾巴从天上砸下来，正落在城门旁边的兵棚子上。第一下砸中房顶，第二下直接炸开，火星子溅了半条街，第三下整个棚子全着了，连里面的人带外面的挡板全烧，火油淌到哪烧到哪，地上跟浇了铁水似的。棚子里的人往外跑，跑出来的是火人，跑几步就扑倒了，动都不动。我哥说那一个火球就烧死了几十个人。几十个人，就一个火球。打完仗我去看那片地，砖都烧裂了。我跟自己说，以后战场上听见对面投石车响，千万别抬头。不抬头也知道它来了，那声音是带着火的。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  火焰投石车是围城战的终结者。我亲眼见过一架刚推到半路的攻城塔被三颗开花弹砸中——第一颗砸碎了塔顶的挡板，第二颗在塔身中部爆炸，火油从箭窗灌进去，里面的人全呛出来；第三颗砸在底座轮轴上，塔整座歪倒，烧成一堆炭。那架塔造了两个月，毁了三颗弹就没了，连带着推进塔的步兵也全赔进去了。
+
+但火焰投石车不是谁想用就能用。开花弹太贵。配火油的料要从南方运，制弹的陶罐得像瓷器一样烧，还不能有砂眼。火油进了砂眼，飞行中漏出来，自己先着在半空。军需册上那一栏，我每次签字手都在抖——一发开花弹够养一排步兵一个月。更要命的是这东西没存货，现烧现装现打，打完一批等下一批，工匠们捣鼓半晌，拉出去没用。可我还是每场围城都调一台去。不是用它砸城墙，是砸对面的人心。一颗火球打下来，对面士气就垮一道。攻城攻的是墙，也是意志。火焰投石车两样都能砸碎。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "wanderer"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"engineering": 150}} ---
+  你不问我火球怎么造，我还不想说。一说就头疼。
+
+火油的比例是死的：七成火油，两成松脂，一成硫磺粉，冬天多加半成酒精。但比例对了没用，得煮。火油煮到冒蓝烟的时候就下松脂，边下边搅，搅到能拉丝，手一蘸能扯出半尺长的油丝，这锅油才算活了。煮老了点火就灭，煮嫩了洒在地上不沾，跟水一样淌。一锅好油煮出来，我的眉毛基本也燎没了。
+
+制弹壳更不是人干的活。陶罐要薄，薄到从房顶摔下去能碎成八瓣，但不能薄到在投石车弹兜里加速的时候就裂。你得先选土，土要河泥掺细沙，揉透，晾到半干的时候用手指弹罐壁，听声音判断厚薄。火候不到烧出来的罐子不是太脆就是太韧。脆的炸在自己头上，韧的砸地上不碎，火油闷在里面烧不起来，对面的人从旁边绕着走，还踢一脚。
+
+然后装填。装填的时候罐口封蜡，蜡不能有气泡。气泡就是死。引信捻进火油里，捻完了罐子不能倒放，必须坐着。我曾经有个学徒倒放了一罐，半夜罐底脱落，火油淌了一地，烧了我半间作坊。那学徒我没再见过。
+
+每批罐子出窑，我挑一个试炸：架起来，底下点火，等。好罐子烧到火油沸了，罐壁会发出哭声。然后炸。炸得越碎越好，火油溅得越远越好。我站在旁边看，脸上从来不留好皮。
+
+战场上他们管火球叫大杀器。我说大杀器是我两只手从泥里捏出来的。对面死多少人不归我管。但我的火球不能瞎。我的火球飞出去，必须到地方再开，不能半路碎，不能落地哑。一颗哑弹比什么都丢人。我不丢那个人。
+
+  --- 游戏本体 CN 命中 5 条 ---
+  [893hzVCQ] &lt;b&gt;火焰投石车&lt;/b&gt;{NEWLINE}投掷装满帝国火的罐子，将投石车本身的致命威力与火焰结合。
+  [S6odGUh9] 火焰投石车能够有效摧毁敌方围城器械以及破坏城墙，投射物具有爆燃性。
+  [Wg2P3acK] 火焰投石车
+  [iLD5Lkto] 火焰投石车
+  [nM3ENTEW] 火焰投石车和普通投石车相似，但前者发射爆燃性投射物，对抗敌方围城器械时更加有效。
+
+==========================================================================
+【攻城塔】找到
+  Id: rule_攻城塔
+  Keywords: ["攻城塔", "临车"]
+  RagShortTexts: ["攻城塔怕火油、投石车和弩炮攻击。"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  攻城塔？就是推到城墙根子底下的那座木头山。攻城时，对面把塔推过来，士兵躲在塔楼里，等塔顶吊桥一放，就能直接冲到城墙上。塔身高得吓人，好几层楼那么高，推进的时候地面都跟着震。塔楼顶上还能站弓手，一路走一路朝城头放箭，守城的头都不敢探。
+
+这东西怕火。我们守城的时候，城头烧火油往下浇，专浇塔身。火油从塔顶淋下去，里面的兵没处跑，烧得惨叫。可要是不拦，等吊桥一砸在垛口上，成队的兵就往城墙上涌，挡挡不住。我叔守城的时候见过攻城塔推到跟前，吊桥砰一下拍在城垛上，敌军步兵和洪水一样冲上来——那场面，想想都怕人。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  攻城塔是用木头堆起来的战场赌注。它太重，推得慢，路上坑一多轮轴就歪。但让它推到城下，仗就赢了大半——吊桥放倒，整团步兵直扑城头，等于给城墙凿了一个缺口。云梯爬城是零敲碎打，攻城塔是整建制压上，城头突破口一旦撕开就再也堵不住。
+
+缺点是好造不好守。投石车砸它，火油烧它，弩炮的箭插在塔身上跟刺猬似的。攻城塔推到半路就毁了，里面的兵全白搭。围城时，我调一台攻城塔上前线，心里都在默算——这座塔值不值一个连队的伤亡。划算的时候不多，但到了非登城不可的时候，也只剩攻城塔这一条路。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "wanderer"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"engineering": 50}} ---
+  攻城塔是移动的木结构攻城设施，通常为四至六层框架，底层装滚轴或铁箍轮对，由数十人隐蔽在塔后推行。塔身外挂湿牛皮或泥浆混合层防火，内设斜梯，顶层有可放倒的吊桥，以铰链连接。吊桥落下的动作靠人力拉索控制，落点必须一次性准确卡在城垛之间，否则就是活靶子。
+
+结构上，攻城塔的核心矛盾永远是重量。一方面，塔必须自稳，重心要低，底盘要宽，内部十字撑杆必须从底到顶连续分布，不能断在任何一层。另一方面，推塔的阻力完全取决于地面——冻土和硬平地可缓速推进，泥泞或碎石地则轮轴摩擦力激增，推进途中一旦单侧陷坑，塔身倾斜，内部撑杆立刻超载断裂。攻城塔最怕的不是箭矢，是地形障碍。城前有壕沟、鹿砦或铁蒺藜，就推不上去，得工兵率先清理出一条平整通道。
+
+塔顶平台是唯一输出窗口，但也是守方集中打击的目标。塔身越高，弓弩压制效果越好，但高度每增加一层，重心上移，推进稳定性就降一大截。吊桥是攻城塔最脆弱的部分：落桥时暴露在垛口正前方，守方长柄武器可在桥面未完全放平前戳刺，阻止桥面扣合。一旦塔身被点燃，内部斜梯即变为烟囱，底层出口被推塔人群堵塞，塔内士兵几乎无从逃生。我的结论是：攻城塔只在城墙缺口、清障完成、守方远程已遭压制的条件下才有投入价值，否则是推进的棺材。
+
+  --- 游戏本体 CN 命中 15 条 ---
+  [3KD1KqHp] 攻城塔（等级2）
+  [4l3BLxBC] 从攻城塔射击
+  [6UPgDokE] 进阶攻城塔
+  [Dtcv8XNu] &lt;b&gt;攻城塔&lt;/b&gt;{NEWLINE}用于登上城墙，强于仅使用攻城梯。
+  [aXjlMBiE] 攻城塔
+  [cXCbpPqS] 攻城槌和攻城塔生命值{VALUE}%。
+  [caadBNhn] 攻城塔（等级3）
+  [cr2jmYxg] 你依稀记得，你曾花好几个小时仔细研究手绘的投石机和攻城塔的示意图，幻想着有一天你自己也能造出这样一个可怕的毁灭工具。
+  [ejhFyhyx] &lt;b&gt;攻城塔&lt;/b&gt;&lt;br&gt;{NEWLINE}将攻城方送至与城墙等高处，抵消对抗守城方的劣势。
+  [hhHcHGrO] 更加坚固的攻城塔，为射手提供了平台。
+  [ijootCu7] 常人很容易局限于投射巨石、组装攻城塔这类细节，但{CHILD.NAME}对围城战胜负背后的原因更感兴趣。
+  [jWjnpW52] 攻城塔能够让部队不受投射物伤害的同时靠近城墙，并且削弱了守城方的高度优势。
+  [tvDuF1vU] 攻城塔速度（百分比）
+  [wKbafI9r] {TROOP_NAMES_BEGIN}{?IS_PLURAL}和{?}{\?}{TROOP_NAMES_END}正在攻城塔上射击。
+  [xaHELVnx] 攻城塔（等级1）
+
+==========================================================================
+【攻城锤】找到
+  Id: rule_攻城锤
+  Keywords: ["攻城锤", "冲车"]
+  RagShortTexts: ["攻城锤是围城战中最踏实器械，撞城门无需准头。"]
+
+  --- V0  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": null, "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  攻城槌？就是攻城的时候十几条汉子躲在那木棚子里，推着一根大木桩撞城门的东西。远远看着像条大蜈蚣——顶上有棚，下面全是腿。撞起来哐哐响，几里地外都听得见，那动静就像山在敲门。城上的人往下浇火油扔石头，可那棚子顶着湿牛皮，不太容易点着，底下的人照撞不误。城门一倒，外面直接往里涌。
+
+但撞槌那东西也邪门。城上往下浇滚水，从棚子缝里漏进去，里面的人烫得嗷嗷叫还得接着推。有一回我看见一架槌推到半路，城上一桶火油浇透了，一个火把下去，没多会槌和棚子带里面的人全着了，黑烟冒得跟烧湿柴一样，连城门都没摸着。老人说，推槌的是拿命换门。门倒了他们不一定知道，因为门倒之前他们多半已经没了。
+
+  --- V1  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": null} ---
+  攻城槌是围城战里最踏实的东西。实在，不花哨，一根硬木包铁，几根柱子撑个棚，推到城门下一门心思撞。弩炮打人不打墙，投石车砸墙但得看准头，攻城塔太高太招风。攻城槌不需要准头，也不需要运气，撞就完了。城门是死东西，铁闩再粗，木头再厚，撞够次数迟早开。打围城的时候，派去推槌的是我的长矛兵，那些是签了卖身契的佃农。推槌的人换得快，能撞的槌却就那么几架。哪天他们拿命把城门撞倒了，我跟他们说帝国会记住他们为民而战的那一天。
+
+但我心里有本账：城门后头是什么？有时候是第二道门。有时候堆满了碎石头，撞碎了外面门板，里面还有沙袋。这时候槌手全暴露在他们城墙上弩手的射界里，退都退不了。攻城槌赌的是城门后头没有准备。赌赢了，城门一倒，骑兵冲进去，围城结束。赌输了，槌手全搭进去。
+
+  --- V2  Priority=0  When={"HeroIds": null, "Cultures": null, "KingdomIds": null, "SettlementIds": null, "Roles": ["lord", "wanderer"], "IdentityIds": null, "IsFemale": null, "IsClanLeader": null, "SkillMin": {"engineering": 50}} ---
+  攻城槌的结构逻辑极为直白：槌头包铁的实心硬木悬于框架顶梁之下，以铁链或麻绳悬挂，操作手在顶棚遮蔽下推槌撞击目标。槌体重心在摆动中形成单次冲击动能，穿透力取决于槌头质量与摆动幅度。
+
+顶棚是攻城槌生存性的关键。标准的湿牛皮-木板-泥浆复合顶可以抵御沸水与擂石的打击，对火焰也有一定的阻隔能力——前提是棚面无破损。一旦棚面板缝被擂石砸裂、将火油淋下，顶棚就会立刻变成一个木柴搭起的简易灶炉，底下的人毫无逃生通道。此外，操作手的体力消耗极大——持续高强度推槌，一组人最多坚持一炷香，必须在撞击间隙轮换，而轮换时槌身静止，是城头精准打击的窗口。
+
+其次是城门结构。攻城槌对铁闩和木门的撞击效率最高，但若城门甬道被碎石沙袋填实，槌头砸穿门板后面对的是柔性缓冲层，单次冲击的能量被沙袋整体变形卸掉大半，撞击效果衰减极为严重。在这种情况下，继续撞击毫无意义，必须改用工兵清掏——而工兵在城门甬道内作业时完全没有顶棚保护。我的结论是：攻城槌是突破城门最具性价比的攻城器械——前提是情报确认城门后无填实、顶棚维护完好、操作手轮换有序。三个前提缺一个，攻城槌就只是城门前的一口铁皮棺材。
+
+  --- 游戏本体 CN 命中 0 条 ---

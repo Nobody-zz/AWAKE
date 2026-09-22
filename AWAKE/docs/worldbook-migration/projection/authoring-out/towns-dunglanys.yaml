@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.towns-dunglanys
 title:
   zh-CN: 邓格拉尼斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 邓格拉尼斯
-  en:
-  - Dunglanys
-  - town_B2
+entity_ids:
+- entity.settlement.town_b2
 summary:
   zh-CN: 邓格拉尼斯矗立山巅俯瞰泰瓦尔湖，得名于五嫁至高王的古代王后，是巴旦尼亚王权的密仪圣地，历代至高王皆欲掌控。
 registry_bindings:
@@ -40,7 +36,7 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 邓格拉尼斯矗立山巅俯瞰泰瓦尔湖，得名于五嫁至高王的古代王后，是巴旦尼亚王权的密仪圣地，历代至高王皆欲掌控。
+    zh-CN: 邓格拉尼斯意为格拉尼斯之岩，矗立高山之巅，俯瞰巴旦尼亚腹地的幽暗湖泊泰瓦尔湖。
   sources:
   - source_id: source.calradia.game.settlements-desc
     source_version: bannerlord-1.3.15.110062
@@ -49,11 +45,11 @@ assertions:
     quote_hash: A8FC104709ADF11ABCF6D35DB84A8A260071E8C33F55A22DA7E2515444227081
     quote: 邓格拉尼斯，意为“格拉尼斯之岩”，矗立于高山之巅，俯瞰着巴旦尼亚腹地的幽暗湖泊——泰瓦尔湖。
   expressions:
-  - id: expr.town-dunglanys-rumor
+  - id: expr.town-dunglanys-1-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 邓格拉尼斯在山顶上，底下是黑黢黢的泰瓦尔湖。老人们说那地方是王权的根子，做大王的都惦记。
+      zh-CN: 邓格拉尼斯在最高的山尖上，底下的泰瓦尔湖又深又暗。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +89,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.town-dunglanys-detail
+  - id: expr.town-dunglanys-1-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 邓格拉尼斯是密仪与王权的符号产业——圣地地位带来朝觐人流；湖畔地势险，货路单一但贵重品多，押运在此按圣物规格走。
+      zh-CN: 邓格拉尼斯踞巴旦尼亚腹地的制高点，脚下就是泰瓦尔湖；这地方看水、看路、看人都便当。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -105,6 +101,128 @@ assertions:
       locator: bannerlord.settlements#town_B2
       quote_hash: A8FC104709ADF11ABCF6D35DB84A8A260071E8C33F55A22DA7E2515444227081
       quote: 邓格拉尼斯，意为“格拉尼斯之岩”，矗立于高山之巅，俯瞰着巴旦尼亚腹地的幽暗湖泊——泰瓦尔湖。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-dunglanys-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 其名出自一位古代王后；据传她先后嫁给五任巴旦尼亚至高王，位分更在他们之上。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_B2
+    quote_hash: 1272C72D8E07E575C0E66C06158B1A0C75B1C56BC11C1638E68B87AC1E04D2EE
+    quote: 据传说，她先后嫁给了五任巴旦尼亚至高王，地位甚至在他们之上。
+  expressions:
+  - id: expr.town-dunglanys-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 老话说邓格拉尼斯这名字是个古代王后留下的。那位王后嫁过五位至高王，说话比他们还管用。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_B2
+      quote_hash: 1272C72D8E07E575C0E66C06158B1A0C75B1C56BC11C1638E68B87AC1E04D2EE
+      quote: 据传说，她先后嫁给了五任巴旦尼亚至高王，地位甚至在他们之上。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-dunglanys-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 邓格拉尼斯的名源是一位古代王后——据传她历任五王之后而位在其上。这故事在巴旦尼亚是讲王权分量的一段旧料。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_B2
+      quote_hash: 1272C72D8E07E575C0E66C06158B1A0C75B1C56BC11C1638E68B87AC1E04D2EE
+      quote: 据传说，她先后嫁给了五任巴旦尼亚至高王，地位甚至在他们之上。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-dunglanys-3
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 此地是巴旦尼亚的密仪圣地，象征王权；并非每位至高王都在此治政，但诸王都渴望掌控它。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_B2
+    quote_hash: CB67EBB4833EC4CB2B89CC7FDD61811DDD085C0488D994DC249E647271D14C17
+    quote: 此地是巴旦尼亚的一处密仪圣地，象征着巴旦尼亚的王权，因此尽管并非每一位巴旦尼亚至高王都在此地进行统治，但他们都渴望掌控这里。
+  expressions:
+  - id: expr.town-dunglanys-3-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 邓格拉尼斯是巴旦尼亚的密仪圣地，王权的象征——不必在此坐镇，但必须握在手里。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_B2
+      quote_hash: CB67EBB4833EC4CB2B89CC7FDD61811DDD085C0488D994DC249E647271D14C17
+      quote: 此地是巴旦尼亚的一处密仪圣地，象征着巴旦尼亚的王权，因此尽管并非每一位巴旦尼亚至高王都在此地进行统治，但他们都渴望掌控这里。
     grants:
     - profile_id: profile.headman
       scope: national

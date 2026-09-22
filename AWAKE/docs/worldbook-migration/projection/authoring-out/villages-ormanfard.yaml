@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-ormanfard
 title:
   zh-CN: 奥曼法德
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 奥曼法德
-  en:
-  - Ormanfard
-  - castle_village_V4_1
+entity_ids:
+- entity.settlement.castle_village_v4_1
 summary:
   zh-CN: 奥曼法德位于一条湍急小河旁——那河自莱恩诺山脉奔流而下，汇入奥克斯湖；山坡开成梯田种葡萄，酿出的酒醇厚浓郁。富人会加蜂蜜与丁香调饮，平民则兑水喝。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-alosea
 title:
   zh-CN: 阿罗塞亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿罗塞亚
-  en:
-  - Alosea
-  - village_EN2_1
+entity_ids:
+- entity.settlement.village_en2_1
 summary:
   zh-CN: 阿罗塞亚在拉科尼斯湖以西很远处，靠近狄亚特马湾的入口；当地人依靠湖中捕捞的梭子鱼与鲟鱼生活富足。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-calioc
 title:
   zh-CN: 卡利奥克
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 卡利奥克
-  en:
-  - Calioc
-  - village_V1_1
+entity_ids:
+- entity.settlement.village_v1_1
 summary:
   zh-CN: 卡利奥克坐落于瓦兰迪亚中部埃皮尔山丘与比斯坎山之间的平原上，当地人在沼泽地上种植亚麻。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-pons
 title:
   zh-CN: 庞斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 庞斯
-  en:
-  - Pons
-  - castle_village_EN7_2
+entity_ids:
+- entity.settlement.castle_village_en7_2
 summary:
   zh-CN: 庞斯是帝国最北端的定居点之一，因位于伊勒坦运输线的「交叉口」而得名；当地人从附近山丘开采盐矿。
 registry_bindings:

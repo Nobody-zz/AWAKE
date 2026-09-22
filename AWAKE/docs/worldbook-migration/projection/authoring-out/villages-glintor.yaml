@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-glintor
 title:
   zh-CN: 格林托尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 格林托尔
-  en:
-  - Glintor
-  - castle_village_B6_2
+entity_ids:
+- entity.settlement.castle_village_b6_2
 summary:
   zh-CN: 格林托尔俯瞰着湍急的费尔河——泰瓦尔湖的水由此汇入瓦尔切格湾；当地草甸养出的马匹，很受北方斯特吉亚强盗与商贩的青睐。
 registry_bindings:

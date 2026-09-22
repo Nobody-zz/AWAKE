@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-sargot
 title:
   zh-CN: 萨哥特
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 萨哥特
-  en:
-  - Sargot
-  - town_V1
+entity_ids:
+- entity.settlement.town_v1
 summary:
   zh-CN: 萨哥特在马萨语中意指工事化营寨，此城建于被毁的帝国城镇废墟上，前萨哥特时代的定居史已被覆盖。
 registry_bindings:

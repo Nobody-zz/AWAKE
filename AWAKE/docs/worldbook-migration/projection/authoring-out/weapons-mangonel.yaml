@@ -1,0 +1,301 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-mangonel
+title:
+  zh-CN: 投石车
+  en: Mangonel
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 攻城投石车
+  en:
+  - Siege Mangonel
+summary:
+  zh-CN: 投石车：基于扭力蓄能的重型抛射装置，核心是扭力束与抛射臂。通过扭转绳索将石头抛掷出一定距离，对城墙、敌方围城器械及其操作员均有效；葡萄弹用于清扫工事表层与密集步兵。软肋是运输笨重、蓄能周期过长、射速极慢，实战中要靠多台交替射击维持火力密度——围城战最后见分晓的是步兵登城，但登城前谁把城头砸烂了，谁的步兵就少死一半。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.1bbdz9iS
+  quote_hash: 2291C2628764AE4797A1B6B308C2CAB33A7CF25D7B3F7B97E96A4C5D29FAD97D
+  quote: 投石车能够有效摧毁敌方围城器械，以及破坏城墙。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_投石车__投石车.json#/Variants/0/Content
+  quote_hash: 6374B8D48665EC703AC86CAA64333EF9BDB813A7E0FD8E99E2CFC867D1167A75
+  quote: 投石车是围城战中最有价值的重型器械
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_投石车__投石车.json#/Variants/0/Content
+  quote_hash: 1C514FFDDB60841458C7221BB471C80A90475FD1DC9474009AA7C0B7AD5D2881
+  quote: 而且射速极慢，实战中要靠多台交替射击才能维持火力密度
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_投石车__投石车.json#/Variants/0/Content
+  quote_hash: 2CAC3D04E3CA20F6283D947D196C84FB34AF47156BD1E85D7589DA29BA004973
+  quote: 葡萄弹的战术价值更高
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_投石车__投石车.json#/Variants/0/Content
+  quote_hash: 58FD346867DEF1FF1EB9AFBFBED4B4066CD027BC4309A8871C8E709D2544E769
+  quote: 但登城之前谁把城头垛口砸稀烂了，谁的步兵就能少死一半人。这笔账我算得清
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_投石车__投石车.json#/Variants/1/Content
+  quote_hash: 21385A1C8E3FFB7C22855E5ED03A1346491579337B4903442E86A769055D389F
+  quote: 投石车是基于扭力蓄能原理的重型抛射装置
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_投石车__投石车.json#/Variants/1/Content
+  quote_hash: 301063B1026C18788090F953AFEB38CACAD2E7C19E946A5842358109E07655F5
+  quote: 综合评估，投石车是目前围城战中拆墙清障的最优解，没有之一
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.PKzUUVKC
+  quote_hash: D236959291CB42BA4158F84354E14DF7A29E6252171185544BE75B52939C71E6
+  quote: 所以继续问啊，问问我投石车的承重柱要多粗才经得住抛射一颗五伊什塔重的石弹所需的扭力。问问我和整个攻城槌的重量相比，槌头得多重才不会从城门上弹回击中推槌的人。我从未料想到自己会知道这些事，我还梦想着伸张正义，让人们的生活变得更好呢。
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.qFLZGWHj
+  quote_hash: B9702D0780F54E7E43E07481E73EE61440F94DED2A4DFC747A6F566226762FD5
+  quote: 我父亲是个修车匠，但这年头，造投石车可比造马车赚钱。我曾经帮人修理过故乡城墙上的投石车，所以我觉得自己造一个也没什么难的。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_投石车__投石车.json#/Variants/2/Content
+  quote_hash: 4377AC3B0E5BFA268C420E99690400F76E24AB9D04C87DAB4125AD6520F02A9F
+  quote: 就是攻城的时候用的那种大甩臂，木头架子比房子还高
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_投石车__投石车.json#/Variants/2/Content
+  quote_hash: CA4EDCCC558489AB005F4C0D8EADF4982AC3BE7B540409F3115B2A22BB6C89C8
+  quote: 尤其是晚上看不见石头飞哪儿，只听见轰隆一声，墙在抖，心也在抖
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.mangonel-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 投石车是基于扭力蓄能原理的重型抛射装置：核心部件为扭力束与抛射臂，扭力束采用畜力筋腱或发绳绞合，蓄能密度稳定。它通过扭转绳索将石头抛掷出一定距离，对城墙、敌方围城器械及其操作员均有效；实心球弹的毁伤逻辑是动能集中释放，对攻城塔的轴接点和弩炮的轻型木架有一次性摧毁能力；葡萄弹则是锥形散布，适合清扫敌方工事表层和密集步兵。主要技术瓶颈在于蓄能周期过长——绞盘需多人协同操作，射速极限无法突破；整机太重、运输太难，这本身就是硬限制。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.1bbdz9iS
+    quote_hash: 2291C2628764AE4797A1B6B308C2CAB33A7CF25D7B3F7B97E96A4C5D29FAD97D
+    quote: 投石车能够有效摧毁敌方围城器械，以及破坏城墙。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_投石车__投石车.json#/Variants/0/Content
+    quote_hash: 6374B8D48665EC703AC86CAA64333EF9BDB813A7E0FD8E99E2CFC867D1167A75
+    quote: 投石车是围城战中最有价值的重型器械
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_投石车__投石车.json#/Variants/0/Content
+    quote_hash: 1C514FFDDB60841458C7221BB471C80A90475FD1DC9474009AA7C0B7AD5D2881
+    quote: 而且射速极慢，实战中要靠多台交替射击才能维持火力密度
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_投石车__投石车.json#/Variants/0/Content
+    quote_hash: 2CAC3D04E3CA20F6283D947D196C84FB34AF47156BD1E85D7589DA29BA004973
+    quote: 葡萄弹的战术价值更高
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_投石车__投石车.json#/Variants/0/Content
+    quote_hash: 58FD346867DEF1FF1EB9AFBFBED4B4066CD027BC4309A8871C8E709D2544E769
+    quote: 但登城之前谁把城头垛口砸稀烂了，谁的步兵就能少死一半人。这笔账我算得清
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_投石车__投石车.json#/Variants/1/Content
+    quote_hash: 21385A1C8E3FFB7C22855E5ED03A1346491579337B4903442E86A769055D389F
+    quote: 投石车是基于扭力蓄能原理的重型抛射装置
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_投石车__投石车.json#/Variants/1/Content
+    quote_hash: 301063B1026C18788090F953AFEB38CACAD2E7C19E946A5842358109E07655F5
+    quote: 综合评估，投石车是目前围城战中拆墙清障的最优解，没有之一
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.PKzUUVKC
+    quote_hash: D236959291CB42BA4158F84354E14DF7A29E6252171185544BE75B52939C71E6
+    quote: 所以继续问啊，问问我投石车的承重柱要多粗才经得住抛射一颗五伊什塔重的石弹所需的扭力。问问我和整个攻城槌的重量相比，槌头得多重才不会从城门上弹回击中推槌的人。我从未料想到自己会知道这些事，我还梦想着伸张正义，让人们的生活变得更好呢。
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.qFLZGWHj
+    quote_hash: B9702D0780F54E7E43E07481E73EE61440F94DED2A4DFC747A6F566226762FD5
+    quote: 我父亲是个修车匠，但这年头，造投石车可比造马车赚钱。我曾经帮人修理过故乡城墙上的投石车，所以我觉得自己造一个也没什么难的。
+  expressions:
+  - id: expr.mangonel-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 投石车是围城里最值钱的重型器械：靠扭力束绞紧、甩臂一抡，把石球抛出去。它对城墙、对方的围城器械和操作的人都有效。它的毛病也明显——太沉，几头牛才拉得动一台，而且攒一次力要半天，射得极慢，实战里得靠多台轮着来。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.1bbdz9iS
+      quote_hash: 2291C2628764AE4797A1B6B308C2CAB33A7CF25D7B3F7B97E96A4C5D29FAD97D
+      quote: 投石车能够有效摧毁敌方围城器械，以及破坏城墙。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_投石车__投石车.json#/Variants/0/Content
+      quote_hash: 6374B8D48665EC703AC86CAA64333EF9BDB813A7E0FD8E99E2CFC867D1167A75
+      quote: 投石车是围城战中最有价值的重型器械
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_投石车__投石车.json#/Variants/0/Content
+      quote_hash: 1C514FFDDB60841458C7221BB471C80A90475FD1DC9474009AA7C0B7AD5D2881
+      quote: 而且射速极慢，实战中要靠多台交替射击才能维持火力密度
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.mangonel-lord-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 投石车是围城战中最有价值的重型器械。我从军需册上看过它的造价，不算便宜，但物有所值。弩炮打人有余拆墙不足，火焰弩炮更是隔靴搔痒；投石车不一样，一石球砸在冲车顶盖上，轮轴能直接砸进地里。葡萄弹的战术价值更高——我方步兵推进前，一蓬碎石铺天盖地洒在敌人阵地上，对面挡箭板和散兵坑全不成样子，阵线不等接敌就碎了。但软肋也明显：运输笨重，几头牛才能拉动一台，调动起来伤筋动骨。围城战最后见分晓的是步兵登城，不是投石车——但登城之前谁把城头垛口砸稀烂了，谁的步兵就能少死一半人。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_投石车__投石车.json#/Variants/0/Content
+      quote_hash: 2CAC3D04E3CA20F6283D947D196C84FB34AF47156BD1E85D7589DA29BA004973
+      quote: 葡萄弹的战术价值更高
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_投石车__投石车.json#/Variants/0/Content
+      quote_hash: 58FD346867DEF1FF1EB9AFBFBED4B4066CD027BC4309A8871C8E709D2544E769
+      quote: 但登城之前谁把城头垛口砸稀烂了，谁的步兵就能少死一半人。这笔账我算得清
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+  - id: expr.mangonel-engineer-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 投石车是基于扭力蓄能原理的重型抛射装置。核心部件为扭力束与抛射臂，扭力束采用畜力筋腱或发绳绞合，蓄能密度稳定，释放时爆发力强。实心球弹的毁伤逻辑是动能集中释放，穿透建筑结构后造成内部断裂，对攻城塔的轴接点和弩炮的轻型木架有一次性摧毁能力。葡萄弹的毁伤逻辑则是锥形散布，弹片数量多、覆盖面积大。它的主要技术瓶颈在于蓄能周期过长：绞盘需多人协同操作，射速极限无法突破；整机太重，运输太难，这本身就是硬限制，不适合快速机动作战。综合评估，投石车是目前围城战中拆墙清障的最优解，没有之一。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_投石车__投石车.json#/Variants/1/Content
+      quote_hash: 21385A1C8E3FFB7C22855E5ED03A1346491579337B4903442E86A769055D389F
+      quote: 投石车是基于扭力蓄能原理的重型抛射装置
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_投石车__投石车.json#/Variants/1/Content
+      quote_hash: 301063B1026C18788090F953AFEB38CACAD2E7C19E946A5842358109E07655F5
+      quote: 综合评估，投石车是目前围城战中拆墙清障的最优解，没有之一
+    grants:
+    - profile_id: profile.noble_high_steward
+      scope: elite
+      min_detail: detail
+    denies: []
+  - id: expr.mangonel-engineer-soldier-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 问问我投石车的承重柱要多粗才经得住抛射一颗五伊什塔重的石弹所需的扭力。问问我和整个攻城槌的重量相比，槌头得多重才不会从城门上弹回击中推槌的人。我父亲是个修车匠，但这年头，造投石车可比造马车赚钱——我曾经帮人修理过故乡城墙上的投石车，所以我觉得自己造一个也没什么难的。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.PKzUUVKC
+      quote_hash: D236959291CB42BA4158F84354E14DF7A29E6252171185544BE75B52939C71E6
+      quote: 所以继续问啊，问问我投石车的承重柱要多粗才经得住抛射一颗五伊什塔重的石弹所需的扭力。问问我和整个攻城槌的重量相比，槌头得多重才不会从城门上弹回击中推槌的人。我从未料想到自己会知道这些事，我还梦想着伸张正义，让人们的生活变得更好呢。
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.qFLZGWHj
+      quote_hash: B9702D0780F54E7E43E07481E73EE61440F94DED2A4DFC747A6F566226762FD5
+      quote: 我父亲是个修车匠，但这年头，造投石车可比造马车赚钱。我曾经帮人修理过故乡城墙上的投石车，所以我觉得自己造一个也没什么难的。
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    denies: []
+- id: assertion.mangonel-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 逃难的村民记住的是投石车的声音和抖动：甩臂抡起来的时候整个架子都在嘎嘎响，像老树要断；一块比人头还大的石球砸在垛口上，碎石崩一脸。晚上看不见石头飞哪儿，只听见轰隆一声，墙在抖，心也在抖。不过它再吓人也就那么回事——打完一发，对面得捣鼓半天，绞盘嘎吱嘎吱往上拉。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_投石车__投石车.json#/Variants/2/Content
+    quote_hash: 4377AC3B0E5BFA268C420E99690400F76E24AB9D04C87DAB4125AD6520F02A9F
+    quote: 就是攻城的时候用的那种大甩臂，木头架子比房子还高
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_投石车__投石车.json#/Variants/2/Content
+    quote_hash: CA4EDCCC558489AB005F4C0D8EADF4982AC3BE7B540409F3115B2A22BB6C89C8
+    quote: 尤其是晚上看不见石头飞哪儿，只听见轰隆一声，墙在抖，心也在抖
+  expressions:
+  - id: expr.mangonel-villager-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 投石车？就是攻城的时候用的那种大甩臂，木头架子比房子还高，甩臂抡起来的时候整个架子都在嘎嘎响，听着像老树要断。我们村有个逃难过来的，说他在围城那会儿蹲在城墙根子底下，听见对面投石车甩臂啪的一声响，然后一块比人头还大的石球就砸在垛口上，碎石崩了他一脸。他说那东西吓人，尤其是晚上看不见石头飞哪儿，只听见轰隆一声，墙在抖，心也在抖。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_投石车__投石车.json#/Variants/2/Content
+      quote_hash: 4377AC3B0E5BFA268C420E99690400F76E24AB9D04C87DAB4125AD6520F02A9F
+      quote: 就是攻城的时候用的那种大甩臂，木头架子比房子还高
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_投石车__投石车.json#/Variants/2/Content
+      quote_hash: CA4EDCCC558489AB005F4C0D8EADF4982AC3BE7B540409F3115B2A22BB6C89C8
+      quote: 尤其是晚上看不见石头飞哪儿，只听见轰隆一声，墙在抖，心也在抖
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []

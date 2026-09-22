@@ -1,0 +1,376 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.troops-druzhinnik-cavalry
+title:
+  zh-CN: 斯特吉亚亲卫骑兵
+  en: Druzhinnik
+status: needs_review
+domain: war
+subdomain: troops
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 亲卫骑兵
+  - 斯特吉亚骑兵
+  - 波耶亲卫骑兵
+  en:
+  - Sturgian Druzhinnik
+summary:
+  zh-CN: 斯特吉亚亲卫骑兵：波耶的私人扈从军，也是「瓦良格之路」的顶点——从步兵一路打上来才有资格骑上战马，装备由波耶置办。特色是下马照样能打：落了马捡起斧头还是战士，这一点让南方的重骑兵颇为忌惮。各族对其评价集中在马矮而耐力强、雪地泥泞里稳，平原冲锋则远不如瓦兰迪亚竞技马。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.3r3MPbhV
+  quote_hash: 2D8CC8786BC8040928019D4BEBC446C9DB7C757D24CE317CD78E3CA461A93D10
+  quote: 斯特吉亚的波耶们总在寻找实力不凡的战士来加入他们的亲卫骑兵，即私人扈从军。这些人因丰厚的赏金而保持忠诚，他们装备着最好的武器和马匹，在任何北方军队中都担任精锐。
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.bdrb4ur3
+  quote_hash: 1D462736F24517DB5A4A20D43D449CA2C8BB4ED6A41977AB104A470A0EE2E335
+  quote: 斯特吉亚土地上的每一座村庄和城镇都为波耶和王公们提供一支民兵部队。他们在战斗中支援亲卫骑兵，如果他们能脱颖而出，就有希望晋升到亲卫骑兵的行列之中。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/0/Content
+  quote_hash: 7A6CC9613A4F86F74DA3ED6E7485895D7A0AF5780C607A170AB3FB314CCA1AB5
+  quote: 斯特吉亚亲卫骑兵是波耶麾下最精锐的战士，也是瓦良格之路的顶点
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.hob3WVkU
+  quote_hash: 25857981DF657A745BACA58F15A8A3013ABAD57A8BA504A20383E3E7A727D6DE
+  quote: 你的父亲是某位波耶的亲卫队成员，这些“伴友”们一起组成了波耶的私人扈从军。他能和主君同桌共餐，监管波耶的庄园，甚至在战斗时还能和波耶并肩站在盾墙中心。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/2/Content
+  quote_hash: 81513C7D97B7FA4AB99553EFC7A9B33F5DC75B7A9EC13158CCD1DCFF139E3ADD
+  quote: 我亲手把缰绳交给他们，因为他们在战场上证明了自己
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.NjXTLWSr
+  quote_hash: BE92FF28207BA5887B9722D9C7EA03CF646F0DAE9A6D4AECDAB88C0923E9FA46
+  quote: 作为一名精英亲卫骑兵，你多年以来精修自己的骑乘技艺{newline}{newline}配备更长的骑枪{newline}{newline}骑术技能+15
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/3/Content
+  quote_hash: 6A181ABD34EAB54FB992655AFA4035B2AF0AA05CB688C036A48721BD252A0A9D
+  quote: 但骨子里我们还是步兵——下了马，架起盾，照样能打
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/5/Content
+  quote_hash: AC45B83EE3DC4A9E926CAD40818483F097E468E26E3046991FD0B3FE785DA71C
+  quote: 但有一点值得警惕：这些骑兵是从瓦良格升上来的，下马之后照样能打
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/5/Content
+  quote_hash: B430AC44022BD5D4F78B8ECA8C54DDB8BDD826A10E3E1FF0086F3BE4CB7FE87A
+  quote: 在北方那种地形里，这种素质很要命
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/6/Content
+  quote_hash: A7A0015566EDAA57BF09BBBCC76A26B4B94435FCB713F2AE335C1C72318EC410
+  quote: 在平原上，一个冲锋就能把他们撞飞。但在北方的雪地和林地里，我们的竞技马跑不动，他们的矮脚马却灵活得很
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/7/Content
+  quote_hash: 002DEEAAA1BCCAF956678E010FCAAB462480843FE8BC206DA3B9D400332C1315
+  quote: 我们的骑射手能绕他们放箭放到天黑。但他们从步兵打上来的底子厚，不像帝国骑兵一落马就废了
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/4/Content
+  quote_hash: 6D3F8C32EB2DFFE8370B0C7776AF49DCEFACF8574530B1ADBD50BB7513C990BB
+  quote: 他们是从瓦良格一路打上来的，不是靠出身，是靠战功
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.druzhinnik-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 斯特吉亚亲卫骑兵是波耶的私人扈从军，也是「瓦良格之路」的顶点：战士从普通瓦良格做起，在战场上历经厮杀、证明自己之后，才有资格骑上战马。装备由波耶置办——最好的武器与马匹。斯特吉亚的村庄与城镇为民兵部队提供支援，民兵中脱颖而出者，有望晋升到亲卫骑兵的行列。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.3r3MPbhV
+    quote_hash: 2D8CC8786BC8040928019D4BEBC446C9DB7C757D24CE317CD78E3CA461A93D10
+    quote: 斯特吉亚的波耶们总在寻找实力不凡的战士来加入他们的亲卫骑兵，即私人扈从军。这些人因丰厚的赏金而保持忠诚，他们装备着最好的武器和马匹，在任何北方军队中都担任精锐。
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.bdrb4ur3
+    quote_hash: 1D462736F24517DB5A4A20D43D449CA2C8BB4ED6A41977AB104A470A0EE2E335
+    quote: 斯特吉亚土地上的每一座村庄和城镇都为波耶和王公们提供一支民兵部队。他们在战斗中支援亲卫骑兵，如果他们能脱颖而出，就有希望晋升到亲卫骑兵的行列之中。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/0/Content
+    quote_hash: 7A6CC9613A4F86F74DA3ED6E7485895D7A0AF5780C607A170AB3FB314CCA1AB5
+    quote: 斯特吉亚亲卫骑兵是波耶麾下最精锐的战士，也是瓦良格之路的顶点
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.hob3WVkU
+    quote_hash: 25857981DF657A745BACA58F15A8A3013ABAD57A8BA504A20383E3E7A727D6DE
+    quote: 你的父亲是某位波耶的亲卫队成员，这些“伴友”们一起组成了波耶的私人扈从军。他能和主君同桌共餐，监管波耶的庄园，甚至在战斗时还能和波耶并肩站在盾墙中心。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/2/Content
+    quote_hash: 81513C7D97B7FA4AB99553EFC7A9B33F5DC75B7A9EC13158CCD1DCFF139E3ADD
+    quote: 我亲手把缰绳交给他们，因为他们在战场上证明了自己
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.NjXTLWSr
+    quote_hash: BE92FF28207BA5887B9722D9C7EA03CF646F0DAE9A6D4AECDAB88C0923E9FA46
+    quote: 作为一名精英亲卫骑兵，你多年以来精修自己的骑乘技艺{newline}{newline}配备更长的骑枪{newline}{newline}骑术技能+15
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/3/Content
+    quote_hash: 6A181ABD34EAB54FB992655AFA4035B2AF0AA05CB688C036A48721BD252A0A9D
+    quote: 但骨子里我们还是步兵——下了马，架起盾，照样能打
+  expressions:
+  - id: expr.druzhinnik-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 斯特吉亚的亲卫骑兵是波耶自己的扈从军——不是靠出身，是靠战功升上来的。波耶们总在找实力不凡的战士来加入，这些人因丰厚的赏金而保持忠诚，装备着最好的武器和马匹，在任何北方军队里都算精锐。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.3r3MPbhV
+      quote_hash: 2D8CC8786BC8040928019D4BEBC446C9DB7C757D24CE317CD78E3CA461A93D10
+      quote: 斯特吉亚的波耶们总在寻找实力不凡的战士来加入他们的亲卫骑兵，即私人扈从军。这些人因丰厚的赏金而保持忠诚，他们装备着最好的武器和马匹，在任何北方军队中都担任精锐。
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.bdrb4ur3
+      quote_hash: 1D462736F24517DB5A4A20D43D449CA2C8BB4ED6A41977AB104A470A0EE2E335
+      quote: 斯特吉亚土地上的每一座村庄和城镇都为波耶和王公们提供一支民兵部队。他们在战斗中支援亲卫骑兵，如果他们能脱颖而出，就有希望晋升到亲卫骑兵的行列之中。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/0/Content
+      quote_hash: 7A6CC9613A4F86F74DA3ED6E7485895D7A0AF5780C607A170AB3FB314CCA1AB5
+      quote: 斯特吉亚亲卫骑兵是波耶麾下最精锐的战士，也是瓦良格之路的顶点
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.druzhinnik-lord-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我手下的亲卫骑兵，每一个都是从我的瓦良格里一步步升上来的。从步兵到骑兵的跨越不只是身份上的，也是本事上的。我亲手把缰绳交给他们，因为他们在战场上证明了自己。他们的装备是我出钱置办的，战马是我马场里最好的。在战场上，他们就是我最硬的拳头。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.hob3WVkU
+      quote_hash: 25857981DF657A745BACA58F15A8A3013ABAD57A8BA504A20383E3E7A727D6DE
+      quote: 你的父亲是某位波耶的亲卫队成员，这些“伴友”们一起组成了波耶的私人扈从军。他能和主君同桌共餐，监管波耶的庄园，甚至在战斗时还能和波耶并肩站在盾墙中心。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/2/Content
+      quote_hash: 81513C7D97B7FA4AB99553EFC7A9B33F5DC75B7A9EC13158CCD1DCFF139E3ADD
+      quote: 我亲手把缰绳交给他们，因为他们在战场上证明了自己
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+      role_ids:
+      - entity.role.lord
+    denies: []
+  - id: expr.druzhinnik-soldier-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 我从瓦良格做起，当了几年步兵，又在资深瓦良格的位置上磨了几年，才有资格骑上这匹马。上马那天，波耶亲手把缰绳交到我手里。我们骑马不是为了好看，是为了更快地冲到需要我们的地方。但骨子里我们还是步兵——下了马，架起盾，照样能打。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.NjXTLWSr
+      quote_hash: BE92FF28207BA5887B9722D9C7EA03CF646F0DAE9A6D4AECDAB88C0923E9FA46
+      quote: 作为一名精英亲卫骑兵，你多年以来精修自己的骑乘技艺{newline}{newline}配备更长的骑枪{newline}{newline}骑术技能+15
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/3/Content
+      quote_hash: 6A181ABD34EAB54FB992655AFA4035B2AF0AA05CB688C036A48721BD252A0A9D
+      quote: 但骨子里我们还是步兵——下了马，架起盾，照样能打
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []
+- id: assertion.druzhinnik-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 「下了马照样能打」是亲卫骑兵最被外人称道的一点，也让各族算出不同的账：帝国人警惕——他们的重骑兵落了马基本就完了，斯特吉亚的亲卫骑兵落了马捡起斧头还是战士，在北方地形里这种素质很要命；瓦兰迪亚人先笑后收——平原上一个冲锋就能把他们撞飞，可北方的雪地和林地里，自家竞技马跑不动；库赛特人算得更细——马太慢，骑射手能绕他们放到天黑，但靠太近了冷不防挨一记飞斧。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/5/Content
+    quote_hash: AC45B83EE3DC4A9E926CAD40818483F097E468E26E3046991FD0B3FE785DA71C
+    quote: 但有一点值得警惕：这些骑兵是从瓦良格升上来的，下马之后照样能打
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/5/Content
+    quote_hash: B430AC44022BD5D4F78B8ECA8C54DDB8BDD826A10E3E1FF0086F3BE4CB7FE87A
+    quote: 在北方那种地形里，这种素质很要命
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/6/Content
+    quote_hash: A7A0015566EDAA57BF09BBBCC76A26B4B94435FCB713F2AE335C1C72318EC410
+    quote: 在平原上，一个冲锋就能把他们撞飞。但在北方的雪地和林地里，我们的竞技马跑不动，他们的矮脚马却灵活得很
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/7/Content
+    quote_hash: 002DEEAAA1BCCAF956678E010FCAAB462480843FE8BC206DA3B9D400332C1315
+    quote: 我们的骑射手能绕他们放箭放到天黑。但他们从步兵打上来的底子厚，不像帝国骑兵一落马就废了
+  expressions:
+  - id: expr.druzhinnik-empire-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 斯特吉亚的亲卫骑兵比他们的重步兵灵活，能在侧翼制造麻烦。不过他们的马矮小，冲锋没有那种碾碎一切的气势。但有一点值得警惕：这些骑兵是从瓦良格升上来的，下马之后照样能打——我们的重骑兵要是落了马，基本就完了。在北方那种地形里，这种素质很要命。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/5/Content
+      quote_hash: AC45B83EE3DC4A9E926CAD40818483F097E468E26E3046991FD0B3FE785DA71C
+      quote: 但有一点值得警惕：这些骑兵是从瓦良格升上来的，下马之后照样能打
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/5/Content
+      quote_hash: B430AC44022BD5D4F78B8ECA8C54DDB8BDD826A10E3E1FF0086F3BE4CB7FE87A
+      quote: 在北方那种地形里，这种素质很要命
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+  - id: expr.druzhinnik-vlandia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 斯特吉亚的亲卫骑兵骑的那种矮脚马，我们的方旗骑士看了就想笑。在平原上，一个冲锋就能把他们撞飞。但在北方的雪地和林地里，我们的竞技马跑不动，他们的矮脚马却灵活得很。而且他们下了马还能打，我们落马的骑士可没那个本事。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/6/Content
+      quote_hash: A7A0015566EDAA57BF09BBBCC76A26B4B94435FCB713F2AE335C1C72318EC410
+      quote: 在平原上，一个冲锋就能把他们撞飞。但在北方的雪地和林地里，我们的竞技马跑不动，他们的矮脚马却灵活得很
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+  - id: expr.druzhinnik-khuzait-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 斯特吉亚的亲卫骑兵马太慢了，我们的骑射手能绕他们放箭放到天黑。但他们从步兵打上来的底子厚，不像帝国骑兵一落马就废了。而且他们手里还有飞斧，靠太近了冷不防挨一下可就不好玩了。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/7/Content
+      quote_hash: 002DEEAAA1BCCAF956678E010FCAAB462480843FE8BC206DA3B9D400332C1315
+      quote: 我们的骑射手能绕他们放箭放到天黑。但他们从步兵打上来的底子厚，不像帝国骑兵一落马就废了
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    denies: []
+- id: assertion.druzhinnik-3
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 在斯特吉亚平民眼里，亲卫骑兵是值得让到路边的人：他们不是靠出身，是靠战功从瓦良格一路打上来的，下了马还能列盾墙，跟步兵一样硬；骑的马虽不高大，在北方的雪地里却稳得很。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.bdrb4ur3
+    quote_hash: 1D462736F24517DB5A4A20D43D449CA2C8BB4ED6A41977AB104A470A0EE2E335
+    quote: 斯特吉亚土地上的每一座村庄和城镇都为波耶和王公们提供一支民兵部队。他们在战斗中支援亲卫骑兵，如果他们能脱颖而出，就有希望晋升到亲卫骑兵的行列之中。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/4/Content
+    quote_hash: 6D3F8C32EB2DFFE8370B0C7776AF49DCEFACF8574530B1ADBD50BB7513C990BB
+    quote: 他们是从瓦良格一路打上来的，不是靠出身，是靠战功
+  expressions:
+  - id: expr.druzhinnik-villager-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 亲卫骑兵大人从街上走过，我们都会让到路边。他们是从瓦良格一路打上来的，不是靠出身，是靠战功。听说他们下了马还能列盾墙，跟步兵一样硬。他们骑的马虽然不高大，但在北方的雪地里稳得很。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.bdrb4ur3
+      quote_hash: 1D462736F24517DB5A4A20D43D449CA2C8BB4ED6A41977AB104A470A0EE2E335
+      quote: 斯特吉亚土地上的每一座村庄和城镇都为波耶和王公们提供一支民兵部队。他们在战斗中支援亲卫骑兵，如果他们能脱颖而出，就有希望晋升到亲卫骑兵的行列之中。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_斯特吉亚亲卫骑兵__斯特吉亚亲卫骑兵.json#/Variants/4/Content
+      quote_hash: 6D3F8C32EB2DFFE8370B0C7776AF49DCEFACF8574530B1ADBD50BB7513C990BB
+      quote: 他们是从瓦良格一路打上来的，不是靠出身，是靠战功
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []

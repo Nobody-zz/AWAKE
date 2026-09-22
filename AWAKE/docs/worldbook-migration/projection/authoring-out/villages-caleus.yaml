@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-caleus
 title:
   zh-CN: 卡琉斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 卡琉斯
-  en:
-  - Caleus
-  - castle_village_V6_1
+entity_ids:
+- entity.settlement.castle_village_v6_1
 summary:
   zh-CN: 卡琉斯位于瓦尔切格湾以南多雾的沿海平原上；当地村民讲一种混合了瓦兰迪亚、斯特吉亚与巴旦尼亚成分的话，在低地种植亚麻。
 registry_bindings:

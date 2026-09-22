@@ -1,0 +1,130 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-fish
+title:
+  zh-CN: 鱼
+  en: Fish
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 鱼是湖畔渔村的主产出，腌过装桶能运远，城里人的日常吃食。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.QGaIYQpg
+  quote_hash: BE5CF4F318534EDBDF4A5D2830DC307172BD592184E5623022B18B99BF6CE19E
+  quote: 鱼{@Plural}成桶的鱼{\@}
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_塔奈西斯湖__塔奈西斯湖.json#/Variants/0/Content
+  quote_hash: DA3B1FC95D8AE474C07586BB8350B8E66684C58BF32522C467C5CBD892BAEF7E
+  quote: 湖中盛产鲈鱼和鲷鱼
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-fish-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 鱼是卡拉迪亚的交易货物，基准价 12 第纳尔，论桶买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.QGaIYQpg
+    quote_hash: BE5CF4F318534EDBDF4A5D2830DC307172BD592184E5623022B18B99BF6CE19E
+    quote: 鱼{@Plural}成桶的鱼{\@}
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_塔奈西斯湖__塔奈西斯湖.json#/Variants/0/Content
+    quote_hash: DA3B1FC95D8AE474C07586BB8350B8E66684C58BF32522C467C5CBD892BAEF7E
+    quote: 湖中盛产鲈鱼和鲷鱼
+  expressions:
+  - id: expr.goods-fish-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 湖边人家天不亮就出船，打上来的鱼当天就得腌上，不然烂得快。桶装的鱼往内陆走，越走越金贵。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.QGaIYQpg
+      quote_hash: BE5CF4F318534EDBDF4A5D2830DC307172BD592184E5623022B18B99BF6CE19E
+      quote: 鱼{@Plural}成桶的鱼{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_塔奈西斯湖__塔奈西斯湖.json#/Variants/0/Content
+      quote_hash: DA3B1FC95D8AE474C07586BB8350B8E66684C58BF32522C467C5CBD892BAEF7E
+      quote: 湖中盛产鲈鱼和鲷鱼
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-fish-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 鱼是货里最贱的一档，一件 12 第纳尔，赚头全在量上。塔奈西斯湖那片出产最盛，收鱼的走的是往内地城镇的路线——靠湖吃鱼不值钱，进了山就翻。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.QGaIYQpg
+      quote_hash: BE5CF4F318534EDBDF4A5D2830DC307172BD592184E5623022B18B99BF6CE19E
+      quote: 鱼{@Plural}成桶的鱼{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_塔奈西斯湖__塔奈西斯湖.json#/Variants/0/Content
+      quote_hash: DA3B1FC95D8AE474C07586BB8350B8E66684C58BF32522C467C5CBD892BAEF7E
+      quote: 湖中盛产鲈鱼和鲷鱼
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

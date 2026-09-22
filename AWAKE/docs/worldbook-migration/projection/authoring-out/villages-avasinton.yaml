@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-avasinton
 title:
   zh-CN: 阿瓦辛顿
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿瓦辛顿
-  en:
-  - Avasinton
-  - village_EN6_1
+entity_ids:
+- entity.settlement.village_en6_1
 summary:
   zh-CN: 阿瓦辛顿坐落于帝国中部山区密泽亚德荒凉的东端；村民清理灌木与荆棘——包括曾为村庄命名的刺鼻艾草——腾地种桑，采桑叶养蚕。
 registry_bindings:

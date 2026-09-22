@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-vinela
 title:
   zh-CN: 维尼拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 维尼拉
-  en:
-  - Vinela
-  - village_EW4_3
+entity_ids:
+- entity.settlement.village_ew4_3
 summary:
   zh-CN: 维尼拉坐落于阿米尼斯河倾入珀拉斯海的瀑布之下；每天渔船自海岸悬崖下出发，在河流入海的肥沃水域捕捞鲭鱼、沙丁鱼与鲣鱼。
 registry_bindings:

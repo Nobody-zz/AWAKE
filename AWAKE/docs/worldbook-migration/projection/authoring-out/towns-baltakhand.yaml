@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-baltakhand
 title:
   zh-CN: 巴尔塔罕
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 巴尔塔罕
-  en:
-  - Baltakhand
-  - town_K1
+entity_ids:
+- entity.settlement.town_k1
 summary:
   zh-CN: 巴尔塔罕意为“斧头堡垒”，由伊勒坦人所建拱卫伊勒坦运输线；严冬拒帝国而未能拒兀儿浑汗，40 年前降于汗国。
 registry_bindings:

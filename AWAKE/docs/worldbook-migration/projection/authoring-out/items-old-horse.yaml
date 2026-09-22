@@ -1,0 +1,106 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.items-old-horse
+title:
+  zh-CN: 役马
+  en: Work Horse
+status: needs_review
+domain: economy
+subdomain: items
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 役马是干粗活的马，拉车犁地都行，卖相不好可耐使。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.U3SWNkFt
+  quote_hash: 3C81B22F7F95D9E906277D44FED758AA3C7BE0BBFBCDA6C7E341D42F96934A69
+  quote: 役马
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.items-old-horse-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 役马是干农活拉车的马，基准价 130 第纳尔，负重 490，论匹买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.U3SWNkFt
+    quote_hash: 3C81B22F7F95D9E906277D44FED758AA3C7BE0BBFBCDA6C7E341D42F96934A69
+    quote: 役马
+  expressions:
+  - id: expr.items-old-horse-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 役马不挑草料，拉犁拉车都肯出力。骑出去不好看，可用它干活，没人说二话。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.U3SWNkFt
+      quote_hash: 3C81B22F7F95D9E906277D44FED758AA3C7BE0BBFBCDA6C7E341D42F96934A69
+      quote: 役马
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.items-old-horse-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 役马 130 一件，比驮马贵一点，胜在能拉重。买它的是农庄和车队——上不了战场，可地里的活全指着它。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.U3SWNkFt
+      quote_hash: 3C81B22F7F95D9E906277D44FED758AA3C7BE0BBFBCDA6C7E341D42F96934A69
+      quote: 役马
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-takor
 title:
   zh-CN: 塔科尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 塔科尔
-  en:
-  - Takor
-  - castle_village_S6_1
+entity_ids:
+- entity.settlement.castle_village_s6_1
 summary:
   zh-CN: 塔科尔是一座养牛的村子，坐落在巴旦尼亚人称作“米纳德·里韦尔”也就是“战争之山”的山口处——他们的帝国与斯特吉亚邻居则管它叫“弥那多耳”；这是连通荒凉北方与较安稳的帝国疆土的主要通道之一，不论对买卖还是对劫掠都一样。
 registry_bindings:

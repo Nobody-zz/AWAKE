@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-sibir
 title:
   zh-CN: 西比尔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 西比尔
-  en:
-  - Sibir
-  - town_S6
+entity_ids:
+- entity.settlement.town_s6
 summary:
   zh-CN: 西比尔由诺德商人建于车尔特格山幽谷，本为与瓦肯语森民的毛皮贸易据点；公国化后税役渐重，伊夏罗夫家族统治此地需掂量民意。
 registry_bindings:

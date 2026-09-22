@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-kargrev
 title:
   zh-CN: 卡格雷夫
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 卡格雷夫
-  en:
-  - Kargrev
-  - village_S1_3
+entity_ids:
+- entity.settlement.village_s1_3
 summary:
   zh-CN: 卡格雷夫从前叫卡尔·格莱夫——巴旦尼亚酋长格莱夫的环形堡垒，两代人之前被斯特吉亚人夺了去；它位于瓦尔切格湾沿岸，湾里海水较平，不少鱼会成群游到湾里产子，当地渔民很会借这份便利。
 registry_bindings:

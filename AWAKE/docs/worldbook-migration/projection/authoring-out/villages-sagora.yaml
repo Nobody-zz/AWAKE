@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-sagora
 title:
   zh-CN: 萨戈拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 萨戈拉
-  en:
-  - Sagora
-  - village_ES4_1
+entity_ids:
+- entity.settlement.village_es4_1
 summary:
   zh-CN: 萨戈拉坐落在吕卡里亚平原中央的一处低矮山脊上；该地区石多土薄，但山谷中的灌木仍可供羊啃食。
 registry_bindings:

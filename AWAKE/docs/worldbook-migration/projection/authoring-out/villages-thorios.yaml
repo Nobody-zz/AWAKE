@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-thorios
 title:
   zh-CN: 托里俄斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 托里俄斯
-  en:
-  - Thorios
-  - castle_village_EW2_1
+entity_ids:
+- entity.settlement.castle_village_ew2_1
 summary:
   zh-CN: 托里俄斯坐落于卡拉迪亚腹地的阿里斯河谷，河水灌溉与相对温暖的内陆气候确保了与相邻柏耳贡的小麦田高产，喂养了帝国中部的许多人。
 registry_bindings:

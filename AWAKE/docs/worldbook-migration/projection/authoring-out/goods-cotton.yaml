@@ -1,0 +1,130 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-cotton
+title:
+  zh-CN: 生丝
+  en: Raw Silk
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 生丝是蚕饲养场出的丝料，八处桑园产，是织天鹅绒的本钱。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.Vqu67a3b
+  quote_hash: FAD1BB5834EFE7ECA170C9929833FD39A973DD968090D682A06FEFEF73202BDF
+  quote: 生丝{@Plural}成卷的生丝{\@}
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.wTyq7LaM
+  quote_hash: A63853F418683BE25B77239E6AD762C3F2FECA0CA59E12D7F6F40A44ECBEB1BD
+  quote: 蚕饲养场
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-cotton-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 生丝是养蚕缫出来的丝料，基准价 80 第纳尔，论卷买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.Vqu67a3b
+    quote_hash: FAD1BB5834EFE7ECA170C9929833FD39A973DD968090D682A06FEFEF73202BDF
+    quote: 生丝{@Plural}成卷的生丝{\@}
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.wTyq7LaM
+    quote_hash: A63853F418683BE25B77239E6AD762C3F2FECA0CA59E12D7F6F40A44ECBEB1BD
+    quote: 蚕饲养场
+  expressions:
+  - id: expr.goods-cotton-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 养蚕是个细致活，桑叶得新鲜，蚕房不能进风。八处桑园才出得起的料，价比羊毛高一大截。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.Vqu67a3b
+      quote_hash: FAD1BB5834EFE7ECA170C9929833FD39A973DD968090D682A06FEFEF73202BDF
+      quote: 生丝{@Plural}成卷的生丝{\@}
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.wTyq7LaM
+      quote_hash: A63853F418683BE25B77239E6AD762C3F2FECA0CA59E12D7F6F40A44ECBEB1BD
+      quote: 蚕饲养场
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-cotton-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 生丝 80 一件，出在蚕饲养场，全大陆只有八个。它是天鹅绒的上游——想在天鹅绒上赚，先得看桑园那年的收成。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.Vqu67a3b
+      quote_hash: FAD1BB5834EFE7ECA170C9929833FD39A973DD968090D682A06FEFEF73202BDF
+      quote: 生丝{@Plural}成卷的生丝{\@}
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.wTyq7LaM
+      quote_hash: A63853F418683BE25B77239E6AD762C3F2FECA0CA59E12D7F6F40A44ECBEB1BD
+      quote: 蚕饲养场
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-alantas
 title:
   zh-CN: 阿兰塔斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿兰塔斯
-  en:
-  - Alantas
-  - village_V9_1
+entity_ids:
+- entity.settlement.village_v9_1
 summary:
   zh-CN: 阿兰塔斯坐落于多山的伊博半岛中央；这里土薄天寒，但山里的铁矿养活了此地。
 registry_bindings:

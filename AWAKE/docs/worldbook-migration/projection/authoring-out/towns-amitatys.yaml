@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.towns-amitatys
 title:
   zh-CN: 阿弥塔堤斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿弥塔堤斯
-  en:
-  - Amitatys
-  - town_EW5
+entity_ids:
+- entity.settlement.town_ew5
 summary:
   zh-CN: 阿弥塔堤斯的帕拉暴君以屠戮取悦冥神求永生，帝国围城遇地震破墙，兵灾屠掠的死亡反超暴君之手。
 registry_bindings:
@@ -40,7 +36,96 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 阿弥塔堤斯的帕拉暴君以屠戮取悦冥神求永生，帝国围城遇地震破墙，兵灾屠掠的死亡反超暴君之手。
+    zh-CN: 阿弥塔堤斯原为帕拉酋长所据；他与帝国军队起冲突，围城时地震震塌城墙，城破后遭烧杀抢掠，死者多于该酋长亲手所杀。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EW5
+    quote_hash: B88DEFF3A7724492E73CCC5D3E277A0D9528DEEC9992D980B6C79C2961AC00E4
+    quote: 他不可避免地和帝国的军队发生了冲突，在围城期间，一场地震震塌了城墙，帝国士兵得以进入城内。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EW5
+    quote_hash: 5581D94047E3AD788A25729BF34363752258C8CF8D22BD720609988D56C6DF04
+    quote: 在接下来的烧杀抢掠中，死去的民众比这位暴君亲手杀的还要多，但这就是战争。
+  expressions:
+  - id: expr.town-amitatys-1-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 阿弥塔堤斯的城墙是叫地震震塌的，兵从缺口进去。这一场下来，死的人比那酋长生前杀的还多。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EW5
+      quote_hash: B88DEFF3A7724492E73CCC5D3E277A0D9528DEEC9992D980B6C79C2961AC00E4
+      quote: 他不可避免地和帝国的军队发生了冲突，在围城期间，一场地震震塌了城墙，帝国士兵得以进入城内。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-amitatys-1-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿弥塔堤斯城防重建百年后，市面以农牧与零工为主；做买卖不碰旧账，提地震与围城都算犯忌。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EW5
+      quote_hash: B88DEFF3A7724492E73CCC5D3E277A0D9528DEEC9992D980B6C79C2961AC00E4
+      quote: 他不可避免地和帝国的军队发生了冲突，在围城期间，一场地震震塌了城墙，帝国士兵得以进入城内。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-amitatys-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 该城帕拉酋长以暴君之名载于记述——说他为求永生而屠戮百姓，以取悦冥界诸神。
   sources:
   - source_id: source.calradia.game.settlements-desc
     source_version: bannerlord-1.3.15.110062
@@ -49,11 +134,11 @@ assertions:
     quote_hash: E15A866EB3D57CF436A95AB328FC0EE3075C7690F49BC1B3477D0D92EDA51D82
     quote: 阿弥塔堤斯的帕拉酋长有着极为糟糕的名声，他是一名暴君，为了追求永生，他不惜屠戮无辜的百姓，只为取悦冥界诸神。
   expressions:
-  - id: expr.town-amitatys-rumor
+  - id: expr.town-amitatys-2-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 阿弥塔堤斯的老城墙是叫天塌下来砸开的。老人们说那是天怒——可进城的兵杀的人比暴君还多。
+      zh-CN: 都说这城的旧主是个狠人，杀人不眨眼，为的是求长生。这名声传了几代，谁也不细问。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +178,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.town-amitatys-detail
+  - id: expr.town-amitatys-2-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 阿弥塔堤斯的政治叙事是官定的“天罚说”——利于帝国站脚的宣传；做买卖不碰旧账，城防重建百年后的市面以农牧与零工为主。
+      zh-CN: 阿弥塔堤斯的旧主在记述里是暴君——求永生、屠百姓、祭冥神。这三样在纸上连成一串，读的人自己掂量。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -105,6 +190,45 @@ assertions:
       locator: bannerlord.settlements#town_EW5
       quote_hash: E15A866EB3D57CF436A95AB328FC0EE3075C7690F49BC1B3477D0D92EDA51D82
       quote: 阿弥塔堤斯的帕拉酋长有着极为糟糕的名声，他是一名暴君，为了追求永生，他不惜屠戮无辜的百姓，只为取悦冥界诸神。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-amitatys-3
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 有人把这场屠掠归咎于上天降下的怒火；这也是帝国在当地站稳脚跟的主流宣传说法。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EW5
+    quote_hash: E94C49F4B9483A033C24152E95EAC3F77743E841BC21F56E6A69E85429F3745C
+    quote: 有人将此结果归咎于上天降下的怒火，而这也是帝国在该地区站稳脚跟的主流宣传说法。
+  expressions:
+  - id: expr.town-amitatys-3-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 阿弥塔堤斯有一说叫“天罚说”：屠掠是上天降的怒火。这说法在帝国站脚的当口传得最顺。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EW5
+      quote_hash: E94C49F4B9483A033C24152E95EAC3F77743E841BC21F56E6A69E85429F3745C
+      quote: 有人将此结果归咎于上天降下的怒火，而这也是帝国在该地区站稳脚跟的主流宣传说法。
     grants:
     - profile_id: profile.headman
       scope: national

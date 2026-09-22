@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-urikskala
 title:
   zh-CN: 乌里克斯卡拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 乌里克斯卡拉
-  en:
-  - Urikskala
-  - castle_village_S7_1
+entity_ids:
+- entity.settlement.castle_village_s7_1
 summary:
   zh-CN: 乌里克斯卡拉位于伊勒坦运输线上——那是一张由冰川湖连成的网络，往来的长船可以在拉科尼斯湖与塔奈西斯湖之间拖过去、划过去；村民在浅水里捕带刺的鲈鱼和螯虾，风干后卖给过路的人。
 registry_bindings:

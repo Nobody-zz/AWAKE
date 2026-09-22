@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-canterion
 title:
   zh-CN: 坎忒里翁
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 坎忒里翁
-  en:
-  - Canterion
-  - village_ES4_3
+entity_ids:
+- entity.settlement.village_es4_3
 summary:
   zh-CN: 坎忒里翁坐落于吕卡里亚平原东部，这里缓缓上升的坡地比平原别处降雨更多；早在帝国入侵前，当地肥美的牧草便使其成为优良养马区。
 registry_bindings:

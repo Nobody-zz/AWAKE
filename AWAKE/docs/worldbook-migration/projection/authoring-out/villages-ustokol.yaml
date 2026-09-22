@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-ustokol
 title:
   zh-CN: 乌斯托科
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 乌斯托科
-  en:
-  - Ustokol
-  - castle_village_S1_1
+entity_ids:
+- entity.settlement.castle_village_s1_1
 summary:
   zh-CN: 乌斯托科坐落于瓦尔切格湾与比亚里海之间当风的卡恰尔半岛上；当地人养的耐寒北方牛在石缝间找小草吃，艰难时则添些海藻。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-orthra
 title:
   zh-CN: 俄耳特拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 俄耳特拉
-  en:
-  - Orthra
-  - village_EN5_2
+entity_ids:
+- entity.settlement.village_en5_2
 summary:
   zh-CN: 俄耳特拉是一处较年轻的定居点，得名自一位在此破晓东望密泽亚德美景的帝国将领；这里是帝国马匹育种场，从东方草原运来牧草，为帝国骑兵供马。
 registry_bindings:

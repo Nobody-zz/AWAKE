@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-cantrec
 title:
   zh-CN: 坎特雷克
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 坎特雷克
-  en:
-  - Cantrec
-  - castle_village_B2_2
+entity_ids:
+- entity.settlement.castle_village_b2_2
 summary:
   zh-CN: 坎特雷克坐落于帝国领土通往乌卡利翁高原处多岩的巴拉索格峡谷之中；土壤并不肥沃，但高处的灌木林地宜养猪。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-liwas
 title:
   zh-CN: 利瓦斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 利瓦斯
-  en:
-  - Liwas
-  - village_A5_2
+entity_ids:
+- entity.settlement.village_a5_2
 summary:
   zh-CN: 利瓦斯坐落于耶什姆海南侧的宽阔山谷内，农田有限，以荒漠春草喂养的马匹最为出名。
 registry_bindings:

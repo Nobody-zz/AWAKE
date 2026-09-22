@@ -1300,6 +1300,9 @@ int RunProbeMode(string[] a)
             ["literal_keyword_hits"] = keywordHits,
             ["literal_term_hits"] = termHits,
             ["hits"] = new JArray(r.HitIds),
+            // 互引边扩进来的条目（2026-09-20）：`link_ids ⊆ hits`，回答「送的这几条里哪几条是捎带的」。
+            // 与 `match_mode` 的 `+link` 后缀配套：后缀说"这次扩过"，这里说"扩到了谁"。
+            ["link_ids"] = new JArray(r.LinkIds),
             // `player_text` = 本条的入参原话（红测报告要能自证"这一条测的是什么"，此前没回显，
             // 报告只能倒着去抄 spec，抄错也看不出来）。`text` 仍是返回正文，语义不变。
             ["player_text"] = wbq.PlayerText,

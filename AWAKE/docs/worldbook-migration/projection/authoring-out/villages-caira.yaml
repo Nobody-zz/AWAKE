@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-caira
 title:
   zh-CN: 恺拉
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 恺拉
-  en:
-  - Caira
-  - castle_village_ES1_2
+entity_ids:
+- entity.settlement.castle_village_es1_2
 summary:
   zh-CN: 恺拉坐落于被称为卡勒萨的河流湖泊交织之地，卡勒萨河与蒂亚具斯河共同塑造的冲积平原可以种植小麦；再往东则是相当贫瘠的碱性土。
 registry_bindings:

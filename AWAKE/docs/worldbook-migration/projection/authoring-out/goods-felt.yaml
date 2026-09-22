@@ -1,0 +1,130 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-felt
+title:
+  zh-CN: 毛毡
+  en: Felt
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 毛毡是羊毛压成的厚布，挡风挡雪，北边的人穿得多。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.hNwjpCVP
+  quote_hash: BBDE5AC293DC5B09B199F9B25D71B676A47BC4ECB8CC7AC14C2CB9A36FD32223
+  quote: 毛毡{@Plural}成卷的毛毡{\@}
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.QbKbGu2h
+  quote_hash: BA1082DEF14CAC8A4826602BDFA5572E18F7BA5D6331B6D5BB82F263F9DE6EAA
+  quote: 牧羊场
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-felt-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 毛毡是羊毛压制成的布，基准价 230 第纳尔，论卷买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.hNwjpCVP
+    quote_hash: BBDE5AC293DC5B09B199F9B25D71B676A47BC4ECB8CC7AC14C2CB9A36FD32223
+    quote: 毛毡{@Plural}成卷的毛毡{\@}
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.QbKbGu2h
+    quote_hash: BA1082DEF14CAC8A4826602BDFA5572E18F7BA5D6331B6D5BB82F263F9DE6EAA
+    quote: 牧羊场
+  expressions:
+  - id: expr.goods-felt-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 羊毛不值钱，压成毡就值钱了。北边风大，毡子缝成毡衣、铺成毡帐，比什么都实在。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.hNwjpCVP
+      quote_hash: BBDE5AC293DC5B09B199F9B25D71B676A47BC4ECB8CC7AC14C2CB9A36FD32223
+      quote: 毛毡{@Plural}成卷的毛毡{\@}
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.QbKbGu2h
+      quote_hash: BA1082DEF14CAC8A4826602BDFA5572E18F7BA5D6331B6D5BB82F263F9DE6EAA
+      quote: 牧羊场
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-felt-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 毛毡 230 一件，跟亚麻布一个价位，产地是牧羊场。它是羊毛的去处——羊多的地方，羊毛贱毛毡却不贱，差价就在压毡这道工上。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.hNwjpCVP
+      quote_hash: BBDE5AC293DC5B09B199F9B25D71B676A47BC4ECB8CC7AC14C2CB9A36FD32223
+      quote: 毛毡{@Plural}成卷的毛毡{\@}
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.QbKbGu2h
+      quote_hash: BA1082DEF14CAC8A4826602BDFA5572E18F7BA5D6331B6D5BB82F263F9DE6EAA
+      quote: 牧羊场
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

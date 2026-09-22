@@ -1,0 +1,451 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.military-legion-old
+title:
+  zh-CN: 旧式军团
+  en: Old Legion
+status: needs_review
+domain: war
+subdomain: military
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 常备军团
+  - 帝国常备军
+  - 军团制
+  en:
+  - Imperial Standing Legion
+summary:
+  zh-CN: 旧式军团：帝国常备军时代的职业军队，由国家财政统一供养，在鹰旗下列阵。以重步兵为核心、弩手供远程、具装骑兵负责两翼；配备工兵、工程队与随军医生铁匠，能远离本土长期作战。士兵以「军团步兵」自称，向旧时的军团致敬。潘德拉克战役中流干了最后一滴血，阿雷尼科斯上位后废除；其标准——纪律、战术、荣誉——至今仍是帝国每个士兵的标尺。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.0dnD9cR4
+  quote_hash: 19AB610122FDAC9084A5748B4FB8E8F4260C8408A8E02009A5D7A1DA6792D8FA
+  quote: 帝国军团步兵的主导地位早已不复存在。如今，当人们想起帝国的精英部队时，就会联想到那些声名远扬的具装骑兵，他们全身上下都包覆着帝国锻造厂所能锻造出的最精良的钢铁。作为领取皇家军饷的全职士兵，这些职业骑兵别无他业，终日操练剑、斧、骑枪与复合弓。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_旧式军团__旧式军团.json#/Variants/1/Content
+  quote_hash: 659890BCA726878A79F6353195DBDDEBBE5B6E6F1458A98417A29ABAA79F09BF
+  quote: 那不是一支军队，是一座移动的城市
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_旧式军团__旧式军团.json#/Variants/0/Content
+  quote_hash: A52D12BEE77965B81051EC215F38B16C51B7D24EAC631F4A688B0F244253B55C
+  quote: 旧式军团消失了，但他们留下的标准——纪律、战术、荣誉——至今仍然是帝国每一个士兵的标尺
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.vhgPg46a
+  quote_hash: 01C1EF834DDF34DAD9D6E6569BED55CADE1A90854B424F41CDBE62E1BE5B5182
+  quote: 这些职业士兵由国家支付军饷，他们是优秀的近战战士。帝国的指挥官们曾因其手持的巨大盾牌，而称他们为重盾步兵。但是这个名字并没有被这些骄傲的士兵们采用，他们更喜欢被称为军团步兵，以向旧时的军团致敬。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_旧式军团__旧式军团.json#/Variants/2/Content
+  quote_hash: 9B92AF37D91EBAF114DC067103B6844096F11ED0F30D7BE020293DD24B8529D5
+  quote: 前排的人倒下了，后排的人自动补位，不需要长官喊，这是练到肌肉里的本能
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_旧式军团__旧式军团.json#/Variants/6/Content
+  quote_hash: F37F0759FC9C074B70A34704A24E04F6CFF83AE251DB75D4A72EE7475A7667A9
+  quote: 从正面冲过去就像撞在一面铁墙上
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_旧式军团__旧式军团.json#/Variants/6/Content
+  quote_hash: 61FF49DC3442988D73BCDA31CF2C2A152264C0AAEC122CD02CA5F230E585B042
+  quote: 单个战士的勇武和一支军团的压迫感是两回事
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_旧式军团__旧式军团.json#/Variants/7/Content
+  quote_hash: 6C4457161EC0AE2EC6327B6F2C06CC475B5A934B6DF07C3D34CDD46110E383B5
+  quote: 但帝国军团的盾墙不只是硬，它还灵活
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_旧式军团__旧式军团.json#/Variants/7/Content
+  quote_hash: 87EEB41054E751C7471FBD0DC8DEF9E41522BE5DA6EEC1E3FD6BC1A0DDA00499
+  quote: 如果那天帝国皇帝不是把军团放在了最不利的地形上，我们赢不了
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_旧式军团__旧式军团.json#/Variants/9/Content
+  quote_hash: 6B5E25A94FA3D9518C0A26E9950F662914DDAD4C7EFFA9F20F4C1D499C2D8738
+  quote: 我们对付旧式军团的战术很简单：不理他们，烧他们的补给线，等他们饿得走不动了再回来
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_旧式军团__旧式军团.json#/Variants/8/Content
+  quote_hash: A4CAE07C47BD34EB7963F72CC73B8B660D33888ACB66BDC53AEF6CC908C8056B
+  quote: 但旧式军团真正的核心不是战术，是后勤
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_旧式军团__旧式军团.json#/Variants/8/Content
+  quote_hash: B6314F9786ED0CAA5DB54A08A0E6582190CCEEBD93EF4F55E00504205425C84B
+  quote: 没有帝国的财政，就养不起帝国的军团
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.mk0l1BfB
+  quote_hash: 6748218848E9F5EF19D0A0D84F3B3DCAD8ADA4A7CD250E8BFC43F68199CA629C
+  quote: 可以这么说。我在帝国军团里服役了二十年。曾几何时，他们确实配得上“军团”的称号。我和老战友们都在一套准则下服役，我们宁愿战死，也不愿看到这套标准动摇或削弱。但是，德洛修斯·涅雷采斯率领著最后一个真正的军团，在巴旦尼亚的树林中遭到了伏击。你可能听说过这段往事。
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.DzyAgYIX
+  quote_hash: C8D8C7FB3E2C3FE3E3265394903D4729A90498EBD16731A69AE35F846B497660
+  quote: 德洛修斯·涅雷采斯率领着军团的精锐进入巴旦尼亚森林，却遭遇了一场埋伏，你可能听说过这件事。那时我正卧病在床，结果我的许多战友都没能回来，从那之后一切都变了。
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.pNVKWAKo
+  quote_hash: F3544E4F7EF074D60DD45611369614482563CDBD50990B57680329BB9FF6F87A
+  quote: 在你造访{VILLAGE}期间，一名年长的{TROOP_TYPE}显得心事重重，沉默寡言。当队伍启程离开时，他突然停下脚步，目光死死盯着路边的一个摊位，随即脱离队伍，怒吼着冲向摊主。事情很快明朗——他曾是帝国旧军团的一员，曾在此地与{NEAREST_OTHER_CULTURE}交战，而眼前这名小贩在兜售的金属残片，显然是从战死将士的坟墓中盗掘而来。
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_旧式军团__旧式军团.json#/Variants/1/Content
+  quote_hash: 8307566C9E0AB143AE0F3DD6C49B40D6755841085622950343744869629CADCC
+  quote: 那种一整个军团踩着同一种步伐往前推进时地面都在颤抖的感觉
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.old-legion-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 旧式军团是帝国常备军时代的职业军队：由国家财政统一供养，穿制式盔甲、举统一盾牌，在鹰旗下组成阵线。一个满编军团是台精密的战争机器——重步兵组成盾墙向前推进，弩手在后方轮番射击，具装骑兵在两翼伺机冲锋；军团里有专门负责修路的工兵、负责架桥的工程队、随军的医生和铁匠，那不是一支军队，是一座移动的城市。士兵本人也以此为傲：帝国指挥官曾因他们手持大盾而称其为「重盾步兵」，但这个名字没有被采用，他们更喜欢自称军团步兵，以向旧时的军团致敬。潘德拉克战役中，旧式军团流干了最后一滴血；阿雷尼科斯皇帝上位后，废除了这支他再也养不起的军队。军团消失了，但他们留下的标准——纪律、战术、荣誉——至今仍然是帝国每一个士兵的标尺。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.0dnD9cR4
+    quote_hash: 19AB610122FDAC9084A5748B4FB8E8F4260C8408A8E02009A5D7A1DA6792D8FA
+    quote: 帝国军团步兵的主导地位早已不复存在。如今，当人们想起帝国的精英部队时，就会联想到那些声名远扬的具装骑兵，他们全身上下都包覆着帝国锻造厂所能锻造出的最精良的钢铁。作为领取皇家军饷的全职士兵，这些职业骑兵别无他业，终日操练剑、斧、骑枪与复合弓。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_旧式军团__旧式军团.json#/Variants/1/Content
+    quote_hash: 659890BCA726878A79F6353195DBDDEBBE5B6E6F1458A98417A29ABAA79F09BF
+    quote: 那不是一支军队，是一座移动的城市
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_旧式军团__旧式军团.json#/Variants/0/Content
+    quote_hash: A52D12BEE77965B81051EC215F38B16C51B7D24EAC631F4A688B0F244253B55C
+    quote: 旧式军团消失了，但他们留下的标准——纪律、战术、荣誉——至今仍然是帝国每一个士兵的标尺
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.vhgPg46a
+    quote_hash: 01C1EF834DDF34DAD9D6E6569BED55CADE1A90854B424F41CDBE62E1BE5B5182
+    quote: 这些职业士兵由国家支付军饷，他们是优秀的近战战士。帝国的指挥官们曾因其手持的巨大盾牌，而称他们为重盾步兵。但是这个名字并没有被这些骄傲的士兵们采用，他们更喜欢被称为军团步兵，以向旧时的军团致敬。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_旧式军团__旧式军团.json#/Variants/2/Content
+    quote_hash: 9B92AF37D91EBAF114DC067103B6844096F11ED0F30D7BE020293DD24B8529D5
+    quote: 前排的人倒下了，后排的人自动补位，不需要长官喊，这是练到肌肉里的本能
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_旧式军团__旧式军团.json#/Variants/6/Content
+    quote_hash: F37F0759FC9C074B70A34704A24E04F6CFF83AE251DB75D4A72EE7475A7667A9
+    quote: 从正面冲过去就像撞在一面铁墙上
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_旧式军团__旧式军团.json#/Variants/6/Content
+    quote_hash: 61FF49DC3442988D73BCDA31CF2C2A152264C0AAEC122CD02CA5F230E585B042
+    quote: 单个战士的勇武和一支军团的压迫感是两回事
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_旧式军团__旧式军团.json#/Variants/7/Content
+    quote_hash: 6C4457161EC0AE2EC6327B6F2C06CC475B5A934B6DF07C3D34CDD46110E383B5
+    quote: 但帝国军团的盾墙不只是硬，它还灵活
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_旧式军团__旧式军团.json#/Variants/7/Content
+    quote_hash: 87EEB41054E751C7471FBD0DC8DEF9E41522BE5DA6EEC1E3FD6BC1A0DDA00499
+    quote: 如果那天帝国皇帝不是把军团放在了最不利的地形上，我们赢不了
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_旧式军团__旧式军团.json#/Variants/9/Content
+    quote_hash: 6B5E25A94FA3D9518C0A26E9950F662914DDAD4C7EFFA9F20F4C1D499C2D8738
+    quote: 我们对付旧式军团的战术很简单：不理他们，烧他们的补给线，等他们饿得走不动了再回来
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_旧式军团__旧式军团.json#/Variants/8/Content
+    quote_hash: A4CAE07C47BD34EB7963F72CC73B8B660D33888ACB66BDC53AEF6CC908C8056B
+    quote: 但旧式军团真正的核心不是战术，是后勤
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_旧式军团__旧式军团.json#/Variants/8/Content
+    quote_hash: B6314F9786ED0CAA5DB54A08A0E6582190CCEEBD93EF4F55E00504205425C84B
+    quote: 没有帝国的财政，就养不起帝国的军团
+  expressions:
+  - id: expr.old-legion-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 旧式军团是帝国常备军时代的骄傲——由国家统一发饷的职业兵，穿制式盔甲、举统一盾牌，在鹰旗下列阵。那不是一支军队，是一座移动的城市：修路的、架桥的、随军的医生和铁匠，一样不缺。潘德拉克战役把他们打光了，阿雷尼科斯登位后把这支养不起的军队废掉。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.0dnD9cR4
+      quote_hash: 19AB610122FDAC9084A5748B4FB8E8F4260C8408A8E02009A5D7A1DA6792D8FA
+      quote: 帝国军团步兵的主导地位早已不复存在。如今，当人们想起帝国的精英部队时，就会联想到那些声名远扬的具装骑兵，他们全身上下都包覆着帝国锻造厂所能锻造出的最精良的钢铁。作为领取皇家军饷的全职士兵，这些职业骑兵别无他业，终日操练剑、斧、骑枪与复合弓。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_旧式军团__旧式军团.json#/Variants/1/Content
+      quote_hash: 659890BCA726878A79F6353195DBDDEBBE5B6E6F1458A98417A29ABAA79F09BF
+      quote: 那不是一支军队，是一座移动的城市
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_旧式军团__旧式军团.json#/Variants/0/Content
+      quote_hash: A52D12BEE77965B81051EC215F38B16C51B7D24EAC631F4A688B0F244253B55C
+      quote: 旧式军团消失了，但他们留下的标准——纪律、战术、荣誉——至今仍然是帝国每一个士兵的标尺
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.old-legion-soldier-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 这些职业士兵由国家支付军饷，是优秀的近战战士。帝国的指挥官们曾因其手持的巨大盾牌，而称他们为重盾步兵。但是这个名字并没有被这些骄傲的士兵们采用，他们更喜欢被称为军团步兵，以向旧时的军团致敬。我们那个年头的训练是这么来的：天不亮起来列队，百夫长拿着藤条在队列里走，谁的盔甲没擦亮、谁的盾牌没举到位，劈头盖脸就是一下。前排的人倒下了，后排的人自动补位，不需要长官喊——这是练到肌肉里的本能。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.vhgPg46a
+      quote_hash: 01C1EF834DDF34DAD9D6E6569BED55CADE1A90854B424F41CDBE62E1BE5B5182
+      quote: 这些职业士兵由国家支付军饷，他们是优秀的近战战士。帝国的指挥官们曾因其手持的巨大盾牌，而称他们为重盾步兵。但是这个名字并没有被这些骄傲的士兵们采用，他们更喜欢被称为军团步兵，以向旧时的军团致敬。
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_旧式军团__旧式军团.json#/Variants/2/Content
+      quote_hash: 9B92AF37D91EBAF114DC067103B6844096F11ED0F30D7BE020293DD24B8529D5
+      quote: 前排的人倒下了，后排的人自动补位，不需要长官喊，这是练到肌肉里的本能
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+  - id: expr.old-legion-vlandia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 旧式军团是我们瓦兰迪亚骑士在平原上最尊重的对手。我们的方旗骑士正面冲锋几乎无人能挡，但碰上旧式军团的盾墙，也得掂量掂量。他们的步兵在平原上能把盾牌锁成一个整体，从正面冲过去就像撞在一面铁墙上；弩手躲在盾墙后面一排一排地放箭，我们的骑手在冲锋路上就已经折了不少。帝国人废掉旧式军团之后，他们的步兵就再也没能达到那个高度了——单个战士的勇武和一支军团的压迫感是两回事。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_旧式军团__旧式军团.json#/Variants/6/Content
+      quote_hash: F37F0759FC9C074B70A34704A24E04F6CFF83AE251DB75D4A72EE7475A7667A9
+      quote: 从正面冲过去就像撞在一面铁墙上
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_旧式军团__旧式军团.json#/Variants/6/Content
+      quote_hash: 61FF49DC3442988D73BCDA31CF2C2A152264C0AAEC122CD02CA5F230E585B042
+      quote: 单个战士的勇武和一支军团的压迫感是两回事
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.vlandia
+    denies: []
+  - id: expr.old-legion-sturgia-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 旧式军团是我们北方人最头疼的敌人。我们的盾墙也很硬，但帝国军团的盾墙不只是硬，它还灵活——他们能在行军中变换阵型，能从行军队列迅速转成战斗队形，能在被我们冲锋的时候不退反进。这种纪律不是天生的，是练出来的。潘德拉克我们帮巴旦尼亚人打帝国，那次帝国军团的侧翼被巴旦尼亚的弓箭手撕开了，我们趁机冲进去，砍了他们的鹰旗。但说实话，如果那天帝国皇帝不是把军团放在了最不利的地形上，我们赢不了。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_旧式军团__旧式军团.json#/Variants/7/Content
+      quote_hash: 6C4457161EC0AE2EC6327B6F2C06CC475B5A934B6DF07C3D34CDD46110E383B5
+      quote: 但帝国军团的盾墙不只是硬，它还灵活
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_旧式军团__旧式军团.json#/Variants/7/Content
+      quote_hash: 87EEB41054E751C7471FBD0DC8DEF9E41522BE5DA6EEC1E3FD6BC1A0DDA00499
+      quote: 如果那天帝国皇帝不是把军团放在了最不利的地形上，我们赢不了
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.sturgia
+    denies: []
+  - id: expr.old-legion-khuzait-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 旧式军团在草原上打过几场硬仗。他们的重步兵在平地上列阵的时候，我们的骑射手只能绕着他们转，箭射在他们的大盾上叮叮当当响，伤不到多少人。但他们有一个致命的弱点——太慢了。在草原上，他们的步兵永远追不上我们的马，他们的补给线拉得越长越脆弱。我们对付旧式军团的战术很简单：不理他们，烧他们的补给线，等他们饿得走不动了再回来。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_旧式军团__旧式军团.json#/Variants/9/Content
+      quote_hash: 6B5E25A94FA3D9518C0A26E9950F662914DDAD4C7EFFA9F20F4C1D499C2D8738
+      quote: 我们对付旧式军团的战术很简单：不理他们，烧他们的补给线，等他们饿得走不动了再回来
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.khuzait
+    denies: []
+  - id: expr.old-legion-aserai-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 旧式军团的传说在撒纳拉的雇佣兵市场里流传甚广。帝国人废除了那支军队之后，有些老军团兵流落到南方，成了我们阿塞莱一些埃米尔的军事顾问，教会了我们一些帝国的战术——怎么用重步兵和弩手配合，怎么在战场上保护侧翼，怎么扎营防夜袭。但旧式军团真正的核心不是战术，是后勤。他们的军团后面有一整套国家机器在运转，我们阿塞莱的部落联盟做不到那种程度的统一供给。没有帝国的财政，就养不起帝国的军团。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_旧式军团__旧式军团.json#/Variants/8/Content
+      quote_hash: A4CAE07C47BD34EB7963F72CC73B8B660D33888ACB66BDC53AEF6CC908C8056B
+      quote: 但旧式军团真正的核心不是战术，是后勤
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_旧式军团__旧式军团.json#/Variants/8/Content
+      quote_hash: B6314F9786ED0CAA5DB54A08A0E6582190CCEEBD93EF4F55E00504205425C84B
+      quote: 没有帝国的财政，就养不起帝国的军团
+    grants:
+    - profile_id: profile.noble
+      scope: national
+      min_detail: detail
+      culture_ids:
+      - entity.culture.aserai
+    denies: []
+- id: assertion.old-legion-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 对帝国的老兵与平民来说，旧式军团是「祖父辈那一支军队」：服役二十年的人说，那年头军团配得上「军团」的称号，一套准则管着所有人，宁愿战死也不愿看标准被削弱；他们记得德洛修斯·涅雷采斯率最后一个真正的军团在巴旦尼亚树林里遭了伏击。平民记得的是那种压迫感——一整个军团踩着同一种步伐往前推进时，地面都在颤抖；也有人在酒馆里喝醉了就骂现在的年轻人不懂什么叫真正的军团纪律。而旧军团的印记还留在具体的人和物上：曾在旧军团服役的老人，会在村庄里为一个兜售从战死将士坟墓中盗掘来的金属残片的小贩暴怒。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.mk0l1BfB
+    quote_hash: 6748218848E9F5EF19D0A0D84F3B3DCAD8ADA4A7CD250E8BFC43F68199CA629C
+    quote: 可以这么说。我在帝国军团里服役了二十年。曾几何时，他们确实配得上“军团”的称号。我和老战友们都在一套准则下服役，我们宁愿战死，也不愿看到这套标准动摇或削弱。但是，德洛修斯·涅雷采斯率领著最后一个真正的军团，在巴旦尼亚的树林中遭到了伏击。你可能听说过这段往事。
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.DzyAgYIX
+    quote_hash: C8D8C7FB3E2C3FE3E3265394903D4729A90498EBD16731A69AE35F846B497660
+    quote: 德洛修斯·涅雷采斯率领着军团的精锐进入巴旦尼亚森林，却遭遇了一场埋伏，你可能听说过这件事。那时我正卧病在床，结果我的许多战友都没能回来，从那之后一切都变了。
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.pNVKWAKo
+    quote_hash: F3544E4F7EF074D60DD45611369614482563CDBD50990B57680329BB9FF6F87A
+    quote: 在你造访{VILLAGE}期间，一名年长的{TROOP_TYPE}显得心事重重，沉默寡言。当队伍启程离开时，他突然停下脚步，目光死死盯着路边的一个摊位，随即脱离队伍，怒吼着冲向摊主。事情很快明朗——他曾是帝国旧军团的一员，曾在此地与{NEAREST_OTHER_CULTURE}交战，而眼前这名小贩在兜售的金属残片，显然是从战死将士的坟墓中盗掘而来。
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_旧式军团__旧式军团.json#/Variants/1/Content
+    quote_hash: 8307566C9E0AB143AE0F3DD6C49B40D6755841085622950343744869629CADCC
+    quote: 那种一整个军团踩着同一种步伐往前推进时地面都在颤抖的感觉
+  expressions:
+  - id: expr.old-legion-vet-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 我在帝国军团里服役了二十年。曾几何时，他们确实配得上「军团」的称号。我和老战友们都在一套准则下服役，我们宁愿战死，也不愿看到这套标准动摇或削弱。但是，德洛修斯·涅雷采斯率领着最后一个真正的军团，在巴旦尼亚的树林中遭到了伏击。你可能听说过这段往事。那时我正卧病在床，结果我的许多战友都没能回来，从那之后一切都变了。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.mk0l1BfB
+      quote_hash: 6748218848E9F5EF19D0A0D84F3B3DCAD8ADA4A7CD250E8BFC43F68199CA629C
+      quote: 可以这么说。我在帝国军团里服役了二十年。曾几何时，他们确实配得上“军团”的称号。我和老战友们都在一套准则下服役，我们宁愿战死，也不愿看到这套标准动摇或削弱。但是，德洛修斯·涅雷采斯率领著最后一个真正的军团，在巴旦尼亚的树林中遭到了伏击。你可能听说过这段往事。
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.DzyAgYIX
+      quote_hash: C8D8C7FB3E2C3FE3E3265394903D4729A90498EBD16731A69AE35F846B497660
+      quote: 德洛修斯·涅雷采斯率领着军团的精锐进入巴旦尼亚森林，却遭遇了一场埋伏，你可能听说过这件事。那时我正卧病在床，结果我的许多战友都没能回来，从那之后一切都变了。
+    grants:
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    denies: []
+  - id: expr.old-legion-villager-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 在你造访村庄期间，一名显得心事重重的老人突然停下脚步，目光死死盯着路边的一个摊位，随即脱离队伍，怒吼着冲向摊主。事情很快明朗——他曾是帝国旧军团的一员，曾在此地与外人交战，而眼前这名小贩在兜售的金属残片，显然是从战死将士的坟墓中盗掘而来。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.pNVKWAKo
+      quote_hash: F3544E4F7EF074D60DD45611369614482563CDBD50990B57680329BB9FF6F87A
+      quote: 在你造访{VILLAGE}期间，一名年长的{TROOP_TYPE}显得心事重重，沉默寡言。当队伍启程离开时，他突然停下脚步，目光死死盯着路边的一个摊位，随即脱离队伍，怒吼着冲向摊主。事情很快明朗——他曾是帝国旧军团的一员，曾在此地与{NEAREST_OTHER_CULTURE}交战，而眼前这名小贩在兜售的金属残片，显然是从战死将士的坟墓中盗掘而来。
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.empire
+    denies: []
+  - id: expr.old-legion-grandfather-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 旧式军团是我们的祖父辈。他们说那支军队打仗的方式和现在完全不一样。以前一个军团从吕卡隆出发，后勤是帝国统一调配的，军饷是国库按时发的，士兵只需要操心一件事：怎么打赢下一仗。现在帝国的军队也不差，但跟旧式军团比起来，总少了那种令人窒息的压迫感——那种一整个军团踩着同一种步伐往前推进时地面都在颤抖的感觉。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_旧式军团__旧式军团.json#/Variants/1/Content
+      quote_hash: 8307566C9E0AB143AE0F3DD6C49B40D6755841085622950343744869629CADCC
+      quote: 那种一整个军团踩着同一种步伐往前推进时地面都在颤抖的感觉
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+      culture_ids:
+      - entity.culture.empire
+    denies: []

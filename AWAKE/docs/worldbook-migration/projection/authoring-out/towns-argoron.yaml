@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-argoron
 title:
   zh-CN: 阿耳戈隆
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿耳戈隆
-  en:
-  - Argoron
-  - town_EN4
+entity_ids:
+- entity.settlement.town_en4
 summary:
   zh-CN: 阿耳戈隆位于涅维斯河入拉科尼斯湖的河口，原住拉科尼亚人自愿拥抱帝国、通婚同化，古语言风俗尽失。
 registry_bindings:

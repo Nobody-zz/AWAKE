@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-ferton
 title:
   zh-CN: 费顿
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 费顿
-  en:
-  - Ferton
-  - castle_village_V2_2
+entity_ids:
+- entity.settlement.castle_village_v2_2
 summary:
   zh-CN: 费顿位于特朗河的一处拐角上，离通往比斯坎丘陵的山口不远；村民在温暖干燥的一侧山坡上种植橄榄。
 registry_bindings:

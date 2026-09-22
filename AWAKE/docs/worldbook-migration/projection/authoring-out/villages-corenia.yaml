@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-corenia
 title:
   zh-CN: 科雷尼亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 科雷尼亚
-  en:
-  - Corenia
-  - castle_village_ES2_1
+entity_ids:
+- entity.settlement.castle_village_es2_1
 summary:
   zh-CN: 科雷尼亚是帝国境内最偏远的村庄之一，村民仍说着卡拉德语；它位于塔奈西斯湖东南方的平原、阿克坎丘陵附近，村民种植谷物，随时提防犯边的掠袭者。
 registry_bindings:

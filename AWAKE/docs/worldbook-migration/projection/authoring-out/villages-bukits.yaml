@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-bukits
 title:
   zh-CN: 布基茨
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 布基茨
-  en:
-  - Bukits
-  - village_S5_2
+entity_ids:
+- entity.settlement.village_s5_2
 summary:
   zh-CN: 布基茨坐落于库赛特边境上伊勒坦山的东坡；这里的村民养一种高原牛，这品种扛得住从山上刮下来的刺骨寒风。
 registry_bindings:

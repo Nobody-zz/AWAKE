@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-safna
 title:
   zh-CN: 萨夫纳
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 萨夫纳
-  en:
-  - Safna
-  - village_S2_1
+entity_ids:
+- entity.settlement.village_s2_1
 summary:
   zh-CN: 萨夫纳坐落于俯瞰激流的高耸山脊上——那激流把拉科尼斯湖与狭窄的马佐波尔湾连在一处；村民在靠近海崖的内陆种小麦，就为那里的地能躲开带盐的风。
 registry_bindings:

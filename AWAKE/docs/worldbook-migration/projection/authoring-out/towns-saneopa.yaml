@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.towns-saneopa
 title:
   zh-CN: 萨涅俄帕
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 萨涅俄帕
-  en:
-  - Saneopa
-  - town_EN3
+entity_ids:
+- entity.settlement.town_en3
 summary:
   zh-CN: 萨涅俄帕扼涅维斯谷通俄佛堤斯湖的低矮隘口，人声鼎沸百业兴旺，是卡拉迪亚内陆重要贸易中心，与幽静圣湖成对照。
 registry_bindings:

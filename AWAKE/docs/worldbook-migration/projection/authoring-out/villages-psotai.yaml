@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-psotai
 title:
   zh-CN: 索泰
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 索泰
-  en:
-  - Psotai
-  - village_ES7_1
+entity_ids:
+- entity.settlement.village_es7_1
 summary:
   zh-CN: 索泰位于塔奈西斯湖南端；这里地势低洼，是东部边境地区的主要产粮地之一。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-dvorusta
 title:
   zh-CN: 德沃鲁斯塔
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 德沃鲁斯塔
-  en:
-  - Dvorusta
-  - castle_village_S6_2
+entity_ids:
+- entity.settlement.castle_village_s6_2
 summary:
   zh-CN: 德沃鲁斯塔是一座渔村，俯瞰着连接瓦尔切格湾和拉科尼斯湖的激流；村民在天亮时沿悬崖一路下去，捕捉跃过岩石的鲑鱼，以及海里的鲱鱼和鳕鱼。
 registry_bindings:

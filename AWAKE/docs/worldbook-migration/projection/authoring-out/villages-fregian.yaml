@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-fregian
 title:
   zh-CN: 弗雷吉昂
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 弗雷吉昂
-  en:
-  - Fregian
-  - village_V2_3
+entity_ids:
+- entity.settlement.village_v2_3
 summary:
   zh-CN: 弗雷吉昂坐落于帕拉汶德以北的平原上——瓦兰迪亚的南国暖流自此让位于北境的寒气；村民在沼泽与草地里种植亚麻。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-ataconia
 title:
   zh-CN: 阿塔科尼亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿塔科尼亚
-  en:
-  - Ataconia
-  - castle_village_EN6_1
+entity_ids:
+- entity.settlement.castle_village_en6_1
 summary:
   zh-CN: 阿塔科尼亚坐落在德律亚山前的一片高原上。山上奔下来的溪水冲开坡面，露出底下成片的盐，本地人祖祖辈辈都在那儿采。
 registry_bindings:

@@ -1,0 +1,236 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-mangonel-fire
+title:
+  zh-CN: 火焰投石车
+  en: Fire Mangonel
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 帝国火抛射器
+  en:
+  - Fire Mangonel
+summary:
+  zh-CN: 火焰投石车：投掷装满帝国火的罐子，把投石车本身的致命威力与火焰结合——投射物具有爆燃性，能有效摧毁敌方围城器械以及破坏城墙。开花弹昂贵且制作繁复（陶罐要薄到摔得碎、又不能薄到在弹兜里加速时裂），没存货，现烧现装现打；但一颗火球砸下来，对面士气就垮一道——攻城攻的是墙，也是意志。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.893hzVCQ
+  quote_hash: 61169E2C14C307B890E8F369D498FF774DCAB22530980EEC2D23E6D8139C63C9
+  quote: '&lt;b&gt;火焰投石车&lt;/b&gt;{NEWLINE}投掷装满帝国火的罐子，将投石车本身的致命威力与火焰结合。'
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/1/Content
+  quote_hash: 9512AF8C700FDE1A7B175E891D3EDA2BEA1F5A297F156ED513B7359B255B1141
+  quote: 开花弹太贵
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/1/Content
+  quote_hash: 92A5717CB579EBD860432CDD6B37E6D192C7C676AF9269129E28394C5EE40848
+  quote: 火焰投石车是围城战的终结者
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/1/Content
+  quote_hash: CBC51B4880767EEA06C6251C6EABA903A25DB4E4526820C20BAE6203CD2074EA
+  quote: 一颗火球打下来，对面士气就垮一道。攻城攻的是墙，也是意志。火焰投石车两样都能砸碎
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/2/Content
+  quote_hash: 33AD0AD1DCF4B53F6B42674BF5C49712B28AC5E2CE6391201E806E3544A9BA7F
+  quote: 火油的比例是死的：七成火油，两成松脂，一成硫磺粉，冬天多加半成酒精
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/2/Content
+  quote_hash: 8997CF14C2D99EA1234ABAE1347016B0A1D6E7327A1B9E008C885A1D708F07C7
+  quote: 我说大杀器是我两只手从泥里捏出来的
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/0/Content
+  quote_hash: 6530DFA4FABC79BADFE5EAE383240073FCA201063E7935D2455F8A1AE5B04516
+  quote: 火焰投石车？那是地狱里拉出来的东西
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/0/Content
+  quote_hash: DEAFBD7AB31699BE84FB9A108DEFE63F80E0BBAC010EE0EE0065E9AEFABCA65C
+  quote: 我跟自己说，以后战场上听见对面投石车响，千万别抬头
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.mangonel-fire-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 火焰投石车是普通投石车的火攻型号：投掷装满帝国火的罐子，将投石车本身的致命威力与火焰结合，投射物具有爆燃性，能够有效摧毁敌方围城器械以及破坏城墙。它的代价在于弹药——开花弹太贵，配火油的料要从南方运，制弹的陶罐得像瓷器一样烧、还不能有砂眼；而且没有存货，现烧现装现打，打完一批要等下一批。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.893hzVCQ
+    quote_hash: 61169E2C14C307B890E8F369D498FF774DCAB22530980EEC2D23E6D8139C63C9
+    quote: '&lt;b&gt;火焰投石车&lt;/b&gt;{NEWLINE}投掷装满帝国火的罐子，将投石车本身的致命威力与火焰结合。'
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/1/Content
+    quote_hash: 9512AF8C700FDE1A7B175E891D3EDA2BEA1F5A297F156ED513B7359B255B1141
+    quote: 开花弹太贵
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/1/Content
+    quote_hash: 92A5717CB579EBD860432CDD6B37E6D192C7C676AF9269129E28394C5EE40848
+    quote: 火焰投石车是围城战的终结者
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/1/Content
+    quote_hash: CBC51B4880767EEA06C6251C6EABA903A25DB4E4526820C20BAE6203CD2074EA
+    quote: 一颗火球打下来，对面士气就垮一道。攻城攻的是墙，也是意志。火焰投石车两样都能砸碎
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/2/Content
+    quote_hash: 33AD0AD1DCF4B53F6B42674BF5C49712B28AC5E2CE6391201E806E3544A9BA7F
+    quote: 火油的比例是死的：七成火油，两成松脂，一成硫磺粉，冬天多加半成酒精
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/2/Content
+    quote_hash: 8997CF14C2D99EA1234ABAE1347016B0A1D6E7327A1B9E008C885A1D708F07C7
+    quote: 我说大杀器是我两只手从泥里捏出来的
+  expressions:
+  - id: expr.mangonel-fire-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 火焰投石车是投石车的火攻型号：发的是装满帝国火的罐子，砸下去会爆燃，能有效摧毁对方的围城器械，也能破坏城墙。它跟普通投石车长得一样，区别全在弹药上——开花弹太贵，也没有存货，现烧现装现打。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.893hzVCQ
+      quote_hash: 61169E2C14C307B890E8F369D498FF774DCAB22530980EEC2D23E6D8139C63C9
+      quote: '&lt;b&gt;火焰投石车&lt;/b&gt;{NEWLINE}投掷装满帝国火的罐子，将投石车本身的致命威力与火焰结合。'
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/1/Content
+      quote_hash: 9512AF8C700FDE1A7B175E891D3EDA2BEA1F5A297F156ED513B7359B255B1141
+      quote: 开花弹太贵
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.mangonel-fire-lord-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 火焰投石车是围城战的终结者。我亲眼见过一架刚推到半路的攻城塔被三颗开花弹砸中——第一颗砸碎了塔顶的挡板，第二颗在塔身中部爆炸，火油从箭窗灌进去；第三颗砸在底座轮轴上，塔整座歪倒，烧成一堆炭。那架塔造了两个月，毁了三颗弹就没了。但开花弹不是谁想用就能用：料要从南方运，制弹的陶罐得像瓷器一样烧，还不能有砂眼。军需册上那一栏，我每次签字手都在抖——一发开花弹够养一排步兵一个月。可我还是每场围城都调一台去：不是用它砸城墙，是砸对面的人心。一颗火球打下来，对面士气就垮一道。攻城攻的是墙，也是意志。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/1/Content
+      quote_hash: 92A5717CB579EBD860432CDD6B37E6D192C7C676AF9269129E28394C5EE40848
+      quote: 火焰投石车是围城战的终结者
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/1/Content
+      quote_hash: CBC51B4880767EEA06C6251C6EABA903A25DB4E4526820C20BAE6203CD2074EA
+      quote: 一颗火球打下来，对面士气就垮一道。攻城攻的是墙，也是意志。火焰投石车两样都能砸碎
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+  - id: expr.mangonel-fire-artisan-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 火油的比例是死的：七成火油，两成松脂，一成硫磺粉，冬天多加半成酒精。但比例对了没用，得煮——火油煮到冒蓝烟的时候就下松脂，边下边搅，搅到能拉丝，这锅油才算活了。制弹壳更不是人干的活：陶罐要薄，薄到从房顶摔下去能碎成八瓣，但不能薄到在投石车弹兜里加速的时候就裂。装填的时候罐口封蜡，蜡不能有气泡，气泡就是死。每批罐子出窑，我挑一个试炸——好罐子烧到火油沸了，罐壁会发出哭声，然后炸。战场上他们管火球叫大杀器，我说大杀器是我两只手从泥里捏出来的。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/2/Content
+      quote_hash: 33AD0AD1DCF4B53F6B42674BF5C49712B28AC5E2CE6391201E806E3544A9BA7F
+      quote: 火油的比例是死的：七成火油，两成松脂，一成硫磺粉，冬天多加半成酒精
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/2/Content
+      quote_hash: 8997CF14C2D99EA1234ABAE1347016B0A1D6E7327A1B9E008C885A1D708F07C7
+      quote: 我说大杀器是我两只手从泥里捏出来的
+    grants:
+    - profile_id: profile.noble_high_steward
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.mangonel-fire-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 在见过它的人嘴里，火焰投石车是「地狱里拉出来的东西」：天快黑时对面营地亮几下火点子，一颗大火球拖着黑尾巴从天上砸下来，落在城门旁的兵棚上，第二下直接炸开，火星溅了半条街；一个火球就烧死了几十个人。事后去看那片地，砖都烧裂了。从此听见对面投石车响，千万别抬头。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/0/Content
+    quote_hash: 6530DFA4FABC79BADFE5EAE383240073FCA201063E7935D2455F8A1AE5B04516
+    quote: 火焰投石车？那是地狱里拉出来的东西
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/0/Content
+    quote_hash: DEAFBD7AB31699BE84FB9A108DEFE63F80E0BBAC010EE0EE0065E9AEFABCA65C
+    quote: 我跟自己说，以后战场上听见对面投石车响，千万别抬头
+  expressions:
+  - id: expr.mangonel-fire-villager-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 火焰投石车？那是地狱里拉出来的东西。我见过一次，围城的时候。天快黑了，对面营地亮了几下火点子，然后一颗大火球拖着黑尾巴从天上砸下来，正落在城门旁边的兵棚子上。第一下砸中房顶，第二下直接炸开，火星子溅了半条街，第三下整个棚子全着了。棚子里的人往外跑，跑出来的是火人，跑几步就扑倒了。我哥说那一个火球就烧死了几十个人。打完仗我去看那片地，砖都烧裂了。我跟自己说，以后战场上听见对面投石车响，千万别抬头。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/0/Content
+      quote_hash: 6530DFA4FABC79BADFE5EAE383240073FCA201063E7935D2455F8A1AE5B04516
+      quote: 火焰投石车？那是地狱里拉出来的东西
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰投石车__火焰投石车.json#/Variants/0/Content
+      quote_hash: DEAFBD7AB31699BE84FB9A108DEFE63F80E0BBAC010EE0EE0065E9AEFABCA65C
+      quote: 我跟自己说，以后战场上听见对面投石车响，千万别抬头
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []

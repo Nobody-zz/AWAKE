@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-bergum
 title:
   zh-CN: 柏耳贡
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 柏耳贡
-  en:
-  - Bergum
-  - castle_village_EW2_2
+entity_ids:
+- entity.settlement.castle_village_ew2_2
 summary:
   zh-CN: 柏耳贡坐落于卡拉迪亚腹地的阿里斯河谷，河水灌溉与温暖的内陆气候确保了与相邻托里俄斯的小麦田高产，喂养了帝国中部的许多人。
 registry_bindings:

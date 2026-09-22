@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-sahel
 title:
   zh-CN: 萨赫勒
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 萨赫勒
-  en:
-  - Sahel
-  - castle_village_A2_1
+entity_ids:
+- entity.settlement.castle_village_a2_1
 summary:
   zh-CN: 萨赫勒地处阿塞莱边陲的阿沙卜山脉低坡，山脉留住雨云与季风，贮水农田得以种植栗子与小麦。
 registry_bindings:

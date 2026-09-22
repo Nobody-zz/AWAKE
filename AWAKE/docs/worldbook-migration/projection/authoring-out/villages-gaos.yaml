@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-gaos
 title:
   zh-CN: 伽俄斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 伽俄斯
-  en:
-  - Gaos
-  - castle_village_EN4_1
+entity_ids:
+- entity.settlement.castle_village_en4_1
 summary:
   zh-CN: 伽俄斯位于帝国东边密泽亚德的宽阔山谷，村庄得名于曾占据此地的游牧民族语言中「牛」的叫法。
 registry_bindings:

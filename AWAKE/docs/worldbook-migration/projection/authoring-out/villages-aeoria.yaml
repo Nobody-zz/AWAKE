@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-aeoria
 title:
   zh-CN: 艾俄里亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 艾俄里亚
-  en:
-  - Aeoria
-  - castle_village_EN1_2
+entity_ids:
+- entity.settlement.castle_village_en1_2
 summary:
   zh-CN: 艾俄里亚位于帝国腹地土壤肥沃的阿里斯谷，当地方言至今掺杂帕拉语词汇——帝国人到来前，大陆中央的居民说的是帕拉语。
 registry_bindings:

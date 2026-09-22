@@ -11,6 +11,7 @@ public sealed class WorldbookApplicationService
     private readonly WorkspaceService _workspace;
     private readonly SchemaValidator _schema = new();
     private readonly RegistryService _registries;
+    private readonly LinkRegistryService _links;
     private readonly EntityCatalogService _entities;
     private readonly SourceRegistryService _sources;
     private readonly AuditLedgerService _audit;
@@ -19,6 +20,7 @@ public sealed class WorldbookApplicationService
     {
         _workspace = workspace;
         _registries = new RegistryService(workspace, _schema);
+        _links = new LinkRegistryService(workspace, _schema);
         _entities = new EntityCatalogService(workspace, _schema);
         _sources = new SourceRegistryService(workspace, _schema);
         _audit = new AuditLedgerService(workspace, _schema);
@@ -575,7 +577,9 @@ public sealed class WorldbookApplicationService
             ["notes"] = "编译结果由新 v2 读取器消费；不生成 v1 兼容 worldbook 文件。"
         };
         var validationJson = JsonSerializer.SerializeToNode(snapshot.Report) ?? new JsonObject();
-        var sourceReport = new JsonObject { ["format"] = "awake.worldbook.source-report.v1", ["registry_count"] = snapshot.SourceRegistry.Count, ["registry_hash"] = snapshot.SourceRegistryHash };
+        // `link_edges`：本次编译整合进来的互引边数（0 == 这个工作区没有边表，召回退化为现状）。
+        // 放在**产物**里而不是诊断里 —— 见 LinkRegistrySnapshot 的类头注释。
+        var sourceReport = new JsonObject { ["format"] = "awake.worldbook.source-report.v1", ["registry_count"] = snapshot.SourceRegistry.Count, ["registry_hash"] = snapshot.SourceRegistryHash, ["link_edges"] = snapshot.Links.EdgeCount, ["link_registry_hash"] = snapshot.Links.Hash };
         var auditReport = new JsonObject { ["format"] = "awake.worldbook.audit-report.v1", ["event_count"] = snapshot.AuditEvents.Count, ["ledger_files"] = snapshot.LedgerFileCount };
         var idReport = new JsonObject { ["format"] = "awake.worldbook.id-report.v1", ["status"] = "validated" };
 
@@ -695,6 +699,7 @@ public sealed class WorldbookApplicationService
         var auditEvents = _audit.LoadAndValidate(documents, report, inputs);
         _audit.ValidateLedger(report, inputs);
         var registries = _registries.LoadAndValidate(report, inputs);
+        var links = _links.LoadAndValidate(report, inputs);
         ValidateRegistryBindings(documents, registries, report);
         ValidateAuthorityAndCanon(documents, report);
         ValidateRedirects(documents, report);
@@ -708,6 +713,7 @@ public sealed class WorldbookApplicationService
             Documents = documents,
             Report = report,
             Registries = registries,
+            Links = links,
             SourceRegistry = sourceRegistry,
             SourceRegistryHash = Hashing.Sha256Text(string.Join("|", sourceRegistry.OrderBy(x => x.Key.Id, StringComparer.Ordinal).ThenBy(x => x.Key.Version).Select(x => $"{x.Key.Id}@{x.Key.Version}:{CanonicalJson.Hash(x.Value)}"))),
             AuditEvents = auditEvents,
@@ -884,6 +890,8 @@ public sealed class ValidatedSnapshot
     public required IReadOnlyList<(string Path, JsonObject Document, ValidationReport Report)> Documents { get; init; }
     public required ValidationReport Report { get; init; }
     public required RegistrySnapshot Registries { get; init; }
+    /// 互引边表（2026-09-20）。空表 == 本工作区没有边表，编译照常、条目不带边。
+    public LinkRegistrySnapshot Links { get; init; } = new();
     public required Dictionary<(string Id, string Version), JsonObject> SourceRegistry { get; init; }
     public required string SourceRegistryHash { get; init; }
     public required Dictionary<string, JsonObject> AuditEvents { get; init; }

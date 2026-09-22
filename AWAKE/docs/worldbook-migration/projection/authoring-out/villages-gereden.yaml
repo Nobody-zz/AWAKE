@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-gereden
 title:
   zh-CN: 格烈登
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 格烈登
-  en:
-  - Gereden
-  - castle_village_K8_2
+entity_ids:
+- entity.settlement.castle_village_k8_2
 summary:
   zh-CN: 格烈登及其附属村落一直延伸到德夫赛格高原的南端，靠近斡祖河与帖牙合河的交汇处；这里地形崎岖，却以山涧里出的上等黏土闻名。
 registry_bindings:

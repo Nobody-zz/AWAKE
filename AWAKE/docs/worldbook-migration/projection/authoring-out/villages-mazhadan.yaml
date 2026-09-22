@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-mazhadan
 title:
   zh-CN: 马扎丹
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 马扎丹
-  en:
-  - Mazhadan
-  - castle_village_S2_1
+entity_ids:
+- entity.settlement.castle_village_s2_1
 summary:
   zh-CN: 马扎丹靠近伽尔喀斯河的源头，在拉科尼斯湖的正西边；这片湿冷之地的村民，在泥泞的山谷里种植亚麻。
 registry_bindings:

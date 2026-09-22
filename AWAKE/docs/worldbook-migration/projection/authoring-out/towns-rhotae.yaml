@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.towns-rhotae
 title:
   zh-CN: 洛泰
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 洛泰
-  en:
-  - Rhotae
-  - town_EW6
+entity_ids:
+- entity.settlement.town_ew6
 summary:
   zh-CN: 洛泰坐落于厄里特律斯山玄武巨岩下，原为帕拉山堡“洛塔什”；萨拉庇俄斯攻城后夷为平地，以其“名誉污点”之论留名。
 registry_bindings:
@@ -40,7 +36,7 @@ assertions:
   revision: 1
   kind: fact
   text:
-    zh-CN: 洛泰坐落于厄里特律斯山玄武巨岩下，原为帕拉山堡“洛塔什”；萨拉庇俄斯攻城后夷为平地，以其“名誉污点”之论留名。
+    zh-CN: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又名洛塔什；继拉革塔之后，洛塔什也很快落入帝国之手。当地帕拉酋长在得知邻国之事后，屠戮了他所庇护的数十名帝国公民；性情古怪的长发将军萨拉庇俄斯率惩戒部队攻下洛塔什，将其夷为平地。
   sources:
   - source_id: source.calradia.game.settlements-desc
     source_version: bannerlord-1.3.15.110062
@@ -48,12 +44,30 @@ assertions:
     locator: bannerlord.settlements#town_EW6
     quote_hash: DAE8EF0ECE7DA0E18A57A7F00C63DB08916A714C1C358480FF4FA6BDBDE95E53
     quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EW6
+    quote_hash: 7A5A5E7A22F0460482695D46B0265B07B1B344573917A12FEAC4DB48FCE37044
+    quote: 在拉革塔之后，洛塔什也很快落入帝国手中。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EW6
+    quote_hash: 9F5695941B695E264038B667DC2A08F6A351F166BC166B5F7F30072CEFA7A381
+    quote: 当地的帕拉酋长在听说邻国发生的事情后，屠戮了受他保护的几十名帝国公民。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EW6
+    quote_hash: 4FC16C56C41779415114B23B5BB130189B685C5701C3C74EDD62E63B34F8A1DC
+    quote: 性格古怪的长发将军萨拉庇俄斯率领着惩戒部队攻下了洛塔什，并将其夷为平地。
   expressions:
-  - id: expr.town-rhotae-rumor
+  - id: expr.town-rhotae-1-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 洛泰那地方，山岩压着城。老人们说当年帝国的怪将军把城平了，血淌得跟河一样，还说什么名誉。
+      zh-CN: 洛泰从前叫洛塔什，是帕拉人的山堡，后来跟拉革塔一样落到帝国手里。那地方的头人听说邻边出了事，把手下护着的几十个帝国人杀了；帝国派来个长发将军，把洛塔什平了。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +107,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.town-rhotae-detail
+  - id: expr.town-rhotae-1-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 洛泰城是在焦土上重建的——玄武岩荫蔽下的地产讲山岩稳固；本地对“光荣攻下”之说心存芥蒂，官面典故莫当面引用。
+      zh-CN: 洛泰的旧账三步连走：山堡易主、头人屠戮受其庇护的帝国公民、惩戒部队夷平全城。中间的余地不大，谁也别想在这里找体面。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -105,6 +119,45 @@ assertions:
       locator: bannerlord.settlements#town_EW6
       quote_hash: DAE8EF0ECE7DA0E18A57A7F00C63DB08916A714C1C358480FF4FA6BDBDE95E53
       quote: 洛泰坐落于厄里特律斯山玄武巨岩的荫蔽之下，早先是一座帕拉人的山堡，又叫“洛塔什”。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-rhotae-2
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 将军事后自陈：卑劣地拿下拉革塔却未曾流血，光荣地攻下洛塔什却让此地流血漂橹；这两件事都将成为名誉的污点——胜者取走战利品，也总得背负污名。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_EW6
+    quote_hash: B41FDFA8EA8442F44EAAAA22F246FCA5600C37D9EF3E12BB1C140F9817D7A984
+    quote: “我们卑劣地拿下了拉革塔，却没有流什么血；我们光荣地攻下了洛塔什，却让这里流血漂橹。”他在事后这么说道，“这两件事将会成为我们名誉的污点，胜利者将拿走战利品，但也总要背负污名。”
+  expressions:
+  - id: expr.town-rhotae-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 萨拉庇俄斯自己把话说透了：拉革塔拿得不体面却没死人，洛塔什打得体面却血流成河。他是个怪人——胜仗打完，先记下的是自己那笔污名。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_EW6
+      quote_hash: B41FDFA8EA8442F44EAAAA22F246FCA5600C37D9EF3E12BB1C140F9817D7A984
+      quote: “我们卑劣地拿下了拉革塔，却没有流什么血；我们光荣地攻下了洛塔什，却让这里流血漂橹。”他在事后这么说道，“这两件事将会成为我们名誉的污点，胜利者将拿走战利品，但也总要背负污名。”
     grants:
     - profile_id: profile.headman
       scope: national

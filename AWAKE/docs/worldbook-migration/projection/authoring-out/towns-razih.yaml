@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 4
 id: doc.geography.towns-razih
 title:
   zh-CN: 拉齐赫
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 拉齐赫
-  en:
-  - Razih
-  - town_A4
+entity_ids:
+- entity.settlement.town_a4
 summary:
   zh-CN: 拉齐赫相传是坎族探险家殖民珀拉斯海岸的基地，坎族口音与宗教俱已消亡，唯船首葡萄藤神像的标志留存至今。
 registry_bindings:
@@ -38,9 +34,9 @@ authority:
 assertions:
 - id: assertion.town-razih-1
   revision: 1
-  kind: fact
+  kind: rumor
   text:
-    zh-CN: 拉齐赫相传是坎族探险家殖民珀拉斯海岸的基地，坎族口音与宗教俱已消亡，唯船首葡萄藤神像的标志留存至今。
+    zh-CN: 据传，远在帝国人来到这片大陆的几个世纪之前，拉齐赫就已是坎族探险家殖民珀拉斯海岸的基地；他们的船首饰着葡萄藤编成的神像，象征财富、葡萄酒、爱与战争。
   sources:
   - source_id: source.calradia.game.settlements-desc
     source_version: bannerlord-1.3.15.110062
@@ -48,12 +44,18 @@ assertions:
     locator: bannerlord.settlements#town_A4
     quote_hash: 41FF7F6891C688DA24A28C3528A228C11724D49A6908E0489A6A4D209B0038AF
     quote: 据说，早在帝国人来到这片大陆的几个世纪以前，拉齐赫就成为了坎族探险家们殖民珀拉斯海岸的基地。
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_A4
+    quote_hash: 642D7B6D56D277667535B2D994870BB187D6D335E71E975827B77131180B260A
+    quote: 他们的船首装饰着葡萄藤编织而成的神像，象征财富、葡萄酒、爱与战争。
   expressions:
-  - id: expr.town-razih-rumor
+  - id: expr.town-razih-1-rumor
     revision: 1
     layer: rumor
     text:
-      zh-CN: 海边老人说，拉齐赫的船头上刻着葡萄藤神像，是老早以前海上勇士留下的，谁也说不清是哪路神仙。
+      zh-CN: 都说帝国人来之前好几百年，拉齐赫就是坎族人在珀拉斯海边落脚的地方。他们的船头上扎着葡萄藤编的神像。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -93,11 +95,11 @@ assertions:
       scope: elite
       min_detail: rumor
     denies: []
-  - id: expr.town-razih-detail
+  - id: expr.town-razih-1-detail
     revision: 1
     layer: detail
     text:
-      zh-CN: 拉齐赫是珀拉斯海岸的老殖民据点，几百年前坎族人的；语言宗教俱亡但地标还在，对老海图与口传谱系的人常来对证据，做古物与海贸生意的都认这段来历。
+      zh-CN: 拉齐赫的前史压在帝国之前数百年：坎族以此处为珀拉斯海岸的据点，船首的神像四样意思——财、酒、爱与战。
     sources:
     - source_id: source.calradia.game.settlements-desc
       source_version: bannerlord-1.3.15.110062
@@ -105,6 +107,89 @@ assertions:
       locator: bannerlord.settlements#town_A4
       quote_hash: 41FF7F6891C688DA24A28C3528A228C11724D49A6908E0489A6A4D209B0038AF
       quote: 据说，早在帝国人来到这片大陆的几个世纪以前，拉齐赫就成为了坎族探险家们殖民珀拉斯海岸的基地。
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.town-razih-2
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 如今坎族口音已被纳哈撒语取代，宗教也被遗忘，唯有他们的标志留存下来——仍讲着那些甘冒一切风险以求荣耀的冒险家。
+  sources:
+  - source_id: source.calradia.game.settlements-desc
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+    locator: bannerlord.settlements#town_A4
+    quote_hash: 9BE8E6B2FC3F330D4341668228B3218FC289B6A352DD2EC0F02A8D0FEA056E89
+    quote: 如今，坎族口音已经彻底被纳哈撒语替代，他们的宗教也被彻底遗忘，但他们的标志却保留了下来，依旧诉说着那些甘愿冒一切风险以获得荣耀的勇敢冒险家的故事。
+  expressions:
+  - id: expr.town-razih-2-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 如今的拉齐赫说的是纳哈撒话，坎族当年的神早没人拜了，只剩下船头那个记号还在用。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_A4
+      quote_hash: 9BE8E6B2FC3F330D4341668228B3218FC289B6A352DD2EC0F02A8D0FEA056E89
+      quote: 如今，坎族口音已经彻底被纳哈撒语替代，他们的宗教也被彻底遗忘，但他们的标志却保留了下来，依旧诉说着那些甘愿冒一切风险以获得荣耀的勇敢冒险家的故事。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.headman
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: rumor
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: rumor
+    denies: []
+  - id: expr.town-razih-2-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 拉齐赫的现况是一句替换：话改了、神忘了、记号留着。记号是坎族仅剩的自证，行里人认它。
+    sources:
+    - source_id: source.calradia.game.settlements-desc
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 115D3154A7E91EF5897C8DB309AB994897441B9289AEBCD23D5E5DD25DA1858B
+      locator: bannerlord.settlements#town_A4
+      quote_hash: 9BE8E6B2FC3F330D4341668228B3218FC289B6A352DD2EC0F02A8D0FEA056E89
+      quote: 如今，坎族口音已经彻底被纳哈撒语替代，他们的宗教也被彻底遗忘，但他们的标志却保留了下来，依旧诉说着那些甘愿冒一切风险以获得荣耀的勇敢冒险家的故事。
     grants:
     - profile_id: profile.headman
       scope: national

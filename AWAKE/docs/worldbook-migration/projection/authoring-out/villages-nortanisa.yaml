@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-nortanisa
 title:
   zh-CN: 诺耳塔尼萨
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 诺耳塔尼萨
-  en:
-  - Nortanisa
-  - castle_village_EN2_2
+entity_ids:
+- entity.settlement.castle_village_en2_2
 summary:
   zh-CN: 诺耳塔尼萨是拉科尼斯湖南岸的一座渔村，村民在湖泊的浅滩放置渔网和渔笼，捕获拟鲤、鲷鱼、鲈鱼与小龙虾。
 registry_bindings:

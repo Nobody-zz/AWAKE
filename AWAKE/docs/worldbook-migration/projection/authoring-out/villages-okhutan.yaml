@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-okhutan
 title:
   zh-CN: 奥胡坦
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 奥胡坦
-  en:
-  - Okhutan
-  - village_K5_2
+entity_ids:
+- entity.settlement.village_k5_2
 summary:
   zh-CN: 奥胡坦是一座位于小麦产区中央的村庄，地处库赛特人称作达那孜海的塔奈西斯湖与阿克坎丘陵之间的狭长平原。
 registry_bindings:

@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-cananc
 title:
   zh-CN: 卡南克
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 卡南克
-  en:
-  - Cananc
-  - village_V8_2
+entity_ids:
+- entity.settlement.village_v8_2
 summary:
   zh-CN: 卡南克位于莱恩诺北部潮湿的林丘中；该村以饲养优质猪闻名，那些猪能在密林里穿梭，寻食橡子、栗子与蛴螬。
 registry_bindings:

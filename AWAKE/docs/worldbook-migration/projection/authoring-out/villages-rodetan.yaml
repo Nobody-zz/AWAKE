@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-rodetan
 title:
   zh-CN: 罗德唐
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 罗德唐
-  en:
-  - Rodetan
-  - castle_village_V7_2
+entity_ids:
+- entity.settlement.castle_village_v7_2
 summary:
   zh-CN: 罗德唐之名取自莱恩诺丘陵富含铁的红土；当地矿山为瓦兰迪亚的许多锻造作坊供应铁矿石。
 registry_bindings:

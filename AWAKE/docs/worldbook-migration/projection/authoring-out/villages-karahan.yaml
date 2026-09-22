@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-karahan
 title:
   zh-CN: 喀拉罕
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 喀拉罕
-  en:
-  - Karahan
-  - village_K6_1
+entity_ids:
+- entity.settlement.village_k6_1
 summary:
   zh-CN: 喀拉罕位于柯希·罗希尼——黎明山脉山麓的丘陵地带；村民向迁徙的部落买马，自己也养一些，库赛特军队的许多马都出自此地。
 registry_bindings:

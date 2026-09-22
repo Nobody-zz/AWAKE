@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-payam
 title:
   zh-CN: 帕亚木
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 帕亚木
-  en:
-  - Payam
-  - castle_village_K9_2
+entity_ids:
+- entity.settlement.castle_village_k9_2
 summary:
   zh-CN: 帕亚木位于库赛特领土的寒冷北方，沿喀拉卡孜河而建；这里几乎终年积雪，但村民在地刚解冻时就播下小麦与大麦，秋收因此还不错。
 registry_bindings:

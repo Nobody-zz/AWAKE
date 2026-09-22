@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-saldannis
 title:
   zh-CN: 萨尔丹尼斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 萨尔丹尼斯
-  en:
-  - Saldannis
-  - village_ES6_1
+entity_ids:
+- entity.settlement.village_es6_1
 summary:
   zh-CN: 萨尔丹尼斯坐落在石膏峭壁之下，俯瞰着塞堤斯河；山上冲下来的细土淤在河湾里，成了上好的陶土，帝国南方的陶工最认这一口。
 registry_bindings:

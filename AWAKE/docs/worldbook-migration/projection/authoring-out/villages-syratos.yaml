@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-syratos
 title:
   zh-CN: 叙拉托斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 叙拉托斯
-  en:
-  - Syratos
-  - castle_village_EN8_1
+entity_ids:
+- entity.settlement.castle_village_en8_1
 summary:
   zh-CN: 叙拉托斯坐落于塔奈西斯湖北岸的一处峭壁之上，寒冷潮湿的谷底让亚麻长得很好。
 registry_bindings:

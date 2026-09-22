@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-garengolia
 title:
   zh-CN: 伽伦戈利亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 伽伦戈利亚
-  en:
-  - Garengolia
-  - village_EW4_4
+entity_ids:
+- entity.settlement.village_ew4_4
 summary:
   zh-CN: 伽伦戈利亚位于一条储藏丰富的银矿脉旁，俯瞰着伽维斯河；几个世纪以来，帝国一直用这里出产的银铸造第纳尔。
 registry_bindings:

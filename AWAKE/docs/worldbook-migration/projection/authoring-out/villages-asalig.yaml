@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-asalig
 title:
   zh-CN: 阿萨利格
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿萨利格
-  en:
-  - Asalig
-  - village_K1_4
+entity_ids:
+- entity.settlement.village_k1_4
 summary:
   zh-CN: 阿萨利格坐落于德夫赛格高原之巅的巴尔思山脚下；村民在相对低矮的山坡上养马，还得时时提防雪豹——山名也正是因此而来。
 registry_bindings:

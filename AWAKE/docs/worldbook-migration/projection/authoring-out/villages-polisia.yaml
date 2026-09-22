@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-polisia
 title:
   zh-CN: 波利西亚
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 波利西亚
-  en:
-  - Polisia
-  - village_ES1_2
+entity_ids:
+- entity.settlement.village_es1_2
 summary:
   zh-CN: 波利西亚坐落于阿塞莱边境被称为卡勒萨的河湖交通网旁；村民从西边的一片潟湖采盐，那里在被沙嘴分割前，曾是珀拉斯海的一片海湾。当地空气又浑又臭，外人多绕道，村民却以监视阿塞莱人自傲。
 registry_bindings:

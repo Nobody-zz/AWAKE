@@ -1,0 +1,160 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.goods-pottery
+title:
+  zh-CN: 陶器
+  en: Pottery
+status: needs_review
+domain: economy
+subdomain: goods
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 陶器是黏土烧出来的家什，价中量重，卖的是就近的城。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.awQrcrt2
+  quote_hash: 9123A3359D05AE4162928D8A09018AC618674F0AACE44D52A291FC3F75CB2A6A
+  quote: 陶器{@Plural}成箱的陶器{\@}
+- source_id: source.calradia.game.items-eco
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+  locator: bannerlord.db#localization.myuzMhOn
+  quote_hash: 6A5E381EAD373302346F7CE554082E7A595FCF53BD47017EC1005E9703A7F8D6
+  quote: 黏土矿坑
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_罗瓦尔山地__罗瓦尔山地.json#/Variants/0/Content
+  quote_hash: F44F8011B0451444A9CE409BE0049130EA6602D5F73BE890E5BD58B64B737C2F
+  quote: 盛产陶器，麻布，铁器
+- source_id: source.calradia.chronicle.animusforge.eco
+  source_version: animusforge-20260913
+  source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+  locator: rules/rule_斯瓦迪亚丘陵__斯瓦迪亚丘陵.json#/Variants/0/Content
+  quote_hash: 16642EE4CAB500192F3798D1F3E531E9F6DD0937F85331A759222BCD3D5A686A
+  quote: 盛产葡萄酒，陶器，以及木盾
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.goods-pottery-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 陶器是黏土烧成的器物，基准价 210 第纳尔，论箱买卖。
+  sources:
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.awQrcrt2
+    quote_hash: 9123A3359D05AE4162928D8A09018AC618674F0AACE44D52A291FC3F75CB2A6A
+    quote: 陶器{@Plural}成箱的陶器{\@}
+  - source_id: source.calradia.game.items-eco
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+    locator: bannerlord.db#localization.myuzMhOn
+    quote_hash: 6A5E381EAD373302346F7CE554082E7A595FCF53BD47017EC1005E9703A7F8D6
+    quote: 黏土矿坑
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_罗瓦尔山地__罗瓦尔山地.json#/Variants/0/Content
+    quote_hash: F44F8011B0451444A9CE409BE0049130EA6602D5F73BE890E5BD58B64B737C2F
+    quote: 盛产陶器，麻布，铁器
+  - source_id: source.calradia.chronicle.animusforge.eco
+    source_version: animusforge-20260913
+    source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+    locator: rules/rule_斯瓦迪亚丘陵__斯瓦迪亚丘陵.json#/Variants/0/Content
+    quote_hash: 16642EE4CAB500192F3798D1F3E531E9F6DD0937F85331A759222BCD3D5A686A
+    quote: 盛产葡萄酒，陶器，以及木盾
+  expressions:
+  - id: expr.goods-pottery-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 陶器是家家要用的东西，可它又沉又易碎，驮着走远路碎一路。烧陶的作坊就开在矿坑边上。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.awQrcrt2
+      quote_hash: 9123A3359D05AE4162928D8A09018AC618674F0AACE44D52A291FC3F75CB2A6A
+      quote: 陶器{@Plural}成箱的陶器{\@}
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.myuzMhOn
+      quote_hash: 6A5E381EAD373302346F7CE554082E7A595FCF53BD47017EC1005E9703A7F8D6
+      quote: 黏土矿坑
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_罗瓦尔山地__罗瓦尔山地.json#/Variants/0/Content
+      quote_hash: F44F8011B0451444A9CE409BE0049130EA6602D5F73BE890E5BD58B64B737C2F
+      quote: 盛产陶器，麻布，铁器
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: rumor
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: rumor
+    denies: []
+  - id: expr.goods-pottery-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 陶器 210 一件，是中价位的货。它跟黏土是一条链上的两头——黏土贱得运不动，陶器价够了却能走货，赚的就是这道加工的差。
+    sources:
+    - source_id: source.calradia.game.items-eco
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 7195c8f5a9734052e446b65fbcad1a6540dc61e9003f098261926679409a4687
+      locator: bannerlord.db#localization.awQrcrt2
+      quote_hash: 9123A3359D05AE4162928D8A09018AC618674F0AACE44D52A291FC3F75CB2A6A
+      quote: 陶器{@Plural}成箱的陶器{\@}
+    - source_id: source.calradia.chronicle.animusforge.eco
+      source_version: animusforge-20260913
+      source_content_hash: d98aaff9e559c9fbaf7d5a83737bdbc7e6ba3e3958ac1aeecc1c910f2830c904
+      locator: rules/rule_斯瓦迪亚丘陵__斯瓦迪亚丘陵.json#/Variants/0/Content
+      quote_hash: 16642EE4CAB500192F3798D1F3E531E9F6DD0937F85331A759222BCD3D5A686A
+      quote: 盛产葡萄酒，陶器，以及木盾
+    grants:
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

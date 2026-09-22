@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-neocorys
 title:
   zh-CN: 涅俄科律斯
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 涅俄科律斯
-  en:
-  - Neocorys
-  - village_EW2_2
+entity_ids:
+- entity.settlement.village_ew2_2
 summary:
   zh-CN: 涅俄科律斯是一处新村，位于特美亚山谷的一处缓坡上，该地最近才由森林开垦而成；当地地主建起育种场，为帝国骑兵供马。
 registry_bindings:

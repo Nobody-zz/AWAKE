@@ -1,0 +1,218 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.war.weapons-ballista-fire
+title:
+  zh-CN: 火焰弩砲
+  en: Fire Ballista
+status: needs_review
+domain: war
+subdomain: weapons
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN:
+  - 火焰弩炮
+  en:
+  - Fire Ballista
+summary:
+  zh-CN: 火焰弩砲：普通弩炮的低成本火攻改装——弩箭箭杆前端加装浸油麻布套环，发射尖端浸透焦油的弩矢，可对敌方围城器械和木制建筑造成火焰伤害。技术上几乎没有额外门槛，弹道特性与普通弩炮一致；但火攻效果不稳定，蹭的是威慑价值，围城战的火攻主力依旧是投石车的火罐与抛石机的燃烧弹。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.lore.war3
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+  locator: bannerlord.db#localization.fd35ahzV
+  quote_hash: 8761C1197BA8A2DCA4DAF2BDB9FC49C363A53D7BF023E0CF3F21A4E622233205
+  quote: '&lt;b&gt;火焰弩炮&lt;/b&gt;{NEWLINE}发射尖端浸透焦油的弩矢。{NEWLINE}可对敌方围城器械和木制建筑造成火焰伤害，对士兵也相当致命。'
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/1/Content
+  quote_hash: 45F72E3710FACA414F60B2DA1D85BA3AAFFA256D5F385AA741AA15CD3A863DE9
+  quote: 火焰弩炮是弩炮的低成本火攻改装
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/1/Content
+  quote_hash: 02CF1065A25CBF5D2AA164AFB89B7938D5BED6293FD700C1C2052F7D985E71AF
+  quote: 守城方看到带火的巨箭落下，士气打击比实际杀伤更难量化
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/1/Content
+  quote_hash: 390F333E6822473B731E6BCF45B72F7A8EFDBC1DB1ABD9C70854C930CD16D8BA
+  quote: 火焰弩炮是临阵改装的便宜货，能用，但别期待它扭转战局
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/2/Content
+  quote_hash: B406D7B1FACF72524F22EF186AB06B09AA8DDEB8377CE234D6DC7833B6B09613
+  quote: 战术补充意义大于技术革新价值
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/0/Content
+  quote_hash: 3DEA94651D1BD486C37E053AC29ADE4B99C79A7E04E0253EBDEA451B0C67374D
+  quote: 就是城头上射出来的那种带火的箭，跟人胳膊那么粗，飞过来的时候拖着黑烟，跟火龙似的
+- source_id: source.calradia.chronicle.animusforge.war3
+  source_version: animusforge-20260913
+  source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+  locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/0/Content
+  quote_hash: 482276F783D2AF3320183E565493295CD9B37049921D23E31BFA85F6B3F7274D
+  quote: 火弩炮是阎王点名的家伙，点到谁谁认命，点不着的照样往前冲
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.ballista-fire-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 火焰弩炮是弩炮的低成本火攻改装：标准弩箭箭杆前端加装浸油麻布套环，油料配比火油与松脂三七开，燃烧温度足够引燃干燥木材但不足以熔断铁质加固件。它发射尖端浸透焦油的弩矢，可对敌方围城器械和木制建筑造成火焰伤害，对士兵也相当致命。技术上几乎没有额外门槛——弹道特性与普通弩炮完全一致，弩箭质量增加微乎其微。但火油布在飞行途中有自行熄灭的风险，引燃效果取决于命中目标的干燥程度和后续处置：对方如果准备了湿沙和水桶，火势很难持续。
+  sources:
+  - source_id: source.calradia.game.lore.war3
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+    locator: bannerlord.db#localization.fd35ahzV
+    quote_hash: 8761C1197BA8A2DCA4DAF2BDB9FC49C363A53D7BF023E0CF3F21A4E622233205
+    quote: '&lt;b&gt;火焰弩炮&lt;/b&gt;{NEWLINE}发射尖端浸透焦油的弩矢。{NEWLINE}可对敌方围城器械和木制建筑造成火焰伤害，对士兵也相当致命。'
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/1/Content
+    quote_hash: 45F72E3710FACA414F60B2DA1D85BA3AAFFA256D5F385AA741AA15CD3A863DE9
+    quote: 火焰弩炮是弩炮的低成本火攻改装
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/1/Content
+    quote_hash: 02CF1065A25CBF5D2AA164AFB89B7938D5BED6293FD700C1C2052F7D985E71AF
+    quote: 守城方看到带火的巨箭落下，士气打击比实际杀伤更难量化
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/1/Content
+    quote_hash: 390F333E6822473B731E6BCF45B72F7A8EFDBC1DB1ABD9C70854C930CD16D8BA
+    quote: 火焰弩炮是临阵改装的便宜货，能用，但别期待它扭转战局
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/2/Content
+    quote_hash: B406D7B1FACF72524F22EF186AB06B09AA8DDEB8377CE234D6DC7833B6B09613
+    quote: 战术补充意义大于技术革新价值
+  expressions:
+  - id: expr.ballista-fire-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 火焰弩砲就是在普通弩砲的基础上做低成本火攻改装：弩箭前端加上浸油麻布，射出去带着火。技术上几乎没有额外门槛，弩箭飞起来也跟原来一样。它烧的是对面的围城器械和木制建筑，对人的杀伤还是那些，多出来的是那股吓人的声势。
+    sources:
+    - source_id: source.calradia.game.lore.war3
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: 4ff820e7299c3d9fc4f55d812ae9d6e5c175d3beb4a3646b88652f22303c0d07
+      locator: bannerlord.db#localization.fd35ahzV
+      quote_hash: 8761C1197BA8A2DCA4DAF2BDB9FC49C363A53D7BF023E0CF3F21A4E622233205
+      quote: '&lt;b&gt;火焰弩炮&lt;/b&gt;{NEWLINE}发射尖端浸透焦油的弩矢。{NEWLINE}可对敌方围城器械和木制建筑造成火焰伤害，对士兵也相当致命。'
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/1/Content
+      quote_hash: 45F72E3710FACA414F60B2DA1D85BA3AAFFA256D5F385AA741AA15CD3A863DE9
+      quote: 火焰弩炮是弩炮的低成本火攻改装
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: summary
+    denies: []
+  - id: expr.ballista-fire-lord-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 火焰弩炮是弩炮的低成本火攻改装。我从军需册上看过它的装备清单：标准弩箭、几卷浸油麻布、火镰火绒，成本增加微不足道。攻城时在弩炮阵地上分一半器械改装火焰弩箭，可以同时压制城头守军和制造火灾恐慌——守城方看到带火的巨箭落下，士气打击比实际杀伤更难量化。但它的战场局限也清楚：火弩箭对人员的杀伤效率提升极其有限，附带灼烧更多是威慑价值；对器械结构的破坏聊胜于无，火烧得再旺也是在木头表面。想摧毁冲车或攻城塔，还是得指望投石车抛掷火罐。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/1/Content
+      quote_hash: 02CF1065A25CBF5D2AA164AFB89B7938D5BED6293FD700C1C2052F7D985E71AF
+      quote: 守城方看到带火的巨箭落下，士气打击比实际杀伤更难量化
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/1/Content
+      quote_hash: 390F333E6822473B731E6BCF45B72F7A8EFDBC1DB1ABD9C70854C930CD16D8BA
+      quote: 火焰弩炮是临阵改装的便宜货，能用，但别期待它扭转战局
+    grants:
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
+  - id: expr.ballista-fire-engineer-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 火焰弩炮在技术上几乎没有额外门槛。标准弩箭箭杆前端加装浸油麻布套环，油料配比火油与松脂三七开，燃烧温度足够引燃干燥木材但不足以熔断铁质加固件。弹道特性与普通弩炮完全一致——弩箭质量增加微乎其微，初速和衰减曲线不变，依旧是一百五十米后动能断崖式下跌。火油布在飞行途中有自行熄灭的风险，弩箭离弦瞬间的风压会扑灭一部分火苗，所以在点火后必须即刻发射，不能瞄准太久。综合看，火焰弩炮是在不增加生产成本的前提下，给弩炮增加不稳定附伤效果的改装方案——战术补充意义大于技术革新价值。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/2/Content
+      quote_hash: B406D7B1FACF72524F22EF186AB06B09AA8DDEB8377CE234D6DC7833B6B09613
+      quote: 战术补充意义大于技术革新价值
+    grants:
+    - profile_id: profile.noble_high_steward
+      scope: elite
+      min_detail: detail
+    denies: []
+- id: assertion.ballista-fire-2
+  revision: 1
+  kind: rumor
+  text:
+    zh-CN: 守城的人对火焰弩炮的印象全在那一箭上：带火的箭跟人胳膊那么粗，飞过来拖着黑烟，跟火龙似的；打中人跟普通弩炮一样，多了个火烧的焦臭味。对攻城的大车没大用——箭头是插进去了，火烧了一会儿，对面一桶水浇上来就灭了。老话说得好，火弩炮是阎王点名的家伙，点到谁谁认命，点不着的照样往前冲。
+  sources:
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/0/Content
+    quote_hash: 3DEA94651D1BD486C37E053AC29ADE4B99C79A7E04E0253EBDEA451B0C67374D
+    quote: 就是城头上射出来的那种带火的箭，跟人胳膊那么粗，飞过来的时候拖着黑烟，跟火龙似的
+  - source_id: source.calradia.chronicle.animusforge.war3
+    source_version: animusforge-20260913
+    source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+    locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/0/Content
+    quote_hash: 482276F783D2AF3320183E565493295CD9B37049921D23E31BFA85F6B3F7274D
+    quote: 火弩炮是阎王点名的家伙，点到谁谁认命，点不着的照样往前冲
+  expressions:
+  - id: expr.ballista-fire-villager-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 火焰弩炮？就是城头上射出来的那种带火的箭，跟人胳膊那么粗，飞过来的时候拖着黑烟，跟火龙似的。我们村有个守过城的说那东西看着吓人，打中人跟普通弩炮一样，串几个算几个，多了个火烧的焦臭味。但他也说，那东西对攻城的大车没大用——射上去箭头是插进去了，火烧了一会儿，对面一桶水浇上来就灭了。老话说得好，火弩炮是阎王点名的家伙，点到谁谁认命，点不着的照样往前冲。
+    sources:
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/0/Content
+      quote_hash: 3DEA94651D1BD486C37E053AC29ADE4B99C79A7E04E0253EBDEA451B0C67374D
+      quote: 就是城头上射出来的那种带火的箭，跟人胳膊那么粗，飞过来的时候拖着黑烟，跟火龙似的
+    - source_id: source.calradia.chronicle.animusforge.war3
+      source_version: animusforge-20260913
+      source_content_hash: c3f584d9f8f55a472c051c889dcf0a469e7be987d3e8e19f52d2b5b4f4acf6f4
+      locator: rules/rule_火焰弩砲__火焰弩砲.json#/Variants/0/Content
+      quote_hash: 482276F783D2AF3320183E565493295CD9B37049921D23E31BFA85F6B3F7274D
+      quote: 火弩炮是阎王点名的家伙，点到谁谁认命，点不着的照样往前冲
+    grants:
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []

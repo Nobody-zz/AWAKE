@@ -1,5 +1,5 @@
 schema_version: awake.worldbook.authoring.v1
-revision: 1
+revision: 3
 id: doc.geography.villages-alision
 title:
   zh-CN: 阿利西翁
@@ -12,12 +12,8 @@ era:
   key: current
   certainty: bounded
 content_tier: base
-aliases:
-  zh-CN:
-  - 阿利西翁
-  en:
-  - Alision
-  - village_ES2_4
+entity_ids:
+- entity.settlement.village_es2_4
 summary:
   zh-CN: 阿利西翁坐落于珀拉斯海北岸；当地渔业相当不景气，村民便在浅滩上建起盐田制盐。
 registry_bindings:
