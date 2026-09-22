@@ -116,6 +116,13 @@ __pycache__/
 #   * AWAKE/artifacts/               -- assemble / game-dir-deploy backups, fully regenerable
 #   * AWAKE/_backup_dist_runtime_*/  -- pre-deploy dist snapshots of the runtime service
 #   * _wtest_ps/                     -- PowerShell write-probe scratch (.bin)
+#   * projection/_archive-alias-tighten-20260920/
+#     -- 09-20 凌晨「别名收紧」与「镜像同步」两道工序之前的手工快照（1392 文件／14 MB）。
+#        当时手工拷是因为镜像侧有未提交改动、git checkout 回不到同步前状态；
+#        如今正本 workspace/full-geo1/authoring 已 489→564、镜像 authoring-out 已 302→569
+#        （之后又加了军事／经济／暗面／互引边四批）⇒ 快照只剩「回滚到那一刻」的价值，
+#        而回滚等于把这四批退掉。故拉黑，不删（文件仍在磁盘）。
+AWAKE/docs/worldbook-migration/projection/_archive-alias-tighten-20260920/
 AWAKE/tools/_reranker_survey/dl/
 AWAKE/tools/*/native/
 AWAKE/artifacts/
