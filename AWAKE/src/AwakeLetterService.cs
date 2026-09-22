@@ -219,12 +219,12 @@ internal static class AwakeLetterService
             "npc").ConfigureAwait(false);
         if (!appended)
         {
-            await RecordFailedAsync(contactKey, letterId, AwakeLetterConstants.Inbound, sender, PlayerSpeaker(), hour, hour, "transcript_write_failed", idempotencyKey, cancellationToken).ConfigureAwait(false);
+            await AwakeLetterCommit.RecordFailedAsync(contactKey, letterId, AwakeLetterConstants.Inbound, sender, PlayerSpeaker(), hour, hour, "transcript_write_failed", idempotencyKey, cancellationToken).ConfigureAwait(false);
             return false;
         }
 
-        bool recorded = await RecordAsync(
-            AddArguments(new AwakeLetterRecord
+        bool recorded = await AwakeLetterCommit.RecordAsync(
+            AwakeLetterCommit.AddArguments(new AwakeLetterRecord
             {
                 Id = letterId,
                 ContactKey = contactKey,
@@ -252,7 +252,7 @@ internal static class AwakeLetterService
     internal static async Task<bool> MarkReadAsync(string letterId, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(letterId)) return false;
-        bool ok = await RecordAsync(
+        bool ok = await AwakeLetterCommit.RecordAsync(
             new JObject
             {
                 ["op"] = AwakeLetterConstants.OpRead,
@@ -313,7 +313,7 @@ internal static class AwakeLetterService
             return false;
         }
 
-        bool recorded = await RecordAsync(
+        bool recorded = await AwakeLetterCommit.RecordAsync(
             new JObject
             {
                 ["op"] = AwakeLetterConstants.OpReply,
@@ -419,87 +419,27 @@ internal static class AwakeLetterService
         string replyToId,
         CancellationToken cancellationToken)
     {
-        string letterId = AwakeLetterConstants.NewLetterId(idempotencyKey);
-        bool appended = await AwakeTranscriptService.AppendLetterAsync(
+        // 两步编排（写正文 ⇒ 写账本）连同失败留痕都在 AwakeLetterCommit 里：
+        // 那个件不引 TaleWorlds，编得进离线验台 —— 半提交的判据才写得了。
+        AwakeLetterCommit.LetterCommitResult commit = await AwakeLetterCommit.WriteOutboundAsync(
             contactKey,
             conversationId,
+            idempotencyKey,
             DayOf(createdHour),
             ResolveLocation(),
             text,
-            idempotencyKey,
+            sender,
+            recipient,
+            createdHour,
+            deliverHour,
+            replyToId,
             cancellationToken).ConfigureAwait(false);
-        if (!appended)
-        {
-            await RecordFailedAsync(contactKey, letterId, AwakeLetterConstants.Outbound, sender, recipient, createdHour, deliverHour, "transcript_write_failed", idempotencyKey, cancellationToken).ConfigureAwait(false);
-            return false;
-        }
 
-        bool recorded = await RecordAsync(
-            AddArguments(new AwakeLetterRecord
-            {
-                Id = letterId,
-                ContactKey = contactKey,
-                Direction = AwakeLetterConstants.Outbound,
-                Sender = sender,
-                Recipient = recipient,
-                CreatedHour = createdHour,
-                DeliverHour = deliverHour,
-                Status = AwakeLetterConstants.StatusSent,
-                ReplyToId = replyToId ?? string.Empty
-            }),
-            "letter-add|" + idempotencyKey,
-            cancellationToken).ConfigureAwait(false);
-        if (recorded)
+        if (commit.LedgerRecorded)
         {
             AwakeLog.Write("letter_send_succeeded key=" + contactKey + " conversation=" + conversationId + " hours=" + (deliverHour - createdHour) + " source=letter");
         }
-        return recorded;
-    }
-
-    /// <summary>正文没能落盘时的账本留痕：只有生命周期，没有正文（审计用）。</summary>
-    private static Task<bool> RecordFailedAsync(
-        string contactKey,
-        string letterId,
-        string direction,
-        string sender,
-        string recipient,
-        int createdHour,
-        int deliverHour,
-        string failureReason,
-        string idempotencyKey,
-        CancellationToken cancellationToken)
-    {
-        return RecordAsync(
-            AddArguments(new AwakeLetterRecord
-            {
-                Id = letterId,
-                ContactKey = contactKey,
-                Direction = direction,
-                Sender = sender,
-                Recipient = recipient,
-                CreatedHour = createdHour,
-                DeliverHour = deliverHour,
-                Status = AwakeLetterConstants.StatusFailed,
-                FailureReason = failureReason
-            }),
-            "letter-failed|" + idempotencyKey,
-            cancellationToken);
-    }
-
-    private static JObject AddArguments(AwakeLetterRecord record)
-    {
-        return new JObject
-        {
-            ["op"] = AwakeLetterConstants.OpAdd,
-            ["letter"] = record.ToJson()
-        };
-    }
-
-    private static async Task<bool> RecordAsync(JObject arguments, string idempotencyKey, CancellationToken cancellationToken)
-    {
-        WorldStateStore store = AwakeRuntime.WorldStateStore;
-        if (store == null) return false;
-        return await store.UpdateLettersAsync(arguments, idempotencyKey, cancellationToken).ConfigureAwait(false);
+        return commit.LedgerRecorded;
     }
 
     private static Task<bool> EnsureReadyAsync(IMarcusAiFrameworkHost host, CancellationToken cancellationToken)

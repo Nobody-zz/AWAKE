@@ -88,6 +88,9 @@
     <Compile Include="..\AWAKE\src\AwakeMessengerHistory.cs" Link="AwakeMessengerHistory.cs" />
     <!-- AwakeLetterService.cs 不在此列：它经 AwakeMessengerService → NpcDialogueLauncher 触及
          Gauntlet UI overlay，本工程不引用 TaleWorlds.MountAndBlade。故只收零依赖的账本与校验器。 -->
+    <!-- AwakeLetterCommit.cs：信件两步编排（写正文 ⇒ 写账本）＋失败留痕。零 TaleWorlds 依赖
+         ⇒ 从 AwakeLetterService 摘出来后，"半提交"的判据才写得了（2026-09-22，P1-05）。 -->
+    <Compile Include="..\AWAKE\src\AwakeLetterCommit.cs" Link="AwakeLetterCommit.cs" />
     <Compile Include="..\AWAKE\src\AwakeLetterLedger.cs" Link="AwakeLetterLedger.cs" />
     <Compile Include="..\AWAKE\src\AwakeLetterRequestValidation.cs" Link="AwakeLetterRequestValidation.cs" />
     <Compile Include="..\AWAKE\src\AwakePromiseStateMachine.cs" Link="AwakePromiseStateMachine.cs" />

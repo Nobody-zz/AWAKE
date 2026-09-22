@@ -1,0 +1,37 @@
+P1-05 信件半提交 · 读数（AWAKE · 2026-09-22）
+================================================================================
+命令：cd AWAKE.Tests && dotnet run        （离线用例表，本次 total=66）
+产品构建：AWAKE/tools/build.ps1 -Configuration Debug  ->  BUILD_OK（0 错误 4 警告）+ TESTS_OK
+
+【红】判据：半提交必须留下可查痕迹
+取得方式：把 AwakeLetterCommit.cs 里那行 letter_send_half_committed 日志注释掉。
+该状态＝修前的行为：本次只是把编排从 AwakeLetterService 摘出来，行为逐字等价，
+唯一新增就是这一行 —— 所以这次红读数同时就是变异检验本身（做法与结果见下一节）。
+
+  [20/66] FAIL letter-half-commit
+  FAIL_MSG 半提交必须留下可查痕迹（含 letterId 与幂等键），否则正文孤儿无从清理。
+  RESULT total=66 passed=63 failed=3
+
+【绿】恢复那一行之后
+  PROBE 正文被校验拒 -> 账本留痕 status=failed reason=transcript_write_failed direction=outbound 计入未读=False
+  PROBE 正文写盘失败 -> failureRecorded=False 账本留痕落地=False
+  [20/66] ok   letter-half-commit
+  RESULT total=66 passed=66 failed=0
+
+【变异检验】
+做法：注释掉被测的那一行日志 -> 判据报"半提交必须留下可查痕迹"（见上"红"节）；
+      恢复该行 -> 全绿。结论：这条判据真能 FAIL，不是全绿灯装饰。
+
+【同一用例顺带量到的两个读数，不断言、供裁决】
+  ① 正文被**校验**拒（超长，> transcript 层 1200 字节上限）
+     => 账本落得下 failed 留痕，status=failed、reason=transcript_write_failed、不计未读。
+  ② 正文**写盘失败**（真故障、可重试）
+     => failureRecorded=False，**账本留痕也落不下去**。
+     机制：可重试的失败命令以 deferred 留在 store 队列里，同一实例内后续命令的落定判定被一并
+     染成"未落定"（WorldStateStore.cs:2361 DeferredRetry；:2379 IsPersisted 要求 !DeferredRetry）。
+     => 这套"正文没落盘就落一条 failed 留痕"的降级，只在校验拒那条路上有效，在真故障那条路上失效。
+
+【另两条失败与本次改动无关（记录，不认领）】
+  worldbook-overlay-import-partial —— 世界书线 P1-04 的用例，该文件正被其并线作业中（时红时绿）。
+  g3-s0-focused-readiness —— 只在 letter-half-commit 提前中止时跟着红（级联：前序用例没跑完收尾
+     会把未决状态留给它）。用例表头的注释已警告过这种级联，本读数与该规律一致。

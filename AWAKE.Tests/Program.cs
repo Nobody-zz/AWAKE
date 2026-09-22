@@ -80,6 +80,7 @@ internal static class Program
 			("r1-gold-adapter-boundary", () => { RunR1GoldAdapterBoundarySmoke(); return Task.CompletedTask; }),
 			("storage-pipeline", () => RunStoragePipelineSmokeAsync()),
 			("persistence-settlement-truth", () => RunPersistenceSettlementTruthSmokeAsync()),
+			("letter-half-commit", () => RunLetterHalfCommitSmokeAsync()),
 			("g3-s0-focused-readiness", () => RunG3S0FocusedReadinessSmokeAsync()),
 			("prompt-registration-coordinator", () => RunPromptRegistrationCoordinatorSmokeAsync()),
 			("npc-memory", () => { RunNpcMemorySmoke(); return Task.CompletedTask; }),
@@ -2719,7 +2720,194 @@ private static void RunMessengerHistorySmoke()
 			Console.WriteLine("PASS storage pipeline smoke");
 		}
 
-		private static async Task RunPersistenceSettlementTruthSmokeAsync()
+		private static async Task RunLetterHalfCommitSmokeAsync()
+	{
+		SessionRef session = new SessionRef("letter-half-campaign", "letter-half-timeline", "letter-half-session");
+		WorldStateStore store = new WorldStateStore(session);
+		FakeKeyValueStore transcriptStore = new FakeKeyValueStore();
+		// 只让**第 2 步（写账本）**失败：正文先落盘、账本写不进去 —— 这就是 P1-05 的半提交窗口。
+		FakeKeyValueStore lettersStore = new FakeKeyValueStore { FailSet = true, FailSetAfter = 1 };
+		// 第三只必须一起注入：AppendLetterAsync 落完正文还要写一次联系人索引
+		// （AwakeTranscriptService.cs:173 EnsureContactAsync），漏注入它这一步就整条 false，
+		// 半提交窗口根本走不到 —— 这是本夹具的第一堵墙。
+		FakeKeyValueStore contactsStore = new FakeKeyValueStore();
+		store.InjectStoreForTesting(AiTaskConstants.TranscriptNamespace, transcriptStore);
+		store.InjectStoreForTesting(AiTaskConstants.LettersNamespace, lettersStore);
+		store.InjectStoreForTesting(AiTaskConstants.ContactsNamespace, contactsStore);
+		await AwakeRuntime.SetWorldStateStore(store).ConfigureAwait(false);
+
+		Action<string> previousRecorder = AwakeLog.Recorder;
+		List<string> logs = new List<string>();
+		AwakeLog.Recorder = logs.Add;
+		try
+		{
+			string contactKey = "hero:letter-half";
+			string body = "半提交测试：正文落盘、账本没落。";
+
+			// ---- 第 1 次：账本写失败 ⇒ 半提交 ----
+			string firstKey = "letter|half-commit-1";
+			AwakeLetterCommit.LetterCommitResult first = await WriteHalfCommitLetterAsync(contactKey, firstKey, body);
+			if (first.LedgerRecorded)
+			{
+				throw new InvalidOperationException("账本写入失败时不得报发送成功。");
+			}
+			if (!first.TranscriptWritten || !first.HalfCommitted)
+			{
+				throw new InvalidOperationException("账本写失败而正文已落盘，应判为半提交。");
+			}
+			List<AwakeTranscriptLine> afterFirst = await AwakeTranscriptService.GetHistoryAsync(contactKey, CancellationToken.None).ConfigureAwait(false);
+			if (CountTranscriptBody(afterFirst, body) != 1)
+			{
+				throw new InvalidOperationException("半提交时正文应已落盘且只有一行（孤儿正文）。");
+			}
+			if ((await ReadLetterLedgerAsync(store).ConfigureAwait(false)).Count != 0)
+			{
+				throw new InvalidOperationException("账本为权威：写失败时账本里不应出现这封信。");
+			}
+			// 本用例的核心判据：半提交**不许静默** —— 必须留下能定位那具孤儿的痕迹。
+			bool traced = false;
+			foreach (string line in logs)
+			{
+				if (line != null
+					&& line.Contains("letter_send_half_committed")
+					&& line.Contains(first.LetterId)
+					&& line.Contains(firstKey))
+				{
+					traced = true;
+					break;
+				}
+			}
+			if (!traced)
+			{
+				throw new InvalidOperationException("半提交必须留下可查痕迹（含 letterId 与幂等键），否则正文孤儿无从清理。");
+			}
+
+			// ---- 重试（同键）：应当收敛 ----
+			lettersStore.FailSet = false;
+			AwakeLetterCommit.LetterCommitResult retrySameKey = await WriteHalfCommitLetterAsync(contactKey, firstKey, body);
+			if (!retrySameKey.LedgerRecorded)
+			{
+				throw new InvalidOperationException("存储恢复后同键重试应当补上账本。");
+			}
+			List<AwakeTranscriptLine> afterRetry = await AwakeTranscriptService.GetHistoryAsync(contactKey, CancellationToken.None).ConfigureAwait(false);
+			if (CountTranscriptBody(afterRetry, body) != 1)
+			{
+				throw new InvalidOperationException("同键重试不得重复写正文（幂等键应生效）。");
+			}
+
+			// ---- 重试（换键）：不收敛。这正是调用方现状：AwakeMessengerVM 把 conversationId 传成
+			//      string.Empty，SendAsync 于是每发一次就现取一枚新 Guid 当幂等键。 ----
+			string secondKey = "letter|half-commit-2";
+			AwakeLetterCommit.LetterCommitResult retryNewKey = await WriteHalfCommitLetterAsync(contactKey, secondKey, body);
+			if (!retryNewKey.LedgerRecorded)
+			{
+				throw new InvalidOperationException("换键重试应能落账本。");
+			}
+			List<AwakeTranscriptLine> afterNewKey = await AwakeTranscriptService.GetHistoryAsync(contactKey, CancellationToken.None).ConfigureAwait(false);
+			int bodies = CountTranscriptBody(afterNewKey, body);
+			if (bodies != 2)
+			{
+				throw new InvalidOperationException("换键重试应产生第二份正文；实得 " + bodies + " 份（口径变了要复核）。");
+			}
+			if ((await ReadLetterLedgerAsync(store).ConfigureAwait(false)).Count != 2)
+			{
+				throw new InvalidOperationException("换键重试会在账本里留下第二封信。");
+			}
+
+			// ---- (h) 正文没能落盘时的账本留痕：分两种，行为完全不同 ----
+			// h1 正文**被校验拒**（超长）：压根没有命令入队 ⇒ 账本 failed 留痕落得下去。
+			string overlongKey = "letter|half-commit-3";
+			string overlongBody = new string('超', 500); // 1500 UTF-8 字节 > transcript 层 1200 的上限
+			AwakeLetterCommit.LetterCommitResult bodyRejected = await WriteHalfCommitLetterAsync(contactKey, overlongKey, overlongBody);
+			if (bodyRejected.TranscriptWritten || !bodyRejected.FailureRecorded)
+			{
+				throw new InvalidOperationException("正文被校验拒时应落 failed 留痕；实得 transcriptWritten="
+					+ bodyRejected.TranscriptWritten + " failureRecorded=" + bodyRejected.FailureRecorded);
+			}
+			AwakeLetterRecord failedRecord = null;
+			foreach (AwakeLetterRecord record in await ReadLetterLedgerAsync(store).ConfigureAwait(false))
+			{
+				if (StringComparer.Ordinal.Equals(record.Id, AwakeLetterConstants.NewLetterId(overlongKey))) failedRecord = record;
+			}
+			if (failedRecord == null
+				|| !StringComparer.Ordinal.Equals(failedRecord.Status, AwakeLetterConstants.StatusFailed)
+				|| !StringComparer.Ordinal.Equals(failedRecord.FailureReason, "transcript_write_failed"))
+			{
+				throw new InvalidOperationException("failed 留痕的状态与原因不合口径。");
+			}
+			if (AwakeLetterConstants.IsUnreadStatus(failedRecord.Status))
+			{
+				throw new InvalidOperationException("failed 记录不得计入未读。");
+			}
+			Console.WriteLine("PROBE 正文被校验拒 -> 账本留痕 status=" + failedRecord.Status
+				+ " reason=" + failedRecord.FailureReason + " direction=" + failedRecord.Direction
+				+ " 计入未读=" + AwakeLetterConstants.IsUnreadStatus(failedRecord.Status));
+
+			// h2 正文**写盘失败**（真故障、可重试）：这笔失败命令以 deferred 留在队列里，把同一实例内
+			// 后续所有命令的落定判定一并染成"未落定" ⇒ **连失败留痕都落不下去**（实测读数，见 PROBE）。
+			// 是否要改成"留痕也必须落地"属裁决项，本用例不断言它，只报读数。
+			string storageFailKey = "letter|half-commit-4";
+			transcriptStore.FailSet = true;
+			AwakeLetterCommit.LetterCommitResult storageFailed = await WriteHalfCommitLetterAsync(contactKey, storageFailKey, body);
+			transcriptStore.FailSet = false;
+			if (storageFailed.TranscriptWritten)
+			{
+				throw new InvalidOperationException("正文写盘失败时不得声称正文已写。");
+			}
+			bool failedTraceLanded = false;
+			foreach (AwakeLetterRecord record in await ReadLetterLedgerAsync(store).ConfigureAwait(false))
+			{
+				if (StringComparer.Ordinal.Equals(record.Id, AwakeLetterConstants.NewLetterId(storageFailKey))) failedTraceLanded = true;
+			}
+			Console.WriteLine("PROBE 正文写盘失败 -> failureRecorded=" + storageFailed.FailureRecorded
+				+ " 账本留痕落地=" + failedTraceLanded);
+
+			// 收尾：把上面那笔 deferred 命令跑定，别把未决状态留给后面的用例。
+			await WriteHalfCommitLetterAsync(contactKey, "letter|half-commit-5", body).ConfigureAwait(false);
+
+			Console.WriteLine("PASS letter half-commit");
+		}
+		finally
+		{
+			AwakeLog.Recorder = previousRecorder;
+		}
+	}
+
+	private static Task<AwakeLetterCommit.LetterCommitResult> WriteHalfCommitLetterAsync(string contactKey, string idempotencyKey, string body)
+	{
+		// 与 AwakeLetterService.WriteOutboundAsync 同参同序 —— 走的是同一段真编排，不带替身。
+		return AwakeLetterCommit.WriteOutboundAsync(
+			contactKey,
+			idempotencyKey,
+			idempotencyKey,
+			5,
+			"测试地点",
+			body,
+			"你",
+			"收信人",
+			100,
+			100,
+			string.Empty,
+			CancellationToken.None);
+	}
+
+	private static int CountTranscriptBody(List<AwakeTranscriptLine> lines, string body)
+	{
+		int count = 0;
+		foreach (AwakeTranscriptLine line in lines)
+		{
+			if (StringComparer.Ordinal.Equals(line.Text, body)) count++;
+		}
+		return count;
+	}
+
+	private static async Task<List<AwakeLetterRecord>> ReadLetterLedgerAsync(WorldStateStore store)
+	{
+		JObject doc = await store.GetLettersAsync(null, CancellationToken.None).ConfigureAwait(false);
+		return LetterLedgerDocument.ParseLetters(doc);
+	}
+
+	private static async Task RunPersistenceSettlementTruthSmokeAsync()
 		{
 			SessionRef session = new SessionRef("settlement-campaign", "settlement-timeline", "settlement-session");
 			WorldStateStore store = new WorldStateStore(session);

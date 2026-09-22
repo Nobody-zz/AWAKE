@@ -1,0 +1,41 @@
+fix(letter): P1-05 信件半提交 —— 编排摘出 UI 依赖 + 半提交必须留痕
+
+派工单：docs/HANDOFF-STORAGE-20260922-MAIN.md 第 1 项。
+
+【(f) 摘出可测】
+新 src/AwakeLetterCommit.cs：信件两步编排（写正文 ⇒ 写账本）＋失败留痕，零 TaleWorlds 依赖。
+原 AwakeLetterService.cs 编不进 AWAKE.Tests 的原因留在原处（ResolveContactDisplayName 走
+AwakeMessengerService.BuildContacts，触及 Gauntlet overlay），本次不动它。
+已加进 AWAKE.Tests.csproj 显式清单。
+判据：新用例 letter-half-commit（真编排 + 真 AwakeTranscriptService + 真 WorldStateStore，
+只把底层存储换成 FakeKeyValueStore）。
+
+【(g) 重试收敛性（实测）】
+同键重试收敛（正文不重复、账本补上）；换键重试不收敛（正文第二份 + 账本第二封）。
+调用方 AwakeMessengerVM.cs:595-599 传 conversationId=string.Empty ⇒ SendAsync 每发一次现取 Guid
+⇒ 实际走换键那一支 ⇒ 重试即重复。
+
+【(h) 正文没落盘的 failed 留痕（实测）】
+校验拒（超长）：留痕落得下，不计未读。
+写盘失败（真故障）：留痕落不下去 —— 可重试失败命令以 deferred 留在队列，同一实例内后续命令的
+落定判定被一并染成未落定（WorldStateStore.cs:2361 / :2379）。
+
+【修法（按已定口径 3）】
+账本为权威、不得因正文存在就报成功（原本如此，未改）；补上"不许静默部分成功"——
+半提交时写一行 letter_send_half_committed（key / letter / idem），这是孤儿正文唯一定位与清理的门牌。
+
+【读数】
+红 [20/66] FAIL letter-half-commit（注释掉那行日志 ⇒ 同一次也是变异检验）；绿 total=66 passed=66 failed=0。
+产品构建 BUILD_OK（0 错误 4 警告）+ TESTS_OK。
+完整读数：AWAKE/tools/_readings_p1_05_20260922.txt；交付说明：AWAKE/docs/DONE-20260922-P1-05-信件半提交.md。
+
+【自报问题（五条，详见交付文档第七节）】
+① AwakeLetterService.cs 此前无任何判据覆盖（不在测试工程清单里），是结构性的"改了没闸"；
+② 一笔可重试的写失败会传染后续所有写的落定判定 ⇒ 降级留痕在真故障路径失效；
+③ 幂等键取自 conversationId 而调用方传空 ⇒ 重试即重复；
+④ AwakeRuntime.SetWorldStateStore(null) 是空操作（AwakeRuntime.cs:501），用例"清场"是假的；
+⑤ 用例表状态耦合：g3-s0-focused-readiness 会在本用例提前中止时级联变红。
+
+【提交纪律】
+AWAKE.Tests/Program.cs 同时含世界书线的在途改动（其 P1-04 用例），故按 hunk 切补丁，
+只把本线两个 hunk（旧起始行 80 / 2719）放进索引（_split_patch_20260922.py），他线在途未带入、未触碰。
