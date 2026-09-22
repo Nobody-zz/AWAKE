@@ -15,7 +15,7 @@
 | 构建 | `AWAKE/tools/build.ps1 -Configuration Debug`（退出码 0） | `Awake.SdkSmoke.exe` mtime **09-22 10:28**（重编生效） |
 | 测试 | `./AWAKE.Tests/bin/Debug/net472/Awake.SdkSmoke.exe` | **`RESULT total=64 passed=64 failed=0`，`EXIT=0`** |
 | 世界书（游戏侧） | 同上，用例 `dialogue chain worldbook deployed redtest` | `entries=482 package=awake:worldbook.calradia` |
-| 未入库 | `git status --porcelain \| wc -l` | **750 条** |
+| 未入库 | `git status --porcelain \| wc -l` | **750 条** ⇒ **10:5x 收口后剩 31 条**（世界书线入库 `7a3e4f2`，714 项） |
 | 体积 | `du -sh` | `docs` 62 M · `authoring-out` 9.1 M · `src` 2.1 M · `ModuleData` 2.6 M |
 | C 档 | `.gitignore:119` | `AWAKE/tools/_reranker_survey/dl/`（**2.2 GB** 下载缓存）**已拉黑** |
 
@@ -77,7 +77,8 @@
 6. 美术 4 件已交付资产的**色值复核**（基准来自 2023-12 旧版，须用现行 `gauntlet_ui.tpac` 重测）。
 
 **E. 自己就能做（不做会真丢东西的排最前）**
-7. **750 条未入库**——569 条世界书内容压着，是「不做会真丢」的那一条。
+7. ✅ **~~750 条未入库~~（10:5x 已收口，甲方指令「把世界书入库」）** —— 世界书线产出入库 **714 项**（`7a3e4f2`）；
+   569 条条目正文已进库。**剩 31 条全属他线或垃圾**。
 8. **删 B 档垃圾**（先经甲方）。
 9. 新开 `ui_awake_slot` category（现图集已满，接线前必须先腾位）。
 
@@ -88,3 +89,28 @@
 - 只做了**读数**：重编（Debug）＋ 实跑测试 ＋ `git status`／`du`／`git log`。
 - **未改任何源码**，未碰 `src/` 在途三件，未提交别人的产出。
 - 重编走 `build.ps1`（只编译、不同步游戏目录）⇒ 游戏目录未被触碰。
+
+### 10:4x～10:5x 追加（甲方指令「把世界书入库」＋「先入库再改路线图」）
+
+**⚠️ 顺序纪律（甲方 10:5x 纠正）：先入库，再改路线图。** 我第一次做反了（先改路线图 `a1218d6`，
+后入库 `692a903`＋`81582b7`）⇒ 已用 `git reset --soft 3805355` 重排为下面的正确顺序。
+理由：**路线图是权威状态**，若先改它，而入库这一步被拦／失败，路线图就会指向库里没有的东西 ⇒ 变成假状态。
+⇒ **常态顺序：产出入库 → 再据以改路线图。**
+
+| 顺序 | 动作 | 提交 | 内容 |
+|---|---|---|---|
+| **① 先** | 世界书入库 | **`7a3e4f2`**（714 项） | 条目正文 569 ＋ 批产文档 27 ＋ 互引边留档 ＋ 契约 ＋ link-registry ＋ 一次性脚本 121 ＋ 编译器 4 ＋ 验证留档 |
+| **② 后** | 修路线图 | **`cdebc34`** | 现状节「61 例 2 红」→ **64 例全绿**；补注新增 09-22 一条（6 条红已过时）；世界书读数改 `entries=482`／558 未投送；加「全绿 ≠ 真机缺陷已修」硬提醒；「下一步」第 2 条标已完成 |
+
+**★ 重排时顺带纠正的一条误带**：第一次入库用了宽 pathspec `AWAKE/tools/` ⇒
+`git commit -- <宽目录>` 会**连带提交该目录下的他人已跟踪在途改动**，
+实际带走了角色卡线 6 件（`persona-workbench/AUTHORING-GUIDELINES.zh-CN.md` ＋ 5 张 `.persona.json`），
+而提交消息里还写着「角色卡线未碰」——**自相矛盾的假留痕**。
+⇒ 本次改为 `AWAKE/tools/_*.py|txt|json` ＋ `:(exclude)` 精确 pathspec，那 6 件已 `git reset` 摘回工作区
+（现为未暂存的 ` M`，交回角色卡线自己提交）。
+⇒ **纪律：入库 pathspec 不许用宽目录覆盖多线共父目录**（`tools/`、`docs/` 都是多线共父）。
+
+**有意排除并已回退暂存**：`projection/_archive-alias-tighten-20260920/`（**1392 文件／14 MB** 工作区备份副本，
+`git add` 时误入，已 `git reset` 摘出）⇒ **建议 ignore 或删，待甲方一句话**。
+其余未入：`_prod_smoke_*.txt`（主干线）、`portrait-probe-fixture.png`（UI 线）、`_workspace_cs_backup_*.bak`、
+角色卡线 `_persona_*`／`persona_definitions` 5 条、`src/` 在途三件、根目录 5 份临时/垃圾文件。
