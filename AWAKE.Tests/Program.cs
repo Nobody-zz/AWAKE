@@ -81,6 +81,7 @@ internal static class Program
 			("storage-pipeline", () => RunStoragePipelineSmokeAsync()),
 			("persistence-settlement-truth", () => RunPersistenceSettlementTruthSmokeAsync()),
 			("letter-half-commit", () => RunLetterHalfCommitSmokeAsync()),
+			("token-usage", () => { RunTokenUsageSmoke(); return Task.CompletedTask; }),
 			("g3-s0-focused-readiness", () => RunG3S0FocusedReadinessSmokeAsync()),
 			("prompt-registration-coordinator", () => RunPromptRegistrationCoordinatorSmokeAsync()),
 			("npc-memory", () => { RunNpcMemorySmoke(); return Task.CompletedTask; }),
@@ -2907,8 +2908,99 @@ private static void RunMessengerHistorySmoke()
 		return LetterLedgerDocument.ParseLetters(doc);
 	}
 
-	private static async Task RunPersistenceSettlementTruthSmokeAsync()
+	// ---------- token 用量记账（2026-09-23 补：AWAKE 侧第一次接 UsageUpdate） ----------
+
+	private static AiTaskEvent TokenUsageEvent(string taskId, AiTaskEventKind kind, int inputTokens, int outputTokens)
+	{
+		return new AiTaskEvent(taskId, "msg-" + taskId, kind, 1, string.Empty, null, "fixture-model", inputTokens, outputTokens);
+	}
+
+	private static string SingleTokenUsageLine(List<string> logs, string taskId, string label)
+	{
+		List<string> hit = new List<string>();
+		foreach (string line in logs)
 		{
+			if (line != null
+				&& line.IndexOf(AwakeTokenUsage.LineTag, StringComparison.Ordinal) >= 0
+				&& line.IndexOf("task=" + taskId, StringComparison.Ordinal) >= 0) hit.Add(line);
+		}
+		if (hit.Count != 1)
+		{
+			throw new InvalidOperationException(label + "：一个任务应当恰好结算一行用量日志，实得 " + hit.Count + " 行。"
+				+ (hit.Count == 0 ? string.Empty : " 实得行：" + string.Join(" ‖ ", hit)));
+		}
+		return hit[0];
+	}
+
+	private static void RequireUsageField(string line, string field, string label)
+	{
+		if (line.IndexOf(field, StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException(label + "：用量日志里缺 [" + field + "]。实得行：" + line);
+		}
+	}
+
+	private static void RunTokenUsageSmoke()
+	{
+		AwakeTokenUsage.Reset();
+		List<string> logs = new List<string>();
+		Action<string> previousRecorder = AwakeLog.Recorder;
+		AwakeLog.Recorder = logs.Add;
+		try
+		{
+			// ① 流式：同一任务会发多次用量更新，每帧报的是「从开始到现在累计」的值，不是这一段新增加的量。
+			//    当成增量去加总的话，输出会变成 30+80=110（错的）；正解是各自取最大的那一次 ⇒ 80。
+			string streamTask = "task-stream-1";
+			AwakeTokenUsage.Track(TokenUsageEvent(streamTask, AiTaskEventKind.UsageUpdate, 100, 0), NpcDialogueConstants.RouteId);
+			AwakeTokenUsage.Track(TokenUsageEvent(streamTask, AiTaskEventKind.UsageUpdate, 0, 30), NpcDialogueConstants.RouteId);
+			AwakeTokenUsage.Track(TokenUsageEvent(streamTask, AiTaskEventKind.UsageUpdate, 0, 80), NpcDialogueConstants.RouteId);
+			AwakeTokenUsage.Track(TokenUsageEvent(streamTask, AiTaskEventKind.Completed, 0, 0), NpcDialogueConstants.RouteId);
+			string streamLine = SingleTokenUsageLine(logs, streamTask, "① 流式用量更新");
+			RequireUsageField(streamLine, "in=100", "① 输入口径");
+			RequireUsageField(streamLine, "out=80", "① 输出口径：累计值取最大，不许把 30 和 80 加在一起");
+
+			// ② 取消：框架兜底发出的取消/失败终态携带 0，可前面流出来的那部分照样烧了钱。
+			//    只认终态的话，这一笔会被记成 0 —— 这正是本条要挡的失效形态。
+			string cancelledTask = "task-cancel-1";
+			AwakeTokenUsage.Track(TokenUsageEvent(cancelledTask, AiTaskEventKind.UsageUpdate, 50, 20), NpcDialogueConstants.RouteId);
+			AwakeTokenUsage.Track(TokenUsageEvent(cancelledTask, AiTaskEventKind.Cancelled, 0, 0), NpcDialogueConstants.RouteId);
+			string cancelledLine = SingleTokenUsageLine(logs, cancelledTask, "② 取消也该有数");
+			RequireUsageField(cancelledLine, "in=50", "② 取消不该把输入抹成 0");
+			RequireUsageField(cancelledLine, "out=20", "② 取消不该把输出抹成 0");
+			RequireUsageField(cancelledLine, "outcome=cancelled", "② 结局要写清楚");
+
+			// ③ 按路由分得开：对话花的是对话的，每日记忆归纳花的是归纳的，不许混在一个桶里。
+			string memoryTask = "task-memory-1";
+			AwakeTokenUsage.Track(TokenUsageEvent(memoryTask, AiTaskEventKind.UsageUpdate, 7, 3), NpcMemoryConstants.RouteId);
+			AwakeTokenUsage.Track(TokenUsageEvent(memoryTask, AiTaskEventKind.Completed, 7, 3), NpcMemoryConstants.RouteId);
+			string memoryLine = SingleTokenUsageLine(logs, memoryTask, "③ 另一条路由");
+			RequireUsageField(memoryLine, "route=" + NpcMemoryConstants.RouteId, "③ 行里要写明是哪条路由");
+			RequireUsageField(streamLine, "route=" + NpcDialogueConstants.RouteId, "③ 对话那条路由也要写在行里");
+
+			long dialogueIn, dialogueOut, memoryIn, memoryOut;
+			AwakeTokenUsage.TryGetRouteTotal(NpcDialogueConstants.RouteId, out dialogueIn, out dialogueOut);
+			if (dialogueIn != 150 || dialogueOut != 100)
+			{
+				throw new InvalidOperationException("③ 对话路由的累计应当是 150/100，实得 " + dialogueIn + "/" + dialogueOut);
+			}
+			AwakeTokenUsage.TryGetRouteTotal(NpcMemoryConstants.RouteId, out memoryIn, out memoryOut);
+			if (memoryIn != 7 || memoryOut != 3)
+			{
+				throw new InvalidOperationException("③ 记忆归纳路由的累计应当是 7/3，实得 " + memoryIn + "/" + memoryOut);
+			}
+			Console.WriteLine("PROBE token-usage 对话路由累计 in=" + dialogueIn + " out=" + dialogueOut
+				+ "；记忆归纳路由累计 in=" + memoryIn + " out=" + memoryOut);
+		}
+		finally
+		{
+			AwakeLog.Recorder = previousRecorder;
+			AwakeTokenUsage.Reset();
+		}
+		Console.WriteLine("PASS token usage bookkeeping");
+	}
+
+	private static async Task RunPersistenceSettlementTruthSmokeAsync()
+	{
 			SessionRef session = new SessionRef("settlement-campaign", "settlement-timeline", "settlement-session");
 			WorldStateStore store = new WorldStateStore(session);
 			FakeKeyValueStore memoryStore = new FakeKeyValueStore { FailSet = true };

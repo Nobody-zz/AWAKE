@@ -1286,6 +1286,9 @@ internal sealed class NpcDialogueService : IDisposable
         try
         {
             if (evt == null || generation != Volatile.Read(ref _generation)) return;
+            // 用量记账必须在分支之前兜住全部事件：UsageUpdate 走不出结算会被丢，
+            // 而框架兜底发出的取消/失败终态携带 0，只有靠前面攒下的 UsageUpdate 才对得上账。
+            AwakeTokenUsage.Track(evt, NpcDialogueConstants.RouteId);
             switch (evt.Kind)
             {
                 case AiTaskEventKind.TextDelta:

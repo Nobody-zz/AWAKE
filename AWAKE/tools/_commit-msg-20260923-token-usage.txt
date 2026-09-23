@@ -1,0 +1,35 @@
+feat(token usage): AWAKE 侧接上用量事件，日志按路由分开
+
+对单：docs/HANDOFF-TOKEN-STATS-20260922-MAIN.md（主控线 09-22 出）
+
+背景：框架侧早已把用量采出来并作为事件下发，框架自己也测过；
+但 AWAKE 侧的事件消费一次都没接过这一类 ⇒ 日志里查不到任何用量数。
+改动前的取证：该类事件在 AWAKE/src/ 全树零命中；两个消费点分别只接 5 类与 3 类。
+
+改动：
+- 新增 src/AwakeTokenUsage.cs（零依赖记账，离线验台可直接压到）
+- NpcDialogueService.OnTaskEvent、NpcMemoryService 的事件回调：
+  各自**在分支之前**统一过一遍 Track，而不是给分支补 case ——
+  两处形状不同（switch / if 链），分别补就会分别漏。
+- 离线用例 token-usage（AWAKE.Tests），并把新文件纳入编译清单。
+
+一个必须改对的口径：同一次请求会发多次用量事件，后一次是「从头累计」的值，
+不是这一段新增的量 ⇒ 各自取最大，**不能累加**（累加会把同一笔算成多份）。
+终态的值并入最大值（单发路径只在终态给数）；
+框架兜底的取消/失败携带硬编码 0 ⇒ 靠前面攒下的用量事件才救得回来。
+
+判据（先红后绿，两组变异）：
+- 绿：total=67 passed=67 failed=0
+- 变异 A（停掉落日志那一行）：1 处红 —— 实得 0 行结算记录
+- 变异 B（取最大改成累加）：1 处红 —— 实得 out=110，正解应是 80
+- 恢复后复绿
+
+没做的：真机读数（两条路由各花多少）离线造不出来，按未验记账。
+真机确认方式写在交付文档第四节；日志 2MB 轮转只留一代，长局会冲掉早期记录。
+
+自报四条见 docs/DONE-20260923-token用量-AWAKE侧接上用量事件.md 第六节，
+其中两条值得一提：界面层另两处同名 switch 处理的是界面自己的事件、与本改动无关；
+路由常量里另有 preprocess / postprocess 两条在 src/ 零引用 ⇒ 未漏接。
+
+未碰：src/WorldKnowledge{Loader,Models,QueryService}.cs（世界书线在途）、framework/。
+AWAKE.Tests/Program.cs 同时有别线在途改动，本次只挑本线那两段入索引提交。

@@ -494,6 +494,9 @@ internal sealed class NpcMemoryService : IDisposable
                 try
                 {
                     if (evt == null) return;
+                    // 同 NpcDialogueService：这里是 if 链不是 switch，最容易漏接新事件类型，
+                    // 所以放在链首统一过一遍，不依赖哪一条分支是否补了 UsageUpdate。
+                    AwakeTokenUsage.Track(evt, NpcMemoryConstants.RouteId);
                     if (evt.Kind == AiTaskEventKind.Completed)
                     {
                         string response = string.IsNullOrWhiteSpace(evt.StructuredJson) ? evt.Text : evt.StructuredJson;
