@@ -87,9 +87,17 @@
 >   （schema → 条件模型 → 编译器 → 加载器 → 判定器 → 查询侧 ＋ 编辑器白名单，共 7 处），
 >   提交 `8edbff9`。零替身探针两轮全链验通：主轮 `[1,0,0]` → 变异轮 `[0,1,0]`（真翻转），
 >   `CLAN_GATE PASS` 九条全绿。档：`docs/DECISION-20260924-CLAN-BINDING.md`。
->   ⚠️ **这一步越过了 `docs/superpowers/specs/2026-08-24-worldbook-entity-catalog-design.md:31`
->   那句「B1 不实现 `hero_ids`/`clan_ids` 运行时权限条件」** —— 视为被甲方 09-24 裁定覆盖，
->   **设计稿待回写**；`hero_ids` 未跟进（保持原状）。现有 558 档**没有一档**用到 `clan_ids`。
+>   ⚠️ 这一步越过了 `docs/superpowers/specs/2026-08-24-worldbook-entity-catalog-design.md:31`
+>   那句「B1 不实现 `hero_ids`/`clan_ids` 运行时权限条件」 —— 被甲方 09-24 裁定覆盖。
+> - **✅ 09-25 补：`hero_ids` 也跟上了，那句设计稿已就地改掉。**
+>   甲方 09-25 指令「改掉，补」⇒ ① 设计稿 `:31` 原句划掉＋更新说明（其余各条仍有效）；
+>   ② `hero_ids` 按同一七段链落地（与 clan 同构），提交 `06ee9e6`。
+>   零替身探针两轮全链：主轮 `[1,0,0]` → 变异轮 `[0,1,0]`（真翻转），`HERO_GATE PASS` 九条全绿。
+>   ★ 要害：阴性必须取「**同家族另一个人**」（伊拉 `lord_1_37`，珀特洛斯家），
+>   取外人则连 `clan_ids` 都能挡住他 ⇒ 测出来的是 clan 不是 hero。权重 `hero` 35 ＞ `clan` 30（更窄）。
+>   ★ 命名坑：`WorldbookQuery` 里**本来就有一个 `HeroId`**（属**作废的 `.Current` 链路**）⇒
+>   新字段取名 `PersonHeroId` 避撞（现行 `.Knowledge` 链路上跑）。
+>   档：`docs/DECISION-20260924-CLAN-BINDING.md`（含 §二之二）。
 
 ### 一句话
 
