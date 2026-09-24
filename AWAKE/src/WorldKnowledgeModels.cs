@@ -43,6 +43,20 @@ internal sealed class WorldKnowledgeEntry
     internal List<string> SourceFactIds { get; } = new List<string>();
     internal List<string> Keywords { get; } = new List<string>();
     internal List<WorldKnowledgeExpression> Expressions { get; } = new List<WorldKnowledgeExpression>();
+    /// 互引边（2026-09-20）：本档正文**点名过谁**。编译期由边表写进 `extensions.links`。
+    /// 顺序即权重（强→弱、专名→枢纽），因为编译器已经排好序（见 Studio 的 LinkRegistryService）。
+    internal List<WorldKnowledgeLink> Links { get; } = new List<WorldKnowledgeLink>();
+}
+
+/// 一条互引边。语义是「本档正文里出现过 `ViaName`，而 `ViaName` 是 `To` 那档的名字」
+/// —— 保的是**提到**，不是**该一起答**。所以消费它时只能当低权重线索（见 QueryService 的 LinkExpand*）。
+internal sealed class WorldKnowledgeLink
+{
+    internal string To { get; set; } = string.Empty;
+    internal string ViaName { get; set; } = string.Empty;
+    internal string Strength { get; set; } = "weak";
+    internal string Bucket { get; set; } = "proper";
+    internal List<string> UsableAs { get; } = new List<string>();
 }
 
 internal sealed class WorldKnowledgeExpression
@@ -108,6 +122,9 @@ internal sealed class WorldKnowledgeQueryResult
     internal List<string> ReportIds { get; } = new List<string>();
     internal List<string> MatchedKeywords { get; } = new List<string>();
     internal List<string> ReferralIds { get; } = new List<string>();
+    /// 这次答案里**由互引边扩进来**（不是直接命中）的条目 id（2026-09-20）。
+    /// 与 `HitIds` 的关系：`LinkIds ⊆ HitIds`，回答「送的这几条里哪几条是捎带的」。
+    internal List<string> LinkIds { get; } = new List<string>();
     internal List<string> Errors { get; } = new List<string>();
     internal string BlockedReason { get; set; } = string.Empty;
     internal string SourceVersion { get; set; } = string.Empty;

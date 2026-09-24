@@ -22,6 +22,14 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
     private readonly HashSet<string> _dynamicEntryIds = new HashSet<string>(StringComparer.Ordinal);
     private int _dynamicRevision;
 
+    /// <summary>
+    /// 最近一次 Overlay **导入**里没落地的那些操作（2026-09-22）。
+    /// 导入的口径是「逐条尽力、允许部分成功」，所以必须有这一栏 —— 否则就是**静默的半成功**，
+    /// 而项目口径是「静默成功比抛错危险」。`TryApplyOverlay`（玩家单条编辑）不写这里：
+    /// 它一次只有一条，返回值本身就是全部信息。
+    /// </summary>
+    private readonly List<string> _overlayImportFailures = new List<string>();
+
     // 语义召回这一路。**可空**且**可后挂**：没挂上时整个类与从前一字不差（融合退化回原序，
     // 见 `WorldKnowledgeRankFusion`）。挂载点见 `AwakeWorldKnowledgeSemanticIndex`。
     private IWorldKnowledgeSemanticIndex _semantic;
@@ -50,7 +58,10 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
     internal int ReferralCount { get { lock (_gate) return _snapshot.Referrals.Count; } }
     internal int OverlayRevision { get { lock (_gate) return _overlay.Revision; } }
     internal int DynamicRevision { get { lock (_gate) return _dynamicRevision; } }
-    internal IReadOnlyList<string> Warnings { get { lock (_gate) return _snapshot.Warnings.ToArray(); } }
+    internal IReadOnlyList<string> Warnings { get { lock (_gate) return _snapshot.Warnings.Concat(_overlayImportFailures).ToArray(); } }
+
+    /// <summary>最近一次 Overlay 导入没落地的操作明细（空 = 全落地）。与 <see cref="Warnings"/> 同源。</summary>
+    internal IReadOnlyList<string> OverlayImportFailures { get { lock (_gate) return _overlayImportFailures.ToArray(); } }
 
     public WorldKnowledgeQueryResult Query(WorldbookQuery query)
     {
@@ -72,6 +83,10 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
             };
             if (!ContentGateAllows(query, result)) return result;
             var candidates = FindCandidates(query.PlayerText, semanticIds, out string matchMode);
+            // 第二趟：沿互引边扩一跳。**必须在 `FindCandidates` 之后、装填循环之前** ——
+            // 它改的是候选表本身，扩进来的条目照常过身份闸（见 `ExpandByLinks`）。
+            HashSet<string> expandedIds = ExpandByLinks(candidates);
+            if (expandedIds.Count > 0) matchMode = matchMode + "+link";
             result.MatchMode = candidates.Count == 0 ? "identity" : matchMode;
             WorldKnowledgeIdentityEvaluation evaluation = WorldbookIdentityEvaluator.Evaluate(query, _snapshot);
             var builder = new StringBuilder();
@@ -99,6 +114,7 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
                 if (builder.Length > 0) builder.AppendLine();
                 builder.Append(text);
                 result.HitIds.Add(entry.Id);
+                if (expandedIds.Contains(entry.Id)) result.LinkIds.Add(entry.Id);
                 if (!string.IsNullOrWhiteSpace(entry.SourceId) && !result.SourceIds.Contains(entry.SourceId, StringComparer.Ordinal)) result.SourceIds.Add(entry.SourceId);
                 if (!string.IsNullOrWhiteSpace(entry.ReportId) && !result.ReportIds.Contains(entry.ReportId, StringComparer.Ordinal)) result.ReportIds.Add(entry.ReportId);
                 sawKnown |= !partial;
@@ -136,7 +152,10 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
     {
         lock (_gate)
         {
-            return "v2 package=" + _snapshot.PackageId + " entries=" + _snapshot.Entries.Count + " dynamic=" + _dynamicEntryIds.Count + " identities=" + _snapshot.Identities.Count + " referrals=" + _snapshot.Referrals.Count + " revision=" + _snapshot.Revision + " dynamic_revision=" + _dynamicRevision;
+            return "v2 package=" + _snapshot.PackageId + " entries=" + _snapshot.Entries.Count + " dynamic=" + _dynamicEntryIds.Count + " identities=" + _snapshot.Identities.Count + " referrals=" + _snapshot.Referrals.Count + " revision=" + _snapshot.Revision + " dynamic_revision=" + _dynamicRevision
+                // 2026-09-22：导入件里没落地几条。**只在不为零时才出现**，免得常驻噪声；
+                // 落点是这条状态串（游戏内「重载世界书」那个反馈直接显示它，见 AwakeDeveloperTestActions:153）。
+                + (_overlayImportFailures.Count == 0 ? string.Empty : " overlay_unapplied=" + _overlayImportFailures.Count);
         }
     }
 
@@ -164,38 +183,65 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
         {
             error = string.Empty;
             if (baseRevision != _overlay.Revision) { error = "WB2-OVERLAY-CAS"; return false; }
-            bool changed = false;
-            if ((kind == "replace_title" || kind == "replace_summary" || kind == "add_keyword" || kind == "remove_keyword") && _snapshot.Entries.TryGetValue(targetId, out WorldKnowledgeEntry entry))
-            {
-                if (kind == "replace_title") { entry.Title = value ?? string.Empty; changed = true; }
-                else if (kind == "replace_summary") { entry.Summary = value ?? string.Empty; changed = true; }
-                else if (kind == "add_keyword" && !entry.Keywords.Contains(value ?? string.Empty)) { entry.Keywords.Add(value ?? string.Empty); changed = true; }
-                else if (kind == "remove_keyword") { changed = entry.Keywords.Remove(value ?? string.Empty); }
-                if (changed) RebuildKeywordIndex();
-            }
-            else if (kind == "replace_text" || kind == "disable_expression" || kind == "enable_expression")
-            {
-                WorldKnowledgeExpression expression = FindExpression(targetId);
-                if (expression != null)
-                {
-                    if (kind == "replace_text") { expression.Text = value ?? string.Empty; changed = true; }
-                    else { expression.Enabled = kind == "enable_expression"; changed = true; }
-                }
-            }
-            else { error = "WB2-OVERLAY-FORBIDDEN"; return false; }
-            if (!changed) { error = "WB2-REFERENCE-MISSING"; return false; }
-            _overlay.Revision++;
-            _overlay.Operations.Add(new JObject
-            {
-                ["operationId"] = "awake:operation:" + _overlay.Revision,
-                ["targetId"] = targetId,
-                ["kind"] = kind,
-                ["baseRevision"] = baseRevision,
-                ["value"] = value,
-                ["reason"] = new JObject { ["zh-CN"] = reason ?? "玩家编辑" }
-            });
-            return true;
+            return TryApplyOverlayCore(kind, targetId, value, new JObject { ["zh-CN"] = reason ?? "玩家编辑" }, out error);
         }
+    }
+
+    /// <summary>
+    /// 真正改数据、记账、推进 revision 的那一步，**不含 CAS**（2026-09-22 拆出来）。
+    ///
+    /// 为什么要拆：导入要「逐条尽力」，而 CAS 是拿 `baseRevision` 跟 **live revision** 逐条比。
+    /// 只要中间有一条没落地，live revision 就不再前进，后面每一条都会撞 CAS
+    /// ⇒ 尾段连锁全灭，`continue` 形同虚设。所以 CAS 的归属是**批次边界**，
+    /// 由调用方决定用 live revision 比（单条编辑）还是用导入游标比（整批导入）。
+    /// </summary>
+    /// <param name="reason">
+    /// 这条操作**为什么发生**，原样记进导出件。导入时必须把操作自带的那个传进来，
+    /// **不能盖成"导入战役 Overlay"** —— 否则每读一次存档，玩家所有编辑的缘由都被改写成同一句
+    ///（2026-09-22 由「导出→导入→导出 逐字相同」这条阳性对照抓到）。
+    /// </param>
+    private bool TryApplyOverlayCore(string kind, string targetId, string value, JObject reason, out string error)
+    {
+        error = string.Empty;
+        bool changed = false;
+        // ⚠️ 「kind 合法」与「目标找得到」必须是**两个判断**。原实现把两者并进同一个 if，
+        // 于是「kind 对、档不在了」顺势掉进最后的 else，报成 `WB2-OVERLAY-FORBIDDEN`
+        // —— 把「引用没了」说成「这种操作不允许」，玩家按错码查不出真因（2026-09-22 修）。
+        if (kind == "replace_title" || kind == "replace_summary" || kind == "add_keyword" || kind == "remove_keyword")
+        {
+            WorldKnowledgeEntry entry;
+            if (!_snapshot.Entries.TryGetValue(targetId, out entry)) { error = "WB2-REFERENCE-MISSING"; return false; }
+            if (kind == "replace_title") { entry.Title = value ?? string.Empty; changed = true; }
+            else if (kind == "replace_summary") { entry.Summary = value ?? string.Empty; changed = true; }
+            else if (kind == "add_keyword" && !entry.Keywords.Contains(value ?? string.Empty)) { entry.Keywords.Add(value ?? string.Empty); changed = true; }
+            else if (kind == "remove_keyword") { changed = entry.Keywords.Remove(value ?? string.Empty); }
+            if (changed) RebuildKeywordIndex();
+        }
+        else if (kind == "replace_text" || kind == "disable_expression" || kind == "enable_expression")
+        {
+            WorldKnowledgeExpression expression = FindExpression(targetId);
+            if (expression == null) { error = "WB2-REFERENCE-MISSING"; return false; }
+            if (kind == "replace_text") { expression.Text = value ?? string.Empty; changed = true; }
+            else { expression.Enabled = kind == "enable_expression"; changed = true; }
+        }
+        else { error = "WB2-OVERLAY-FORBIDDEN"; return false; }
+        if (!changed) { error = "WB2-REFERENCE-MISSING"; return false; }
+        // 记的 baseRevision 是**落地那一刻的 live revision**，不是调用方传进来的那个数。
+        // 两者在单条编辑下恒等；在导入下**故意不等** —— 中间有 op 没落地时，live revision
+        // 落后于导入游标；若照抄导出件里那个声明值，重新导出就会得到一条带空洞的序列
+        //（0,2,4…），下次导入必在第二个 op 撞 CAS。记 live 值才能保证导出序列始终连续、可再导入。
+        int appliedAt = _overlay.Revision;
+        _overlay.Revision++;
+        _overlay.Operations.Add(new JObject
+        {
+            ["operationId"] = "awake:operation:" + _overlay.Revision,
+            ["targetId"] = targetId,
+            ["kind"] = kind,
+            ["baseRevision"] = appliedAt,
+            ["value"] = value,
+            ["reason"] = reason ?? new JObject { ["zh-CN"] = "玩家编辑" }
+        });
+        return true;
     }
 
     internal JObject ExportOverlay()
@@ -213,24 +259,64 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
         }
     }
 
+    /// <summary>
+    /// 导入战役 Overlay。口径（2026-09-22 定）：**逐条尽力、允许部分成功，不做全批原子事务**
+    /// —— 玩家覆盖本来就是以「单条」为粒度产生的，且存储层没有事务能力，硬做原子只能靠上一层补，
+    /// 成本远大于收益。
+    ///
+    /// 但**必须补上另一半**：哪一条没进去，要让玩家看得见（见 <see cref="OverlayImportFailures"/>
+    /// 与 <see cref="Warnings"/>，那条数还会进 <see cref="BuildStatusText"/>）。
+    /// 「静默的部分成功」比抛错危险。
+    ///
+    /// <paramref name="error"/> 保持旧语义：**第一条**失败的原因码（调用方按它记日志）；
+    /// 完整的失败清单走 <see cref="OverlayImportFailures"/>。
+    /// </summary>
     internal bool TryImportOverlay(JObject overlay, out string error)
     {
         lock (_gate)
         {
             error = string.Empty;
+            _overlayImportFailures.Clear();
             if (overlay == null) { error = "WB2-OVERLAY-IMPORT"; return false; }
             int targetRevision = overlay["revision"]?.Value<int>() ?? 0;
             if (targetRevision <= _overlay.Revision) return true;
             JArray operations = overlay["operations"] as JArray;
             if (operations == null) { error = "WB2-OVERLAY-IMPORT"; return false; }
+            // 导入游标：从 live revision 起，**每处理一条就 +1（成功失败都加）**。
+            // 为什么失败的也要加：导出序列是连续的 0,1,2…，中间一条没落地只是「这一格空了」，
+            // 不是「后面的格子都作废」。不加就会让后面每条都撞 CAS —— 那等于没改，
+            // 只是把「停在第 2 条」换成「第 2 条以后全报失败」。
+            int cursor = _overlay.Revision;
+            int index = 0;
             foreach (JObject operation in operations)
             {
+                index++;
                 string kind = operation["kind"]?.Value<string>() ?? string.Empty;
                 string targetId = operation["targetId"]?.Value<string>() ?? string.Empty;
                 string value = operation["value"]?.Value<string>() ?? string.Empty;
                 int baseRevision = operation["baseRevision"]?.Value<int>() ?? -1;
-                if (!TryApplyOverlay(kind, targetId, value, baseRevision, "导入战役 Overlay", out error)) return false;
+                string operationError = string.Empty;
+                // 缘由**原样带回**（导出件里每条都记着"为什么改"）。不传就等于每读一次存档把它盖成同一句。
+                JObject operationReason = (operation["reason"] as JObject)?.DeepClone() as JObject;
+                bool applied = baseRevision == cursor
+                    && TryApplyOverlayCore(kind, targetId, value,
+                        operationReason ?? new JObject { ["zh-CN"] = "导入战役 Overlay" }, out operationError);
+                if (!applied && string.IsNullOrEmpty(operationError)) operationError = "WB2-OVERLAY-CAS";
+                cursor++;
+                if (applied) continue;
+                if (string.IsNullOrEmpty(error)) error = operationError;
+                string failure = "WB2-OVERLAY-PARTIAL index=" + index
+                    + " targetId=" + targetId
+                    + " kind=" + kind
+                    + " baseRevision=" + baseRevision
+                    + " cause=" + operationError;
+                _overlayImportFailures.Add(failure);
+                // 门牌日志：与信件半提交（`AwakeLetterCommit.cs:127`，同日 P1-05）同一套做法 ——
+                // 带齐「哪一条、改谁、为什么」再落日志。**没有它这一步就是静默的**：
+                // 玩家以为编辑都恢复了，其实少了几条，谁也不知道少了哪几条。
+                AwakeLog.Write("worldbook_overlay_import_partial " + failure);
             }
+            if (_overlayImportFailures.Count > 0) return false;
             return _overlay.Revision == targetRevision;
         }
     }
@@ -348,6 +434,54 @@ internal sealed class WorldKnowledgeQueryService : IWorldKnowledgeQuery
             if (_snapshot.Entries.TryGetValue(id, out WorldKnowledgeEntry entry)) candidates.Add(entry);
         }
         return candidates;
+    }
+
+    // ── 互引边扩召回（2026-09-20）────────────────────────────────────────────
+    //
+    // 边从哪来：编译期把「A 条正文点名了 B 条的名字」这条判据的产物写进每个条目的
+    //   `extensions.links`（判据与生成器见 `tools/_link_registry_20260920.py`，
+    //   可行性核查见 `docs/worldbook-migration/EDGE-TO-RECALL-FEASIBILITY-20260920.md`）。
+    //
+    // ★ 为什么是「追加在候选表末尾」，而不是与字面/语义两腿一起过 RRF：
+    //   边的判据保的是**提到**，不是**该一起答** —— 拿它和直接命中平起平坐，问「村子」就会被
+    //   沿边扩出一大片。追加在末尾＝位次最低；`Query()` 按顺序装填且受 `ByteBudget` 截断
+    //   ⇒ 预算够才捎带出来，不够就自然被截掉。这就是「低权重提示」在这套代码里的现成说法：
+    //   **不新造融合权重，用既有的排序与预算。**
+    //
+    // ★ 两个旋钮（保守起点，按需调）：
+    //   `LinkExpandPerSeed`  —— 每个种子最多带几条；
+    //   `LinkExpandMaxTotal` —— 一次查询总共最多带几条。
+    //
+    // ⚠️ 扩进来的条目**照常过身份闸**（`HasMatchingDeny` ＋ `SelectExpression`）。
+    //    这一层只决定「谁进候选表」，不决定「谁知道」—— 别在这里做任何权限判断。
+    //
+    // ⚠️ 只沿**出边**走。双向边的两个方向在边表里各有一条独立记录（判据对每档各跑一遍），
+    //    所以不需要在这里反着查；`usableAs` 因此仅作标注、不作分支。
+    //    边表缺失（旧包 / 别的工作区）⇒ `Links` 为空 ⇒ 本方法返回空集，一切照旧。
+    private const int LinkExpandPerSeed = 2;
+    private const int LinkExpandMaxTotal = 3;
+
+    private HashSet<string> ExpandByLinks(List<WorldKnowledgeEntry> candidates)
+    {
+        var expanded = new HashSet<string>(StringComparer.Ordinal);
+        if (candidates.Count == 0) return expanded;        // 没有种子就没有可扩的东西
+        var present = new HashSet<string>(candidates.Select(x => x.Id), StringComparer.Ordinal);
+        // ToList()：下面会往 candidates 里追加，不能一边遍历一边加。
+        foreach (WorldKnowledgeEntry seed in candidates.ToList())
+        {
+            if (expanded.Count >= LinkExpandMaxTotal) break;
+            int taken = 0;
+            foreach (WorldKnowledgeLink link in seed.Links)    // 编译器已排序：强→弱、专名→枢纽
+            {
+                if (taken >= LinkExpandPerSeed || expanded.Count >= LinkExpandMaxTotal) break;
+                if (!present.Add(link.To)) continue;           // 已在候选里（含刚扩进来的）⇒ 不占配额
+                if (!_snapshot.Entries.TryGetValue(link.To, out WorldKnowledgeEntry target)) continue;
+                candidates.Add(target);
+                expanded.Add(target.Id);
+                taken++;
+            }
+        }
+        return expanded;
     }
 
     private List<WorldKnowledgeEntry> FindLiteralCandidates(string text)

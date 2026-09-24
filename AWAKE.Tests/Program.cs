@@ -132,6 +132,9 @@ internal static class Program
 			// 真策略 + 真模板 + 真渲染，把 not_found 轮次的提示词整段拼出来，看它到底长什么样。
 			// 既有两条都够不到这里 —— 策略层只看"喂不喂知识"，模板层只看"变量名对不对"。
 			("knowledge-gate-prompt", () => { RunKnowledgeGatePromptSmoke(); return Task.CompletedTask; }),
+			// Overlay 逐条导入的「半提交」（2026-09-22 加）。
+			// 口径（已定）：逐条尽力 + 允许部分成功 + **哪一条没进去要能被点出来**。
+			("worldbook-overlay-import-partial", () => { RunWorldbookOverlayImportSmoke(); return Task.CompletedTask; }),
 			// 本用例会重置 UI 调度线程绑定；放在最后，避免影响前面的用例。
 			("dialogue-chain-redtest", () =>
 			{
@@ -1733,6 +1736,166 @@ private static void RunMessengerHistorySmoke()
 		}
 		Console.WriteLine("PASS worldbook B2 smoke");
 	}
+	// Overlay 逐条导入（2026-09-22）。
+	//
+	// 背景：`WorldKnowledgeQueryService.TryImportOverlay` 把导入件里的 operations **逐条**交给
+	// `TryApplyOverlay`，而后者在第一条失败时就 `return false` ⇒ 前面的条目已经改动生效、
+	// 后面的**根本没试过**。调用方（`AwakeTerminalBehavior.SyncData`）只拿到一个 false，
+	// 玩家看到一行日志码，状态却是「改了一半」。
+	//
+	// 口径（已定，不按全批原子事务做）：**逐条尽力、允许部分成功**，但**哪一条没进去要能被点出来**。
+	// 本判据就钉这两半：① 一条失败不许把后面的连锁带倒；② 没进去的那条必须留痕、且点得出是谁。
+	private static void RunWorldbookOverlayImportSmoke()
+	{
+		const string entryId = "awake:entry:economy.grain";
+		// 夹具：一个手工 runtime，不依赖磁盘上的包。字段形状照 `WorldKnowledgeLoader.LoadEntries`。
+		string runtimeJson = @"{
+			""schemaVersion"": ""awake.worldbook.v2"",
+			""packageId"": ""awake:worldbook.calradia"",
+			""version"": ""test"",
+			""worldId"": ""awake:world:calradia"",
+			""revision"": 1,
+			""entries"": [
+				{
+					""id"": ""awake:entry:economy.grain"",
+					""domain"": ""economy"",
+					""title"": { ""zh-CN"": ""谷物"" },
+					""summary"": { ""zh-CN"": ""旧摘要。"" },
+					""keywords"": [ ""谷物"" ],
+					""expressions"": [
+						{ ""id"": ""expr-grain-rumor"", ""detail"": ""rumor"", ""text"": { ""zh-CN"": ""旧表达。"" } }
+					]
+				}
+			]
+		}";
+		WorldKnowledgeSnapshot snapshot = WorldKnowledgeLoader.LoadVerified(
+			new WorldbookVerifiedPackage { Runtime = JObject.Parse(runtimeJson) });
+		WorldKnowledgeEntry entry = snapshot.Entries[entryId];
+
+		// 三条操作：① 改标题（合法）② 改一条**不存在的表达**的正文（非法）③ 改摘要（合法）。
+		// `baseRevision` 是**顺序**的 0/1/2 —— 与真导出件同形：导出时逐条记下的就是应用当时的 revision。
+		// 为什么非法那条挑「表达不存在」而不是「档不存在」：后者会掉进 `TryApplyOverlay` 的
+		// `else` 分支报 `WB2-OVERLAY-FORBIDDEN`（kind 明明是合法的），那是另一个错码问题，
+		// 放在本用例末尾单独量，避免它把「半提交」这条主判据的红因搅浑。
+		string overlayJson = @"{
+			""schemaVersion"": ""awake.worldbook.overlay.v1"",
+			""overlayId"": ""awake:overlay:campaign"",
+			""revision"": 3,
+			""operations"": [
+				{ ""operationId"": ""awake:operation:1"", ""targetId"": """ + entryId + @""", ""kind"": ""replace_title"", ""baseRevision"": 0, ""value"": ""新标题"" },
+				{ ""operationId"": ""awake:operation:2"", ""targetId"": ""expr-does-not-exist"", ""kind"": ""replace_text"", ""baseRevision"": 1, ""value"": ""落空的改动"" },
+				{ ""operationId"": ""awake:operation:3"", ""targetId"": """ + entryId + @""", ""kind"": ""replace_summary"", ""baseRevision"": 2, ""value"": ""新摘要"" }
+			]
+		}";
+		WorldKnowledgeQueryService service = new WorldKnowledgeQueryService(snapshot);
+		// 抓日志：`AwakeLog.Recorder` 在 `Enabled` 判断**之前**回调，所以主验台里（日志被静音）也抓得到。
+		List<string> logged = new List<string>();
+		Action<string> previousRecorder = AwakeLog.Recorder;
+		AwakeLog.Recorder = line =>
+		{
+			if (line != null && line.IndexOf("worldbook_overlay_import_partial", StringComparison.Ordinal) >= 0) logged.Add(line);
+		};
+		string error;
+		bool imported;
+		try
+		{
+			imported = service.TryImportOverlay(JObject.Parse(overlayJson), out error);
+		}
+		finally
+		{
+			AwakeLog.Recorder = previousRecorder;
+		}
+
+		// ④（夹具前提）第 1 条确实已经生效 —— 这就是「半提交」的前半，记录它、不否它：
+		//    部分成功是允许的，本条断言只保证夹具没走空。
+		if (!StringComparer.Ordinal.Equals(entry.Title, "新标题"))
+			throw new InvalidOperationException("夹具前提不成立：第 1 条 op 应当已生效。title=[" + entry.Title + "]");
+
+		// ① 有失败就不许报成功、且原因要拿得到（现状即绿，留着防回退）。
+		if (imported || error.IndexOf("WB2-REFERENCE-MISSING", StringComparison.Ordinal) < 0)
+			throw new InvalidOperationException("导入件里有一条非法操作时，必须失败并给出原因。ok=" + imported + " error=" + error);
+
+		// ② 逐条尽力：第 3 条不许被第 2 条的失败连锁带倒。
+		//    ⚠️ 现状（2026-09-22 修前）：第 2 条一失败就 `return false`，第 3 条从未被尝试。
+		//    另有一层：即便改成「失败也继续」，第 3 条的 baseRevision=2 也过不了 CAS
+		//    （失败的 op 不推进 live revision）⇒ 尾段会连锁全灭。两处都要处理。
+		if (!StringComparer.Ordinal.Equals(entry.Summary, "新摘要"))
+			throw new InvalidOperationException("一条操作失败不许中断整批：第 3 条没有落地。summary=[" + entry.Summary + "]");
+
+		// ③ 不许静默部分成功：没进去的那条要能点出来，且点得出是谁。三处都要能查到 ——
+		//    结构化清单（给调用方）＋ warnings（给状态面）＋ 门牌日志（给人查）。
+		//    这与信件半提交（`AwakeLetterCommit.cs:127`，同日 P1-05）是同一套做法。
+		if (service.OverlayImportFailures.Count != 1
+			|| service.OverlayImportFailures[0].IndexOf("expr-does-not-exist", StringComparison.Ordinal) < 0
+			|| service.OverlayImportFailures[0].IndexOf("index=2", StringComparison.Ordinal) < 0
+			|| service.OverlayImportFailures[0].IndexOf("WB2-REFERENCE-MISSING", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("没落地的操作必须进结构化清单，且点得出是第几条、改谁、为什么。failures=[" + string.Join(" | ", service.OverlayImportFailures) + "]");
+		}
+		bool reported = false;
+		foreach (string warning in service.Warnings)
+		{
+			if (warning.IndexOf("expr-does-not-exist", StringComparison.Ordinal) >= 0) reported = true;
+		}
+		if (!reported)
+			throw new InvalidOperationException("部分成功必须留痕：没进去的那条要在 warnings 里点得出来。warnings=[" + string.Join(" | ", service.Warnings) + "]");
+		bool doorPlate = false;
+		foreach (string line in logged)
+		{
+			if (line.IndexOf("expr-does-not-exist", StringComparison.Ordinal) >= 0
+				&& line.IndexOf("WB2-REFERENCE-MISSING", StringComparison.Ordinal) >= 0) doorPlate = true;
+		}
+		if (!doorPlate)
+			throw new InvalidOperationException("半提交必须落门牌日志（带 改谁/为什么）。logged=[" + string.Join(" | ", logged) + "]");
+
+		// ⑤ 第二条：kind 合法、但目标档不存在 —— 错码必须说"引用没了"，不能说"不允许"。
+		//    现状：`TryApplyOverlay` 的第一个分支把「kind 对」和「档找得到」并进同一个条件，
+		//    档找不到就顺势掉到 `else` ⇒ 报 `WB2-OVERLAY-FORBIDDEN`（把"引用缺失"说成"操作被禁"）。
+		WorldKnowledgeQueryService service2 = new WorldKnowledgeQueryService(
+			WorldKnowledgeLoader.LoadVerified(new WorldbookVerifiedPackage { Runtime = JObject.Parse(runtimeJson) }));
+		string error2;
+		service2.TryImportOverlay(JObject.Parse(@"{
+			""revision"": 1,
+			""operations"": [
+				{ ""operationId"": ""awake:operation:1"", ""targetId"": ""awake:entry:no-such-entry"", ""kind"": ""replace_title"", ""baseRevision"": 0, ""value"": ""x"" }
+			]
+		}"), out error2);
+		if (error2.IndexOf("WB2-OVERLAY-FORBIDDEN", StringComparison.Ordinal) >= 0
+			|| error2.IndexOf("WB2-REFERENCE-MISSING", StringComparison.Ordinal) < 0)
+		{
+			throw new InvalidOperationException("目标档不存在时错码必须说\"引用没了\"，不能说\"操作被禁\"。error=" + error2);
+		}
+
+		// ⑥ 阳性对照（主路径）：**干净导出件必须能原样导入回去**。
+		//    本条不是为本次缺陷写的，是为「别把它弄坏」写的 —— 本用例动了 `TryApplyOverlay`
+		//    的内部拆法（CAS 归批次边界、记账改用 live revision），而正常存档往返走的就是这条路。
+		//    只验失败路径、不验成功路径的判据，等于没验过。
+		WorldKnowledgeSnapshot sourceSnapshot = WorldKnowledgeLoader.LoadVerified(
+			new WorldbookVerifiedPackage { Runtime = JObject.Parse(runtimeJson) });
+		WorldKnowledgeQueryService source = new WorldKnowledgeQueryService(sourceSnapshot);
+		if (!source.TryApplyOverlay("replace_title", entryId, "往返标题", 0, "测试", out error)
+			|| !source.TryApplyOverlay("replace_summary", entryId, "往返摘要", 1, "测试", out error))
+		{
+			throw new InvalidOperationException("阳性对照前提不成立：单条编辑没落地。error=" + error);
+		}
+		JObject exported = source.ExportOverlay();
+		WorldKnowledgeSnapshot targetSnapshot = WorldKnowledgeLoader.LoadVerified(
+			new WorldbookVerifiedPackage { Runtime = JObject.Parse(runtimeJson) });
+		WorldKnowledgeQueryService target = new WorldKnowledgeQueryService(targetSnapshot);
+		string roundTripError;
+		bool roundTripped = target.TryImportOverlay((JObject)exported.DeepClone(), out roundTripError);
+		string exportedText = exported.ToString(Newtonsoft.Json.Formatting.None);
+		string reExportedText = target.ExportOverlay().ToString(Newtonsoft.Json.Formatting.None);
+		if (!roundTripped || target.OverlayImportFailures.Count != 0)
+			throw new InvalidOperationException("干净导出件必须能原样导入。ok=" + roundTripped + " error=" + roundTripError
+				+ " failures=[" + string.Join(" | ", target.OverlayImportFailures) + "]");
+		if (!StringComparer.Ordinal.Equals(targetSnapshot.Entries[entryId].Title, "往返标题")
+			|| !StringComparer.Ordinal.Equals(targetSnapshot.Entries[entryId].Summary, "往返摘要"))
+			throw new InvalidOperationException("导入后条目状态应与导出侧一致。title=[" + targetSnapshot.Entries[entryId].Title + "] summary=[" + targetSnapshot.Entries[entryId].Summary + "]");
+		if (!StringComparer.Ordinal.Equals(reExportedText, exportedText))
+			throw new InvalidOperationException("导出→导入→导出 必须逐字相同。\n  原=[" + exportedText + "]\n  后=[" + reExportedText + "]");
+	}
+
 	private static void RunWorldbookSmoke()
 	{
 		string ruleJson = @"{

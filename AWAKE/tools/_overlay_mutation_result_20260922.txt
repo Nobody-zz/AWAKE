@@ -1,0 +1,16 @@
+=== 基线 ===
+RESULT total=66 passed=66 failed=0
+
+[A cursor++] RED-ok
+  RESULT total=66 passed=65 failed=1
+  红因: 导入件里有一条非法操作时，必须失败并给出原因。ok=False error=WB2-OVERLAY-CAS
+
+[B 门牌日志] RED-ok
+  RESULT total=66 passed=65 failed=1
+  红因: 半提交必须落门牌日志（带 改谁/为什么）。logged=[]
+
+[C 逐条尽力] RED-ok
+  RESULT total=66 passed=65 failed=1
+  红因: 一条操作失败不许中断整批：第 3 条没有落地。summary=[旧摘要。]
+
+源码按字节还原: OK

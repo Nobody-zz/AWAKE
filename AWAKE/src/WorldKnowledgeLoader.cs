@@ -68,6 +68,7 @@ internal static class WorldKnowledgeLoader
                 string keyword = token.Value<string>();
                 if (!string.IsNullOrWhiteSpace(keyword)) entry.Keywords.Add(keyword);
             }
+            LoadLinks(entry, value["extensions"] as JObject);
             JArray expressions = value["expressions"] as JArray;
             if (expressions != null) foreach (JObject expressionValue in expressions.Children<JObject>())
             {
@@ -86,8 +87,30 @@ internal static class WorldKnowledgeLoader
         }
     }
 
-    private static void LoadIdentities(WorldKnowledgeSnapshot snapshot, JArray identities)
+    // 互引边（2026-09-20）：读 `entry.extensions.links`。
+    // 边表缺失、字段缺失、条目是旧包编的 —— 一律只是「没有边」，不报错、不影响既有加载
+    //（召回那侧对空 Links 的处理就是「不扩」，见 WorldKnowledgeQueryService.LinkExpand*）。
+    private static void LoadLinks(WorldKnowledgeEntry entry, JObject extensions)
     {
+        foreach (JObject value in (extensions?["links"] as JArray)?.Children<JObject>() ?? Enumerable.Empty<JObject>())
+        {
+            string to = Str(value, "to");
+            if (string.IsNullOrWhiteSpace(to) || StringComparer.Ordinal.Equals(to, entry.Id)) continue;
+            var link = new WorldKnowledgeLink
+            {
+                To = to,
+                ViaName = Str(value, "viaName"),
+                Strength = DefaultValue(Str(value, "strength"), "weak"),
+                Bucket = DefaultValue(Str(value, "bucket"), "proper")
+            };
+            AddStrings(link.UsableAs, value["usableAs"] as JArray);
+            // 同一目标可能由两个名字各连一条（正文里既叫了名也叫了别称）⇒ 只留先出现的那条。
+            if (entry.Links.Any(x => StringComparer.Ordinal.Equals(x.To, to))) continue;
+            entry.Links.Add(link);
+        }
+    }
+
+    private static void LoadIdentities(WorldKnowledgeSnapshot snapshot, JArray identities)    {
         if (identities == null) return;
         foreach (JObject value in identities)
         {
