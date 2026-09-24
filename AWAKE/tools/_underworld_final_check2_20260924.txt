@@ -1,0 +1,31 @@
+===== 前缀归一 · 最终复核（B 案口径）=====
+
+[1] 两侧档数 / 双写
+   WS 档数 = 558  OK
+   AO 档数 = 558  OK
+   8 档双写：不一致 0  OK
+
+[2] 档内 id 层（B 案：doc 换新 / 子 id 留旧）
+   underworld-alleys.yaml         doc新=Y doc旧残留=N 子id旧=Y 子id被误改=N  OK
+   underworld-gang-leaders.yaml   doc新=Y doc旧残留=N 子id旧=Y 子id被误改=N  OK
+   underworld-struggle.yaml       doc新=Y doc旧残留=N 子id旧=Y 子id被误改=N  OK
+   underworld-gangs.yaml          doc新=Y doc旧残留=N 子id旧=Y 子id被误改=N  OK
+   underworld-crime-rating.yaml   doc新=Y doc旧残留=N 子id旧=Y 子id被误改=N  OK
+   underworld-blood-money.yaml    doc新=Y doc旧残留=N 子id旧=Y 子id被误改=N  OK
+   underworld-bandits.yaml        doc新=Y doc旧残留=N 子id旧=Y 子id被误改=N  OK
+   underworld-smuggling.yaml      doc新=Y doc旧残留=N 子id旧=Y 子id被误改=N  OK
+
+[3] 全仓旧引用残留（排除快照 / 备份 / 产物 / 本批脚本）
+   无残留  OK
+
+[4] 编译产物
+   档数 = 558
+   8 个新条目 id 全在：是
+   8 个旧条目 id 已退场：是
+   子 id 保留旧形态：是 ；子 id 被误改：无
+
+[5] 现役包
+   档数 = 482（应 482）
+
+===== 结论 =====
+全部通过。

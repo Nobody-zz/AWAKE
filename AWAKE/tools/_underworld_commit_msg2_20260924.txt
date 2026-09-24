@@ -1,0 +1,47 @@
+worldbook: 暗面批 doc id 首段归一 + 前缀规范补充（underworld-）
+
+接 57108d0。上一笔只改了文件名，漏了 doc id 首段 —— 按档名规范
+（TOPIC-WORLDBOOK §档名，B 案）：「文件名 + doc id 首段」用新前缀，
+assertion / expr 子 id 保留历史单形态。本笔补齐。
+
+一、doc id 首段归一（8 档 × 2 目录 = 16 处）
+  doc.politics.town-alleys        -> doc.politics.underworld-alleys
+  doc.politics.alley-gang-leaders -> doc.politics.underworld-gang-leaders
+  doc.politics.alley-struggle     -> doc.politics.underworld-struggle
+  doc.politics.town-gangs         -> doc.politics.underworld-gangs
+  doc.politics.crime-rating       -> doc.politics.underworld-crime-rating
+  doc.politics.blood-money        -> doc.politics.underworld-blood-money
+  doc.politics.bandits            -> doc.politics.underworld-bandits
+  doc.economy.smuggling           -> doc.economy.underworld-smuggling
+  行数一行未变；assertion.*-1 / expr.* 子 id 保留旧形态（B 案要求）。
+
+二、生成器随动
+  authoring-out/_gen_dark_20260920.py：FN_PREFIX 改名 SLUG_MAP，
+  一处表同时管「文件名尾」与「doc id 首段」，杜绝两者再次分叉。
+
+三、判据（tools/，_ 前缀留档）
+  _underworld_idfix_20260924.py      doc id 首段归一执行 + 逐档核对
+  _underworld_regen_equiv_20260924.py  ★最强判据：生成器临时目录真跑，
+                                     产出 vs 现役档 16/16 逐字节一致
+  _underworld_final_check2_20260924.py B 案口径五道复核（全绿）
+    [1] 两侧 558 档 / 8 档双写一致
+    [2] 档内 doc 新 / 子 id 旧
+    [3] 全仓无旧 id 引用残留
+    [4] 产物：8 新条目 id 全在、8 旧 id 退场、子 id 留旧
+    [5] 现役包 ModuleData 482 档未动
+  _underworld_chain_20260924.py      全链复跑口径改 B 案（新 id 在/旧 id 退场/子 id 留旧）
+
+四、文档层
+  docs/worldbook-studio-plan/FILE-PREFIX-CONVENTION.md
+    整份重写 —— 原文误称"前缀此前无成文规范"，规范实为既有
+    （.workbuddy/memory/TOPIC-WORLDBOOK.md 档名节）。改为对既有规范的一处补充，
+    并补记一个此前没成文的事实：doc id 首段就是条目 id 的 slug（同一物），
+    改它是 B 案要求的形态，不是事故。
+  EDGE-RECALL-REPORT-20260920.md：politics.town-gangs -> politics.underworld-gangs
+
+五、编译
+  全链三次（uw20260924a/b/c），validation total=21 error=0 warning=21，
+  manifest_hash 两次相同（确定性），新包 558 档。
+
+未动：ModuleData 现役包；link-registry.v1.json / should-link.v3.json
+（09-20 一次性快照，不手改）。

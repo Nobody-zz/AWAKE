@@ -8,7 +8,7 @@
   ⇒ 所以这里用**新 op 前缀**强制走一遍全链，并且**只强制重登记那 8 档**（其余按需），
     以最小扰动验证「改名后的磁盘状态能编译出正确产物」。
 
-产物：compiled/geo1-v23-underworld
+产物：compiled/geo1-v25-underworld
 ⚠️ 不动 ModuleData（不部署）。⚠️ 不改分类表。
 """
 import glob
@@ -24,8 +24,8 @@ ROOT = r"D:/AWAKE-Dev/AWAKE"
 WS_REL = "tools/worldbook-studio/workspace/full-geo1"
 WS = os.path.join(ROOT, WS_REL)
 DLL = os.path.join(ROOT, "tools/worldbook-studio/src/Awake.WorldbookStudio.Cli/bin/Release/net10.0/worldbook-studio.dll")
-OPBASE = "uw20260924a"
-OUT_PKG = WS_REL + "/compiled/geo1-v23-underworld"
+OPBASE = "uw20260924c"
+OUT_PKG = WS_REL + "/compiled/geo1-v25-underworld"
 
 LOG = os.path.join(WS, "_underworld_chain_log.txt")
 MANIFEST = os.path.join(WS, "_underworld_register_batch.json")
@@ -87,10 +87,10 @@ def main():
 
     # ★ 强制把 8 个改名档也登记一遍：新 op 前缀 ⇒ 不会幂等短路
     FORCE = [
-        "doc.politics.town-alleys", "doc.politics.alley-gang-leaders",
-        "doc.politics.alley-struggle", "doc.politics.town-gangs",
-        "doc.politics.crime-rating", "doc.politics.blood-money",
-        "doc.politics.bandits", "doc.economy.smuggling",
+        "doc.politics.underworld-alleys", "doc.politics.underworld-gang-leaders",
+        "doc.politics.underworld-struggle", "doc.politics.underworld-gangs",
+        "doc.politics.underworld-crime-rating", "doc.politics.underworld-blood-money",
+        "doc.politics.underworld-bandits", "doc.economy.underworld-smuggling",
     ]
     forced = [(disk[d], d) for d in FORCE if d in disk and (disk[d], d) not in need]
     log("[1b/6] 强制重登记改名档 %d 档" % len(forced))
@@ -160,22 +160,40 @@ def main():
     for e in errs[:12]:
         log("      ERROR %s %s" % (e.get("code"), str(e.get("message"))[:180]))
 
-    # ---- 验收：新包里的 8 个条目 id 是否一字未变 ----
+    # ---- 验收（B 案口径）：条目 id 换新、子 id 留旧 ----
     out_path = os.path.join(ROOT, OUT_PKG.replace("/", os.sep), "runtime.json")
     out = json.load(io.open(out_path, encoding="utf-8"))
     ids_in = set("doc." + e["id"].replace("awake:entry:", "", 1) for e in out["entries"])
     log("      新包档数 = %d" % len(ids_in))
+
+    # ① 新 doc id 必须全在
     miss = [d for d in FORCE if d not in ids_in]
-    log("      8 个旧 id 在新包里全部存在：%s" % ("是" if not miss else "否 -> " + str(miss)))
+    log("      8 个新 doc id 全在：%s" % ("是" if not miss else "否 -> " + str(miss)))
 
-    # 旧前缀 id 是否已绝迹
-    stale = [d for d in ids_in if ".underworld-" in d]
-    log("      条目 id 里出现 .underworld- 的（应为 0）：%d" % len(stale))
+    # ② 旧 doc id 必须已退场
+    OLD_DOC = ["doc.politics.town-alleys", "doc.politics.alley-gang-leaders",
+               "doc.politics.alley-struggle", "doc.politics.town-gangs",
+               "doc.politics.crime-rating", "doc.politics.blood-money",
+               "doc.politics.bandits", "doc.economy.smuggling"]
+    left = [d for d in OLD_DOC if d in ids_in]
+    log("      8 个旧 doc id 已退场：%s" % ("是" if not left else "否 -> 残留 %s" % left))
 
+    # ③ 子 id 必须保留旧形态（B 案：assertion/expr 不跟首段走）
+    #    ⚠️ 产物里子 id 的完整形态是 `assertion.<slug>-1` / `awake:expression:<slug>-<layer>`，
+    #       上一次探针拿裸 `expr.<slug>` 去找、恒不命中 —— 那是探针写错，不是内容丢。
+    rt = io.open(out_path, encoding="utf-8").read()
+    sub_probes = ["assertion.town-alleys-1", "awake:expression:alley-struggle-rumor",
+                  "assertion.bandits-1", "awake:expression:smuggling-detail"]
+    sub_ok = all(p in rt for p in sub_probes)
+    log("      子 id 保留旧形态（B 案）：%s" % ("是" if sub_ok else "否"))
+    bad_sub = [p for p in ("assertion.underworld", "awake:expression:underworld") if p in rt]
+    log("      子 id 被误改新前缀：%s" % ("无" if not bad_sub else "有 -> %s" % bad_sub))
+
+    allok = (not miss) and (not left) and sub_ok and (not bad_sub)
     log("")
-    log("结论：%s" % ("改名未影响编译产物与条目 id" if not miss else "!! 有条目丢失"))
+    log("结论：%s" % ("条目 id 已换新、子 id 按 B 案保留旧形态" if allok else "!! 有不符合项"))
     logf.close()
-    return 0 if not miss else 1
+    return 0 if allok else 1
 
 
 if __name__ == "__main__":

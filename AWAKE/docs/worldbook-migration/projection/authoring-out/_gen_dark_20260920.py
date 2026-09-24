@@ -37,13 +37,14 @@ IMPORTED = "2026-09-20T00:00:00Z"
 
 CHECK_ONLY = "--check" in sys.argv
 
-# ---------- 文件名前缀归一（09-24 甲方裁定）----------
-# ⚠️ `slug` 在这条链里身兼三职：① 文件名 ② `id: doc.<域>.<slug>` 的尾段
-#    ③ 条目 id `awake:entry:<域>.<slug>` 的尾段。后两者**已发布、不许动**，
-#    只有 ① 是给 `git ls` 看的人眼分类标签（编译器不读文件名）。
-#    ⇒ 这里只重映射文件名，`doc["slug"]` 本身原样保留，id 一律不变。
-#    ⚠️ 不改这一段的话：任何人重跑本生成器，AO 会重新长出旧名副本 ⇒ 改名被静默退回。
-FN_PREFIX = {
+# ---------- 前缀归一（09-24 甲方裁定）----------
+# `slug` 在这条链里同时是 ① 文件名 ② `id: doc.<域>.<slug>` 的尾段。
+# 依 09-14 定下的档名规范（`TOPIC-WORLDBOOK.md` §档名规范 / 复数化那条的「B 案」）：
+#   范围＝**文件名 ＋ `doc` id 首段**同步改；`assertion`／`expr` 子 id **保留历史形态**。
+# ⇒ 所以这里把 slug 整体重映射（文件名与 doc id 一起走），子 id 由下面的
+#   `kid_old` 单独回填成旧形态。
+#   ⚠️ 不改这一段：任何人重跑生成器都会把两目录退回旧名。
+SLUG_MAP = {
     "town-alleys":        "underworld-alleys",
     "alley-gang-leaders": "underworld-gang-leaders",
     "alley-struggle":     "underworld-struggle",
@@ -233,10 +234,13 @@ for doc in docs:
                 seen.add(k)
                 topsrc.append(s)
 
+    # 档名与 doc id 首段同步换新；`assertion`／`expr` 子 id 来自 L2 的 a["id"]/e["id"]，
+    # 本来就是旧形态（B 案要求保留），不在这里动。
+    slug_new = SLUG_MAP.get(doc["slug"], doc["slug"])
     doc_obj = {
         "schema_version": "awake.worldbook.authoring.v1",
         "revision": 1,
-        "id": "doc.%s.%s" % (dom, doc["slug"]),
+        "id": "doc.%s.%s" % (dom, slug_new),
         "title": {"zh-CN": doc["title_zh"], "en": doc["title_en"]},
         "status": "needs_review",
         "domain": dom,
@@ -253,13 +257,14 @@ for doc in docs:
     }
     body = ydump(doc_obj)
     chk = yaml.safe_load(body)
-    assert chk["id"] == "doc.%s.%s" % (dom, doc["slug"])
+    assert chk["id"] == "doc.%s.%s" % (dom, slug_new)
+    assert chk["id"] == "doc.%s.%s" % (dom, SLUG_MAP.get(doc["slug"], doc["slug"]))
     assert len(chk["assertions"]) == len(doc["assertions"])
     for lang, tv in (("zh-CN", doc["title_zh"]), ("en", doc["title_en"])):
         for al in chk["aliases"][lang]:
             assert al != tv and (al.lower() not in tv.lower()) and (tv.lower() not in al.lower()), \
                 "%s: 别名「%s」与 title「%s」构成死条" % (doc["slug"], al, tv)
-    fn = FN_PREFIX.get(doc["slug"], doc["slug"]) + ".yaml"
+    fn = slug_new + ".yaml"
     if not CHECK_ONLY:
         for d in (WS, AO):
             io.open(os.path.join(d, fn), "w", encoding="utf-8", newline="\n").write(body)
