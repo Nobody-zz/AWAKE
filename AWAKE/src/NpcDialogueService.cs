@@ -52,6 +52,7 @@ internal sealed class NpcDialogueService : IDisposable
     private int _heroAge;
     private string _heroKingdomId = string.Empty;
     private string _heroSettlementId = string.Empty;
+    private string _heroClanId = string.Empty;
     private bool _heroIsClanLeader;
     private readonly Dictionary<string, int> _heroSkills = new Dictionary<string, int>(StringComparer.Ordinal);
     private string _openingHint = string.Empty;
@@ -782,6 +783,7 @@ internal sealed class NpcDialogueService : IDisposable
                 _heroAge = (int)_target.Age;
                 _heroKingdomId = string.Empty;
                 _heroSettlementId = string.Empty;
+                _heroClanId = string.Empty;
                 _heroIsClanLeader = false;
                 _heroSkills.Clear();
                 return;
@@ -796,6 +798,7 @@ internal sealed class NpcDialogueService : IDisposable
                 _heroAge = (int)hero.Age;
                 _heroKingdomId = hero.Clan?.Kingdom?.StringId ?? string.Empty;
                 _heroSettlementId = (hero.CurrentSettlement ?? hero.StayingInSettlement)?.StringId ?? string.Empty;
+                _heroClanId = hero.Clan?.StringId ?? string.Empty;
                 _heroIsClanLeader = hero.Clan?.Leader == hero;
                 _heroSkills.Clear();
                 AddHeroSkill(hero, "steward", DefaultSkills.Steward);
@@ -1050,6 +1053,7 @@ internal sealed class NpcDialogueService : IDisposable
             KingdomId = personaSnapshot.KingdomId,
             SettlementId = _heroSettlementId,
             Role = personaSnapshot.Role,
+            ClanId = _heroClanId,
             IsFemale = StringComparer.Ordinal.Equals(_heroGender, "female") ? true
                 : StringComparer.Ordinal.Equals(_heroGender, "male") ? false : (bool?)null,
             IsClanLeader = _heroIsClanLeader,

@@ -133,6 +133,8 @@ internal sealed class WorldbookQuery
     internal string KingdomId { get; set; } = string.Empty;
     internal string SettlementId { get; set; } = string.Empty;
     internal string Role { get; set; } = string.Empty;
+    // 家族归属（2026-09-24）：当前问话对象所属的 clan。空 ⇒ 条件里写了 clan_ids 的说法一律不送。
+    internal string ClanId { get; set; } = string.Empty;
     internal bool? IsFemale { get; set; }
     internal int Age { get; set; }
     internal bool IsClanLeader { get; set; }

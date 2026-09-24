@@ -1070,6 +1070,14 @@
           },
           "uniqueItems": true
         },
+        "clan_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^entity\\.clan\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
         "is_female": {
           "type": [
             "boolean",

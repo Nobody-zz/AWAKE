@@ -1,0 +1,196 @@
+{
+ "doc": "doc.politics.clan-probe",
+ "target_clan": "clan_empire_south_1",
+ "other_clan": "clan_empire_south_2",
+ "validate_own_diag": [],
+ "validate_other_diag": 9,
+ "clan_ids_in_package": 1,
+ "rows": [
+  {
+   "name": "P1-同clan",
+   "identity": "profile.noble",
+   "role": "Lord",
+   "culture": "",
+   "kingdom": "",
+   "settlement": "",
+   "clan": "clan_empire_south_1",
+   "age": 0,
+   "scope": "elite",
+   "detail": "detail",
+   "requested_detail": "secret",
+   "state": "partial",
+   "match_mode": "keyword",
+   "literal_keyword_hits": 1,
+   "literal_term_hits": 3,
+   "hits": [
+    "awake:entry:politics.clan-probe"
+   ],
+   "link_ids": [],
+   "player_text": "家族探针",
+   "text": "同族人说得出口的那句话。"
+  },
+  {
+   "name": "N1-别的clan",
+   "identity": "profile.noble",
+   "role": "Lord",
+   "culture": "",
+   "kingdom": "",
+   "settlement": "",
+   "clan": "clan_empire_south_2",
+   "age": 0,
+   "scope": "elite",
+   "detail": "detail",
+   "requested_detail": "secret",
+   "state": "not_found",
+   "match_mode": "keyword",
+   "literal_keyword_hits": 1,
+   "literal_term_hits": 3,
+   "hits": [],
+   "link_ids": [],
+   "player_text": "家族探针",
+   "text": ""
+  },
+  {
+   "name": "N2-无clan",
+   "identity": "profile.noble",
+   "role": "Lord",
+   "culture": "",
+   "kingdom": "",
+   "settlement": "",
+   "clan": "",
+   "age": 0,
+   "scope": "elite",
+   "detail": "detail",
+   "requested_detail": "secret",
+   "state": "not_found",
+   "match_mode": "keyword",
+   "literal_keyword_hits": 1,
+   "literal_term_hits": 3,
+   "hits": [],
+   "link_ids": [],
+   "player_text": "家族探针",
+   "text": ""
+  }
+ ],
+ "mut_clan_ids_in_package": 1,
+ "rows_mut": [
+  {
+   "name": "P1-同clan",
+   "identity": "profile.noble",
+   "role": "Lord",
+   "culture": "",
+   "kingdom": "",
+   "settlement": "",
+   "clan": "clan_empire_south_1",
+   "age": 0,
+   "scope": "elite",
+   "detail": "detail",
+   "requested_detail": "secret",
+   "state": "not_found",
+   "match_mode": "keyword",
+   "literal_keyword_hits": 1,
+   "literal_term_hits": 3,
+   "hits": [],
+   "link_ids": [],
+   "player_text": "家族探针",
+   "text": ""
+  },
+  {
+   "name": "N1-别的clan",
+   "identity": "profile.noble",
+   "role": "Lord",
+   "culture": "",
+   "kingdom": "",
+   "settlement": "",
+   "clan": "clan_empire_south_2",
+   "age": 0,
+   "scope": "elite",
+   "detail": "detail",
+   "requested_detail": "secret",
+   "state": "partial",
+   "match_mode": "keyword",
+   "literal_keyword_hits": 1,
+   "literal_term_hits": 3,
+   "hits": [
+    "awake:entry:politics.clan-probe-mut"
+   ],
+   "link_ids": [],
+   "player_text": "家族探针",
+   "text": "同族人说得出口的那句话。"
+  },
+  {
+   "name": "N2-无clan",
+   "identity": "profile.noble",
+   "role": "Lord",
+   "culture": "",
+   "kingdom": "",
+   "settlement": "",
+   "clan": "",
+   "age": 0,
+   "scope": "elite",
+   "detail": "detail",
+   "requested_detail": "secret",
+   "state": "not_found",
+   "match_mode": "keyword",
+   "literal_keyword_hits": 1,
+   "literal_term_hits": 3,
+   "hits": [],
+   "link_ids": [],
+   "player_text": "家族探针",
+   "text": ""
+  }
+ ],
+ "verdict": [
+  {
+   "name": "①同clan必须拿到(阳性对照)",
+   "pass": true,
+   "value": 1
+  },
+  {
+   "name": "②别的clan必须拿不到",
+   "pass": true,
+   "value": 0
+  },
+  {
+   "name": "③无clan必须拿不到",
+   "pass": true,
+   "value": 0
+  },
+  {
+   "name": "④空转护栏(三行都在)",
+   "pass": true,
+   "value": [
+    1,
+    0,
+    0
+   ]
+  },
+  {
+   "name": "⑤编译真落下了clan_ids",
+   "pass": true,
+   "value": 1
+  },
+  {
+   "name": "⑥变异:条件换OTHER后TARGET查=0",
+   "pass": true,
+   "value": 0
+  },
+  {
+   "name": "⑦变异:条件换OTHER后OTHER查>0",
+   "pass": true,
+   "value": 1
+  },
+  {
+   "name": "⑧变异:无clan查仍为0",
+   "pass": true,
+   "value": 0
+  },
+  {
+   "name": "⑨变异轮也真落了clan_ids",
+   "pass": true,
+   "value": 1
+  }
+ ],
+ "flipped": true,
+ "pass": true
+}

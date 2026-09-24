@@ -71,6 +71,9 @@ internal static class WorldbookIdentityEvaluator
         if (condition.KingdomIds.Count > 0 && !ContainsValue(condition.KingdomIds, query.KingdomId)) return false;
         if (condition.SettlementIds.Count > 0 && !ContainsValue(condition.SettlementIds, query.SettlementId)) return false;
         if (condition.RoleIds.Count > 0 && !condition.RoleIds.Any(x => StringComparer.OrdinalIgnoreCase.Equals(NormalizeRole(x), NormalizeRole(query.Role)))) return false;
+        // 家族归属（2026-09-24）：问「他是不是哪家的人」。查询侧没带家族 ⇒ 一律不命中
+        // （不求近似、不回退到王国；「不知道他是谁家的人」与「他不属于这一家」在这里同解）。
+        if (condition.ClanIds.Count > 0 && !ContainsValue(condition.ClanIds, query.ClanId)) return false;
         if (condition.IsFemale.HasValue && (!query.IsFemale.HasValue || query.IsFemale.Value != condition.IsFemale.Value)) return false;
         if (condition.IsClanLeader.HasValue && query.IsClanLeader != condition.IsClanLeader.Value) return false;
         if (condition.MinAge.HasValue && (query.Age <= 0 || query.Age < condition.MinAge.Value)) return false;
@@ -85,6 +88,7 @@ internal static class WorldbookIdentityEvaluator
         score += 25 * condition.KingdomIds.Count;
         score += 30 * condition.SettlementIds.Count;
         score += 15 * condition.RoleIds.Count;
+        score += 30 * condition.ClanIds.Count;
         score += condition.IsFemale.HasValue ? 5 : 0;
         score += condition.IsClanLeader.HasValue ? 10 : 0;
         score += condition.MinAge.HasValue || condition.MaxAge.HasValue ? 15 : 0;

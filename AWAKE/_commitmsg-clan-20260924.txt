@@ -1,0 +1,35 @@
+feat(worldbook): 知识条目可绑定 clan —— 一条说法只送给某个家族的人
+
+甲方裁定（2026-09-24）：「我就是要知识条目的某一个说法绑定一个 clan」。
+本条实现该能力的运行时全链，并附零替身验通证据。
+
+改了 7 处：
+  ① schema      docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json
+                knowledge_rule.clan_ids（值域 ^entity\.clan\.[a-z0-9]+…$）
+  ② 条件模型    src/WorldKnowledgeModels.cs（WorldKnowledgeCondition.ClanIds）
+                src/WorldbookModels.cs（WorldbookQuery.ClanId）
+  ③ 编译器      tools/worldbook-studio/.../RuntimePackageCompiler.cs
+                CopyStringArray(...,"clan_ids") + MapConditionId("clan_ids")=>"clan"
+  ④ 加载器      src/WorldKnowledgeLoader.cs:169（AddStrings(condition.ClanIds, ...)）
+  ⑤ 判定器      src/WorldbookIdentityEvaluator.cs（ClanIds.Count>0 && !ContainsValue ⇒ false；权重 30/条）
+  ⑥ 查询侧      src/NpcDialogueService.cs（_heroClanId = hero.Clan?.StringId）
+  ⑦ 编辑白名单  tools/worldbook-studio/.../AuthoringEditorModel.cs:485（RuleConditionKeys，不加则填了留不住）
+
+判定语义：条件写了 clan_ids 而查询侧无 clan ⇒ 一律不命中（不求近似、不回退到王国）；
+「不知道他是谁家的人」与「他不属于这一家」在此同解。与 is_clan_leader 正交
+（那个问「是不是族长」，这个问「是哪家的人」）。
+
+证据（零替身验台，两轮全链）：
+  tools/_uw_clan_gate_probe_20260924.py
+  - 编译产物实证："conditions": {"clan_ids": ["awake:clan:clan_empire_south_1"]}
+  - 主轮[条件=TARGET]   TARGET查/OTHER查/无clan查 = [1, 0, 0]
+  - 变异轮[条件=OTHER]  TARGET查/OTHER查/无clan查 = [0, 1, 0]  ⇒ 真翻转
+  - CLAN_GATE PASS（九条判据全绿），⑥⑦ 证明「别的 clan 拿不到」不是恒真
+
+★ 越界声明：docs/superpowers/specs/2026-08-24-worldbook-entity-catalog-design.md:31
+原写「B1 不实现 hero_ids/clan_ids 运行时权限条件」。本次直接实现了 clan 的运行时条件，
+越过该批次边界 —— 系甲方 09-24 明确裁定所覆盖。hero_ids 未跟进（保持原状）。
+详见 docs/DECISION-20260924-CLAN-BINDING.md。
+
+附：UW-RUMOR-MECHANICS-20260924.md 原写「系统里没有 clan_ids」，该论断已过时，同批更新为
+「09-24 已补实现」并记明越界。

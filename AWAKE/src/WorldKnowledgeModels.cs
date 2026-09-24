@@ -85,6 +85,9 @@ internal sealed class WorldKnowledgeCondition
     internal List<string> KingdomIds { get; } = new List<string>();
     internal List<string> SettlementIds { get; } = new List<string>();
     internal List<string> RoleIds { get; } = new List<string>();
+    // 家族归属（2026-09-24）：这条说法只送给「属于某个家族」的人。
+    // 与 IsClanLeader 的分工：那个问「他是不是族长」，这个问「他是哪家的人」。
+    internal List<string> ClanIds { get; } = new List<string>();
     internal bool? IsFemale { get; set; }
     internal bool? IsClanLeader { get; set; }
     internal int? MinAge { get; set; }

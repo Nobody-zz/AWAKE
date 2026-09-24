@@ -4,7 +4,14 @@
 > 本章是把「怎么做」当场查死的结果。**凡是查过的，给读数；凡是查不到的，标缺口。不许再拿"没先例"当挡箭牌。**
 >
 > **结论一句话**：**身份只有 12 个（按社会地位分），游戏侧的 `KingdomIds` 挂不上身份，只能当条件；
-> 而 `kingdom_ids` 写 clan（火焰余烬/秘密之手）是死条件 —— 系统里没有 `clan_ids`。**
+> 而 `kingdom_ids` 写 clan（火焰余烬/秘密之手）是死条件。**
+>
+> **★ 2026-09-24 追记**：本文原写「系统里没有 `clan_ids`」——**该论断已过时。**
+> 同日已补实现全链（schema→模型→编译器→加载器→判定器→查询侧），
+> 一条说法现在可以写 `clan_ids: [entity.clan.<code>]` 只送给某个家族的人。
+> 见本文 §六「追记」与 `docs/DECISION-20260924-CLAN-BINDING.md`。
+> **注意：这一步越过了 `docs/superpowers/specs/2026-08-24-worldbook-entity-catalog-design.md:31`
+> 那句「B1 不实现 `hero_ids`/`clan_ids` 运行时权限条件」——是否接受由甲方定。**
 
 ## 一、身份清单：**只有 12 个，没有"教徒"**
 
@@ -32,7 +39,10 @@
    根因就在这里：**挂父节点会连带命中整棵子树**。
 3. **给低能力身份挂高级别 grant ＝ 死表达**（能力上限见 §三）。
 
-## 二、条件字段：7 个，**没有 `clan_ids`**
+## 二、条件字段：原 7 个，**2026-09-24 起补上 `clan_ids`**
+
+> **★ 本节是当日快照（写于 clan 落地之前）。** 现行为 **8 个**，多了 `clan_ids`，
+> 见 §六「追记」。下表保留原样，便于对照"改之前长什么样"。
 
 出处：`AuthoringEditorModel.cs:485` ＋ `RuntimePackageCompiler.cs:232-243`（一手）
 
@@ -52,7 +62,7 @@ min_age / max_age / min_management / min_steward / min_skill
 | 有 `settlement_ids` | 有 `SettlementIds` | 对应 |
 | **无** | 有 `HeroIds` | **缺** |
 | **无** | 有 `IdentityIds` | **缺** |
-| **无 `clan_ids`** | — | **★ 关键缺口** |
+| ~~**无 `clan_ids`**~~ | — | ~~★ 关键缺口~~ **★ 已于 09-24 补上（§六）** |
 
 **值域**（`awake.worldbook.authoring.v1.schema.json`）：
 - 档里写**裸名**（`empire` / `embers_of_flame`），
@@ -217,8 +227,36 @@ min_age / max_age / min_management / min_steward / min_skill
   ⇒ 这一位**不改变能听到什么**，只改"是/不是族长"这一条筛选。
 - `min_skill` 只在 `query.Skills` 里比数值（`:79-82`），**与派系无关**。
 
-⇒ **结论不变：系统里没有 `clan_ids`，"属于火焰余烬"这件事在条件层表达不了。**
-⇒ 只能靠 §五-③ 的 `culture_ids` ＋ 口吻近似。
+⇒ **原结论：「系统里没有 `clan_ids`，属于火焰余烬这件事在条件层表达不了。」**
+⇒ **★ 2026-09-24 追记（当天补实现，结论作废）**：见下。
+⇒ 原替代方案（靠 §五-③ 的 `culture_ids` ＋ 口吻近似）**不再需要**。
+
+### ★ 追记（2026-09-24）：`clan_ids` 已补实现，全链打通并验通
+
+「一条说法只送给某个家族的人」现在**能表达了**。改了六处：
+
+| # | 部位 | 文件 |
+|---|---|---|
+| ① | 授权 schema | `awake.worldbook.authoring.v1.schema.json`（`knowledge_rule.clan_ids`，值域 `^entity\.clan\.[a-z0-9]+…$`）|
+| ② | 条件模型 | `src/WorldKnowledgeModels.cs`（`WorldKnowledgeCondition.ClanIds`）|
+| ③ | 编译器 | `tools/worldbook-studio/src/Awake.WorldbookStudio.Core/RuntimePackageCompiler.cs`（`CopyStringArray(..., "clan_ids")` ＋ `MapConditionId("clan_ids") => "clan"`）|
+| ④ | 加载器 | `src/WorldKnowledgeLoader.cs:169`（`AddStrings(condition.ClanIds, value["clan_ids"])`）|
+| ⑤ | 判定器 | `src/WorldbookIdentityEvaluator.cs`（`condition.ClanIds.Count > 0 && !ContainsValue(...)` ⇒ false；权重 30/条）|
+| ⑥ | 查询侧 | `src/NpcDialogueService.cs`（`_heroClanId = hero.Clan?.StringId`）＋ `src/WorldbookModels.cs`（`WorldbookQuery.ClanId`）|
+
+**另有一处编辑侧白名单**：`tools/worldbook-studio/src/Awake.WorldbookStudio.Core/AuthoringEditorModel.cs:485`（`RuleConditionKeys`）——不加，编辑器里填了留不住。
+
+**证据**（零替身探针 `tools/_uw_clan_gate_probe_20260924.py`，两轮全链）：
+- 编译产物真落下条件：`"conditions": {"clan_ids": ["awake:clan:clan_empire_south_1"]}`（值归一成 `awake:clan:`）。
+- 主轮（条件=TARGET）：TARGET 查 → 拿到 / OTHER 查 → 0 / 无 clan 查 → 0。
+- **变异轮**（同一份档，只把条件换成 OTHER）：TARGET 查 → **翻成 0** / OTHER 查 → **翻成 >0** / 无 clan 查 → 0。
+  两轮读数**真的跟着 clan 翻转** ⇒ 判定器确实在按 clan 分流（不是恒真/恒空）。
+
+**★ 越界声明**：`docs/superpowers/specs/2026-08-24-worldbook-entity-catalog-design.md:31` 明写
+「**B1 不实现 `hero_ids`/`clan_ids` 运行时权限条件**；作者选择结果先作为可预览的实体绑定数据，
+运行时契约另立后续批次。」本次**直接实现了 clan 的运行时条件**，越过了这条批次边界。
+= **这是甲方 09-24 明确裁定要的（`我就是要知识条目的某一个说法绑定一个 clan`）**，
+设计稿 B1 条款视为被本次裁定覆盖；是否要回写设计稿、以及 `hero_ids` 是否同样跟进，待甲方定。
 
 ### ✅ 4. 变体 2 近似挂法 —— **已跑真探针，结论见 §五-③ 的 2026-09-24 补正**
 
