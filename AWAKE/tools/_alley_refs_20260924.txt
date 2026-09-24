@@ -1,0 +1,452 @@
+== alley-* 引用点 ==
+
+### docs/mappings/worldbook-should-link/20260920/should-link.v3.json  (4 处)
+  22372  [alley-gang-leaders]  "from": "awake:entry:politics.alley-gang-leaders",
+  22391  [alley-gang-leaders]  "from": "awake:entry:politics.alley-gang-leaders",
+  22409  [alley-struggle]  "from": "awake:entry:politics.alley-struggle",
+  22428  [alley-struggle]  "from": "awake:entry:politics.alley-struggle",
+
+### docs/worldbook-migration/DARK-BATCH-REPORT-20260920.md  (2 处)
+     15  [alley-gang-leaders]  | 2 | 巷子头目 `alley-gang-leaders` | politics/law | **interpretation** |
+     16  [alley-struggle]  | 3 | 巷子争夺 `alley-struggle` | politics/law | fact |
+
+### docs/worldbook-migration/DARK-BATCH-SPEC-20260920.md  (2 处)
+     24  [alley-gang-leaders]  | 2 | `alley-gang-leaders` | 巷子头目 | politics/law | **interpretation**（官叫帮派头目／居民叫守护者） |
+     25  [alley-struggle]  | 3 | `alley-struggle` | 巷子争夺 | politics/law | fact |
+
+### docs/worldbook-migration/_dark_roster_20260920.json  (2 处)
+     64  [alley-gang-leaders]  "slug": "alley-gang-leaders",
+     72  [alley-struggle]  "slug": "alley-struggle",
+
+### docs/worldbook-migration/projection/authoring-out/_dark_A_20260920.json  (8 处)
+     38  [alley-gang-leaders]  "slug": "alley-gang-leaders",
+     48  [alley-gang-leaders]  "id": "alley-gang-leaders-1",
+     53  [alley-gang-leaders]  "id": "alley-gang-leaders-rumor",
+     60  [alley-gang-leaders]  "id": "alley-gang-leaders-detail",
+     71  [alley-struggle]  "slug": "alley-struggle",
+     81  [alley-struggle]  "id": "alley-struggle-1",
+     86  [alley-struggle]  "id": "alley-struggle-rumor",
+     93  [alley-struggle]  "id": "alley-struggle-detail",
+
+### docs/worldbook-migration/projection/authoring-out/alley-gang-leaders.yaml  (4 处)
+      3  [alley-gang-leaders]  id: doc.politics.alley-gang-leaders
+     72  [alley-gang-leaders]  - id: assertion.alley-gang-leaders-1
+    121  [alley-gang-leaders]  - id: expr.alley-gang-leaders-rumor
+    156  [alley-gang-leaders]  - id: expr.alley-gang-leaders-detail
+
+### docs/worldbook-migration/projection/authoring-out/alley-struggle.yaml  (4 处)
+      3  [alley-struggle]  id: doc.politics.alley-struggle
+     72  [alley-struggle]  - id: assertion.alley-struggle-1
+    121  [alley-struggle]  - id: expr.alley-struggle-rumor
+    156  [alley-struggle]  - id: expr.alley-struggle-detail
+
+### docs/worldbook-studio-plan/link-registry.v1.json  (4 处)
+  11304  [alley-gang-leaders]  "from": "awake:entry:politics.alley-gang-leaders",
+  11314  [alley-gang-leaders]  "from": "awake:entry:politics.alley-gang-leaders",
+  11324  [alley-struggle]  "from": "awake:entry:politics.alley-struggle",
+  11334  [alley-struggle]  "from": "awake:entry:politics.alley-struggle",
+
+### tools/_alley_refs_20260924.py  (3 处)
+      9  [alley-gang-leaders]  "alley-gang-leaders", "alley-struggle",
+     10  [alley-gang-leaders]  "doc.politics.alley-gang-leaders", "doc.politics.alley-struggle",
+     11  [alley-gang-leaders]  "politics.alley-gang-leaders", "politics.alley-struggle",
+
+### tools/worldbook-studio/workspace/full-geo1/_dark_chain_log.txt  (1 处)
+     13  [alley-gang-leaders]  [11:35:20]   新增 76 档（前 45）：['doc.culture.notables', 'doc.culture.serfs', 'doc.economy.goods-beer', 'doc.economy.goods-butter', 'doc.economy.goods-charcoal', 'do
+
+### tools/worldbook-studio/workspace/full-geo1/_dark_gate_cap_result_20260920.json  (60 处)
+     19  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+     20  [alley-struggle]  "awake:entry:politics.alley-struggle"
+     42  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+     43  [alley-struggle]  "awake:entry:politics.alley-struggle"
+     65  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+     66  [alley-struggle]  "awake:entry:politics.alley-struggle"
+     88  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+     89  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    111  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    112  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    134  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    135  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    157  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    158  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    180  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    181  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    203  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    204  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    226  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    227  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    233  [alley-gang-leaders]  "name": "alley-gang-leaders#1",
+    248  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    255  [alley-gang-leaders]  "name": "alley-gang-leaders#2",
+    270  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    277  [alley-gang-leaders]  "name": "alley-gang-leaders#3",
+    292  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    299  [alley-gang-leaders]  "name": "alley-gang-leaders#4",
+    314  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    321  [alley-gang-leaders]  "name": "alley-gang-leaders#5",
+    336  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    343  [alley-gang-leaders]  "name": "alley-gang-leaders#6",
+    358  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    365  [alley-gang-leaders]  "name": "alley-gang-leaders#7",
+    380  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    387  [alley-gang-leaders]  "name": "alley-gang-leaders#8",
+    402  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    409  [alley-gang-leaders]  "name": "alley-gang-leaders#9",
+    424  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    431  [alley-gang-leaders]  "name": "alley-gang-leaders#10",
+    446  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    453  [alley-struggle]  "name": "alley-struggle#1",
+    468  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    475  [alley-struggle]  "name": "alley-struggle#2",
+    490  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    497  [alley-struggle]  "name": "alley-struggle#3",
+    512  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    519  [alley-struggle]  "name": "alley-struggle#4",
+    534  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    541  [alley-struggle]  "name": "alley-struggle#5",
+    556  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    563  [alley-struggle]  "name": "alley-struggle#6",
+    578  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    585  [alley-struggle]  "name": "alley-struggle#7",
+    600  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    607  [alley-struggle]  "name": "alley-struggle#8",
+    622  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    629  [alley-struggle]  "name": "alley-struggle#9",
+    644  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    651  [alley-struggle]  "name": "alley-struggle#10",
+    666  [alley-struggle]  "awake:entry:politics.alley-struggle",
+
+### tools/worldbook-studio/workspace/full-geo1/_dark_gate_cap_spec_20260920.json  (20 处)
+     54  [alley-gang-leaders]  "name": "alley-gang-leaders#1",
+     59  [alley-gang-leaders]  "name": "alley-gang-leaders#2",
+     64  [alley-gang-leaders]  "name": "alley-gang-leaders#3",
+     69  [alley-gang-leaders]  "name": "alley-gang-leaders#4",
+     74  [alley-gang-leaders]  "name": "alley-gang-leaders#5",
+     79  [alley-gang-leaders]  "name": "alley-gang-leaders#6",
+     84  [alley-gang-leaders]  "name": "alley-gang-leaders#7",
+     89  [alley-gang-leaders]  "name": "alley-gang-leaders#8",
+     94  [alley-gang-leaders]  "name": "alley-gang-leaders#9",
+     99  [alley-gang-leaders]  "name": "alley-gang-leaders#10",
+    104  [alley-struggle]  "name": "alley-struggle#1",
+    109  [alley-struggle]  "name": "alley-struggle#2",
+    114  [alley-struggle]  "name": "alley-struggle#3",
+    119  [alley-struggle]  "name": "alley-struggle#4",
+    124  [alley-struggle]  "name": "alley-struggle#5",
+    129  [alley-struggle]  "name": "alley-struggle#6",
+    134  [alley-struggle]  "name": "alley-struggle#7",
+    139  [alley-struggle]  "name": "alley-struggle#8",
+    144  [alley-struggle]  "name": "alley-struggle#9",
+    149  [alley-struggle]  "name": "alley-struggle#10",
+
+### tools/worldbook-studio/workspace/full-geo1/_dark_gate_cap_summary_20260920.json  (40 处)
+    104  [alley-gang-leaders]  "alley-gang-leaders",
+    105  [alley-gang-leaders]  "expr.alley-gang-leaders-rumor",
+    114  [alley-gang-leaders]  "alley-gang-leaders",
+    115  [alley-gang-leaders]  "expr.alley-gang-leaders-rumor",
+    124  [alley-gang-leaders]  "alley-gang-leaders",
+    125  [alley-gang-leaders]  "expr.alley-gang-leaders-rumor",
+    134  [alley-gang-leaders]  "alley-gang-leaders",
+    135  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    144  [alley-gang-leaders]  "alley-gang-leaders",
+    145  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    154  [alley-gang-leaders]  "alley-gang-leaders",
+    155  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    164  [alley-gang-leaders]  "alley-gang-leaders",
+    165  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    174  [alley-gang-leaders]  "alley-gang-leaders",
+    175  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    184  [alley-gang-leaders]  "alley-gang-leaders",
+    185  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    194  [alley-gang-leaders]  "alley-gang-leaders",
+    195  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    204  [alley-struggle]  "alley-struggle",
+    205  [alley-struggle]  "expr.alley-struggle-rumor",
+    214  [alley-struggle]  "alley-struggle",
+    215  [alley-struggle]  "expr.alley-struggle-rumor",
+    224  [alley-struggle]  "alley-struggle",
+    225  [alley-struggle]  "expr.alley-struggle-rumor",
+    234  [alley-struggle]  "alley-struggle",
+    235  [alley-struggle]  "expr.alley-struggle-detail",
+    244  [alley-struggle]  "alley-struggle",
+    245  [alley-struggle]  "expr.alley-struggle-detail",
+    254  [alley-struggle]  "alley-struggle",
+    255  [alley-struggle]  "expr.alley-struggle-detail",
+    264  [alley-struggle]  "alley-struggle",
+    265  [alley-struggle]  "expr.alley-struggle-detail",
+    274  [alley-struggle]  "alley-struggle",
+    275  [alley-struggle]  "expr.alley-struggle-detail",
+    284  [alley-struggle]  "alley-struggle",
+    285  [alley-struggle]  "expr.alley-struggle-detail",
+    294  [alley-struggle]  "alley-struggle",
+    295  [alley-struggle]  "expr.alley-struggle-detail",
+
+### tools/worldbook-studio/workspace/full-geo1/_dark_gate_pure_result_20260920.json  (60 处)
+     19  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+     20  [alley-struggle]  "awake:entry:politics.alley-struggle"
+     42  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+     43  [alley-struggle]  "awake:entry:politics.alley-struggle"
+     65  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+     66  [alley-struggle]  "awake:entry:politics.alley-struggle"
+     88  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+     89  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    111  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    112  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    134  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    135  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    157  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    158  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    180  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    181  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    203  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    204  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    226  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    227  [alley-struggle]  "awake:entry:politics.alley-struggle"
+    233  [alley-gang-leaders]  "name": "alley-gang-leaders#1",
+    248  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    255  [alley-gang-leaders]  "name": "alley-gang-leaders#2",
+    270  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    277  [alley-gang-leaders]  "name": "alley-gang-leaders#3",
+    292  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    299  [alley-gang-leaders]  "name": "alley-gang-leaders#4",
+    314  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    321  [alley-gang-leaders]  "name": "alley-gang-leaders#5",
+    336  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    343  [alley-gang-leaders]  "name": "alley-gang-leaders#6",
+    358  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    365  [alley-gang-leaders]  "name": "alley-gang-leaders#7",
+    380  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    387  [alley-gang-leaders]  "name": "alley-gang-leaders#8",
+    402  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    409  [alley-gang-leaders]  "name": "alley-gang-leaders#9",
+    424  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    431  [alley-gang-leaders]  "name": "alley-gang-leaders#10",
+    446  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    453  [alley-struggle]  "name": "alley-struggle#1",
+    468  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    475  [alley-struggle]  "name": "alley-struggle#2",
+    490  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    497  [alley-struggle]  "name": "alley-struggle#3",
+    512  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    519  [alley-struggle]  "name": "alley-struggle#4",
+    534  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    541  [alley-struggle]  "name": "alley-struggle#5",
+    556  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    563  [alley-struggle]  "name": "alley-struggle#6",
+    578  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    585  [alley-struggle]  "name": "alley-struggle#7",
+    600  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    607  [alley-struggle]  "name": "alley-struggle#8",
+    622  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    629  [alley-struggle]  "name": "alley-struggle#9",
+    644  [alley-struggle]  "awake:entry:politics.alley-struggle",
+    651  [alley-struggle]  "name": "alley-struggle#10",
+    666  [alley-struggle]  "awake:entry:politics.alley-struggle",
+
+### tools/worldbook-studio/workspace/full-geo1/_dark_gate_pure_spec_20260920.json  (20 处)
+     84  [alley-gang-leaders]  "name": "alley-gang-leaders#1",
+     92  [alley-gang-leaders]  "name": "alley-gang-leaders#2",
+    100  [alley-gang-leaders]  "name": "alley-gang-leaders#3",
+    108  [alley-gang-leaders]  "name": "alley-gang-leaders#4",
+    116  [alley-gang-leaders]  "name": "alley-gang-leaders#5",
+    124  [alley-gang-leaders]  "name": "alley-gang-leaders#6",
+    132  [alley-gang-leaders]  "name": "alley-gang-leaders#7",
+    140  [alley-gang-leaders]  "name": "alley-gang-leaders#8",
+    148  [alley-gang-leaders]  "name": "alley-gang-leaders#9",
+    156  [alley-gang-leaders]  "name": "alley-gang-leaders#10",
+    164  [alley-struggle]  "name": "alley-struggle#1",
+    172  [alley-struggle]  "name": "alley-struggle#2",
+    180  [alley-struggle]  "name": "alley-struggle#3",
+    188  [alley-struggle]  "name": "alley-struggle#4",
+    196  [alley-struggle]  "name": "alley-struggle#5",
+    204  [alley-struggle]  "name": "alley-struggle#6",
+    212  [alley-struggle]  "name": "alley-struggle#7",
+    220  [alley-struggle]  "name": "alley-struggle#8",
+    228  [alley-struggle]  "name": "alley-struggle#9",
+    236  [alley-struggle]  "name": "alley-struggle#10",
+
+### tools/worldbook-studio/workspace/full-geo1/_dark_gate_pure_summary_20260920.json  (40 处)
+    104  [alley-gang-leaders]  "alley-gang-leaders",
+    105  [alley-gang-leaders]  "expr.alley-gang-leaders-rumor",
+    114  [alley-gang-leaders]  "alley-gang-leaders",
+    115  [alley-gang-leaders]  "expr.alley-gang-leaders-rumor",
+    124  [alley-gang-leaders]  "alley-gang-leaders",
+    125  [alley-gang-leaders]  "expr.alley-gang-leaders-rumor",
+    134  [alley-gang-leaders]  "alley-gang-leaders",
+    135  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    144  [alley-gang-leaders]  "alley-gang-leaders",
+    145  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    154  [alley-gang-leaders]  "alley-gang-leaders",
+    155  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    164  [alley-gang-leaders]  "alley-gang-leaders",
+    165  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    174  [alley-gang-leaders]  "alley-gang-leaders",
+    175  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    184  [alley-gang-leaders]  "alley-gang-leaders",
+    185  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    194  [alley-gang-leaders]  "alley-gang-leaders",
+    195  [alley-gang-leaders]  "expr.alley-gang-leaders-detail",
+    204  [alley-struggle]  "alley-struggle",
+    205  [alley-struggle]  "expr.alley-struggle-rumor",
+    214  [alley-struggle]  "alley-struggle",
+    215  [alley-struggle]  "expr.alley-struggle-rumor",
+    224  [alley-struggle]  "alley-struggle",
+    225  [alley-struggle]  "expr.alley-struggle-rumor",
+    234  [alley-struggle]  "alley-struggle",
+    235  [alley-struggle]  "expr.alley-struggle-detail",
+    244  [alley-struggle]  "alley-struggle",
+    245  [alley-struggle]  "expr.alley-struggle-detail",
+    254  [alley-struggle]  "alley-struggle",
+    255  [alley-struggle]  "expr.alley-struggle-detail",
+    264  [alley-struggle]  "alley-struggle",
+    265  [alley-struggle]  "expr.alley-struggle-detail",
+    274  [alley-struggle]  "alley-struggle",
+    275  [alley-struggle]  "expr.alley-struggle-detail",
+    284  [alley-struggle]  "alley-struggle",
+    285  [alley-struggle]  "expr.alley-struggle-detail",
+    294  [alley-struggle]  "alley-struggle",
+    295  [alley-struggle]  "expr.alley-struggle-detail",
+
+### tools/worldbook-studio/workspace/full-geo1/_dark_register_batch.json  (4 处)
+     15  [alley-gang-leaders]  "operation": "dark20260920a-reg-3-doc_politics_alley-gang-leaders",
+     16  [alley-gang-leaders]  "path": "D:/AWAKE-Dev/AWAKE\\tools/worldbook-studio/workspace/full-geo1\\authoring\\alley-gang-leaders.yaml"
+     19  [alley-struggle]  "operation": "dark20260920a-reg-4-doc_politics_alley-struggle",
+     20  [alley-struggle]  "path": "D:/AWAKE-Dev/AWAKE\\tools/worldbook-studio/workspace/full-geo1\\authoring\\alley-struggle.yaml"
+
+### tools/worldbook-studio/workspace/full-geo1/_dark_register_out.txt  (4 处)
+     33  [alley-gang-leaders]  "operation": "dark20260920a-reg-3-doc_politics_alley-gang-leaders",
+     35  [alley-gang-leaders]  "documentId": "doc.politics.alley-gang-leaders",
+     42  [alley-struggle]  "operation": "dark20260920a-reg-4-doc_politics_alley-struggle",
+     44  [alley-struggle]  "documentId": "doc.politics.alley-struggle",
+
+### tools/worldbook-studio/workspace/full-geo1/_link_probe_mut_20260920.json  (6 处)
+  11092  [alley-gang-leaders]  "name": "awake:entry:politics.alley-gang-leaders",
+  11107  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+  11115  [alley-struggle]  "name": "awake:entry:politics.alley-struggle",
+  11130  [alley-struggle]  "awake:entry:politics.alley-struggle",
+  11428  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+  11429  [alley-struggle]  "awake:entry:politics.alley-struggle"
+
+### tools/worldbook-studio/workspace/full-geo1/_link_probe_new_20260920.json  (6 处)
+  13158  [alley-gang-leaders]  "name": "awake:entry:politics.alley-gang-leaders",
+  13173  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+  13184  [alley-struggle]  "name": "awake:entry:politics.alley-struggle",
+  13199  [alley-struggle]  "awake:entry:politics.alley-struggle",
+  13550  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+  13551  [alley-struggle]  "awake:entry:politics.alley-struggle",
+
+### tools/worldbook-studio/workspace/full-geo1/_link_probe_old_20260920.json  (6 处)
+  11092  [alley-gang-leaders]  "name": "awake:entry:politics.alley-gang-leaders",
+  11107  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+  11115  [alley-struggle]  "name": "awake:entry:politics.alley-struggle",
+  11130  [alley-struggle]  "awake:entry:politics.alley-struggle",
+  11428  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+  11429  [alley-struggle]  "awake:entry:politics.alley-struggle"
+
+### tools/worldbook-studio/workspace/full-geo1/_link_probe_spec_20260920.json  (2 处)
+   2409  [alley-gang-leaders]  "name": "awake:entry:politics.alley-gang-leaders",
+   2414  [alley-struggle]  "name": "awake:entry:politics.alley-struggle",
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/approval-proofs/approval.c29280508d2c40e3ad0ee82253e50d31.json  (1 处)
+      1  [alley-gang-leaders]  {"approval_id":"approval.c29280508d2c40e3ad0ee82253e50d31","approved":true,"approved_at":"2026-09-20T03:34:22.4123093\u002B00:00","issuer":"awake.worldbook-stud
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/approval-proofs/approval.d082e766c2434da5bbf6404a62705eaa.json  (1 处)
+      1  [alley-gang-leaders]  {"approval_id":"approval.d082e766c2434da5bbf6404a62705eaa","approved":true,"approved_at":"2026-09-20T03:58:36.4104389\u002B00:00","issuer":"awake.worldbook-stud
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/commit-markers/dark20260920a-reg-3-doc_politics_alley-gang-leaders.json  (1 处)
+      1  [alley-gang-leaders]  {"head_entry":{"content_hash":"EFEC36B68B2AEEE04A042AA736525F00E17C528BEE684079B0967D7CAE0319ED","document_id":"doc.politics.alley-gang-leaders","path":"authori
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/commit-markers/dark20260920a-reg-4-doc_politics_alley-struggle.json  (1 处)
+      1  [alley-struggle]  {"head_entry":{"content_hash":"1D22C1D5F0F49A202B52D1F1AFECE9F02A156FD0B26547D3B193852DD6035960","document_id":"doc.politics.alley-struggle","path":"authoring/a
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/compile-proofs/k1_cp_1fa9478d2f01a667664884f38e6cc8f6549c1866aa4980489227aa07df2e6010.json  (1 处)
+      1  [alley-gang-leaders]  {"approval_id":"approval.c29280508d2c40e3ad0ee82253e50d31","approval_proof_hash":"618724C1D0B74C39F414DC95C5A4C2344C4569B549F3A71FB817ACC11DDBF45E","compile_pro
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/compile-proofs/k1_cp_29208ddd35f6df1da11e628e0a991ef4a4ba36c6ef4c7700546a171a79edd2ff.json  (1 处)
+      1  [alley-gang-leaders]  {"approval_id":"approval.d082e766c2434da5bbf6404a62705eaa","approval_proof_hash":"D6C85730558548DCEAE702809BA5B5F7780C7C14FCB5ED1301F5809AB4E74688","compile_pro
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/document-revisions/doc.politics.alley-gang-leaders/1.json  (1 处)
+      1  [alley-gang-leaders]  {"content":"schema_version: awake.worldbook.authoring.v1\nrevision: 1\nid: doc.politics.alley-gang-leaders\ntitle:\n  zh-CN: \u5DF7\u5B50\u5934\u76EE\n  en: All
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/document-revisions/doc.politics.alley-struggle/1.json  (1 处)
+      1  [alley-struggle]  {"content":"schema_version: awake.worldbook.authoring.v1\nrevision: 1\nid: doc.politics.alley-struggle\ntitle:\n  zh-CN: \u5DF7\u5B50\u4E89\u593A\n  en: Alley S
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/operations/dark20260920a-reg-3-doc_politics_alley-gang-leaders.json  (1 处)
+      1  [alley-gang-leaders]  {"committed_at":"2026-09-20T03:34:06.3350330\u002B00:00","kind":"document_revision","operation_id":"dark20260920a-reg-3-doc_politics_alley-gang-leaders","state"
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/operations/dark20260920a-reg-4-doc_politics_alley-struggle.json  (1 处)
+      1  [alley-struggle]  {"committed_at":"2026-09-20T03:34:06.6819292\u002B00:00","kind":"document_revision","operation_id":"dark20260920a-reg-4-doc_politics_alley-struggle","state":"co
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/selections/selection.12abd91e7d2d466ea4899de73e789a5a.json  (1 处)
+      1  [alley-gang-leaders]  {"created_at":"2026-09-20T03:34:15.6181805\u002B00:00","immutable":true,"items":[{"content_hash":"FC63833226C69A8266742FB226EBE749FFB859E4B24C9F061C6E3386E69285
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/selections/selection.ea8aa783df0f4a91b5aeadef7f9dbdd1.json  (1 处)
+      1  [alley-gang-leaders]  {"created_at":"2026-09-20T03:58:29.3548536\u002B00:00","immutable":true,"items":[{"content_hash":"FC63833226C69A8266742FB226EBE749FFB859E4B24C9F061C6E3386E69285
+
+### tools/worldbook-studio/workspace/full-geo1/authoring-v1/workspace-head.json  (1 处)
+      1  [alley-gang-leaders]  {"documents":{"doc.culture.charas-origin-tales":{"content_hash":"A11872C811E77403C09FF5DE2F0E5CC7274A5C38D8799C8C0294466C4C21DB57","document_id":"doc.culture.ch
+
+### tools/worldbook-studio/workspace/full-geo1/authoring/alley-gang-leaders.yaml  (4 处)
+      3  [alley-gang-leaders]  id: doc.politics.alley-gang-leaders
+     72  [alley-gang-leaders]  - id: assertion.alley-gang-leaders-1
+    121  [alley-gang-leaders]  - id: expr.alley-gang-leaders-rumor
+    156  [alley-gang-leaders]  - id: expr.alley-gang-leaders-detail
+
+### tools/worldbook-studio/workspace/full-geo1/authoring/alley-struggle.yaml  (4 处)
+      3  [alley-struggle]  id: doc.politics.alley-struggle
+     72  [alley-struggle]  - id: assertion.alley-struggle-1
+    121  [alley-struggle]  - id: expr.alley-struggle-rumor
+    156  [alley-struggle]  - id: expr.alley-struggle-detail
+
+### tools/worldbook-studio/workspace/full-geo1/compiled/_link_mut_no_links_20260920/index.json  (8 处)
+    491  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+    492  [alley-struggle]  "awake:entry:politics.alley-struggle",
+   1054  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+   1055  [alley-struggle]  "awake:entry:politics.alley-struggle",
+   1196  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders"
+   1199  [alley-struggle]  "awake:entry:politics.alley-struggle"
+   4351  [alley-struggle]  "awake:entry:politics.alley-struggle"
+   4354  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders"
+
+### tools/worldbook-studio/workspace/full-geo1/compiled/_link_mut_no_links_20260920/runtime.json  (18 处)
+  66696  [alley-gang-leaders]  "sourceAssertionId": "assertion.alley-gang-leaders-1"
+  66718  [alley-gang-leaders]  "id": "awake:expression:alley-gang-leaders-rumor",
+  66727  [alley-gang-leaders]  "sourceAssertionId": "assertion.alley-gang-leaders-1"
+  66773  [alley-gang-leaders]  "id": "awake:expression:alley-gang-leaders-detail",
+  66780  [alley-gang-leaders]  "sourceDocumentId": "doc.politics.alley-gang-leaders",
+  66783  [alley-gang-leaders]  "id": "awake:entry:politics.alley-gang-leaders",
+  66803  [alley-struggle]  "sourceAssertionId": "assertion.alley-struggle-1"
+  66825  [alley-struggle]  "id": "awake:expression:alley-struggle-rumor",
+  66834  [alley-struggle]  "sourceAssertionId": "assertion.alley-struggle-1"
+  66880  [alley-struggle]  "id": "awake:expression:alley-struggle-detail",
+  66887  [alley-struggle]  "sourceDocumentId": "doc.politics.alley-struggle",
+  66890  [alley-struggle]  "id": "awake:entry:politics.alley-struggle",
+  80584  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders",
+  80585  [alley-struggle]  "awake:entry:politics.alley-struggle",
+  80729  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders"
+  80732  [alley-struggle]  "awake:entry:politics.alley-struggle"
+  83884  [alley-struggle]  "awake:entry:politics.alley-struggle"
+  83887  [alley-gang-leaders]  "awake:entry:politics.alley-gang-leaders"
+
+### tools/worldbook-studio/workspace/full-geo1/compiled/geo1-v21-dark/content-graph.json  (1 处)
+      1  [alley-gang-leaders]  {"edges":[{"edge_type":"index_entry","from":"index.worldbook","to":"doc.politics.alley-gang-leaders"},{"edge_type":"references_source","from":"doc.politics.alle
+
+### tools/worldbook-studio/workspace/full-geo1/compiled/geo1-v21-dark/documents.json  (1 处)
+      1  [alley-gang-leaders]  [{"aliases":{"en":[],"zh-CN":[]},"assertions":[{"expressions":[{"denies":[],"grants":[{"min_detail":"rumor","profile_id":"profile.commoner","scope":"local"},{"m
+
+### tools/worldbook-studio/workspace/full-geo1/compiled/geo1-v21-dark/index.json  (1 处)
+      1  [alley-gang-leaders]  {"domainToEntryIds":{"culture":["awake:entry:culture.notables","awake:entry:culture.serfs","awake:entry:culture.tales-charas-origins","awake:entry:culture.tales
+
+### tools/worldbook-studio/workspace/full-geo1/compiled/geo1-v21-dark/runtime.json  (1 处)
+      1  [alley-gang-leaders]  {"entries":[{"domain":"culture","expressions":[{"denies":[],"detail":"rumor","extensions":{"sourceAssertionId":"assertion.notables-1"},"grants":[{"conditions":{
+
+### tools/worldbook-studio/workspace/full-geo1/compiled/geo1-v22-links/content-graph.json  (1 处)
+      1  [alley-gang-leaders]  {"edges":[{"edge_type":"index_entry","from":"index.worldbook","to":"doc.politics.alley-gang-leaders"},{"edge_type":"references_source","from":"doc.politics.alle
+
+### tools/worldbook-studio/workspace/full-geo1/compiled/geo1-v22-links/documents.json  (1 处)
+      1  [alley-gang-leaders]  [{"aliases":{"en":[],"zh-CN":[]},"assertions":[{"expressions":[{"denies":[],"grants":[{"min_detail":"rumor","profile_id":"profile.commoner","scope":"local"},{"m
+
+### tools/worldbook-studio/workspace/full-geo1/compiled/geo1-v22-links/index.json  (1 处)
+      1  [alley-gang-leaders]  {"domainToEntryIds":{"culture":["awake:entry:culture.notables","awake:entry:culture.serfs","awake:entry:culture.tales-charas-origins","awake:entry:culture.tales
+
+### tools/worldbook-studio/workspace/full-geo1/compiled/geo1-v22-links/runtime.json  (1 处)
+      1  [alley-gang-leaders]  {"entries":[{"domain":"culture","expressions":[{"denies":[],"detail":"rumor","extensions":{"sourceAssertionId":"assertion.notables-1"},"grants":[{"conditions":{

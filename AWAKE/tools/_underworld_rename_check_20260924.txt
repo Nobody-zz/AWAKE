@@ -1,0 +1,23 @@
+===== 改名后主键集复核 =====
+
+[读法] 照抄 _dark_chain_20260920.py 的 docid_of（读 id: 行当主键），以文件夹名。改名只动文件夹名，所以本读数必须与改名前逐项相同。
+
+[1] 八个 docid 是否仍在磁盘主键集
+   doc.politics.town-alleys             -> underworld-alleys.yaml
+   doc.politics.alley-gang-leaders      -> underworld-gang-leaders.yaml
+   doc.politics.alley-struggle          -> underworld-struggle.yaml
+   doc.politics.town-gangs              -> underworld-gangs.yaml
+   doc.politics.crime-rating            -> underworld-crime-rating.yaml
+   doc.politics.blood-money             -> underworld-blood-money.yaml
+   doc.politics.bandits                 -> underworld-bandits.yaml
+   doc.economy.smuggling                -> underworld-smuggling.yaml
+
+[2] 对现役包（482 档）
+   磁盘 558 档；磁盘多出 76 档；磁盘少 0 档
+
+[3] 对 workspace-head（1045 档）
+   磁盘有、head 没有 = 0 档
+
+[4] 磁盘档数 = 558
+
+结论：改名未触碰 id: 字段，主键集不变。

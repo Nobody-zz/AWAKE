@@ -1,0 +1,208 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.politics.alley-gang-leaders
+title:
+  zh-CN: 巷子头目
+  en: Alley Gang Leaders
+status: needs_review
+domain: politics
+subdomain: law
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 一条巷子得有人管着。官面上叫他帮派头目，巷子里的居民却常叫他「守护者」。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.ClyaDhGU
+  quote_hash: 035C3993A0A92713564CEB583C53C5DC597C530EBF78B3111339852AC9CA729F
+  quote: 更改巷子头目
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.LjkQ4fYp
+  quote_hash: 9E9F07F1716513671AC422F33A90BB213B52B4162585E695C6EF30418B2C8ACA
+  quote: 我来自一座城镇，那里每条巷子都有自己的“守护者”。这些守护者都有点能量，而且很受人尊敬，他们为当地人的公道挺身而出。我父亲就是我们那条巷子的守护者，于是在他年龄大了，不能亲力亲为之后，我就继承了他的衣钵。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.PWpTT0NM
+  quote_hash: 4D9A75D71F5CEF3974614A50671CA1B0E96CB9EF18A995B8011BF437FFB53050
+  quote: 我告诉队长我做不了这种事。这巷子里的居民，我得让他们信任我才行。可队长不接受任何异议，他逼我就范，还威胁我的父亲。我能怎么办？我不能背叛我的族人，但也不能背叛自己的父亲。于是我只好举家逃难。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.hnhKJYbx
+  quote_hash: 7CAD2D291264358EF7A2713F06C78D46CCBD36D47CB1F7950DC1183556CF0D1A
+  quote: 你没有合适的家族成员安排到这条巷子。（{ROGUERY_SKILL}技能{NEEDED_SKILL_LEVEL}及以上，{TRAIT_NAME}特质{MAX_TRAIT_AMOUNT}及以下）
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.KjuxDQfn
+  quote_hash: 1863E2D4885916AB0D9C0C8EF2F5E424DD960CAD04B966BD0EFF3CC6C79262E6
+  quote: 巷子头目死了。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.FzbeSkBb
+  quote_hash: 5C22D475FB9755D2B8D40D1E75C6EC43B28710C1F3C26A5C56DBD1FB1B9BCE64
+  quote: 你的一条巷子失去了它的头目或缺乏士兵，它将在{DAYS}天过后被放弃。如果你想保留它，你可以在家族界面中指派一名新的家族成员，或者前往该巷子增加士兵。任何留在巷子里的士兵都会在它被放弃时丢失。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.P5UbgK4c
+  quote_hash: 58CE47D6B30A612A5D3D396FBBEB5E54009A1FF35B19DE8FAF68771391E317F9
+  quote: '{CLAN_MEMBER.NAME}曾掌管着这条巷子，现在{?CLAN_MEMBER.GENDER}她{?}他{\?}已经死了。巷子将在{REMAINING_DAYS}天之后被遗弃，除非能指派新的监督人过去。'
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.alley-gang-leaders-1
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 巷子由一名头目掌管，得从自己人里挑一个派过去。同一个角色有两套叫法：衙门叫帮派头目，巷子里的居民叫「守护者」。
+  sources:
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.ClyaDhGU
+    quote_hash: 035C3993A0A92713564CEB583C53C5DC597C530EBF78B3111339852AC9CA729F
+    quote: 更改巷子头目
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.LjkQ4fYp
+    quote_hash: 9E9F07F1716513671AC422F33A90BB213B52B4162585E695C6EF30418B2C8ACA
+    quote: 我来自一座城镇，那里每条巷子都有自己的“守护者”。这些守护者都有点能量，而且很受人尊敬，他们为当地人的公道挺身而出。我父亲就是我们那条巷子的守护者，于是在他年龄大了，不能亲力亲为之后，我就继承了他的衣钵。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.PWpTT0NM
+    quote_hash: 4D9A75D71F5CEF3974614A50671CA1B0E96CB9EF18A995B8011BF437FFB53050
+    quote: 我告诉队长我做不了这种事。这巷子里的居民，我得让他们信任我才行。可队长不接受任何异议，他逼我就范，还威胁我的父亲。我能怎么办？我不能背叛我的族人，但也不能背叛自己的父亲。于是我只好举家逃难。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.hnhKJYbx
+    quote_hash: 7CAD2D291264358EF7A2713F06C78D46CCBD36D47CB1F7950DC1183556CF0D1A
+    quote: 你没有合适的家族成员安排到这条巷子。（{ROGUERY_SKILL}技能{NEEDED_SKILL_LEVEL}及以上，{TRAIT_NAME}特质{MAX_TRAIT_AMOUNT}及以下）
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.KjuxDQfn
+    quote_hash: 1863E2D4885916AB0D9C0C8EF2F5E424DD960CAD04B966BD0EFF3CC6C79262E6
+    quote: 巷子头目死了。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.FzbeSkBb
+    quote_hash: 5C22D475FB9755D2B8D40D1E75C6EC43B28710C1F3C26A5C56DBD1FB1B9BCE64
+    quote: 你的一条巷子失去了它的头目或缺乏士兵，它将在{DAYS}天过后被放弃。如果你想保留它，你可以在家族界面中指派一名新的家族成员，或者前往该巷子增加士兵。任何留在巷子里的士兵都会在它被放弃时丢失。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.P5UbgK4c
+    quote_hash: 58CE47D6B30A612A5D3D396FBBEB5E54009A1FF35B19DE8FAF68771391E317F9
+    quote: '{CLAN_MEMBER.NAME}曾掌管着这条巷子，现在{?CLAN_MEMBER.GENDER}她{?}他{\?}已经死了。巷子将在{REMAINING_DAYS}天之后被遗弃，除非能指派新的监督人过去。'
+  expressions:
+  - id: expr.alley-gang-leaders-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 每条巷子都有人管。管事的得有几分本事，也得让巷子里的居民信得过他——信不过，这位置坐不安稳。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.ClyaDhGU
+      quote_hash: 035C3993A0A92713564CEB583C53C5DC597C530EBF78B3111339852AC9CA729F
+      quote: 更改巷子头目
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.LjkQ4fYp
+      quote_hash: 9E9F07F1716513671AC422F33A90BB213B52B4162585E695C6EF30418B2C8ACA
+      quote: 我来自一座城镇，那里每条巷子都有自己的“守护者”。这些守护者都有点能量，而且很受人尊敬，他们为当地人的公道挺身而出。我父亲就是我们那条巷子的守护者，于是在他年龄大了，不能亲力亲为之后，我就继承了他的衣钵。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.PWpTT0NM
+      quote_hash: 4D9A75D71F5CEF3974614A50671CA1B0E96CB9EF18A995B8011BF437FFB53050
+      quote: 我告诉队长我做不了这种事。这巷子里的居民，我得让他们信任我才行。可队长不接受任何异议，他逼我就范，还威胁我的父亲。我能怎么办？我不能背叛我的族人，但也不能背叛自己的父亲。于是我只好举家逃难。
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    denies: []
+  - id: expr.alley-gang-leaders-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 挑人是有讲究的：手上要够狠，心肠还得够硬，这两样缺一样都压不住场面。头目一旦没了，巷子撑不了几天就得丢，除非赶紧再派个人过去接手。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.hnhKJYbx
+      quote_hash: 7CAD2D291264358EF7A2713F06C78D46CCBD36D47CB1F7950DC1183556CF0D1A
+      quote: 你没有合适的家族成员安排到这条巷子。（{ROGUERY_SKILL}技能{NEEDED_SKILL_LEVEL}及以上，{TRAIT_NAME}特质{MAX_TRAIT_AMOUNT}及以下）
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.KjuxDQfn
+      quote_hash: 1863E2D4885916AB0D9C0C8EF2F5E424DD960CAD04B966BD0EFF3CC6C79262E6
+      quote: 巷子头目死了。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.FzbeSkBb
+      quote_hash: 5C22D475FB9755D2B8D40D1E75C6EC43B28710C1F3C26A5C56DBD1FB1B9BCE64
+      quote: 你的一条巷子失去了它的头目或缺乏士兵，它将在{DAYS}天过后被放弃。如果你想保留它，你可以在家族界面中指派一名新的家族成员，或者前往该巷子增加士兵。任何留在巷子里的士兵都会在它被放弃时丢失。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.P5UbgK4c
+      quote_hash: 58CE47D6B30A612A5D3D396FBBEB5E54009A1FF35B19DE8FAF68771391E317F9
+      quote: '{CLAN_MEMBER.NAME}曾掌管着这条巷子，现在{?CLAN_MEMBER.GENDER}她{?}他{\?}已经死了。巷子将在{REMAINING_DAYS}天之后被遗弃，除非能指派新的监督人过去。'
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

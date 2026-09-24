@@ -1,0 +1,93 @@
+==============================================================================
+一、三个词的官方中文（先拿 stringId，再查 CNs）
+==============================================================================
+
+  [Alley]  stringId=XkrL8Wok
+    CNs = '巷子'
+    出处 = Modules/SandBox/ModuleData/Languages/CNs/std_location_complex_templates_xml-zho-CN.xml
+
+  [Gang Leader]  stringId=DIuI1moW
+    CNs = '帮派头目'
+    出处 = Modules/Native/ModuleData/Languages/CNs/std_module_strings_xml-zho-CN.xml
+
+  [Crime]  stringId=xj0MgUO0
+    CNs = '犯罪'
+    出处 = Modules/Native/ModuleData/Languages/CNs/std_common_strings_xml-zho-CN.xml
+
+==============================================================================
+二、含「巷」的全部 CNs 条目正文（按出处分组）
+==============================================================================
+
+--- Modules/Native/ModuleData/Languages/CNs/std_common_strings_xml-zho-CN.xml ---
+  [Eb7Lgq10] 奥斯蒂港原本是一座帝国的小港口，现在却成为了北海海民的庇护所。他们中的许多人都是身怀长技的海盗，在之后断断续续的内战中，帝国的各个派系都在雇佣他们打击自己的对手。实际上，首批抵达卡拉迪亚海岸的一些瓦兰迪亚人最后就定居在这座镇子的后巷里，正是他们向自己的同族传话，讲述一旦侵略此地之后将获取何等的财富。
+
+--- Modules/Native/ModuleData/Languages/CNs/std_module_strings_xml-zho-CN.xml ---
+  [4kKxsVzZ] 你在{TOWN}的{ALLEY_NAME}巷子被占领了。
+  [87vr9BHq] 掌控一条{SETTLEMENT_NAME}的巷子
+  [BdFaNDom] 此英雄已经是巷子头目。
+  [UQc6zg1Q] 拥有的巷子
+
+--- Modules/SandBox/ModuleData/Languages/CNs/std_SandBox-zho-CN.xml ---
+  [1YGgXOB7] 呵……你以为统治城里的街头巷尾很容易吗？你小瞧我们了，现在来谈谈钱的事吧。
+  [2LW2jWuG] 你现在掌握了揪出那个间谍所需的足够证据。那些竞技大赛的参赛者很有可能在暴徒盘踞的小巷子里闲逛，找到他们并与之交谈。
+  [3E1XVyGM] 你将会失去巷子的所有权。
+  [4QfQBi2k] 巷战胜利
+  [5bIpeW9X] 你在{SETTLEMENT}的巷子正受到附近帮派的攻击。若不前去支援，{RESPONSE_TIME}天后将会失去巷子。
+  [8SK2BZum] 你已经清理了一条一个帮派头目的巷子。现在，你可以出于自己的利益接管它，或者让它空着也算是给城镇做点好事。要想拥有一条巷子，你需要指派一名合适的帮派成员和一些士兵来看管它。这将为你的家族提供第纳尔，但也会增加你的犯罪等级。
+  [AjBYneFr] {CLAN_MEMBER.NAME}掌控这条巷子。{?CLAN_MEMBER.GENDER}她{?}他{\?}当前正前往这条巷子，并且会在{HOURS}小时后抵达。
+  [ClyaDhGU] 更改巷子头目
+  [EAPYyktd] 你的一个巷子失去了它的头目或缺少士兵
+  [ELfguvYD] 放弃巷子
+  [OeKgpuAv] 在你攻击敌对帮派的巷子后，{QUEST_GIVER.LINK}决定改变{?QUEST_GIVER.GENDER}她{?}他{\?}的计划，不再需要你的协助。任务已取消。
+  [P5UbgK4c] {CLAN_MEMBER.NAME}曾掌管着这条巷子，现在{?CLAN_MEMBER.GENDER}她{?}他{\?}已经死了。巷子将在{REMAINING_DAYS}天之后被遗弃，除非能指派新的监督人过去。
+  [QrBCe41Z] 管理巷子中的士兵
+  [VkOtMe5a] 进入巷子
+  [dWf6ztYu] 你在你的{ALLEY_TYPE}巷子里，{FURTHER_INFO}
+  [eKy1II3h] 你逃出生天，但{PRISONER.NAME}在途中身负重伤。无奈之下，你只能将{?PRISONER.GENDER}她{?}他{\?}丢在身后，而你则消失于后巷，偷偷溜出了大门。{INFORMATION_IF_PRISONER_DEAD}
+  [fcqdfY09] {CLAN_MEMBER.NAME}掌管这条巷子。
+  [grhRXqen] 面对{HOSTILE_GANG_LEADER.NAME}对你巷子的攻击。
+  [hnhKJYbx] 你没有合适的家族成员安排到这条巷子。（{ROGUERY_SKILL}技能{NEEDED_SKILL_LEVEL}及以上，{TRAIT_NAME}特质{MAX_TRAIT_AMOUNT}及以下）
+  [i1sgAm0F] 你已经成功地保卫了你的巷子，抵挡住了攻击。你可能想留下一些士兵，以作为你在战斗中减员的补充。
+  [po79q14T] 你没能保护你的巷子免受攻击，你已经失去了对它的所有权。
+  [qxY2ASqp] 接管巷子
+  [ribkM9dl] 你已经在定居点拥有另一条巷子。
+  [s8dsW6m0] 新巷子
+  [wAgfOHio] 你已经失去了{SETTLEMENT}的巷子的所有权。
+  [zLnqZdIK] 你没有足够的士兵分配到这条巷子。（至少需要{NEEDED_TROOP_NUMBER}名）
+
+--- Modules/SandBox/ModuleData/Languages/CNs/std_TaleWorlds_CampaignSystem-zho-CN.xml ---
+  [QGlhXD4F] 选择一位同伴领导巷子。
+  [Tq4O8vic] 你的{KNIGHT}之一请求你帮个忙。他的女儿打算嫁给一个出身于这座城镇巷子、声名狼藉的游手好闲之徒。他已明确拒绝了这门亲事，但希望你能设法阻止两人私奔。
+  [WBcw6Z9W] {HERO.NAME}正在领导一个巷子。
+  [ZAGR6PYc] 在后巷突发大火，邻居们不知所措的危急时刻，你挺身而出，进行了干脆利落的指挥。你组织起一条通向最近水井的水桶运输线，在房屋被焚毁之前就扑灭了大火。
+  [Zwy8JybD] 你进入了后巷。当地酒馆内似乎非常热闹。
+  [emQQbbO9] 巷子受到攻击！
+  [gAjvAGTa] 在小巷里和帮派混在一起。
+  [t87T82jq] 拥有的巷子
+
+--- Modules/SandBox/ModuleData/Languages/CNs/std_TaleWorlds_CampaignSystem_ViewModelCollection-zho-CN.xml ---
+  [7tKjfMSb] 巷子
+  [FzbeSkBb] 你的一条巷子失去了它的头目或缺乏士兵，它将在{DAYS}天过后被放弃。如果你想保留它，你可以在家族界面中指派一名新的家族成员，或者前往该巷子增加士兵。任何留在巷子里的士兵都会在它被放弃时丢失。
+  [KjuxDQfn] 巷子头目死了。
+  [SFB2uYHa] 巷子头目正在前往巷子。（剩余{LEFT_TIME}小时）
+  [W3hmFcfv] 放弃巷子
+  [pBVbKYwo] 你会失去巷子的所有权及其中的士兵。你确定吗？
+
+--- Modules/SandBox/ModuleData/Languages/CNs/std_common_strings_xml-zho-CN.xml ---
+  [6QoSHiWC] 一个没有头目的巷子
+  [dQBArrqh] 管理巷子
+  [pdqi2qz1] 当你的巷子受到攻击时，你不能执行该操作。
+
+--- Modules/SandBox/ModuleData/Languages/CNs/std_location_complex_templates_xml-zho-CN.xml ---
+  [XkrL8Wok] 巷子
+
+--- Modules/SandBox/ModuleData/Languages/CNs/std_wanderer_strings_xml-zho-CN.xml ---
+  [8zQ9UPvX] 有的男孩帮父亲种田，有的男孩学着牧羊，而我的童年就是在酒馆后巷学习怎么拿人钱财。这些都是我老爹教的，在残忍方面，他是个好老师。
+  [Aqbu1o9v] 记得好久之前，我还在{IMPERIALCAPITAL}街头跟一帮脏兮兮的穷小子瞎混的时候。有这么一拨人，他们的地盘就在附近巷口，自称为“半人马帮”，我猜他们挺喜欢我。这些人总让我做些特殊的差事——从扒窃开始，到最后甚至要我刺杀他们的仇敌。那时为了一捧无花果、一些奶酪、甚至是得到他们的一句赞赏，我愿意做任何事。
+  [G7ZQb9tQ] 也许有些人会说我该为我妈报仇。但你要知道这哪有那么容易。虽然我们不怎么提起，但他毕竟是我的生父啊，当然他也是巷子里其他孩子的爹。于是我逃离了镇子，现在用我亲爱的父母教我的本事在这里讨生活。
+  [LjkQ4fYp] 我来自一座城镇，那里每条巷子都有自己的“守护者”。这些守护者都有点能量，而且很受人尊敬，他们为当地人的公道挺身而出。我父亲就是我们那条巷子的守护者，于是在他年龄大了，不能亲力亲为之后，我就继承了他的衣钵。
+  [PWpTT0NM] 我告诉队长我做不了这种事。这巷子里的居民，我得让他们信任我才行。可队长不接受任何异议，他逼我就范，还威胁我的父亲。我能怎么办？我不能背叛我的族人，但也不能背叛自己的父亲。于是我只好举家逃难。
+  [fGhNWKgK] 但是随着战争的爆发，很多人失去了他们的土地，码头上的情况发生了变化。搬货的手越来越多，但货物却没有那么多。后巷的帮派们开始介入了。如果你胆敢不雇佣他们的人，你的船都有可能被付之一炬。
+  [nlRg040C] 挣得正当权力总好过在陋巷摸爬滚打。
+  [pKMVhx2v] 那些后巷子里的渣滓所说的龌龊事情总是花样繁多。
+  [sbK6AEjB] 我凑了点钱。我不会说怎么凑来的，不过已经够买一把剑了。我决心挣够钱，帮我的族人买回被夺走的财产——牧群。很遗憾我不太了解草原，不过我非常了解城镇和后街小巷，了解如何在肮脏的阴暗处生存，了解如何变得强大。

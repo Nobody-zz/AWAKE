@@ -1,0 +1,24 @@
+== 变异检验 v2：FN_PREFIX 防护（让生成器本人说话）==
+
+判据：把生成器复制到临时目录真跑一遍，它写出的 8 个暗面档文件名里，
+      还有几个是旧前缀。
+
+[对照] 未变异
+   写出档数 = 11 ；其中旧前缀名 = 0  OK（预期 0）
+
+[变异 A] fn 还原成 doc["slug"] + ".yaml"
+   写出档数 = 11 ；其中旧前缀名 = 8  OK（打回红）
+   旧名清单：alley-gang-leaders.yaml, alley-struggle.yaml, bandits.yaml, blood-money.yaml, crime-rating.yaml, smuggling.yaml, town-alleys.yaml, town-gangs.yaml
+
+[变异 B] FN_PREFIX 表里删掉 town-alleys 一项
+   写出档数 = 11 ；其中旧前缀名 = 1  OK（打回红）
+   旧名清单：town-alleys.yaml
+
+[自校验] 源生成器文件按字节未被动过 OK
+
+===== 汇总 =====
+  对照：不改动             实测 0 / 期望 0   OK
+  A：还原成 slug         实测 8 / 期望 8   OK
+  B：表删一项             实测 1 / 期望 1   OK
+
+结论：三条全部符合预期，防护有效

@@ -37,6 +37,23 @@ IMPORTED = "2026-09-20T00:00:00Z"
 
 CHECK_ONLY = "--check" in sys.argv
 
+# ---------- 文件名前缀归一（09-24 甲方裁定）----------
+# ⚠️ `slug` 在这条链里身兼三职：① 文件名 ② `id: doc.<域>.<slug>` 的尾段
+#    ③ 条目 id `awake:entry:<域>.<slug>` 的尾段。后两者**已发布、不许动**，
+#    只有 ① 是给 `git ls` 看的人眼分类标签（编译器不读文件名）。
+#    ⇒ 这里只重映射文件名，`doc["slug"]` 本身原样保留，id 一律不变。
+#    ⚠️ 不改这一段的话：任何人重跑本生成器，AO 会重新长出旧名副本 ⇒ 改名被静默退回。
+FN_PREFIX = {
+    "town-alleys":        "underworld-alleys",
+    "alley-gang-leaders": "underworld-gang-leaders",
+    "alley-struggle":     "underworld-struggle",
+    "town-gangs":         "underworld-gangs",
+    "crime-rating":       "underworld-crime-rating",
+    "blood-money":        "underworld-blood-money",
+    "bandits":            "underworld-bandits",
+    "smuggling":          "underworld-smuggling",
+}
+
 db = sqlite3.connect(DB, uri=True)
 cur = db.cursor()
 
@@ -242,7 +259,7 @@ for doc in docs:
         for al in chk["aliases"][lang]:
             assert al != tv and (al.lower() not in tv.lower()) and (tv.lower() not in al.lower()), \
                 "%s: 别名「%s」与 title「%s」构成死条" % (doc["slug"], al, tv)
-    fn = doc["slug"] + ".yaml"
+    fn = FN_PREFIX.get(doc["slug"], doc["slug"]) + ".yaml"
     if not CHECK_ONLY:
         for d in (WS, AO):
             io.open(os.path.join(d, fn), "w", encoding="utf-8", newline="\n").write(body)

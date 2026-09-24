@@ -1,0 +1,37 @@
+== 暗面批前缀归一（文件名 -> underworld-*）==
+
+[0] 改名前 authoring 下 yaml 档数 = 558
+  town-alleys.yaml           -> underworld-alleys.yaml            id=doc.politics.town-alleys             bytes=10166
+  alley-gang-leaders.yaml    -> underworld-gang-leaders.yaml      id=doc.politics.alley-gang-leaders      bytes=13060
+  alley-struggle.yaml        -> underworld-struggle.yaml          id=doc.politics.alley-struggle          bytes=10796
+  town-gangs.yaml            -> underworld-gangs.yaml             id=doc.politics.town-gangs              bytes=13859
+  crime-rating.yaml          -> underworld-crime-rating.yaml      id=doc.politics.crime-rating            bytes=12240
+  blood-money.yaml           -> underworld-blood-money.yaml       id=doc.politics.blood-money             bytes=8914
+  bandits.yaml               -> underworld-bandits.yaml           id=doc.politics.bandits                 bytes=11543
+  smuggling.yaml             -> underworld-smuggling.yaml         id=doc.economy.smuggling                bytes=11888
+
+[1] 建备份目录 D:\AWAKE-Dev\AWAKE\tools\worldbook-studio\workspace\full-geo1\authoring\_archive-20260924
+  已备份 8 档（副本文件名保持原名）
+
+[2] 执行改名
+  renamed: town-alleys.yaml -> underworld-alleys.yaml
+  renamed: alley-gang-leaders.yaml -> underworld-gang-leaders.yaml
+  renamed: alley-struggle.yaml -> underworld-struggle.yaml
+  renamed: town-gangs.yaml -> underworld-gangs.yaml
+  renamed: crime-rating.yaml -> underworld-crime-rating.yaml
+  renamed: blood-money.yaml -> underworld-blood-money.yaml
+  renamed: bandits.yaml -> underworld-bandits.yaml
+  renamed: smuggling.yaml -> underworld-smuggling.yaml
+
+[3] 复核
+  改名前档数 558 / 改名后档数 558  OK
+  underworld-alleys.yaml           bytes 10166/10166 OK | sha OK | id doc.politics.town-alleys (OK)
+  underworld-gang-leaders.yaml     bytes 13060/13060 OK | sha OK | id doc.politics.alley-gang-leaders (OK)
+  underworld-struggle.yaml         bytes 10796/10796 OK | sha OK | id doc.politics.alley-struggle (OK)
+  underworld-gangs.yaml            bytes 13859/13859 OK | sha OK | id doc.politics.town-gangs (OK)
+  underworld-crime-rating.yaml     bytes 12240/12240 OK | sha OK | id doc.politics.crime-rating (OK)
+  underworld-blood-money.yaml      bytes 8914/8914 OK | sha OK | id doc.politics.blood-money (OK)
+  underworld-bandits.yaml          bytes 11543/11543 OK | sha OK | id doc.politics.bandits (OK)
+  underworld-smuggling.yaml        bytes 11888/11888 OK | sha OK | id doc.economy.smuggling (OK)
+
+结论：全部通过

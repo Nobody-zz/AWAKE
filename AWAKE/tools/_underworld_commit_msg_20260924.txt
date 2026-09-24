@@ -1,0 +1,71 @@
+worldbook: 暗面批档名前缀归一（alley-/town-/裸名 → underworld-）
+
+甲方 09-24 裁定：用一个前缀把「城镇地下秩序」这批档拢到一起。
+读完全批 11 档后确认：这批当时**只有 2 档长了内容前缀**（alley-*），
+其余 6 档裸名/混用 town-，而 town-alleys / town-gangs 又会被误读成
+地理类（旁有 towns-* 53 档）。故统一为 underworld-。
+
+## 范围（甲方点头）
+
+改 8 档：
+  town-alleys        -> underworld-alleys
+  alley-gang-leaders -> underworld-gang-leaders
+  alley-struggle     -> underworld-struggle
+  town-gangs         -> underworld-gangs
+  crime-rating       -> underworld-crime-rating
+  blood-money        -> underworld-blood-money
+  bandits            -> underworld-bandits
+  smuggling          -> underworld-smuggling
+
+不动 3 档：notables / serfs / small-factions —— 非「只在城镇后街成立」，
+硬塞进 underworld 会把该词稀释。
+
+## ★ 铁律：只改「档名」这一层
+
+`slug` 在生成器里身兼三职 —— 文件名 / `id: doc.<域>.<slug>` 尾段 /
+条目 id `awake:entry:<域>.<slug>` 尾段。后两者**已发布**：
+  · 编译器只读 domain/subdomain，**不读文件名**
+  · link-registry.v1.json 1286 条边、should-link.v3.json 1394 条边，
+    全按条目 id 索引
+=> 改名**只动文件名**，档内一行未改。复核逐档验过：
+   docid 未变、assertion/expr 子 id 未变、无 `.underworld-` 污染。
+
+## 改了什么
+
+- 两侧目录同步改名（WS authoring 558 档 ＋ AO 镜像 558 档），
+  8 档逐字节一致（sha256 比对 0 不一致）
+- `_gen_dark_20260920.py`：新增 `FN_PREFIX` 映射表，
+  `fn = FN_PREFIX.get(doc["slug"], doc["slug"]) + ".yaml"`。
+  ⚠️ 这是**防退回装置** —— 生成器第 247 行对 (WS, AO) 双写同一文件名，
+  不写这张表，任何人重跑生成器，AO 会重新长出旧名副本。
+- 两份批内报告/规格里的**档名层**引用（22 处）跟着换；
+  带域前缀的条目 id 一处未动。
+- 新建 `docs/worldbook-studio-plan/FILE-PREFIX-CONVENTION.md`：
+  前缀此前**从无成文规范**（全库 564 档实测 politics-/economy-/culture-/war-
+  各 0 档，前缀一律是内容类目词）。此次把它立下来，含两层辨析表、取值规则、
+  现存谱系、underworld 归入判据、两处已知缺口。
+
+## 判据与读数
+
+- 变异检验 `tools/_underworld_mutation_20260924.py`（v2）：
+  ★ v1 是错的 —— 探针自己正则抠 FN_PREFIX 表反推文件名，于是变异 A
+  （还原 `fn` 那一行）改的不是探针读的那段，打不红（恒绿）。
+  v2 改成**把生成器复制到临时目录真跑**，取它本人写出的文件名：
+    对照 旧前缀残留 0 / 变异 A（还原成 slug）8 / 变异 B（表删一项）1
+  三条全部符合预期，源文件按字节还原、自校验为真。
+- 全链复跑 `tools/_underworld_chain_20260924.py`（新 op 前缀 uw20260924a）：
+  register 8 档 -> select itemCount=558 -> approve -> proof -> compile
+  `validation total=21 error=0 warning=21`；新包 558 档；
+  8 个旧条目 id 全在；条目 id 含 `.underworld-` 的 = 0。
+- 最终复核 `tools/_underworld_final_check_20260924.py`：五道全绿
+  （档数/双写/id 层/旧名残留/条目 id 层 + 现役包仍 482 档未部署）。
+
+## 未动
+
+- 分类表：没有「法外／地下」这一格，8 档仍挤在 politics/law ×7 ＋
+  economy/trade ×1。补格会令 Studio 包过期，属专项，只记账。
+- `link-registry.v1.json` / `should-link.v3.json`：当时的一次性快照，
+  不随档名走、也不手改。
+- 现役上线包（ModuleData 482 档，时间戳 09-18）一动未动；未部署。
+
+产物：`compiled/geo1-v23-underworld`

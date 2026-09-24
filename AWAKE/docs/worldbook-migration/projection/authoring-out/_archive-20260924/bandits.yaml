@@ -1,0 +1,228 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.politics.bandits
+title:
+  zh-CN: 强盗
+  en: Bandits
+status: needs_review
+domain: politics
+subdomain: law
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 官道和野地里盘踞着各色强盗。他们是谁、该怎么看，各地的人说法不一样。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.1sbJQR4H
+  quote_hash: D17D9923EE362534BDD81BE10A094E13DB7D2AAA17E33A1BE9B7F061BE61DB5E
+  quote: 劫匪
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.3IpiWM7H
+  quote_hash: 596D489DCAE631F02459BAAA8725458F10A8101EBA004CC076F7C0070597FA44
+  quote: 强盗
+- source_id: source.calradia.chronicle.animusforge.dark
+  source_version: animusforge-20260913
+  source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+  locator: rules/rule_劫匪__劫匪.json#/Variants/0/Content
+  quote_hash: A75E51597A6303CCD92BE8E87C90548A03B2B5A5E90F4E06C829EB92A2C8554A
+  quote: 劫匪们很可恶，他们三三五五的聚集起来，专门打劫良善
+- source_id: source.calradia.chronicle.animusforge.dark
+  source_version: animusforge-20260913
+  source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+  locator: rules/rule_沙漠强盗__沙漠强盗.json#/Variants/1/Content
+  quote_hash: C3A40A9BEE14C4A581FB7AB5B758FABCCB22355F5EF4BCD57DD0CF8EA9469008
+  quote: 他们以前是正经的扈从，骑好马，穿铜甲，在部落里有人叫得出他们名字
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.mOa9CX13
+  quote_hash: 95BC877EC4ACC56300EED321D7FBC5E36C8F9BB9D5F3D22674DE6512E9F80286
+  quote: 山贼
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.ziOBJSzR
+  quote_hash: F3CADB55BD2AFE670A3AF852C6AF3C17AD50AFF2CC2C24F4CF16F240E65E4CE1
+  quote: 山贼头领
+- source_id: source.calradia.chronicle.animusforge.dark
+  source_version: animusforge-20260913
+  source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+  locator: rules/rule_山贼__山贼.json#/Variants/0/Content
+  quote_hash: 93861D26B311B434E65E0134653026E774C9404E37FBC67E8052A0DEA3BB1D34
+  quote: 这群亡命之徒常年藏身于卡拉迪亚的丛林深处，以简陋的木质营寨为据点
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.bandits-1
+  revision: 1
+  kind: interpretation
+  text:
+    zh-CN: 卡拉迪亚的官道与野地里盘踞着各色强盗——劫匪、山贼、海寇、沙漠里的哈拉米。他们是谁、该怎么看他们，各地的人说法差得很远。
+  sources:
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.1sbJQR4H
+    quote_hash: D17D9923EE362534BDD81BE10A094E13DB7D2AAA17E33A1BE9B7F061BE61DB5E
+    quote: 劫匪
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.3IpiWM7H
+    quote_hash: 596D489DCAE631F02459BAAA8725458F10A8101EBA004CC076F7C0070597FA44
+    quote: 强盗
+  - source_id: source.calradia.chronicle.animusforge.dark
+    source_version: animusforge-20260913
+    source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+    locator: rules/rule_劫匪__劫匪.json#/Variants/0/Content
+    quote_hash: A75E51597A6303CCD92BE8E87C90548A03B2B5A5E90F4E06C829EB92A2C8554A
+    quote: 劫匪们很可恶，他们三三五五的聚集起来，专门打劫良善
+  - source_id: source.calradia.chronicle.animusforge.dark
+    source_version: animusforge-20260913
+    source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+    locator: rules/rule_沙漠强盗__沙漠强盗.json#/Variants/1/Content
+    quote_hash: C3A40A9BEE14C4A581FB7AB5B758FABCCB22355F5EF4BCD57DD0CF8EA9469008
+    quote: 他们以前是正经的扈从，骑好马，穿铜甲，在部落里有人叫得出他们名字
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.mOa9CX13
+    quote_hash: 95BC877EC4ACC56300EED321D7FBC5E36C8F9BB9D5F3D22674DE6512E9F80286
+    quote: 山贼
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.ziOBJSzR
+    quote_hash: F3CADB55BD2AFE670A3AF852C6AF3C17AD50AFF2CC2C24F4CF16F240E65E4CE1
+    quote: 山贼头领
+  - source_id: source.calradia.chronicle.animusforge.dark
+    source_version: animusforge-20260913
+    source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+    locator: rules/rule_山贼__山贼.json#/Variants/0/Content
+    quote_hash: 93861D26B311B434E65E0134653026E774C9404E37FBC67E8052A0DEA3BB1D34
+    quote: 这群亡命之徒常年藏身于卡拉迪亚的丛林深处，以简陋的木质营寨为据点
+  expressions:
+  - id: expr.bandits-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 劫匪三三五五聚起来，专挑良善下手，跟苍蝇一样到处都是，轰也轰不走、打也打不完，只能勤加剿灭。他们谁都打不过，也就欺负欺负村民——最可恶的一帮人。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.1sbJQR4H
+      quote_hash: D17D9923EE362534BDD81BE10A094E13DB7D2AAA17E33A1BE9B7F061BE61DB5E
+      quote: 劫匪
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.3IpiWM7H
+      quote_hash: 596D489DCAE631F02459BAAA8725458F10A8101EBA004CC076F7C0070597FA44
+      quote: 强盗
+    - source_id: source.calradia.chronicle.animusforge.dark
+      source_version: animusforge-20260913
+      source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+      locator: rules/rule_劫匪__劫匪.json#/Variants/0/Content
+      quote_hash: A75E51597A6303CCD92BE8E87C90548A03B2B5A5E90F4E06C829EB92A2C8554A
+      quote: 劫匪们很可恶，他们三三五五的聚集起来，专门打劫良善
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    denies: []
+  - id: expr.bandits-summary
+    revision: 1
+    layer: summary
+    text:
+      zh-CN: 沙漠里那些不一样。他们原先是正经的扈从，骑好马、穿铜甲，在部落里有人叫得出名字；不肯低头去给人当奴隶兵，就骑着马进了沙丘。有人恨他们，也有人暗地里羡慕他们。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.3IpiWM7H
+      quote_hash: 596D489DCAE631F02459BAAA8725458F10A8101EBA004CC076F7C0070597FA44
+      quote: 强盗
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.1sbJQR4H
+      quote_hash: D17D9923EE362534BDD81BE10A094E13DB7D2AAA17E33A1BE9B7F061BE61DB5E
+      quote: 劫匪
+    - source_id: source.calradia.chronicle.animusforge.dark
+      source_version: animusforge-20260913
+      source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+      locator: rules/rule_沙漠强盗__沙漠强盗.json#/Variants/1/Content
+      quote_hash: C3A40A9BEE14C4A581FB7AB5B758FABCCB22355F5EF4BCD57DD0CF8EA9469008
+      quote: 他们以前是正经的扈从，骑好马，穿铜甲，在部落里有人叫得出他们名字
+    grants:
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    denies: []
+  - id: expr.bandits-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 林子里的那批常年藏在深处，以简陋木寨为据点：破烂布衣，少数人裹着偷来的破损皮甲，用的是猎弓、生锈斧头与草叉。他们既是被战乱赶离土地的农民，也是逃兵与罪犯的集合体。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.mOa9CX13
+      quote_hash: 95BC877EC4ACC56300EED321D7FBC5E36C8F9BB9D5F3D22674DE6512E9F80286
+      quote: 山贼
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.ziOBJSzR
+      quote_hash: F3CADB55BD2AFE670A3AF852C6AF3C17AD50AFF2CC2C24F4CF16F240E65E4CE1
+      quote: 山贼头领
+    - source_id: source.calradia.chronicle.animusforge.dark
+      source_version: animusforge-20260913
+      source_content_hash: a9cda7018dcdd65b5245c500e044aec879dc98a3da3ba466f9e35be3e4368c37
+      locator: rules/rule_山贼__山贼.json#/Variants/0/Content
+      quote_hash: 93861D26B311B434E65E0134653026E774C9404E37FBC67E8052A0DEA3BB1D34
+      quote: 这群亡命之徒常年藏身于卡拉迪亚的丛林深处，以简陋的木质营寨为据点
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

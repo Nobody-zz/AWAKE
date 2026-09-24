@@ -1,0 +1,34 @@
+== 前缀归一 · 第三段：文档里的「档名」层 ==
+
+改：反引号里的裸档名          留：带域前缀的条目 id（已发布主键）
+
+### docs/worldbook-migration/DARK-BATCH-REPORT-20260920.md
+   town-alleys              -> underworld-alleys               1 处
+   alley-gang-leaders       -> underworld-gang-leaders         1 处
+   alley-struggle           -> underworld-struggle             1 处
+   town-gangs               -> underworld-gangs                1 处
+   crime-rating             -> underworld-crime-rating         2 处
+   blood-money              -> underworld-blood-money          1 处
+   bandits                  -> underworld-bandits              4 处
+   smuggling                -> underworld-smuggling            1 处
+   [已写]
+
+### docs/worldbook-migration/DARK-BATCH-SPEC-20260920.md
+   town-alleys              -> underworld-alleys               1 处
+   alley-gang-leaders       -> underworld-gang-leaders         1 处
+   alley-struggle           -> underworld-struggle             1 处
+   town-gangs               -> underworld-gangs                1 处
+   crime-rating             -> underworld-crime-rating         2 处
+   blood-money              -> underworld-blood-money          1 处
+   bandits                  -> underworld-bandits              2 处
+   smuggling                -> underworld-smuggling            1 处
+   [已写]
+
+合计改写 22 处
+
+★ 以下一律**未动**（属已发布主键，改了会打断边表）：
+   · politics.town-gangs / politics.town-alleys …等带域前缀的条目 id
+   · docs/worldbook-studio-plan/link-registry.v1.json（1286 条边）
+   · docs/mappings/.../should-link.v3.json（1394 条边）
+   · 两档 yaml 内的 id / assertion id / expression id
+   · _dark_A_20260920.json（生成本源，其 slug 是 id 的来源）

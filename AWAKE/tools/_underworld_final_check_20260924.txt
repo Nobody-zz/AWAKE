@@ -1,0 +1,30 @@
+===== 前缀归一 · 最终一致性复核 =====
+
+[1] 两侧档数与双写一致性
+   WS 档数 = 558  OK
+   AO 档数 = 558  OK
+   8 档双写比对：不一致 0 档  OK
+
+[2] 档内 id 层未被动过
+   underworld-alleys.yaml         docid=doc.politics.town-alleys             子id=3 无 underworld 污染=是  OK
+   underworld-gang-leaders.yaml   docid=doc.politics.alley-gang-leaders      子id=3 无 underworld 污染=是  OK
+   underworld-struggle.yaml       docid=doc.politics.alley-struggle          子id=3 无 underworld 污染=是  OK
+   underworld-gangs.yaml          docid=doc.politics.town-gangs              子id=3 无 underworld 污染=是  OK
+   underworld-crime-rating.yaml   docid=doc.politics.crime-rating            子id=3 无 underworld 污染=是  OK
+   underworld-blood-money.yaml    docid=doc.politics.blood-money             子id=3 无 underworld 污染=是  OK
+   underworld-bandits.yaml        docid=doc.politics.bandits                 子id=4 无 underworld 污染=是  OK
+   underworld-smuggling.yaml      docid=doc.economy.smuggling                子id=3 无 underworld 污染=是  OK
+
+[3] 全仓旧档名残留（作为档名出现的地方）
+   无残留  OK
+
+[4] 条目 id 层未被误改
+   新包档数 = 558
+   8 个旧条目 id 全在：是
+   条目 id 里出现 .underworld- 的 = 0  OK
+
+[5] 现役上线包（ModuleData）
+   档数 = 482（应为 482，未部署）
+
+===== 结论 =====
+全部通过。

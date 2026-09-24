@@ -1,0 +1,208 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.politics.alley-struggle
+title:
+  zh-CN: 巷子争夺
+  en: Alley Struggles
+status: needs_review
+domain: politics
+subdomain: law
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 巷子会招来附近帮派的攻打。守不住，连里面的兵一起丢。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.po79q14T
+  quote_hash: 391DC1324B761FD96E15F5F2C46AA51D14BFB8E3FA7EBA4BB0C8E8BA2090AB31
+  quote: 你没能保护你的巷子免受攻击，你已经失去了对它的所有权。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.FZdiWaBs
+  quote_hash: F17B2C7AED5C9CA605303A54C6DC919B144DE0A2FA2E458D90F0361A48754206
+  quote: '{HERO}的地盘被夺占。'
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.cOnCiZeH
+  quote_hash: 3A02B13AE31276872D93A2DCFDA47C0ABD2F7EC5DC899F49F1E9DB37A49587EB
+  quote: '{HERO1}袭击了{HERO2}在{SETTLEMENT}的地盘{ADDITIONAL_INFO}'
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.5bIpeW9X
+  quote_hash: F28FF10D553ED26AC485EEAA97877C44A62B5F6E292F3EFAE32D8205B0B33804
+  quote: 你在{SETTLEMENT}的巷子正受到附近帮派的攻击。若不前去支援，{RESPONSE_TIME}天后将会失去巷子。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.emQQbbO9
+  quote_hash: 4FF52E6D96C7EBFD1602255B180AD282EA1F5539E5CADDD29415FDC3313E7411
+  quote: 巷子受到攻击！
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.i1sgAm0F
+  quote_hash: F2E828C8BEC3FCD671394BCF01E1FABCCB0126FFCFB44BC1BCB91FF9F4BE7CBC
+  quote: 你已经成功地保卫了你的巷子，抵挡住了攻击。你可能想留下一些士兵，以作为你在战斗中减员的补充。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.zLnqZdIK
+  quote_hash: 059B8AF48C6D13C6593E98241F468AFCFEC1B4D1BB3F5636928C61B4D55EF2FA
+  quote: 你没有足够的士兵分配到这条巷子。（至少需要{NEEDED_TROOP_NUMBER}名）
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.alley-struggle-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 巷子会招来附近帮派的攻打。撑不过去，就失去对它的所有权，留在里面的兵也一并丢光。
+  sources:
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.po79q14T
+    quote_hash: 391DC1324B761FD96E15F5F2C46AA51D14BFB8E3FA7EBA4BB0C8E8BA2090AB31
+    quote: 你没能保护你的巷子免受攻击，你已经失去了对它的所有权。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.FZdiWaBs
+    quote_hash: F17B2C7AED5C9CA605303A54C6DC919B144DE0A2FA2E458D90F0361A48754206
+    quote: '{HERO}的地盘被夺占。'
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.cOnCiZeH
+    quote_hash: 3A02B13AE31276872D93A2DCFDA47C0ABD2F7EC5DC899F49F1E9DB37A49587EB
+    quote: '{HERO1}袭击了{HERO2}在{SETTLEMENT}的地盘{ADDITIONAL_INFO}'
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.5bIpeW9X
+    quote_hash: F28FF10D553ED26AC485EEAA97877C44A62B5F6E292F3EFAE32D8205B0B33804
+    quote: 你在{SETTLEMENT}的巷子正受到附近帮派的攻击。若不前去支援，{RESPONSE_TIME}天后将会失去巷子。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.emQQbbO9
+    quote_hash: 4FF52E6D96C7EBFD1602255B180AD282EA1F5539E5CADDD29415FDC3313E7411
+    quote: 巷子受到攻击！
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.i1sgAm0F
+    quote_hash: F2E828C8BEC3FCD671394BCF01E1FABCCB0126FFCFB44BC1BCB91FF9F4BE7CBC
+    quote: 你已经成功地保卫了你的巷子，抵挡住了攻击。你可能想留下一些士兵，以作为你在战斗中减员的补充。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.zLnqZdIK
+    quote_hash: 059B8AF48C6D13C6593E98241F468AFCFEC1B4D1BB3F5636928C61B4D55EF2FA
+    quote: 你没有足够的士兵分配到这条巷子。（至少需要{NEEDED_TROOP_NUMBER}名）
+  expressions:
+  - id: expr.alley-struggle-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 这条街换过好几回主人了。今天归这家，过些日子可能就换了旗——没人在的时候，巷子是谁的都说不准。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.po79q14T
+      quote_hash: 391DC1324B761FD96E15F5F2C46AA51D14BFB8E3FA7EBA4BB0C8E8BA2090AB31
+      quote: 你没能保护你的巷子免受攻击，你已经失去了对它的所有权。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.FZdiWaBs
+      quote_hash: F17B2C7AED5C9CA605303A54C6DC919B144DE0A2FA2E458D90F0361A48754206
+      quote: '{HERO}的地盘被夺占。'
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.cOnCiZeH
+      quote_hash: 3A02B13AE31276872D93A2DCFDA47C0ABD2F7EC5DC899F49F1E9DB37A49587EB
+      quote: '{HERO1}袭击了{HERO2}在{SETTLEMENT}的地盘{ADDITIONAL_INFO}'
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    denies: []
+  - id: expr.alley-struggle-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 想保住就得留人。打赢了不算完，得把折损的兵补回去，不然下一拨来了照样守不住。有人守着，才叫你的巷子。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.5bIpeW9X
+      quote_hash: F28FF10D553ED26AC485EEAA97877C44A62B5F6E292F3EFAE32D8205B0B33804
+      quote: 你在{SETTLEMENT}的巷子正受到附近帮派的攻击。若不前去支援，{RESPONSE_TIME}天后将会失去巷子。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.emQQbbO9
+      quote_hash: 4FF52E6D96C7EBFD1602255B180AD282EA1F5539E5CADDD29415FDC3313E7411
+      quote: 巷子受到攻击！
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.i1sgAm0F
+      quote_hash: F2E828C8BEC3FCD671394BCF01E1FABCCB0126FFCFB44BC1BCB91FF9F4BE7CBC
+      quote: 你已经成功地保卫了你的巷子，抵挡住了攻击。你可能想留下一些士兵，以作为你在战斗中减员的补充。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.zLnqZdIK
+      quote_hash: 059B8AF48C6D13C6593E98241F468AFCFEC1B4D1BB3F5636928C61B4D55EF2FA
+      quote: 你没有足够的士兵分配到这条巷子。（至少需要{NEEDED_TROOP_NUMBER}名）
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

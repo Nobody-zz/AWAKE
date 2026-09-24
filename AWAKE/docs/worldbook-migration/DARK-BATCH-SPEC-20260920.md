@@ -20,16 +20,16 @@
 
 | # | slug | 标题 | 域/子域 | 断言性质 |
 |---|---|---|---|---|
-| 1 | `town-alleys` | 巷子 | politics/law | fact |
-| 2 | `alley-gang-leaders` | 巷子头目 | politics/law | **interpretation**（官叫帮派头目／居民叫守护者） |
-| 3 | `alley-struggle` | 巷子争夺 | politics/law | fact |
-| 4 | `town-gangs` | 帮派 | politics/law | fact |
-| 5 | `crime-rating` | 犯罪等级 | politics/law | fact（100 / 30 两个数在官方正文里，非我们算的） |
-| 6 | `blood-money` | 赎罪金 | politics/law | fact |
-| 7 | `smuggling` | 走私货 | economy/trade | fact |
+| 1 | `underworld-alleys` | 巷子 | politics/law | fact |
+| 2 | `underworld-gang-leaders` | 巷子头目 | politics/law | **interpretation**（官叫帮派头目／居民叫守护者） |
+| 3 | `underworld-struggle` | 巷子争夺 | politics/law | fact |
+| 4 | `underworld-gangs` | 帮派 | politics/law | fact |
+| 5 | `underworld-crime-rating` | 犯罪等级 | politics/law | fact（100 / 30 两个数在官方正文里，非我们算的） |
+| 6 | `underworld-blood-money` | 赎罪金 | politics/law | fact |
+| 7 | `underworld-smuggling` | 走私货 | economy/trade | fact |
 | 8 | `notables` | 要人 | culture/identity | fact |
 | 9 | `serfs` | 农奴 | culture/identity | **interpretation**（★ 三层说法） |
-| 10 | `bandits` | 强盗 | politics/law | **interpretation**（★ 三层说法） |
+| 10 | `underworld-bandits` | 强盗 | politics/law | **interpretation**（★ 三层说法） |
 | 11 | `small-factions` | 小阵营 | politics/diplomacy | fact |
 
 合计 **11 断言 / 24 表达**。
@@ -47,7 +47,7 @@
 
 1. **受众必须互斥**。`SelectExpression` 每档只送一条，`分数 = 规则分×10 ＋ 层号`，同分取先
    ⇒ 同一身份被两层都挂上，**层号低的那条永远送不到人耳**。
-   本批 `serfs` / `bandits` 用三层：`rumor`→(commoner, villager)、`summary`→(townsfolk)、`detail`→(notable, merchant, tavernkeeper, ransom_broker, headman, soldier, noble)。
+   本批 `serfs` / `underworld-bandits` 用三层：`rumor`→(commoner, villager)、`summary`→(townsfolk)、`detail`→(notable, merchant, tavernkeeper, ransom_broker, headman, soldier, noble)。
    生成器里对「同时有 rumor 与 summary 的档」自动把 `townsfolk` 从 rumor 层摘掉。
 2. **能力上限不许越**（一手 `WorldbookIdentityCapabilityRules.cs`）：
    `villager/commoner=(local,rumor)`｜`townsfolk=(regional,summary)`｜`headman/soldier=(national,detail)`｜
@@ -58,7 +58,7 @@
 
 ## 四、开工约束（四条）
 
-1. **数值只写官方文本里有的**。`crime-rating` 的 100 与 30 出自官方正文（`FP4KyHBK`）；其余机制数值
+1. **数值只写官方文本里有的**。`underworld-crime-rating` 的 100 与 30 出自官方正文（`FP4KyHBK`）；其余机制数值
    （巷子收益是「城越兴旺、进项越多」、赃物「半价」出自文案）一律**定性表述，不写成公式**。
    ⇒ 这不违反甲方裁定：裁定的落点是「数值可进正文但须挂得上游戏数据出处」，本批把它收紧成「**数值必须在官方文本里能指出来**」，更安全。
 2. **B 级编年史只给「世界内的说法」**，不据以改官方名。`rule_农奴` 里的旧译不得回灌官方条目。

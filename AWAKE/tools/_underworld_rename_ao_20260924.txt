@@ -1,0 +1,39 @@
+== 暗面批前缀归一 · 第二段（镜像目录 AO）==
+
+[0] 改名前 AO 档数 = 558
+  town-alleys.yaml           -> underworld-alleys.yaml            id=doc.politics.town-alleys
+  alley-gang-leaders.yaml    -> underworld-gang-leaders.yaml      id=doc.politics.alley-gang-leaders
+  alley-struggle.yaml        -> underworld-struggle.yaml          id=doc.politics.alley-struggle
+  town-gangs.yaml            -> underworld-gangs.yaml             id=doc.politics.town-gangs
+  crime-rating.yaml          -> underworld-crime-rating.yaml      id=doc.politics.crime-rating
+  blood-money.yaml           -> underworld-blood-money.yaml       id=doc.politics.blood-money
+  bandits.yaml               -> underworld-bandits.yaml           id=doc.politics.bandits
+  smuggling.yaml             -> underworld-smuggling.yaml         id=doc.economy.smuggling
+
+[1] 已备份 8 档到 D:\AWAKE-Dev\AWAKE\docs\worldbook-migration\projection\authoring-out\_archive-20260924
+
+[2] 执行改名
+  renamed: town-alleys.yaml -> underworld-alleys.yaml
+  renamed: alley-gang-leaders.yaml -> underworld-gang-leaders.yaml
+  renamed: alley-struggle.yaml -> underworld-struggle.yaml
+  renamed: town-gangs.yaml -> underworld-gangs.yaml
+  renamed: crime-rating.yaml -> underworld-crime-rating.yaml
+  renamed: blood-money.yaml -> underworld-blood-money.yaml
+  renamed: bandits.yaml -> underworld-bandits.yaml
+  renamed: smuggling.yaml -> underworld-smuggling.yaml
+
+[3] 复核
+  档数 558 -> 558  OK
+  underworld-alleys.yaml           bytes 10166/10166 | sha OK | id doc.politics.town-alleys
+  underworld-gang-leaders.yaml     bytes 13060/13060 | sha OK | id doc.politics.alley-gang-leaders
+  underworld-struggle.yaml         bytes 10796/10796 | sha OK | id doc.politics.alley-struggle
+  underworld-gangs.yaml            bytes 13859/13859 | sha OK | id doc.politics.town-gangs
+  underworld-crime-rating.yaml     bytes 12240/12240 | sha OK | id doc.politics.crime-rating
+  underworld-blood-money.yaml      bytes 8914/8914 | sha OK | id doc.politics.blood-money
+  underworld-bandits.yaml          bytes 11543/11543 | sha OK | id doc.politics.bandits
+  underworld-smuggling.yaml        bytes 11888/11888 | sha OK | id doc.economy.smuggling
+
+[4] WS 与 AO 双写一致性
+  8 档比对，不一致 0 档  OK
+
+结论：全部通过

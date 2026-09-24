@@ -1,0 +1,208 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.economy.smuggling
+title:
+  zh-CN: 走私货
+  en: Smuggled Goods
+status: needs_review
+domain: economy
+subdomain: trade
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 走私来的货因为来路不正、带着风险，价钱比正常货低。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.3WFgPigk
+  quote_hash: AC9C973218829C526F51C4B270E33F5D9AB1C5E2BE729F7E8AA1C449534ED052
+  quote: '{ISSUE_GIVER.NAME}想要将偷来的赃物卖给你。因为有附带风险，商品的价格会低一些。'
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.riKyIyaa
+  quote_hash: B455E0E356EAE246C3AEB4EA5FEC440B881697D303D09308FD34E6E184DF7961
+  quote: '{QUEST_GIVER.LINK}，一位来自{QUEST_GIVER_SETTLEMENT}的帮派头目，想以半价卖给你{STOLEN_GOODS_SIZE}{STOLEN_GOOD}，因为这些货是偷来的……{?QUEST_GIVER.GENDER}她{?}他{\?}说这些货藏在一处偏僻的地方，你命令同伴前去购买这些货物。'
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.uaYGZUDs
+  quote_hash: F1B3E9DA1958EBF8B6DEF8DD433225621FDC1A717C661DC1AB53AB4E1593336F
+  quote: '{QUEST_GIVER.LINK}，一位来自{QUEST_GIVER_SETTLEMENT}的帮派头目，想以半价卖给你{STOLEN_GOODS_SIZE}{STOLEN_GOOD}，因为这些货是偷来的……{?QUEST_GIVER.GENDER}她{?}他{\?}说这些货藏在一处偏僻的地方，你同意购买这些货物。'
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.4iEQr3il
+  quote_hash: 67B303D97BA49DBBEDF8A0C09C10A5E6A44884B97F6B5B78F9E9BF99B3F3BD83
+  quote: 站住，你因走私被{TARGET_SETTLEMENT}官方通缉。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.5AvvGkk4
+  quote_hash: 646DDA167EF6A53115C3E4B90CFF8B0EA7A721868B73EC3245C8498FF16066A0
+  quote: 我相信你是无心之失，但法不留情。将走私货交给我，事情到此结束。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.X3TL6QZ8
+  quote_hash: C04BDD03DB40A8FE52D916D37387ADDB146770DF71DA7FDBDBF87C5584AB5FBA
+  quote: 你因犯罪行为在定居点被通缉，因此将不被允许在港口停靠。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.GTnVcUz9
+  quote_hash: 97FDB0F7B62D6E8863C08E221F81F97881E0FB8E82E23643A601649F82E0DD19
+  quote: 走私贩子的部队
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.smuggling-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 走私来的货物来路不正、带着风险，所以卖的价钱比正常货低——出手的人管这个差价叫「风险」。
+  sources:
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.3WFgPigk
+    quote_hash: AC9C973218829C526F51C4B270E33F5D9AB1C5E2BE729F7E8AA1C449534ED052
+    quote: '{ISSUE_GIVER.NAME}想要将偷来的赃物卖给你。因为有附带风险，商品的价格会低一些。'
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.riKyIyaa
+    quote_hash: B455E0E356EAE246C3AEB4EA5FEC440B881697D303D09308FD34E6E184DF7961
+    quote: '{QUEST_GIVER.LINK}，一位来自{QUEST_GIVER_SETTLEMENT}的帮派头目，想以半价卖给你{STOLEN_GOODS_SIZE}{STOLEN_GOOD}，因为这些货是偷来的……{?QUEST_GIVER.GENDER}她{?}他{\?}说这些货藏在一处偏僻的地方，你命令同伴前去购买这些货物。'
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.uaYGZUDs
+    quote_hash: F1B3E9DA1958EBF8B6DEF8DD433225621FDC1A717C661DC1AB53AB4E1593336F
+    quote: '{QUEST_GIVER.LINK}，一位来自{QUEST_GIVER_SETTLEMENT}的帮派头目，想以半价卖给你{STOLEN_GOODS_SIZE}{STOLEN_GOOD}，因为这些货是偷来的……{?QUEST_GIVER.GENDER}她{?}他{\?}说这些货藏在一处偏僻的地方，你同意购买这些货物。'
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.4iEQr3il
+    quote_hash: 67B303D97BA49DBBEDF8A0C09C10A5E6A44884B97F6B5B78F9E9BF99B3F3BD83
+    quote: 站住，你因走私被{TARGET_SETTLEMENT}官方通缉。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.5AvvGkk4
+    quote_hash: 646DDA167EF6A53115C3E4B90CFF8B0EA7A721868B73EC3245C8498FF16066A0
+    quote: 我相信你是无心之失，但法不留情。将走私货交给我，事情到此结束。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.X3TL6QZ8
+    quote_hash: C04BDD03DB40A8FE52D916D37387ADDB146770DF71DA7FDBDBF87C5584AB5FBA
+    quote: 你因犯罪行为在定居点被通缉，因此将不被允许在港口停靠。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.GTnVcUz9
+    quote_hash: 97FDB0F7B62D6E8863C08E221F81F97881E0FB8E82E23643A601649F82E0DD19
+    quote: 走私贩子的部队
+  expressions:
+  - id: expr.smuggling-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 有些货为什么那么便宜，买的人心里其实都清楚。有人肯半价出，就有人肯闭嘴。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.3WFgPigk
+      quote_hash: AC9C973218829C526F51C4B270E33F5D9AB1C5E2BE729F7E8AA1C449534ED052
+      quote: '{ISSUE_GIVER.NAME}想要将偷来的赃物卖给你。因为有附带风险，商品的价格会低一些。'
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.riKyIyaa
+      quote_hash: B455E0E356EAE246C3AEB4EA5FEC440B881697D303D09308FD34E6E184DF7961
+      quote: '{QUEST_GIVER.LINK}，一位来自{QUEST_GIVER_SETTLEMENT}的帮派头目，想以半价卖给你{STOLEN_GOODS_SIZE}{STOLEN_GOOD}，因为这些货是偷来的……{?QUEST_GIVER.GENDER}她{?}他{\?}说这些货藏在一处偏僻的地方，你命令同伴前去购买这些货物。'
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.uaYGZUDs
+      quote_hash: F1B3E9DA1958EBF8B6DEF8DD433225621FDC1A717C661DC1AB53AB4E1593336F
+      quote: '{QUEST_GIVER.LINK}，一位来自{QUEST_GIVER_SETTLEMENT}的帮派头目，想以半价卖给你{STOLEN_GOODS_SIZE}{STOLEN_GOOD}，因为这些货是偷来的……{?QUEST_GIVER.GENDER}她{?}他{\?}说这些货藏在一处偏僻的地方，你同意购买这些货物。'
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    denies: []
+  - id: expr.smuggling-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 这条道有专门的通道和人手。被逮住要没收货，人也会被通缉；闹得大的话，连港口都别想再靠。货还是那些货，只是从此见不得光。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.4iEQr3il
+      quote_hash: 67B303D97BA49DBBEDF8A0C09C10A5E6A44884B97F6B5B78F9E9BF99B3F3BD83
+      quote: 站住，你因走私被{TARGET_SETTLEMENT}官方通缉。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.5AvvGkk4
+      quote_hash: 646DDA167EF6A53115C3E4B90CFF8B0EA7A721868B73EC3245C8498FF16066A0
+      quote: 我相信你是无心之失，但法不留情。将走私货交给我，事情到此结束。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.X3TL6QZ8
+      quote_hash: C04BDD03DB40A8FE52D916D37387ADDB146770DF71DA7FDBDBF87C5584AB5FBA
+      quote: 你因犯罪行为在定居点被通缉，因此将不被允许在港口停靠。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.GTnVcUz9
+      quote_hash: 97FDB0F7B62D6E8863C08E221F81F97881E0FB8E82E23643A601649F82E0DD19
+      quote: 走私贩子的部队
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []

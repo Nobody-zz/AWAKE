@@ -1,0 +1,172 @@
+schema_version: awake.worldbook.authoring.v1
+revision: 1
+id: doc.politics.crime-rating
+title:
+  zh-CN: 犯罪等级
+  en: Crime Rating
+status: needs_review
+domain: politics
+subdomain: law
+universe: awake_current
+era:
+  key: current
+  certainty: bounded
+content_tier: base
+aliases:
+  zh-CN: []
+  en: []
+summary:
+  zh-CN: 在卡拉迪亚，抢劫或侵犯王国居民会留下犯罪等级。到 30 就进不去那个王国的定居点了。
+registry_bindings:
+  profile_registry_version: 1.0.0
+  profile_registry_hash: 309D10583E7B4AF05F28DE2C2E67A2528CB3D6C45752369C0F7D160FABC3F3A5
+  referral_registry_version: 1.0.0
+  referral_registry_hash: 6E17075F1F967BE28C0437121DB50E5C30809C4EFC3D2A5F22AD9BB0B3B926CD
+sources:
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.r0WIRUHo
+  quote_hash: 04943499B94C26E34628B64A2D7F9B21410D654A775A6DCC274A2FEE32F70D5A
+  quote: 犯罪等级
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.X3TL6QZ8
+  quote_hash: C04BDD03DB40A8FE52D916D37387ADDB146770DF71DA7FDBDBF87C5584AB5FBA
+  quote: 你因犯罪行为在定居点被通缉，因此将不被允许在港口停靠。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.xj0MgUO0
+  quote_hash: BF575EB6B97B34ABD4894E9BEEAAB56F94DE3BDB0548AAF3EDC9D4CEE8BF213C
+  quote: 犯罪
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.FP4KyHBK
+  quote_hash: 0051F1EC2CEADA908D7197C8B9C0F0DAB526705A322982EA2437735399EF4FF2
+  quote: 玩家如果抢劫或以其他方式侵犯一个王国的居民，除非他们处于战争状态，否则将得到一个犯罪等级。像胁迫村民给你提供新兵和物资，或在任务中的非法行为，将增加少量的犯罪等级。对中立方的直接攻击将增加相当大的数额，通常会引发战争。{newline}{newline}犯罪等级最高为100。在一个中立王国中，等级达到30或更高的玩家将被禁止进入该王国的定居点，如果他们试图潜入并被抓住，他们可能会被短暂监禁或遭受肉刑。卡拉迪亚的城镇通常缺乏长期关押囚犯的资源，所以对轻微犯罪的惩罚往往是粗暴而直接的，但并不像可能的那样严厉。不过，正义是不可预测的——如果玩家的生命值很低，而殴打会导致死亡，那么就有可能考虑处决。{newline}{newline}另一方面，一个独立的玩家如果犯罪等级达到60或更高，将被王国宣布为逃犯，并被当场攻击。如果玩家在成为一个王国的附庸时积累了犯罪等级，他或她仍然能够进入其定居点，但一旦进入，可能会面临监禁、罚款或失去影响力。此外，玩家每天都会失去相当于其犯罪等级一半的影响力。犯罪等级会随着时间的推移而衰减，所以在一段时间后，一个角色的错误行为会被遗忘。然而，如果一个玩家被宣布为逃犯，他或她将需要通过一个谈判的和平协议来结束这场战争。
+- source_id: source.calradia.game.urban-dark
+  source_version: bannerlord-1.3.15.110062
+  source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+  locator: bannerlord.db#localization.gXmzmJbg
+  quote_hash: A5AA9DCC067252E0BF2AF9E427141EEB83118A6805BF19DBE6E805F362B6546D
+  quote: 你有犯罪等级时的贸易惩罚{VALUE}%。
+authority:
+  owner: awake_canon
+  conflict_policy: canon_wins
+assertions:
+- id: assertion.crime-rating-1
+  revision: 1
+  kind: fact
+  text:
+    zh-CN: 抢劫或以其他方式侵犯一个王国的居民，会留下犯罪等级，最高到 100。在中立王国里，等级达到 30 的人将被禁止进入该王国的定居点。
+  sources:
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.r0WIRUHo
+    quote_hash: 04943499B94C26E34628B64A2D7F9B21410D654A775A6DCC274A2FEE32F70D5A
+    quote: 犯罪等级
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.X3TL6QZ8
+    quote_hash: C04BDD03DB40A8FE52D916D37387ADDB146770DF71DA7FDBDBF87C5584AB5FBA
+    quote: 你因犯罪行为在定居点被通缉，因此将不被允许在港口停靠。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.xj0MgUO0
+    quote_hash: BF575EB6B97B34ABD4894E9BEEAAB56F94DE3BDB0548AAF3EDC9D4CEE8BF213C
+    quote: 犯罪
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.FP4KyHBK
+    quote_hash: 0051F1EC2CEADA908D7197C8B9C0F0DAB526705A322982EA2437735399EF4FF2
+    quote: 玩家如果抢劫或以其他方式侵犯一个王国的居民，除非他们处于战争状态，否则将得到一个犯罪等级。像胁迫村民给你提供新兵和物资，或在任务中的非法行为，将增加少量的犯罪等级。对中立方的直接攻击将增加相当大的数额，通常会引发战争。{newline}{newline}犯罪等级最高为100。在一个中立王国中，等级达到30或更高的玩家将被禁止进入该王国的定居点，如果他们试图潜入并被抓住，他们可能会被短暂监禁或遭受肉刑。卡拉迪亚的城镇通常缺乏长期关押囚犯的资源，所以对轻微犯罪的惩罚往往是粗暴而直接的，但并不像可能的那样严厉。不过，正义是不可预测的——如果玩家的生命值很低，而殴打会导致死亡，那么就有可能考虑处决。{newline}{newline}另一方面，一个独立的玩家如果犯罪等级达到60或更高，将被王国宣布为逃犯，并被当场攻击。如果玩家在成为一个王国的附庸时积累了犯罪等级，他或她仍然能够进入其定居点，但一旦进入，可能会面临监禁、罚款或失去影响力。此外，玩家每天都会失去相当于其犯罪等级一半的影响力。犯罪等级会随着时间的推移而衰减，所以在一段时间后，一个角色的错误行为会被遗忘。然而，如果一个玩家被宣布为逃犯，他或她将需要通过一个谈判的和平协议来结束这场战争。
+  - source_id: source.calradia.game.urban-dark
+    source_version: bannerlord-1.3.15.110062
+    source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+    locator: bannerlord.db#localization.gXmzmJbg
+    quote_hash: A5AA9DCC067252E0BF2AF9E427141EEB83118A6805BF19DBE6E805F362B6546D
+    quote: 你有犯罪等级时的贸易惩罚{VALUE}%。
+  expressions:
+  - id: expr.crime-rating-rumor
+    revision: 1
+    layer: rumor
+    text:
+      zh-CN: 犯过事的人身上是带着记号的，官府心里有本账。背了案子的人，连港口都不让他靠。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.r0WIRUHo
+      quote_hash: 04943499B94C26E34628B64A2D7F9B21410D654A775A6DCC274A2FEE32F70D5A
+      quote: 犯罪等级
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.X3TL6QZ8
+      quote_hash: C04BDD03DB40A8FE52D916D37387ADDB146770DF71DA7FDBDBF87C5584AB5FBA
+      quote: 你因犯罪行为在定居点被通缉，因此将不被允许在港口停靠。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.xj0MgUO0
+      quote_hash: BF575EB6B97B34ABD4894E9BEEAAB56F94DE3BDB0548AAF3EDC9D4CEE8BF213C
+      quote: 犯罪
+    grants:
+    - profile_id: profile.commoner
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.villager
+      scope: local
+      min_detail: rumor
+    - profile_id: profile.townsfolk
+      scope: regional
+      min_detail: summary
+    denies: []
+  - id: expr.crime-rating-detail
+    revision: 1
+    layer: detail
+    text:
+      zh-CN: 潜进去被逮住，可能被关几天，也可能挨一顿肉刑。卡拉迪亚的城镇没那么多地方长期关人，所以判罚往往又快又粗——真轮到头上时，正义是不可预测的。
+    sources:
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.FP4KyHBK
+      quote_hash: 0051F1EC2CEADA908D7197C8B9C0F0DAB526705A322982EA2437735399EF4FF2
+      quote: 玩家如果抢劫或以其他方式侵犯一个王国的居民，除非他们处于战争状态，否则将得到一个犯罪等级。像胁迫村民给你提供新兵和物资，或在任务中的非法行为，将增加少量的犯罪等级。对中立方的直接攻击将增加相当大的数额，通常会引发战争。{newline}{newline}犯罪等级最高为100。在一个中立王国中，等级达到30或更高的玩家将被禁止进入该王国的定居点，如果他们试图潜入并被抓住，他们可能会被短暂监禁或遭受肉刑。卡拉迪亚的城镇通常缺乏长期关押囚犯的资源，所以对轻微犯罪的惩罚往往是粗暴而直接的，但并不像可能的那样严厉。不过，正义是不可预测的——如果玩家的生命值很低，而殴打会导致死亡，那么就有可能考虑处决。{newline}{newline}另一方面，一个独立的玩家如果犯罪等级达到60或更高，将被王国宣布为逃犯，并被当场攻击。如果玩家在成为一个王国的附庸时积累了犯罪等级，他或她仍然能够进入其定居点，但一旦进入，可能会面临监禁、罚款或失去影响力。此外，玩家每天都会失去相当于其犯罪等级一半的影响力。犯罪等级会随着时间的推移而衰减，所以在一段时间后，一个角色的错误行为会被遗忘。然而，如果一个玩家被宣布为逃犯，他或她将需要通过一个谈判的和平协议来结束这场战争。
+    - source_id: source.calradia.game.urban-dark
+      source_version: bannerlord-1.3.15.110062
+      source_content_hash: b4d5c8f431ccd2464129a318bab6b9243926a93f7df82b01799fd50fa3242f47
+      locator: bannerlord.db#localization.gXmzmJbg
+      quote_hash: A5AA9DCC067252E0BF2AF9E427141EEB83118A6805BF19DBE6E805F362B6546D
+      quote: 你有犯罪等级时的贸易惩罚{VALUE}%。
+    grants:
+    - profile_id: profile.notable
+      scope: regional
+      min_detail: detail
+    - profile_id: profile.merchant
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.tavernkeeper
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.ransom_broker
+      scope: faction
+      min_detail: detail
+    - profile_id: profile.headman
+      scope: national
+      min_detail: detail
+    - profile_id: profile.soldier
+      scope: national
+      min_detail: detail
+    - profile_id: profile.noble
+      scope: elite
+      min_detail: detail
+    denies: []
