@@ -482,7 +482,7 @@ public static class AuthoringEditorProjection
 
     private static readonly string[] RuleConditionKeys =
     [
-        "culture_ids", "kingdom_ids", "settlement_ids", "role_ids", "clan_ids", "is_female", "is_clan_leader",
+        "culture_ids", "kingdom_ids", "settlement_ids", "role_ids", "clan_ids", "hero_ids", "is_female", "is_clan_leader",
         "min_age", "max_age", "min_management", "min_steward", "min_skill"
     ];
 

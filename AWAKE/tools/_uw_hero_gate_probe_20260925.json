@@ -1,0 +1,203 @@
+{
+ "doc": "doc.politics.hero-probe",
+ "target_hero": "lord_1_14",
+ "same_clan_other_hero": "lord_1_37",
+ "target_clan": "clan_empire_south_1",
+ "validate_own_diag": [],
+ "validate_other_diag": 9,
+ "hero_ids_in_package": 1,
+ "rows": [
+  {
+   "name": "P1-是本人",
+   "identity": "profile.noble",
+   "role": "Lord",
+   "culture": "",
+   "kingdom": "",
+   "settlement": "",
+   "clan": "clan_empire_south_1",
+   "hero": "lord_1_14",
+   "age": 0,
+   "scope": "elite",
+   "detail": "detail",
+   "requested_detail": "secret",
+   "state": "partial",
+   "match_mode": "keyword",
+   "literal_keyword_hits": 1,
+   "literal_term_hits": 3,
+   "hits": [
+    "awake:entry:politics.hero-probe"
+   ],
+   "link_ids": [],
+   "player_text": "本人探针",
+   "text": "只有本人才知道的那句话。"
+  },
+  {
+   "name": "N1-同clan的另一个人",
+   "identity": "profile.noble",
+   "role": "Lord",
+   "culture": "",
+   "kingdom": "",
+   "settlement": "",
+   "clan": "clan_empire_south_1",
+   "hero": "lord_1_37",
+   "age": 0,
+   "scope": "elite",
+   "detail": "detail",
+   "requested_detail": "secret",
+   "state": "not_found",
+   "match_mode": "keyword",
+   "literal_keyword_hits": 1,
+   "literal_term_hits": 3,
+   "hits": [],
+   "link_ids": [],
+   "player_text": "本人探针",
+   "text": ""
+  },
+  {
+   "name": "N2-无本人",
+   "identity": "profile.noble",
+   "role": "Lord",
+   "culture": "",
+   "kingdom": "",
+   "settlement": "",
+   "clan": "clan_empire_south_1",
+   "hero": "",
+   "age": 0,
+   "scope": "elite",
+   "detail": "detail",
+   "requested_detail": "secret",
+   "state": "not_found",
+   "match_mode": "keyword",
+   "literal_keyword_hits": 1,
+   "literal_term_hits": 3,
+   "hits": [],
+   "link_ids": [],
+   "player_text": "本人探针",
+   "text": ""
+  }
+ ],
+ "mut_hero_ids_in_package": 1,
+ "rows_mut": [
+  {
+   "name": "P1-是本人",
+   "identity": "profile.noble",
+   "role": "Lord",
+   "culture": "",
+   "kingdom": "",
+   "settlement": "",
+   "clan": "clan_empire_south_1",
+   "hero": "lord_1_14",
+   "age": 0,
+   "scope": "elite",
+   "detail": "detail",
+   "requested_detail": "secret",
+   "state": "not_found",
+   "match_mode": "keyword",
+   "literal_keyword_hits": 1,
+   "literal_term_hits": 3,
+   "hits": [],
+   "link_ids": [],
+   "player_text": "本人探针",
+   "text": ""
+  },
+  {
+   "name": "N1-同clan的另一个人",
+   "identity": "profile.noble",
+   "role": "Lord",
+   "culture": "",
+   "kingdom": "",
+   "settlement": "",
+   "clan": "clan_empire_south_1",
+   "hero": "lord_1_37",
+   "age": 0,
+   "scope": "elite",
+   "detail": "detail",
+   "requested_detail": "secret",
+   "state": "partial",
+   "match_mode": "keyword",
+   "literal_keyword_hits": 1,
+   "literal_term_hits": 3,
+   "hits": [
+    "awake:entry:politics.hero-probe-mut"
+   ],
+   "link_ids": [],
+   "player_text": "本人探针",
+   "text": "只有本人才知道的那句话。"
+  },
+  {
+   "name": "N2-无本人",
+   "identity": "profile.noble",
+   "role": "Lord",
+   "culture": "",
+   "kingdom": "",
+   "settlement": "",
+   "clan": "clan_empire_south_1",
+   "hero": "",
+   "age": 0,
+   "scope": "elite",
+   "detail": "detail",
+   "requested_detail": "secret",
+   "state": "not_found",
+   "match_mode": "keyword",
+   "literal_keyword_hits": 1,
+   "literal_term_hits": 3,
+   "hits": [],
+   "link_ids": [],
+   "player_text": "本人探针",
+   "text": ""
+  }
+ ],
+ "verdict": [
+  {
+   "name": "①是本人必须拿到(阳性对照)",
+   "pass": true,
+   "value": 1
+  },
+  {
+   "name": "②同clan的另一个人必须拿不到",
+   "pass": true,
+   "value": 0
+  },
+  {
+   "name": "③无本人必须拿不到",
+   "pass": true,
+   "value": 0
+  },
+  {
+   "name": "④空转护栏(三行都在)",
+   "pass": true,
+   "value": [
+    1,
+    0,
+    0
+   ]
+  },
+  {
+   "name": "⑤编译真落下了hero_ids",
+   "pass": true,
+   "value": 1
+  },
+  {
+   "name": "⑥变异:条件换别人后TARGET查=0",
+   "pass": true,
+   "value": 0
+  },
+  {
+   "name": "⑦变异:条件换别人后别人查>0",
+   "pass": true,
+   "value": 1
+  },
+  {
+   "name": "⑧变异:无本人查仍为0",
+   "pass": true,
+   "value": 0
+  },
+  {
+   "name": "⑨变异轮也真落了hero_ids",
+   "pass": true,
+   "value": 1
+  }
+ ],
+ "flipped": true,
+ "pass": true
+}

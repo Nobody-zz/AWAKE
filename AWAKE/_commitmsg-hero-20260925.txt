@@ -1,0 +1,40 @@
+feat(worldbook): 知识条目可绑定具体某人（hero_ids）＋ 设计稿 B1 那句改掉
+
+甲方 2026-09-25 指令：「改掉，补」。
+  改掉＝ docs/superpowers/specs/2026-08-24-worldbook-entity-catalog-design.md:31
+          原写「B1 不实现 hero_ids/clan_ids 运行时权限条件」，已就地标为作废
+          （其余各条仍有效）。
+  补　 ＝ hero_ids 跟进实现（clan_ids 已于 8edbff9 落地）。
+
+改了 7 处（与 clan 同构）：
+  ① schema      docs/worldbook-studio-plan/awake.worldbook.authoring.v1.schema.json
+                knowledge_rule.hero_ids（值域 ^entity\.hero\.[a-z0-9]+(?:[._-][a-z0-9]+)*$）
+  ② 条件模型    src/WorldKnowledgeModels.cs（WorldKnowledgeCondition.HeroIds）
+                src/WorldbookModels.cs（WorldbookQuery.PersonHeroId）
+  ③ 编译器      tools/worldbook-studio/.../RuntimePackageCompiler.cs
+                CopyStringArray(...,"hero_ids") + MapConditionId("hero_ids")=>"hero"
+  ④ 加载器      src/WorldKnowledgeLoader.cs（AddStrings(condition.HeroIds, ...)）
+  ⑤ 判定器      src/WorldbookIdentityEvaluator.cs（HeroIds.Count>0 && !ContainsValue ⇒ false；
+                权重 35/条，比 clan 的 30 高，因为它更窄）
+  ⑥ 查询侧      src/NpcDialogueService.cs（_heroPersonId = hero.StringId，非 hero ⇒ 清空）
+  ⑦ 编辑白名单  tools/worldbook-studio/.../AuthoringEditorModel.cs:485（RuleConditionKeys）
+
+★ 命名坑（编译当场抓到）：WorldbookQuery 里**本来就有一个 HeroId** —— 那属于**作废的
+  .Current 链路**（WorldbookWhen.HeroIds / WorldbookService.cs:383；其承载者
+  WorldbookRuntime._current 全仓从未被赋过真值、外部调用方 0 个）。
+  新字段走现行 .Knowledge 链路，取名 PersonHeroId 避撞。⇒ 加字段前先 grep 同名。
+
+判定语义：条件写了 hero_ids 而查询侧无本人 ⇒ 一律不命中；
+「不知道他是谁」与「他不是这个人」同解。与 clan_ids 的分工：clan 问「是不是这家的**人**」，
+hero 问「是不是**他本人**」。
+
+证据（零替身验台，两轮全链）：tools/_uw_hero_gate_probe_20260925.py
+  - 编译产物实证："conditions": {"hero_ids": ["awake:hero:lord_1_14"]}
+  - 主轮[条件=拉盖娅]   本人查/同族另一人查/无本人查 = [1, 0, 0]
+  - 变异轮[条件=伊拉]   本人查/同族另一人查/无本人查 = [0, 1, 0]  ⇒ 真翻转
+  - HERO_GATE PASS（九条判据全绿）
+  ★ 阴性取「同一个珀特洛斯家里的妹妹伊拉 lord_1_37」而非外人 ——
+    取外人则连 clan_ids 都能挡住他，测出来的是 clan 不是 hero。
+
+文档：docs/DECISION-20260924-CLAN-BINDING.md 增 §二之二（hero_ids）与实测表；
+      docs/worldbook-migration/UW-RUMOR-MECHANICS-20260924.md 追记两句均已落地。

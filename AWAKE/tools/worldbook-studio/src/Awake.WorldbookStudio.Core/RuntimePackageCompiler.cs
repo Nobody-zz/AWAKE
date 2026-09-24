@@ -234,6 +234,7 @@ public static class RuntimePackageCompiler
         CopyStringArray(rule, conditions, "settlement_ids");
         CopyStringArray(rule, conditions, "role_ids");
         CopyStringArray(rule, conditions, "clan_ids");
+        CopyStringArray(rule, conditions, "hero_ids");
         CopyBoolean(rule, conditions, "is_female");
         CopyBoolean(rule, conditions, "is_clan_leader");
         if (TryGetInt(rule["min_age"], out var age)) conditions["min_age"] = age;
@@ -265,6 +266,7 @@ public static class RuntimePackageCompiler
             "settlement_ids" => "settlement",
             "role_ids" => "role",
             "clan_ids" => "clan",
+            "hero_ids" => "hero",
             _ => string.Empty
         };
         if (string.IsNullOrWhiteSpace(kind)) return value;

@@ -1078,6 +1078,14 @@
           },
           "uniqueItems": true
         },
+        "hero_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^entity\\.hero\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        },
         "is_female": {
           "type": [
             "boolean",

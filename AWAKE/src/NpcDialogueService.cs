@@ -53,6 +53,10 @@ internal sealed class NpcDialogueService : IDisposable
     private string _heroKingdomId = string.Empty;
     private string _heroSettlementId = string.Empty;
     private string _heroClanId = string.Empty;
+    // 具体某人（2026-09-25）：问话对象本人的 id，喂给 hero_ids 条件。
+    // 与 _heroId 的区别：那个是"本次对话的对象标识"（构造时即定），这个只在
+    // RefreshHeroInfo 确认他确实是个 hero 之后才填；不是 hero ⇒ 清空（同 clan 口径）。
+    private string _heroPersonId = string.Empty;
     private bool _heroIsClanLeader;
     private readonly Dictionary<string, int> _heroSkills = new Dictionary<string, int>(StringComparer.Ordinal);
     private string _openingHint = string.Empty;
@@ -784,6 +788,7 @@ internal sealed class NpcDialogueService : IDisposable
                 _heroKingdomId = string.Empty;
                 _heroSettlementId = string.Empty;
                 _heroClanId = string.Empty;
+                _heroPersonId = string.Empty;
                 _heroIsClanLeader = false;
                 _heroSkills.Clear();
                 return;
@@ -799,6 +804,7 @@ internal sealed class NpcDialogueService : IDisposable
                 _heroKingdomId = hero.Clan?.Kingdom?.StringId ?? string.Empty;
                 _heroSettlementId = (hero.CurrentSettlement ?? hero.StayingInSettlement)?.StringId ?? string.Empty;
                 _heroClanId = hero.Clan?.StringId ?? string.Empty;
+                _heroPersonId = hero.StringId ?? string.Empty;
                 _heroIsClanLeader = hero.Clan?.Leader == hero;
                 _heroSkills.Clear();
                 AddHeroSkill(hero, "steward", DefaultSkills.Steward);
@@ -1054,6 +1060,7 @@ internal sealed class NpcDialogueService : IDisposable
             SettlementId = _heroSettlementId,
             Role = personaSnapshot.Role,
             ClanId = _heroClanId,
+            PersonHeroId = _heroPersonId,
             IsFemale = StringComparer.Ordinal.Equals(_heroGender, "female") ? true
                 : StringComparer.Ordinal.Equals(_heroGender, "male") ? false : (bool?)null,
             IsClanLeader = _heroIsClanLeader,

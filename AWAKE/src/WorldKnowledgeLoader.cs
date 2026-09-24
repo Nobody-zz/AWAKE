@@ -168,6 +168,7 @@ internal static class WorldKnowledgeLoader
         AddStrings(condition.SettlementIds, value["settlement_ids"] as JArray);
         AddStrings(condition.RoleIds, value["role_ids"] as JArray);
         AddStrings(condition.ClanIds, value["clan_ids"] as JArray);
+        AddStrings(condition.HeroIds, value["hero_ids"] as JArray);
         JObject skills = value["min_skill"] as JObject;
         if (skills != null)
         {

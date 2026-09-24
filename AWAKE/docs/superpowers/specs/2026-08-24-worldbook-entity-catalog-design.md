@@ -28,7 +28,12 @@ _基于用户已确认的 Worldbook Studio 总方案；本批次先经过独立�
 5. 将目录以只读 catalog 接入现有 `BuildCatalog()`，只追加可选字段；不把目录内容写入 authoring 文档，也不让普通编辑器修改目录。B1 的实体选择只用于 catalog/预览，不产生旧 v1 不认识的持久化字段。
 6. 生成 manifest 和 diagnostics，记录两个输入 mapping 文件的规范化相对路径、文件 SHA-256、mapping 报告自身 SHA-256、报告生成时间、生成器版本、生成器脚本 SHA-256、规范化规则、记录数量和诊断数量。
 7. 生成器先写入同一临时目录，再一次性发布三件套；registry、manifest、diagnostics 共享 `catalog_build_id`。加载器拒绝三件套缺失、版本不一致或 manifest 输入哈希不匹配的组合，并返回可诊断的空实体 catalog。
-8. B1 不实现 `hero_ids`/`clan_ids` 运行时权限条件；作者选择结果先作为可预览的实体绑定数据，运行时契约另立后续批次。
+8. ~~B1 不实现 `hero_ids`/`clan_ids` 运行时权限条件；作者选择结果先作为可预览的实体绑定数据，运行时契约另立后续批次。~~
+   **★ 2026-09-25 更新（甲方裁定覆盖）**：上句已作废。B1 的实体选择**现已接上运行时条件**——
+   `clan_ids` 与 `hero_ids` 均已在 `awake.worldbook.authoring.v1` 落地为可用的运行时权限条件
+   （`clan_ids` 见提交 `8edbff9`；`hero_ids` 同批补，见 `docs/DECISION-20260924-CLAN-BINDING.md`）。
+   ⇒ 原文的分批边界**不再成立**；本设计稿其余各条（目录只读接入、不写进 authoring 文档、
+   不改 profile/referral registry 等）**仍然有效**。
 
 ## 预期目录
 

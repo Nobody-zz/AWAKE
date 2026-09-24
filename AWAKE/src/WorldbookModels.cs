@@ -135,6 +135,11 @@ internal sealed class WorldbookQuery
     internal string Role { get; set; } = string.Empty;
     // 家族归属（2026-09-24）：当前问话对象所属的 clan。空 ⇒ 条件里写了 clan_ids 的说法一律不送。
     internal string ClanId { get; set; } = string.Empty;
+    // 具体某人（2026-09-25）：当前问话对象本人，喂 `hero_ids` 条件。
+    // ⚠ 别与上面第 129 行的 `HeroId` 混：那个属于**作废的 `.Current` 链路**
+    //   （`WorldbookWhen.HeroIds` / `WorldbookService.cs:383`，全仓 0 个调用方挂在它上面）。
+    //   本字段走的是现行 `.Knowledge` 链路（`WorldKnowledgeCondition.HeroIds`）。
+    internal string PersonHeroId { get; set; } = string.Empty;
     internal bool? IsFemale { get; set; }
     internal int Age { get; set; }
     internal bool IsClanLeader { get; set; }
