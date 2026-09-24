@@ -1,0 +1,77 @@
+暗面批「补传言」：《小阵营》落《火焰余烬》六变体 ＋ 机制四条销账
+
+## 一、这份提交干了什么
+
+按甲方裁定「**甲：七变体不拆散，整条进《小阵营》**」，把《火焰余烬》
+（`rule_火焰余烬__火焰余烬.json`，6 变体）按**说话人层级**并成三条表达落进
+`awake:entry:politics.small-factions`；并把 `UW-RUMOR-MECHANICS` §六「待查」四条**跑真探针销账**。
+
+## 二、为什么是「六变体 → 三条表达」而不是「六条各占一层」
+
+`SelectExpression(entry, query, evaluation)` **按条目算，每档只送一条**
+（`WorldKnowledgeQueryService.cs:104`）⇒ 同一档内多层互斥，六条各占一层会互相抢。
+⇒ 按「说话人的层级」并成三条，让每个层级的人各听到**同一批人不同嘴里的同一件事**：
+
+| 层 | 受众（能力上限） | 用哪个变体 | 口吻 |
+|---|---|---|---|
+| rumor | commoner / villager（local） | 变体 0 ＋ 变体 4 | 街面上看到的、听来的 |
+| summary | townsfolk（regional） | 变体 2 ＋ 变体 5 | **局内人自述**（他们自己／同行） |
+| detail | notable 及以上 | 变体 1 ＋ 变体 3 | 朝廷／外来者的分析口吻 |
+
+## 三、机制四条「待查」销账（全部跑真探针）
+
+零替身验台 `tools/worldbook-runtime-sim/`（把 `src/*.cs` 整个编进自己的程序集，
+`internal` 就近可见）；`probe` 模式内部**直接调真件** `WorldbookIdentityCapabilityRules.Resolve` /
+`WorldbookIdentityEvaluator` ⇒ 是读数，不是"另写一个引擎"。
+
+1. **15 个小派系官方中文名**全查明（回填 §四）：古拉姆／被弃者军团／护盾兄弟会／黄金野猪兵团／
+   暗影之子／狼皮部落／绿林兄弟会／贾沃勒／喀拉库吉特／森民／自由民（＋火焰余烬／秘密之手／湖鼠帮）。
+2. **`role_ids` 值域＝代码里两张表，不是登记表**：实测**认得出 26 个 role**、认不出 8 个。
+   ★ **游戏真实 occupation 只有 30 种，全驼峰**（`bannerlord_troops.occupation` 当场读数），
+   **一个下划线都没有** ⇒ `Tavernkeeper`→`tavernkeeper` 命中 ✓；
+   代码里 `tavern_keeper`/`trooper`/`clan_leader` 那几个 case 是**死代码但走不到**（不是活缺陷）。
+   ⇒ **"贵族"身份是靠 `Occupation=Lord` 认的**。
+3. **`is_clan_leader` 表达不了派系归属**：实测 `role=noble` 时其真/假 scope/detail **完全相同**；
+   它只知道"是不是族长"，不知道"是哪一家的"。`min_skill` 同理。**⇒ 无 `clan_ids` 这个缺口坐实。**
+4. **变体 2 近似挂法跑真探针 → 掀翻我先前 §五-③ 的写法**：
+   我上轮写"用 `culture_ids:[empire]` 近似"，**实际 `small-factions.yaml` 里根本没写 culture 条件**
+   ⇒ 探针跑出"帝国与瓦兰迪亚平民拿到同一条"。用**阳性对照档** `military-empire-north`
+   （真挂了 `culture_ids:[entity.culture.empire]`）重跑：
+
+   | 探针 | 条件 | 目标命中 |
+   |---|---|---|
+   | P1 | 帝国 + townsfolk | **True** |
+   | N1 | 瓦兰迪亚 + townsfolk | **False** ← culture 真在筛 |
+   | N2 | 帝国 + commoner（能力不足） | **False** ← 能力闸真在筛 |
+   | P2 | 帝国 + soldier | **True** |
+
+   ⇒ **两道闸都管事**；`culture_ids` 是可用的真条件。
+
+## 四、验收读数（五项全绿）
+
+1. **双写一致**：AO ＋ WS 两目录 `small-factions.yaml` sha256 相同（`F043335D…`）。
+2. **引文校验**：生成器打印 `引文校验通过：A 56 条 / B 14 条`（原 B 7 条 → **新增 7 条全过**）。
+3. **全链编译**：`geo1-v27-uw-flame`，558 档，`validation total=21 error=0 warning=21`。
+4. **分层实测 7/7**：commoner/villager → rumor｜townsfolk → summary｜notable/merchant/soldier/noble → detail；
+   三条护栏全过（三层都可达／层间互斥／三层不是同一段文本）。
+5. **新旧句对质**：新句 3 条各进 1 次、旧句 2 条各 0 次、别档归属 0（三条全部只落 `small-factions`）。
+6. **文本门禁 `--pure`**：110 问**可达 110 ／ 被压制 0 ／ 不达 0**。
+7. **现役包未动**：`ModuleData/Worldbook/packages/calradia/runtime.json` 仍 482 档。
+
+## 五、`serfs` / `underworld-bandits` 的连带改动（只 hash）
+
+这两档**正文一字未动**，只有 `source_content_hash` 从 `A9CDA701…` 变为 `F2F393DB…`
+（＝生成器打印的 `chron hash`，即 B 类编年史料库的内容哈希）。
+⇒ **这是来源版本同步，不是内容改动**（非 hash 行差异 = 0）。
+`underworld-alleys` 的唯一改动是**上一会话的《巷子》样板**（L2 已改、yaml 本轮才落盘）。
+
+## 六、教训（记进当日记忆）
+
+★ **写进文档不算数** —— 我上一轮在机制档里写了"用 `culture_ids` 近似"，
+但**从没落进 `small-factions.yaml`**，探针一跑就露。与甲方那句
+「他妈的都是你写的……到头来还不是你自己去查去写？」同源：**要真落到产物上、并且跑得起来才算。**
+
+## 七、扫描口径
+
+本次改动**只碰世界书线**；`tools/persona-workbench/` 与 `persona_definitions/` 下的大量
+在途改动**属角色卡线**，**未纳入本提交**（未用 `git add -A`）。

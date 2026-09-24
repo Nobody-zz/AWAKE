@@ -1,383 +1,562 @@
 {
- "_note": "暗面批（09-20）：城镇地下秩序 11 档。A=官方本地化 stringId；B=[编年史文件, 变体号, 引文]。分域见每档 domain/subdomain —— 分类表没有「法外/地下」这一格，只能就现有格，已在报告里记为缺口。",
- "docs": [
-  {
-   "slug": "town-alleys",
-   "title_zh": "巷子",
-   "title_en": "Alleys",
-   "domain": "politics",
-   "subdomain": "law",
-   "aliases_zh": [],
-   "aliases_en": [],
-   "summary": "城镇后街那一类地方有「巷子」，是一份按天进钱的产业；一座城最多一条，想要就得自己去夺。",
-   "assertions": [
+  "_note": "暗面批（09-20）：城镇地下秩序 11 档。A=官方本地化 stringId；B=[编年史文件, 变体号, 引文]。分域见每档 domain/subdomain —— 分类表没有「法外/地下」这一格，只能就现有格，已在报告里记为缺口。",
+  "docs": [
     {
-     "id": "town-alleys-1",
-     "kind": "fact",
-     "text": "卡拉迪亚的城镇里有「巷子」这种地方——后街、空地、滨水区那一类。它是一份能按天进钱的产业，而一座聚落最多只能拥有一条。",
-     "expressions": [
-      {
-       "id": "town-alleys-rumor",
-       "layer": "rumor",
-       "text": "哪条巷子归谁管，城里人心里都有数。白天看着平平常常，入了夜那地方就归别人说了算——后巷子里那些龌龊事，花样从来不少。",
-       "A": ["pKMVhx2v", "emQQbbO9", "ribkM9dl"],
-       "B": []
-      },
-      {
-       "id": "town-alleys-detail",
-       "layer": "detail",
-       "text": "巷子跟工坊是一个路数——都是城里的一份产业，差别只在工坊挂牌、巷子不挂牌。谁拿下它，谁就按这座城的兴旺程度分钱；城越富，那条巷子越肥。",
-       "A": ["8SK2BZum", "ribkM9dl", "Rr1cy5Sk", "a0MVffcN"],
-       "B": []
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "slug": "alley-gang-leaders",
-   "title_zh": "巷子头目",
-   "title_en": "Alley Gang Leaders",
-   "domain": "politics",
-   "subdomain": "law",
-   "aliases_zh": [],
-   "aliases_en": [],
-   "summary": "一条巷子得有人管着。官面上叫他帮派头目，巷子里的居民却常叫他「守护者」。",
-   "assertions": [
+      "slug": "town-alleys",
+      "title_zh": "巷子",
+      "title_en": "Alleys",
+      "domain": "politics",
+      "subdomain": "law",
+      "aliases_zh": [],
+      "aliases_en": [],
+      "summary": "城镇后街那一类地方有「巷子」，是一份按天进钱的产业；一座城最多一条，想要就得自己去夺。",
+      "assertions": [
+        {
+          "id": "town-alleys-1",
+          "kind": "fact",
+          "text": "卡拉迪亚的城镇里有「巷子」这种地方——后街、空地、滨水区那一类。它是一份能按天进钱的产业，而一座聚落最多只能拥有一条。",
+          "expressions": [
+            {
+              "id": "town-alleys-rumor",
+              "layer": "rumor",
+              "text": "后巷子里那些龌龊事，花样从来不少——这话我们街面上的人说了几辈子了。至于哪条巷子归谁管，白天看不出来，入了夜那地方就归别人说了算，我们也就背地里说说，谁也不会去问。",
+              "A": [
+                "pKMVhx2v",
+                "emQQbbO9",
+                "ribkM9dl"
+              ],
+              "B": []
+            },
+            {
+              "id": "town-alleys-detail",
+              "layer": "detail",
+              "text": "巷子跟工坊是一个路数——都是城里的一份产业，差别只在工坊挂牌、巷子不挂牌。谁拿下它，谁就按这座城的兴旺程度分钱；城越富，那条巷子越肥。",
+              "A": [
+                "8SK2BZum",
+                "ribkM9dl",
+                "Rr1cy5Sk",
+                "a0MVffcN"
+              ],
+              "B": []
+            }
+          ]
+        }
+      ]
+    },
     {
-     "id": "alley-gang-leaders-1",
-     "kind": "interpretation",
-     "text": "巷子由一名头目掌管，得从自己人里挑一个派过去。同一个角色有两套叫法：衙门叫帮派头目，巷子里的居民叫「守护者」。",
-     "expressions": [
-      {
-       "id": "alley-gang-leaders-rumor",
-       "layer": "rumor",
-       "text": "每条巷子都有人管。管事的得有几分本事，也得让巷子里的居民信得过他——信不过，这位置坐不安稳。",
-       "A": ["ClyaDhGU", "LjkQ4fYp", "PWpTT0NM"],
-       "B": []
-      },
-      {
-       "id": "alley-gang-leaders-detail",
-       "layer": "detail",
-       "text": "挑人是有讲究的：手上要够狠，心肠还得够硬，这两样缺一样都压不住场面。头目一旦没了，巷子撑不了几天就得丢，除非赶紧再派个人过去接手。",
-       "A": ["hnhKJYbx", "KjuxDQfn", "FzbeSkBb", "P5UbgK4c"],
-       "B": []
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "slug": "alley-struggle",
-   "title_zh": "巷子争夺",
-   "title_en": "Alley Struggles",
-   "domain": "politics",
-   "subdomain": "law",
-   "aliases_zh": [],
-   "aliases_en": [],
-   "summary": "巷子会招来附近帮派的攻打。守不住，连里面的兵一起丢。",
-   "assertions": [
+      "slug": "alley-gang-leaders",
+      "title_zh": "巷子头目",
+      "title_en": "Alley Gang Leaders",
+      "domain": "politics",
+      "subdomain": "law",
+      "aliases_zh": [],
+      "aliases_en": [],
+      "summary": "一条巷子得有人管着。官面上叫他帮派头目，巷子里的居民却常叫他「守护者」。",
+      "assertions": [
+        {
+          "id": "alley-gang-leaders-1",
+          "kind": "interpretation",
+          "text": "巷子由一名头目掌管，得从自己人里挑一个派过去。同一个角色有两套叫法：衙门叫帮派头目，巷子里的居民叫「守护者」。",
+          "expressions": [
+            {
+              "id": "alley-gang-leaders-rumor",
+              "layer": "rumor",
+              "text": "每条巷子都有人管。管事的得有几分本事，也得让巷子里的居民信得过他——信不过，这位置坐不安稳。",
+              "A": [
+                "ClyaDhGU",
+                "LjkQ4fYp",
+                "PWpTT0NM"
+              ],
+              "B": []
+            },
+            {
+              "id": "alley-gang-leaders-detail",
+              "layer": "detail",
+              "text": "挑人是有讲究的：手上要够狠，心肠还得够硬，这两样缺一样都压不住场面。头目一旦没了，巷子撑不了几天就得丢，除非赶紧再派个人过去接手。",
+              "A": [
+                "hnhKJYbx",
+                "KjuxDQfn",
+                "FzbeSkBb",
+                "P5UbgK4c"
+              ],
+              "B": []
+            }
+          ]
+        }
+      ]
+    },
     {
-     "id": "alley-struggle-1",
-     "kind": "fact",
-     "text": "巷子会招来附近帮派的攻打。撑不过去，就失去对它的所有权，留在里面的兵也一并丢光。",
-     "expressions": [
-      {
-       "id": "alley-struggle-rumor",
-       "layer": "rumor",
-       "text": "这条街换过好几回主人了。今天归这家，过些日子可能就换了旗——没人在的时候，巷子是谁的都说不准。",
-       "A": ["po79q14T", "FZdiWaBs", "cOnCiZeH"],
-       "B": []
-      },
-      {
-       "id": "alley-struggle-detail",
-       "layer": "detail",
-       "text": "想保住就得留人。打赢了不算完，得把折损的兵补回去，不然下一拨来了照样守不住。有人守着，才叫你的巷子。",
-       "A": ["5bIpeW9X", "emQQbbO9", "i1sgAm0F", "zLnqZdIK"],
-       "B": []
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "slug": "town-gangs",
-   "title_zh": "帮派",
-   "title_en": "Town Gangs",
-   "domain": "politics",
-   "subdomain": "law",
-   "aliases_zh": [],
-   "aliases_en": [],
-   "summary": "帮派头目是城镇里的「要人」之一。他们管着后街、移民棚户区和滨水区这些不信任官府的地方。",
-   "assertions": [
+      "slug": "alley-struggle",
+      "title_zh": "巷子争夺",
+      "title_en": "Alley Struggles",
+      "domain": "politics",
+      "subdomain": "law",
+      "aliases_zh": [],
+      "aliases_en": [],
+      "summary": "巷子会招来附近帮派的攻打。守不住，连里面的兵一起丢。",
+      "assertions": [
+        {
+          "id": "alley-struggle-1",
+          "kind": "fact",
+          "text": "巷子会招来附近帮派的攻打。撑不过去，就失去对它的所有权，留在里面的兵也一并丢光。",
+          "expressions": [
+            {
+              "id": "alley-struggle-rumor",
+              "layer": "rumor",
+              "text": "这条街换过好几回主人了。今天归这家，过些日子可能就换了旗——没人在的时候，巷子是谁的都说不准。",
+              "A": [
+                "po79q14T",
+                "FZdiWaBs",
+                "cOnCiZeH"
+              ],
+              "B": []
+            },
+            {
+              "id": "alley-struggle-detail",
+              "layer": "detail",
+              "text": "想保住就得留人。打赢了不算完，得把折损的兵补回去，不然下一拨来了照样守不住。有人守着，才叫你的巷子。",
+              "A": [
+                "5bIpeW9X",
+                "emQQbbO9",
+                "i1sgAm0F",
+                "zLnqZdIK"
+              ],
+              "B": []
+            }
+          ]
+        }
+      ]
+    },
     {
-     "id": "town-gangs-1",
-     "kind": "fact",
-     "text": "帮派头目是城镇里的「要人」之一，跟商人、地主并列。他们控制着后街、移民棚户区、滨水区，以及那些不信任官府的社区。",
-     "expressions": [
-      {
-       "id": "town-gangs-rumor",
-       "layer": "rumor",
-       "text": "在别人的地盘上，想受保护就得交钱——他们管这叫税。那些店主是他们的韭菜，别人不许割。",
-       "A": ["3MJSuB8G", "YzBDQ8J3", "rgTGzfzI", "DIuI1moW"],
-       "B": []
-      },
-      {
-       "id": "town-gangs-detail",
-       "layer": "detail",
-       "text": "这些人多半有两副面孔：在城里是体面商人，出了城就换了装束去当土匪。手上有钱，还能拿去撬动地方官断案的口子。",
-       "A": ["nQOf27Rx", "InFseOAA", "1SUTcF0J"],
-       "B": []
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "slug": "crime-rating",
-   "title_zh": "犯罪等级",
-   "title_en": "Crime Rating",
-   "domain": "politics",
-   "subdomain": "law",
-   "aliases_zh": [],
-   "aliases_en": [],
-   "summary": "在卡拉迪亚，抢劫或侵犯王国居民会留下犯罪等级。到 30 就进不去那个王国的定居点了。",
-   "assertions": [
+      "slug": "town-gangs",
+      "title_zh": "帮派",
+      "title_en": "Town Gangs",
+      "domain": "politics",
+      "subdomain": "law",
+      "aliases_zh": [],
+      "aliases_en": [],
+      "summary": "帮派头目是城镇里的「要人」之一。他们管着后街、移民棚户区和滨水区这些不信任官府的地方。",
+      "assertions": [
+        {
+          "id": "town-gangs-1",
+          "kind": "fact",
+          "text": "帮派头目是城镇里的「要人」之一，跟商人、地主并列。他们控制着后街、移民棚户区、滨水区，以及那些不信任官府的社区。",
+          "expressions": [
+            {
+              "id": "town-gangs-rumor",
+              "layer": "rumor",
+              "text": "在别人的地盘上，想受保护就得交钱——他们管这叫税。那些店主是他们的韭菜，别人不许割。",
+              "A": [
+                "3MJSuB8G",
+                "YzBDQ8J3",
+                "rgTGzfzI",
+                "DIuI1moW"
+              ],
+              "B": []
+            },
+            {
+              "id": "town-gangs-detail",
+              "layer": "detail",
+              "text": "这些人多半有两副面孔：在城里是体面商人，出了城就换了装束去当土匪。手上有钱，还能拿去撬动地方官断案的口子。",
+              "A": [
+                "nQOf27Rx",
+                "InFseOAA",
+                "1SUTcF0J"
+              ],
+              "B": []
+            }
+          ]
+        }
+      ]
+    },
     {
-     "id": "crime-rating-1",
-     "kind": "fact",
-     "text": "抢劫或以其他方式侵犯一个王国的居民，会留下犯罪等级，最高到 100。在中立王国里，等级达到 30 的人将被禁止进入该王国的定居点。",
-     "expressions": [
-      {
-       "id": "crime-rating-rumor",
-       "layer": "rumor",
-       "text": "犯过事的人身上是带着记号的，官府心里有本账。背了案子的人，连港口都不让他靠。",
-       "A": ["r0WIRUHo", "X3TL6QZ8", "xj0MgUO0"],
-       "B": []
-      },
-      {
-       "id": "crime-rating-detail",
-       "layer": "detail",
-       "text": "潜进去被逮住，可能被关几天，也可能挨一顿肉刑。卡拉迪亚的城镇没那么多地方长期关人，所以判罚往往又快又粗——真轮到头上时，正义是不可预测的。",
-       "A": ["FP4KyHBK", "gXmzmJbg"],
-       "B": []
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "slug": "blood-money",
-   "title_zh": "赎罪金",
-   "title_en": "Blood Money",
-   "domain": "politics",
-   "subdomain": "law",
-   "aliases_zh": [],
-   "aliases_en": [],
-   "summary": "卡拉迪亚的律法许人用一笔钱抵命，叫赎罪金；罚金交不出，才受别的处置。",
-   "assertions": [
+      "slug": "crime-rating",
+      "title_zh": "犯罪等级",
+      "title_en": "Crime Rating",
+      "domain": "politics",
+      "subdomain": "law",
+      "aliases_zh": [],
+      "aliases_en": [],
+      "summary": "在卡拉迪亚，抢劫或侵犯王国居民会留下犯罪等级。到 30 就进不去那个王国的定居点了。",
+      "assertions": [
+        {
+          "id": "crime-rating-1",
+          "kind": "fact",
+          "text": "抢劫或以其他方式侵犯一个王国的居民，会留下犯罪等级，最高到 100。在中立王国里，等级达到 30 的人将被禁止进入该王国的定居点。",
+          "expressions": [
+            {
+              "id": "crime-rating-rumor",
+              "layer": "rumor",
+              "text": "犯过事的人身上是带着记号的，官府心里有本账。背了案子的人，连港口都不让他靠。",
+              "A": [
+                "r0WIRUHo",
+                "X3TL6QZ8",
+                "xj0MgUO0"
+              ],
+              "B": []
+            },
+            {
+              "id": "crime-rating-detail",
+              "layer": "detail",
+              "text": "潜进去被逮住，可能被关几天，也可能挨一顿肉刑。卡拉迪亚的城镇没那么多地方长期关人，所以判罚往往又快又粗——真轮到头上时，正义是不可预测的。",
+              "A": [
+                "FP4KyHBK",
+                "gXmzmJbg"
+              ],
+              "B": []
+            }
+          ]
+        }
+      ]
+    },
     {
-     "id": "blood-money-1",
-     "kind": "fact",
-     "text": "卡拉迪亚的律法允许用一笔钱抵命，这笔钱叫赎罪金。判下的罚金也一样——交不出第纳尔，才轮到别的处置。",
-     "expressions": [
-      {
-       "id": "blood-money-rumor",
-       "layer": "rumor",
-       "text": "有钱能使鬼推磨，这话在镇子上最灵。看门的、断案的，哪一处都有一道价码。",
-       "A": ["z4RgNBkq", "ETKyjOkJ"],
-       "B": []
-      },
-      {
-       "id": "blood-money-detail",
-       "layer": "detail",
-       "text": "这笔账是按王国分开记的：在哪个王国犯的事，就要向哪个王国交代。清账的法子不止一种——有人掏第纳尔，有人拿另外的东西出来抵。",
-       "A": ["z4RgNBkq", "t01zXDvG", "hwq0RMRN"],
-       "B": []
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "slug": "smuggling",
-   "title_zh": "走私货",
-   "title_en": "Smuggled Goods",
-   "domain": "economy",
-   "subdomain": "trade",
-   "aliases_zh": [],
-   "aliases_en": [],
-   "summary": "走私来的货因为来路不正、带着风险，价钱比正常货低。",
-   "assertions": [
+      "slug": "blood-money",
+      "title_zh": "赎罪金",
+      "title_en": "Blood Money",
+      "domain": "politics",
+      "subdomain": "law",
+      "aliases_zh": [],
+      "aliases_en": [],
+      "summary": "卡拉迪亚的律法许人用一笔钱抵命，叫赎罪金；罚金交不出，才受别的处置。",
+      "assertions": [
+        {
+          "id": "blood-money-1",
+          "kind": "fact",
+          "text": "卡拉迪亚的律法允许用一笔钱抵命，这笔钱叫赎罪金。判下的罚金也一样——交不出第纳尔，才轮到别的处置。",
+          "expressions": [
+            {
+              "id": "blood-money-rumor",
+              "layer": "rumor",
+              "text": "有钱能使鬼推磨，这话在镇子上最灵。看门的、断案的，哪一处都有一道价码。",
+              "A": [
+                "z4RgNBkq",
+                "ETKyjOkJ"
+              ],
+              "B": []
+            },
+            {
+              "id": "blood-money-detail",
+              "layer": "detail",
+              "text": "这笔账是按王国分开记的：在哪个王国犯的事，就要向哪个王国交代。清账的法子不止一种——有人掏第纳尔，有人拿另外的东西出来抵。",
+              "A": [
+                "z4RgNBkq",
+                "t01zXDvG",
+                "hwq0RMRN"
+              ],
+              "B": []
+            }
+          ]
+        }
+      ]
+    },
     {
-     "id": "smuggling-1",
-     "kind": "fact",
-     "text": "走私来的货物来路不正、带着风险，所以卖的价钱比正常货低——出手的人管这个差价叫「风险」。",
-     "expressions": [
-      {
-       "id": "smuggling-rumor",
-       "layer": "rumor",
-       "text": "有些货为什么那么便宜，买的人心里其实都清楚。有人肯半价出，就有人肯闭嘴。",
-       "A": ["3WFgPigk", "riKyIyaa", "uaYGZUDs"],
-       "B": []
-      },
-      {
-       "id": "smuggling-detail",
-       "layer": "detail",
-       "text": "这条道有专门的通道和人手。被逮住要没收货，人也会被通缉；闹得大的话，连港口都别想再靠。货还是那些货，只是从此见不得光。",
-       "A": ["4iEQr3il", "5AvvGkk4", "X3TL6QZ8", "GTnVcUz9"],
-       "B": []
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "slug": "notables",
-   "title_zh": "要人",
-   "title_en": "Notables",
-   "domain": "culture",
-   "subdomain": "identity",
-   "aliases_zh": [],
-   "aliases_en": [],
-   "summary": "城镇和村庄里有一类「要人」——不是贵族，可能是商人、地主，也可能是帮派头目。",
-   "assertions": [
+      "slug": "smuggling",
+      "title_zh": "走私货",
+      "title_en": "Smuggled Goods",
+      "domain": "economy",
+      "subdomain": "trade",
+      "aliases_zh": [],
+      "aliases_en": [],
+      "summary": "走私来的货因为来路不正、带着风险，价钱比正常货低。",
+      "assertions": [
+        {
+          "id": "smuggling-1",
+          "kind": "fact",
+          "text": "走私来的货物来路不正、带着风险，所以卖的价钱比正常货低——出手的人管这个差价叫「风险」。",
+          "expressions": [
+            {
+              "id": "smuggling-rumor",
+              "layer": "rumor",
+              "text": "有些货为什么那么便宜，买的人心里其实都清楚。有人肯半价出，就有人肯闭嘴。",
+              "A": [
+                "3WFgPigk",
+                "riKyIyaa",
+                "uaYGZUDs"
+              ],
+              "B": []
+            },
+            {
+              "id": "smuggling-detail",
+              "layer": "detail",
+              "text": "这条道有专门的通道和人手。被逮住要没收货，人也会被通缉；闹得大的话，连港口都别想再靠。货还是那些货，只是从此见不得光。",
+              "A": [
+                "4iEQr3il",
+                "5AvvGkk4",
+                "X3TL6QZ8",
+                "GTnVcUz9"
+              ],
+              "B": []
+            }
+          ]
+        }
+      ]
+    },
     {
-     "id": "notables-1",
-     "kind": "fact",
-     "text": "城镇和村庄里都有「要人」：他们是当地有名望的居民，不是贵族。可能是商人、地主，也可能是帮派头目。与他们交好，能招到更多、更好的兵。",
-     "expressions": [
-      {
-       "id": "notables-rumor",
-       "layer": "rumor",
-       "text": "谁在镇上说话算数，去集市上转几圈就知道了。要办事，找他们比找官老爷管用。",
-       "A": ["DaE0N37L", "2Af5HRJU", "RTCjRw3I"],
-       "B": []
-      },
-      {
-       "id": "notables-detail",
-       "layer": "detail",
-       "text": "跟要人处得好，换来的是兵，也是声望——那份声望还能记在家族的账上，变成殿上说话的分量。",
-       "A": ["RTCjRw3I", "0h5BrVdA", "9YHjPkb8"],
-       "B": []
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "slug": "serfs",
-   "title_zh": "农奴",
-   "title_en": "Serfs",
-   "domain": "culture",
-   "subdomain": "identity",
-   "aliases_zh": [],
-   "aliases_en": [],
-   "summary": "卡拉迪亚的乡下有一类人叫农奴，依附在土地上。他们的日子到底怎么样，说法差得很远。",
-   "assertions": [
+      "slug": "notables",
+      "title_zh": "要人",
+      "title_en": "Notables",
+      "domain": "culture",
+      "subdomain": "identity",
+      "aliases_zh": [],
+      "aliases_en": [],
+      "summary": "城镇和村庄里有一类「要人」——不是贵族，可能是商人、地主，也可能是帮派头目。",
+      "assertions": [
+        {
+          "id": "notables-1",
+          "kind": "fact",
+          "text": "城镇和村庄里都有「要人」：他们是当地有名望的居民，不是贵族。可能是商人、地主，也可能是帮派头目。与他们交好，能招到更多、更好的兵。",
+          "expressions": [
+            {
+              "id": "notables-rumor",
+              "layer": "rumor",
+              "text": "谁在镇上说话算数，去集市上转几圈就知道了。要办事，找他们比找官老爷管用。",
+              "A": [
+                "DaE0N37L",
+                "2Af5HRJU",
+                "RTCjRw3I"
+              ],
+              "B": []
+            },
+            {
+              "id": "notables-detail",
+              "layer": "detail",
+              "text": "跟要人处得好，换来的是兵，也是声望——那份声望还能记在家族的账上，变成殿上说话的分量。",
+              "A": [
+                "RTCjRw3I",
+                "0h5BrVdA",
+                "9YHjPkb8"
+              ],
+              "B": []
+            }
+          ]
+        }
+      ]
+    },
     {
-     "id": "serfs-1",
-     "kind": "interpretation",
-     "text": "卡拉迪亚的乡下有一类人叫农奴，依附在土地上。他们过的是什么日子，从不同的人嘴里说出来，完全是两件事。",
-     "expressions": [
-      {
-       "id": "serfs-rumor",
-       "layer": "rumor",
-       "text": "我们就是所谓的农奴。其实我们过得挺好的——一周也就去领主老人家的地里干一两天，其余时间都是自己的；老爷还给我们份地，交完公粮剩下的都归自己。每个月还能进城一次，多自由？",
-       "A": ["8FPCRv5L"],
-       "B": [["rule_农奴__农奴.json", 1, "我们就是所谓的农奴，其实我们过的都挺好的"]]
-      },
-      {
-       "id": "serfs-summary",
-       "layer": "summary",
-       "text": "说起他们，城里人各有各的口吻。有人叹一句「瓦兰迪亚人真惨，他们的老百姓离不开土地，生生世世都是贵族的奴隶」；也有人把手一摆，说这有什么稀奇——毕竟君君臣臣，都是有契约的。",
-       "A": ["8FPCRv5L"],
-       "B": [["rule_农奴__农奴.json", 0, "瓦兰迪亚人真惨，他们的老百姓无法离开土地，永生永世都是贵族的奴隶"],
-            ["rule_农奴__农奴.json", 3, "毕竟君君臣臣，都是有契约的"]]
-      },
-      {
-       "id": "serfs-detail",
-       "layer": "detail",
-       "text": "换个场合，同一批人又换了称呼：农奴？依附民？太文绉绉了。他们一般直接叫他们屁民、群氓、交税工具、后备兵源。",
-       "A": ["8FPCRv5L"],
-       "B": [["rule_农奴__农奴.json", 2, "我们一般直接管他们叫屁民，群氓，交税工具，后备兵源"]]
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "slug": "bandits",
-   "title_zh": "强盗",
-   "title_en": "Bandits",
-   "domain": "politics",
-   "subdomain": "law",
-   "aliases_zh": [],
-   "aliases_en": [],
-   "summary": "官道和野地里盘踞着各色强盗。他们是谁、该怎么看，各地的人说法不一样。",
-   "assertions": [
+      "slug": "serfs",
+      "title_zh": "农奴",
+      "title_en": "Serfs",
+      "domain": "culture",
+      "subdomain": "identity",
+      "aliases_zh": [],
+      "aliases_en": [],
+      "summary": "卡拉迪亚的乡下有一类人叫农奴，依附在土地上。他们的日子到底怎么样，说法差得很远。",
+      "assertions": [
+        {
+          "id": "serfs-1",
+          "kind": "interpretation",
+          "text": "卡拉迪亚的乡下有一类人叫农奴，依附在土地上。他们过的是什么日子，从不同的人嘴里说出来，完全是两件事。",
+          "expressions": [
+            {
+              "id": "serfs-rumor",
+              "layer": "rumor",
+              "text": "我们就是所谓的农奴。其实我们过得挺好的——一周也就去领主老人家的地里干一两天，其余时间都是自己的；老爷还给我们份地，交完公粮剩下的都归自己。每个月还能进城一次，多自由？",
+              "A": [
+                "8FPCRv5L"
+              ],
+              "B": [
+                [
+                  "rule_农奴__农奴.json",
+                  1,
+                  "我们就是所谓的农奴，其实我们过的都挺好的"
+                ]
+              ]
+            },
+            {
+              "id": "serfs-summary",
+              "layer": "summary",
+              "text": "说起他们，城里人各有各的口吻。有人叹一句「瓦兰迪亚人真惨，他们的老百姓离不开土地，生生世世都是贵族的奴隶」；也有人把手一摆，说这有什么稀奇——毕竟君君臣臣，都是有契约的。",
+              "A": [
+                "8FPCRv5L"
+              ],
+              "B": [
+                [
+                  "rule_农奴__农奴.json",
+                  0,
+                  "瓦兰迪亚人真惨，他们的老百姓无法离开土地，永生永世都是贵族的奴隶"
+                ],
+                [
+                  "rule_农奴__农奴.json",
+                  3,
+                  "毕竟君君臣臣，都是有契约的"
+                ]
+              ]
+            },
+            {
+              "id": "serfs-detail",
+              "layer": "detail",
+              "text": "换个场合，同一批人又换了称呼：农奴？依附民？太文绉绉了。他们一般直接叫他们屁民、群氓、交税工具、后备兵源。",
+              "A": [
+                "8FPCRv5L"
+              ],
+              "B": [
+                [
+                  "rule_农奴__农奴.json",
+                  2,
+                  "我们一般直接管他们叫屁民，群氓，交税工具，后备兵源"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
-     "id": "bandits-1",
-     "kind": "interpretation",
-     "text": "卡拉迪亚的官道与野地里盘踞着各色强盗——劫匪、山贼、海寇、沙漠里的哈拉米。他们是谁、该怎么看他们，各地的人说法差得很远。",
-     "expressions": [
-      {
-       "id": "bandits-rumor",
-       "layer": "rumor",
-       "text": "劫匪三三五五聚起来，专挑良善下手，跟苍蝇一样到处都是，轰也轰不走、打也打不完，只能勤加剿灭。他们谁都打不过，也就欺负欺负村民——最可恶的一帮人。",
-       "A": ["1sbJQR4H", "3IpiWM7H"],
-       "B": [["rule_劫匪__劫匪.json", 0, "劫匪们很可恶，他们三三五五的聚集起来，专门打劫良善"]]
-      },
-      {
-       "id": "bandits-summary",
-       "layer": "summary",
-       "text": "沙漠里那些不一样。他们原先是正经的扈从，骑好马、穿铜甲，在部落里有人叫得出名字；不肯低头去给人当奴隶兵，就骑着马进了沙丘。有人恨他们，也有人暗地里羡慕他们。",
-       "A": ["3IpiWM7H", "1sbJQR4H"],
-       "B": [["rule_沙漠强盗__沙漠强盗.json", 1, "他们以前是正经的扈从，骑好马，穿铜甲，在部落里有人叫得出他们名字"]]
-      },
-      {
-       "id": "bandits-detail",
-       "layer": "detail",
-       "text": "林子里的那批常年藏在深处，以简陋木寨为据点：破烂布衣，少数人裹着偷来的破损皮甲，用的是猎弓、生锈斧头与草叉。他们既是被战乱赶离土地的农民，也是逃兵与罪犯的集合体。",
-       "A": ["mOa9CX13", "ziOBJSzR"],
-       "B": [["rule_山贼__山贼.json", 0, "这群亡命之徒常年藏身于卡拉迪亚的丛林深处，以简陋的木质营寨为据点"]]
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "slug": "small-factions",
-   "title_zh": "小阵营",
-   "title_en": "Minor Factions",
-   "domain": "politics",
-   "subdomain": "diplomacy",
-   "aliases_zh": [],
-   "aliases_en": [],
-   "summary": "一批不属于任何王国的群体：罪恶的兄弟会、雇佣兵、宗教运动、游牧民。靠卖命或收保护费过活。",
-   "assertions": [
+      "slug": "bandits",
+      "title_zh": "强盗",
+      "title_en": "Bandits",
+      "domain": "politics",
+      "subdomain": "law",
+      "aliases_zh": [],
+      "aliases_en": [],
+      "summary": "官道和野地里盘踞着各色强盗。他们是谁、该怎么看，各地的人说法不一样。",
+      "assertions": [
+        {
+          "id": "bandits-1",
+          "kind": "interpretation",
+          "text": "卡拉迪亚的官道与野地里盘踞着各色强盗——劫匪、山贼、海寇、沙漠里的哈拉米。他们是谁、该怎么看他们，各地的人说法差得很远。",
+          "expressions": [
+            {
+              "id": "bandits-rumor",
+              "layer": "rumor",
+              "text": "劫匪三三五五聚起来，专挑良善下手，跟苍蝇一样到处都是，轰也轰不走、打也打不完，只能勤加剿灭。他们谁都打不过，也就欺负欺负村民——最可恶的一帮人。",
+              "A": [
+                "1sbJQR4H",
+                "3IpiWM7H"
+              ],
+              "B": [
+                [
+                  "rule_劫匪__劫匪.json",
+                  0,
+                  "劫匪们很可恶，他们三三五五的聚集起来，专门打劫良善"
+                ]
+              ]
+            },
+            {
+              "id": "bandits-summary",
+              "layer": "summary",
+              "text": "沙漠里那些不一样。他们原先是正经的扈从，骑好马、穿铜甲，在部落里有人叫得出名字；不肯低头去给人当奴隶兵，就骑着马进了沙丘。有人恨他们，也有人暗地里羡慕他们。",
+              "A": [
+                "3IpiWM7H",
+                "1sbJQR4H"
+              ],
+              "B": [
+                [
+                  "rule_沙漠强盗__沙漠强盗.json",
+                  1,
+                  "他们以前是正经的扈从，骑好马，穿铜甲，在部落里有人叫得出他们名字"
+                ]
+              ]
+            },
+            {
+              "id": "bandits-detail",
+              "layer": "detail",
+              "text": "林子里的那批常年藏在深处，以简陋木寨为据点：破烂布衣，少数人裹着偷来的破损皮甲，用的是猎弓、生锈斧头与草叉。他们既是被战乱赶离土地的农民，也是逃兵与罪犯的集合体。",
+              "A": [
+                "mOa9CX13",
+                "ziOBJSzR"
+              ],
+              "B": [
+                [
+                  "rule_山贼__山贼.json",
+                  0,
+                  "这群亡命之徒常年藏身于卡拉迪亚的丛林深处，以简陋的木质营寨为据点"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
-     "id": "small-factions-1",
-     "kind": "fact",
-     "text": "小阵营是卡拉迪亚上不属于任何王国的一批群体：可能是罪恶的兄弟会、雇佣兵组织、宗教运动组织或游牧民。他们通常靠给某个王国卖命，或向路过其领地的商队和旅行者收取保护费来维持生计。",
-     "expressions": [
-      {
-       "id": "small-factions-rumor",
-       "layer": "rumor",
-       "text": "有些地界，过路是要交钱的——不交就得打一场。他们宣称那一片都是自己的「领地」，哪怕只是一片牧场。",
-       "A": ["uce9Opgg", "RWOYui01", "7JMaPpkN"],
-       "B": []
-      },
-      {
-       "id": "small-factions-detail",
-       "layer": "detail",
-       "text": "有的兄弟会一边替当局办事，一边做自己的生意：在城里是体面的商人，出了城就是打家劫舍的土匪。谁在城里、谁在乡间，他们自己分得很清，外人不问，他们也不说。",
-       "A": ["nQOf27Rx", "dRaYhQva", "B8c2mNKj"],
-       "B": []
-      }
-     ]
+      "slug": "small-factions",
+      "title_zh": "小阵营",
+      "title_en": "Minor Factions",
+      "domain": "politics",
+      "subdomain": "diplomacy",
+      "aliases_zh": [],
+      "aliases_en": [],
+      "summary": "一批不属于任何王国的群体：罪恶的兄弟会、雇佣兵、宗教运动、游牧民。靠卖命或收保护费过活。",
+      "assertions": [
+        {
+          "id": "small-factions-1",
+          "kind": "fact",
+          "text": "小阵营是卡拉迪亚上不属于任何王国的一批群体：可能是罪恶的兄弟会、雇佣兵组织、宗教运动组织或游牧民。他们通常靠给某个王国卖命，或向路过其领地的商队和旅行者收取保护费来维持生计。",
+          "expressions": [
+            {
+              "id": "small-factions-rumor",
+              "layer": "rumor",
+              "text": "有的地方，过路是要交钱的——商家按月交，农户按季交，交了就没人来掀你的摊子，不交就隔三差五有醉汉上门闹事，报官也没用。他们到底是谁，说不清：白天在街上碰见，也就是隔壁那条巷子里的街坊，有人还拄着拐一瘸一拐的；可收了摊往巷子里一蹲，腿就不瘸了。有人讲他们拜一个死了好多年的皇帝，就等着他回来——死了皇帝不埋，这么些年还能说出个名堂来，怎么听怎么像喝多了编的。反正离得远，谁知道呢。",
+              "A": [
+                "uce9Opgg",
+                "RWOYui01",
+                "7JMaPpkN"
+              ],
+              "B": [
+                [
+                  "rule_火焰余烬__火焰余烬.json",
+                  0,
+                  "北区卖陶罐的老瘸子就是他们的人"
+                ],
+                [
+                  "rule_火焰余烬__火焰余烬.json",
+                  4,
+                  "死了皇帝不埋，等着他回来"
+                ]
+              ]
+            },
+            {
+              "id": "small-factions-summary",
+              "layer": "summary",
+              "text": "他们自己不叫自己匪帮，说自己是「被遗忘者的工会」：你摆摊没人管，他们管；你死了儿子没人收尸，他们替你收。他们讲自己拜的不是账本，是一个死了一百年的皇帝，等的是下一代人的好日子——说是这么说，会里的人也承认自己七岁跟着爹进会，如今鬓角白了，天还是没亮，念一次经，手里那把刀就沉一分。同行看他们又是另一套说法：同业，但不是同行——一个为了利，一个一半为了利、一半为了等谁回来；念着经把刀子捅了，捅完还跪地上求原谅。但同行也认一件事：他们接活讲规矩，交了钱的不抢、交了粮的不烧、灾年还给欠账的宽限，官府来围剿，他们不躲山头，就躲在隔壁老瘸子家后院的地窖里——官府想不到。他们的根基不是钱，是街坊。",
+              "A": [
+                "uce9Opgg",
+                "RWOYui01",
+                "7JMaPpkN"
+              ],
+              "B": [
+                [
+                  "rule_火焰余烬__火焰余烬.json",
+                  2,
+                  "我们不是匪帮，我们是被遗忘者的工会"
+                ],
+                [
+                  "rule_火焰余烬__火焰余烬.json",
+                  2,
+                  "我七岁跟着爹进会，到现在鬓角白了，天亮还是没来"
+                ],
+                [
+                  "rule_火焰余烬__火焰余烬.json",
+                  5,
+                  "同业，但不是同行"
+                ]
+              ]
+            },
+            {
+              "id": "small-factions-detail",
+              "layer": "detail",
+              "text": "在朝廷眼里，他们多半是癣疥之疾，不是心腹之患：元老院每隔几年议一次要不要彻底清剿，每次议而不决——不是剿不了，是剿完留下的灰色地带更麻烦。城镇里的高利贷、销赃、调解纠纷都捏在这么一批人手里，凑成一套法外的秩序，没了它，下城的治安撑不了三天；他们也接朝廷不方便出面的活。至于那套信仰，不过是脸上贴的一层金箔，撕了底下还是匪帮——但这层金箔到底让他们和纯黑帮分开了：他们有经可念、有主可等，用起来有底线。外来做生意的看得更实在：大陆上再没有第二个这样的组织，一边敲诈商户一边念经，劫掠和末世论搅在一块儿；阵地战里只能当消耗品，可巷战里的那股劲头不能小看。那句话概括得最准——那层千年教派的自我定位，是他们在这个灰产行当里唯一的信用担保。",
+              "A": [
+                "nQOf27Rx",
+                "dRaYhQva",
+                "B8c2mNKj"
+              ],
+              "B": [
+                [
+                  "rule_火焰余烬__火焰余烬.json",
+                  1,
+                  "火焰余烬是帝国的癣疥之疾，不是心腹之患"
+                ],
+                [
+                  "rule_火焰余烬__火焰余烬.json",
+                  3,
+                  "那层千年教派的自我定位，是他们在这个灰产行当里唯一的信用担保"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
     }
-   ]
-  }
- ]
+  ]
 }

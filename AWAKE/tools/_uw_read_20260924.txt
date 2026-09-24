@@ -1,0 +1,132 @@
+========================================================================
+underworld-alleys ｜ 巷子 ｜ 域=politics/law
+摘要：城镇后街那一类地方有「巷子」，是一份按天进钱的产业；一座城最多一条，想要就得自己去夺。
+
+── 断言 assertion.town-alleys-1  【事实】
+   内容：卡拉迪亚的城镇里有「巷子」这种地方——后街、空地、滨水区那一类。它是一份能按天进钱的产业，而一座聚落最多只能拥有一条。
+   引文 6 条
+
+   ▸ expr.town-alleys-rumor  〔只言片语〕
+     说给谁：commoner(local,只言片语)、villager(local,只言片语)、townsfolk(regional,大致)
+     原话：哪条巷子归谁管，城里人心里都有数。白天看着平平常常，入了夜那地方就归别人说了算——后巷子里那些龌龊事，花样从来不少。
+
+   ▸ expr.town-alleys-detail  〔细致〕
+     说给谁：notable(regional,细致)、merchant(faction,细致)、tavernkeeper(faction,细致)、ransom_broker(faction,细致)、headman(national,细致)、soldier(national,细致)、noble(elite,细致)
+     原话：巷子跟工坊是一个路数——都是城里的一份产业，差别只在工坊挂牌、巷子不挂牌。谁拿下它，谁就按这座城的兴旺程度分钱；城越富，那条巷子越肥。
+
+========================================================================
+underworld-gang-leaders ｜ 巷子头目 ｜ 域=politics/law
+摘要：一条巷子得有人管着。官面上叫他帮派头目，巷子里的居民却常叫他「守护者」。
+
+── 断言 assertion.alley-gang-leaders-1  【解读】
+   内容：巷子由一名头目掌管，得从自己人里挑一个派过去。同一个角色有两套叫法：衙门叫帮派头目，巷子里的居民叫「守护者」。
+   引文 7 条
+
+   ▸ expr.alley-gang-leaders-rumor  〔只言片语〕
+     说给谁：commoner(local,只言片语)、villager(local,只言片语)、townsfolk(regional,大致)
+     原话：每条巷子都有人管。管事的得有几分本事，也得让巷子里的居民信得过他——信不过，这位置坐不安稳。
+
+   ▸ expr.alley-gang-leaders-detail  〔细致〕
+     说给谁：notable(regional,细致)、merchant(faction,细致)、tavernkeeper(faction,细致)、ransom_broker(faction,细致)、headman(national,细致)、soldier(national,细致)、noble(elite,细致)
+     原话：挑人是有讲究的：手上要够狠，心肠还得够硬，这两样缺一样都压不住场面。头目一旦没了，巷子撑不了几天就得丢，除非赶紧再派个人过去接手。
+
+========================================================================
+underworld-struggle ｜ 巷子争夺 ｜ 域=politics/law
+摘要：巷子会招来附近帮派的攻打。守不住，连里面的兵一起丢。
+
+── 断言 assertion.alley-struggle-1  【事实】
+   内容：巷子会招来附近帮派的攻打。撑不过去，就失去对它的所有权，留在里面的兵也一并丢光。
+   引文 7 条
+
+   ▸ expr.alley-struggle-rumor  〔只言片语〕
+     说给谁：commoner(local,只言片语)、villager(local,只言片语)、townsfolk(regional,大致)
+     原话：这条街换过好几回主人了。今天归这家，过些日子可能就换了旗——没人在的时候，巷子是谁的都说不准。
+
+   ▸ expr.alley-struggle-detail  〔细致〕
+     说给谁：notable(regional,细致)、merchant(faction,细致)、tavernkeeper(faction,细致)、ransom_broker(faction,细致)、headman(national,细致)、soldier(national,细致)、noble(elite,细致)
+     原话：想保住就得留人。打赢了不算完，得把折损的兵补回去，不然下一拨来了照样守不住。有人守着，才叫你的巷子。
+
+========================================================================
+underworld-gangs ｜ 帮派 ｜ 域=politics/law
+摘要：帮派头目是城镇里的「要人」之一。他们管着后街、移民棚户区和滨水区这些不信任官府的地方。
+
+── 断言 assertion.town-gangs-1  【事实】
+   内容：帮派头目是城镇里的「要人」之一，跟商人、地主并列。他们控制着后街、移民棚户区、滨水区，以及那些不信任官府的社区。
+   引文 7 条
+
+   ▸ expr.town-gangs-rumor  〔只言片语〕
+     说给谁：commoner(local,只言片语)、villager(local,只言片语)、townsfolk(regional,大致)
+     原话：在别人的地盘上，想受保护就得交钱——他们管这叫税。那些店主是他们的韭菜，别人不许割。
+
+   ▸ expr.town-gangs-detail  〔细致〕
+     说给谁：notable(regional,细致)、merchant(faction,细致)、tavernkeeper(faction,细致)、ransom_broker(faction,细致)、headman(national,细致)、soldier(national,细致)、noble(elite,细致)
+     原话：这些人多半有两副面孔：在城里是体面商人，出了城就换了装束去当土匪。手上有钱，还能拿去撬动地方官断案的口子。
+
+========================================================================
+underworld-crime-rating ｜ 犯罪等级 ｜ 域=politics/law
+摘要：在卡拉迪亚，抢劫或侵犯王国居民会留下犯罪等级。到 30 就进不去那个王国的定居点了。
+
+── 断言 assertion.crime-rating-1  【事实】
+   内容：抢劫或以其他方式侵犯一个王国的居民，会留下犯罪等级，最高到 100。在中立王国里，等级达到 30 的人将被禁止进入该王国的定居点。
+   引文 5 条
+
+   ▸ expr.crime-rating-rumor  〔只言片语〕
+     说给谁：commoner(local,只言片语)、villager(local,只言片语)、townsfolk(regional,大致)
+     原话：犯过事的人身上是带着记号的，官府心里有本账。背了案子的人，连港口都不让他靠。
+
+   ▸ expr.crime-rating-detail  〔细致〕
+     说给谁：notable(regional,细致)、merchant(faction,细致)、tavernkeeper(faction,细致)、ransom_broker(faction,细致)、headman(national,细致)、soldier(national,细致)、noble(elite,细致)
+     原话：潜进去被逮住，可能被关几天，也可能挨一顿肉刑。卡拉迪亚的城镇没那么多地方长期关人，所以判罚往往又快又粗——真轮到头上时，正义是不可预测的。
+
+========================================================================
+underworld-blood-money ｜ 赎罪金 ｜ 域=politics/law
+摘要：卡拉迪亚的律法许人用一笔钱抵命，叫赎罪金；罚金交不出，才受别的处置。
+
+── 断言 assertion.blood-money-1  【事实】
+   内容：卡拉迪亚的律法允许用一笔钱抵命，这笔钱叫赎罪金。判下的罚金也一样——交不出第纳尔，才轮到别的处置。
+   引文 4 条
+
+   ▸ expr.blood-money-rumor  〔只言片语〕
+     说给谁：commoner(local,只言片语)、villager(local,只言片语)、townsfolk(regional,大致)
+     原话：有钱能使鬼推磨，这话在镇子上最灵。看门的、断案的，哪一处都有一道价码。
+
+   ▸ expr.blood-money-detail  〔细致〕
+     说给谁：notable(regional,细致)、merchant(faction,细致)、tavernkeeper(faction,细致)、ransom_broker(faction,细致)、headman(national,细致)、soldier(national,细致)、noble(elite,细致)
+     原话：这笔账是按王国分开记的：在哪个王国犯的事，就要向哪个王国交代。清账的法子不止一种——有人掏第纳尔，有人拿另外的东西出来抵。
+
+========================================================================
+underworld-bandits ｜ 强盗 ｜ 域=politics/law
+摘要：官道和野地里盘踞着各色强盗。他们是谁、该怎么看，各地的人说法不一样。
+
+── 断言 assertion.bandits-1  【解读】
+   内容：卡拉迪亚的官道与野地里盘踞着各色强盗——劫匪、山贼、海寇、沙漠里的哈拉米。他们是谁、该怎么看他们，各地的人说法差得很远。
+   引文 7 条
+
+   ▸ expr.bandits-rumor  〔只言片语〕
+     说给谁：commoner(local,只言片语)、villager(local,只言片语)
+     原话：劫匪三三五五聚起来，专挑良善下手，跟苍蝇一样到处都是，轰也轰不走、打也打不完，只能勤加剿灭。他们谁都打不过，也就欺负欺负村民——最可恶的一帮人。
+
+   ▸ expr.bandits-summary  〔大致〕
+     说给谁：townsfolk(regional,大致)
+     原话：沙漠里那些不一样。他们原先是正经的扈从，骑好马、穿铜甲，在部落里有人叫得出名字；不肯低头去给人当奴隶兵，就骑着马进了沙丘。有人恨他们，也有人暗地里羡慕他们。
+
+   ▸ expr.bandits-detail  〔细致〕
+     说给谁：notable(regional,细致)、merchant(faction,细致)、tavernkeeper(faction,细致)、ransom_broker(faction,细致)、headman(national,细致)、soldier(national,细致)、noble(elite,细致)
+     原话：林子里的那批常年藏在深处，以简陋木寨为据点：破烂布衣，少数人裹着偷来的破损皮甲，用的是猎弓、生锈斧头与草叉。他们既是被战乱赶离土地的农民，也是逃兵与罪犯的集合体。
+
+========================================================================
+underworld-smuggling ｜ 走私货 ｜ 域=economy/trade
+摘要：走私来的货因为来路不正、带着风险，价钱比正常货低。
+
+── 断言 assertion.smuggling-1  【事实】
+   内容：走私来的货物来路不正、带着风险，所以卖的价钱比正常货低——出手的人管这个差价叫「风险」。
+   引文 7 条
+
+   ▸ expr.smuggling-rumor  〔只言片语〕
+     说给谁：commoner(local,只言片语)、villager(local,只言片语)、townsfolk(regional,大致)
+     原话：有些货为什么那么便宜，买的人心里其实都清楚。有人肯半价出，就有人肯闭嘴。
+
+   ▸ expr.smuggling-detail  〔细致〕
+     说给谁：notable(regional,细致)、merchant(faction,细致)、tavernkeeper(faction,细致)、ransom_broker(faction,细致)、headman(national,细致)、soldier(national,细致)、noble(elite,细致)
+     原话：这条道有专门的通道和人手。被逮住要没收货，人也会被通缉；闹得大的话，连港口都别想再靠。货还是那些货，只是从此见不得光。
+
