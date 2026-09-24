@@ -89,9 +89,14 @@ WorldStateStore.cs:920/934/937  chunk 侧的三种坏法：chunk_missing / chunk
       只回滚缓存不够（替换可能真成功了）；只加直读磁盘也不够（API 把两种失败压成一个 Failure）。
   (m) **成本要说清**：IKeyValueStore 是框架侧公开契约
       （AWAKE/framework/MarcusAwakeFramework/src/StorageAndRagApi.cs:48-53），
-      三个方法全返回 OperationResult<bool>。要区分"必未写"与"结果未知"，
+      三个方法**并非**都返回 `OperationResult<bool>`——实际是
+      `GetAsync → OperationResult<string>`、`SetAsync` / `DeleteAsync → OperationResult<bool>`
+      ⇒ **要区分"必未写"与"结果未知"，`bool` 这个返回类型本身就承载不了**，
       要么扩展契约、要么约定错误码语义。**这是框架契约变更，影响所有实现方**，
       不是 AWAKE/src 里的一次局部修补。先把方案与影响面写出来，别直接动手。
+
+      > ⚠️ **09-24 更正**：本段原先写作"三个方法全返回 `OperationResult<bool>`"，**是错的**（主控写错）。
+      > 以本段现文为准，续单 `HANDOFF-STORAGE-20260924-MAIN-R2.md` 同。
 
 ■ P1-03 revision 写放大 —— 这不是正确性问题，是成本问题，别给它写"红/绿"
 WorldStateStore.cs:3707   每次追加一条 fact，都 BuildJournalChunks(facts, revision) 重建**全部** chunks
