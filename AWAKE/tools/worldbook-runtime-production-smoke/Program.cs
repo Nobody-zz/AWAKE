@@ -16,8 +16,23 @@ internal static partial class Program
     private static int _failed;
     private static readonly List<Task> ObservedBackgroundTasks = new List<Task>();
 
-    private static int Main()
+    private static int Main(string[] args)
     {
+        if (args.Length == 3 && args[0] == "persona-prompt-render")
+        {
+            var variables = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(args[1]));
+            if (variables == null) throw new InvalidDataException("Prompt variables must be a JSON object.");
+            foreach (System.Text.RegularExpressions.Match placeholder in
+                System.Text.RegularExpressions.Regex.Matches(NpcPromptTemplate.TemplateText, @"\{\{([A-Za-z0-9_]+)\}\}"))
+            {
+                if (!variables.ContainsKey(placeholder.Groups[1].Value))
+                    throw new InvalidDataException("Missing prompt variable: " + placeholder.Groups[1].Value);
+            }
+            string prompt = NpcDialoguePromptPipeline.RenderTemplate(NpcPromptTemplate.TemplateText, variables);
+            File.WriteAllText(args[2], prompt);
+            Console.WriteLine("PROMPT_RENDERED=" + args[2]);
+            return 0;
+        }
         return MainAsync().GetAwaiter().GetResult();
     }
 
