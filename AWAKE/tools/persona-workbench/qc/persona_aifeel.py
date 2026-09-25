@@ -30,9 +30,17 @@ SCENARIOS = {"identity": "你是谁？家里做什么的？",
              "challenge": "你说的这条路子，我看不靠谱。"}
 
 
+def normalize_connectives(text):
+    # A small, explicit mutation set; not a Chinese syntax parser.
+    for old, new in (("第一步", "先"), ("首先", "先"), ("起初", "先"),
+                     ("随后", "再"), ("接着", "再"), ("然后", "再")):
+        text = text.replace(old, new)
+    return text
+
+
 def shape(text):
     """Clause architecture, not exact wording: keeps connective/negation sequence."""
-    s = re.sub(r"\s+", "", text)
+    s = re.sub(r"\s+", "", normalize_connectives(text))
     s = re.sub(r"[^，。！？；：、,—（）()\w]", "", s)
     pattern = "(" + "|".join(map(re.escape, MARKERS)) + "|[，。！？；：、,—（）()])"
     bits = re.split(pattern, s)
@@ -42,7 +50,7 @@ def shape(text):
 
 def frame_family(text):
     """Broad construction family; catches slot/particle changes that exact shapes miss."""
-    s = re.sub(r"\s+", "", text)
+    s = re.sub(r"\s+", "", normalize_connectives(text))
     if "先" in s and ("再" in s or "才" in s or "然后" in s):
         return "first_then"
     if "先" in s:
@@ -58,6 +66,18 @@ def frame_family(text):
     return "other"
 
 
+def validate_definition_fields(obj, path):
+    for field in FIELDS:
+        value = obj.get(field)
+        if value is None:
+            continue
+        if field in LIST_FIELDS:
+            if not isinstance(value, list) or any(not isinstance(item, str) for item in value):
+                raise ValueError(f"{path}: {field} must be an array of strings")
+        elif not isinstance(value, str):
+            raise ValueError(f"{path}: {field} must be a string")
+
+
 def rows_from_definitions(directory):
     rows = []
     files = sorted(Path(directory).glob("*.definition.json"))
@@ -65,6 +85,7 @@ def rows_from_definitions(directory):
         raise ValueError(f"No definitions in {directory}")
     for path in files:
         obj = json.loads(path.read_text(encoding="utf-8"))
+        validate_definition_fields(obj, path)
         for field in FIELDS:
             value = obj.get(field)
             values = value if isinstance(value, list) else [value]
@@ -84,16 +105,23 @@ def metrics(rows):
             continue
         counts = Counter(r["shape"] for r in data)
         families = Counter(r["family"] for r in data)
+        family_cards = {family: len({r["card"] for r in data if r["family"] == family})
+                        for family in families}
         lengths = [len(r["text"]) for r in data]
         endings = Counter((r["text"][-1] if r["text"] else "") for r in data)
         max_count = max(counts.values())
         top = sorted(counts.items(), key=lambda x: (-x[1], x[0]))[:5]
+        card_count = len({r["card"] for r in data})
         report[field] = {
-            "n": len(data), "cards": len({r["card"] for r in data}),
+            "n": len(data), "cards": card_count,
+            "insufficient_cross_card_sample": card_count < 3,
             "top_shape_share": round(max_count / len(data), 4),
             "shape_diversity": round(len(counts) / len(data), 4),
             "frame_families": dict(families.most_common()),
+            "family_card_coverage": family_cards,
             "first_family_share": round((families["first_then"] + families["first_then_implicit"]) / len(data), 4),
+            "first_family_card_coverage": len({r["card"] for r in data
+                                               if r["family"] in ("first_then", "first_then_implicit")}),
             "top_non_other_family_share": round(max((v for k, v in families.items() if k != "other"), default=0) / len(data), 4),
             "length_min": min(lengths), "length_median": statistics.median(lengths),
             "length_max": max(lengths),
@@ -124,37 +152,81 @@ def digest(path):
 
 
 def parse_reply(raw):
-    text = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw.strip(), flags=re.I).strip()
-    parsed = json.loads(text)
+    if not isinstance(raw, str):
+        raise ValueError("raw response is not a string")
+    parsed = json.loads(raw.strip())
+    if not isinstance(parsed, dict):
+        raise ValueError("response is not a JSON object")
+    if set(parsed) - {"reply", "mood", "effects", "command"}:
+        raise ValueError("unexpected output property")
+    if "command" in parsed:
+        raise ValueError("command is forbidden in chat mode")
     reply = parsed["reply"]
-    if not isinstance(reply, str) or not reply.strip():
+    mood = parsed["mood"]
+    if not isinstance(reply, str) or not reply.strip() or len(reply) > 4000:
         raise ValueError("reply is empty or not a string")
+    if not isinstance(mood, str) or not mood.strip() or len(mood) > 8:
+        raise ValueError("mood is empty, too long or not a string")
+    effects = parsed.get("effects", [])
+    if not isinstance(effects, list) or len(effects) > 8 or any(not isinstance(v, str) for v in effects):
+        raise ValueError("effects must be an array of at most eight strings")
     return reply
+
+
+def fenced_reply_for_diagnosis(raw):
+    """Never contract-valid; recover only the wording inside an exact JSON fence."""
+    if not isinstance(raw, str):
+        return None
+    match = re.fullmatch(r"```(?:json)?\s*(.*?)\s*```", raw.strip(), flags=re.I | re.S)
+    if not match:
+        return None
+    try:
+        body = json.loads(match.group(1))
+    except json.JSONDecodeError:
+        return None
+    reply = body.get("reply") if isinstance(body, dict) else None
+    return reply if isinstance(reply, str) and reply.strip() else None
+
+
+def scenario_style(rows):
+    return {scenario: metrics([r for r in rows if r["scenario"] == scenario])["reply"]
+            for scenario in sorted({r["scenario"] for r in rows})}
 
 
 def answer_metrics(path, version="after"):
     source = json.loads(Path(path).read_text(encoding="utf-8"))
-    rows = []
+    if not isinstance(source, dict) or not isinstance(source.get("results"), list):
+        raise ValueError("answers.results must be an array")
+    rows, diagnostic_rows = [], []
     invalid = []
     for index, record in enumerate(source["results"]):
+        if not isinstance(record, dict):
+            invalid.append({"row": index, "error": "answer row is not an object"})
+            continue
         if record.get("version") != version:
+            continue
+        if any(key not in record for key in ("stem", "scenario", "sample")):
+            invalid.append({"row": index, "error": "answer row lacks stem/scenario/sample"})
             continue
         try:
             reply = parse_reply(record.get("raw", ""))
         except (json.JSONDecodeError, KeyError, TypeError, ValueError) as error:
             invalid.append({"row": index, "card": record.get("stem"),
                             "scenario": record.get("scenario"), "error": str(error),
-                            "raw_excerpt": record.get("raw", "")[:200]})
+                            "raw_excerpt": str(record.get("raw", ""))[:200]})
+            recovered = fenced_reply_for_diagnosis(record.get("raw"))
+            if recovered is not None:
+                diagnostic_rows.append({"card": record["stem"], "scenario": record["scenario"],
+                                        "field": "reply", "index": index, "text": recovered,
+                                        "shape": shape(recovered), "family": frame_family(recovered)})
             continue
         rows.append({"card": record["stem"], "scenario": record["scenario"],
                      "sample": record["sample"], "field": "reply", "index": index,
                      "text": reply, "shape": shape(reply), "family": frame_family(reply)})
-    if not rows:
-        raise ValueError("No valid replies for requested version; refusing empty-pass")
-    by_scenario = {scenario: metrics([r for r in rows if r["scenario"] == scenario])["reply"]
-                   for scenario in sorted({r["scenario"] for r in rows})}
     return {"source_sha256": digest(path), "model": source.get("model"), "version": version,
-            "valid": len(rows), "invalid": invalid, "by_scenario": by_scenario}
+            "status": "scored" if rows else "no_valid_replies",
+            "valid": len(rows), "invalid": invalid, "by_scenario": scenario_style(rows),
+            "diagnostic_only": {"n": len(diagnostic_rows), "by_scenario": scenario_style(diagnostic_rows)}}
 
 
 def relation_report(definitions, links_path):
@@ -166,6 +238,7 @@ def relation_report(definitions, links_path):
     cards = []
     for path in sorted(Path(definitions).glob("*.definition.json")):
         obj = json.loads(path.read_text(encoding="utf-8"))
+        validate_definition_fields(obj, path)
         hero = obj.get("characterId")
         matched = links.get(hero, [])
         ceilings = sorted({link.get("confirmedFor") or "unspecified" for link in matched
@@ -192,15 +265,28 @@ def run(command):
 
 
 def dsl_usable(log):
-    return ("[PERSONA_DSL_OK]" in log and "fallback=False" in log
-            and "WARN persona.tag_unregistered" not in log)
+    matches = re.findall(r"^\[PERSONA_DSL_OK\][^\r\n]*\bfallback=(True|False)\b", log, flags=re.M)
+    return len(matches) == 1 and matches[0] == "False" and "WARN persona.tag_unregistered" not in log
+
+
+def validate_card_paths(cards):
+    names = [card.name.casefold() for card in cards]
+    if len(set(names)) != len(names):
+        raise ValueError("Duplicate card basenames would overwrite the temporary input")
+    sidecars = {}
+    for card in cards:
+        if not card.is_file() or not card.name.endswith(".persona.json"):
+            raise ValueError(f"Expected existing *.persona.json: {card}")
+        sidecar = card.with_name(card.name.replace(".persona.json", ".origins.json"))
+        if not sidecar.is_file():
+            raise ValueError(f"Missing hero identity sidecar: {sidecar}")
+        sidecars[card.name] = sidecar
+    return sidecars
 
 
 def chain(args):
     cards = [Path(p).resolve() for p in args.cards]
-    for card in cards:
-        if not card.is_file() or not card.name.endswith(".persona.json"):
-            raise ValueError(f"Expected existing *.persona.json: {card}")
+    sidecars = validate_card_paths(cards)
     registry = REPO / "ModuleData/Worldbook/persona_definitions/tag_registry.json"
     materializer = REPO / "tools/persona-workbench/tools/materialize-definitions.ps1"
     simulator = REPO / "tools/worldbook-runtime-sim/bin/Release/net10.0-windows/WorldbookRuntimeSim.dll"
@@ -214,22 +300,28 @@ def chain(args):
         defs.mkdir()
         for card in cards:
             shutil.copy2(card, source / card.name)
-            sidecar = card.with_name(card.name.replace(".persona.json", ".origins.json"))
-            if sidecar.is_file():
-                shutil.copy2(sidecar, source / sidecar.name)
+            sidecar = sidecars[card.name]
+            shutil.copy2(sidecar, source / sidecar.name)
         run(["powershell", "-NoProfile", "-File", materializer, "-CharactersDir", source,
              "-RegistryPath", registry, "-OutDir", defs])
         definitions = sorted(defs.glob("*.definition.json"))
         if len(definitions) != len(cards):
             raise RuntimeError("Materializer did not produce one definition per selected card")
+        objects = [json.loads(path.read_text(encoding="utf-8")) for path in definitions]
+        hero_ids = [obj.get("characterId") for obj in objects]
+        if any(not hero for hero in hero_ids) or len(set(hero_ids)) != len(hero_ids):
+            raise RuntimeError("Missing or duplicate heroId in materialized definitions")
+        if {obj.get("materialization", {}).get("sourceFile") for obj in objects} != {card.name for card in cards}:
+            raise RuntimeError("Materialized sourceFile does not match selected cards")
         result = {"source_hashes": {p.name: digest(p) for p in cards},
+                  "sidecar_hashes": {name: digest(path) for name, path in sidecars.items()},
                   "registry_sha256": digest(registry),
                   "renderer_source_sha256": digest(REPO / "src/NpcDialoguePromptPipeline.cs"),
                   "template_source_sha256": digest(REPO / "src/Prompts/NpcPromptTemplate.cs"),
                   "renderer_exe_sha256": digest(renderer), "simulator_dll_sha256": digest(simulator),
+                  "force_approved_for_offline_test": True,
                   "model": args.model, "seed": args.seed if args.model else None, "items": []}
-        for definition in definitions:
-            obj = json.loads(definition.read_text(encoding="utf-8"))
+        for definition, obj in zip(definitions, objects):
             hero_id = obj["characterId"]
             display_name = obj.get("materialization", {}).get("sourceFile", definition.name).split("_")[0]
             dsl = root / (definition.stem + ".dsl.txt")
@@ -270,21 +362,28 @@ def chain(args):
             result["items"].append(item)
         result["text_metrics"] = metrics(rows_from_definitions(defs))
         if args.model:
-            reply_rows, invalid = [], []
+            reply_rows, diagnostic_rows, invalid = [], [], []
             for item in result["items"]:
                 for label, response in item["prompts"].items():
                     try:
                         reply = parse_reply(response["raw"])
                     except (json.JSONDecodeError, KeyError, TypeError, ValueError) as error:
                         invalid.append({"card": item["card"], "scenario": label, "error": str(error)})
+                        recovered = fenced_reply_for_diagnosis(response["raw"])
+                        if recovered is not None:
+                            diagnostic_rows.append({"card": item["card"], "field": "reply", "index": 0,
+                                                    "text": recovered, "shape": shape(recovered),
+                                                    "family": frame_family(recovered), "scenario": label})
                         continue
                     reply_rows.append({"card": item["card"], "field": "reply", "index": 0,
                                        "text": reply, "shape": shape(reply), "family": frame_family(reply),
                                        "scenario": label})
             result["reply_metrics"] = {
+                "status": "scored" if reply_rows else "no_valid_replies",
                 "valid": len(reply_rows), "invalid": invalid,
-                "by_scenario": {label: metrics([r for r in reply_rows if r["scenario"] == label]).get("reply")
-                                for label in SCENARIOS},
+                "by_scenario": scenario_style(reply_rows),
+                "diagnostic_only": {"n": len(diagnostic_rows),
+                                    "by_scenario": scenario_style(diagnostic_rows)},
             }
     return result
 
@@ -315,6 +414,10 @@ def main():
         print(f"REPORT={args.out} SHA256={digest(args.out)}")
     else:
         print(payload)
+    if args.command == "answers" and result["status"] != "scored":
+        sys.exit(2)
+    if args.command == "chain" and args.model and result["reply_metrics"]["status"] != "scored":
+        sys.exit(2)
 
 
 if __name__ == "__main__":
