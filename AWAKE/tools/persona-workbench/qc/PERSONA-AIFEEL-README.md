@@ -1,5 +1,7 @@
 # 角色卡 AI 感：可复现检查器
 
+作者和审阅者的操作规范见 [AI-FEEL-REVIEW-SPEC.zh-CN.md](AI-FEEL-REVIEW-SPEC.zh-CN.md)。
+
 入口：`persona_aifeel.py`。旧交接目录的七个脚本不再作为放行依据；本工具不修改角色卡、tag registry 或游戏目录。只看物化后的九个文本字段；`tags` 由真 DSL 生成器处理。作者草稿字段不计入。
 
 ## 使用
