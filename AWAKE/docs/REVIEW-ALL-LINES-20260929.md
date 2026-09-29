@@ -119,3 +119,24 @@ pilot 那三张卡不在版本管理里，备份被自己的脚本覆盖过一�
 - ❌ 「代码仓库最近没更新」—— 不是"最近"，是**从 09-10 起就没推过**。
 - ❌ 「世界书线压着未提交产物」（09-14 起一直这么写）—— 现在的准确说法是：
   **内容源从来就不在版本管理里，靠的是镜像档兜底；而镜像档从 09-25 起断了。**
+
+---
+
+## 收尾 · 2026-09-29 22:0x：同步已完成
+
+甲方把 SSH 公钥登记到 GitHub 后，**182 笔积压全部推上去了**。
+
+- 推送结果：`cc7b057..a577bf2  main -> main`
+- 独立复核（不信推送输出）：`git ls-remote` 读回 `a577bf2` ＝ 本地 `main`；
+  `git rev-list --left-right --count origin/main...main` ＝ **`0  0`**；远程分支 321 笔提交
+- **仓库地址从 HTTPS 切到了 SSH**：`origin` 现为 `git@github.com:Nobody-zz/AWAKE.git`
+  （HTTPS 那条道在这台机器上走不通，见 §二）
+- 本机新增：`~/.ssh/awake_github`（ed25519 私钥）＋ `~/.ssh/config` 里一条 `Host github.com` 规则
+- ⚠️ 每次连接都会冒一句 `Failed to add the host to the list of known hosts` —— **是噪声，不影响连接**
+  （Git Bash 写不进那个文件；`StrictHostKeyChecking accept-new` 已经兜住了）
+
+### 还没进去的（下一轮的第一件事）
+
+推上去的是**已提交**的部分。工作区那 **772 条**（含 279 张角色卡 ＋ 27 份审查报告）**仍然只在盘上**。
+⇒ 现在远程有了一份完整的历史，但**最新的工作产物还没有**。
+
