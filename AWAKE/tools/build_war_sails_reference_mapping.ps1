@@ -1,4 +1,4 @@
-param(
+﻿param(
     [string]$EnglishDirectory = 'C:\Users\26811\Downloads\战帆英文',
     [string]$ChineseDirectory = 'C:\Users\26811\Downloads\战帆中文',
     [string]$OutputDirectory = ''

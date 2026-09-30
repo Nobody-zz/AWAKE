@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Convert an AF-format worldbook directory into native AWAKE worldbook format.
 

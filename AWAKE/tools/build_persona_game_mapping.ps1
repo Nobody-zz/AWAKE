@@ -1,4 +1,4 @@
-param(
+﻿param(
     [string]$PersonaDirectory = 'D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AnimusForge\PlayerExports\卡拉迪亚编年史\personality_background',
     [string]$GameModulesRoot = 'D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules',
     [string]$OutputDirectory = ''

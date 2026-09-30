@@ -55,6 +55,28 @@
 - **构建成功 ≠ 游戏内验证**：本地 smoke 不得称游戏实测；证据分级见下「状态、候选与证据」节。
 - 同步游戏目录、启动游戏、不可逆覆盖、正式提版、发布和计划外产品决策仍需用户明确授权。
 
+## 跨 agent 共享知识
+
+> **2026-10-01 新增。** 背景：本工作区同时有**多个 agent 系统**在跑，各家的 skill 目录互不可见——
+> DSH（`<dshHome>/skills`）、WorkBuddy（`~/.workbuddy/skills`，56 个）、Codex（`~/.codex/skills`，37 个，09-13 停手）、
+> 以及 zcode / Trae 等。同一个仓库被 4 套 agent 碰，而每套只看得见自己那份 skill。
+
+- **凡跨 agent 的共享知识一律进仓库**，不得只写在某个 harness 的私有 skill 目录里。
+  否则每个 harness 各维护一份私有副本，然后各自漂移——这正是本仓库已经受够的病
+  （同族问题见 `docs/REVIEW-DESIGN-20261001.md`「多个权威源互相打架」）。
+- **harness 专属的东西才留在各家的 skill 目录**：例如「本机没有 bash 工具」「用 `py -3`」
+  「该 harness 的工具名」「它的沙箱模式」。这类内容对别的 harness 是**错的**，不能进仓库。
+- **仓库工具放 `AWAKE/tools/`**，任何 agent 都能跑；各家的 skill 只做薄壳与指针。
+  现有跨 agent 工具：
+  - `tools/check-ps1.ps1` —— `.ps1` 的 BOM / 非 ASCII / 行尾 / 语法自检（纯 ASCII，自带不需 BOM）
+  - `tools/assert-gate.ps1` —— 断言一道门的退出码与输出模式（"红在对的理由上"的可执行形式）
+  - `tools/gen_skill_refs.py` —— 把发现提取的 JSON 渲染成参考文档
+- **共享参考文档放 `AWAKE/docs/reference/`**，由 `gen_skill_refs.py` 生成，**不要手改**（会被重跑覆盖）。
+  现有：`bannerlord-facts.md`、`bannerlord-gauntlet-ui.md`、`worldbook-pipeline.md`、`reverify-queue.md`。
+- 参考文档里的 `valid_for` 是**测量版本**，不是当前版本。本机游戏已从 `v1.3.15` 升到 `v1.4.8`，
+  **引用任何数字或否定式断言前先核当前版本**；否定式断言（"原版做不到 X"）风险最高。
+- **同一条纪律对文档也适用**：新知识写进仓库文档，不要只写进某个 agent 的会话记忆或私有目录。
+
 ## MCM 菜单规则
 
 - 每做一个功能，必须评估 MCM 菜单是否需要调整或新增调控项；评估结论写进 PLAN。
