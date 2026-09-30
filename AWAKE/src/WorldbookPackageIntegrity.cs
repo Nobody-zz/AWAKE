@@ -233,7 +233,13 @@ internal static class WorldbookPackageIntegrity
         {
             switch (character)
             {
-                case '"': builder.Append("\\\""); break;
+                // ⚠️ 必须是 \u0022，不能写成 \"。
+                // 包是用 System.Text.Json 默认编码器写的（Studio 侧 Contracts.cs CanonicalJson.Serialize），
+                // 它把字符串里的双引号输出为 \u0022。这里若写成 \"，同一份内容会算出不同的规范字节流 ⇒
+                // contentHash 对不上 ⇒ WorldbookPackageIntegrity 抛 WB2-HASH-MISMATCH:content ⇒
+                // WorldbookRuntime 吞掉异常 ⇒ 状态显示「世界书未加载」（静默全灭）。
+                // 症状只在正文里出现双引号时触发：pilot 包无此字符故一直绿，calradia 包有 2 处故必红。
+                case '"': builder.Append("\\u0022"); break;
                 case '\\': builder.Append("\\\\"); break;
                 case '\b': builder.Append("\\b"); break;
                 case '\f': builder.Append("\\f"); break;

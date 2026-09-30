@@ -6,7 +6,8 @@ param(
     [string]$Configuration = 'Release',
     [string]$GamePath = 'D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord',
     [string]$FrameworkPathOverride = 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2',
-    [switch]$SkipGameVersionCheck
+    [switch]$SkipGameVersionCheck,
+    [switch]$SkipSmoke
 )
 
 $ErrorActionPreference = 'Stop'
@@ -45,6 +46,32 @@ try {
     & dotnet build $testsProject -c $Configuration --nologo -v:minimal
     if ($LASTEXITCODE -ne 0) { throw "AWAKE.Tests build failed with exit code $LASTEXITCODE" }
     Write-Output "TESTS_OK configuration=$Configuration"
+
+    # 判据：离线烟测必须**真跑**，不能只编译。
+    # 此前这里只有上面的 dotnet build —— 构建恒绿、测试恒红，于是
+    # 世界书 contentHash 口径不一致（WB2-HASH-MISMATCH:content，2026-10-01 修复）
+    # 藏了 8 天没人发现：任何一次 build.ps1 都是绿的。同类欠账见
+    # docs/HANDOFF-STORAGE-CONSISTENCY-20260922.md:139（"build.ps1 只编译不跑测试"）。
+    #
+    # ⚠️ 不得把结果并进 TESTS_OK —— 那是"编译通过"，语义不同。
+    # ⚠️ 已知代价：Awake.SdkSmoke 的 dialogue-chain-redtest 判据是**已投送的**世界书
+    #    （DialogueChainRedtest.ResolveDeployedManifest 默认指向游戏模块目录），
+    #    所以本步骤要求游戏侧模块已投送。干净克隆上跑请加 -SkipSmoke。
+    if ($SkipSmoke) {
+        Write-Output "SMOKE_SKIPPED (requested by -SkipSmoke)"
+    }
+    else {
+        $smokeExe = Join-Path $root "..\AWAKE.Tests\bin\$Configuration\net472\Awake.SdkSmoke.exe"
+        if (-not (Test-Path -LiteralPath $smokeExe)) { throw "Awake.SdkSmoke.exe not found: $smokeExe" }
+        $smokeOutput = & $smokeExe 2>&1
+        $smokeExit = $LASTEXITCODE
+        $smokeOutput | Select-String -Pattern '^(RESULT|PASS ALL|FAILED_CASES)' | ForEach-Object { Write-Output $_.Line }
+        if ($smokeExit -ne 0) {
+            $smokeOutput | Select-String -Pattern '^(FAIL_CASE|FAIL_MSG|FAIL_TYPE)' | ForEach-Object { Write-Output $_.Line }
+            throw "Awake.SdkSmoke failed with exit code $smokeExit (offline gate is RED)"
+        }
+        Write-Output "SMOKE_OK configuration=$Configuration"
+    }
 }
 finally {
     Pop-Location
