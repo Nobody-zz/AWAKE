@@ -97,6 +97,21 @@
 
 ---
 
+## 六之二、⚠️ 无日期后缀的文档（最易被误当"现行"）
+
+**有日期的文档至少能看出年纪；没有日期的会伪装成现行。** 已处置的：
+
+| 文件 | 病 | 处置 |
+|---|---|---|
+| `Awake-Development-Plan.md` | 抬头写「与当前运行时对齐」，实际通篇 `SlaneshsEmbrace`（09-15 已裁定作废）；指向不存在的 `docs/archive/` | 标 `superseded` |
+| `Awake-Framework-Usage-Map.md` | 同上，「与当前运行时对齐」+ `SlaneshsEmbrace` | 标 `superseded` |
+| `AWAKE-VALIDATION.md` | **无日期、无状态标记**，但「当前」那节停在 **09-11**（BuildId `awake-20260911-…`） | **拆分标注**：E1~E5 读数已过期；**E0~E5 定义表长期有效**，继续用 |
+| `AWAKE-STATE-HISTORY.md` | 原名 `AWAKE-CURRENT.md`（名字叫 CURRENT、装的是过去） | 已于 09-14 自行标退役，**处置正确** |
+
+> ⇒ 见到无日期文档**先看头部有没有状态声明**；没有的，按 §七 第 3 条补。
+
+---
+
 ## 七、怎样加新文档
 
 1. **命名按 §四**（`TYPE-主题-日期.md`，中文主题可用）。

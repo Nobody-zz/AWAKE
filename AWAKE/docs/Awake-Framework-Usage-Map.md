@@ -1,7 +1,31 @@
 # AWAKE · Marcus 框架利用地图
 
 > 日期：2026-08-16
-> 状态：与当前运行时对齐。旧版 Slaanesh 时代的地图归档为 `docs/archive/Awake-Framework-Usage-Map-20260813.md`。
+> **状态：`superseded`（2026-09-30 标记）。现行权威：`AWAKE-ROADMAP.md`。**
+>
+> ⚠️ **本文件抬头原写「与当前运行时对齐」—— 该声称已失效。**
+
+---
+
+## ⚠️ 退役说明（2026-09-30 补）
+
+### 失效点
+
+| # | 本文件写的 | 现实 |
+|---|---|---|
+| 1 | §1「内容包：`SlaaneshsEmbraceContent`，DLL `SlaneshsEmbrace.dll`，ModId `SlaaneshsEmbrace`，数据前缀 `slaanesh.*`」 | 甲方 **09-15 已裁定**本体不含成人向内容；且该内容包**已不在本工作区**（`AGENTS.md`：本工作区只承载运行时、工具链、测试） |
+| 2 | 抬头「旧版地图归档为 `docs/archive/Awake-Framework-Usage-Map-20260813.md`」 | **`docs/archive/` 不存在**（09-30 实测）；本项目不做物理归档，改为原文件头部标记 |
+| 3 | 通篇是 08-16 的能力映射 | 框架能力此后有多次落地（生图 port、数据面等），本表未跟 |
+
+### 仍然有效的部分
+
+- §1「运行时身份边界」：`ModId AWAKE` / `DLL Awake.dll` / `namespace Awake` / `owner AWAKE` / `awake.*` 前缀 —— **仍成立**（`SubModule.xml` 实测一致）。
+- §1「运行时不依赖 AF / 爱与恨，也不反向引用内容包类型」—— **仍成立**。
+- **Marcus 框架能力映射本身**仍有参考价值（哪块能力挂在哪、怎么接），只是**不再是"当前"**。
+
+> 要读当前方向，**只读 `AWAKE-ROADMAP.md`**。
+
+---
 
 ## 1. 身份边界
 
