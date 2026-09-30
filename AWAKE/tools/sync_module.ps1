@@ -24,13 +24,24 @@ $embeddedRuntimeScript = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.P
 
 $managedRootFiles = @('SubModule.xml', 'README_CN.md', 'README_EN.txt', 'BUILD_VERIFICATION.txt', 'THIRD-PARTY-NOTICES.txt')
 $managedGuiFiles = @(
+    'GUI\AWAKESpriteData.xml',
     'GUI\Prefabs\AwakeMessenger.xml',
     'GUI\Prefabs\AwakePortraitProbe.xml',
+    'GUI\Prefabs\AwakePortraitSlot.xml',
     'GUI\Prefabs\DeveloperCheck.xml',
     'GUI\Prefabs\NpcDialogue.xml',
     'GUI\Prefabs\SceneDialogueStatus.xml',
     'GUI\Prefabs\WeeklyReportBrowser.xml',
     'GUI\Prefabs\WorldEventInbox.xml'
+)
+# Brushes / SpriteParts sat outside the managed list until 2026-09-30: the prefabs reference 11
+# `Awake.*` brushes whose definitions live in GUI\Brushes, and those resolve to the sheets in
+# GUI\SpriteParts. On the game side AwakeBrushes.xml was missing outright and SpriteParts had
+# drifted (22 files vs 53 in the repo) -- both silently, because unmanaged paths are never
+# updated and never removed. See docs/AUDIT-MOD-SURFACE-20260930.md P0-4/P0-5.
+$managedGuiDirectories = @(
+    'GUI\Brushes',
+    'GUI\SpriteParts'
 )
 $managedLanguageFiles = @(
     'ModuleData\Languages\awake_strings.xml',
@@ -228,6 +239,17 @@ function Get-ManagedFiles([string]$SourceRoot, [string]$BuildDll) {
     Add-ManagedFile $list 'bin\Win64_Shipping_Client\MarcusAwakeFramework.dll' $SourceRoot $BuildDll
     Add-ManagedFile $list 'bin\Win64_Shipping_Client\MarcusAwakeTransport.dll' $SourceRoot $BuildDll
     foreach ($relative in $managedGuiFiles) { Add-ManagedFile $list $relative $SourceRoot $BuildDll }
+    foreach ($directory in $managedGuiDirectories) {
+        $directoryPath = Join-Path $SourceRoot $directory
+        if (-not (Test-Path -LiteralPath $directoryPath)) { continue }
+        Assert-NoReparseComponents $directoryPath
+        foreach ($file in Get-ChildItem -LiteralPath $directoryPath -Recurse -File -Force) {
+            if (($file.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0) { throw "Reparse source file is not allowed: $($file.FullName)" }
+            $relative = Get-RelativePath $SourceRoot $file.FullName
+            if ($list.Contains($relative)) { throw "Duplicate managed path: $relative" }
+            $list.Add($relative)
+        }
+    }
     foreach ($relative in $managedLanguageFiles) { Add-ManagedFile $list $relative $SourceRoot $BuildDll }
     if (-not $SkipWorldbook) {
         foreach ($relative in $managedWorldbookFiles) { Add-ManagedFile $list $relative $SourceRoot $BuildDll }

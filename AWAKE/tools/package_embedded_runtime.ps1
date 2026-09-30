@@ -70,7 +70,10 @@ function Test-IsForbiddenRelativePath([string]$Relative) {
     }
 
     $fileName = [IO.Path]::GetFileName($Relative).ToLowerInvariant()
-    if ($fileName -match 'secret|credential|privatekey|password|token') { return $true }
+    # `token` MUST carry word boundaries: without them Microsoft.ML.Tokenizers.dll (the tokenizer,
+    # a real dependency of MarcusAwakeStorage) matches and gets silently dropped by
+    # Copy-PublishPayload. Found 2026-09-30 -- see docs/AUDIT-MOD-SURFACE-20260930.md P0-1.
+    if ($fileName -match 'secret|credential|privatekey|password|\btoken\b') { return $true }
     return $false
 }
 
@@ -262,6 +265,31 @@ function Copy-PublishPayload([string]$SourceRoot, [string]$DestinationRoot) {
     }
 }
 
+# The local semantic model is a HAND-PLACED asset: `dotnet publish` never emits it, so before
+# 2026-09-30 it was absent from the packaging pipeline entirely (the copy on the game side was
+# dropped in by hand on 09-17). The standing decision is that the model ships inside the module
+# package rather than requiring players to install it themselves -- see the 2026-09-16 DECISION
+# doc under docs/. The 94.9 MB of weights do not belong in git, so the source lives under
+# artifacts/models/, which .gitignore:129 already ignores.
+# Per-file sha256: tools/semantic-model-provenance.json (verifier: tools/verify_semantic_model.py).
+# NOTE: keep this file ASCII-only -- it has no BOM, so non-ASCII bytes break PS 5.1 parsing.
+function Copy-ModelPayload([string]$DestinationRoot) {
+    $sourceRoot = Join-Path $ProjectRoot 'artifacts\models'
+    if (-not (Test-Path -LiteralPath $sourceRoot -PathType Container)) {
+        Write-Warning ("Local model source is missing: {0} -- the package will NOT contain models/. Download bge-small-zh-v1.5 into that directory (see tools/semantic-model-provenance.json)." -f $sourceRoot)
+        return
+    }
+    foreach ($file in @(Get-ChildItem -LiteralPath $sourceRoot -Recurse -File -Force)) {
+        $relative = Get-RelativePath $sourceRoot $file.FullName
+        if (Test-IsForbiddenRelativePath $relative) { continue }
+        if (Test-IsForeignRuntimePath $relative) { continue }
+        $target = Join-Path (Join-Path $DestinationRoot 'models') $relative
+        $parent = Split-Path -Parent $target
+        if (-not (Test-Path -LiteralPath $parent)) { New-Item -ItemType Directory -Path $parent -Force | Out-Null }
+        Copy-Item -LiteralPath $file.FullName -Destination $target -Force
+    }
+}
+
 $projectRoot = Get-FullPath $ProjectRoot
 if (-not (Test-Path -LiteralPath $projectRoot -PathType Container)) { throw "ProjectRoot is missing: $projectRoot" }
 Assert-NoReparseComponents $projectRoot
@@ -334,6 +362,7 @@ try {
     }
 
     Copy-PublishPayload $publishRoot $packageRoot
+    Copy-ModelPayload $packageRoot
     Assert-ExistingFile $providerDll 'Provider build output'
     Copy-Item -LiteralPath $providerDll -Destination (Join-Path $packageRoot 'MarcusAwakeProvider.dll') -Force
 
