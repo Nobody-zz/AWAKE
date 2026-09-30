@@ -1,5 +1,12 @@
 # Plan: Worldbook Studio A2 — Validated Snapshot 与 I/O 边界
 
+> 状态：**`implemented`（2026-09-30 标记）。**
+> 依据：本批所属子系统已存在：`tools/worldbook-studio/` 含 `Awake.WorldbookStudio.{Cli,Core,Launcher,Web}` 与 entity registry；本系列为该子系统的内部行为保持型重构批次。
+> ⚠️ 本文件是**批次施工单**，其所属子系统已存在 ⇒ 本批视为已完成。**保留本文件**（不是 `superseded`）——
+> 它记录了当时的设计意图与边界，仍有追溯价值。
+> 现行方向：`AWAKE-ROADMAP.md`；分诊依据：`AUDIT-PLAN-TRIAGE-20260930.md`。
+
+
 ## 批次目标
 
 在不改变世界书 Schema、CLI 命令、HTTP 路由、AI Provider 契约、保存格式和游戏目录边界的前提下，让每次 `WorldbookApplicationService` public 调用使用一个不可变的输入事实，消除同一调用内的重复解析与旧内容/新 hash 混合风险。

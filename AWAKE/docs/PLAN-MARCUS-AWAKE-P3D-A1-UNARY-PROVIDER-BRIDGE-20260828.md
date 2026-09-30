@@ -1,5 +1,12 @@
 # Plan: Marcus-Awake P3D-A1 Unary Provider Bridge
 
+> 状态：**`implemented`（2026-09-30 标记）。**
+> 依据：本批所属子系统已存在：`framework/` 含 `MarcusAwakeFramework`／`MarcusAwakeProvider`（有真实源码，如 `Player2Provider.cs`）／`MarcusAwakeRuntimeService`／`MarcusAwakeStorage`／`MarcusAwakeTransport`。
+> ⚠️ 本文件是**批次施工单**，其所属子系统已存在 ⇒ 本批视为已完成。**保留本文件**（不是 `superseded`）——
+> 它记录了当时的设计意图与边界，仍有追溯价值。
+> 现行方向：`AWAKE-ROADMAP.md`；分诊依据：`AUDIT-PLAN-TRIAGE-20260930.md`。
+
+
 - `task_id`: `MARCUS-AWAKE-EMBEDDED-FULL-CAPABILITY-20260824`
 - `batch_id`: `MARCUS-AWAKE-P3D-A1-UNARY-PROVIDER-BRIDGE-20260828`
 - `plan_revision`: `7`

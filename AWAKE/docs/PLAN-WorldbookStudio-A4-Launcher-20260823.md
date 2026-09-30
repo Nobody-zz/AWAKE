@@ -1,4 +1,11 @@
 # Plan: Worldbook Studio A4-Launcher 生命周期精进
+
+> 状态：**`implemented`（2026-09-30 标记）。**
+> 依据：本批所属子系统已存在：`tools/worldbook-studio/` 含 `Awake.WorldbookStudio.{Cli,Core,Launcher,Web}` 与 entity registry；本系列为该子系统的内部行为保持型重构批次。
+> ⚠️ 本文件是**批次施工单**，其所属子系统已存在 ⇒ 本批视为已完成。**保留本文件**（不是 `superseded`）——
+> 它记录了当时的设计意图与边界，仍有追溯价值。
+> 现行方向：`AWAKE-ROADMAP.md`；分诊依据：`AUDIT-PLAN-TRIAGE-20260930.md`。
+
 _Locked via autonomous grill — implementation completed and offline verified, 2026-08-23_
 
 > Status: `offline_verified`. The bounded implementation and release checks below are complete. No Schema, CLI/Web wire contract, AI/CAS contract, AWAKE runtime, game directory, or frozen candidate was changed.

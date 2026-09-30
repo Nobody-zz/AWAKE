@@ -85,12 +85,15 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\validate_localization.
 
 **AWAKE does not hard-depend on the DLC — it works without it.** On the official side NavalDLC is `OfficialOptional`.
 
-But it loads by default (`DefaultModule=true`), so it **must be handled**:
+But it loads by default (`DefaultModule=true`), so it **must be handled**. Current state **is three-layered — not "nothing done"**:
 
-- The worldbook already has 4 canon entries written about the **Nord** faction the DLC introduces (`clan-clan_nord_1/2/3`, `military-nord`);
-- **The runtime currently has zero awareness of the DLC** (no `NavalDLC` hits in source).
+| Layer | Status |
+|---|---|
+| **Tooling / reference** | ✅ **Built** (08-24): `docs/mappings/war-sails-reference/` (528 EN/ZH rows) + entity registry carries DLC state (`hero_official_dlc_not_installed: 53`) |
+| **Content (worldbook)** | 🟡 Partial: 4 canon entries cover the DLC's **Nord** faction (`clan-clan_nord_1/2/3`, `military-nord`), but carry **no DLC condition** |
+| **Runtime** | ❌ Not wired: zero `NavalDLC` hits in `src/*.cs`; worldbook schema has no DLC field |
 
-Full assessment (DLC content scale, to-dos N0–N2, open questions) is in **`docs/DLC-COMPAT-NAVAL-20260930.md`**.
+Full assessment (three-layer correction, DLC content scale, to-dos N0–N2, open questions) is in **`docs/DLC-COMPAT-NAVAL-20260930.md`**.
 
 ---
 

@@ -85,12 +85,15 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\validate_localization.
 
 **AWAKE 不硬依赖 DLC —— 不带 DLC 也能玩。** DLC 在官方侧是 `OfficialOptional`。
 
-但 DLC 默认加载（`DefaultModule=true`），所以**必须处理它**：
+但 DLC 默认加载（`DefaultModule=true`），所以**必须处理它**。当前状态**分三层，不是"完全没接"**：
 
-- 世界书里已有 4 份正典档写的是 DLC 引入的 **Nord（诺德）** 势力（`clan-clan_nord_1/2/3`、`military-nord`）；
-- **运行时当前对 DLC 零感知**（源码中 `NavalDLC` 零命中）。
+| 层 | 状态 |
+|---|---|
+| **工具/参考层** | ✅ **已建**（08-24）：`docs/mappings/war-sails-reference/`（528 条中英对照）＋ 实体注册表已带 DLC 状态（`hero_official_dlc_not_installed: 53`） |
+| **内容层（世界书）** | 🟡 部分：4 份正典档写 DLC 引入的 **Nord（诺德）** 势力（`clan-clan_nord_1/2/3`、`military-nord`），但**无 DLC 条件** |
+| **运行时层** | ❌ 未接：`src/*.cs` 中 `NavalDLC` 零命中；世界书 schema 无 DLC 字段 |
 
-完整评估（含 DLC 内容规模、待办 N0–N2、需裁定问题）见 **`docs/DLC-COMPAT-NAVAL-20260930.md`**。
+完整评估（三层修正、DLC 内容规模、待办 N0–N2、需裁定问题）见 **`docs/DLC-COMPAT-NAVAL-20260930.md`**。
 
 ---
 

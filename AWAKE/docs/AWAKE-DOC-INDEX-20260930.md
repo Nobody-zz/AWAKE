@@ -119,12 +119,16 @@
 | 类别 | 数量 | 说明 |
 |---|---|---|
 | 附属件（`REVIEW-LOG`/`DRAFT`/`DISCOVERY-LOG`） | **70** | 主档的审查流水与草稿，**是证据链，不动** |
-| 主档 · 已确凿判定 | 7 | 见 `AUDIT-PLAN-TRIAGE` §3（4 份 `implemented` ＋ 3 份 `superseded`） |
-| 主档 · 无法判定 | ~138 | **不动**（74% 无状态行；落地物命中率不可靠，见下） |
+| 主档 · 已确凿判定 | **21** | 第一轮 7（见 `AUDIT-PLAN-TRIAGE` §3）＋ 第二轮 14（按簇核验，见 §7） |
+| 主档 · 未判定 | ~132 | **不动**（74% 无状态行；落地物命中率不可靠，见下） |
 
 ⭐ **两条必须记住的判据教训**：
 1. **「设计没照做」≠「工作没完成」**。实证：`Dialogue-BatchC` 要的 `awake.conversations` 零命中，但 `AwakeMessenger*` 已落地 ⇒ 功能做了、换了形态。
 2. **落地物命中率（抽类名去 grep）不可用作完成度判据** —— 它测的是词汇重合。实证：`EVENT-CANDIDATE-EVALUATION` 命中 18/18，但它引用的类名在文档「已确认的现状」节里就被提到了，是既有代码。
+
+⭐ **按簇核验**（第二轮方法）：大簇对应同一子系统，**核一次子系统覆盖一批**。
+已核：`WorldbookStudio-A*`（Studio 存在）✅、`MARCUS-AWAKE-P3*`（framework 存在）✅、
+`PLAN-Awake-*-20260816`（混杂）⬜、`PersonaWorkbench-*`（`tools/persona-workbench/` 只有 .md）⬜。
 
 ---
 

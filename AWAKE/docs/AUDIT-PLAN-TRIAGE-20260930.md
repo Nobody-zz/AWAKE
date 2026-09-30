@@ -93,3 +93,42 @@
    **这是本轮 74% 无状态行的直接补救。**
 2. **状态变化时回原文件改那一行** —— 不要让状态只存在于对话里。
 3. **判"做完没做完"，不要只看 PLAN 里写的具体设计**（§一末条）—— 要问「这件事现在有没有替代物」。
+
+---
+
+## 七、第二轮：按簇核验（2026-09-30 晚）
+
+逐份读 146 份不现实，改用**按簇核验** —— 大簇对应同一个子系统，**核一次子系统就能覆盖一批**。
+
+### 7.1 簇核验结果
+
+| 簇 | 份数 | 子系统核查 | 判定 |
+|---|---|---|---|
+| `WorldbookStudio-A1~A4/B1` | 9 | ✅ `tools/worldbook-studio/` 含 `Awake.WorldbookStudio.{Cli,Core,Launcher,Web}` ＋ entity registry | ✅ **标 `implemented`** |
+| `MARCUS-AWAKE-P3B/P3C/P3D` | 5 | ✅ `framework/` 含 `MarcusAwakeFramework`／`Provider`（有真实源码）／`RuntimeService`／`Storage`／`Transport` | ✅ **标 `implemented`** |
+| `PLAN-Awake-*-20260816` | ~14 | 🟡 **混杂**：`AwakeMessenger*`／`AwakeEvent*`／`AwakeContact*`／`NpcProactive*`／`WeeklyReportBrowser*`／`WorldEventInbox*` **在**；但 `DevTestTool`／`McmConfig`／`UnifiedDialogue` **零命中**（可能改名） | ⬜ **不标**（证据混杂） |
+| `PersonaWorkbench-*` | ~15 | ❌ `tools/persona-workbench/` **只有 .md，无代码**；`KeywordConstraintCompiler` 全仓零命中（真身可能在 `tools/persona-awake-joint/`） | ⬜ **不标** |
+| `WORLDBOOK-STUDIO-*`（大写） | ~15 | 🟡 编译链在（`Cli`/`Core`/`Launcher`/`Web`），但各档具体目标未逐一核 | ⬜ **不标** |
+
+### 7.2 本轮标记（14 份）
+
+**WorldbookStudio A 系列（9）** ＋ **MARCUS P3 系列（5）**，统一标 `implemented`，头部写明：
+> 本文件是**批次施工单**，其所属子系统已存在 ⇒ 本批视为已完成。**保留本文件**（不是 `superseded`）—— 它记录了当时的设计意图与边界。
+
+> ⚠️ **标记的诚实边界**：依据是「**所属子系统已存在**」，不是「逐条验收了每项交付物」。
+> 头部**写明了这个依据**，读者可自行判断。这是「误标代价 > 不标代价」下的折中。
+
+### 7.3 ⭐ 顺带查出的重要事实：**DLC 处理链早已存在**（修正当日 DLC 评估）
+
+核 B1 簇时发现 `PLAN-WorldbookStudio-B1-ENTITY-CATALOG-20260824.md` 里**已处理战帆 DLC**：
+> 「战帆是同一世界的官方 DLC；本机未安装时只显示"官方 DLC、当前未安装"，不建立独立的战帆世界。」
+
+顺此查出**项目 08-24 已建 DLC 处理链**：
+- `tools/build_war_sails_reference_mapping.ps1`
+- `docs/mappings/war-sails-reference/`（**528 条**：settlements 358／naval_characters 102／naval_lords 53／clans 9／heroes 5／kingdoms 1）
+- 实体注册表带 DLC 状态：`hero_official_dlc_not_installed: 53`、`clan_official_dlc_not_installed: 9`
+- 口径文件 `war-sails-reference/README.md`：「**本机未安装战帆时，不能把"本机缺少数据"当成对象冲突**」
+
+⇒ **`DLC-COMPAT-NAVAL-20260930.md` 初版写的「AWAKE 对 DLC 接入度 = 0」是错的**（只量了 `src/*.cs`），
+已修正为**三层表述**（工具层 ✅ 已建／内容层 🟡 部分／运行时层 ❌ 未接）。
+**这与本项目反复出现的那条教训同族：量"接入度"不能只量源码。**

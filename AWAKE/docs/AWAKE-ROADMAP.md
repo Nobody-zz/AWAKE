@@ -105,11 +105,15 @@
 **口径（甲方 09-30 定）：DLC 不是硬依赖，玩家可以选择不加；但本模组关于 DLC 的内容一定要做。**
 
 - 官方侧 `NavalDLC` 是 `OfficialOptional`，但 `DefaultModule=true`（默认加载）⇒ 绝大多数玩家**实际会带**。
-- **基础游戏已全线升到 v1.4.8**（Native/SandBoxCore/SandBox/StoryMode/NavalDLC 的宿主）；AWAKE 默认构建目标仍是 1.3.15。
-- **当前缺口**：世界书已有 4 份**写 Nord 势力**的正典档（`clan-clan_nord_1/2/3`、`military-nord`），但**运行时对 DLC 零感知**（源码 `NavalDLC` 零命中）。
+- **基础游戏已全线升到 v1.4.8**；AWAKE 默认构建目标仍是 1.3.15。
+- **当前状态分三层**（09-30 修正，**不是"完全没接"**）：
+  - ✅ **工具/参考层已建**（08-24）：`docs/mappings/war-sails-reference/`（528 条）＋ 实体注册表带 DLC 状态（`official_dlc_not_installed` 53 hero／9 clan）；
+  - 🟡 **内容层部分**：4 份正典档写 Nord（`clan-clan_nord_1/2/3`、`military-nord`），**无 DLC 条件**；
+  - ❌ **运行时层未接**：`src/*.cs` 零命中；**世界书 schema 无 DLC 字段**（想写条件也写不出来）。
+- ⭐ **口径 08-24 已定**（`war-sails-reference/README.md`）：「战帆是同一世界的官方 DLC……**本机未安装时，不能把"本机缺少数据"当成对象冲突**」⇒ 与本轮甲方口径一致，**不是新决定**。
 - **硬纪律**：不得把 NavalDLC 写进 `DependedModules`（那是硬依赖）；一切走运行时探测 + 静默降级。
 
-完整评估（DLC 内容规模、待办 N0–N2、需甲方裁定问题）见 **`docs/DLC-COMPAT-NAVAL-20260930.md`**。
+完整评估见 **`docs/DLC-COMPAT-NAVAL-20260930.md`**（含 §1.3 三层修正、待办 N0–N2、待裁定问题）。
 
 ---
 
