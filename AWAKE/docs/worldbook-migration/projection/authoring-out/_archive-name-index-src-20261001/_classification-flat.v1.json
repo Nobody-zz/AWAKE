@@ -1,0 +1,696 @@
+{
+  "generated_at": "2026-09-14 21:18",
+  "taxonomy_version": "1.0.0",
+  "n_entries": 448,
+  "categories": [
+    {
+      "id": "politics",
+      "label": "政治",
+      "help": "国家、领地、制度和权力关系。",
+      "hints": [
+        "主权边界归这里；自然山脉和河流边界归地理。",
+        "聚落行政归这里；聚落所在位置归地理。"
+      ],
+      "n": 7,
+      "subs_used": 3,
+      "subs_unused": 5
+    },
+    {
+      "id": "economy",
+      "label": "经济",
+      "help": "土地、生产、交易和财富流动。",
+      "hints": [
+        "土地生产归这里；土地地貌归地理。",
+        "商路经营归这里；道路走向归地理。",
+        "资源交易归这里；资源分布归地理。"
+      ],
+      "n": 21,
+      "subs_used": 2,
+      "subs_unused": 8
+    },
+    {
+      "id": "culture",
+      "label": "文化",
+      "help": "信仰、习俗、身份和日常生活。",
+      "hints": [
+        "婚姻习俗归这里；婚姻造成的王位继承归政治。",
+        "宗教信条归这里；教会拥有的政治权力归政治。"
+      ],
+      "n": 6,
+      "subs_used": 4,
+      "subs_unused": 4
+    },
+    {
+      "id": "war",
+      "label": "战争",
+      "help": "战事、军队、武器和战争后果。",
+      "hints": [
+        "要塞防御归这里；要塞所在位置归地理。",
+        "士兵编制归这里；士兵的社会身份归文化。"
+      ],
+      "n": 6,
+      "subs_used": 3,
+      "subs_unused": 5
+    },
+    {
+      "id": "geography",
+      "label": "地理",
+      "help": "地形、方位、道路、聚落和自然资源。",
+      "hints": [
+        "自然边界归这里；主权边界归政治。",
+        "聚落位置归这里；聚落行政归政治。",
+        "资源分布归这里；资源交易归经济。",
+        "要塞位置归这里；要塞防御归战争。",
+        "道路走向归这里；商路经营归经济。"
+      ],
+      "n": 408,
+      "subs_used": 4,
+      "subs_unused": 5
+    }
+  ],
+  "subdomain_rows": [
+    {
+      "domain": "politics",
+      "domain_zh": "政治",
+      "subdomain": "throne",
+      "subdomain_zh": "王位",
+      "help": "国王、王位和统治合法性。",
+      "example": "谁拥有王位",
+      "status": "已用",
+      "n": 2,
+      "prefixes": "throne(2)"
+    },
+    {
+      "domain": "politics",
+      "domain_zh": "政治",
+      "subdomain": "kingdoms",
+      "subdomain_zh": "王国",
+      "help": "王国、势力和国家身份。",
+      "example": "王国的正式名称",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "politics",
+      "domain_zh": "政治",
+      "subdomain": "territories",
+      "subdomain_zh": "领地",
+      "help": "领土、主权、行政范围和统治责任。",
+      "example": "某领主负责的领地",
+      "status": "已用",
+      "n": 4,
+      "prefixes": "territories(4)"
+    },
+    {
+      "domain": "politics",
+      "domain_zh": "政治",
+      "subdomain": "offices",
+      "subdomain_zh": "官职",
+      "help": "官职、职责和治理机构。",
+      "example": "城镇头人的职责",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "politics",
+      "domain_zh": "政治",
+      "subdomain": "law",
+      "subdomain_zh": "法律",
+      "help": "法律、裁判、罪责和惩罚。",
+      "example": "盗窃如何定罪",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "politics",
+      "domain_zh": "政治",
+      "subdomain": "diplomacy",
+      "subdomain_zh": "外交",
+      "help": "盟约、使节、谈判和国家关系。",
+      "example": "两国签订的盟约",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "politics",
+      "domain_zh": "政治",
+      "subdomain": "clans",
+      "subdomain_zh": "家族",
+      "help": "家族、血缘、家名和政治网络。",
+      "example": "某家族效忠的对象",
+      "status": "已用",
+      "n": 1,
+      "prefixes": "clans(1)"
+    },
+    {
+      "domain": "politics",
+      "domain_zh": "政治",
+      "subdomain": "succession",
+      "subdomain_zh": "继承",
+      "help": "王位、领地、家产和家名的继承。",
+      "example": "无子嗣时如何继承",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "economy",
+      "domain_zh": "经济",
+      "subdomain": "land_production",
+      "subdomain_zh": "土地",
+      "help": "土地所有、耕作、牧场和生产。",
+      "example": "平原适合种什么",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "economy",
+      "domain_zh": "经济",
+      "subdomain": "food",
+      "subdomain_zh": "粮食",
+      "help": "粮食来源、储备、价格和短缺。",
+      "example": "城镇的粮食来源",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "economy",
+      "domain_zh": "经济",
+      "subdomain": "trade",
+      "subdomain_zh": "贸易",
+      "help": "买卖、市场、商品和交易习惯。",
+      "example": "某城镇出售的商品",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "economy",
+      "domain_zh": "经济",
+      "subdomain": "taxation",
+      "subdomain_zh": "税赋",
+      "help": "税种、征收、负担和免税。",
+      "example": "村民缴纳的税",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "economy",
+      "domain_zh": "经济",
+      "subdomain": "currency",
+      "subdomain_zh": "货币",
+      "help": "钱币、兑换、价值和支付。",
+      "example": "常用钱币的名称",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "economy",
+      "domain_zh": "经济",
+      "subdomain": "workshops",
+      "subdomain_zh": "工坊",
+      "help": "工坊、手工业、产能和经营。",
+      "example": "城市里常见的工坊",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "economy",
+      "domain_zh": "经济",
+      "subdomain": "debt",
+      "subdomain_zh": "债务",
+      "help": "借贷、利息、抵押和欠款。",
+      "example": "商人的欠款",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "economy",
+      "domain_zh": "经济",
+      "subdomain": "trade_routes",
+      "subdomain_zh": "商路",
+      "help": "商业路线、运输和通行成本。",
+      "example": "商队从哪里经过",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "economy",
+      "domain_zh": "经济",
+      "subdomain": "items",
+      "subdomain_zh": "器物",
+      "help": "器物、装备、珍宝的来历、归属与流转。",
+      "example": "这把剑是谁的",
+      "status": "已用",
+      "n": 15,
+      "prefixes": "items(15)"
+    },
+    {
+      "domain": "economy",
+      "domain_zh": "经济",
+      "subdomain": "goods",
+      "subdomain_zh": "物产",
+      "help": "物产、特产、原料的产地与贸易。",
+      "example": "这里出产什么",
+      "status": "已用",
+      "n": 6,
+      "prefixes": "goods(6)"
+    },
+    {
+      "domain": "culture",
+      "domain_zh": "文化",
+      "subdomain": "faith",
+      "subdomain_zh": "信仰",
+      "help": "神祇、教义、仪式和宗教组织。",
+      "example": "人们敬奉的神",
+      "status": "已用",
+      "n": 2,
+      "prefixes": "tales(2)"
+    },
+    {
+      "domain": "culture",
+      "domain_zh": "文化",
+      "subdomain": "customs",
+      "subdomain_zh": "习俗",
+      "help": "礼节、禁忌、待人方式和地方传统。",
+      "example": "见面时的礼节",
+      "status": "已用",
+      "n": 2,
+      "prefixes": "tales(2)"
+    },
+    {
+      "domain": "culture",
+      "domain_zh": "文化",
+      "subdomain": "language",
+      "subdomain_zh": "语言",
+      "help": "语言、方言、称谓和书写。",
+      "example": "不同民族的称呼",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "culture",
+      "domain_zh": "文化",
+      "subdomain": "identity",
+      "subdomain_zh": "身份",
+      "help": "民族、阶层、职业和社会归属。",
+      "example": "如何称呼某个阶层",
+      "status": "已用",
+      "n": 1,
+      "prefixes": "tales(1)"
+    },
+    {
+      "domain": "culture",
+      "domain_zh": "文化",
+      "subdomain": "marriage",
+      "subdomain_zh": "婚姻",
+      "help": "婚配习惯、婚礼和家庭关系。",
+      "example": "某地的婚配习惯",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "culture",
+      "domain_zh": "文化",
+      "subdomain": "clothing",
+      "subdomain_zh": "服饰",
+      "help": "衣物、装饰、身份标志和穿着场合。",
+      "example": "贵族服饰的标志",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "culture",
+      "domain_zh": "文化",
+      "subdomain": "festivals",
+      "subdomain_zh": "节庆",
+      "help": "节日、纪念日、集市和庆典。",
+      "example": "收获节的活动",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "culture",
+      "domain_zh": "文化",
+      "subdomain": "arts",
+      "subdomain_zh": "艺术",
+      "help": "歌曲、故事、怪谈、舞蹈、绘画和工艺。",
+      "example": "酒馆里流传的歌谣",
+      "status": "已用",
+      "n": 1,
+      "prefixes": "tales(1)"
+    },
+    {
+      "domain": "war",
+      "domain_zh": "战争",
+      "subdomain": "war_history",
+      "subdomain_zh": "战史",
+      "help": "战争、战役、胜负和历史影响。",
+      "example": "某次战役的结果",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "war",
+      "domain_zh": "战争",
+      "subdomain": "military",
+      "subdomain_zh": "军制",
+      "help": "军队编制、征募、军阶和服役。",
+      "example": "谁负责征募士兵",
+      "status": "已用",
+      "n": 3,
+      "prefixes": "military(3)"
+    },
+    {
+      "domain": "war",
+      "domain_zh": "战争",
+      "subdomain": "troops",
+      "subdomain_zh": "兵种",
+      "help": "步兵、骑兵、射手和特殊部队。",
+      "example": "某国常见的兵种",
+      "status": "已用",
+      "n": 2,
+      "prefixes": "troops(2)"
+    },
+    {
+      "domain": "war",
+      "domain_zh": "战争",
+      "subdomain": "weapons",
+      "subdomain_zh": "武器",
+      "help": "武器、护具、攻城器械和使用常识。",
+      "example": "长矛适合什么战法",
+      "status": "已用",
+      "n": 1,
+      "prefixes": "weapons(1)"
+    },
+    {
+      "domain": "war",
+      "domain_zh": "战争",
+      "subdomain": "tactics",
+      "subdomain_zh": "战术",
+      "help": "阵形、行军、伏击和战场方法。",
+      "example": "骑兵如何冲击",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "war",
+      "domain_zh": "战争",
+      "subdomain": "fortifications",
+      "subdomain_zh": "要塞",
+      "help": "城墙、堡垒、防守和攻城。",
+      "example": "城墙的防守方式",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "war",
+      "domain_zh": "战争",
+      "subdomain": "logistics",
+      "subdomain_zh": "军需",
+      "help": "粮秣、运输、营地和军队消耗。",
+      "example": "军队如何获得粮食",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "war",
+      "domain_zh": "战争",
+      "subdomain": "prisoners",
+      "subdomain_zh": "俘虏",
+      "help": "俘虏、看守、赎金和交换。",
+      "example": "俘虏如何被看守",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "geography",
+      "domain_zh": "地理",
+      "subdomain": "terrain",
+      "subdomain_zh": "地形",
+      "help": "山地、平原、沙漠、森林和海岸。",
+      "example": "某地是平原还是山地",
+      "status": "已用",
+      "n": 7,
+      "prefixes": "mountains(4)、deserts(1)、peninsulas(1)、plateaus(1)"
+    },
+    {
+      "domain": "geography",
+      "domain_zh": "地理",
+      "subdomain": "climate",
+      "subdomain_zh": "气候",
+      "help": "季节、降雨、寒暑和天气规律。",
+      "example": "北方冬季有多冷",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "geography",
+      "domain_zh": "地理",
+      "subdomain": "directions",
+      "subdomain_zh": "方位",
+      "help": "东南西北、远近和地标方向。",
+      "example": "某城在何处",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "geography",
+      "domain_zh": "地理",
+      "subdomain": "rivers",
+      "subdomain_zh": "水域",
+      "help": "河流、湖泊、海湾、海域、渡口和水域通行。",
+      "example": "哪条河流经城镇",
+      "status": "已用",
+      "n": 7,
+      "prefixes": "lakes(3)、rivers(2)、bays(1)、seas(1)"
+    },
+    {
+      "domain": "geography",
+      "domain_zh": "地理",
+      "subdomain": "roads",
+      "subdomain_zh": "道路",
+      "help": "道路、山口、渡口和陆上通行路线。",
+      "example": "两座城之间的道路",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "geography",
+      "domain_zh": "地理",
+      "subdomain": "settlements",
+      "subdomain_zh": "聚落",
+      "help": "村庄、城镇、城堡和它们所在的位置。",
+      "example": "某村庄位于哪片土地",
+      "status": "已用",
+      "n": 393,
+      "prefixes": "villages(273)、castles(67)、towns(53)"
+    },
+    {
+      "domain": "geography",
+      "domain_zh": "地理",
+      "subdomain": "natural_boundaries",
+      "subdomain_zh": "边界",
+      "help": "山脉、河流、海岸等自然形成的分界。",
+      "example": "哪条河分隔两地",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    },
+    {
+      "domain": "geography",
+      "domain_zh": "地理",
+      "subdomain": "resources",
+      "subdomain_zh": "资源",
+      "help": "矿产、森林、牧场和其他自然资源的分布。",
+      "example": "铁矿在哪里",
+      "status": "已用",
+      "n": 1,
+      "prefixes": "mines(1)"
+    },
+    {
+      "domain": "geography",
+      "domain_zh": "地理",
+      "subdomain": "sea_routes",
+      "subdomain_zh": "航路",
+      "help": "海上路线、港口之间的航行和水路方向。",
+      "example": "港口之间如何航行",
+      "status": "未用",
+      "n": 0,
+      "prefixes": ""
+    }
+  ],
+  "prefix_rows": [
+    {
+      "prefix": "villages",
+      "zh": "村庄",
+      "n": 273,
+      "domains": "geography",
+      "subdomains": "settlements"
+    },
+    {
+      "prefix": "castles",
+      "zh": "城堡",
+      "n": 67,
+      "domains": "geography",
+      "subdomains": "settlements"
+    },
+    {
+      "prefix": "towns",
+      "zh": "城镇",
+      "n": 53,
+      "domains": "geography",
+      "subdomains": "settlements"
+    },
+    {
+      "prefix": "items",
+      "zh": "器物",
+      "n": 15,
+      "domains": "economy",
+      "subdomains": "items"
+    },
+    {
+      "prefix": "goods",
+      "zh": "物产",
+      "n": 6,
+      "domains": "economy",
+      "subdomains": "goods"
+    },
+    {
+      "prefix": "tales",
+      "zh": "传说",
+      "n": 6,
+      "domains": "culture",
+      "subdomains": "faith、customs、identity、arts"
+    },
+    {
+      "prefix": "mountains",
+      "zh": "山地",
+      "n": 4,
+      "domains": "geography",
+      "subdomains": "terrain"
+    },
+    {
+      "prefix": "territories",
+      "zh": "领地",
+      "n": 4,
+      "domains": "politics",
+      "subdomains": "territories"
+    },
+    {
+      "prefix": "lakes",
+      "zh": "湖泊",
+      "n": 3,
+      "domains": "geography",
+      "subdomains": "rivers"
+    },
+    {
+      "prefix": "military",
+      "zh": "军制",
+      "n": 3,
+      "domains": "war",
+      "subdomains": "military"
+    },
+    {
+      "prefix": "rivers",
+      "zh": "河流",
+      "n": 2,
+      "domains": "geography",
+      "subdomains": "rivers"
+    },
+    {
+      "prefix": "throne",
+      "zh": "王权",
+      "n": 2,
+      "domains": "politics",
+      "subdomains": "throne"
+    },
+    {
+      "prefix": "troops",
+      "zh": "兵种",
+      "n": 2,
+      "domains": "war",
+      "subdomains": "troops"
+    },
+    {
+      "prefix": "bays",
+      "zh": "湾澳",
+      "n": 1,
+      "domains": "geography",
+      "subdomains": "rivers"
+    },
+    {
+      "prefix": "clans",
+      "zh": "氏族",
+      "n": 1,
+      "domains": "politics",
+      "subdomains": "clans"
+    },
+    {
+      "prefix": "deserts",
+      "zh": "荒漠",
+      "n": 1,
+      "domains": "geography",
+      "subdomains": "terrain"
+    },
+    {
+      "prefix": "mines",
+      "zh": "矿场",
+      "n": 1,
+      "domains": "geography",
+      "subdomains": "resources"
+    },
+    {
+      "prefix": "peninsulas",
+      "zh": "半岛",
+      "n": 1,
+      "domains": "geography",
+      "subdomains": "terrain"
+    },
+    {
+      "prefix": "plateaus",
+      "zh": "高原",
+      "n": 1,
+      "domains": "geography",
+      "subdomains": "terrain"
+    },
+    {
+      "prefix": "seas",
+      "zh": "海域",
+      "n": 1,
+      "domains": "geography",
+      "subdomains": "rivers"
+    },
+    {
+      "prefix": "weapons",
+      "zh": "兵器",
+      "n": 1,
+      "domains": "war",
+      "subdomains": "weapons"
+    }
+  ],
+  "fixes": []
+}
