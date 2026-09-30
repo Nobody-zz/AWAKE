@@ -44,6 +44,22 @@ CLI="src/Awake.WorldbookStudio.Cli/bin/Debug/net10.0/worldbook-studio.exe"
   `authoring/culture-concept-calculating.yaml` → `doc.culture.concept-calculating`。
 - ⚠️ head 含**历史残留档**（≥1299 条 vs 实际 789）⇒ **勿全量 select**。
 
+### ⭐⭐ register 的 `--path` 只传「文件名」（09-30 新坑，`WB-DOC-404`）
+
+`Workspace.ResolveAuthoringPath`（`Workspace.cs:448`）三段式：
+```
+Path.IsPathRooted(path)                       → 原样用
+path.StartsWith("authoring", OrdinalIgnoreCase) → Path.Combine(Root, path)
+否则                                            → Path.Combine(Root, "authoring", path)
+```
+⇒ 传 `workspace/full-geo1/authoring/x.yaml`（**相对、但不以 `authoring` 开头**）会被拼成
+`<Root>/authoring/workspace/full-geo1/authoring/x.yaml` ⇒ **双拼 ⇒ `WB-DOC-404`**。
+
+- ✅ 正确：`{"operation":"…","path":"politics-polity-senate-body.yaml"}`（纯文件名）
+- ✅ 或：`path":"authoring/politics-polity-senate-body.yaml"`
+- ❌ 错误：`"workspace/full-geo1/authoring/…"`（把 workspace 前缀也带上）
+- ⚠️ 与 §一 的 `WB-SCHEMA-404` **是两个不同的坑**：那个是 **cwd**，这个是 **path 形态**。
+
 ## 四、⭐ 引文（证据层）三条硬口径
 
 1. `quote_hash` = **sha256(quote 的 UTF-8 字节)** 小写十六进制（校验点 `Awake.WorldbookStudio.Core/AuthoringDraftContracts.cs:1301`，不符即 throw）
@@ -85,13 +101,18 @@ CLI="src/Awake.WorldbookStudio.Cli/bin/Debug/net10.0/worldbook-studio.exe"
 ## 七、编译产物与基线
 
 - **`compiled/customer/` = 默认输出目录**（`AuthorityGate.cs:469`：不带 `--out` 就跑 ⇒ 写进 `compiled/customer/`，**覆盖上一次**）。
-  ⇒ **正式产物一律显式 `--out compiled/<pkg名>`**。
+  ⇒ **正式产物一律显式 `--out`**。
 - **全量编译 = select 全部正典 id**（`AuthorityGate.MaterializeSelection`：**selection 就是编译集**）。
   范式：列 `authoring/*.yaml`（排除 `_`/`source-`）→ 读每档 `id:` → select 全部 → approve → proof → `compile --out`。
-- **`compile --out` 按进程 CWD（仓库根）解析**，否则 `WB-PATH-003`。
+- ⭐⭐ **`--out` 的解析根 = workspace 的 `CompiledRoot`（`<workspace根>/compiled`），不是 studio 根**（`Workspace.cs:63/79 RequireCompiled`）。
+  - ❌ `--out compiled/geo1-v40-polity-c`（从 studio 根算）⇒ 落到 `<studio>/compiled/…` ⇒ **不在 workspace 的 compiled 下 ⇒ `WB-PATH-003`**。
+  - ✅ `--out workspace/full-geo1/compiled/geo1-v40-polity-c`（cwd=studio 根时的相对写法）；或直接给绝对路径。
+  - 实测：v40 首次编译即栽在此，报 `WB-PATH-003 / side_effect:none`（**无副作用，可安全重跑**）。
+- ⚠️ **前四步（register/select/approve/proof）成功后，proof 落盘可复用** ⇒ `--out` 之类只影响 compile 的错误，
+  修完**只需重跑 compile 一步**（proof 文件 = `authoring-v1/compile-proofs/k1_cp_<sha256(proofId)>.json`，内含 `compile_proof_id` 可核对）。
 - ⚠️ **编译门会把被判「回收」的产物整个挪进 `compiled/quarantine/<SafeId(op_id)>/artifact/`**（`AuthorityGate.cs:1258`）。
   ⇒ **报告里写的包路径要当「产物名」看，不是永久地址**；引用前先 `ls`。
-- **当前在挂版**：`compiled/geo1-v38-r1/`（790 档，09-30 部署）。**具体哈希以 `docs/worldbook-migration/DEPLOY-V38-REPORT-20260930.md` 为准**，本文不复述。
+- **当前在挂版**：`compiled/geo1-v39-polity-b/`（796 档，09-30 部署）。**具体哈希以 `docs/worldbook-migration/DEPLOY-V39-REPORT-20260930.md` 为准**，本文不复述。
 - `validate` 常态基线：`total=0 valid=True`（诊断里 `severity` 全小写 `error`/`warning`）。
 
 ## 八、⭐ subdomain 是受控词表
