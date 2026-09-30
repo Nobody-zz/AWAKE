@@ -1,7 +1,12 @@
 # Plan: AWAKE 世界知识平台与玩家可编辑世界书
-_Locked via grill — by Claude + user_
 
-状态：经过 5 轮 Codex 只读对抗审查（前 4 轮修订，第 5 轮通过），待用户签收后进入独立实现计划。
+> **状态：`superseded`（2026-09-30 标记）。原写「待用户签收后进入独立实现计划」—— 该状态已失效。**
+> ⚠️ **已被取代**：本方案的目标「把 AWAKE 世界书重做为一套统一知识平台、**替换现有 v1 读取器的设计方向**」**早已完成** ——
+> 世界书已推进到 **v38 / 790 档**（`identity 12`、`polity 5`），运行时读取器已换。
+> 现行权威：`AWAKE-ROADMAP.md`；当前世界书规范：`WORLDBOOK-AUTHORING-SPEC-v1-20260930.md`。
+> 依据：`AUDIT-PLAN-TRIAGE-20260930.md` §3.2。
+
+_Locked via grill — by Claude + user_
 
 ## Goal
 

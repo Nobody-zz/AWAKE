@@ -1,5 +1,12 @@
 # Plan: 场景可视化选人 + AI 场景对话独立接口
 
+> 状态：**`implemented`（2026-09-30 标记）。原写「待独立审查后签收」已失效。**
+>
+> ⚠️ **两个接口均已落地**：① 场景 T/Y 可视化选人 —— `AwakeConfig.cs:175 EnableSceneVisualSelection` ＋ MCM 文案 `awake.mcm.scene_visual_selection.*` ＋ `AwakeTerminalBehavior.cs:216` 读取该开关；
+> ② 原版对话窗口 AI 模式 —— AWAKE 对话接口已接入。
+> **保留本文件**（不是 `superseded`）—— 它锁定了"可视化必须一眼可辨"的硬性要求，是美术验收的原始依据。
+> 依据：`AUDIT-PLAN-TRIAGE-20260930.md` §3.1。
+
 _Locked via grill — AWAKE 设计方 + 用户，待独立审查后签收_
 
 ## Goal

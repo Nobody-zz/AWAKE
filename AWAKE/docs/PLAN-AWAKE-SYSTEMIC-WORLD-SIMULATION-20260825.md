@@ -1,5 +1,11 @@
 # Plan: AWAKE 可组合领域世界运行平台总方案升级
 
+> **状态：`superseded`（2026-09-30 标记）。**
+> ⚠️ **为什么退役**：本文件自述「本批次**只升级路线与文档权威关系，不实现任何运行时系统**」——
+> 但它当年要升格的"总路线"，**已被 `AWAKE-ROADMAP.md` 取代**（现行版本阶梯按「玩家能多做什么」排，见该文件 §二）。
+> ⇒ 本文件作为**路线方案**已失效；作为**当时的领域系统设想**仍有阅读价值。
+> 依据：`AUDIT-PLAN-TRIAGE-20260930.md` §3.2。
+
 _Locked via grill — revised after the user clarified the systemic-sandbox target_
 
 ## Goal

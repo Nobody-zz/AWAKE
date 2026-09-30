@@ -1,7 +1,13 @@
 # Batch C：远程写信 / NPC 主动来信
 
 > 日期：2026-08-16
-> 状态：待用户签收的修订 PLAN
+> 状态：**`implemented`（2026-09-30 标记）。原写「待用户签收」已失效。**
+>
+> ⚠️ **本方案的远程通信功能已落地，但实现形态与原设计不同** —— 这恰好是精查最该记的一笔：
+> - 本文件 §2 要求的 `awake.conversations` 命名空间 **未按原设计建**（源码零命中）；
+> - 但 `src/AwakeMessengerHistory.cs` / `AwakeMessengerService.cs` / `AwakeMessengerVM.cs` **均已落地**。
+> ⇒ **「设计没照做」≠「工作没完成」。** 保留本文件以追溯"当初打算怎么做"。
+> 依据：`AUDIT-PLAN-TRIAGE-20260930.md` §一末条、§3.1。
 
 ## 1. 目标
 

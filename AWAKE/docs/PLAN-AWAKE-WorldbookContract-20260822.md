@@ -1,7 +1,10 @@
 # AWAKE Worldbook Contract v1 统一世界书方案
 
 - 日期：2026-08-22
-- 状态：方案草案，待独立审查后进入实现计划
+- **状态：`superseded`（2026-09-30 标记）。原写「方案草案，待独立审查后进入实现计划」—— 该状态已失效。**
+- ⚠️ **已被取代**：它要建立的「AWAKE Worldbook Contract v1」**早已落地**，正式契约见 **`AWAKE-Worldbook-Contract-v1.md`**；
+  权威形态规范见 `worldbook-studio-plan/RUNTIME-MAPPING-CONTRACT.md`。本文件仅为当时的方案稿。
+- 依据：`AUDIT-PLAN-TRIAGE-20260930.md` §3.2。
 - 适用对象：AWAKE mod、Worldbook Studio、世界书作者、离线测试工具
 - 目标：让模组运行时、世界书编辑器和作者内容共同遵守同一套世界书契约
 

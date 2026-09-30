@@ -1,7 +1,13 @@
 # Batch A：对话入口与 UI 边界
 
 > 日期：2026-08-16
-> 状态：待用户签收的修订 PLAN
+> 状态：**`implemented`（2026-09-30 标记）。原写「待用户签收」已失效。**
+>
+> ⚠️ **本方案描述的入口→UI 路由与 T/Y 交互已落地**：`NpcDialogueOverlay` / `AwakeMessengerOverlay` 均在 `src/`（且 09-14 真机跑通过对话面板）。
+> **保留本文件**（不是 `superseded`）—— 它记录了"入口为什么这么分工"的设计意图，仍有追溯价值。
+> 要看当前方向：`AWAKE-ROADMAP.md`。
+> 依据：`AUDIT-PLAN-TRIAGE-20260930.md` §3.1。
+
 > 依据：`PLAN-Awake-Dialogue-GrillBatch-20260816.md` 与 Batch A 审查日志
 
 ## 1. 目标
