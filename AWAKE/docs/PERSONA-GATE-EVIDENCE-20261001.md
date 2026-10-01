@@ -1,12 +1,12 @@
 # 角色卡质量门 · 红绿证据（2026-10-01）
 
-门：`AWAKE/tools/persona-card-gate.py`（9 条判据）
+门：`AWAKE/tools/persona-card-gate.py`（12 条判据：R1–R9 本门自有，R10–R12 委派给外部判据脚本，见 §10）
 证据等级：**E2（离线测试）** —— 未涉及游戏内验证，本门也不声称游戏内生效。
 配套规格：[`PERSONA-CARD-SPEC-v1-20261001.md`](PERSONA-CARD-SPEC-v1-20261001.md)（巡检会话，另写；关系见 §7）
 
 ---
 
-## 一、九条判据
+## 一、十二条判据
 
 | # | 规则码 | 判据 | 类型 | 老卡 76 | 新卡 279 |
 |---|---|---|---|---|---|
@@ -19,8 +19,15 @@
 | R7 | `PERSONA_TAG_UNREGISTERED` | 每个 tag 须在 `tag_registry.json`（39 个）中 | 不变量 | 0 | **276** |
 | R8 | `PERSONA_FIELD_SHAPE` | `realSelfBehaviors` **存在时**须是数组 | 不变量 | 0 | 0 |
 | R9 | `PERSONA_TAG_COUNT_STAMP` | 每卡 tag 数须有 ≥4 种取值且单值占比 ≤50% | 阈值 | 0 | **1**（1 种取值，100%） |
+| R10 | `PERSONA_CROSS_CARD_DUPLICATE` | 边界条目（三轴 / `selfClaimRules` / `realSelfBehaviors`）出现在 >2 张卡即违规 | 阈值 | 0 | **262** |
+| R11 | `PERSONA_SUMMARY_COPIED_INTO_EXAMPLE` | 整条 `summary` 不得是自身某条例句的子串 | 不变量 | 0 | **262** |
+| R12 | `PERSONA_SPEAKER_LABEL_PREFIX` | 例句不得以「本名（…家）」开头 | 不变量 | 0 | **262** |
+| — | `PERSONA_CRITERIA_UNAVAILABLE` | 判据脚本加载失败（**门级**失败，不挂在某张卡上） | 不变量 | 0 | 0 |
 
-红批次合计 **1477 条违规 / 279 张卡**。
+R10–R12 的规则逻辑**不在本门里**：本门只应用阈值，规则实现在
+`AWAKE/tools/persona-workbench/tools/measure-three-criteria.py`（巡检会话产出，详见 §10）。
+
+红批次合计 **2263 条违规 / 279 张卡**（1477 + 262×3）。
 
 ### R6 与 R7 为什么最重
 
@@ -166,6 +173,9 @@ exit=1
 4. **阈值标定于 2026-10-01 的 76/279 样本**，样本构成变化后须重标。
 5. **本门判不了「亲属关系是否写错」**（实测只有 8 张卡能被句式解析出亲属）与**「事实是否有据」**。
 6. **本门不覆盖物化产物**（`definition.json` 的形状与新鲜度）——§6 的 8 个 `{}` 与规格稿 F1 的 73/76 过期都在门外。
+7. **R10–R12 的规则实现在门外**（`measure-three-criteria.py`）。该脚本未入库时本门**直接变红**（`PERSONA_CRITERIA_UNAVAILABLE`），这是有意为之，不是缺陷。
+8. **R10–R12 在这批语料上完全相关**：三条命中同一 262 张（并集也是 262），**不能当成三重独立证据**（详见 §10）。
+9. **R11 没有摘要长度下限**，它现在零误报只因为最短摘要也有 14 字（详见 §10）。
 
 ---
 
@@ -176,3 +186,74 @@ exit=1
 - 未把门挂进 `AWAKE/tools/build.ps1`
 - 未提交任何文件
 - 未做游戏内验证（本门与游戏内无关）
+- 未把 C1/C2/C3 的规则逻辑抄进本门（改为委派，见 §10）
+- 未给 R11 加摘要长度下限
+- 未查清帝国三系那 17 张坏卡「另一型病」的具体形态
+
+---
+
+## 十、R10–R12：委派给外部判据脚本（2026-10-01 增补）
+
+### 为什么委派而不是抄进来
+
+巡检会话已把三条判据实现为 `AWAKE/tools/persona-workbench/tools/measure-three-criteria.py`（122 行，`py -3.11` 跑）。用户裁定**不重复实现**：本门用 `importlib` 把它当模块加载，只调它的 `units()` 与 `measure()` 两个函数，阈值留在本门。同一规则只有一份实现，不会两处漂移。
+
+三点接线细节：
+
+1. **不跑它的 `main()`。** 该脚本 `main()` 里有冻结断言 `if (len(good), len(bad)) != (76, 279): raise ValueError(...)`，它是**标定工具**、不是通用门。模块加载不触发 `main()`。
+2. **跨卡计数一律在整目录上算**，绝不在 `--include-list` 子集上算。在子集里算，每张卡的 `support` 都会塌成 1，判据永远不可能红——这正是「不可失败门」的第四种形态（判据用错入口）。因此本门**先读全目录（355 张）算读数，再只对受检子集报违规**。
+3. **判据脚本加载失败 = 门变红**（`PERSONA_CRITERIA_UNAVAILABLE`），不是静默跳过。要主动放弃这三条必须显式传 `--skip-external-criteria`。
+
+### 独立复跑（复现巡检会话的每一个数字）
+
+`py -3.11 AWAKE/tools/persona-workbench/tools/measure-three-criteria.py` → 退出 0，`head=ab5a3bb`，`corpus_sha256=2369a7d0b79b1841…`。
+
+| 判据 | 好卡 76（min/中位/max，直方图） | 坏卡 279（min/中位/max，直方图） | 命中 |
+|---|---|---|---|
+| C1 跨卡整条重复 | 1 / 1 / 2，{1:70, 2:6} | 1 / 259 / 259，{1:17, 247:3, 259:259} | 262/279 |
+| C2 摘要搬入样本 | 0 / 0 / 0，{0:76} | 0 / 1 / 1，{0:17, 1:262} | 262/279 |
+| C3 说话人标签前缀 | 0 / 0 / 0，{0:76} | 0 / 5 / 5，{0:17, 5:262} | 262/279 |
+
+**报告里的每个数字都对上了。**
+
+### 复跑时发现、报告里没说的两件事
+
+**① 三条判据在这批语料上不是三个独立信号。** 三条各自命中 262 张，且**并集也正好是 262** ⇒ 三个命中集合**完全相同**。它们是同一个生成缺陷的三种形状，不是三重独立证据。对未来的批次可能分化，但**用这批数据无法证明它们彼此独立**。
+
+**② 漏检的 17 张全部是帝国系。** 逐张列名后按文化后缀统计：
+
+| 文化后缀 | 坏卡总数 | 其中漏检 |
+|---|---|---|
+| `empire_n` | 45 | **6** |
+| `empire_s` | 34 | **5** |
+| `empire_w` | 33 | **6** |
+| aserai / battania / khuzait / sturgia / vlandia | 167 | **0** |
+
+⇒ 非帝国的 167 张坏卡**一张不漏**；帝国三系 112 张里漏 17 张（15%）。这 17 张 C1=1、C2=0、C3=0，说明它们的规则/行为/三轴都唯一、摘要没被搬、例句没有标签前缀——**它们的病是另一型**。这 17 张本门的 R1/R2/R6/R7 已全部拦住（红批次 `failed_cards=279`）。
+
+### C2 的标定边界（复跑时实测）
+
+全库 355 张 `summary` 均非空，归一化长度 **min 14 / 中位 33 / max 108**。C2 用的是**无长度下限的连续子串**判据，它现在零误报只是因为最短的摘要也有 14 字。**将来出现 3–5 字的摘要，C2 会误报**，而脚本里没有长度下限。这是一条**未加护栏的标定假设**。
+
+### 本门自己的红绿与变异
+
+- **绿**（76 张已入库）：`PERSONA_GATE_CRITERIA script=… corpus=355` + `total=76 failed_cards=0 violations=0` + `PERSONA_GATE_GREEN`，退出 0。
+- **红**（279 张未跟踪）：新增三行 `FAIL PERSONA_CROSS_CARD_DUPLICATE count=262`、`FAIL PERSONA_SUMMARY_COPIED_INTO_EXAMPLE count=262`、`FAIL PERSONA_SPEAKER_LABEL_PREFIX count=262`；`violations` 由 **1477 → 2263**（+786 = 262×3），`PERSONA_GATE_RED`，退出 1。
+- **阴性对照**：取好卡 `乌尔玻斯_ulbos_pethros_empire_s.persona.json`，真实语料、受检集合只有它一张 → `total=1 failed_cards=0`，绿，退出 0。
+- **变异**：把整目录复制到临时目录（355 张），只在该副本里把这张好卡注入三种缺陷——① 追加一条两张好卡共有的 `selfClaimRules` 条目（`support` 由 1→3）；② `selfClaimExamples[0] := summary`；③ `selfClaimExamples[1]` 前缀加 `乌尔玻斯（测试家）`。跑门 → 退出 1，`violations=3`，且**恰好**是：
+
+  ```
+  FAIL PERSONA_CROSS_CARD_DUPLICATE count=1
+       … :: shared with 3 cards (max=2)
+  FAIL PERSONA_SUMMARY_COPIED_INTO_EXAMPLE count=1
+       … :: 1 example(s) carry the whole summary (max=0)
+  FAIL PERSONA_SPEAKER_LABEL_PREFIX count=1
+       … :: 1 example(s) start with a speaker label (max=0)
+  ```
+
+  ⇒ 三条委派判据在本门里**确实会红，且红在对的理由上**。仓库里的角色卡一个字节未动。
+- **不可失败门检验**：`--criteria-script <不存在的路径>` → `FAIL PERSONA_CRITERIA_UNAVAILABLE count=1` + `PERSONA_GATE_RED`，退出 1（**不会静默变绿**）；`--skip-external-criteria` → `PERSONA_GATE_NOTE` + 绿，退出 0（主动放弃有明确痕迹）。
+
+### 依赖风险（必须处理）
+
+`measure-three-criteria.py` 目前**未入库**（`git status` 显示 `??`）。本门默认路径指向它，且加载失败即变红 ⇒ **如果只提交门而不提交该脚本，任何一次干净检出上这道门都会红。两者必须同一次提交。**

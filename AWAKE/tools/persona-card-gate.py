@@ -43,6 +43,34 @@ Rules
                          --min-tag-count-values distinct values and no single
                          value above --max-tag-count-share
                          (good 8 values, max 38% / bad 1 value, 100%)
+  R10 cross-card-duplicate
+                         no boundary entry (tensionAxes.* / selfClaimRules[] /
+                         realSelfBehaviors[]) may appear in more than
+                         --max-cross-card-support cards
+                         (good max 2 / bad 259 of 279)
+  R11 summary-copied-into-example
+                         a card's whole summary may not be a substring of one
+                         of its own selfClaimExamples[]
+                         (good 0/76 / bad 262/279)
+  R12 speaker-label-prefix
+                         no selfClaimExamples[] entry may start with
+                         "<displayName>\uff08...\u5bb6\uff09"
+                         (good 0/76 / bad 262/279)
+
+R10-R12 DELEGATE: the rule logic lives in exactly one place -- the external
+criteria script (default persona-workbench/tools/measure-three-criteria.py,
+override with --criteria-script). This gate only applies thresholds, so the two
+implementations cannot drift apart. Their cross-card counts are always computed
+over the WHOLE card directory, never over the --include-list subset: counting
+inside a subset collapses every support value to 1 and the criterion could
+never fire.
+CALIBRATION NOTE (2026-10-01 corpus): R10/R11/R12 flag exactly the SAME 262 of
+279 bad cards, so they are three shapes of one defect, not three independent
+signals. The 17 they miss are all empire_* cards and are already caught by
+R1/R2/R6/R7.
+If the criteria script cannot be loaded the gate FAILS loudly
+(PERSONA_CRITERIA_UNAVAILABLE) instead of silently losing three criteria; pass
+--skip-external-criteria to opt out deliberately.
 
 Usage
   py -3 AWAKE/tools/persona-card-gate.py --cards <dir>
@@ -81,6 +109,9 @@ ID_PATTERN = re.compile(r"^calradia\.[a-z0-9_]+(\.[a-z0-9_]+){1,2}$")
 DEFAULT_TAG_REGISTRY = os.path.normpath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)), os.pardir,
     "ModuleData", "Worldbook", "persona_definitions", "tag_registry.json"))
+DEFAULT_CRITERIA_SCRIPT = os.path.normpath(os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "persona-workbench", "tools",
+    "measure-three-criteria.py"))
 
 REPORT = []
 
@@ -152,6 +183,31 @@ def load_registry(path):
     return out
 
 
+def load_criteria_module(path):
+    """Import the external criteria script as a module.
+
+    Never runs its main() (that entry point re-asserts a frozen 76/279
+    calibration population and would refuse to run on any other corpus).
+    Returns None when the file is missing, unimportable, or does not expose the
+    two functions this gate depends on.
+    """
+    if not path or not os.path.isfile(path):
+        return None
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("awake_external_criteria", path)
+        if spec is None or spec.loader is None:
+            return None
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+    except Exception:
+        return None
+    for attr in ("units", "measure"):
+        if not hasattr(mod, attr):
+            return None
+    return mod
+
+
 def read_cards(cards_dir, include, exclude):
     cards = []
     for p in sorted(glob.glob(os.path.join(cards_dir, "*.persona.json"))):
@@ -183,6 +239,11 @@ def main():
     ap.add_argument("--max-tag-count-share", type=float, default=0.50)
     ap.add_argument("--include-list", default=None)
     ap.add_argument("--exclude-list", default=None)
+    ap.add_argument("--criteria-script", default=DEFAULT_CRITERIA_SCRIPT)
+    ap.add_argument("--skip-external-criteria", action="store_true")
+    ap.add_argument("--max-cross-card-support", type=int, default=2)
+    ap.add_argument("--max-summary-copies", type=int, default=0)
+    ap.add_argument("--max-speaker-prefix", type=int, default=0)
     ap.add_argument("--max-detail", type=int, default=25)
     ap.add_argument("--report", default=None)
     ap.add_argument("--label", default="")
@@ -318,12 +379,62 @@ def main():
                          distinct, args.min_tag_count_values, val, cnt,
                          share * 100, args.max_tag_count_share * 100))
 
+    # ---------- R10 / R11 / R12 : delegated to the external criteria script --
+    # The rule logic lives in exactly one place (measure-three-criteria.py);
+    # this gate only applies thresholds. Cross-card counts MUST come from the
+    # whole corpus: computing them inside the --include-list subset would
+    # collapse every support value to 1 and the criterion could never fire.
+    if args.skip_external_criteria:
+        emit("PERSONA_GATE_NOTE external criteria deliberately skipped (--skip-external-criteria)")
+    else:
+        mod = load_criteria_module(args.criteria_script)
+        if mod is None:
+            fail("PERSONA_CRITERIA_UNAVAILABLE",
+                 "cannot load criteria script at %s" % args.criteria_script)
+        else:
+            corpus = read_cards(args.cards, set(), set())
+            pairs, by_key = [], {}
+            for c in corpus:
+                if c["error"]:
+                    continue
+                key = norm(os.path.abspath(c["path"]))
+                pairs.append((key, c["data"]))
+                by_key[key] = c["name"]
+            readings = None
+            try:
+                readings = mod.measure(pairs)
+            except Exception as exc:
+                fail("PERSONA_CRITERIA_ERROR",
+                     "measure() raised %s: %s" % (type(exc).__name__, exc))
+            if readings is not None:
+                emit("PERSONA_GATE_CRITERIA script=%s corpus=%d" % (
+                    args.criteria_script, len(pairs)))
+                gated = set(norm(os.path.abspath(c["path"])) for c in cards)
+                for key, (support, copied, prefixed) in sorted(readings.items()):
+                    if key not in gated:
+                        continue
+                    name = by_key.get(key, os.path.basename(key))
+                    if support > args.max_cross_card_support:
+                        fail("PERSONA_CROSS_CARD_DUPLICATE",
+                             "%s :: shared with %d cards (max=%d)" % (
+                                 name, support, args.max_cross_card_support))
+                    if copied > args.max_summary_copies:
+                        fail("PERSONA_SUMMARY_COPIED_INTO_EXAMPLE",
+                             "%s :: %d example(s) carry the whole summary (max=%d)" % (
+                                 name, copied, args.max_summary_copies))
+                    if prefixed > args.max_speaker_prefix:
+                        fail("PERSONA_SPEAKER_LABEL_PREFIX",
+                             "%s :: %d example(s) start with a speaker label (max=%d)" % (
+                                 name, prefixed, args.max_speaker_prefix))
+
     # ---------- report ----------
     by_rule = Counter(r for r, _ in failures)
     for rule in ("PERSONA_CARD_UNREADABLE", "PERSONA_CORE_TOO_SHORT", "PERSONA_CORE_UNTERMINATED",
                  "PERSONA_KIN_NOT_A_NAME", "PERSONA_ID_PATTERN", "PERSONA_FIELD_SHAPE",
                  "PERSONA_TEMPLATE_LOAD", "PERSONA_TAG_STAMP", "PERSONA_TAG_UNREGISTERED",
-                 "PERSONA_TAG_COUNT_STAMP"):
+                 "PERSONA_TAG_COUNT_STAMP", "PERSONA_CRITERIA_UNAVAILABLE",
+                 "PERSONA_CRITERIA_ERROR", "PERSONA_CROSS_CARD_DUPLICATE",
+                 "PERSONA_SUMMARY_COPIED_INTO_EXAMPLE", "PERSONA_SPEAKER_LABEL_PREFIX"):
         if not by_rule.get(rule):
             continue
         emit("FAIL %s count=%d" % (rule, by_rule[rule]))
