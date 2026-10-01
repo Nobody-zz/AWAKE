@@ -423,7 +423,10 @@ def group_by_mtime(entries, gap):
 def read_cards(cards_dir, include, exclude):
     cards = []
     for p in sorted(glob.glob(os.path.join(cards_dir, "*.persona.json"))):
-        key = norm(p)
+        # load_list() stores absolute normalized paths, so the key MUST be absolute too.
+        # With a relative --cards, glob() returns relative paths and every key misses the
+        # include set -> silently zero cards selected. Absolutize both sides.
+        key = norm(os.path.abspath(p))
         if include and key not in include:
             continue
         if exclude and key in exclude:

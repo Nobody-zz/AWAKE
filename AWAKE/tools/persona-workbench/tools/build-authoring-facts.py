@@ -43,10 +43,13 @@ POLITICAL = ("Egalitarian", "Oligarchic", "Authoritarian")
 ALL_TRAITS = PERSONALITY + POLITICAL
 
 COLUMNS = [
-    "card_file", "hero_id", "name_zh", "name_en", "culture", "kingdom_id", "clan_id",
-    "is_noble_clan", "clan_owner_hero_id", "home_settlement_id", "age", "is_female",
-    "voice", "father", "mother", "spouse", "personality_traits", "political_traits",
-    "match_status",
+    "card_file", "hero_id", "name_zh", "name_en", "culture",
+    "kingdom_id", "kingdom_zh", "clan_id", "clan_en", "clan_zh",
+    "is_noble_clan", "clan_owner_hero_id", "clan_owner_zh",
+    "home_settlement_id", "home_settlement_zh",
+    "age", "is_female", "voice",
+    "father", "father_zh", "mother", "mother_zh", "spouse", "spouse_zh",
+    "personality_traits", "political_traits", "match_status",
 ]
 
 
@@ -132,6 +135,46 @@ def read_sage_relations(path):
     return out
 
 
+def read_code_table(path):
+    """`code -> (english, chinese)` for the code-keyed mapping tables."""
+    out = {}
+    if not os.path.exists(path):
+        return out
+    with io.open(path, encoding="utf-8-sig") as handle:
+        header = handle.readline().rstrip("\n").split("\t")
+        try:
+            i_code = header.index("code")
+            i_en = header.index("english")
+            i_cn = header.index("chinese")
+        except ValueError:
+            return out
+        for line in handle:
+            parts = line.rstrip("\n").split("\t")
+            if len(parts) > max(i_code, i_en, i_cn):
+                out[parts[i_code]] = (parts[i_en], parts[i_cn])
+    return out
+
+
+def read_kingdom_table(path):
+    """`kingdom_id -> (english, chinese)`."""
+    out = {}
+    if not os.path.exists(path):
+        return out
+    with io.open(path, encoding="utf-8-sig") as handle:
+        header = handle.readline().rstrip("\n").split("\t")
+        try:
+            i_id = header.index("kingdom_id")
+            i_en = header.index("english")
+            i_cn = header.index("chinese")
+        except ValueError:
+            return out
+        for line in handle:
+            parts = line.rstrip("\n").split("\t")
+            if len(parts) > max(i_id, i_en, i_cn):
+                out[parts[i_id]] = (parts[i_en], parts[i_cn])
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=DEFAULT_ROOT)
@@ -150,6 +193,18 @@ def main():
     names = read_names(names_path)
     anchors = read_game_mapping(mapping_path)
     relations = read_sage_relations(args.sage_db)
+    clans = read_code_table(os.path.join(args.root, "docs", "mappings",
+                                         "persona-names-zh-en.tsv"))
+    kingdoms = read_kingdom_table(os.path.join(args.root, "docs", "mappings",
+                                               "kingdom-names-zh-en.tsv"))
+    settlements = read_code_table(os.path.join(args.root, "docs", "mappings",
+                                               "settlement-names-zh-en.tsv"))
+
+    def hero_zh(hid):
+        return names.get(hid, ("", ""))[0] if hid else ""
+
+    def code_zh(table, code):
+        return table.get(code, ("", ""))[1] if code else ""
 
     rows = []
     skipped = []
@@ -178,14 +233,22 @@ def main():
         father, mother, spouse = relations.get(hero_id, ("", "", ""))
         traits = lord["traits"]
 
+        kingdom_id = anchor.get("kingdom_id", "")
+        clan_id = anchor.get("clan_id", "")
+        owner_id = anchor.get("clan_owner_hero_id", "")
+        settlement_id = anchor.get("home_settlement_id", "")
+        clan_en, clan_zh = clans.get(clan_id, ("", ""))
+
         rows.append([
             name, hero_id, name_zh, name_en,
             (anchor.get("culture_id") or lord["culture"].replace("Culture.", "")),
-            anchor.get("kingdom_id", ""), anchor.get("clan_id", ""),
+            kingdom_id, code_zh(kingdoms, kingdom_id), clan_id, clan_en, clan_zh,
             "1" if anchor.get("is_noble_clan") else "0",
-            anchor.get("clan_owner_hero_id", ""), anchor.get("home_settlement_id", ""),
-            lord["age"], "1" if lord["female"] == "true" else "0", lord["voice"],
-            father, mother, spouse,
+            owner_id, hero_zh(owner_id),
+            settlement_id, code_zh(settlements, settlement_id),
+            lord["age"], "1" if lord["female"].strip().lower() == "true" else "0",
+            lord["voice"],
+            father, hero_zh(father), mother, hero_zh(mother), spouse, hero_zh(spouse),
             ";".join("%s=%s" % (k, traits[k]) for k in PERSONALITY if k in traits),
             ";".join("%s=%s" % (k, traits[k]) for k in POLITICAL if k in traits),
             anchor.get("match_status", ""),

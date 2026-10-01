@@ -64,7 +64,11 @@ foreach($f in $cards){
 
     # E 性别代词（origins 在 .origins.json 侧车）
     $expect = $null
-    $origJson = Join-Path $charDir ($name + ".origins.json")
+    # NOTE: $name is FileInfo.BaseName, i.e. "<stem>.persona" -- the sidecar on disk is
+    # "<stem>.origins.json" (NOT "<stem>.persona.origins.json"). Strip the ".persona" tail
+    # first, otherwise Test-Path is always false, $expect stays $null and the E check below
+    # can never fire (an unfailable gate).
+    $origJson = Join-Path $charDir (($name -replace '\.persona$', '') + ".origins.json")
     if(Test-Path $origJson){
         $otmp = Get-Content $origJson -Raw -Encoding UTF8 | ConvertFrom-Json
         if($otmp -and $otmp.heroId -and $sex[$otmp.heroId]){ $expect = $sex[$otmp.heroId] }
