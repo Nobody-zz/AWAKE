@@ -56,6 +56,55 @@ Rules
                          no selfClaimExamples[] entry may start with
                          "<displayName>\uff08...\u5bb6\uff09"
                          (good 0/76 / bad 262/279)
+  R13 placeholder-text   no string anywhere in the card may contain an unfilled
+                         template marker: （...heroId）/（...待填）/ {...} /
+                         ${...} / <...> / TODO / TBD / FIXME / XXX
+                         (good 0/76 / bad 0/262 / leaked batch 8/17)
+                         HARD because identityFacts IS a runtime narrative
+                         field: the leaked batch ships （游戏内配偶 heroId）
+                         verbatim to the model.
+  R14 summary-derived-from-description
+                         summary must not be a prefix-extension of the card's
+                         own publicDescription / privateDescription. Both the
+                         raw field AND the field with a leading 对外，/私下里，
+                         label stripped are checked (the leaked batch extended
+                         the stripped text; extending the labelled text is the
+                         same defect). Whitespace is ignored and the
+                         description must be >= --min-derived-len characters
+                         before it counts.
+                         (good 0/76 / bad 0/262 / leaked batch 17/17)
+                         HARD because summary IS in the runtime payload: a
+                         mechanical splice means the card has no real summary.
+  R15 profile-key-nonconformant
+                         every PRESENT profile dict (traitProfile,
+                         expressionProfile, behaviorProfile, reactionProfile,
+                         commitmentProfile) must use exactly the canonical key
+                         names from
+                         PersonaWorkbench.Web/ProviderDraftContract.cs:307-310
+                         and :738-743
+                         (good 0/76 / bad 0/262 / leaked batch 17/17 on four
+                         of the five profiles -- traitProfile is conformant
+                         there; the leaked batch abbreviates every other key,
+                         e.g. cond/delib/trust/lev/ing/lead instead of
+                         conditionality/deliberation/trustTesting/leverage/
+                         inGroupPriority/leadership)
+                         HARD, not cosmetic: persona-awake-joint.ps1:591
+                         requires exact field names, and :1092-1093 splices
+                         seven of these values into the runtime narrative
+                         fields, so an abbreviated profile is either rejected
+                         or silently loses content.
+  R16 facet-mirrors-tags WARNING ONLY -- never sets the exit code unless
+                         --fail-on-facet-mirror is passed.
+                         facetStrengths must not be a bare copy of tags; good
+                         cards make it a strict superset
+                         (good 2/52 present / bad 0/262 / leaked batch 17/17)
+                         Deliberately soft: AUTHORING-GUIDELINES.zh-CN.md:61
+                         classes facetStrengths as an author-side draft field
+                         that the materializer drops.
+
+R13-R15 are LOCAL rules. They are pure per-card structural checks with no
+cross-card state, so there is nothing to delegate, and being
+population-independent they are not gated by --min-population.
 
 R10-R12 DELEGATE: the rule logic lives in exactly one place -- the external
 criteria script (default persona-workbench/tools/measure-three-criteria.py,
@@ -113,6 +162,44 @@ DEFAULT_TAG_REGISTRY = os.path.normpath(os.path.join(
 DEFAULT_CRITERIA_SCRIPT = os.path.normpath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "persona-workbench", "tools",
     "measure-three-criteria.py"))
+
+# Canonical profile keys. Authority is the source, NOT a reverse-engineering of
+# the good cards: PersonaWorkbench.Web/ProviderDraftContract.cs:307-310 lists
+# the four authoring profiles and :738-743 lists traitProfile. The same names
+# are hardcoded in persona-awake-joint.ps1:583-586 and :1057-1060.
+CANONICAL_PROFILES = {
+    "traitProfile": ("caution", "ambition", "pride", "pragmatism",
+                     "inGroupLoyalty", "tradition"),
+    "expressionProfile": ("restraint", "directness", "formality",
+                          "playfulness", "warmth"),
+    "behaviorProfile": ("conditionality", "deliberation", "trustTesting",
+                        "leverage", "inGroupPriority", "leadership"),
+    "reactionProfile": ("confrontation", "expression", "timing", "resentment",
+                        "supportSeeking", "sensitiveConditions",
+                        "conditionalResponses"),
+    "commitmentProfile": ("promiseCaution", "promisePersistence",
+                          "valueTradeability", "priorityOrder",
+                          "protectedValues", "applicableScope",
+                          "exceptionCost", "breachResponse"),
+}
+
+# R13: unfilled template markers. The measured case is （游戏内配偶 heroId）;
+# the rest are the usual authoring escape hatches. Deliberately narrow -- every
+# alternative names an identifier-shaped token, so ordinary CJK prose cannot
+# trip it.
+PLACEHOLDER = re.compile(
+    u"[\uff08(][^\uff09)\r\n]{0,60}?"
+    u"(heroId|heroID|hero_id|HeroId|charId|characterId|personaId"
+    u"|TODO|TBD|FIXME|XXX|\\{\\{|\\$\\{|待填|待补|占位)"
+    u"[^\uff09)\r\n]{0,60}?[\uff09)]"
+    u"|\\{\\{[^{}]{1,60}\\}\\}"
+    u"|\\$\\{[^{}]{1,60}\\}"
+    u"|<[A-Za-z_][A-Za-z0-9_]{1,40}>"
+    u"|\\{[A-Za-z_][A-Za-z0-9_.]{2,40}\\}")
+
+# R14: the label the leaked batch prepends to description fields before
+# splicing them into summary.
+LEAD_PREFIX = re.compile(u"^(对外|私下里|私下|明面上|人前|人后)[，,：:]?")
 
 REPORT = []
 
@@ -209,6 +296,43 @@ def load_criteria_module(path):
     return mod
 
 
+def iter_strings(node, path=u"$"):
+    """Yield (json-path, text) for every string anywhere in the document.
+
+    Used by R13: an unfilled placeholder is a defect wherever it hides, so the
+    scan is field-agnostic rather than an allowlist of known-bad fields.
+    """
+    if isinstance(node, dict):
+        for k in node:
+            for item in iter_strings(node[k], path + u"." + str(k)):
+                yield item
+    elif isinstance(node, list):
+        for i, v in enumerate(node):
+            for item in iter_strings(v, path + u"[%d]" % i):
+                yield item
+    elif isinstance(node, str):
+        yield (path, node)
+
+
+def squash(text):
+    """Drop all whitespace: card text wraps, so comparisons must not care."""
+    return re.sub(u"\\s+", u"", text or u"")
+
+
+def strip_lead(text):
+    """Remove the 对外，/私下里， label the leaked batch prepends."""
+    return LEAD_PREFIX.sub(u"", (text or u"").strip())
+
+
+def find_placeholder(text):
+    """Return a short excerpt of the first unfilled marker, or None."""
+    m = PLACEHOLDER.search(text or u"")
+    if not m:
+        return None
+    hit = m.group(0)
+    return hit if len(hit) <= 40 else hit[:40] + u"..."
+
+
 def read_cards(cards_dir, include, exclude):
     cards = []
     for p in sorted(glob.glob(os.path.join(cards_dir, "*.persona.json"))):
@@ -245,6 +369,8 @@ def main():
     ap.add_argument("--max-cross-card-support", type=int, default=2)
     ap.add_argument("--max-summary-copies", type=int, default=0)
     ap.add_argument("--max-speaker-prefix", type=int, default=0)
+    ap.add_argument("--min-derived-len", type=int, default=10)
+    ap.add_argument("--fail-on-facet-mirror", action="store_true")
     ap.add_argument("--max-detail", type=int, default=25)
     ap.add_argument("--report", default=None)
     ap.add_argument("--label", default="")
@@ -261,12 +387,13 @@ def main():
         emit("PERSONA_GATE_ERROR no cards matched")
         return 2
 
-    failures = []          # (rule, detail-line)
+    failures = []          # (rule, detail-line) -- these set the exit code
+    warns = []             # (rule, detail-line) -- advisory, never fail
 
     def fail(rule, line):
         failures.append((rule, line))
 
-    # ---------- R1 / R2 / R5 / R6 / R8 : per card ----------
+    # ---------- R1 / R2 / R5 / R6 / R8 / R13 / R14 / R15 / R16 : per card ----
     for c in cards:
         if c["error"]:
             fail("PERSONA_CARD_UNREADABLE", "%s :: %s" % (c["name"], c["error"]))
@@ -311,6 +438,66 @@ def main():
             fail("PERSONA_FIELD_SHAPE",
                  "%s :: realSelfBehaviors is %s, expected array" % (
                      c["name"], type(d["realSelfBehaviors"]).__name__))
+
+        # R13 -- unfilled template markers, anywhere in the card.
+        for jpath, text in iter_strings(d):
+            hit = find_placeholder(text)
+            if hit:
+                fail("PERSONA_PLACEHOLDER_TEXT",
+                     "%s :: %s=%s" % (c["name"], jpath, hit))
+
+        # R14 -- summary must be its own text, not a splice of a description.
+        # BOTH the raw field and the field with its 对外，/私下里， label
+        # stripped are checked. The mutation harness caught the raw form
+        # slipping through: the leaked batch extended the stripped text, but
+        # extending the labelled text is the same defect.
+        su = squash(d.get("summary") or u"")
+        if su:
+            hit = None
+            for label in ("publicDescription", "privateDescription"):
+                field = d.get(label) or u""
+                for note, src in ((u"", squash(field)),
+                                  (u" (label stripped)", squash(strip_lead(field)))):
+                    if len(src) >= args.min_derived_len and su.startswith(src):
+                        hit = (label, note, len(src))
+                        break
+                if hit:
+                    break
+            if hit:
+                fail("PERSONA_SUMMARY_DERIVED_FROM_DESCRIPTION",
+                     "%s :: summary starts with %s%s (%d chars)" % (
+                         c["name"], hit[0], hit[1], hit[2]))
+
+        # R15 -- present profile dicts must use the canonical key names.
+        for pname in sorted(CANONICAL_PROFILES):
+            if pname not in d:
+                continue
+            val = d[pname]
+            if not isinstance(val, dict):
+                fail("PERSONA_PROFILE_KEY_NONCONFORMANT",
+                     "%s :: %s is %s, expected object" % (
+                         c["name"], pname, type(val).__name__))
+                continue
+            got = set(val.keys())
+            want = set(CANONICAL_PROFILES[pname])
+            if got != want:
+                fail("PERSONA_PROFILE_KEY_NONCONFORMANT",
+                     "%s :: %s keys=%d expected=%d extra=%s missing=%s" % (
+                         c["name"], pname, len(got), len(want),
+                         u",".join(sorted(got - want)) or u"-",
+                         u",".join(sorted(want - got)) or u"-"))
+
+        # R16 -- facetStrengths mirroring tags. Warning by default.
+        fs = d.get("facetStrengths")
+        if isinstance(fs, dict) and fs:
+            tset = set(tag_ids(d))
+            if tset and set(fs.keys()) == tset:
+                line = "%s :: facetStrengths == tags (%d keys)" % (
+                    c["name"], len(tset))
+                if args.fail_on_facet_mirror:
+                    fail("PERSONA_FACET_MIRRORS_TAGS", line)
+                else:
+                    warns.append(("PERSONA_FACET_MIRRORS_TAGS", line))
 
     # ---------- R3 : cross-card template load ----------
     sent_cards = defaultdict(set)
@@ -435,7 +622,9 @@ def main():
                  "PERSONA_TEMPLATE_LOAD", "PERSONA_TAG_STAMP", "PERSONA_TAG_UNREGISTERED",
                  "PERSONA_TAG_COUNT_STAMP", "PERSONA_CRITERIA_UNAVAILABLE",
                  "PERSONA_CRITERIA_ERROR", "PERSONA_CROSS_CARD_DUPLICATE",
-                 "PERSONA_SUMMARY_COPIED_INTO_EXAMPLE", "PERSONA_SPEAKER_LABEL_PREFIX"):
+                 "PERSONA_SUMMARY_COPIED_INTO_EXAMPLE", "PERSONA_SPEAKER_LABEL_PREFIX",
+                 "PERSONA_PLACEHOLDER_TEXT", "PERSONA_SUMMARY_DERIVED_FROM_DESCRIPTION",
+                 "PERSONA_PROFILE_KEY_NONCONFORMANT", "PERSONA_FACET_MIRRORS_TAGS"):
         if not by_rule.get(rule):
             continue
         emit("FAIL %s count=%d" % (rule, by_rule[rule]))
@@ -448,6 +637,24 @@ def main():
                 break
             emit("     " + line)
             shown += 1
+
+    # ---------- advisory section (R16) -- never affects the exit code --------
+    by_warn = Counter(r for r, _ in warns)
+    for rule in ("PERSONA_FACET_MIRRORS_TAGS",):
+        if not by_warn.get(rule):
+            continue
+        emit("WARN %s count=%d" % (rule, by_warn[rule]))
+        shown = 0
+        for r, line in warns:
+            if r != rule:
+                continue
+            if shown >= args.max_detail:
+                emit("     ... %d more" % (by_warn[rule] - shown))
+                break
+            emit("     " + line)
+            shown += 1
+    if warns:
+        emit("PERSONA_GATE_WARNINGS total=%d" % len(warns))
 
     failed_cards = len(set(line.split(" :: ")[0] for _, line in failures if " :: " in line))
     emit("PERSONA_GATE_SUMMARY total=%d failed_cards=%d violations=%d" % (

@@ -1,12 +1,12 @@
 # 角色卡质量门 · 红绿证据（2026-10-01）
 
-门：`AWAKE/tools/persona-card-gate.py`（12 条判据：R1–R9 本门自有，R10–R12 委派给外部判据脚本，见 §10）
+门：`AWAKE/tools/persona-card-gate.py`（16 条判据：R1–R9 与 R13–R15 是本门自有的硬判据，R10–R12 委派给外部判据脚本见 §10，R16 是**告警**、不判死）
 证据等级：**E2（离线测试）** —— 未涉及游戏内验证，本门也不声称游戏内生效。
 配套规格：[`PERSONA-CARD-SPEC-v1-20261001.md`](PERSONA-CARD-SPEC-v1-20261001.md)（巡检会话，另写；关系见 §7）
 
 ---
 
-## 一、十二条判据
+## 一、十六条判据
 
 | # | 规则码 | 判据 | 类型 | 老卡 76 | 新卡 279 |
 |---|---|---|---|---|---|
@@ -22,12 +22,20 @@
 | R10 | `PERSONA_CROSS_CARD_DUPLICATE` | 边界条目（三轴 / `selfClaimRules` / `realSelfBehaviors`）出现在 >2 张卡即违规 | 阈值 | 0 | **262** |
 | R11 | `PERSONA_SUMMARY_COPIED_INTO_EXAMPLE` | 整条 `summary` 不得是自身某条例句的子串 | 不变量 | 0 | **262** |
 | R12 | `PERSONA_SPEAKER_LABEL_PREFIX` | 例句不得以「本名（…家）」开头 | 不变量 | 0 | **262** |
+| R13 | `PERSONA_PLACEHOLDER_TEXT` | 卡内**任何**字符串不得含未填模板标记（`（…heroId）`/`{…}`/`${…}`/`<…>`/TODO/TBD/FIXME/XXX/待填/待补/占位） | 不变量 | 0 | **8** |
+| R14 | `PERSONA_SUMMARY_DERIVED_FROM_DESCRIPTION` | `summary` 不得是自身 `publicDescription`/`privateDescription` 的**前缀延长**（原文与剥掉「对外，/私下里，」标签两种形态都比） | 不变量 | 0 | **17** |
+| R15 | `PERSONA_PROFILE_KEY_NONCONFORMANT` | 存在的 profile 字典（`traitProfile`/`expressionProfile`/`behaviorProfile`/`reactionProfile`/`commitmentProfile`）键名须**精确等于**规范键集 | 不变量 | 0 | **68**（17 卡 × 4 套） |
+| R16 | `PERSONA_FACET_MIRRORS_TAGS` | `facetStrengths` 键集不得**等于** `tags`（好卡是严格超集） | **告警** | 2 | 17 |
 | — | `PERSONA_CRITERIA_UNAVAILABLE` | 判据脚本加载失败（**门级**失败，不挂在某张卡上） | 不变量 | 0 | 0 |
 
 R10–R12 的规则逻辑**不在本门里**：本门只应用阈值，规则实现在
 `AWAKE/tools/persona-workbench/tools/measure-three-criteria.py`（巡检会话产出，详见 §10）。
 
-红批次合计 **2263 条违规 / 279 张卡**（1477 + 262×3）。
+R13–R15 是**本门自有的局部判据**：纯单卡结构检查、无跨卡状态、与语料规模无关，因此**不受
+`--min-population` 影响**（20 张以下也照样判）。R16 只打印 `WARN` 与 `PERSONA_GATE_WARNINGS`，
+**从不改变退出码**，除非显式传 `--fail-on-facet-mirror` 把它提成硬判据。
+
+红批次合计 **2356 条违规 / 279 张卡**（1477 + 262×3 + 8 + 17 + 68），另有 **17 条告警**。
 
 ### R6 与 R7 为什么最重
 
@@ -89,10 +97,28 @@ FAIL PERSONA_TAG_STAMP          count=1
 FAIL PERSONA_TAG_UNREGISTERED   count=276
 FAIL PERSONA_TAG_COUNT_STAMP    count=1
      distinct=1 (min=4) largest=5 tag(s) x279 (100% max=50%)
-PERSONA_GATE_SUMMARY total=279 failed_cards=279 violations=1477
+FAIL PERSONA_CROSS_CARD_DUPLICATE            count=262
+FAIL PERSONA_SUMMARY_COPIED_INTO_EXAMPLE     count=262
+FAIL PERSONA_SPEAKER_LABEL_PREFIX            count=262
+FAIL PERSONA_PLACEHOLDER_TEXT                count=8
+     ..._Tynops_elaches_empire_w.persona.json :: $.identityFacts=…… heroId）
+FAIL PERSONA_SUMMARY_DERIVED_FROM_DESCRIPTION count=17
+     ..._Tynops_elaches_empire_w.persona.json :: summary starts with publicDescription (60 chars)
+FAIL PERSONA_PROFILE_KEY_NONCONFORMANT       count=68
+     ..._Tynops_elaches_empire_w.persona.json :: behaviorProfile keys=6 expected=6
+          extra=cond,delib,ing,lead,lev,trust
+          missing=conditionality,deliberation,inGroupPriority,leadership,leverage,trustTesting
+WARN PERSONA_FACET_MIRRORS_TAGS count=17
+PERSONA_GATE_WARNINGS total=17
+PERSONA_GATE_SUMMARY total=279 failed_cards=279 violations=2356
 PERSONA_GATE_RED
 exit=1
 ```
+
+（`FAIL` 行的中文原文见 `--report` 输出的 UTF-8 文件；stdout 里的 `?` 是 Windows 控制台按 GBK 解码所致，非门的问题。）
+
+**三条新硬判据只咬漏检的那 17 张**：R13 命中 8 张、R14 命中 17 张、R15 命中 17 张×4 套 = 68 条，
+**262 张坏卡一张没误伤**，76 张好卡零误报。
 
 **红在对的理由上**：每条判据各自报出错误码与计数，不是靠「进程非 0」这种无关信号。
 
@@ -111,7 +137,23 @@ exit=1
 | tag-unreg | 追加未注册 tag | RED | 1 | `TAG_UNREGISTERED` | ✅ |
 | shape-dict | `realSelfBehaviors = {}` | RED | 1 | `FIELD_SHAPE` | ✅ |
 | **key-absent** | **删掉该键** | **GREEN** | **0** | — | ✅ **阴性对照** |
+| placeholder | `identityFacts` 追加 `（游戏内配偶 heroId）` | RED | 1 | `PLACEHOLDER_TEXT` | ✅ |
+| derived | `summary := publicDescription + "。补充说明。"` | RED | 1 | `SUMMARY_DERIVED_FROM_DESCRIPTION` | ✅ |
+| profilekey | `behaviorProfile.conditionality` 改名 `cond` | RED | 1 | `PROFILE_KEY_NONCONFORMANT` | ✅ |
+| **facetmirror** | **`facetStrengths := {tag:1}`** | **GREEN＋告警** | **0** | 仅 `WARN FACET_MIRRORS_TAGS` | ✅ **阴性对照** |
+| facetmirror-strict | 同上 ＋ `--fail-on-facet-mirror` | RED | 1 | `FACET_MIRRORS_TAGS` | ✅ |
 | restored | 还原 | GREEN | 0 | — | ✅ |
+
+**8/8 ALL_PASS**，源卡 sha256 前后完全相同（`f91dfaf2c4830dbb…`）。
+
+**变异抓到了判据自己的洞（值得记一笔）**：R14 第一版只拿「剥掉 `对外，` 标签后」的描述去比前缀，
+而 `乌尔玻斯` 的 `publicDescription` 恰好以 `对外，` 开头（83 字）。变异把**带标签的原文**拼进
+`summary` 时，判据**没有红** —— 同一个病、两种拼法，我只堵了一种。改成**原文与剥标签两种形态都比**
+之后才红。这正是「先红在对的理由上」这条纪律的价值：红测（279 张坏卡）当时是**通过**的，
+洞只有变异才照得出来。
+
+**`facetmirror → GREEN＋告警` 是 R16 的阴性对照**：证明「告警」这个设计是真的不判死，
+不是嘴上说说。
 
 **`key-absent → GREEN` 是关键的阴性对照**：它证明 R8 对「键缺失」的豁免是**有据的**（8/76 张好卡本来就缺该键），不是门上的窟窿。
 **每条新判据（R6/R7/R8）都至少被变异打红过一次**——满足「一道从未红过的门不是门」。
@@ -176,6 +218,14 @@ exit=1
 7. **R10–R12 的规则实现在门外**（`measure-three-criteria.py`）。该脚本已随本门一起入库（提交 `21d5597`）；缺失时本门**直接变红**（`PERSONA_CRITERIA_UNAVAILABLE`），这是有意为之，不是缺陷。
 8. **R10–R12 在这批语料上完全相关**：三条命中同一 262 张（并集也是 262），**不能当成三重独立证据**（详见 §10）。
 9. **R11 没有摘要长度下限**，它现在零误报只因为最短摘要也有 14 字（详见 §10）。
+10. **R13 的占位符正则只认「有界」的标记**：`（…heroId）`、`{{…}}`、`${…}`、`<…>`、`{…}` 五种形态。
+    纯中文的「待填/待补/占位」必须**带括号**才命中（这是有意的：正文里裸写「待补」是正常词）。
+11. **R14 只比前缀，不比同义改写**。把 `publicDescription` 换个说法再当 `summary`，判据看不出来 ——
+    它抓的是「机械拼接」，不是「语义重复」。
+12. **R15 只看键集合、不看取值**；且 `traitProfile` 在好/坏/漏检三组上**全部合规**
+    ⇒ 该套在本样本上零判别力（它靠变异证明会红，不靠样本）。
+13. **R16 是告警**，默认不改退出码；要它判死必须显式 `--fail-on-facet-mirror`。
+    它也只认「键集恰好等于 tags」这一种形态（`facetStrengths` 为 tags 真子集或含 tags 之外键时不响）。
 
 ---
 
@@ -188,7 +238,10 @@ exit=1
 - 未做游戏内验证（本门与游戏内无关）
 - 未把 C1/C2/C3 的规则逻辑抄进本门（改为委派，见 §10）
 - 未给 R11 加摘要长度下限
-- 未查清帝国三系那 17 张坏卡「另一型病」的具体形态
+- ~~未查清帝国三系那 17 张坏卡「另一型病」的具体形态~~ → **已查清，见 §十一**
+- 未实跑 `persona-awake-joint` 的 fixture（§十一 的「联合契约拒掉 355 张」因此仍是【审计】，不是【实测】）
+- 未裁定 `tensionAxes` 究竟该不该出现在角色卡里（见 §十一 的未决项）
+- 未修 279 张卡中的任何一张，也未重做
 
 ---
 
@@ -265,3 +318,72 @@ exit=1
 
 - `21d5597 feat(tooling): 角色卡门扩到 12 条判据（R10–R12 委派外部判据脚本）` —— 3 files changed, 318 insertions(+), 4 deletions(-)。含本门（472 行）、本文档、`AWAKE/tools/persona-workbench/tools/measure-three-criteria.py`。
 - 提交后烟测（已提交状态）：绿 76 张 `violations=0` 退出 0；红 279 张 `violations=2263` 退出 1。
+
+---
+
+## 十一、帝国三系那 17 张的「另一型病」＋ 联合契约审计（2026-10-01 增补）
+
+### 怎么定位的（不是靠打字猜）
+
+- 判据：`AWAKE/tools/persona-workbench/tools/measure-three-criteria.py` 的 `measure()` 返回 `(support, copies, prefixes)`；筛「`s<=2 and c<=0 and pr<=0` 且不在已入库 76 张名单里」⇒ 恰好 17 张，`CORPUS=355 GOOD=76 BAD=279 LEAKED=17`。
+- 单独拿这 17 张跑门：只命中 `CORE_TOO_SHORT`、`ID_PATTERN`、`TAG_UNREGISTERED` 三条，`violations=51` ⇒ **旧门对它几乎无感**。
+
+### 决定性证据：文件时间线
+
+| 组 | mtime 范围 | 张数 |
+|---|---|---|
+| GOOD76 | 2026-09-20 00:24:20 .. 2026-09-24 22:06:30 | 76 |
+| **LEAK17** | **2026-09-24 23:03:16 .. 23:17:13** | 17 |
+| BAD262 | 2026-09-25 12:30:28 .. 20:54:38 | 262 |
+
+好卡 → 隔 57 分钟 → 17 张（14 分钟内批量出）→ 隔 13 小时 → 262 张。**是三批，不是两批。**
+
+### 三组指纹对照（实测）
+
+| 指标 | GOOD76 | LEAK17 | BAD262 |
+|---|---|---|---|
+| `core` 长度 | 187–546（均 304） | **91–129（均 107）** | 26–92（均 50） |
+| `core` 有终止标点 | 76/76 | **17/17** | 0/262 |
+| `id` 合 pattern | 76/76 | **0/17** | 0/262 |
+| 未注册 tag | 0/76 | **17/17** | 259/262 |
+| tag 个数 | 4–11 | **恒 5** | 恒 5 |
+| 例句条数 | 4–6 | 5–6 | 恒 5 |
+| 四套 profile 键名合规 | 52/52 | **0/17** | 262/262 |
+| `identityFacts` 带占位符 | 0/76 | **8/17** | 0/262 |
+| `facetStrengths` 键集 == `tags` | 2/76 | **17/17** | 0/262 |
+| `summary` 是 `publicDescription` 前缀延长 | 0/76 | **17/17** | 0/262 |
+
+⇒ **LEAK17 是「修了一半」的批**：core 截断（无句号）修好了、长度也翻了一倍，但 id 命名法、tag 词汇表、恒 5 tag 一个没改，另外多了三条只属于它的新病。
+
+### 四条只属于它的签名
+
+1. **四套 profile 键名全缩写**（`traitProfile` 除外）：`behaviorProfile{cond,delib,ing,lead,lev,trust}`、`commitmentProfile{ascope,br,ec,pc,po,pp,pv,vt}`、`expressionProfile{direct,form,play,restraint,warm}`、`reactionProfile{condresp,conf,expr,res,sens,supp,tim}`。17 张**逐张、四套、完全一致**。规范键名的权威在源码：`AWAKE/tools/persona-workbench/src/PersonaWorkbench.Web/ProviderDraftContract.cs:307-310`（四套）＋`:738-743`（`traitProfile`），同一批名字硬编码在 `AWAKE/tools/persona-awake-joint/persona-awake-joint.ps1:583-586` 与 `:1057-1060`。
+2. **`identityFacts` 里留着未填的模板变量 `（游戏内配偶 heroId）`**（8/17）。
+3. **`facetStrengths` 的键集合恰好等于 `tags`**（17/17）。好卡是严格超集（如 `乌尔玻斯` 7 键 vs 6 tag）。
+4. **`summary` 是 `publicDescription` 的机械拼接**（17/17；`summary` 81 字 / `pub` 63 字 / `priv` 43 字）。
+
+### 关于「草稿层」的一次反转与再反转（记下来免得后人再绕）
+
+`AWAKE/tools/persona-workbench/AUTHORING-GUIDELINES.zh-CN.md:61`（v4.3）称 profile 是「作者侧刻画草稿：可选、物化时丢弃、不入门禁（仅软建议）」，`AWAKE/tools/persona-workbench/AI-FEEL-BASELINE.md:248` 更直接写着「❌ 不要量草稿层」。
+
+**但这句话在联合契约这条链路上不成立**：`AWAKE/tools/persona-awake-joint/persona-awake-joint.ps1:1092-1093` 明确从 `reactionProfile.sensitiveConditions` / `conditionalResponses` / `commitmentProfile.priorityOrder|protectedValues|applicableScope|exceptionCost|breachResponse` **取文本拼进运行时的 `privateDescription` / `contradictionDescription`**，且 `:591` 要求键名精确相等。
+
+⇒ 结论：**profile 键名走 workbench 物化链路可能是被丢弃的，走 `persona-awake-joint` 导出链路是真损坏。** 文档那句「物化时丢弃」至少对第二条链路是**过时或不准确**的。R15 因此按**硬判据**做（改成告警会更符合文档、更不符合代码）。
+
+### 联合契约审计：0/355 张卡能进（【审计】，未实跑）
+
+- `AWAKE/tools/persona-awake-joint/persona-awake-joint.ps1:456-466` `Assert-JointExactFields`：**未知字段直接 `Throw-JointReject 'persona.schema_unknown_field'`**，不是告警。
+- `:559-601` `Assert-JointWorkbenchDocument`：`:560` 的 `$allowed` 只有 **23 个顶层字段**，**不含 `tensionAxes`、也不含 `evidence`**；`:591` 每个存在的 profile 必须字段名精确相等；`:577-578` facetStrengths 值须为整数 1..4；`:596` 数值轴 **-2..2**（而 `AWAKE/tools/persona-workbench/tools/audit-character-schema.ps1:90-91` 用 **-3..3** —— 两处不一致）。
+- `:968-970`：导出还要求 `status == 'approved'`，否则 `persona.workbench_not_approved` ⇒ **76 张「好卡」全是 `draft`，在这一关也会被拒。**
+- `:363-402` `Get-JointWorkbenchSource` **不做任何字段剥离/转换** ⇒ 上面这些检查看到的就是原始卡。
+- 对照全库 **323/355 张卡有 `tensionAxes`** ⇒ 全部触发未知字段；LEAK17 另外在四套 profile 上触发键名不符。**0/355 能过。**
+
+**契约认可的卡长什么样**（`AWAKE/docs/fixtures/persona-awake-joint/PWB-AWAKE-001-valid-approved/source.json`）：**只有 18 个顶层字段、没有 `tensionAxes`**，四套 profile 全用规范长键名，`status:"approved"`，且 `tags` 里允许 `boundary.no_empty_promises` 这种不在 `tag_registry.json` 里的 id（该 fixture 自带另一份 `registry.json`）。
+
+### 由此产生的三个未决项
+
+1. **`tensionAxes` 到底该不该在角色卡里？** 角色卡 schema（`AWAKE/tools/persona-workbench/contracts/persona-workbench.character.v1.schema.json:29`）与 `AWAKE/tools/persona-workbench/src/PersonaWorkbench.Verify/Program.cs:107` 都认它合法，联合契约不认。**是契约漏了这个字段，还是卡不该带它？** 待裁。
+2. **`status` 从 draft 到 approved 的路径**：联合契约要求 `approved`，全库 355 张一张都不是。批准动作由谁做、在哪个入口做，尚未找到。
+3. **R4 的语料相对性**：R4（标签戳）按「占**本次语料**的比例 ≤10%」算。LEAK17 在批内是 5/17 = 29%（很明显），混进 355 张里只有 5/355 = 1.4%（**永不触发**）。⇒ **按批次重做时，戳记会藏进多数派里。** 这条对「重做 279 张」是致命的，必须处理（候选：按批次分组，或加「批内」戳记检测）。另：R4 还需 ≥20 张才生效。
+
+本文档与门的本次改动（R13–R16）见下一次提交。
