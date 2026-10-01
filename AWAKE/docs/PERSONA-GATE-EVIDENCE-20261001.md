@@ -1,12 +1,12 @@
 # 角色卡质量门 · 红绿证据（2026-10-01）
 
-门：`AWAKE/tools/persona-card-gate.py`（16 条判据：R1–R9 与 R13–R15 是本门自有的硬判据，R10–R12 委派给外部判据脚本见 §10，R16 是**告警**、不判死）
+门：`AWAKE/tools/persona-card-gate.py`（17 条判据：R1–R9、R13–R15、R17 是本门自有的硬判据，R10–R12 委派给外部判据脚本见 §10，R16 是**告警**、不判死）
 证据等级：**E2（离线测试）** —— 未涉及游戏内验证，本门也不声称游戏内生效。
 配套规格：[`PERSONA-CARD-SPEC-v1-20261001.md`](PERSONA-CARD-SPEC-v1-20261001.md)（巡检会话，另写；关系见 §7）
 
 ---
 
-## 一、十六条判据
+## 一、十七条判据
 
 | # | 规则码 | 判据 | 类型 | 老卡 76 | 新卡 279 |
 |---|---|---|---|---|---|
@@ -26,6 +26,7 @@
 | R14 | `PERSONA_SUMMARY_DERIVED_FROM_DESCRIPTION` | `summary` 不得是自身 `publicDescription`/`privateDescription` 的**前缀延长**（原文与剥掉「对外，/私下里，」标签两种形态都比） | 不变量 | 0 | **17** |
 | R15 | `PERSONA_PROFILE_KEY_NONCONFORMANT` | 存在的 profile 字典（`traitProfile`/`expressionProfile`/`behaviorProfile`/`reactionProfile`/`commitmentProfile`）键名须**精确等于**规范键集 | 不变量 | 0 | **68**（17 卡 × 4 套） |
 | R16 | `PERSONA_FACET_MIRRORS_TAGS` | `facetStrengths` 键集不得**等于** `tags`（好卡是严格超集） | **告警** | 2 | 17 |
+| R17 | `PERSONA_BATCH_TAG_STAMP` | **同一批次内**最大标签集合的占比不得超阈值（批 ≥5 张、该组 ≥4 张才判） | 不变量（**批级**） | 0 | **2** |
 | — | `PERSONA_CRITERIA_UNAVAILABLE` | 判据脚本加载失败（**门级**失败，不挂在某张卡上） | 不变量 | 0 | 0 |
 
 R10–R12 的规则逻辑**不在本门里**：本门只应用阈值，规则实现在
@@ -35,7 +36,17 @@ R13–R15 是**本门自有的局部判据**：纯单卡结构检查、无跨卡
 `--min-population` 影响**（20 张以下也照样判）。R16 只打印 `WARN` 与 `PERSONA_GATE_WARNINGS`，
 **从不改变退出码**，除非显式传 `--fail-on-facet-mirror` 把它提成硬判据。
 
-红批次合计 **2356 条违规 / 279 张卡**（1477 + 262×3 + 8 + 17 + 68），另有 **17 条告警**。
+R17 是**批级**判据：它只在一批**内部**算占比，**从不读全局占比**，所以语料再大也藏不住戳记；
+它同样不受 `--min-population` 影响，而且是**唯一一条不挂在任何单卡上的硬判据** —— 明细行以
+`batch <name> :: …` 开头，所以 `PERSONA_GATE_SUMMARY` 的 `failed_cards` 仍只数真正的卡，
+批级失败另计一行 `PERSONA_GATE_GROUP_LEVEL groups=N`。
+
+**为什么非要有它**：R4 问的是「这套 tag 占 `--cards` 多大比例」，而 R4 需要一个**同质**的种群；
+R10–R12 的跨卡重复检测却**必须**看整个语料 —— 一个 `--cards` 服务不了两个问题。于是「重做一小批
+→ 混进 355 张里跑门」时，批内 29% 的戳记被稀释成 5/355 = 1.4%，**永不触发**（那 17 张就是这么
+漏过去的）。R17 把语料按**生成批次**切开，在批内重问同一个问题。
+
+红批次合计 **2358 条违规 / 279 张卡**（1477 + 262×3 + 8 + 17 + 68 + 2 条批级），另有 **17 条告警**。
 
 ### R6 与 R7 为什么最重
 
@@ -86,6 +97,10 @@ exit=0
 ### 红：279 张未跟踪
 
 ```
+PERSONA_GATE_BATCHES total=3 source=auto-gap=3600s
+PERSONA_GATE_BATCH name=auto#1@2026-09-24 23:03 cards=17 largest=5/17
+PERSONA_GATE_BATCH name=auto#2@2026-09-25 12:30 cards=259 largest=230/259
+PERSONA_GATE_BATCHES_CHECKED count=2 min_size=5
 FAIL PERSONA_CORE_TOO_SHORT     count=279
 FAIL PERSONA_CORE_UNTERMINATED  count=262
 FAIL PERSONA_KIN_NOT_A_NAME     count=117
@@ -108,9 +123,13 @@ FAIL PERSONA_PROFILE_KEY_NONCONFORMANT       count=68
      ..._Tynops_elaches_empire_w.persona.json :: behaviorProfile keys=6 expected=6
           extra=cond,delib,ing,lead,lev,trust
           missing=conditionality,deliberation,inGroupPriority,leadership,leverage,trustTesting
+FAIL PERSONA_BATCH_TAG_STAMP                  count=2
+     batch auto#1@2026-09-24 23:03 :: largest tag set 5/17 (29%)
+     batch auto#2@2026-09-25 12:30 :: largest tag set 230/259 (89%)
 WARN PERSONA_FACET_MIRRORS_TAGS count=17
 PERSONA_GATE_WARNINGS total=17
-PERSONA_GATE_SUMMARY total=279 failed_cards=279 violations=2356
+PERSONA_GATE_SUMMARY total=279 failed_cards=279 violations=2358
+PERSONA_GATE_GROUP_LEVEL groups=2 (batch/whole-corpus rules; not attached to any single card)
 PERSONA_GATE_RED
 exit=1
 ```
@@ -119,6 +138,11 @@ exit=1
 
 **三条新硬判据只咬漏检的那 17 张**：R13 命中 8 张、R14 命中 17 张、R15 命中 17 张×4 套 = 68 条，
 **262 张坏卡一张没误伤**，76 张好卡零误报。
+
+**R17 单独把 17 张那批拎了出来**：`auto#1` 是 17 张一批（`5/17 = 29%`），`auto#2` 是 259 张一批
+（`230/259 = 89%`）；绿测那边唯一够大的批是 70 张（`4/70 = 5.7%`）**一动不动**。注意 R4 在红测里
+仍然开火（`235/279 = 84%`，因为这一批本身就同质），R17 的价值不在替代 R4，而在**把一批混进大语料
+之后仍然看得见**。
 
 **红在对的理由上**：每条判据各自报出错误码与计数，不是靠「进程非 0」这种无关信号。
 
@@ -144,7 +168,10 @@ exit=1
 | facetmirror-strict | 同上 ＋ `--fail-on-facet-mirror` | RED | 1 | `FACET_MIRRORS_TAGS` | ✅ |
 | restored | 还原 | GREEN | 0 | — | ✅ |
 
-**8/8 ALL_PASS**，源卡 sha256 前后完全相同（`f91dfaf2c4830dbb…`）。
+**全部 PASS**，源卡 sha256 前后完全相同（`f91dfaf2c4830dbb…`）。
+
+（这张表是**两次 harness 运行的并集**：先 7 个用例全绿，加完 R13–R16 后 8 个用例全绿（8/8）。
+两次各自全绿、并集 12 个用例，但没有把 12 个塞进同一次运行，所以这里**不写「12/12」**。）
 
 **变异抓到了判据自己的洞（值得记一笔）**：R14 第一版只拿「剥掉 `对外，` 标签后」的描述去比前缀，
 而 `乌尔玻斯` 的 `publicDescription` 恰好以 `对外，` 开头（83 字）。变异把**带标签的原文**拼进
@@ -157,6 +184,32 @@ exit=1
 
 **`key-absent → GREEN` 是关键的阴性对照**：它证明 R8 对「键缺失」的豁免是**有据的**（8/76 张好卡本来就缺该键），不是门上的窟窿。
 **每条新判据（R6/R7/R8）都至少被变异打红过一次**——满足「一道从未红过的门不是门」。
+
+### 批级矩阵（R17 专用，8/8 ALL_PASS）
+
+R17 判的不是单卡而是**批次**，所以不能用「改一张卡」来变异。改用**合成语料**：从 `good76.txt` 取前 N 张
+好卡复制到临时目录，把前 K 张的 `tags` 覆写成同一套**已注册**标签
+（`trait.pragmatic,expression.measured,behavior.keeps_leverage,trigger.threat_or_leverage`，避免 R7 掺进来），
+再用 `--batch-map` 写一张 TSV 批表（**用相对文件名**，顺带验证「相对路径按 `--cards` 解析」），
+并加 `--min-population 100` 把 R4/R9 关掉以**隔离** R17。
+
+| 用例 | 合成方式 | 期望 | 实测 exit | 触发 | 判定 |
+|---|---|---|---|---|---|
+| `stamp5of6` | 6 张一批，5 张同套 | RED | 1 | `BATCH_TAG_STAMP` | ✅ |
+| `stamp4of6` | 6 张一批，4 张同套 | RED | 1 | `BATCH_TAG_STAMP` | ✅ |
+| **`stamp3of6`** | **6 张一批，3 张同套** | **GREEN** | **0** | — | ✅ **计数闸阴性对照** |
+| `distinct6` | 6 张一批，各不同 | GREEN | 0 | — | ✅ |
+| **`stamp4of40`** | **40 张一批，4 张同套 = 10%** | **GREEN** | **0** | — | ✅ **比例边界（不 > 10%）** |
+| `stamp5of40` | 40 张一批，5 张同套 = 12.5% | RED | 1 | `BATCH_TAG_STAMP` | ✅ |
+| **`tiny4skip`** | **4 张一批全部同套** | **GREEN** | **0** | — | ✅ **`--min-batch-size` 闸** |
+| **`split2x3`** | **5 张同套，但批表拆成 2 批各 3 张** | **GREEN** | **0** | — | ✅ **证明分组由批表决定** |
+
+第一版矩阵里有 2 个用例报 FAIL —— **错的是我的期望，不是门**：当时 N=20，`--min-population` 默认 20
+正好生效，R4 合法地开火（`4/20 = 20% > 10%`）。加 `--min-population 100` 隔离后重设计了边界用例。
+
+**`--max-batch-tag-share` 为什么默认 0.10**：与 R4 用同一个数，一个比例阈值只用解释一次；且实测健康批
+5.7% 在它下面 1.75 倍、已知最小戳记 29% 在它上面 2.9 倍。小批噪声交给**计数闸**
+`--min-batch-stamp-count 4`（10 张的批里两张撞 tag 是巧合，不是戳记）。
 
 ---
 
@@ -226,6 +279,14 @@ exit=1
     ⇒ 该套在本样本上零判别力（它靠变异证明会红，不靠样本）。
 13. **R16 是告警**，默认不改退出码；要它判死必须显式 `--fail-on-facet-mirror`。
     它也只认「键集恰好等于 tags」这一种形态（`facetStrengths` 为 tags 真子集或含 tags 之外键时不响）。
+14. **R17 的自动分组靠文件 mtime**（`--auto-batch-gap`，默认 3600 秒）：`git checkout` / `clone` 会把
+    全部 mtime 压成同一时刻 ⇒ 整个语料变成**一批**，R17 退化成 R4。这是**安全退化**（不会假红，
+    但灵敏度归零）。要确定性、要真批次，就显式给 `--batch-map`。
+15. **R17 的比例阈值仍然是相对的，而且有三道闸**：一批 <5 张不判、同套组 <4 张不判、
+    占比不 >10% 不判。40 张一批里恰好 4 张同套（正好 10%）不判死。三道闸是**有意**的
+    （否则小批噪声会淹掉信号），但它们也意味着**小批戳记可以藏**。
+16. **R17 只查批内，不查跨批**：14 个批次各自 8% 同套、但每批用的是**同一套** tag —— 这种「分批
+    但同模板」的形态 R17 看不出来（那需要跨批比较，目前没有）。
 
 ---
 
@@ -241,6 +302,8 @@ exit=1
 - ~~未查清帝国三系那 17 张坏卡「另一型病」的具体形态~~ → **已查清，见 §十一**
 - 未实跑 `persona-awake-joint` 的 fixture（§十一 的「联合契约拒掉 355 张」因此仍是【审计】，不是【实测】）
 - 未裁定 `tensionAxes` 究竟该不该出现在角色卡里（见 §十一 的未决项）
+- 未给 R17 做**跨批同套**检测（只查批内，见 §八 第 16 条）
+- 未把 R17 的 `--batch-map` 接到任何生成流程上（批表目前要人工给，`--auto-batch-gap` 只是兜底）
 - 未修 279 张卡中的任何一张，也未重做
 
 ---
@@ -384,6 +447,7 @@ exit=1
 
 1. **`tensionAxes` 到底该不该在角色卡里？** 角色卡 schema（`AWAKE/tools/persona-workbench/contracts/persona-workbench.character.v1.schema.json:29`）与 `AWAKE/tools/persona-workbench/src/PersonaWorkbench.Verify/Program.cs:107` 都认它合法，联合契约不认。**是契约漏了这个字段，还是卡不该带它？** 待裁。
 2. **`status` 从 draft 到 approved 的路径**：联合契约要求 `approved`，全库 355 张一张都不是。批准动作由谁做、在哪个入口做，尚未找到。
-3. **R4 的语料相对性**：R4（标签戳）按「占**本次语料**的比例 ≤10%」算。LEAK17 在批内是 5/17 = 29%（很明显），混进 355 张里只有 5/355 = 1.4%（**永不触发**）。⇒ **按批次重做时，戳记会藏进多数派里。** 这条对「重做 279 张」是致命的，必须处理（候选：按批次分组，或加「批内」戳记检测）。另：R4 还需 ≥20 张才生效。
+3. ~~**R4 的语料相对性**：R4（标签戳）按「占**本次语料**的比例 ≤10%」算。LEAK17 在批内是 5/17 = 29%（很明显），混进 355 张里只有 5/355 = 1.4%（**永不触发**）。⇒ **按批次重做时，戳记会藏进多数派里。** 这条对「重做 279 张」是致命的，必须处理（候选：按批次分组，或加「批内」戳记检测）。另：R4 还需 ≥20 张才生效。~~
+   → **已解决（2026-10-01，R17 `PERSONA_BATCH_TAG_STAMP`）**：把语料按**生成批次**切开，在批内重问同一个问题。实测 17 张那批独立成 `auto#1`（`5/17 = 29%`）**被抓**，绿测唯一够大的批（`4/70 = 5.7%`）**不动**。分组来源：`--batch-map`（确定性，优先）或 `--auto-batch-gap`（mtime 兜底，默认 3600 秒）。残留风险见 §八 第 14–16 条。
 
-本文档与门的本次改动（R13–R16）见下一次提交。
+本文档与门的本次改动（R13–R17）见本次提交（`git log -1 --oneline`）。

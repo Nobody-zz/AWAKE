@@ -102,9 +102,45 @@ Rules
                          classes facetStrengths as an author-side draft field
                          that the materializer drops.
 
-R13-R15 are LOCAL rules. They are pure per-card structural checks with no
-cross-card state, so there is nothing to delegate, and being
-population-independent they are not gated by --min-population.
+  R17 batch-tag-stamp     HARD. A tag set that covers a large share of ONE
+                          PRODUCTION BATCH is a stamp even when that batch is
+                          diluted inside a big corpus. R4 asks "is this set a
+                          large share of --cards?"; R17 asks "is this set a
+                          large share of the cards that were generated
+                          together?" -- and one --cards cannot serve both,
+                          because R10-R12 REQUIRE the whole corpus while R4
+                          needs a homogeneous population. That tension is the
+                          defect R17 closes.
+                          A batch is examined only when it holds
+                          >= --min-batch-size cards; inside it R17 fires when
+                          the largest tag-set group has
+                          >= --min-batch-stamp-count cards AND more than
+                          --max-batch-tag-share of the batch. The COUNT guard
+                          (default 4) is what keeps small healthy batches
+                          quiet: a 10-card batch in which two cards happen to
+                          share a set is coincidence, not a stamp.
+                          Grouping comes from --batch-map (authoritative and
+                          deterministic) or, failing that, from mtime gaps
+                          (--auto-batch-gap seconds, default 3600; 0 disables).
+                          On a fresh git checkout every mtime collapses to one
+                          value, so the whole corpus becomes a single batch and
+                          R17 degenerates to exactly R4 -- a safe degradation,
+                          never a false positive.
+                          Measured 2026-10-01 (auto-gap 3600s): the only
+                          healthy batch of >= 5 cards is 4/70 = 5.7% PASS;
+                          LEAK17 forms its own batch at 5/17 = 29% FAIL; the
+                          bad batch is 230/259 = 89% FAIL. R4 alone cannot see
+                          the middle one -- it reads 5/355 = 1.4% -- which is
+                          exactly how those 17 cards slipped through.
+                          --max-batch-tag-share therefore defaults to the SAME
+                          0.10 as R4: one share threshold to explain, and the
+                          measured healthy rate sits 1.75x below it while the
+                          smallest known stamp sits 2.9x above.
+
+R13-R15 are LOCAL rules: pure per-card structural checks. R17 is local to a
+BATCH rather than to a card, but it is still population-independent -- it never
+reads a global share, so the size of the surrounding corpus cannot hide a stamp.
+None of the four is gated by --min-population.
 
 R10-R12 DELEGATE: the rule logic lives in exactly one place -- the external
 criteria script (default persona-workbench/tools/measure-three-criteria.py,
@@ -127,6 +163,8 @@ Usage
   py -3 AWAKE/tools/persona-card-gate.py --cards <dir> --include-list <file>
   py -3 AWAKE/tools/persona-card-gate.py --cards <dir> --exclude-list <file>
   py -3 AWAKE/tools/persona-card-gate.py --cards <dir> --tag-registry <file>
+  py -3 AWAKE/tools/persona-card-gate.py --cards <dir> --auto-batch-gap 1800
+  py -3 AWAKE/tools/persona-card-gate.py --cards <dir> --batch-map <file.tsv>
 
 Exit codes
   0  PERSONA_GATE_GREEN
@@ -140,6 +178,7 @@ with the file reader.
 from __future__ import print_function
 
 import argparse
+import datetime
 import glob
 import io
 import json
@@ -333,6 +372,54 @@ def find_placeholder(text):
     return hit if len(hit) <= 40 else hit[:40] + u"..."
 
 
+def load_batch_map(path, cards_dir):
+    """Read a TSV batch map: '<batch-id>\\t<path>' per line.
+
+    Relative paths resolve against --cards (not the cwd) so a map stays valid
+    wherever the gate is invoked from. Blank lines and '#' comments are ignored.
+    Returns a list of (batch_id, normalised absolute path) in file order.
+    """
+    out = []
+    with io.open(path, "r", encoding="utf-8-sig") as fh:
+        for raw in fh:
+            line = raw.rstrip(u"\r\n")
+            if not line.strip() or line.lstrip().startswith(u"#"):
+                continue
+            if u"\t" in line:
+                bid, p = line.split(u"\t", 1)
+            else:
+                parts = line.split(None, 1)
+                if len(parts) != 2:
+                    continue
+                bid, p = parts
+            p = p.strip()
+            if not os.path.isabs(p):
+                p = os.path.join(cards_dir, p)
+            out.append((bid.strip(), norm(os.path.abspath(p))))
+    return out
+
+
+def group_by_mtime(entries, gap):
+    """Split (key, mtime, label) triples into runs separated by > gap seconds.
+
+    Returns a list of (batch_name, [key, ...]) in chronological order. Every
+    run is one production batch under the assumption that cards written more
+    than `gap` seconds apart did not come out of the same run.
+    """
+    ordered = sorted(entries, key=lambda t: (t[1], t[0]))
+    runs, cur, prev = [], [], None
+    for key, mt, label in ordered:
+        if prev is not None and (mt - prev) > gap:
+            runs.append(cur)
+            cur = []
+        cur.append((key, label))
+        prev = mt
+    if cur:
+        runs.append(cur)
+    return [(u"auto#%d@%s" % (i + 1, run[0][1]), [k for k, _ in run])
+            for i, run in enumerate(runs)]
+
+
 def read_cards(cards_dir, include, exclude):
     cards = []
     for p in sorted(glob.glob(os.path.join(cards_dir, "*.persona.json"))):
@@ -371,6 +458,11 @@ def main():
     ap.add_argument("--max-speaker-prefix", type=int, default=0)
     ap.add_argument("--min-derived-len", type=int, default=10)
     ap.add_argument("--fail-on-facet-mirror", action="store_true")
+    ap.add_argument("--batch-map", default=None)
+    ap.add_argument("--auto-batch-gap", type=int, default=3600)
+    ap.add_argument("--min-batch-size", type=int, default=5)
+    ap.add_argument("--min-batch-stamp-count", type=int, default=4)
+    ap.add_argument("--max-batch-tag-share", type=float, default=0.10)
     ap.add_argument("--max-detail", type=int, default=25)
     ap.add_argument("--report", default=None)
     ap.add_argument("--label", default="")
@@ -567,6 +659,73 @@ def main():
                          distinct, args.min_tag_count_values, val, cnt,
                          share * 100, args.max_tag_count_share * 100))
 
+    # ---------- R17 : batch-local tag stamp (hard, population-independent) ---
+    # R4 asks "is this tag set a large share of --cards?". That question cannot
+    # be answered with one --cards, because R10-R12 need the WHOLE corpus while
+    # R4 needs a HOMOGENEOUS one -- so a 5/17 stamp diluted into 5/355 hides.
+    # R17 asks the batch-local question instead: a tag set covering most of one
+    # production run is a stamp however thinly it is spread across the corpus.
+    batches = None
+    batch_src = u""
+    if args.batch_map:
+        by_bid, order = defaultdict(list), []
+        for bid, key in load_batch_map(args.batch_map, args.cards):
+            if bid not in by_bid:
+                order.append(bid)
+            by_bid[bid].append(key)
+        listed = set()
+        for bid in order:
+            listed.update(by_bid[bid])
+        batches = [(bid, by_bid[bid]) for bid in order]
+        unlisted = [norm(os.path.abspath(c["path"])) for c in cards
+                    if not c["error"]
+                    and norm(os.path.abspath(c["path"])) not in listed]
+        if unlisted:
+            batches.append((u"(unlisted)", unlisted))
+        batch_src = u"map=%s" % os.path.basename(args.batch_map)
+    elif args.auto_batch_gap > 0:
+        entries = []
+        for c in cards:
+            if c["error"]:
+                continue
+            try:
+                mt = os.stat(c["path"]).st_mtime
+            except OSError:
+                continue
+            entries.append((norm(os.path.abspath(c["path"])), mt,
+                            datetime.datetime.fromtimestamp(mt).strftime(
+                                "%Y-%m-%d %H:%M")))
+        batches = group_by_mtime(entries, args.auto_batch_gap)
+        batch_src = u"auto-gap=%ds" % args.auto_batch_gap
+    if batches is None:
+        emit("PERSONA_GATE_NOTE no batch grouping "
+             "(--batch-map / --auto-batch-gap) : R17 skipped")
+    else:
+        by_key = {}
+        for c in cards:
+            if not c["error"]:
+                by_key[norm(os.path.abspath(c["path"]))] = c
+        emit("PERSONA_GATE_BATCHES total=%d source=%s" % (len(batches), batch_src))
+        checked = 0
+        for bname, keys in batches:
+            members = [by_key[k] for k in keys if k in by_key]
+            if len(members) < args.min_batch_size:
+                continue
+            checked += 1
+            groups = Counter(tuple(sorted(tag_ids(m["data"]))) for m in members)
+            if not groups:
+                continue
+            tags, cnt = groups.most_common(1)[0]
+            share = cnt / float(len(members))
+            emit("PERSONA_GATE_BATCH name=%s cards=%d largest=%d/%d" % (
+                bname, len(members), cnt, len(members)))
+            if cnt >= args.min_batch_stamp_count and share > args.max_batch_tag_share:
+                fail("PERSONA_BATCH_TAG_STAMP",
+                     "batch %s :: largest tag set %d/%d (%.0f%%) tags=%s" % (
+                         bname, cnt, len(members), share * 100, ",".join(tags)))
+        emit("PERSONA_GATE_BATCHES_CHECKED count=%d min_size=%d" % (
+            checked, args.min_batch_size))
+
     # ---------- R10 / R11 / R12 : delegated to the external criteria script --
     # The rule logic lives in exactly one place (measure-three-criteria.py);
     # this gate only applies thresholds. Cross-card counts MUST come from the
@@ -624,7 +783,8 @@ def main():
                  "PERSONA_CRITERIA_ERROR", "PERSONA_CROSS_CARD_DUPLICATE",
                  "PERSONA_SUMMARY_COPIED_INTO_EXAMPLE", "PERSONA_SPEAKER_LABEL_PREFIX",
                  "PERSONA_PLACEHOLDER_TEXT", "PERSONA_SUMMARY_DERIVED_FROM_DESCRIPTION",
-                 "PERSONA_PROFILE_KEY_NONCONFORMANT", "PERSONA_FACET_MIRRORS_TAGS"):
+                 "PERSONA_PROFILE_KEY_NONCONFORMANT", "PERSONA_FACET_MIRRORS_TAGS",
+                 "PERSONA_BATCH_TAG_STAMP"):
         if not by_rule.get(rule):
             continue
         emit("FAIL %s count=%d" % (rule, by_rule[rule]))
@@ -656,9 +816,19 @@ def main():
     if warns:
         emit("PERSONA_GATE_WARNINGS total=%d" % len(warns))
 
-    failed_cards = len(set(line.split(" :: ")[0] for _, line in failures if " :: " in line))
+    # failed_cards counts CARD-attached failures only. R17 reports per batch,
+    # not per card, so its detail lines must not inflate the card count -- that
+    # is why the prefix is matched against the real card names instead of being
+    # trusted as one.
+    known_names = set(c["name"] for c in cards)
+    prefixes = [line.split(" :: ")[0] for _, line in failures if " :: " in line]
+    failed_cards = len(set(p for p in prefixes if p in known_names))
+    group_level = len(set(p for p in prefixes if p not in known_names))
     emit("PERSONA_GATE_SUMMARY total=%d failed_cards=%d violations=%d" % (
         n, failed_cards, len(failures)))
+    if group_level:
+        emit("PERSONA_GATE_GROUP_LEVEL groups=%d (batch/whole-corpus rules; "
+             "not attached to any single card)" % group_level)
     if failures:
         emit("PERSONA_GATE_RED")
         code = 1
