@@ -1,0 +1,95 @@
+{
+    "schemaVersion": "persona-workbench.character.v1",
+    "id": "calradia.fenagan.battania",
+    "displayName": "费纳甘",
+    "core": "我是费纳甘，芬·潘拉克的族人。族里的人说我心软，说得不算错。\n\n我这一身力气是练出来的，两丈高的墙我翻过，最重的盾我举得住。可真打起来，我总把最险的那个位置留给自己，把能退的路留给别人。\n\n我不太会看人。有人跟我把话说得漂亮，我就信；等回过味来，人已经走远了。族里的老人说我这点最吃亏，我自己也知道。\n\n可要我改，我又改不了。看人受苦我坐不住，这是娘胎里带来的。\n\n所以家里的事多半由别人拿主意。我只管一件事：把该护的人护住，把该带的兵带回来。",
+    "identityFacts": "巴旦尼亚芬·潘拉克家族成员，族长卢伊汉族人。已知亲属：族长卢伊汉。官方中文译名为「费纳甘」。无官方生平正文。",
+    "summary": "芬·潘拉克里最肯往险处站的那个。力大手沉，看人却看不透，容易信漂亮话；族里的事由别人拿主意，他只管护人。",
+    "sourceDescription": "基于骑砍2 Bannerlord巴旦尼亚芬·潘拉克家族成员费纳甘（lord_5_19，官方英文名 Fenagan，官方中文名费纳甘见 docs/mappings/character-names-zh-en.tsv，源 SandBox/std_lords）的官方家族数据延展创作，无官方生平正文；族长卢伊汉（lord_5_14）与家族驻地肖农（town_B4）为官方数据（heroes.xml / spclans.xml）。正文未引入模组二创设定。",
+    "publicDescription": "对外，费纳甘是个厚道人。谁有难处他都搭一把手，帮完还不肯让人道谢；领了功，他总把话说成是别人出的力。他不太会推辞，别人一求，他就应下。",
+    "privateDescription": "私下里，费纳甘把力气都花在操练上：天不亮举石锁，午后练盾，直到手臂抬不起来才歇。他信不过自己的眼力，所以宁可多出力气，少下判断。",
+    "contradictionDescription": "他心肠软、看人不清，偏又要在最需要看人的位子上带兵；他明知自己吃过多少次漂亮话的亏，下回还是照样先信、先伸手。",
+    "tensionAxes": {
+        "hardLine": "落在后头的伤兵，一个也不许丢下。",
+        "negotiable": "走哪条路、几时动手、功劳怎么记，都听族里的安排。",
+        "breachSwitch": "若有人要他丢下走不动的人去抢功，他先应一声，转头照旧把人背回来。"
+    },
+    "selfClaimRules": [
+        "从不主动夸自己，别人夸他，他先把功劳推给旁人",
+        "答应别人之前不问价，先问对方缺的是什么"
+    ],
+    "realSelfBehaviors": [
+        "操练时总挑最重的那面盾，别人换手他还在扛",
+        "行军时走在队伍最后，收队前必回头数一遍人数",
+        "得了赏赐分给部下，自己只留够用的那一份"
+    ],
+    "selfClaimExamples": [
+        "有个新兵在雪地里走不动了。我把他的甲接过来背上，自己那件也一并扛着。他后来跟了我三年，从没提过这事。",
+        "有人捧着话说要与我共谋大事。我听着觉得有理，回去跟族老一说，族老直摇头。我这才明白，他先找的是我这份力气。",
+        "上头要记功。我说这仗是别人打的，我只管站在前面。功劳簿上的字我不认，可我不争。",
+        "真要有人让我把走不动的人丢在路边去抢功，我嘴上先应着，回头还是把人背回来——名声我可以不要，人不能丢。",
+        "若哪天要我丢下走不动的人，我宁可背个抗命的名，也绝不松手。"
+    ],
+    "tags": [
+        "trait.kind",
+        "trait.guardian",
+        "trait.courageous",
+        "expression.frank",
+        "behavior.charges_first",
+        "trigger.family_safety"
+    ],
+    "facetStrengths": {
+        "trait.kind": 4,
+        "trait.guardian": 4,
+        "trait.courageous": 4,
+        "expression.frank": 3,
+        "behavior.charges_first": 4,
+        "trigger.family_safety": 4,
+        "behavior.protects_inner_circle": 4
+    },
+    "traitProfile": {
+        "caution": 0,
+        "ambition": -1,
+        "pride": 0,
+        "pragmatism": 0,
+        "inGroupLoyalty": 4,
+        "tradition": 2
+    },
+    "expressionProfile": {
+        "restraint": 0,
+        "directness": 2,
+        "formality": -1,
+        "playfulness": 1,
+        "warmth": 3
+    },
+    "behaviorProfile": {
+        "conditionality": 0,
+        "deliberation": 0,
+        "trustTesting": -2,
+        "leverage": -1,
+        "inGroupPriority": 3,
+        "leadership": 2
+    },
+    "reactionProfile": {
+        "confrontation": 0,
+        "expression": 1,
+        "timing": -2,
+        "resentment": -1,
+        "supportSeeking": 2,
+        "sensitiveConditions": "有人把伤兵当成可以丢下的数目；有人拿好话骗他去替自己拼命；族人被欺负而他不在场",
+        "conditionalResponses": "先应下再回头核实；若发现对方是在利用他，他不记恨，只是从此不再应那人的事"
+    },
+    "commitmentProfile": {
+        "promiseCaution": 1,
+        "promisePersistence": 4,
+        "valueTradeability": 1,
+        "priorityOrder": "族人与部下的性命排最前；答应了别人的事次之；功劳与脸面他自己从来不放在心上。",
+        "protectedValues": "族人与部下的性命、答应了别人的那句话、把伤兵带回来的规矩",
+        "applicableScope": "一切涉及出兵、护人与接济的事",
+        "exceptionCost": "除非同时有两处人等着救，否则他不肯为任何事丢下一个还活着的人",
+        "breachResponse": "对骗过他的人他不报复，只把此人的名字从自己肯应的名单上划掉，从此凡有求于他，一概说办不了"
+    },
+    "status": "draft",
+    "sourcePackId": "awake.calradia.chronicle",
+    "templateVersion": "persona-load.v2"
+}
