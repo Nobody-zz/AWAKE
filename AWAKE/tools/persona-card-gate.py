@@ -61,9 +61,10 @@ R10-R12 DELEGATE: the rule logic lives in exactly one place -- the external
 criteria script (default persona-workbench/tools/measure-three-criteria.py,
 override with --criteria-script). This gate only applies thresholds, so the two
 implementations cannot drift apart. Their cross-card counts are always computed
-over the WHOLE card directory, never over the --include-list subset: counting
+over the WHOLE --cards directory, never over the --include-list subset: counting
 inside a subset collapses every support value to 1 and the criterion could
-never fire.
+never fire. NOTE that --cards itself defines "the corpus": point it at a
+subdirectory and a duplicate with a card outside that subdirectory is invisible.
 CALIBRATION NOTE (2026-10-01 corpus): R10/R11/R12 flag exactly the SAME 262 of
 279 bad cards, so they are three shapes of one defect, not three independent
 signals. The 17 they miss are all empire_* cards and are already caught by
