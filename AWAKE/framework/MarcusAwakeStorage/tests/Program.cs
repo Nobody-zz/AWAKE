@@ -22,7 +22,13 @@ internal static class Program
             ("rag_fingerprint_conflict_is_atomic", TestRagFingerprintConflictAsync),
             ("rag_identity_and_mode_boundaries", TestRagIdentityAndModeBoundariesAsync),
             ("timeline_ledger_and_restart_recovery", TestTimelineLedgerAndRestartAsync),
-            ("cancellation_and_deadline_errors", TestCancellationAndDeadlineAsync)
+            ("cancellation_and_deadline_errors", TestCancellationAndDeadlineAsync),
+            ("asset_import_read_dedup", AssetStoreTests.RunImportReadDedupAsync),
+            ("asset_rejects_and_quarantine", AssetStoreTests.RunRejectsAndQuarantineAsync),
+            ("asset_scope_ownership_and_pin", AssetStoreTests.RunScopeOwnershipAndPinAsync),
+            ("asset_list_paging_and_cleanup", AssetStoreTests.RunListPagingAndCleanupAsync),
+            ("asset_export_and_guards", AssetStoreTests.RunExportAndGuardsAsync),
+            ("asset_corruption_boundaries", AssetStoreTests.RunCorruptionBoundariesAsync)
         };
 
         var failures = new List<string>();
