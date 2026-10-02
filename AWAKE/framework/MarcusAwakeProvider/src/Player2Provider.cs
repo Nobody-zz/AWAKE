@@ -23,6 +23,20 @@ public sealed class Player2Provider : ProviderAdapterBase, IProviderImageAdapter
     private readonly int maxImageRequestBytes;
     private readonly int maxImageJsonBytes;
 
+    /// <summary>
+    /// 5 参这一版是给运行时的反射构造用的：<c>ProviderRegistry.CreateAdapter</c> 只认「参数个数 == 5」
+    /// 的那一个构造器（<see cref="OpenAiCompatibleProvider"/> 也是同一套）。出图字节上限走默认值。
+    /// </summary>
+    public Player2Provider(
+        ProviderConnectionProfile profile,
+        HttpMessageInvoker invoker,
+        IProviderEndpointPolicy? endpointPolicy = null,
+        ProviderLimits? limits = null,
+        IProviderClock? clock = null)
+        : this(profile, invoker, endpointPolicy, limits, clock, ProviderImageMedia.DefaultMaxAssetBytes)
+    {
+    }
+
     public Player2Provider(
         ProviderConnectionProfile profile,
         HttpMessageInvoker invoker,
@@ -56,6 +70,28 @@ public sealed class Player2Provider : ProviderAdapterBase, IProviderImageAdapter
     protected override Task<ProviderResult<IReadOnlyList<ProviderModel>>> ListModelsForConnectionAsync(ApiKeyCredential? credential, DateTimeOffset deadline, CancellationToken cancellationToken)
     {
         return ListModelsAsync(credential, deadline, cancellationToken);
+    }
+
+    /// <summary>
+    /// 基类会报 <c>TextGeneration = Unverified</c>，对 Player2 是**错的**：它根本不提供文字，
+    /// 如实报 <see cref="ProviderCapabilityState.Unsupported"/> 才对。生图能力则是
+    /// <see cref="ProviderCapabilityState.Unverified"/> —— 适配器提供它，但这次连通性检查并没有真去出一张图，
+    /// 不能替它宣称「已验证」。
+    /// </summary>
+    public override async Task<ProviderResult<ProviderConnectivityResult>> TestConnectionAsync(ApiKeyCredential? credential, DateTimeOffset deadline, CancellationToken cancellationToken = default)
+    {
+        ProviderResult<IReadOnlyList<ProviderModel>> models = await ListModelsForConnectionAsync(credential, deadline, cancellationToken).ConfigureAwait(false);
+        if (!models.IsSuccess) return ProviderResult<ProviderConnectivityResult>.Failed(models.Error!);
+        var capabilities = new Dictionary<ProviderCapabilityId, ProviderCapabilityState>
+        {
+            [ProviderCapabilityId.ModelDiscovery] = ProviderCapabilityState.Available,
+            [ProviderCapabilityId.ImageGeneration] = ProviderCapabilityState.Unverified,
+            [ProviderCapabilityId.TextGeneration] = ProviderCapabilityState.Unsupported,
+            [ProviderCapabilityId.Streaming] = ProviderCapabilityState.Unsupported,
+            [ProviderCapabilityId.Usage] = ProviderCapabilityState.Unsupported,
+            [ProviderCapabilityId.StructuredOutput] = ProviderCapabilityState.Unsupported
+        };
+        return ProviderResult<ProviderConnectivityResult>.Succeeded(new ProviderConnectivityResult(Profile.ProviderId, models.Value!, new ProviderCapabilityReport(capabilities)));
     }
 
     public override Task<ProviderResult<ProviderCompletion>> CompleteAsync(ProviderChatRequest request, ApiKeyCredential? credential, DateTimeOffset deadline, CancellationToken cancellationToken = default)

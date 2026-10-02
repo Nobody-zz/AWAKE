@@ -69,7 +69,12 @@ public abstract class ProviderAdapterBase : IProviderAdapter
         return ProviderResponseSupport.ParseModels(document, responseProperty, Profile.ProviderId, Limits.MaxModels, deduplicate);
     }
 
-    public async Task<ProviderResult<ProviderConnectivityResult>> TestConnectionAsync(ApiKeyCredential? credential, DateTimeOffset deadline, CancellationToken cancellationToken = default)
+    /// <summary>
+    /// 默认连通性检查：列模型 + 如实报「探过/没探过」的能力表。
+    /// <c>virtual</c> 是为了让**只提供一部分能力**的适配器纠正基类的默认假设
+    /// （例如只生图的 Player2 不能继承「有文字能力」这一条）。
+    /// </summary>
+    public virtual async Task<ProviderResult<ProviderConnectivityResult>> TestConnectionAsync(ApiKeyCredential? credential, DateTimeOffset deadline, CancellationToken cancellationToken = default)
     {
         var models = await ListModelsForConnectionAsync(credential, deadline, cancellationToken).ConfigureAwait(false);
         if (!models.IsSuccess) return ProviderResult<ProviderConnectivityResult>.Failed(models.Error!);

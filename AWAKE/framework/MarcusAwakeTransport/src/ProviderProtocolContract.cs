@@ -153,7 +153,8 @@ namespace MarcusAwakeTransport
                 [ProtocolConstants.MessageTypeProviderProfileRemoveV1] = new ProviderRequestContract(ProtocolConstants.MessageTypeProviderProfileRemoveV1, ProtocolConstants.CapabilityProviderConfigureV1, ProtocolConstants.ProviderProfileRemoveSchemaV1, ProtocolConstants.ProviderProfileResultSchemaV1, 1, 0, true),
                 [ProtocolConstants.MessageTypeProviderModelsV1] = new ProviderRequestContract(ProtocolConstants.MessageTypeProviderModelsV1, ProtocolConstants.CapabilityProviderModelsV1, ProtocolConstants.ProviderModelsSchemaV1, ProtocolConstants.ProviderModelsResultSchemaV1, 1, 0, true),
                 [ProtocolConstants.MessageTypeProviderCompleteV1] = new ProviderRequestContract(ProtocolConstants.MessageTypeProviderCompleteV1, ProtocolConstants.CapabilityProviderCompleteV1, ProtocolConstants.ProviderCompleteSchemaV1, ProtocolConstants.ProviderResultSchemaV1, 1, 0, true),
-                [ProtocolConstants.MessageTypeProviderStreamV1] = new ProviderRequestContract(ProtocolConstants.MessageTypeProviderStreamV1, ProtocolConstants.CapabilityProviderStreamV1, ProtocolConstants.ProviderStreamSchemaV1, ProtocolConstants.ProviderStreamEventSchemaV1, 1, 0, true)
+                [ProtocolConstants.MessageTypeProviderStreamV1] = new ProviderRequestContract(ProtocolConstants.MessageTypeProviderStreamV1, ProtocolConstants.CapabilityProviderStreamV1, ProtocolConstants.ProviderStreamSchemaV1, ProtocolConstants.ProviderStreamEventSchemaV1, 1, 0, true),
+                [ProtocolConstants.MessageTypeProviderImageV1] = new ProviderRequestContract(ProtocolConstants.MessageTypeProviderImageV1, ProtocolConstants.CapabilityProviderImageV1, ProtocolConstants.ProviderImageSchemaV1, ProtocolConstants.ProviderImageResultSchemaV1, 1, 0, true)
             };
             Requests = new ReadOnlyDictionary<string, ProviderRequestContract>(requests);
             WireErrorCategoryValues = new ReadOnlyCollection<string>(new[]
@@ -200,7 +201,8 @@ namespace MarcusAwakeTransport
                 || StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeProviderCredentialResult)
                 || StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeProviderModelsResult)
                 || StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeProviderResult)
-                || StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeProviderStreamEvent);
+                || StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeProviderStreamEvent)
+                || StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeProviderImageResult);
         }
 
         public static bool IsKnownProviderErrorCategory(string value)

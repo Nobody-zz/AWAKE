@@ -146,6 +146,36 @@ internal static partial class ProviderTests
         TestSupport.Assert(handler.RequestCount == 0, "合成模型名不该去猜一个 /models 端点");
     }
 
+    /// <summary>
+    /// 连接检查的能力表必须如实：Player2 不提供文字，就不能继承基类那句「文字能力未验证」。
+    /// </summary>
+    internal static async Task Player2ConnectionReportDoesNotClaimTextCapabilityAsync()
+    {
+        var profile = Player2Profile(false);
+        var handler = ImageHandler("{}");
+        using var invoker = new System.Net.Http.HttpMessageInvoker(handler);
+        var adapter = new Player2Provider(profile, invoker);
+
+        var report = TestSupport.AssertSuccess(await adapter.TestConnectionAsync(null, Deadline(), CancellationToken.None).ConfigureAwait(false));
+        TestSupport.Assert(report.ProviderId == profile.ProviderId, "能力表要报自己的 provider");
+        TestSupport.Assert(
+            report.Capabilities[ProviderCapabilityId.TextGeneration] == ProviderCapabilityState.Unsupported,
+            "Player2 不提供文字 ⇒ 必须报 Unsupported 而不是基类那句 Unverified；实得 " + report.Capabilities[ProviderCapabilityId.TextGeneration]);
+        TestSupport.Assert(
+            report.Capabilities[ProviderCapabilityId.Streaming] == ProviderCapabilityState.Unsupported,
+            "流式同理；实得 " + report.Capabilities[ProviderCapabilityId.Streaming]);
+        TestSupport.Assert(
+            report.Capabilities[ProviderCapabilityId.StructuredOutput] == ProviderCapabilityState.Unsupported,
+            "结构化输出同理；实得 " + report.Capabilities[ProviderCapabilityId.StructuredOutput]);
+        TestSupport.Assert(
+            report.Capabilities[ProviderCapabilityId.ImageGeneration] == ProviderCapabilityState.Unverified,
+            "生图能力存在，但这次连通性检查并没有真去出一张图 ⇒ 只能报 Unverified，不许宣称已验证；实得 " + report.Capabilities[ProviderCapabilityId.ImageGeneration]);
+        TestSupport.Assert(
+            report.Capabilities[ProviderCapabilityId.ModelDiscovery] == ProviderCapabilityState.Available,
+            "合成模型名是实际给出的 ⇒ Available；实得 " + report.Capabilities[ProviderCapabilityId.ModelDiscovery]);
+        TestSupport.Assert(handler.RequestCount == 0, "Player2 的连通性检查不该发请求");
+    }
+
     // ---------- 剥前缀（判据 ①）----------
 
     internal static async Task ImagePayloadDataUriPrefixIsStrippedExactlyAsync()

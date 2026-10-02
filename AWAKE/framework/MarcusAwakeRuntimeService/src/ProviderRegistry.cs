@@ -212,6 +212,29 @@ internal sealed class ProviderRegistry : IDisposable
         }
     }
 
+    /// <summary>
+    /// Route-scoped candidate lookup for the media path. Unlike <see cref="DescribeCandidates"/>
+    /// it does not require a profile or provider anchor: the logical route alone selects the
+    /// ordered fallback chain, which is what the framework's media contract exposes.
+    /// </summary>
+    internal ProviderStreamCandidateSnapshot DescribeImageCandidates(PipeEnvelope envelope, ProviderWireRequest request)
+    {
+        if (envelope == null) throw new ArgumentNullException(nameof(envelope));
+        if (request == null) throw new ArgumentNullException(nameof(request));
+        lock (sync)
+        {
+            ThrowIfDisposed();
+            var snapshot = profiles.Values
+                .Where(entry => entry.MatchesRoute(envelope, request))
+                .OrderBy(entry => entry.RegistrationOrdinal)
+                .ThenBy(entry => entry.Request.ProviderId, StringComparer.Ordinal)
+                .ThenBy(entry => entry.Request.DefaultModel, StringComparer.Ordinal)
+                .ToList();
+            if (snapshot.Count == 0) return ProviderStreamCandidateSnapshot.Failure(ProviderWireAdapter.RouteNoCandidate());
+            return ProviderStreamCandidateSnapshot.Success(snapshot.AsReadOnly(), mutationGeneration);
+        }
+    }
+
     internal async Task<ProviderStreamBeginResult> BeginStreamAsync(PipeEnvelope envelope, ProviderWireRequest request, DateTimeOffset deadline, CancellationToken cancellationToken)
     {
         for (var attempt = 0; attempt < 2; attempt++)
@@ -405,6 +428,7 @@ internal sealed class ProviderRegistry : IDisposable
             "openai_compatible" => "MarcusAwakeProvider.OpenAiCompatibleProvider",
             "anthropic" => "MarcusAwakeProvider.AnthropicProvider",
             "ollama" => "MarcusAwakeProvider.OllamaProvider",
+            "player2" => "MarcusAwakeProvider.Player2Provider",
             _ => throw new ProviderRuntimeException(ProviderWireAdapter.SchemaError())
         });
         var kindName = request.ProviderKind switch
@@ -412,6 +436,7 @@ internal sealed class ProviderRegistry : IDisposable
             "openai_compatible" => "OpenAiCompatible",
             "anthropic" => "Anthropic",
             "ollama" => "Ollama",
+            "player2" => "Player2",
             _ => throw new ProviderRuntimeException(ProviderWireAdapter.SchemaError())
         };
         var kind = Enum.Parse(kindType, kindName, ignoreCase: false);
@@ -537,6 +562,127 @@ internal sealed class ProviderRegistry : IDisposable
             throw new ProviderRuntimeException(ProviderStreamErrors.BridgeInvalid());
         }
         return stream;
+    }
+
+    internal async Task<ProviderImageCallResult> GenerateImageAsync(PipeEnvelope envelope, ProviderWireRequest request, DateTimeOffset deadline, CancellationToken cancellationToken)
+    {
+        if (envelope == null) throw new ArgumentNullException(nameof(envelope));
+        if (request == null) throw new ArgumentNullException(nameof(request));
+        if (request.Operation != ProviderWireOperation.ImageGenerate) return ProviderImageCallResult.Failure(ProviderWireAdapter.SchemaError());
+        if (request.Image == null) return ProviderImageCallResult.Failure(ProviderWireAdapter.SchemaError());
+        if (cancellationToken.IsCancellationRequested) return ProviderImageCallResult.Failure(ProviderWireAdapter.Cancelled());
+        if (DateTimeOffset.UtcNow >= deadline) return ProviderImageCallResult.Failure(ProviderWireAdapter.DeadlineExpired());
+
+        var candidateSnapshot = DescribeImageCandidates(envelope, request);
+        if (candidateSnapshot.Error != null) return ProviderImageCallResult.Failure(candidateSnapshot.Error);
+        var snapshot = candidateSnapshot.Entries;
+        if (snapshot == null) return ProviderImageCallResult.Failure(ProviderStreamErrors.BridgeInvalid());
+        if (!SnapshotStillValid(snapshot, candidateSnapshot.MutationGeneration)) return ProviderImageCallResult.Failure(ProviderWireAdapter.ProfileChanged());
+
+        var leases = new List<ProviderCredentialLease>(snapshot.Count);
+        try
+        {
+            var providerRequest = CreateImageRequest(envelope, request);
+            var candidates = new List<object>(snapshot.Count);
+            for (var index = 0; index < snapshot.Count; index++)
+            {
+                if (cancellationToken.IsCancellationRequested) return await AbortImageAsync(leases, ProviderImageCallResult.Failure(ProviderWireAdapter.Cancelled())).ConfigureAwait(false);
+                if (DateTimeOffset.UtcNow >= deadline) return await AbortImageAsync(leases, ProviderImageCallResult.Failure(ProviderWireAdapter.DeadlineExpired())).ConfigureAwait(false);
+                var credentialResult = await LoadCredentialAsync(snapshot[index], cancellationToken).ConfigureAwait(false);
+                if (credentialResult.Error != null) return await AbortImageAsync(leases, ProviderImageCallResult.Failure(credentialResult.Error)).ConfigureAwait(false);
+                var lease = new ProviderCredentialLease(credentialResult.Credential);
+                leases.Add(lease);
+                candidates.Add(CreateRouteCandidate(snapshot[index].Adapter, lease.Credential));
+            }
+
+            if (!SnapshotStillValid(snapshot, candidateSnapshot.MutationGeneration))
+            {
+                return await AbortImageAsync(leases, ProviderImageCallResult.Failure(ProviderWireAdapter.ProfileChanged())).ConfigureAwait(false);
+            }
+
+            var router = CreateRouter(candidates);
+            var imageResult = await InvokeRouterImageAsync(router, providerRequest, deadline, cancellationToken).ConfigureAwait(false);
+            if (!TryReadProviderResult(imageResult, out var value, out var imageError))
+            {
+                return await AbortImageAsync(leases, ProviderImageCallResult.Failure(imageError!)).ConfigureAwait(false);
+            }
+
+            var outcome = ReadImage(value);
+            if (outcome == null)
+            {
+                return await AbortImageAsync(leases, ProviderImageCallResult.Failure(ProviderStreamErrors.BridgeInvalid())).ConfigureAwait(false);
+            }
+
+            if (!SnapshotStillValid(snapshot, candidateSnapshot.MutationGeneration))
+            {
+                return await AbortImageAsync(leases, ProviderImageCallResult.Failure(ProviderWireAdapter.ProfileChanged())).ConfigureAwait(false);
+            }
+
+            return await AbortImageAsync(leases, ProviderImageCallResult.Success(outcome)).ConfigureAwait(false);
+        }
+        catch (ProviderRuntimeException exception)
+        {
+            return await AbortImageAsync(leases, ProviderImageCallResult.Failure(exception.Error)).ConfigureAwait(false);
+        }
+        catch (TargetInvocationException exception)
+        {
+            return await AbortImageAsync(leases, ProviderImageCallResult.Failure(MapUnexpectedException(exception.InnerException, request.ProviderId))).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            return await AbortImageAsync(leases, ProviderImageCallResult.Failure(ResolveCancellationError(cancellationToken, deadline))).ConfigureAwait(false);
+        }
+        catch (Exception exception)
+        {
+            return await AbortImageAsync(leases, ProviderImageCallResult.Failure(MapUnexpectedException(exception, request.ProviderId))).ConfigureAwait(false);
+        }
+    }
+
+    private static async Task<ProviderImageCallResult> AbortImageAsync(IReadOnlyList<ProviderCredentialLease> leases, ProviderImageCallResult result)
+    {
+        await DisposeLeasesAsync(leases).ConfigureAwait(false);
+        return result;
+    }
+
+    private object CreateImageRequest(PipeEnvelope envelope, ProviderWireRequest request)
+    {
+        var image = request.Image ?? throw new ProviderRuntimeException(ProviderWireAdapter.SchemaError());
+        var assembly = GetProviderAssembly() ?? throw new ProviderRuntimeException(ProviderWireAdapter.RuntimeUnavailable());
+        var requestType = RequireType(assembly, "MarcusAwakeProvider.ProviderImageRequest");
+        var constructor = requestType.GetConstructors(BindingFlags.Public | BindingFlags.Instance)
+            .SingleOrDefault(candidate => candidate.GetParameters().Length == 8);
+        if (constructor == null) throw new ProviderRuntimeException(ProviderStreamErrors.BridgeInvalid());
+        var idempotencyKey = envelope.TaskScope == null ? string.Empty : envelope.TaskScope.IdempotencyKey;
+        return constructor.Invoke(new object?[]
+        {
+            image.Prompt,
+            image.Width,
+            image.Height,
+            string.IsNullOrEmpty(image.NegativePrompt) ? null : image.NegativePrompt,
+            image.ReferenceImage,
+            string.IsNullOrEmpty(image.ReferenceMediaType) ? "png" : image.ReferenceMediaType,
+            string.IsNullOrEmpty(image.Model) ? request.Model : image.Model,
+            idempotencyKey
+        });
+    }
+
+    private static async Task<object?> InvokeRouterImageAsync(object router, object providerRequest, DateTimeOffset deadline, CancellationToken cancellationToken)
+    {
+        var method = FindMethod(router.GetType(), "GenerateImageAsync");
+        var task = method.Invoke(router, new object?[] { providerRequest, deadline, cancellationToken });
+        if (task == null) throw new ProviderRuntimeException(ProviderStreamErrors.BridgeInvalid());
+        return await AwaitTaskAsync(task).ConfigureAwait(false);
+    }
+
+    private static ProviderImageOutcome? ReadImage(object? value)
+    {
+        if (value == null) return null;
+        var type = value.GetType();
+        var content = type.GetProperty("Content", BindingFlags.Public | BindingFlags.Instance)?.GetValue(value) as byte[];
+        if (content == null || content.Length == 0) return null;
+        var mediaType = type.GetProperty("MediaType", BindingFlags.Public | BindingFlags.Instance)?.GetValue(value) as string ?? string.Empty;
+        var resolvedModel = type.GetProperty("ResolvedModel", BindingFlags.Public | BindingFlags.Instance)?.GetValue(value) as string ?? string.Empty;
+        return new ProviderImageOutcome(content, mediaType, resolvedModel);
     }
 
     private static object CreateEnumerator(object stream, CancellationToken cancellationToken, out PropertyInfo currentProperty, out MethodInfo moveNextMethod, out MethodInfo disposeMethod)
@@ -809,6 +955,20 @@ internal sealed class ProviderRegistry : IDisposable
                 && StringComparer.Ordinal.Equals(Key.TimelineId, envelope.TimelineId)
                 && StringComparer.Ordinal.Equals(Key.SessionId, envelope.SessionId)
                 && StringComparer.Ordinal.Equals(Request.ProfileId, request.ProfileId)
+                && StringComparer.Ordinal.Equals(Request.RouteId, request.RouteId);
+        }
+
+        /// <summary>
+        /// Route-scoped match used by the media path. The logical route selects the
+        /// provider, so a media caller does not have to know the profile or provider
+        /// identity; every profile registered for the route becomes a fallback candidate.
+        /// </summary>
+        internal bool MatchesRoute(PipeEnvelope envelope, ProviderWireRequest request)
+        {
+            return StringComparer.Ordinal.Equals(Key.OwnerId, envelope.OwnerId)
+                && StringComparer.Ordinal.Equals(Key.CampaignGuid, envelope.CampaignGuid)
+                && StringComparer.Ordinal.Equals(Key.TimelineId, envelope.TimelineId)
+                && StringComparer.Ordinal.Equals(Key.SessionId, envelope.SessionId)
                 && StringComparer.Ordinal.Equals(Request.RouteId, request.RouteId);
         }
     }

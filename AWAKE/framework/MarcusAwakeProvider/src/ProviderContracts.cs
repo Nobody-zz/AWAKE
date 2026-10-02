@@ -25,7 +25,12 @@ public enum ProviderCapabilityId
     TextGeneration,
     Streaming,
     Usage,
-    StructuredOutput
+    StructuredOutput,
+
+    /// <summary>
+    /// 追加在末尾：取值会按序号落盘/上线，插在中间会把既有取值整体挪位。
+    /// </summary>
+    ImageGeneration
 }
 
 public enum ProviderCapabilityState

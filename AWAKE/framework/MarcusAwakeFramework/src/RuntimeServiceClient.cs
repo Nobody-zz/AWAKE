@@ -31,6 +31,7 @@ namespace MarcusAwakeFramework.Api
             ProtocolConstants.CapabilityProviderModelsV1,
             ProtocolConstants.CapabilityProviderCompleteV1,
             ProtocolConstants.CapabilityProviderStreamV1,
+            ProtocolConstants.CapabilityProviderImageV1,
             ProtocolConstants.CapabilityRagRead,
             ProtocolConstants.CapabilityRagWrite
         };
@@ -109,7 +110,7 @@ namespace MarcusAwakeFramework.Api
         }
     }
 
-    public sealed partial class RuntimeServiceClient : IRuntimeServicePort, IProviderRuntimePort, IAiGateway, IRagService, IDisposable
+    public sealed partial class RuntimeServiceClient : IRuntimeServicePort, IProviderRuntimePort, IAiGateway, IRagService, IMediaService, IAssetService, IDisposable
     {
         private const int MaximumProviderStreamEvents = RuntimeResourceBudget.MaximumStreamFrameCount;
         private const string HealthPayloadSchema = "marcus-awake.health.v1";

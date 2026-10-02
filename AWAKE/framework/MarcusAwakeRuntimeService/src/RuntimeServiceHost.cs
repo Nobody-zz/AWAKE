@@ -66,7 +66,9 @@ internal sealed class RuntimeServiceHost
         ProtocolConstants.CapabilityProviderCredentialsV1,
         ProtocolConstants.CapabilityProviderModelsV1,
         ProtocolConstants.CapabilityProviderCompleteV1,
-        ProtocolConstants.CapabilityProviderStreamV1
+        ProtocolConstants.CapabilityProviderStreamV1,
+        ProtocolConstants.CapabilityProviderImageV1,
+        ProtocolConstants.CapabilityAssetRead
     };
 
     private readonly object sync = new object();
@@ -102,6 +104,7 @@ internal sealed class RuntimeServiceHost
     private HttpMessageInvoker? providerInvoker;
     private ProviderRegistry? providerRegistry;
     private RuntimeProviderOutcomeLedger? providerOutcomeLedger;
+    private ContentAddressedAssetStore? assetStore;
 
     internal RuntimeServiceHost()
     {
@@ -116,6 +119,7 @@ internal sealed class RuntimeServiceHost
             descriptor = await ReadBootstrapAsync(Console.OpenStandardInput(), lifecycle.Token).ConfigureAwait(false);
             InitializeBootstrap();
             storageBackend = new SqliteStorageAndRagBackend(ResolveStorageDatabasePath(), null, CreateEmbedder());
+            assetStore = new ContentAddressedAssetStore(ResolveAssetStoreRootPath());
             providerOutcomeLedger = new RuntimeProviderOutcomeLedger(ResolveProviderOutcomeLedgerPath());
             if (!providerOutcomeLedger.Load(out var ledgerLoadError))
             {
@@ -166,6 +170,19 @@ internal sealed class RuntimeServiceHost
                     Console.Error.Flush();
                 }
                 storageBackend = null;
+            }
+            if (assetStore != null)
+            {
+                try
+                {
+                    assetStore.Dispose();
+                }
+                catch (Exception exception)
+                {
+                    Console.Error.WriteLine("asset_store_dispose_failed:" + exception.GetType().Name);
+                    Console.Error.Flush();
+                }
+                assetStore = null;
             }
             state = LifecycleState.Stopped;
             lifecycle.Dispose();
@@ -661,6 +678,9 @@ internal sealed class RuntimeServiceHost
                 case ProtocolConstants.MessageTypeRagSearch:
                     await HandleStorageBusinessAsync(connection, envelope, cancellationToken).ConfigureAwait(false);
                     break;
+                case ProtocolConstants.MessageTypeAssetRead:
+                    await HandleAssetReadAsync(connection, envelope, cancellationToken).ConfigureAwait(false);
+                    break;
                 case "diagnostic":
                     await HandleDiagnosticAsync(connection, envelope, cancellationToken).ConfigureAwait(false);
                     break;
@@ -845,6 +865,7 @@ internal sealed class RuntimeServiceHost
             || StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeCancel)
             || StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeDiagnostic)
             || StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeShutdown)
+            || StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeAssetRead)
             || IsStorageBusinessMessage(messageType)
             || ProviderProtocolContract.IsProviderRequest(messageType);
     }
@@ -871,6 +892,7 @@ internal sealed class RuntimeServiceHost
     {
         return StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeEcho)
             || StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeCancel)
+            || StringComparer.Ordinal.Equals(messageType, ProtocolConstants.MessageTypeAssetRead)
             || IsStorageBusinessMessage(messageType)
             || ProviderProtocolContract.IsProviderRequest(messageType);
     }
@@ -902,6 +924,8 @@ internal sealed class RuntimeServiceHost
                 return ProtocolConstants.CapabilityRagRead;
             case ProtocolConstants.MessageTypeRagIngest:
                 return ProtocolConstants.CapabilityRagWrite;
+            case ProtocolConstants.MessageTypeAssetRead:
+                return ProtocolConstants.CapabilityAssetRead;
             default:
                 return messageType;
         }
@@ -928,6 +952,7 @@ internal sealed class RuntimeServiceHost
                 case ProtocolConstants.MessageTypeProviderModelsV1:
                 case ProtocolConstants.MessageTypeProviderCompleteV1:
                 case ProtocolConstants.MessageTypeProviderStreamV1:
+                case ProtocolConstants.MessageTypeProviderImageV1:
                     return TryValidateProviderPayload(envelope, document.RootElement, out error);
                 case "health":
                     if (properties.Any(property => !StringComparer.Ordinal.Equals(property.Name, "probe")))
@@ -985,6 +1010,16 @@ internal sealed class RuntimeServiceHost
                 case ProtocolConstants.MessageTypeRagIngest:
                 case ProtocolConstants.MessageTypeRagSearch:
                     return StorageBusinessFrameAdapter.TryParse(envelope, out _, out error);
+                case ProtocolConstants.MessageTypeAssetRead:
+                    if (!HasRequiredProperties(document.RootElement, new HashSet<string>(StringComparer.Ordinal) { "asset_id", "offset", "maximum_bytes" }, new[] { "asset_id", "offset", "maximum_bytes" })
+                        || !document.RootElement.TryGetProperty("asset_id", out var assetIdProperty) || assetIdProperty.ValueKind != JsonValueKind.String || !IsBoundedIdentifier(assetIdProperty.GetString(), 128)
+                        || !document.RootElement.TryGetProperty("offset", out var assetOffsetProperty) || !assetOffsetProperty.TryGetInt64(out var assetOffset) || assetOffset < 0
+                        || !document.RootElement.TryGetProperty("maximum_bytes", out var assetMaximumProperty) || !assetMaximumProperty.TryGetInt32(out var assetMaximumBytes) || assetMaximumBytes < 1 || assetMaximumBytes > ProtocolConstants.MaxAssetChunkBytes)
+                    {
+                        error = "payload_asset_read_invalid";
+                        return false;
+                    }
+                    return true;
                 case "diagnostic":
                 case "shutdown":
                     if (properties.Length != 0)
@@ -1041,7 +1076,9 @@ internal sealed class RuntimeServiceHost
             allowed.UnionWith(new[] { "schema", "profile_id", "provider_id", "route_id", "provider_kind", "base_url", "default_model", "credential_reference", "is_cloud" });
             if (!HasRequiredProperties(root, allowed, new[] { "schema", "profile_id", "provider_id", "route_id", "provider_kind", "base_url", "default_model", "is_cloud" })) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
             if (!TryReadProviderIds(root, envelope, out error)) return false;
-            if (!root.TryGetProperty("provider_kind", out var kind) || kind.ValueKind != JsonValueKind.String || (kind.GetString() != "openai_compatible" && kind.GetString() != "anthropic" && kind.GetString() != "ollama")) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
+            // 这份名单必须与 ProviderKindCodec.TryParseWireName 和 ProviderProfileRequest 保持一致：
+            // 少一个就在准入层把整条形状拒掉（适配器工厂里那段就成了够不着的死代码）。
+            if (!root.TryGetProperty("provider_kind", out var kind) || kind.ValueKind != JsonValueKind.String || (kind.GetString() != "openai_compatible" && kind.GetString() != "anthropic" && kind.GetString() != "ollama" && kind.GetString() != "player2")) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
             if (!root.TryGetProperty("base_url", out var baseUrl) || baseUrl.ValueKind != JsonValueKind.String || !IsValidProviderBaseUrl(baseUrl.GetString())) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
             if (!root.TryGetProperty("default_model", out var model) || model.ValueKind != JsonValueKind.String || !IsBoundedUtf8(model.GetString(), 256)) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
             if (root.TryGetProperty("credential_reference", out var credential) && (credential.ValueKind != JsonValueKind.String || !IsBoundedIdentifier(credential.GetString(), 160))) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
@@ -1055,6 +1092,31 @@ internal sealed class RuntimeServiceHost
         {
             if (!HasExactlyRequiredProperties(root, allowed, new[] { "schema", "profile_id", "provider_id", "route_id" })) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
             return TryReadProviderIds(root, envelope, out error);
+        }
+
+        if (envelope.MessageType == ProtocolConstants.MessageTypeProviderImageV1)
+        {
+            // Image generation carries no chat message list. The reference image stays optional so the
+            // AWAKE-added edit path (provider `/image/edit`) keeps working; it is bounded well below the
+            // frame ceiling because base64 inflates the payload by 4/3.
+            allowed.UnionWith(new[] { "schema", "profile_id", "provider_id", "route_id", "prompt", "negative_prompt", "width", "height", "seed", "model", "reference_image_base64", "reference_media_type", "logical_kind", "created_by_task", "campaign_id", "timeline_id", "provenance", "retention_class" });
+            if (!HasRequiredProperties(root, allowed, new[] { "schema", "route_id", "prompt" })) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
+            if (!TryReadMediaRouteIds(root, envelope, out error)) return false;
+            if (!root.TryGetProperty("prompt", out var prompt) || prompt.ValueKind != JsonValueKind.String || string.IsNullOrWhiteSpace(prompt.GetString()) || !IsBoundedUtf8(prompt.GetString(), 8192)) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
+            if (!TryReadOptionalBoundedString(root, "negative_prompt", 8192, out error)) return false;
+            if (!TryReadOptionalBoundedString(root, "model", 256, out error)) return false;
+            if (!TryReadOptionalBoundedString(root, "reference_media_type", 128, out error)) return false;
+            if (!TryReadOptionalBoundedString(root, "logical_kind", 128, out error)) return false;
+            if (!TryReadOptionalBoundedString(root, "created_by_task", 160, out error)) return false;
+            if (!TryReadOptionalBoundedString(root, "campaign_id", 256, out error)) return false;
+            if (!TryReadOptionalBoundedString(root, "timeline_id", 256, out error)) return false;
+            if (!TryReadOptionalBoundedString(root, "provenance", 512, out error)) return false;
+            if (!TryReadOptionalBoundedString(root, "retention_class", 64, out error)) return false;
+            if (!TryReadOptionalBoundedNumber(root, "width", 0, 4096, out error)) return false;
+            if (!TryReadOptionalBoundedNumber(root, "height", 0, 4096, out error)) return false;
+            if (!TryReadOptionalBoundedNumber(root, "seed", 0, int.MaxValue, out error)) return false;
+            if (!TryReadOptionalBase64(root, "reference_image_base64", 262144, out error)) return false;
+            return true;
         }
 
         allowed.UnionWith(new[] { "model", "messages", "max_output_tokens", "temperature", "response_schema_json" });
@@ -1118,6 +1180,63 @@ internal sealed class RuntimeServiceHost
         if (name == "profile_id") return envelope.TaskScope?.ProfileId ?? string.Empty;
         if (name == "provider_id") return envelope.TaskScope?.ProviderId ?? string.Empty;
         return envelope.TaskScope?.RouteId ?? string.Empty;
+    }
+
+    /// <summary>
+    /// Media payload identity check. The framework's media contract exposes only a logical
+    /// route, so the runtime resolves the profile and provider itself; when the caller does
+    /// send them they must still agree with the task scope.
+    /// </summary>
+    private static bool TryReadMediaRouteIds(JsonElement root, PipeEnvelope envelope, out string error)
+    {
+        error = string.Empty;
+        if (!root.TryGetProperty("route_id", out var route) || route.ValueKind != JsonValueKind.String || !StringComparer.Ordinal.Equals(route.GetString(), ProviderScopeValue(envelope, "route_id"))) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
+        var optional = new[] { "profile_id", "provider_id" };
+        for (var index = 0; index < optional.Length; index++)
+        {
+            if (!root.TryGetProperty(optional[index], out var property)) continue;
+            if (property.ValueKind != JsonValueKind.String || !StringComparer.Ordinal.Equals(property.GetString(), ProviderScopeValue(envelope, optional[index]))) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
+        }
+
+        return true;
+    }
+
+    private static bool TryReadOptionalBoundedString(JsonElement root, string name, int maximumBytes, out string error)
+    {
+        error = string.Empty;
+        if (!root.TryGetProperty(name, out var property)) return true;
+        if (property.ValueKind != JsonValueKind.String || !IsBoundedUtf8(property.GetString(), maximumBytes)) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
+        return true;
+    }
+
+    private static bool TryReadOptionalBoundedNumber(JsonElement root, string name, int minimum, int maximum, out string error)
+    {
+        error = string.Empty;
+        if (!root.TryGetProperty(name, out var property)) return true;
+        if (property.ValueKind != JsonValueKind.Number || !property.TryGetInt32(out var value) || value < minimum || value > maximum) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
+        return true;
+    }
+
+    private static bool TryReadOptionalBase64(JsonElement root, string name, int maximumCharacters, out string error)
+    {
+        error = string.Empty;
+        if (!root.TryGetProperty(name, out var property)) return true;
+        if (property.ValueKind != JsonValueKind.String) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
+        var text = property.GetString();
+        if (string.IsNullOrEmpty(text) || text.Length > maximumCharacters || text.Length % 4 != 0 || !IsBase64Alphabet(text)) return ProviderPayloadFailure(out error, "provider_schema_mismatch");
+        return true;
+    }
+
+    private static bool IsBase64Alphabet(string text)
+    {
+        for (var index = 0; index < text.Length; index++)
+        {
+            var value = text[index];
+            var isBase64 = (value >= 'A' && value <= 'Z') || (value >= 'a' && value <= 'z') || (value >= '0' && value <= '9') || value == '+' || value == '/';
+            if (!isBase64 && !(value == '=' && index >= text.Length - 2)) return false;
+        }
+
+        return true;
     }
 
     private static bool TryValidateProviderMessages(JsonElement messages, out string error)
@@ -1508,6 +1627,127 @@ internal sealed class RuntimeServiceHost
         });
     }
 
+    /// <summary>
+    /// Serves one bounded slice of a stored asset. A stored asset is far larger than a single frame,
+    /// so the game process reads it back in chunks and reassembles the bytes on its own side. The
+    /// runtime never writes into the game process's data directories.
+    /// </summary>
+    private async Task HandleAssetReadAsync(ConnectionContext connection, PipeEnvelope envelope, CancellationToken cancellationToken)
+    {
+        if (assetStore == null)
+        {
+            await WriteResponseAsync(connection, BuildErrorResponse(connection, envelope, "asset.store_unavailable", "retryable_reject"), cancellationToken).ConfigureAwait(false);
+            return;
+        }
+
+        if (!TryReadAssetReadRequest(envelope, out var assetId, out var offset, out var maximumBytes, out var parseError))
+        {
+            await WriteResponseAsync(connection, BuildErrorResponse(connection, envelope, parseError, "rejected"), cancellationToken).ConfigureAwait(false);
+            return;
+        }
+
+        if (!RegisterActiveTask(envelope.TaskScope!.TaskId, cancellationToken, out var taskCancellation))
+        {
+            await WriteResponseAsync(connection, BuildErrorResponse(connection, envelope, "task_in_progress", "retryable_reject"), cancellationToken).ConfigureAwait(false);
+            return;
+        }
+
+        try
+        {
+            var content = await assetStore.ReadAsync(assetId, CreateStorageRequestContext(connection, envelope), taskCancellation.Token).ConfigureAwait(false);
+            if (!content.IsSuccess)
+            {
+                var error = content.Error;
+                var retryable = error != null && (error.Retryable || error.Category == FrameworkErrorCategory.Cancelled || error.Category == FrameworkErrorCategory.Timeout);
+                await WriteResponseAsync(connection, BuildErrorResponse(connection, envelope, error?.Code ?? "asset.read_failed", retryable ? "retryable_reject" : "rejected", error), cancellationToken).ConfigureAwait(false);
+                return;
+            }
+
+            var asset = content.Value!;
+            if (offset >= asset.ByteLength)
+            {
+                await WriteResponseAsync(connection, BuildErrorResponse(connection, envelope, "asset.offset_out_of_range", "rejected"), cancellationToken).ConfigureAwait(false);
+                return;
+            }
+
+            var payload = BuildAssetReadResultPayload(asset, offset, maximumBytes);
+            var response = BuildResponse(connection, envelope, ProtocolConstants.MessageTypeAssetResult, ProtocolConstants.AssetResultSchemaV1, payload, envelope.TaskScope, ProtocolConstants.OutcomeAccepted, ackStatus: ProtocolConstants.AckAccepted, nonDurable: true);
+            await WriteResponseAsync(connection, response, cancellationToken).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                await WriteResponseAsync(connection, BuildErrorResponse(connection, envelope, "awake.cancelled", "retryable_reject"), cancellationToken).ConfigureAwait(false);
+            }
+        }
+        catch (Exception exception)
+        {
+            Console.Error.WriteLine("asset_dispatch_failed:" + exception.GetType().Name + ":correlation=" + envelope.CorrelationId + ":message=" + envelope.MessageType + ":" + envelope.MessageId);
+            await WriteResponseAsync(connection, BuildErrorResponse(connection, envelope, "asset.dispatch_failed", "rejected"), cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            RemoveActiveTask(envelope.TaskScope!.TaskId);
+        }
+    }
+
+    private static bool TryReadAssetReadRequest(PipeEnvelope envelope, out string assetId, out long offset, out int maximumBytes, out string error)
+    {
+        assetId = string.Empty;
+        offset = 0L;
+        maximumBytes = 0;
+        error = "payload_asset_read_invalid";
+        try
+        {
+            using var document = JsonDocument.Parse(envelope.PayloadJson, new JsonDocumentOptions { MaxDepth = ProtocolConstants.MaxJsonDepth, AllowTrailingCommas = false });
+            var root = document.RootElement;
+            if (root.ValueKind != JsonValueKind.Object) return false;
+            if (!HasRequiredProperties(root, new HashSet<string>(StringComparer.Ordinal) { "asset_id", "offset", "maximum_bytes" }, new[] { "asset_id", "offset", "maximum_bytes" })) return false;
+            if (!root.TryGetProperty("asset_id", out var assetIdProperty) || assetIdProperty.ValueKind != JsonValueKind.String || !IsBoundedIdentifier(assetIdProperty.GetString(), 128)) return false;
+            if (!root.TryGetProperty("offset", out var offsetProperty) || !offsetProperty.TryGetInt64(out var parsedOffset) || parsedOffset < 0L) return false;
+            if (!root.TryGetProperty("maximum_bytes", out var maximumProperty) || !maximumProperty.TryGetInt32(out var parsedMaximum) || parsedMaximum < 1 || parsedMaximum > ProtocolConstants.MaxAssetChunkBytes) return false;
+            assetId = assetIdProperty.GetString()!;
+            offset = parsedOffset;
+            maximumBytes = parsedMaximum;
+            return true;
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
+    private static string BuildAssetReadResultPayload(AssetContent asset, long offset, int maximumBytes)
+    {
+        var bytes = asset.GetContentCopy();
+        var start = (int)offset;
+        var count = Math.Min(maximumBytes, bytes.Length - start);
+        using var stream = new MemoryStream();
+        using (var writer = new Utf8JsonWriter(stream))
+        {
+            writer.WriteStartObject();
+            writer.WriteString("asset_id", asset.Handle.AssetId);
+            writer.WriteString("content_hash", asset.Handle.ContentHash);
+            writer.WriteString("media_type", asset.Handle.MediaType);
+            writer.WriteNumber("byte_length", bytes.Length);
+            writer.WriteString("logical_kind", asset.Handle.LogicalKind);
+            writer.WriteString("created_by_task", asset.Handle.CreatedByTask);
+            writer.WriteString("owner_extension_id", asset.Handle.OwnerExtensionId.Value);
+            writer.WriteString("campaign_id", asset.Handle.CampaignId);
+            writer.WriteString("timeline_id", asset.Handle.TimelineId);
+            writer.WriteString("provenance", asset.Handle.Provenance);
+            writer.WriteString("retention_class", asset.Handle.RetentionClass);
+            writer.WriteNumber("offset", offset);
+            writer.WriteNumber("chunk_byte_length", count);
+            writer.WriteBase64String("chunk_base64", bytes.AsSpan(start, count));
+            writer.WriteBoolean("done", offset + count >= bytes.Length);
+            writer.WriteEndObject();
+        }
+
+        return Encoding.UTF8.GetString(stream.ToArray());
+    }
+
     private async Task HandleStorageBusinessAsync(ConnectionContext connection, PipeEnvelope envelope, CancellationToken cancellationToken)
     {
         if (storageBackend == null)
@@ -1733,6 +1973,7 @@ internal sealed class RuntimeServiceHost
                     ProviderWireOperation.ProfileRemove => providerRegistry.Remove(envelope, request),
                     ProviderWireOperation.Models => await providerRegistry.ListModelsAsync(envelope, request, deadline, taskCancellation.Token).ConfigureAwait(false),
                     ProviderWireOperation.Complete => await providerRegistry.CompleteAsync(envelope, request, deadline, taskCancellation.Token).ConfigureAwait(false),
+                    ProviderWireOperation.ImageGenerate => await GenerateImageAsync(connection, envelope, request, deadline, taskCancellation.Token).ConfigureAwait(false),
                     _ => ProviderWireResult.Failure(ProviderWireAdapter.SchemaError())
                 };
             }
@@ -1781,6 +2022,7 @@ internal sealed class RuntimeServiceHost
                 ProviderWireOperation.ProfileRemove => "provider_profile_result",
                 ProviderWireOperation.Models => "provider_models_result",
                 ProviderWireOperation.Complete => "provider_result",
+                ProviderWireOperation.ImageGenerate => ProtocolConstants.MessageTypeProviderImageResult,
                 _ => "provider_result"
             };
             var responseSchema = request.Operation switch
@@ -1790,6 +2032,7 @@ internal sealed class RuntimeServiceHost
                 ProviderWireOperation.ProfileRemove => ProtocolConstants.ProviderProfileResultSchemaV1,
                 ProviderWireOperation.Models => ProtocolConstants.ProviderModelsResultSchemaV1,
                 ProviderWireOperation.Complete => ProtocolConstants.ProviderResultSchemaV1,
+                ProviderWireOperation.ImageGenerate => ProtocolConstants.ProviderImageResultSchemaV1,
                 _ => ProtocolConstants.ProviderResultSchemaV1
             };
             var response = BuildResponse(connection, envelope, responseMessageType, responseSchema, result.PayloadJson!, envelope.TaskScope, ProtocolConstants.OutcomeAccepted, ackStatus: ProtocolConstants.AckAccepted, nonDurable: true);
@@ -2444,6 +2687,71 @@ internal sealed class RuntimeServiceHost
             || !StringComparer.Ordinal.Equals(Environment.GetEnvironmentVariable(CrashAfterCommitMessageEnvironmentVariable), envelope.MessageId)) return;
 
         Process.GetCurrentProcess().Kill(entireProcessTree: false);
+    }
+
+    private async Task<ProviderWireResult> GenerateImageAsync(ConnectionContext connection, PipeEnvelope envelope, ProviderWireRequest request, DateTimeOffset deadline, CancellationToken cancellationToken)
+    {
+        var image = request.Image;
+        if (image == null) return ProviderWireResult.Failure(ProviderWireAdapter.SchemaError());
+        if (assetStore == null) return ProviderWireResult.Failure(ProviderWireAdapter.RuntimeUnavailable("The asset store is unavailable."));
+        if (providerRegistry == null) return ProviderWireResult.Failure(ProviderWireAdapter.RuntimeUnavailable());
+
+        var call = await providerRegistry.GenerateImageAsync(envelope, request, deadline, cancellationToken).ConfigureAwait(false);
+        if (!call.IsSuccess) return ProviderWireResult.Failure(call.Error!);
+
+        var outcome = call.Value!;
+        var logicalKind = string.IsNullOrWhiteSpace(image.LogicalKind) ? "image" : image.LogicalKind;
+        var createdByTask = string.IsNullOrWhiteSpace(image.CreatedByTask)
+            ? (envelope.TaskScope == null ? "media.image" : envelope.TaskScope.TaskId)
+            : image.CreatedByTask;
+        var provenance = string.IsNullOrWhiteSpace(image.Provenance) ? ProtocolConstants.MessageTypeProviderImageV1 : image.Provenance;
+        var retentionClass = string.IsNullOrWhiteSpace(image.RetentionClass) ? "campaign" : image.RetentionClass;
+        var importRequest = new AssetImportRequest(outcome.Content, outcome.MediaType, logicalKind, createdByTask, provenance, retentionClass);
+        var import = await assetStore.ImportAsync(importRequest, CreateStorageRequestContext(connection, envelope), cancellationToken).ConfigureAwait(false);
+        if (!import.IsSuccess) return ProviderWireResult.Failure(MapAssetStoreError(import.Error!));
+
+        var handle = import.Value!;
+        var projection = new ProviderImageProjection(
+            handle.AssetId,
+            handle.ContentHash,
+            handle.MediaType,
+            handle.ByteLength,
+            handle.LogicalKind,
+            handle.CreatedByTask,
+            handle.OwnerExtensionId.Value,
+            handle.CampaignId,
+            handle.TimelineId,
+            handle.Provenance,
+            handle.RetentionClass,
+            outcome.ResolvedModel);
+        return ProviderWireResult.Success(ProviderWireAdapter.BuildImageResult(request, projection));
+    }
+
+    private static ProviderWireError MapAssetStoreError(FrameworkError error)
+    {
+        return new ProviderWireError(error.Code, MapAssetStoreCategory(error.Category), error.Retryable, false, error.SafeFallback);
+    }
+
+    private static string MapAssetStoreCategory(FrameworkErrorCategory category)
+    {
+        return category switch
+        {
+            FrameworkErrorCategory.InvalidRequest => "invalid_request",
+            FrameworkErrorCategory.Incompatible => "invalid_request",
+            FrameworkErrorCategory.Unsupported => "unsupported",
+            FrameworkErrorCategory.Unavailable => "unavailable",
+            FrameworkErrorCategory.Denied => "forbidden",
+            FrameworkErrorCategory.NotFound => "not_found",
+            FrameworkErrorCategory.Conflict => "conflict",
+            FrameworkErrorCategory.Expired => "timeout",
+            FrameworkErrorCategory.RateLimited => "rate_limited",
+            FrameworkErrorCategory.ProviderFailure => "malformed_response",
+            FrameworkErrorCategory.Timeout => "timeout",
+            FrameworkErrorCategory.Cancelled => "cancelled",
+            FrameworkErrorCategory.ResourceExhausted => "resource_exhausted",
+            FrameworkErrorCategory.RecoveryRequired => "internal_failure",
+            _ => "internal_failure"
+        };
     }
 
     private static RequestContext CreateStorageRequestContext(ConnectionContext connection, PipeEnvelope envelope)
@@ -3350,6 +3658,11 @@ internal sealed class RuntimeServiceHost
     private static string ResolveProviderOutcomeLedgerPath()
     {
         return Path.ChangeExtension(ResolveStorageDatabasePath(), ".provider-ledger.json");
+    }
+
+    private static string ResolveAssetStoreRootPath()
+    {
+        return Path.Combine(Path.GetDirectoryName(ResolveStorageDatabasePath())!, "assets");
     }
 
     private static string ResolveEmbeddingModelName()

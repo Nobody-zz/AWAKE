@@ -78,10 +78,13 @@ namespace MarcusAwakeFramework.Api
             events = new InMemoryEventService();
             ai = runtime as IAiGateway ?? new UnavailableAiGateway();
             models = new UnavailableAiModelService();
-            media = new UnavailableMediaService();
+            media = runtime as IMediaService ?? new UnavailableMediaService();
             prompts = overrides?.Prompts ?? new UnavailablePromptRegistry();
             storage = overrides?.Storage ?? new UnavailableStorageService();
-            assets = new UnavailableAssetService();
+            // Assets live in the Runtime Service's content-addressed store, so the runtime port is
+            // the only asset implementation the host can offer. A runtime that does not speak the
+            // asset surface keeps the typed unavailable shell instead of failing at call time.
+            assets = runtime as IAssetService ?? new UnavailableAssetService();
             permissions = overrides?.Permissions ?? new UnavailablePermissionService();
             log = new UnavailableLoggingService();
             state = HostState.Created;

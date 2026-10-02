@@ -21,7 +21,9 @@ namespace MarcusAwakeFramework.Api
             ProviderId = ContractGuard.Id(providerId, nameof(providerId));
             RouteId = ContractGuard.Id(routeId, nameof(routeId));
             ProviderKind = ContractGuard.Id(providerKind, nameof(providerKind));
-            if (ProviderKind != "openai_compatible" && ProviderKind != "anthropic" && ProviderKind != "ollama") throw new ArgumentException("Unsupported provider kind.", nameof(providerKind));
+            // 与 ProviderKindCodec.TryParseWireName、RuntimeServiceHost 的准入名单三处同源；
+            // 少一处就在那一层把整条形状拒掉。player2 只生图，但它是合法形状。
+            if (ProviderKind != "openai_compatible" && ProviderKind != "anthropic" && ProviderKind != "ollama" && ProviderKind != "player2") throw new ArgumentException("Unsupported provider kind.", nameof(providerKind));
             BaseUrl = ContractGuard.Id(baseUrl, nameof(baseUrl));
             DefaultModel = ContractGuard.Id(defaultModel, nameof(defaultModel));
             CredentialReference = string.IsNullOrWhiteSpace(credentialReference) ? string.Empty : ContractGuard.Id(credentialReference, nameof(credentialReference));

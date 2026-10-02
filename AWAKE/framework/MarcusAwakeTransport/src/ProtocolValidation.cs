@@ -328,7 +328,8 @@ namespace MarcusAwakeTransport
                 || StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeStorageTimelineAppend)
                 || StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeStorageTimelineRead)
                 || StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeRagIngest)
-                || StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeRagSearch);
+                || StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeRagSearch)
+                || StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeAssetRead);
         }
 
         private static bool IsResponseMessageType(string value)
@@ -341,6 +342,7 @@ namespace MarcusAwakeTransport
                 || StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeShutdownAck)
                 || StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeStorageResult)
                 || StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeRagResult)
+                || StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeAssetResult)
                 || StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeError);
         }
 
@@ -388,8 +390,10 @@ namespace MarcusAwakeTransport
                 StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeStorageTimelineRead) ||
                 StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeRagIngest) ||
                 StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeRagSearch) ||
+                StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeAssetRead) ||
                 StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeStorageResult) ||
                 StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeRagResult) ||
+                StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeAssetResult) ||
                 StringComparer.Ordinal.Equals(value, ProtocolConstants.MessageTypeError)) return ProtocolDecision.Accepted();
             return ProtocolDecision.Rejected(ProtocolErrorCode.InvalidMessageType, "message_type");
         }

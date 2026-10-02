@@ -32,6 +32,7 @@ internal static class Program
         if (args.Length == 1 && StringComparer.Ordinal.Equals(args[0], "--provider-outcome-ledger")) return RuntimeProviderOutcomeLedgerTests.Run();
         if (args.Length == 1 && StringComparer.Ordinal.Equals(args[0], "--runtime-service-log")) return RuntimeServiceLogTests.Run();
         if (args.Length == 1 && StringComparer.Ordinal.Equals(args[0], "--rag-client")) return await RagClientTests.RunAsync().ConfigureAwait(false);
+        if (args.Length == 1 && StringComparer.Ordinal.Equals(args[0], "--media-client")) return await MediaClientTests.RunAsync().ConfigureAwait(false);
         if (!OperatingSystem.IsWindows())
         {
             Console.Error.WriteLine("FAIL windows_required");

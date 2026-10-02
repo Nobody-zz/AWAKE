@@ -14,7 +14,8 @@ internal enum ProviderWireOperation
     ProfileRemove,
     Models,
     Complete,
-    Stream
+    Stream,
+    ImageGenerate
 }
 
 internal sealed class ProviderWireRequest
@@ -35,7 +36,8 @@ internal sealed class ProviderWireRequest
         double? temperature = null,
         string? responseSchemaJson = null,
         ProviderStreamBudget? resourceBudget = null,
-        string? credentialSecret = null)
+        string? credentialSecret = null,
+        ProviderImageWireRequest? image = null)
     {
         Operation = operation;
         ProfileId = profileId;
@@ -53,6 +55,7 @@ internal sealed class ProviderWireRequest
         Temperature = temperature;
         ResponseSchemaJson = responseSchemaJson;
         ResourceBudget = resourceBudget;
+        Image = image;
     }
 
     internal ProviderWireOperation Operation { get; }
@@ -71,6 +74,98 @@ internal sealed class ProviderWireRequest
     internal double? Temperature { get; }
     internal string? ResponseSchemaJson { get; }
     internal ProviderStreamBudget? ResourceBudget { get; }
+    internal ProviderImageWireRequest? Image { get; }
+}
+
+internal sealed class ProviderImageWireRequest
+{
+    internal ProviderImageWireRequest(
+        string prompt,
+        string negativePrompt,
+        int width,
+        int height,
+        string model,
+        string referenceMediaType,
+        byte[]? referenceImage,
+        string logicalKind,
+        string createdByTask,
+        string campaignId,
+        string timelineId,
+        string provenance,
+        string retentionClass)
+    {
+        Prompt = prompt;
+        NegativePrompt = negativePrompt;
+        Width = width;
+        Height = height;
+        Model = model;
+        ReferenceMediaType = referenceMediaType;
+        ReferenceImage = referenceImage;
+        LogicalKind = logicalKind;
+        CreatedByTask = createdByTask;
+        CampaignId = campaignId;
+        TimelineId = timelineId;
+        Provenance = provenance;
+        RetentionClass = retentionClass;
+    }
+
+    internal string Prompt { get; }
+    internal string NegativePrompt { get; }
+    internal int Width { get; }
+    internal int Height { get; }
+    internal string Model { get; }
+    internal string ReferenceMediaType { get; }
+    internal byte[]? ReferenceImage { get; }
+    internal string LogicalKind { get; }
+    internal string CreatedByTask { get; }
+    internal string CampaignId { get; }
+    internal string TimelineId { get; }
+    internal string Provenance { get; }
+    internal string RetentionClass { get; }
+}
+
+internal sealed class ProviderImageProjection
+{
+    internal ProviderImageProjection(
+        string assetId,
+        string contentHash,
+        string mediaType,
+        long byteLength,
+        string logicalKind,
+        string createdByTask,
+        string ownerExtensionId,
+        string campaignId,
+        string timelineId,
+        string provenance,
+        string retentionClass,
+        string resolvedModel)
+    {
+        AssetId = assetId;
+        ContentHash = contentHash;
+        MediaType = mediaType;
+        ByteLength = byteLength;
+        LogicalKind = logicalKind;
+        CreatedByTask = createdByTask;
+        OwnerExtensionId = ownerExtensionId;
+        CampaignId = campaignId;
+        TimelineId = timelineId;
+        Provenance = provenance;
+        RetentionClass = retentionClass;
+        ResolvedModel = resolvedModel;
+    }
+
+    internal string AssetId { get; }
+    internal string ContentHash { get; }
+    internal string MediaType { get; }
+    internal long ByteLength { get; }
+    internal string LogicalKind { get; }
+    internal string CreatedByTask { get; }
+    internal string OwnerExtensionId { get; }
+    internal string CampaignId { get; }
+    internal string TimelineId { get; }
+    internal string Provenance { get; }
+    internal string RetentionClass { get; }
+    internal string ResolvedModel { get; }
 }
 
 internal sealed class ProviderWireMessage
@@ -209,6 +304,13 @@ internal static class ProviderWireAdapter
                 return TryParseCredentialUpsert(root, envelope, out request, out error);
             }
 
+            // The media contract exposes only a logical route, so an image payload is scoped by route
+            // alone and must not go through the strict profile/provider scope check below.
+            if (operation == ProviderWireOperation.ImageGenerate)
+            {
+                return TryParseImage(root, envelope, out request, out error);
+            }
+
             if (!TryReadScope(root, envelope, out error)) return false;
             if (operation == ProviderWireOperation.ProfileRemove || operation == ProviderWireOperation.Models)
             {
@@ -229,6 +331,71 @@ internal static class ProviderWireAdapter
             error = "provider_schema_mismatch";
             return false;
         }
+    }
+
+    private static bool TryParseImage(JsonElement root, PipeEnvelope envelope, out ProviderWireRequest? request, out string error)
+    {
+        request = null;
+        error = string.Empty;
+        if (!TryReadImageScope(root, envelope, out error)) return false;
+        if (!TryReadRequiredString(root, "prompt", out var prompt, out error)) return false;
+
+        byte[]? referenceImage = null;
+        var referenceText = TryReadOptionalString(root, "reference_image_base64");
+        if (!string.IsNullOrEmpty(referenceText))
+        {
+            try
+            {
+                referenceImage = Convert.FromBase64String(referenceText);
+            }
+            catch (FormatException)
+            {
+                error = "provider_schema_mismatch";
+                return false;
+            }
+
+            if (referenceImage.Length == 0)
+            {
+                error = "provider_schema_mismatch";
+                return false;
+            }
+        }
+
+        var image = new ProviderImageWireRequest(
+            prompt,
+            TryReadOptionalString(root, "negative_prompt"),
+            TryReadOptionalInt(root, "width"),
+            TryReadOptionalInt(root, "height"),
+            TryReadOptionalString(root, "model"),
+            TryReadOptionalString(root, "reference_media_type"),
+            referenceImage,
+            TryReadOptionalString(root, "logical_kind"),
+            TryReadOptionalString(root, "created_by_task"),
+            TryReadOptionalString(root, "campaign_id"),
+            TryReadOptionalString(root, "timeline_id"),
+            TryReadOptionalString(root, "provenance"),
+            TryReadOptionalString(root, "retention_class"));
+
+        request = new ProviderWireRequest(
+            ProviderWireOperation.ImageGenerate,
+            envelope.TaskScope!.ProfileId,
+            envelope.TaskScope.ProviderId,
+            envelope.TaskScope.RouteId,
+            model: image.Model,
+            image: image);
+        return true;
+    }
+
+    private static string TryReadOptionalString(JsonElement root, string name)
+    {
+        if (!root.TryGetProperty(name, out var property) || property.ValueKind != JsonValueKind.String) return string.Empty;
+        return property.GetString() ?? string.Empty;
+    }
+
+    private static int TryReadOptionalInt(JsonElement root, string name)
+    {
+        if (!root.TryGetProperty(name, out var property) || property.ValueKind != JsonValueKind.Number) return 0;
+        return property.TryGetInt32(out var value) ? value : 0;
     }
 
     internal static string BuildProfileResult(ProviderWireRequest request, string status)
@@ -306,6 +473,29 @@ internal static class ProviderWireAdapter
         }
 
         return SerializeBounded(payload);
+    }
+
+    internal static string BuildImageResult(ProviderWireRequest request, ProviderImageProjection image)
+    {
+        return SerializeBounded(new Dictionary<string, object?>(StringComparer.Ordinal)
+        {
+            ["schema"] = ProtocolConstants.ProviderImageResultSchemaV1,
+            ["profile_id"] = request.ProfileId,
+            ["provider_id"] = request.ProviderId,
+            ["route_id"] = request.RouteId,
+            ["asset_id"] = image.AssetId,
+            ["content_hash"] = image.ContentHash,
+            ["media_type"] = image.MediaType,
+            ["byte_length"] = image.ByteLength,
+            ["logical_kind"] = image.LogicalKind,
+            ["created_by_task"] = image.CreatedByTask,
+            ["owner_extension_id"] = image.OwnerExtensionId,
+            ["campaign_id"] = image.CampaignId,
+            ["timeline_id"] = image.TimelineId,
+            ["provenance"] = image.Provenance,
+            ["retention_class"] = image.RetentionClass,
+            ["resolved_model"] = image.ResolvedModel
+        });
     }
 
     internal static string BuildStreamEventPayload(ProviderWireRequest request, ProviderStreamEventProjection streamEvent)
@@ -449,7 +639,9 @@ internal static class ProviderWireAdapter
             return false;
         }
 
-        if (providerKind is not ("openai_compatible" or "anthropic" or "ollama")
+        // 形状白名单在三处同源：这里、RuntimeServiceHost 的准入名单、框架侧的 ProviderProfileRequest。
+        // 漏任一处都在那一层把整条形状拒掉，而工厂里那段适配器代码就成了够不着的死代码。
+        if (providerKind is not ("openai_compatible" or "anthropic" or "ollama" or "player2")
             || !IsBoundedUtf8(baseUrl, MaximumUrlBytes)
             || !Uri.TryCreate(baseUrl, UriKind.Absolute, out var uri)
             || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps)
@@ -659,11 +851,47 @@ internal static class ProviderWireAdapter
                 operation = ProviderWireOperation.Stream;
                 schema = ProtocolConstants.ProviderStreamSchemaV1;
                 return true;
+            case ProtocolConstants.MessageTypeProviderImageV1:
+                operation = ProviderWireOperation.ImageGenerate;
+                schema = ProtocolConstants.ProviderImageSchemaV1;
+                return true;
             default:
                 operation = default;
                 schema = string.Empty;
                 return false;
         }
+    }
+
+    /// <summary>
+    /// Media scope check. The framework's media contract exposes only a logical route, so the
+    /// runtime resolves profile and provider identity itself; when the caller does send them
+    /// they must still agree with the task scope.
+    /// </summary>
+    private static bool TryReadImageScope(JsonElement root, PipeEnvelope envelope, out string error)
+    {
+        error = string.Empty;
+        var scope = envelope.TaskScope!;
+        if (!root.TryGetProperty("schema", out var schema) || schema.ValueKind != JsonValueKind.String
+            || !StringComparer.Ordinal.Equals(schema.GetString(), ProtocolConstants.ProviderImageSchemaV1)
+            || !root.TryGetProperty("route_id", out var route) || route.ValueKind != JsonValueKind.String
+            || !StringComparer.Ordinal.Equals(route.GetString(), scope.RouteId))
+        {
+            error = "provider_schema_mismatch";
+            return false;
+        }
+
+        foreach (var name in new[] { "profile_id", "provider_id" })
+        {
+            if (!root.TryGetProperty(name, out var property)) continue;
+            var expected = StringComparer.Ordinal.Equals(name, "profile_id") ? scope.ProfileId : scope.ProviderId;
+            if (property.ValueKind != JsonValueKind.String || !StringComparer.Ordinal.Equals(property.GetString(), expected))
+            {
+                error = "provider_schema_mismatch";
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static bool TryReadScope(JsonElement root, PipeEnvelope envelope, out string error)

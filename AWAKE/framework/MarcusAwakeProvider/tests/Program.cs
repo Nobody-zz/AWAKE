@@ -43,6 +43,7 @@ internal static class Program
             ("player2_image_idempotency_key_when_provided", ProviderTests.Player2ImageIdempotencyKeyIsSentWhenProvidedAsync),
             ("player2_image_authorization_follows_cloud", ProviderTests.Player2ImageAuthorizationFollowsCloudNotShapeAsync),
             ("player2_chat_operations_report_unsupported", ProviderTests.Player2ChatOperationsReportUnsupportedAsync),
+            ("player2_connection_report_does_not_claim_text_capability", ProviderTests.Player2ConnectionReportDoesNotClaimTextCapabilityAsync),
             // 生图（片 1）：两条「改坏就会红」的判据
             ("image_payload_data_uri_prefix_stripped_exactly", ProviderTests.ImagePayloadDataUriPrefixIsStrippedExactlyAsync),
             ("image_media_type_follows_bytes_not_declared_mime", ProviderTests.ImageMediaTypeFollowsBytesNotDeclaredMimeAsync),

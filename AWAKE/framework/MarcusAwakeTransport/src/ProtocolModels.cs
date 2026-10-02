@@ -49,28 +49,33 @@ namespace MarcusAwakeTransport
         public const string CapabilityProviderModelsV1 = "provider.models.v1";
         public const string CapabilityProviderCompleteV1 = "provider.complete.v1";
         public const string CapabilityProviderStreamV1 = "provider.stream.v1";
+        public const string CapabilityProviderImageV1 = "provider.image.v1";
         public const string MessageTypeProviderProfileUpsertV1 = "provider.profile_upsert.v1";
         public const string MessageTypeProviderCredentialUpsertV1 = "provider.credential_upsert.v1";
         public const string MessageTypeProviderProfileRemoveV1 = "provider.profile_remove.v1";
         public const string MessageTypeProviderModelsV1 = "provider.models.v1";
         public const string MessageTypeProviderCompleteV1 = "provider.complete.v1";
         public const string MessageTypeProviderStreamV1 = "provider.stream.v1";
+        public const string MessageTypeProviderImageV1 = "provider.image.v1";
         public const string MessageTypeProviderProfileResult = "provider_profile_result";
         public const string MessageTypeProviderCredentialResult = "provider_credential_result";
         public const string MessageTypeProviderModelsResult = "provider_models_result";
         public const string MessageTypeProviderResult = "provider_result";
         public const string MessageTypeProviderStreamEvent = "provider_stream_event";
+        public const string MessageTypeProviderImageResult = "provider_image_result";
         public const string ProviderProfileUpsertSchemaV1 = "marcus-awake.provider.profile_upsert.v1";
         public const string ProviderCredentialUpsertSchemaV1 = "marcus-awake.provider.credential_upsert.v1";
         public const string ProviderProfileRemoveSchemaV1 = "marcus-awake.provider.profile_remove.v1";
         public const string ProviderModelsSchemaV1 = "marcus-awake.provider.models.v1";
         public const string ProviderCompleteSchemaV1 = "marcus-awake.provider.complete.v1";
         public const string ProviderStreamSchemaV1 = "marcus-awake.provider.stream.v1";
+        public const string ProviderImageSchemaV1 = "marcus-awake.provider.image.v1";
         public const string ProviderResultSchemaV1 = "marcus-awake.provider.result.v1";
         public const string ProviderProfileResultSchemaV1 = "marcus-awake.provider.profile_result.v1";
         public const string ProviderCredentialResultSchemaV1 = "marcus-awake.provider.credential_result.v1";
         public const string ProviderModelsResultSchemaV1 = "marcus-awake.provider.models_result.v1";
         public const string ProviderStreamEventSchemaV1 = "marcus-awake.provider.stream_event.v1";
+        public const string ProviderImageResultSchemaV1 = "marcus-awake.provider.image_result.v1";
         public const string ProviderErrorSchemaV1 = "marcus-awake.provider.error.v1";
         public const string GenericErrorSchemaV1 = "marcus-awake.error.v1";
         public const string MessageTypeStorageKvGet = "storage.kv_get";
@@ -82,6 +87,18 @@ namespace MarcusAwakeTransport
         public const string MessageTypeRagSearch = "rag.search";
         public const string MessageTypeStorageResult = "storage_result";
         public const string MessageTypeRagResult = "rag_result";
+        public const string CapabilityAssetRead = "asset.read";
+        public const string MessageTypeAssetRead = "asset.read";
+        public const string MessageTypeAssetResult = "asset_result";
+        public const string AssetReadSchemaV1 = "marcus-awake.asset.read.v1";
+        public const string AssetResultSchemaV1 = "marcus-awake.asset.result.v1";
+
+        /// <summary>
+        /// Largest asset slice a single asset read frame may return. A stored asset is far larger than
+        /// one frame, so the game process reads it back in bounded chunks. 64 KiB of raw bytes becomes
+        /// ~87 KiB once base64 encoded, which stays inside <see cref="MaxPayloadBytes"/> (128 KiB).
+        /// </summary>
+        public const int MaxAssetChunkBytes = 65536;
     }
 
     public sealed class BootstrapDescriptor

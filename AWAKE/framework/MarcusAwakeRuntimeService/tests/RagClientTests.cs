@@ -32,7 +32,9 @@ internal static class RagClientTests
             return 1;
         }
 
-        var dataRoot = Path.Combine(Path.GetTempPath(), "marcus-awake-rag-client-" + Guid.NewGuid().ToString("N"));
+        // Under the test output directory rather than the system temp root: the confined sandbox
+        // denies creating new directories directly under %TEMP%, and this keeps the run hermetic.
+        var dataRoot = Path.Combine(AppContext.BaseDirectory, "_rag-client", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(dataRoot);
         Environment.SetEnvironmentVariable("MARCUS_AWAKE_RUNTIME_DATA_ROOT", dataRoot);
 
