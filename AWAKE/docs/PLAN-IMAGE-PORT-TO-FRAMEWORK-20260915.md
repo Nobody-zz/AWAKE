@@ -54,7 +54,7 @@ AWAKE 本地化时只留了纯文本三路。**媒体消息类型、`ProviderBin
 | `Companion/ProviderPresets.cs` | 11 条预设，其中 `player2` → `https://api.player2.game/v1` | `MarcusAwakeRuntimeService/src/ProviderRegistry.cs` | ⏳ 片 2 |
 | `Shared/ProtocolContracts.cs:550 / :564` | `ImageGenerateRequestPayload`、`ProviderAssetResponsePayload` | `MarcusAwakeTransport/src/` | ⏳ 片 2（**碰共享协议**） |
 | `Companion/CompanionConnection.cs:601` | `RunImageAsync`：收帧 → 生成 → `ImportGeneratedAsync` 入 CAS → 回帧 | `MarcusAwakeRuntimeService/src/RuntimeServiceHost.cs` | ⏳ 片 2 |
-| `Companion/AssetEngine.cs`（728 行） | 资产 CAS | `MarcusAwakeStorage/src/` | ⏳ 片 3 |
+| `Companion/AssetEngine.cs`（728 行） | 资产 CAS | `MarcusAwakeStorage/src/` | ✅ 片 3（E2） |
 | `MarcusAIFramework/Core/GovernedServices.cs:150` | `GovernedMediaService`：校验 RouteId / CloudExportClassification → `ensurePersistentSession` → 转桥 | `MarcusAwakeFramework/src/HostApi.cs:1053` 换真实现 | ⏳ 片 2 |
 | `MarcusAIFramework/Companion/CompanionClientBridge.cs:507` | 模组侧发帧 / 收帧 | 同上 | ⏳ 片 2 |
 
@@ -82,11 +82,35 @@ AWAKE 本地化时只留了纯文本三路。**媒体消息类型、`ProviderBin
 - 为什么先它：**风险最低（单模块、纯库、无进程边界）、可离线证死、复用已测逻辑**（`AwakeImageShape` 的 17 条用例已覆盖线上形状）。
 - 产出：适配器 + 判据。**验台位置见 §8**——不新建 harness，扩既有的 `MarcusAwakeProvider/tests`。
 
-**片 2 · 打通线**：Transport 加 media 消息 → `RuntimeServiceHost` 加分派 → `HostApi` 换真实现。**这一步才碰共享协议**，也是最容易返工的一步。
+**片 2 · 打通线**：Transport 加 media 消息 → `RuntimeServiceHost` 加分派 → `HostApi` 换真实现。**这一步才碰共享协议**，也是最容易返工的一步。拆成三段做，每段单独取绿：
 
-**片 3 · 资产落点**：`AssetEngine` 搬进 `MarcusAwakeStorage`。
+**片 2a · 生图走 Route**（**已完成（E2）**，见 §5）
+- `provider.image.v1` 登记为 **provider request** ⇒ 白拿幂等台账、取消、截止、错误映射；运行时反射调 `ProviderRouter.GenerateImageAsync`；出图字节**入 CAS**，回帧**只带 `AssetHandle`**。
+- 新增 `MarcusAwakeRuntimeService/src/ProviderImageBridge.cs`、`MarcusAwakeFramework/src/RuntimeServiceClient.Media.cs`、`MarcusAwakeRuntimeService/tests/MediaClientTests.cs`。
+- **媒体调用方只有逻辑 route**：`ImageGenerationRequest` 不暴露 ProfileId/ProviderId，而 `ProviderProfileEntry.Matches` 要求 ProfileId 逐字相等、anchor 要求 ProviderId 逐字相等 ⇒ 新增 `MatchesRoute` / `DescribeImageCandidates`（**只比 owner/campaign/timeline/session/RouteId**）。逻辑 route 就是身份，profile/provider 由运行时解析。
+- **字节绝不回游戏进程**：立绘缓存落在游戏进程的 Application 数据桶，运行时算不出那条路径，而单帧只有 256 KB。
 
-**片 4 · 调用方切换**：`AWAKE/src` 改走 `Host.Media`；`AwakeImage*.cs`（6 文件、1200+ 行）降级为回退路径或退役。
+**片 2b · 资产分块读回**（**已完成（E2）**，见 §5）
+- 新消息 `asset.read` / `asset_result`，**存储家族 ⇒ payload 不带 `schema`**；单块上限 `ProtocolConstants.MaxAssetChunkBytes = 65536`（64 KiB 原始字节 base64 后约 87 KiB，卡在 128 KiB 载荷上限内）。
+- 每块回带**完整 `AssetHandle` 身份字段**，客户端逐块校验 asset_id / offset / 身份一致性，拼完再比总长度。
+- `HostApi` 的 `assets` 换成 `runtime as IAssetService ?? new UnavailableAssetService()`；**其余 7 个 `IAssetService` 方法本片显式回 typed `Unsupported`**（不静默）。
+
+**片 2c · 云导出分类**（**框架侧已完成（E2）/ mod 侧只有 E1**，见 §5）
+- 片 2a 曾用「非 `none` 一律拒」当占位。片 2c 把它换成**受约束接受**：分类必须非空、且是 ≤64 字节的小写标识符，否则本地拒且**不打 HTTP**。
+- **真正的门在 mod 侧，且与文本对话共用同一份实现**：新增 `AWAKE/src/CloudExportGate.cs`，`AiTaskGateway` 改为委托；新增分类 `npc_persona` 与配置开关 `AllowCloudExportNpcPersona`（**默认关闭**，不随玩家状态一起放开）；立绘路径接上这道门。
+- **为什么框架不自己当门**：框架的 `IPermissionService` 默认是 `UnavailablePermissionService`，而 AWAKE 用的是自己那套 `PermissionCatalog`/`PermissionGate`；文本路径也是「mod 跑门、框架只承载分类」。让框架当门会把合法调用全拒掉，反而逼调用方用 `none` 撒谎。
+
+**片 3 · 资产落点**：`AssetEngine` 搬进 `MarcusAwakeStorage`。**已完成（E2）**，见 §5。
+
+- 新增 `MarcusAwakeStorage/src/{AssetStoreOptions.cs, AssetContentInspector.cs, ContentAddressedAssetStore.cs}`；`ContentAddressedAssetStore : IAssetService` 八方法全实现，落地形态照设计大纲 §6 的文件树（`objects/<hash 前 2 位>/<hash>`、`metadata/<asset-id>.json`、`temp/`、`quarantine/`、`exports/`）。
+- 与原版 `AssetEngine` 的**刻意偏离**：① **不引 SQLite** —— §6 的形态本来就是文件树，于是资产库不推 `SchemaVersion`，也能脱离数据库单独构造、单独测；② **格式判定不复用 `ProviderImageMedia.SniffFormat`** —— Provider 只引用 Transport、Storage 只引用 Framework，跨依赖图复用会把 Provider 拉进 Storage 的引用闭包，所以 `AssetContentInspector` 是第二道防线。
+- **与片 2 的接缝（本片新发现的硬约束）**：`IAssetService.ReadAsync` 返回的 `AssetContent` 是**整包字节**，而协议单帧上限只有 256 KB（`ProtocolConstants.MaxFrameBytes`）且**没有分块机制** ⇒ 片 2 必须给「资产读回」加分块，否则 PNG 立绘根本过不去。
+
+**片 4 · 调用方切换**（**mod 侧只有 E1**，见 §5）：`AWAKE/src` 改走 `Host.Media` + `Host.Assets`；`AwakeImage*.cs`（6 文件、1200+ 行）**保留为回退路径**。
+- 新增 `AWAKE/src/AwakePortraitGenerator.cs` = 立绘生成的**唯一入口**，顺序固定：**先过云外发门 → 再选路**。首选框架路（`Host.Media` 出图 → `Host.Assets` 取字节；钥匙与出网都在运行时进程里），框架路**不可用**时退回 B 路。
+- **退回的边界写死了**：只有「这条路根本没法驱动」才退（运行时端口缺失 / 模型名缺失 / 凭据或 profile 注册失败 / 组合异常）。**框架路跑过但失败（provider 报错、策略拒绝）不退回** —— 再打一发 B 路会双倍消耗额度，还会把策略拒绝伪装成网络抖动。每次退回都写日志说明原因，不静默降级。
+- **退回不构成绕过治理**：门在选路之前就跑完，两条路共用同一个判决；`NpcDialogueVM` 不许直连 `AwakeImageClient`。
+- 新增 MCM 栏 `PortraitImageModel`（Order=4，其后各项顺延）：框架 profile 的 `default_model` **不能为空**，而 AWAKE 原本压根不发模型名。Player2 形状不认模型名（给非空占位）；OpenAI 兼容形状必须玩家填，留空 ⇒ 退回 B 路（**不猜模型名**）。
 
 **ComfyUI 排在片 1–4 之后。**
 
@@ -100,6 +124,30 @@ AWAKE 本地化时只留了纯文本三路。**媒体消息类型、`ProviderBin
 3. **`Idempotency-Key` 头必须在**——判据要查**请求头**，不是只查 body。
 4. **前缀 + 上限**：喂 `data:image/jpeg;base64,` 前缀样本，断言解出字节数 **== 原图字节数**（不是 +15）；喂超限样本，断言抛 `media.provider_payload_too_large`。
 5. **变异检验**：至少改坏两处（① 去掉剥前缀 ② 把 8 MB 上限改成 `int.MaxValue`），确认对应用例**会红**。**全绿不算证据。**
+
+**片 3（离线，可证死）**
+1. 判据 6 条进既有验台 `MarcusAwakeStorage/tests`（新增 `AssetStoreTests.cs`，已补 `<Compile Include>`；**该测试工程是显式清单，新增文件必须手改 csproj**）：`asset_import_read_dedup` / `asset_rejects_and_quarantine` / `asset_scope_ownership_and_pin` / `asset_list_paging_and_cleanup` / `asset_export_and_guards` / `asset_corruption_boundaries`。
+2. **实测 `PASS ALL`（12/12，含既有 6 条）**；`dotnet build -c Release -m:1 -nodeReuse:false` 0 错 0 警。
+3. **变异检验：五处全红，且每处只红对应的那一条**（每轮改坏后逐字节还原，还原后 SHA256 与绿版一致 `80F464E9C427D4C1F34242F3F5C5CF7D485D284BC622F5A805703C44B5308451`）：① 去掉内容格式校验 → `asset_rejects_and_quarantine`；② 去掉「有未读元数据就不回收对象」→ `asset_corruption_boundaries`；③ 去掉引用安全删除 → `asset_import_read_dedup`；④ 去掉所有者范围校验 → `asset_scope_ownership_and_pin`；⑤ 原子写不覆盖（`File.Move(staging, target, true)` 去掉 `overwrite`）→ `asset_scope_ownership_and_pin`。
+4. **这一片抓到一个真缺陷。** 早先 `WriteAtomically` 写的是 `File.Move(staging, target)` 并用 `catch (IOException)` 吞掉：**新建文件时成功，改写既有文件时每一次都被静默丢弃** —— 钉住一条资产再读回来，`Pinned` 还是 `false`。判据 3 里那句「钉住必须能在元数据里看见」把它抓出来了。这个缺陷编译得过、新建路径也跑得通，**只有会红的门才看得见它**。
+
+**片 2a / 2b / 2c（离线，可证死）**
+1. 判据进 `MarcusAwakeRuntimeService/tests/MediaClientTests.cs`（**该测试工程是显式 `<Compile Include>` 清单 + `Program.cs` 开关表，两处都要手工登记**），跑法 `--media-client`。
+2. **实测 `MEDIA_CLIENT 12/12 PASS`**；对照组 `RAG_CLIENT 9/9 PASS`（无回归）；`dotnet build -c Release -m:1 -nodeReuse:false` 0 错 0 警（只剩 `NU1900` 离线警告）。
+3. 判据清单：端到端出 handle + CAS 落盘（路径/字节数/SHA256 全对）／同字节去重不新增对象／空 prompt 在任何 HTTP 之前本地拒／合法分类**放行并真的到达 provider**／空分类本地拒且不打 HTTP／非法分类本地拒且不打 HTTP／未知 route 由运行时 typed 拒且不落库／provider 401 映射成 `Denied`／资产分块读回字节逐字节一致（且断言 fixture **大于单块**，否则判据覆盖不到分块）／未知 asset_id ⇒ `asset.not_found`／空白 asset_id ⇒ `asset.asset_id_required`／七个未实现方法逐个 typed `Unsupported`。
+4. **变异检验（五处，均已逐字节还原复绿）**：① 把严格 `TryReadScope` 插回 image 分派之前 → 3/6 FAIL `provider.provider_schema_mismatch`；② `ProviderRegistry.ReadImage` 翻末位字节 → 4/6 FAIL `content_hash_invalid`；③ `done` 恒真 → 9/10 FAIL `asset.byte_length_mismatch`；④ 切片翻 1 bit → 9/10 FAIL `asset_read_bytes_corrupt`；⑤ 分类格式校验恒真 → 11/12 FAIL（malformed 那条）；去掉空分类守卫 → 11/12 FAIL（blank 那条）。
+5. **这一片抓到两个真缺陷。**
+   - `ProviderWireAdapter.TryParse` 里 `TryReadScope` 排在 image 分派**之前**，而媒体契约只暴露逻辑 route ⇒ **每个真调用都被 `provider.provider_schema_mismatch` 拒掉**。
+   - **加一条协议消息要改六处白名单，不是两处**：`MarcusAwakeTransport/src/ProtocolValidation.cs` 的 `ValidateMessageType` / `IsTaskMessageType` / `IsResponseMessageType`，加 `MarcusAwakeRuntimeService/src/RuntimeServiceHost.cs` 的 `IsKnownRequestMessage` / `IsTaskMessage` / `RequiredCapabilityForMessage`。漏任一处都在 `ProtocolCodec.SerializeEnvelope` 抛 `ArgumentException`，被客户端包成 `runtime.provider_call_failed/InternalFailure`，**真因完全看不出来**（这次连踩两次）。
+6. **mod 侧（片 2c 后半）只有 E1。** `AWAKE` 没有自己的离线验台（无 `Awake.SdkSmoke` 工程），`CloudExportGate` / `npc_persona` / `AwakeConfig.AllowCloudExportNpcPersona` / `NpcDialogueVM` 那条门**只有「编译通过」这一级证据**，真行为必须等 E4。**不许把它说成已验过。**
+7. **跑判据必须一次性提权**（沙箱禁命名管道，不提权一律 `client_start_failed`）；跑前把三个环境变量指向临时目录，且**在构造客户端之前**设。
+
+**片 4（mod 侧只有 E1；框架侧新增的两处白名单修正是 E2）**
+1. **框架侧修掉了「形状白名单三处同源、只改一处」这个真缺陷。** `player2` 这条形状在片 1 就进了适配器工厂，但**协议层压根到不了它**：白名单在三个地方各写了一遍 —— `MarcusAwakeTransport` 无、`RuntimeServiceHost.TryValidateProviderPayload`（准入）、`ProviderWireAdapter.TryParseProfileUpsert`（线解析）、`ProviderProfileRequest` 构造器（框架客户端）。**只改前两处仍然红**，第三处补上才通。
+2. 新增判据 `media_image_player2_profile_kind_is_accepted_end_to_end`：注册 `provider_kind="player2"` 的 profile → 走 Player2 形状出图 → 断言 handle 的 `content_hash`/`media_type` 与假端点一致、且请求路径含 `image/generate`。**这条判据的红→绿就是上面那个缺陷的取证**（首跑 `player2_profile_rejected:provider.provider_schema_mismatch`，逐个补白名单后转绿）。
+3. 另修 `Player2Provider` 缺 5 参构造器：`ProviderRegistry.CreateAdapter` 只认「参数个数 == 5」的那一个构造器（`OpenAiCompatibleProvider` 也是同一套），原来 Player2 只有 6 参版 ⇒ 反射造不出来。
+4. **mod 侧（`AwakePortraitGenerator` / MCM 新栏 / `NpcDialogueVM` 改线）只有 E1（编译通过）。** `AWAKE` 没有自己的离线验台，这条改动**一次都没红过**，真行为只能等 E4。**不许说成已验。**
+5. 实测：`MEDIA_CLIENT 13/13 PASS`、`RAG_CLIENT 9/9 PASS`、Storage `PASS ALL`（连跑 3 次稳定）、Framework `PASS ALL: 12` + `P3D-A2 6`、Provider `PASS ALL`、Transport `PASS_COUNT=7 FAIL_COUNT=0`、AWAKE 主工程 1.4.8 构建 0 错。
 
 **片 2–4**：一律以**游戏内**为准（见 `docs/AWAKE-ROADMAP.md`「现状」节——五条线一次都没进过游戏）。**离线全绿不算过版。**
 
@@ -159,6 +207,13 @@ AWAKE 本地化时只留了纯文本三路。**媒体消息类型、`ProviderBin
 | 拆掉字节上限 | 上限判据红 | **1 条红**（`image_asset_limit_enforced`）|
 | 不做 sniff、直接假定 `png` | 媒体类型判据红 | **2 条红**（`..._follows_bytes_not_declared_mime`、`..._prefix_stripped_exactly`）|
 
-### 挂账（片 2 处理）
+### 挂账（片 2 处理）—— **已清（E2）**
 
-**`Player2Provider` 的连接检查走基类实现，会给 `TextGeneration = Unverified` —— 而它根本不提供文字。** 根因两条：基类 `TestConnectionAsync` 不是 `virtual`（覆写不了）、`ProviderCapabilityId` 里没有 `ImageGeneration`。这两样都指向「能力上报」，而能力上报本来就要上协议 —— 所以归到片 2，不在这里打补丁。
+**`Player2Provider` 的连接检查走基类实现，会给 `TextGeneration = Unverified` —— 而它根本不提供文字。** 根因两条：基类 `TestConnectionAsync` 不是 `virtual`（覆写不了）、`ProviderCapabilityId` 里没有 `ImageGeneration`。
+
+两条都已修：
+1. `ProviderAdapterBase.TestConnectionAsync` 改成 `virtual`（带注释说明为什么：**只提供一部分能力的适配器必须能纠正基类的默认假设**）。
+2. `ProviderCapabilityId` 追加 `ImageGeneration`（**追加在末尾**，插中间会把既有取值整体挪位）。
+3. `Player2Provider` 覆写 `TestConnectionAsync`，如实报：`ModelDiscovery = Available`、`ImageGeneration = Unverified`（适配器提供它，但这次连通性检查**并没有真去出一张图**，不能替它宣称「已验证」）、`TextGeneration`/`Streaming`/`Usage`/`StructuredOutput` 全 `Unsupported`。
+
+判据：`MarcusAwakeProvider/tests` 新增 `player2_connection_report_does_not_claim_text_capability`（**该工程 `EnableDefaultItems=false` + `Program.cs` 开关表，两处都要手工登记**）。变异检验：把 `TextGeneration` 改回 `Unverified` ⇒ 该条 FAIL（`实得 Unverified`），已还原复绿。Provider 套件 `PASS ALL`。

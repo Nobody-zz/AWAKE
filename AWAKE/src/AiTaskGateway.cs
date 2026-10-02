@@ -43,6 +43,7 @@ internal sealed class AiTaskGateway : IDisposable
     private readonly Dictionary<string, AiRouteTurnEvents> _active = new Dictionary<string, AiRouteTurnEvents>(StringComparer.Ordinal);
     private readonly Dictionary<string, int> _generations = new Dictionary<string, int>(StringComparer.Ordinal);
     private readonly PermissionGate _permissionGate;
+    private readonly CloudExportGate _cloudExportGate;
     private bool _disposed;
 
     internal AiTaskGateway(IMarcusAiFrameworkHost host, PermissionGate permissionGate = null)
@@ -50,6 +51,7 @@ internal sealed class AiTaskGateway : IDisposable
         _host = host ?? throw new ArgumentNullException(nameof(host));
         _caller = new ExtensionId(AwakeConstants.OwnerValue);
         _permissionGate = permissionGate ?? new PermissionGate(host);
+        _cloudExportGate = new CloudExportGate(_permissionGate);
     }
 
     internal PermissionGate PermissionGate => _permissionGate;
@@ -498,55 +500,31 @@ internal sealed class AiTaskGateway : IDisposable
         RequestContext context,
         CancellationToken cancellationToken)
     {
-        AiTaskSubmitResult fail = new AiTaskSubmitResult { Ok = false, CorrelationId = context?.CorrelationId };
-        if (!CloudExportPolicy.IsKnownClassification(classification))
+        // 策略只有一份（见 CloudExportGate）：立绘生图走的是同一道门。
+        FrameworkError error = await _cloudExportGate
+            .EnsureAsync(classification, config, context, cancellationToken, "将当前对话与角色状态外发到云 AI Provider。")
+            .ConfigureAwait(false);
+        if (error == null) return null;
+
+        AwakeLog.Write("ai_task_cloud_export_denied classification=" + classification + " code=" + error.Code + " correlation=" + (context?.CorrelationId ?? "none"));
+        return new AiTaskSubmitResult
         {
-            fail.Error = FrameworkErrors.Create(
-                "awake.cloud_export_unknown",
-                FrameworkErrorCategory.InvalidRequest,
-                "The cloud export classification is unknown: " + classification,
-                context?.CorrelationId,
-                owner: AwakeConstants.OwnerValue);
-            fail.ErrorCode = fail.Error.Code;
-            fail.ErrorDisplay = "云外发分类无效。";
-            AwakeLog.Write("ai_task_cloud_export_unknown classification=" + classification + " correlation=" + (context?.CorrelationId ?? "none"));
-            return fail;
-        }
-        if (!CloudExportPolicy.IsClassificationAllowed(config, classification))
+            Ok = false,
+            Error = error,
+            ErrorCode = error.Code,
+            ErrorDisplay = DescribeCloudExportError(classification, error),
+            CorrelationId = context?.CorrelationId
+        };
+    }
+
+    private static string DescribeCloudExportError(string classification, FrameworkError error)
+    {
+        switch (error.Code)
         {
-            fail.Error = FrameworkErrors.Create(
-                "awake.cloud_export_disabled",
-                FrameworkErrorCategory.Denied,
-                "The cloud export classification is disabled: " + classification,
-                context?.CorrelationId,
-                owner: AwakeConstants.OwnerValue);
-            fail.ErrorCode = fail.Error.Code;
-            fail.ErrorDisplay = "云外发未启用：" + classification;
-            AwakeLog.Write("ai_task_cloud_export_disabled classification=" + classification + " correlation=" + (context?.CorrelationId ?? "none"));
-            return fail;
+            case "awake.cloud_export_unknown": return "云外发分类无效。";
+            case "awake.cloud_export_disabled": return "云外发未启用：" + classification;
+            default: return "云外发权限未授予：" + CloudExportGate.PermissionId(classification);
         }
-        if (!StringComparer.Ordinal.Equals(classification, CloudExportPolicy.None))
-        {
-            PermissionGateResult cloudPermission = await _permissionGate.EnsureAsync(
-                PermissionCatalog.CloudExportPermission(classification),
-                context,
-                cancellationToken,
-                "将当前对话与角色状态外发到云 AI Provider。").ConfigureAwait(false);
-            if (!cloudPermission.Granted)
-            {
-                fail.Error = cloudPermission.Error ?? FrameworkErrors.Create(
-                    "awake.permission_denied",
-                    FrameworkErrorCategory.Denied,
-                    "The cloud export permission was not granted.",
-                    context?.CorrelationId,
-                    owner: AwakeConstants.OwnerValue);
-                fail.ErrorCode = fail.Error.Code;
-                fail.ErrorDisplay = "云外发权限未授予：" + PermissionCatalog.CloudExportPermissionId(classification);
-                AwakeLog.Write("ai_task_cloud_export_permission_denied classification=" + classification + " code=" + fail.ErrorCode + " correlation=" + (context?.CorrelationId ?? "none"));
-                return fail;
-            }
-        }
-        return null;
     }
 
     private static bool ContainsClassification(string[] allowed, string classification)

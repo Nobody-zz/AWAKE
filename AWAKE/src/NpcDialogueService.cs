@@ -17,6 +17,8 @@ internal sealed class NpcDialogueService : IDisposable
     private readonly object _gate = new object();
     private readonly IMarcusAiFrameworkHost _host;
     private readonly AiTaskGateway _gateway;
+    private readonly CloudExportGate _cloudExportGate;
+    private readonly AwakePortraitGenerator _portraitGenerator;
     private readonly AwakeNpcTarget _target;
     private readonly string _heroId;
     private readonly string _heroName;
@@ -92,6 +94,8 @@ internal sealed class NpcDialogueService : IDisposable
         _entrySource = string.IsNullOrWhiteSpace(entrySource) ? "npc_dialogue" : entrySource;
         _contactKey = ResolveContactKey(heroId);
         _gateway = new AiTaskGateway(host);
+        _cloudExportGate = new CloudExportGate(_gateway.PermissionGate);
+        _portraitGenerator = new AwakePortraitGenerator(host, _cloudExportGate);
     }
 
     internal NpcDialogueService(IMarcusAiFrameworkHost host, AwakeNpcTarget target, string sceneKeywords)
@@ -208,6 +212,18 @@ internal sealed class NpcDialogueService : IDisposable
     }
 
     internal string SpeakerName => _heroName;
+
+    /// <summary>
+    /// 立绘生成的唯一入口。**它自己过云外发门**，所以调用方不许绕过它直连
+    /// <see cref="AwakeImageClient"/> —— 否则就是一条不受治理的出网路。
+    /// </summary>
+    internal AwakePortraitGenerator PortraitGenerator => _portraitGenerator;
+
+    /// <summary>给立绘那条后台任务用的请求上下文（与文本路径共用同一个网关与权限门）。</summary>
+    internal RequestContext CreateAiContext(TimeSpan budget)
+    {
+        return _gateway.CreateContext(budget);
+    }
 
     internal void Initialize()
     {

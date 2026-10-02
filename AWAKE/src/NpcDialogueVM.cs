@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using MarcusAwakeFramework.Api;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 
@@ -10,6 +11,9 @@ namespace Awake;
 
 internal sealed class NpcDialogueVM : ViewModel
 {
+    /// <summary>立绘请求上下文的预算。比出网超时（<c>AwakeImageClient</c> 的 120s）留出余量。</summary>
+    private static readonly TimeSpan PortraitContextBudget = TimeSpan.FromSeconds(180);
+
     private readonly NpcDialogueService _service;
     private readonly Action _close;
     private readonly MBBindingList<NpcDialogueChatRowVM> _chatRows = new MBBindingList<NpcDialogueChatRowVM>();
@@ -476,13 +480,13 @@ internal sealed class NpcDialogueVM : ViewModel
             AwakeImageOutcome outcome;
             try
             {
-                // 参考图留空 = 纯文生图。§13 那条「游戏自渲肖像当身份锚点」要等真机截屏
-                // 那条路走通（需要一个开机窗口），在那之前拿别人的缓存图当参考是错的。
-                AwakeImageRequest request = new AwakeImageRequest(promptForRun, null, width, height);
                 using (CancellationTokenSource timeout = AwakeImageClient.CreateTimeoutScope())
                 {
-                    outcome = await AwakeImageClient
-                        .GenerateAsync(endpointForRun, request, apiKeyForRun, timeout.Token)
+                    // 门与选路都在生成器里：框架路（Host.Media 出图 → Host.Assets 取字节）优先，
+                    // 不可用时退回模组侧直连。两条路共用同一道云外发门，所以退回不构成绕过治理。
+                    RequestContext portraitContext = _service.CreateAiContext(PortraitContextBudget);
+                    outcome = await _service.PortraitGenerator
+                        .GenerateAsync(endpointForRun, promptForRun, width, height, apiKeyForRun, portraitContext, timeout.Token)
                         .ConfigureAwait(false);
                 }
             }

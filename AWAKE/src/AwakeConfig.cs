@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using MCM.Abstractions;
 using MCM.Abstractions.Attributes;
@@ -117,24 +117,28 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyGroup("{=awake.mcm.group.image}1. 图片生成", GroupOrder = 0)]
     public bool PortraitImageIsCloud { get; set; }
 
-    [SettingPropertyButton("{=awake.mcm.image_key.name}输入或替换出图 API Key", -1, true, "", Content = "{=awake.mcm.image_key.content}打开输入框", Order = 4, RequireRestart = false, HintText = "{=awake.mcm.image_key.hint}输入框保持可见，便于核对；密钥只写入本机保护存储，不进入 MCM、存档或日志。它与 AI 链路的 Key 各存各处。")]
+    [SettingPropertyText("{=awake.mcm.image_model.name}出图模型名", Order = 4, RequireRestart = false, HintText = "{=awake.mcm.image_model.hint}只有「OpenAI 兼容」形状需要填：运行时那边的 profile 必须带一个非空的默认模型名。Player2 形状不认模型名，留空即可。留空且形状是 OpenAI 兼容时，立绘会退回模组侧直连那条老路。")]
+    [SettingPropertyGroup("{=awake.mcm.group.image}1. 图片生成", GroupOrder = 0)]
+    public string PortraitImageModel { get; set; } = string.Empty;
+
+    [SettingPropertyButton("{=awake.mcm.image_key.name}输入或替换出图 API Key", -1, true, "", Content = "{=awake.mcm.image_key.content}打开输入框", Order = 5, RequireRestart = false, HintText = "{=awake.mcm.image_key.hint}输入框保持可见，便于核对；密钥只写入本机保护存储，不进入 MCM、存档或日志。它与 AI 链路的 Key 各存各处。")]
     [SettingPropertyGroup("{=awake.mcm.group.image}1. 图片生成", GroupOrder = 0)]
     public Action ConfigureImageApiKey { get; set; }
 
-    [SettingPropertyInteger("{=awake.mcm.image_width.name}出图宽度（像素）", 128, 2048, Order = 5, RequireRestart = false, HintText = "{=awake.mcm.image_width.hint}请求尺寸，默认 512。注意服务端有权不遵守：实测有的端点直接忽略它出更大尺寸，所以落盘与布局以实际像素为准。")]
+    [SettingPropertyInteger("{=awake.mcm.image_width.name}出图宽度（像素）", 128, 2048, Order = 6, RequireRestart = false, HintText = "{=awake.mcm.image_width.hint}请求尺寸，默认 512。注意服务端有权不遵守：实测有的端点直接忽略它出更大尺寸，所以落盘与布局以实际像素为准。")]
     [SettingPropertyGroup("{=awake.mcm.group.image}1. 图片生成", GroupOrder = 0)]
     public int PortraitImageWidth { get; set; } = 512;
 
-    [SettingPropertyInteger("{=awake.mcm.image_height.name}出图高度（像素）", 128, 2048, Order = 6, RequireRestart = false, HintText = "{=awake.mcm.image_height.hint}请求尺寸，默认 512。同样不保证被遵守，以实际产出为准。")]
+    [SettingPropertyInteger("{=awake.mcm.image_height.name}出图高度（像素）", 128, 2048, Order = 7, RequireRestart = false, HintText = "{=awake.mcm.image_height.hint}请求尺寸，默认 512。同样不保证被遵守，以实际产出为准。")]
     [SettingPropertyGroup("{=awake.mcm.group.image}1. 图片生成", GroupOrder = 0)]
     public int PortraitImageHeight { get; set; } = 512;
 
-    [SettingPropertyButton("{=awake.mcm.image_probe.name}测试出图", -1, true, "", Content = "{=awake.mcm.image_probe.content}打一发", Order = 7, RequireRestart = false, HintText = "{=awake.mcm.image_probe.hint}真往填好的地址打一发，并把图存到本机立绘目录，路径会回显。这是唯一能证明“地址 + 钥匙真的能用”的动作，会消耗服务端额度。")]
+    [SettingPropertyButton("{=awake.mcm.image_probe.name}测试出图", -1, true, "", Content = "{=awake.mcm.image_probe.content}打一发", Order = 8, RequireRestart = false, HintText = "{=awake.mcm.image_probe.hint}真往填好的地址打一发，并把图存到本机立绘目录，路径会回显。这是唯一能证明“地址 + 钥匙真的能用”的动作，会消耗服务端额度。")]
     [SettingPropertyGroup("{=awake.mcm.group.image}1. 图片生成", GroupOrder = 0)]
     public Action TestImageGeneration { get; set; }
 
     [JsonIgnore]
-    [SettingPropertyText("{=awake.mcm.image_status.name}出图状态", Order = 8, RequireRestart = false, HintText = "{=awake.mcm.image_status.hint}只读显示密钥是否已配置，以及最近一次测试出图的结果。")]
+    [SettingPropertyText("{=awake.mcm.image_status.name}出图状态", Order = 9, RequireRestart = false, HintText = "{=awake.mcm.image_status.hint}只读显示密钥是否已配置，以及最近一次测试出图的结果。")]
     [SettingPropertyGroup("{=awake.mcm.group.image}1. 图片生成", GroupOrder = 0)]
     public string PortraitImageStatus
     {
@@ -161,6 +165,10 @@ public sealed class AwakeConfig : AttributeGlobalSettings<AwakeConfig>
     [SettingPropertyBool("{=awake.mcm.export_player_state.name}允许外发玩家状态", Order = 2, RequireRestart = false, HintText = "{=awake.mcm.export_player_state.hint}允许把玩家、英雄、关系等角色状态作为 player_state 分类随 NPC 对话外发。默认开启。")]
     [SettingPropertyGroup("{=awake.mcm.group.auth}2. 授权与外发", GroupOrder = 1)]
     public bool AllowCloudExportPlayerState { get; set; } = true;
+
+    [SettingPropertyBool("{=awake.mcm.export_npc_persona.name}允许外发 NPC 人设", Order = 3, RequireRestart = false, HintText = "{=awake.mcm.export_npc_persona.hint}允许把角色卡外貌与人设拼出的立绘提示词作为 npc_persona 分类外发给云端生图 Provider。默认关闭：这是一项单独授权，不随玩家状态一起放开。")]
+    [SettingPropertyGroup("{=awake.mcm.group.auth}2. 授权与外发", GroupOrder = 1)]
+    public bool AllowCloudExportNpcPersona { get; set; }
 
     // ── 3. 对话与场景 ──────────────────────────────────────────────────────────
     // 玩家侧的人物选取与按键。原先的「3. 命令台」只有一项按键设置，已并入本组末尾 ——
