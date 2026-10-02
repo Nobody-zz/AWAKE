@@ -249,8 +249,16 @@ function Test-EmbeddedRuntimePackage([string]$Root) {
 }
 
 function Invoke-Dotnet([string]$DotnetPath, [string[]]$Arguments) {
-    & $DotnetPath @Arguments
-    if ($LASTEXITCODE -ne 0) { throw "dotnet command failed with exit code $($LASTEXITCODE): $([string]::Join(' ', $Arguments))" }
+    # Single-process MSBuild (-m:1). On this machine the dotnet CLI default (parallel worker
+    # nodes) can FAIL SILENTLY on some projects: it prints "Build FAILED" with 0 warnings and
+    # 0 errors, returns exit code 1 after ~1.5s, and emits no diagnostic at all. Both `restore`
+    # and `build` are affected, and neither --disable-parallel nor -p:RestoreDisableParallel=true
+    # helps; -m:1 is the only switch that makes them deterministic (measured switch-by-switch,
+    # 2026-10-02). The cost is a serial build. The point is that this gate must be able to
+    # produce a REAL result instead of pretending to be green.
+    $effective = @($Arguments) + @('-m:1')
+    & $DotnetPath @effective
+    if ($LASTEXITCODE -ne 0) { throw "dotnet command failed with exit code $($LASTEXITCODE): $([string]::Join(' ', $effective))" }
 }
 
 function Copy-PublishPayload([string]$SourceRoot, [string]$DestinationRoot) {
