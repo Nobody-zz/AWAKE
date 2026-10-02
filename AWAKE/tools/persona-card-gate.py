@@ -40,9 +40,13 @@ Rules
                          realSelfBehaviors = {} because the materializer emits
                          an empty object when the source card omits the field.
   R9 tag-count-stamp     the per-card tag count must have >=
-                         --min-tag-count-values distinct values and no single
-                         value above --max-tag-count-share
-                         (good 8 values, max 38% / bad 1 value, 100%)
+                         --min-tag-count-values distinct values, and no single
+                         value may exceed --max-tag-count-share UNLESS the tag
+                         SETS are diverse (>= --min-tag-set-diversity unique
+                         sets): a repeated count only evidences a template when
+                         the sets repeat with it
+                         (good 8 values, max 38% / bad 1 value, 100% with 5
+                          distinct sets over 279 cards)
   R10 cross-card-duplicate
                          no boundary entry (tensionAxes.* / selfClaimRules[] /
                          realSelfBehaviors[]) may appear in more than
@@ -452,6 +456,7 @@ def main():
     ap.add_argument("--tag-registry", default=DEFAULT_TAG_REGISTRY)
     ap.add_argument("--min-tag-count-values", type=int, default=4)
     ap.add_argument("--max-tag-count-share", type=float, default=0.50)
+    ap.add_argument("--min-tag-set-diversity", type=float, default=0.25)
     ap.add_argument("--include-list", default=None)
     ap.add_argument("--exclude-list", default=None)
     ap.add_argument("--criteria-script", default=DEFAULT_CRITERIA_SCRIPT)
@@ -656,11 +661,26 @@ def main():
             distinct = len(shape)
             val, cnt = shape.most_common(1)[0]
             share = cnt / float(n)
-            if distinct < args.min_tag_count_values or share > args.max_tag_count_share:
+            sets = set(tuple(sorted(tag_ids(c["data"])))
+                       for c in cards if not c["error"])
+            diversity = len(sets) / float(n)
+            count_stamp = distinct < args.min_tag_count_values
+            # A concentrated tag COUNT only evidences a template when the tag
+            # SETS repeat with it. Measured 2026-10-02: 355 cards carry 348
+            # distinct tag sets (98%) yet 233 of them hold exactly 6 tags
+            # (66%) -- an authoring convention, not a stamp. The 2026-10-01 bad
+            # batch (279 cards, 5 distinct sets, one count value at 100%) still
+            # trips both branches, so the rule did not lose its red case.
+            shape_stamp = (share > args.max_tag_count_share
+                           and diversity < args.min_tag_set_diversity)
+            if count_stamp or shape_stamp:
                 fail("PERSONA_TAG_COUNT_STAMP",
-                     "distinct=%d (min=%d) largest=%d tag(s) x%d (%.0f%% max=%.0f%%)" % (
+                     "distinct=%d (min=%d) largest=%d tag(s) x%d (%.0f%% max=%.0f%%) "
+                     "tag_sets=%d (%.0f%% min=%.0f%%)" % (
                          distinct, args.min_tag_count_values, val, cnt,
-                         share * 100, args.max_tag_count_share * 100))
+                         share * 100, args.max_tag_count_share * 100,
+                         len(sets), diversity * 100,
+                         args.min_tag_set_diversity * 100))
 
     # ---------- R17 : batch-local tag stamp (hard, population-independent) ---
     # R4 asks "is this tag set a large share of --cards?". That question cannot
