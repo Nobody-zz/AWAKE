@@ -395,7 +395,7 @@ internal static class NpcDialogueLauncher
     internal static Hero FindHeroById(string heroId)
     {
         if (string.IsNullOrWhiteSpace(heroId)) return null;
-        AwakeNpcTarget target = FindTargetById("hero:" + heroId);
+        AwakeNpcTarget target = FindTargetById(AwakeNpcTarget.NormalizeStableId(heroId));
         return target?.Hero;
     }
 

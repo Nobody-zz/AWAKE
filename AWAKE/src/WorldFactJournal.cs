@@ -127,7 +127,20 @@ internal static class WorldFactJournalCodec
 
     internal static WorldFactJournalReadStatus ReadRoot(string json, out JObject root)
     {
+        return ReadRoot(json, out root, out _);
+    }
+
+    /// <summary>
+    /// root 解析 + **诊断码**。两个出参分工：`root` 只在 Success/Empty 时非 null，
+    /// `errorCode` 只在 Corrupt 时非空 —— 调用方据此把"坏了"和"为什么坏"一起报出去，
+    /// 而不是把一切塌缩成同一个码（缺陷 1 残留②：root_corrupt 抹掉了所有子原因）。
+    /// Corrupt 时的码：awake.world_fact.root_json_invalid（JSON 都解不开）/
+    /// root_schema_mismatch / root_phase_invalid / root_bounds_invalid / root_chunk_keys_invalid。
+    /// </summary>
+    internal static WorldFactJournalReadStatus ReadRoot(string json, out JObject root, out string errorCode)
+    {
         root = null;
+        errorCode = string.Empty;
         if (json == null) return WorldFactJournalReadStatus.Missing;
         // 空/空白 = 存储层在说"这个 key 还没有值"（AwakeFileStorageService 对不存在的 key
         // 返回的是 Succeeded("")，不是 storage.key_not_found）。判 Missing 而不是 Corrupt：
@@ -136,16 +149,23 @@ internal static class WorldFactJournalCodec
         try
         {
             root = JObject.Parse(json);
+            // 检查次序（schema → phase → bounds → chunkKeys）是契约的一部分：`{"schema":"other"}`
+            // 什么都不带，必须报 schema 而不是 bounds，否则诊断会把排查引向错的方向。
+            if ((string)root["schema"] != RootSchema)
+            { root = null; errorCode = "awake.world_fact.root_schema_mismatch"; return WorldFactJournalReadStatus.Corrupt; }
+            if ((string)root["phase"] != "committed")
+            { root = null; errorCode = "awake.world_fact.root_phase_invalid"; return WorldFactJournalReadStatus.Corrupt; }
+            if (!ValidBounds(root["startDay"], root["endDay"], root["revision"]))
+            { root = null; errorCode = "awake.world_fact.root_bounds_invalid"; return WorldFactJournalReadStatus.Corrupt; }
             JArray chunkKeys = root["chunkKeys"] as JArray;
-            if ((string)root["schema"] != RootSchema || (string)root["phase"] != "committed" || chunkKeys == null
-                || !ValidBounds(root["startDay"], root["endDay"], root["revision"])
+            if (chunkKeys == null
                 || chunkKeys.Any(x => x.Type != JTokenType.String || string.IsNullOrWhiteSpace((string)x))
                 || chunkKeys.Select(x => (string)x).Distinct(StringComparer.Ordinal).Count() != chunkKeys.Count
                 || !chunkKeys.Select(x => (string)x).SequenceEqual(chunkKeys.Select(x => (string)x).OrderBy(x => x, StringComparer.Ordinal), StringComparer.Ordinal))
-            { root = null; return WorldFactJournalReadStatus.Corrupt; }
-            return ((JArray)root["chunkKeys"]).Count == 0 ? WorldFactJournalReadStatus.Empty : WorldFactJournalReadStatus.Success;
+            { root = null; errorCode = "awake.world_fact.root_chunk_keys_invalid"; return WorldFactJournalReadStatus.Corrupt; }
+            return chunkKeys.Count == 0 ? WorldFactJournalReadStatus.Empty : WorldFactJournalReadStatus.Success;
         }
-        catch (Exception) { return WorldFactJournalReadStatus.Corrupt; }
+        catch (Exception) { root = null; errorCode = "awake.world_fact.root_json_invalid"; return WorldFactJournalReadStatus.Corrupt; }
     }
 
     private static bool ValidBounds(JToken start, JToken end, JToken revision)

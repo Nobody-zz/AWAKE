@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using MarcusAwakeFramework.Api;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
 
@@ -97,6 +99,49 @@ internal static class AwakeDeveloperTestActions
         AwakeFeedback.ShowSuccess(AwakeLocalization.Resolve(
             "awake.dev_tools.proactive_reset",
             "NPC proactive state reset."));
+    }
+
+    /// <summary>
+    /// 缺陷①（2026-10-01）：坏的世界事实账本以前没有显式恢复入口 —— 读路径把 Codec 判断出的子原因
+    /// 塌缩成 awake.world_fact.root_corrupt，写侧要等到"恰好又写进一条世界事实"才会隔离重建，
+    /// 中间周报链一直 status=unavailable。这个动作把坏值隔离到旁路 key 并重建空账本（revision 1），
+    /// 之后周报链读到的是 Empty 而不是 Corrupt。
+    /// 按 docs/PLAN-REPAIR-WORLDBOOK-HASH-AND-FOUR-DEFECTS-20261001.md §4.6：这是开发者调试入口，
+    /// 不是玩家选项，所以只挂在这里，不进 MCM。
+    /// </summary>
+    internal static void ResetWorldFactJournal()
+    {
+        WorldStateStore store = AwakeRuntime.WorldStateStore;
+        if (store == null)
+        {
+            AwakeFeedback.ShowWarning(AwakeLocalization.Resolve(
+                "awake.dev_tools.world_fact_journal_reset_no_store",
+                "世界事实账本还没打开（先开始一场战役）。"));
+            return;
+        }
+        AwakeBackgroundTask.Run(
+            async () =>
+            {
+                OperationResult<string> result = await store.ResetWorldFactJournalAsync(null, CancellationToken.None)
+                    .ConfigureAwait(false);
+                // 回 UI 线程再弹提示：AwakeFeedback 直接调 InformationManager，不自己排队。
+                AwakeUiDispatcher.Enqueue(() =>
+                {
+                    if (result.IsSuccess)
+                    {
+                        AwakeFeedback.ShowSuccess(AwakeLocalization.Resolve(
+                            "awake.dev_tools.world_fact_journal_reset_ok",
+                            "世界事实账本已重置，诊断码：") + result.Value);
+                    }
+                    else
+                    {
+                        AwakeFeedback.ShowError(AwakeLocalization.Resolve(
+                            "awake.dev_tools.world_fact_journal_reset_failed",
+                            "世界事实账本重置失败：") + (result.Error?.Code ?? "unknown"));
+                    }
+                });
+            },
+            "awake_dev_world_fact_journal_reset");
     }
 
     internal static void ShowWorldbookStatus()

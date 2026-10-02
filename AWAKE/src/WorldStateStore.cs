@@ -901,11 +901,19 @@ internal sealed class WorldStateStore
         }
 
         JObject root;
-        WorldFactJournalReadStatus rootStatus = WorldFactJournalCodec.ReadRoot(rootValue.Value, out root);
+        string rootErrorCode;
+        WorldFactJournalReadStatus rootStatus = WorldFactJournalCodec.ReadRoot(rootValue.Value, out root, out rootErrorCode);
         if (rootStatus == WorldFactJournalReadStatus.Missing || rootStatus == WorldFactJournalReadStatus.Empty)
             return new WorldFactJournalReadResult(rootStatus, revision: root == null ? 0 : IntValue(root["revision"]));
         if (rootStatus != WorldFactJournalReadStatus.Success)
-            return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Corrupt, errorCode: "awake.world_fact.root_corrupt");
+        {
+            // 缺陷 1 残留②（2026-10-01 修）：这里过去写死 awake.world_fact.root_corrupt，
+            // 把 codec 判断出的"为什么坏"整个丢掉 ⇒ 真机日志只看到"账本坏了"。现在透传子原因，
+            // 并落一行日志（读路径只在真坏时打，不会刷屏）。
+            string diagnosis = string.IsNullOrWhiteSpace(rootErrorCode) ? "awake.world_fact.root_corrupt" : rootErrorCode;
+            AwakeLog.Write("world_fact_journal_root_corrupt code=" + diagnosis);
+            return new WorldFactJournalReadResult(WorldFactJournalReadStatus.Corrupt, errorCode: diagnosis);
+        }
 
         int rootStartDay = IntValue(root["startDay"]);
         int rootEndDay = IntValue(root["endDay"]);
@@ -949,6 +957,97 @@ internal sealed class WorldStateStore
         return facts.Count == 0
             ? new WorldFactJournalReadResult(WorldFactJournalReadStatus.Empty, revision: IntValue(root["revision"]))
             : new WorldFactJournalReadResult(WorldFactJournalReadStatus.Success, facts, revision: IntValue(root["revision"]));
+    }
+
+    /// <summary>
+    /// 显式"重置世界事实账本"动作（开发者入口）。**只在 root 真坏时动手**：把坏值隔离到旁路 key
+    /// （只复制、不删原件），再写一个空账本 root（revision 1）—— 之后读侧得到 Empty 而不是 Corrupt，
+    /// 周报链（WeeklyReportService 只接受 Success/Empty）才有机会恢复。
+    /// 返回诊断出的具体子原因码（如 awake.world_fact.root_json_invalid）。
+    ///
+    /// 为什么不做"读侧自动改写"（两条硬约束）：
+    ///   1) 写侧 AppendWorldFactJournalAsync 在**持 WorldFactJournalWriterGate 时**读账本
+    ///      （WorldStateStore.cs:3667-3670）；读路径若也写 root，取同一把门会死锁，不取则可能撞坏
+    ///      写侧的读回校验（:3737-3748 的 root_commit_unknown / root_replace_retryable / root_conflict）。
+    ///   2) 仓库硬规则「效果走 Command+Preflight+权限+幂等」—— 读路径隐式写存储会绕过
+    ///      AwakeConstants.PermissionStorageWrite 预检。
+    /// </summary>
+    internal async Task<OperationResult<string>> ResetWorldFactJournalAsync(RequestContext context, CancellationToken cancellationToken)
+    {
+        if (!IsBusinessOperationOpen())
+            return OperationResult<string>.Failed(FrameworkErrors.Create(
+                "awake.world_state.stale_store_session",
+                FrameworkErrorCategory.Unavailable,
+                "世界事实账本所属的会话已经结束。",
+                context?.CorrelationId ?? "world-fact-journal-reset",
+                retryable: true,
+                owner: AwakeConstants.OwnerValue));
+        IKeyValueStore store;
+        lock (_gate) _stores.TryGetValue(AiTaskConstants.WorldFactJournalNamespace, out store);
+        if (store == null)
+            return OperationResult<string>.Failed(FrameworkErrors.Create(
+                "awake.world_fact.storage_unavailable",
+                FrameworkErrorCategory.Unavailable,
+                "世界事实账本的存储命名空间还没打开。",
+                context?.CorrelationId ?? "world-fact-journal-reset",
+                retryable: true,
+                owner: AwakeConstants.OwnerValue));
+
+        await WorldFactJournalWriterGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            RequestContext writeContext = context ?? CreateContext();
+            WorldFactJournalReadResult existing = await GetWorldFactJournalAsync(writeContext, cancellationToken).ConfigureAwait(false);
+            if (existing.Status == WorldFactJournalReadStatus.Unavailable)
+            {
+                // 存储不可用是环境问题，隔离/重建都解决不了 —— 原样报出去，让调用方重试。
+                return OperationResult<string>.Failed(FrameworkErrors.Create(
+                    string.IsNullOrWhiteSpace(existing.ErrorCode) ? "awake.world_fact.journal_unavailable" : existing.ErrorCode,
+                    FrameworkErrorCategory.Unavailable,
+                    "世界事实账本暂时读不到（存储不可用），重置解决不了环境问题。",
+                    writeContext.CorrelationId,
+                    retryable: true,
+                    owner: AwakeConstants.OwnerValue));
+            }
+            if (existing.Status != WorldFactJournalReadStatus.Corrupt)
+                return OperationResult<string>.Succeeded("awake.world_fact.journal_reset_not_needed");
+
+            string diagnosis = string.IsNullOrWhiteSpace(existing.ErrorCode) ? "awake.world_fact.root_corrupt" : existing.ErrorCode;
+            // 先把坏值隔离到旁路 key（只复制、不删原件）—— 重置不许变成删数据。
+            if (!await QuarantineCorruptJournalAsync(store, writeContext, cancellationToken).ConfigureAwait(false))
+                return OperationResult<string>.Failed(FrameworkErrors.Create(
+                    "awake.world_fact.journal_quarantine_failed",
+                    FrameworkErrorCategory.Unavailable,
+                    "坏账本没能隔离到旁路 key，本次重置放弃（坏值仍在原位）。",
+                    writeContext.CorrelationId,
+                    retryable: true,
+                    owner: AwakeConstants.OwnerValue));
+
+            // 空账本 root：revision 1、没有 chunk。窗口 1..7 只是为了满足 root 的边界不变量 ——
+            // 空账本没有事实，查询窗口取自请求（WorldFactQuery.ResolveWindow），与 root 的 bounds 无关。
+            string rootJson = WorldFactJournalCodec.BuildRoot(1, 7, 1, new string[0]).ToString(Formatting.None);
+            OperationResult<bool> stored = await store.SetAsync(
+                AiTaskConstants.WorldFactJournalRootKey, rootJson, writeContext, cancellationToken).ConfigureAwait(false);
+            OperationResult<string> readBack = await store.GetAsync(
+                AiTaskConstants.WorldFactJournalRootKey, writeContext, cancellationToken).ConfigureAwait(false);
+            if (!readBack.IsSuccess || !StringComparer.Ordinal.Equals(readBack.Value, rootJson))
+            {
+                return OperationResult<string>.Failed(FrameworkErrors.Create(
+                    stored.Error?.Code ?? "awake.world_fact.root_write_failed",
+                    FrameworkErrorCategory.Unavailable,
+                    "空账本 root 没写进去或读回不一致，重置未生效。",
+                    writeContext.CorrelationId,
+                    retryable: true,
+                    owner: AwakeConstants.OwnerValue));
+            }
+
+            AwakeLog.Write("world_fact_journal_reset diagnosis=" + diagnosis);
+            return OperationResult<string>.Succeeded(diagnosis);
+        }
+        finally
+        {
+            WorldFactJournalWriterGate.Release();
+        }
     }
 
     internal async Task<List<WeeklyReportApplicationState>> GetWeeklyReportStatesAsync(CancellationToken cancellationToken)

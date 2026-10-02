@@ -18,6 +18,9 @@ internal static class DialogueChainRedtest
 {
     private const string ProbeNamespace = "awake.redtest.namespace";
 
+    // 假存档 id：只用来证明"绑定之后落进哪个目录"，与真实存档无关。
+    private const string TestCampaignId = "awake-redtest-campaign";
+
     internal static void Run()
     {
         RunPermissionChecks();
@@ -152,20 +155,42 @@ internal static class DialogueChainRedtest
     private static void RunStorageChecks()
     {
         AwakeFileStorageService storage = new AwakeFileStorageService();
-        string file = Path.Combine(
+        string stateRoot = Path.Combine(
             AwakeModulePaths.ResolveModuleDirectory(),
             "PlayerExports",
-            "AwakeState",
-            "unbound",
-            ProbeNamespace + ".json");
+            "AwakeState");
+        string unboundFile = Path.Combine(stateRoot, "unbound", ProbeNamespace + ".json");
+        string boundFile = Path.Combine(stateRoot, TestCampaignId, ProbeNamespace + ".json");
 
         try
         {
+            // 缺陷④（2026-10-01）：campaign 还没绑定时，存储必须**拒绝写入并报可重试**。
+            // 口径是主控直接定的（docs/HANDOFF-STORAGE-CONSISTENCY-20260922.md §1.2 Q11-4）：
+            // 「campaign 未绑定时 → 拒绝写入并报可重试（行为变更，现行是照写）」。
+            // 现行落进共享的 unbound\ 桶：写入"成功"，等真存档 id 出来以后 ResolveCampaignId()
+            // 已经返回真 id，开局前写的那些账本再也读不回来（09-14 真机实证：unbound\ 与
+            // 1IgZ8yHJynfn\ 两份并存，前者时间戳就是那一场）。
+            AwakeFileStorageService.CampaignIdProviderForTesting = null;
+            OperationResult<IKeyValueStore> unbound = storage
+                .OpenCampaignNamespaceAsync(ProbeNamespace, null, CancellationToken.None)
+                .GetAwaiter().GetResult();
+            Require(!unbound.IsSuccess, "campaign namespace must be refused while the campaign is unbound");
+            Require(unbound.Error != null, "refusing an unbound campaign namespace must carry an error");
+            Require(StringComparer.Ordinal.Equals(unbound.Error.Code, "awake.storage.campaign_unbound"),
+                "unbound campaign namespace must report awake.storage.campaign_unbound, got="
+                + (unbound.Error == null ? "none" : unbound.Error.Code));
+            Require(unbound.Error.Retryable, "unbound campaign namespace must be retryable");
+            Require(!File.Exists(unboundFile),
+                "an unbound campaign must not write into the shared unbound bucket: " + unboundFile);
+
+            // 绑定之后必须落在**真存档 id** 的目录里。
+            AwakeFileStorageService.CampaignIdProviderForTesting = () => TestCampaignId;
             OperationResult<IKeyValueStore> opened = storage
                 .OpenCampaignNamespaceAsync(ProbeNamespace, null, CancellationToken.None)
                 .GetAwaiter().GetResult();
             Require(opened.IsSuccess && opened.Value != null,
-                "campaign namespace must open, code=" + (opened.Error?.Code ?? "none"));
+                "campaign namespace must open once the campaign is bound, code="
+                + (opened.Error?.Code ?? "none"));
             IKeyValueStore store = opened.Value;
 
             Require(store.SetAsync("probe.key", "probe-value", null, CancellationToken.None).GetAwaiter().GetResult().IsSuccess,
@@ -179,6 +204,11 @@ internal static class DialogueChainRedtest
             Require(afterDelete.IsSuccess && string.IsNullOrEmpty(afterDelete.Value),
                 "storage get after delete must be empty");
 
+            Require(File.Exists(boundFile),
+                "campaign state must live under the campaign id directory: " + boundFile);
+            Require(!File.Exists(unboundFile),
+                "a bound campaign must not write into the shared unbound bucket: " + unboundFile);
+
             // 会话作用域必须显式不可用，不得静默造第二条数据面。
             OperationResult<IKeyValueStore> session = storage
                 .OpenSessionNamespaceAsync(ProbeNamespace, null, CancellationToken.None)
@@ -190,7 +220,9 @@ internal static class DialogueChainRedtest
         }
         finally
         {
-            Cleanup(file);
+            AwakeFileStorageService.CampaignIdProviderForTesting = null;
+            Cleanup(boundFile);
+            Cleanup(unboundFile);
         }
 
         Console.WriteLine("PASS dialogue chain storage redtest");
@@ -267,6 +299,11 @@ internal static class DialogueChainRedtest
         try
         {
             if (File.Exists(file)) File.Delete(file);
+            // Save() 是「先写 .tmp 再换名」两步；换名失败时 .tmp 会留下，
+            // 于是这个判据自己往模块目录里漏垃圾（2026-10-01 实测：残留
+            // awake.redtest.namespace.json.tmp 卡住了上一级目录的清理）。清理必须连它一起收。
+            string tempFile = file + ".tmp";
+            if (File.Exists(tempFile)) File.Delete(tempFile);
             string directory = Path.GetDirectoryName(file);
             for (int i = 0; i < 3 && !string.IsNullOrEmpty(directory); i++)
             {

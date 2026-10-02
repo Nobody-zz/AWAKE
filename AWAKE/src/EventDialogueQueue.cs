@@ -14,7 +14,7 @@ internal sealed class PendingDialogue
 
     internal PendingDialogue(string heroId, string openingHint, string id = null)
     {
-        HeroId = heroId ?? string.Empty;
+        HeroId = AwakeNpcTarget.NormalizeStableId(heroId);
         OpeningHint = openingHint ?? string.Empty;
         Id = id ?? string.Empty;
     }

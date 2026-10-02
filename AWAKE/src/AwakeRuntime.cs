@@ -55,9 +55,16 @@ internal sealed class NativeReadinessResult
         return new NativeReadinessResult(NativeReadinessStatus.Cancelled, generation, sessionId, "cancelled", true);
     }
 
-    internal static NativeReadinessResult Skipped(int generation, string sessionId, string failureCode)
+    // retryable 默认 false：session_ended / stale_session 这类「本会话不再适用」的跳过不可重试。
+    // 而「战役/主角还没绑好」这类**还没到时候**的跳过必须可重试（2026-10-01 缺陷②）——
+    // 否则一次早探测会被 EnsureNativeReadinessAsync 记成永久结论。
+    internal static NativeReadinessResult Skipped(
+        int generation,
+        string sessionId,
+        string failureCode,
+        bool retryable = false)
     {
-        return new NativeReadinessResult(NativeReadinessStatus.Skipped, generation, sessionId, failureCode, false);
+        return new NativeReadinessResult(NativeReadinessStatus.Skipped, generation, sessionId, failureCode, retryable);
     }
 
     internal NativeReadinessResult ForSession(int generation, string sessionId)
@@ -120,6 +127,11 @@ internal static class AwakeRuntime
     }
 
     internal static Func<int, CancellationToken, Task<NativeReadinessResult>> NativeReadinessProbeForTesting { get; set; }
+
+    // 测试缝：离线没有 Campaign，探针会停在 campaign_unavailable，永远走不到 Hero.MainHero
+    // （而真机 09-10 起的 native_probe_exception 正是 Hero.MainHero 的 getter 自身抛 NRE）。
+    // 生产环境恒为 null ⇒ 走真实的 Campaign.Current 判定。
+    internal static Func<bool> CampaignBoundProviderForTesting { get; set; }
 
     internal static string HostResolutionStatus
     {
@@ -670,7 +682,28 @@ internal static class AwakeRuntime
             }
             if (_nativeReadinessTask != null)
             {
-                return _nativeReadinessTask;
+                // 在飞的探测仍然单飞：同一个 Task 交给所有调用方
+                // （判据 native readiness should be single-flight per session）。
+                // 失败的 Task 也原样交回，让异常在 await 处照旧浮出。
+                if (_nativeReadinessTask.Status != TaskStatus.RanToCompletion)
+                {
+                    return _nativeReadinessTask;
+                }
+
+                // 缺陷②（2026-10-01）：已经落地的**可重试**结论不得被永久记住。
+                // 「战役/主角还没绑好」是一次早探测的产物（探针跑在 CampaignSessionReady 上，
+                // 可能早于战役与主角绑定），开局后必须还能重新探到 Ready ——
+                // 真机 09-10 起的 native_readiness Failed 正是一次早失败黏住了整个会话
+                // （同一份日志里亦多次 Ready ⇒ 次序/竞态，不是恒定坏）。
+                NativeReadinessResult settled = _nativeReadinessTask.GetAwaiter().GetResult();
+                if (!settled.Retryable || settled.Status == NativeReadinessStatus.Ready)
+                {
+                    return _nativeReadinessTask;
+                }
+
+                AwakeLog.Write("native_readiness_retry generation=" + _sessionGeneration
+                    + " code=" + settled.FailureCode);
+                _nativeReadinessTask = null;
             }
 
             int generation = _sessionGeneration;
@@ -761,14 +794,30 @@ internal static class AwakeRuntime
         }
         try
         {
-            if (Campaign.Current == null)
+            if (!IsCampaignBound())
             {
-                return Task.FromResult(NativeReadinessResult.Skipped(generation, sessionId, "campaign_unavailable"));
+                // 「还没到时候」不是「坏了」：可重试，别让它变成永久结论。
+                return Task.FromResult(NativeReadinessResult.Skipped(generation, sessionId, "campaign_unavailable", retryable: true));
             }
-            if (Hero.MainHero == null)
+
+            // 缺陷②（2026-10-01）：Hero.MainHero 的 getter 链（Hero.MainHero →
+            // CharacterObject.PlayerCharacter → Game.Current.PlayerTroop）在主角还没绑定时
+            // **自己就抛 NRE** —— 所以"守卫本身会抛"，会被下面外层 catch 记成
+            // native_probe_exception（真机错误码），把一次早探测升级成整场 Failed。
+            // 单独接住它，让「主角还没绑好」保持它本来的身份：可重试的 player_unavailable。
+            try
             {
-                return Task.FromResult(NativeReadinessResult.Skipped(generation, sessionId, "player_unavailable"));
+                if (Hero.MainHero == null)
+                {
+                    return Task.FromResult(NativeReadinessResult.Skipped(generation, sessionId, "player_unavailable", retryable: true));
+                }
             }
+            catch (Exception ex)
+            {
+                AwakeLog.Write("native_readiness_player_unbound generation=" + generation + " error=" + ex.Message);
+                return Task.FromResult(NativeReadinessResult.Skipped(generation, sessionId, "player_unavailable", retryable: true));
+            }
+
             return Task.FromResult(NativeReadinessResult.Ready(generation, sessionId));
         }
         catch (Exception ex)
@@ -776,6 +825,13 @@ internal static class AwakeRuntime
             AwakeLog.Write("native_readiness_probe_error error=" + ex.Message);
             return Task.FromResult(NativeReadinessResult.Failed(generation, "native_probe_exception", retryable: true));
         }
+    }
+
+    // 战役是否已绑定。抽成独立方法只为一件事：离线可测（见 CampaignBoundProviderForTesting）。
+    private static bool IsCampaignBound()
+    {
+        Func<bool> provider = CampaignBoundProviderForTesting;
+        return provider != null ? provider() : Campaign.Current != null;
     }
 
     internal static Task<bool> EnsureWorldStateStorageReadyAsync(

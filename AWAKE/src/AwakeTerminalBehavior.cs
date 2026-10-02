@@ -1148,7 +1148,13 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
                 "导出世界书修改",
                 (ImageIdentifier)null,
                 true,
-                "导出当前战役修改，供后续存档复用")
+                "导出当前战役修改，供后续存档复用"),
+            new InquiryElement(
+                "world_fact_journal_reset",
+                AwakeLocalization.Resolve("awake.dev_tools.world_fact_journal_reset", "重置世界事实账本"),
+                (ImageIdentifier)null,
+                true,
+                AwakeLocalization.Resolve("awake.dev_tools.world_fact_journal_reset_hint", "坏账本读不出来时用：隔离坏值并重建空账本"))
         };
         MultiSelectionInquiryData data = new MultiSelectionInquiryData(
             AwakeLocalization.Resolve("awake.dev_tools.title", "醒世 · 开发者测试"),
@@ -1232,6 +1238,10 @@ internal sealed class AwakeTerminalBehavior : CampaignBehaviorBase
         if (StringComparer.Ordinal.Equals(id, "worldbook_export_overlay"))
         {
             AwakeDeveloperTestActions.ExportWorldbookOverlay();
+        }
+        if (StringComparer.Ordinal.Equals(id, "world_fact_journal_reset"))
+        {
+            AwakeDeveloperTestActions.ResetWorldFactJournal();
         }
     }
 

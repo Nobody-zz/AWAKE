@@ -12,7 +12,7 @@ internal static class NpcDialogueContext
     {
         lock (Gate)
         {
-            _pendingHeroId = heroId ?? string.Empty;
+            _pendingHeroId = AwakeNpcTarget.NormalizeStableId(heroId);
             _pendingText = text ?? string.Empty;
         }
     }

@@ -117,6 +117,27 @@ internal sealed class AwakeNpcTarget
             age);
     }
 
+    /// <summary>
+    /// 把任意形态的目标 id 归一成稳定 id（hero:StringId / npc:StringId[:aN]）。
+    ///
+    /// 规则（幂等，可重复调用）：
+    /// - 已带 scheme（即含 ':'）的一律原样返回 —— 既防 hero:hero:xxx 二次加前缀，
+    ///   也保护 scene:current 这类非英雄哨兵值不被误改；
+    /// - 只有完全不带 scheme 的裸 StringId 才按英雄补前缀。依据：主动对话队列的两个生产者
+    ///   喂进来的都是 Hero.StringId（NpcProactiveService.cs:342 HeroId = hero.StringId；
+    ///   AwakeEventEngine.ResolveDialogueTarget 返回 ...Leader?.StringId）。
+    ///
+    /// 2026-10-01：缺陷③ 的修复点。生产者给裸 id、消费端（NpcDialogueLauncher.FindTargetById）
+    /// 只认前缀 ⇒ 解析恒失败 ⇒ npc_dialogue_open_failed:target_unavailable，NPC 的嘴张不开。
+    /// </summary>
+    internal static string NormalizeStableId(string stableId)
+    {
+        if (string.IsNullOrWhiteSpace(stableId)) return string.Empty;
+        string trimmed = stableId.Trim();
+        if (trimmed.IndexOf(':') >= 0) return trimmed;
+        return "hero:" + trimmed;
+    }
+
     internal static bool TryParseStableId(string stableId, out string kind, out string characterId, out int agentIndex)
     {
         kind = string.Empty;

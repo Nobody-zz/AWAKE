@@ -135,6 +135,11 @@ internal static class Program
 			// Overlay 逐条导入的「半提交」（2026-09-22 加）。
 			// 口径（已定）：逐条尽力 + 允许部分成功 + **哪一条没进去要能被点出来**。
 			("worldbook-overlay-import-partial", () => { RunWorldbookOverlayImportSmoke(); return Task.CompletedTask; }),
+			// 缺陷②（2026-10-01）：早探测的结论不能被永久记住；「还没绑好」必须可重试。
+			("native-readiness-retry", () => RunNativeReadinessRetrySmokeAsync()),
+			("native-readiness-too-early", () => RunNativeReadinessTooEarlySmokeAsync()),
+			// 缺陷①（2026-10-01）：root_corrupt 抹掉子原因 + 坏账本没有显式恢复入口。
+			("world-fact-journal-reset", () => RunWorldFactJournalResetSmokeAsync()),
 			// 本用例会重置 UI 调度线程绑定；放在最后，避免影响前面的用例。
 			("dialogue-chain-redtest", () =>
 			{
@@ -562,6 +567,91 @@ private static void RunMessengerHistorySmoke()
 		AwakeRuntime.NativeReadinessProbeForTesting = null;
 		AwakeRuntime.ResetSessionStateForTesting();
 		Console.WriteLine("PASS b1 native readiness and scalar snapshot smoke");
+	}
+
+	private static async Task RunNativeReadinessRetrySmokeAsync()
+	{
+		// 缺陷②（2026-10-01）：探针跑在 CampaignSessionReady 上，可能早于战役/主角绑定；
+		// 那时候的结论是**可重试**的，不能被永久记住 —— 真机 09-10 起的 native_readiness Failed
+		// 正是这样一次早失败黏住了整个会话（同一份日志里亦多次 Ready ⇒ 次序/竞态）。
+		AwakeRuntime.ResetSessionStateForTesting();
+		int probeCalls = 0;
+		AwakeRuntime.NativeReadinessProbeForTesting = (generation, cancellationToken) =>
+		{
+			probeCalls++;
+			return Task.FromResult(probeCalls == 1
+				? NativeReadinessResult.Skipped(generation, "b1-retry", "player_unavailable", retryable: true)
+				: NativeReadinessResult.Ready(generation, "b1-retry"));
+		};
+		NativeReadinessResult early = await AwakeRuntime.EnsureNativeReadinessAsync("b1-retry", CancellationToken.None);
+		if (early.Status != NativeReadinessStatus.Skipped || !early.Retryable)
+		{
+			throw new InvalidOperationException("too-early native readiness must be a retryable skip, got status="
+				+ early.Status + " code=" + early.FailureCode + " retryable=" + early.Retryable);
+		}
+		NativeReadinessResult late = await AwakeRuntime.EnsureNativeReadinessAsync("b1-retry", CancellationToken.None);
+		if (late.Status != NativeReadinessStatus.Ready || probeCalls != 2)
+		{
+			throw new InvalidOperationException("a retryable native readiness result must be re-probed, got status="
+				+ late.Status + " calls=" + probeCalls);
+		}
+
+		// 结论已经不可能变（不可重试）时必须仍然只探一次，否则每次读状态都重探。
+		AwakeRuntime.ResetSessionStateForCampaign();
+		int terminalCalls = 0;
+		AwakeRuntime.NativeReadinessProbeForTesting = (generation, cancellationToken) =>
+		{
+			terminalCalls++;
+			return Task.FromResult(NativeReadinessResult.Skipped(generation, "b1-terminal", "session_ended"));
+		};
+		await AwakeRuntime.EnsureNativeReadinessAsync("b1-terminal", CancellationToken.None);
+		await AwakeRuntime.EnsureNativeReadinessAsync("b1-terminal", CancellationToken.None);
+		if (terminalCalls != 1)
+		{
+			throw new InvalidOperationException("a non-retryable native readiness result must stay memoized, calls="
+				+ terminalCalls);
+		}
+
+		AwakeRuntime.NativeReadinessProbeForTesting = null;
+		AwakeRuntime.ResetSessionStateForTesting();
+		Console.WriteLine("PASS native readiness retry smoke");
+	}
+
+	private static async Task RunNativeReadinessTooEarlySmokeAsync()
+	{
+		// 缺陷②（2026-10-01）真机症状：探针在「战役已建、主角还没绑」时**在守卫里自己抛 NRE**
+		// （Hero.MainHero → CharacterObject.PlayerCharacter → Game.Current.PlayerTroop 为 null 时 getter 抛），
+		// 被外层 catch 记成 Failed(native_probe_exception) ⇒ 整场 native_readiness Failed。
+		// 离线没有 Campaign，所以用缝把「战役在」打开，让真实的 Hero.MainHero 走到底：
+		// 离线它的 getter 链同样会抛（Game.Current 为 null），与真机同源。
+		AwakeRuntime.ResetSessionStateForTesting();
+		AwakeRuntime.NativeReadinessProbeForTesting = null;
+		AwakeRuntime.CampaignBoundProviderForTesting = () => true;
+		NativeReadinessResult tooEarly = await AwakeRuntime.EnsureNativeReadinessAsync("b1-too-early", CancellationToken.None);
+		AwakeRuntime.CampaignBoundProviderForTesting = null;
+		if (tooEarly.Status != NativeReadinessStatus.Skipped
+			|| !StringComparer.Ordinal.Equals(tooEarly.FailureCode, "player_unavailable")
+			|| !tooEarly.Retryable)
+		{
+			throw new InvalidOperationException("a probe before the player is bound must report a retryable"
+				+ " player_unavailable, got status=" + tooEarly.Status + " code=" + tooEarly.FailureCode
+				+ " retryable=" + tooEarly.Retryable);
+		}
+
+		// 战役本身还没起来时同样必须是可重试的「还没到时候」，不是永久失败。
+		AwakeRuntime.ResetSessionStateForCampaign();
+		NativeReadinessResult noCampaign = await AwakeRuntime.EnsureNativeReadinessAsync("b1-no-campaign", CancellationToken.None);
+		if (noCampaign.Status != NativeReadinessStatus.Skipped
+			|| !StringComparer.Ordinal.Equals(noCampaign.FailureCode, "campaign_unavailable")
+			|| !noCampaign.Retryable)
+		{
+			throw new InvalidOperationException("a probe without a campaign must be a retryable skip, got status="
+				+ noCampaign.Status + " code=" + noCampaign.FailureCode + " retryable=" + noCampaign.Retryable);
+		}
+
+		AwakeRuntime.NativeReadinessProbeForTesting = null;
+		AwakeRuntime.ResetSessionStateForTesting();
+		Console.WriteLine("PASS native readiness too-early smoke");
 	}
 
 	private static void AssertSnapshotHasNoBannerlordObjects(Type snapshotType)
@@ -1089,12 +1179,64 @@ private static void RunMessengerHistorySmoke()
 			throw new InvalidOperationException("dialogue queue should keep enqueued items.");
 		}
 		PendingDialogue first;
-		if (!EventDialogueQueue.TryDequeue(out first)
-			|| !StringComparer.Ordinal.Equals(first.HeroId, "hero-1")
-			|| EventDialogueQueue.Count != 1)
+		if (!EventDialogueQueue.TryDequeue(out first) || EventDialogueQueue.Count != 1)
 		{
 			throw new InvalidOperationException("dialogue queue dequeue mismatch.");
 		}
+		if (!StringComparer.Ordinal.Equals(first.HeroId, "hero:hero-1"))
+		{
+			throw new InvalidOperationException(
+				"dialogue queue target must be normalized to hero:hero-1, got: " + first.HeroId);
+		}
+
+		// 判据：队列吐出的 HeroId 必须是**消费端能解析的稳定 id**。
+		// 真机缺陷（2026-09-14 那一跑）：两个生产者喂的都是裸 Hero.StringId
+		// （NpcProactiveService.cs:342 `HeroId = hero.StringId`；AwakeEventEngine.ResolveDialogueTarget
+		// 返回 `...Leader?.StringId`），而消费端 SubModule 的 FindTargetById 只认 hero:/npc: 前缀
+		// ⇒ 解析失败 ⇒ 每次主动对话都记 npc_dialogue_open_failed:target_unavailable，
+		// NPC 的嘴永远张不开（v0.3「活起来」卡在这里）。
+		string kind;
+		string characterId;
+		int agentIndex;
+		if (!AwakeNpcTarget.TryParseStableId(first.HeroId, out kind, out characterId, out agentIndex)
+			|| !StringComparer.Ordinal.Equals(kind, "hero")
+			|| !StringComparer.Ordinal.Equals(characterId, "hero-1"))
+		{
+			throw new InvalidOperationException(
+				"dialogue queue target must be a parseable stable id, got: " + first.HeroId);
+		}
+
+		// 判据：归一化必须幂等 —— 已带前缀的生产者不得被拼成 hero:hero:xxx。
+		EventDialogueQueue.ClearForTesting();
+		EventDialogueQueue.Enqueue("hero:lord_swadian", "a");
+		EventDialogueQueue.Enqueue("npc:townsman_empire:a3", "b");
+		PendingDialogue prefixed;
+		PendingDialogue npcTarget;
+		if (!EventDialogueQueue.TryDequeue(out prefixed)
+			|| !StringComparer.Ordinal.Equals(prefixed.HeroId, "hero:lord_swadian")
+			|| !EventDialogueQueue.TryDequeue(out npcTarget)
+			|| !StringComparer.Ordinal.Equals(npcTarget.HeroId, "npc:townsman_empire:a3"))
+		{
+			throw new InvalidOperationException("dialogue queue must not re-prefix an already-prefixed target id.");
+		}
+
+		// 判据：开场提示的上下文槽必须与 NpcDialogueService._heroId 同形。
+		// `_heroId` 就是 target.StableId（NpcDialogueService.cs:113 ⇒ :87），即 `hero:<StringId>`；
+		// 而 ConsumeOpeningContext（:1737）与 Dispose（:435）都是**严格相等**比较。
+		// 槽里存裸 id ⇒ 提示被静默丢弃 ⇒ 嘴张开了但开场白没了。
+		NpcDialogueContext.ClearForTesting();
+		NpcDialogueContext.Record("lord_swadian", "开场提示");
+		string contextHeroId;
+		string contextText;
+		if (!NpcDialogueContext.TryTake(out contextHeroId, out contextText)
+			|| !StringComparer.Ordinal.Equals(contextHeroId, "hero:lord_swadian")
+			|| !StringComparer.Ordinal.Equals(contextText, "开场提示"))
+		{
+			throw new InvalidOperationException(
+				"dialogue context key must be canonical, got: " + contextHeroId);
+		}
+		NpcDialogueContext.ClearForTesting();
+
 		EventDialogueQueue.ClearForTesting();
 		Console.WriteLine("PASS dialogue queue smoke");
 	}
@@ -2335,6 +2477,7 @@ private static void RunMessengerHistorySmoke()
 	private static void RunWorldFactJournalSmoke()
 	{
 		JObject scratch;
+		string rootError;
 		// 1) "key 不存在"在存储层的真实表示是"成功 + 空串"（不是 storage.key_not_found）。
 		if (WorldFactJournalCodec.ReadRoot(null, out scratch) != WorldFactJournalReadStatus.Missing)
 			throw new InvalidOperationException("journal root null must read as missing.");
@@ -2349,10 +2492,42 @@ private static void RunMessengerHistorySmoke()
 		if (WorldFactJournalCodec.ReadRoot("{\"schema\":\"other\"}", out scratch) != WorldFactJournalReadStatus.Corrupt)
 			throw new InvalidOperationException("journal root with a foreign schema must stay corrupt.");
 
+		// 2b) 缺陷 1 残留②（2026-10-01 修）：旧行为把一切坏法塌缩成同一个码
+		//     （WorldStateStore.cs:907-908 写死 awake.world_fact.root_corrupt）⇒ 真机日志只说
+		//     "账本坏了"、不说"为什么坏"。四种子原因必须各自可辨。
+		//     检查次序（schema → phase → bounds → chunkKeys）是契约的一部分：`{"schema":"other"}`
+		//     什么都没有，必须报 schema 而不是 bounds，否则诊断会指错方向。
+		if (WorldFactJournalCodec.ReadRoot("{not json", out scratch, out rootError) != WorldFactJournalReadStatus.Corrupt
+			|| !StringComparer.Ordinal.Equals(rootError, "awake.world_fact.root_json_invalid"))
+			throw new InvalidOperationException("malformed journal root must report awake.world_fact.root_json_invalid, got=" + rootError);
+		if (WorldFactJournalCodec.ReadRoot("{\"schema\":\"other\"}", out scratch, out rootError) != WorldFactJournalReadStatus.Corrupt
+			|| !StringComparer.Ordinal.Equals(rootError, "awake.world_fact.root_schema_mismatch"))
+			throw new InvalidOperationException("journal root with a foreign schema must report awake.world_fact.root_schema_mismatch, got=" + rootError);
+		JObject writingPhase = WorldFactJournalCodec.BuildRoot(1, 7, 1, new string[0]);
+		writingPhase["phase"] = "writing";
+		if (WorldFactJournalCodec.ReadRoot(writingPhase.ToString(Newtonsoft.Json.Formatting.None), out scratch, out rootError) != WorldFactJournalReadStatus.Corrupt
+			|| !StringComparer.Ordinal.Equals(rootError, "awake.world_fact.root_phase_invalid"))
+			throw new InvalidOperationException("journal root with a non-committed phase must report awake.world_fact.root_phase_invalid, got=" + rootError);
+		JObject badBounds = WorldFactJournalCodec.BuildRoot(1, 7, 1, new string[0]);
+		badBounds["revision"] = 0;
+		if (WorldFactJournalCodec.ReadRoot(badBounds.ToString(Newtonsoft.Json.Formatting.None), out scratch, out rootError) != WorldFactJournalReadStatus.Corrupt
+			|| !StringComparer.Ordinal.Equals(rootError, "awake.world_fact.root_bounds_invalid"))
+			throw new InvalidOperationException("journal root with impossible bounds must report awake.world_fact.root_bounds_invalid, got=" + rootError);
+		// BuildRoot 会把 chunkKeys 排好序，所以"乱序"这一种必须手写 JSON。
+		string unsortedKeys = "{\"schema\":\"" + WorldFactJournalCodec.RootSchema
+			+ "\",\"startDay\":1,\"endDay\":7,\"revision\":1,\"phase\":\"committed\",\"chunkKeys\":[\"facts-b\",\"facts-a\"]}";
+		if (WorldFactJournalCodec.ReadRoot(unsortedKeys, out scratch, out rootError) != WorldFactJournalReadStatus.Corrupt
+			|| !StringComparer.Ordinal.Equals(rootError, "awake.world_fact.root_chunk_keys_invalid"))
+			throw new InvalidOperationException("journal root with unsorted chunk keys must report awake.world_fact.root_chunk_keys_invalid, got=" + rootError);
+
 		// 3) 正常路径不能被改坏。
 		JObject noChunks = WorldFactJournalCodec.BuildRoot(1, 7, 1, new string[0]);
 		if (WorldFactJournalCodec.ReadRoot(noChunks.ToString(Newtonsoft.Json.Formatting.None), out scratch) != WorldFactJournalReadStatus.Empty)
 			throw new InvalidOperationException("journal root without chunks must read as empty.");
+		// 3b) 好账本不得携带原因码 —— 否则"为什么坏"会退化成"什么都算坏"。
+		if (WorldFactJournalCodec.ReadRoot(noChunks.ToString(Newtonsoft.Json.Formatting.None), out scratch, out rootError) != WorldFactJournalReadStatus.Empty
+			|| !string.IsNullOrEmpty(rootError))
+			throw new InvalidOperationException("an empty journal root must carry no error code, got=" + rootError);
 		JObject withChunk = WorldFactJournalCodec.BuildRoot(1, 7, 1, new[] { "facts-00000001-00000007-r00000001-0000-" + new string('a', 64) });
 		if (WorldFactJournalCodec.ReadRoot(withChunk.ToString(Newtonsoft.Json.Formatting.None), out scratch) != WorldFactJournalReadStatus.Success)
 			throw new InvalidOperationException("well-formed journal root must read as success.");
@@ -2438,6 +2613,11 @@ private static void RunMessengerHistorySmoke()
 		WorldFactJournalReadResult corrupt = await store.GetWorldFactJournalAsync(context, CancellationToken.None).ConfigureAwait(false);
 		if (corrupt.Status != WorldFactJournalReadStatus.Corrupt)
 			throw new InvalidOperationException("a malformed journal root must read as corrupt, got=" + corrupt.Status);
+		// 缺陷 1 残留②（2026-10-01 修）：store 曾把 codec 的判断整个换成写死的
+		// awake.world_fact.root_corrupt（WorldStateStore.cs:907-908）⇒ 真机只看到"账本坏了"，
+		// 看不到"为什么坏"。这里钉住"codec 的具体子原因必须透到 store 这一层"。
+		if (!StringComparer.Ordinal.Equals(corrupt.ErrorCode, "awake.world_fact.root_json_invalid"))
+			throw new InvalidOperationException("a malformed journal root must surface the codec sub-cause, got=" + corrupt.ErrorCode);
 
 		WorldFact fact = new WorldFact(
 			"wf1-journal-recovery-smoke",
@@ -2470,7 +2650,101 @@ private static void RunMessengerHistorySmoke()
 				+ after.Status + " facts=" + after.Facts.Count + " code=" + after.ErrorCode);
 		}
 
+		// 第二种坏法（schema 不符）：子原因必须跟着变，不能恒为同一个码 —— 否则"具体子原因"
+		// 就只是把一个写死的串换成了另一个写死的串。
+		journalStore.Seed(AiTaskConstants.WorldFactJournalRootKey, "{\"schema\":\"other\"}");
+		WorldFactJournalReadResult foreign = await store.GetWorldFactJournalAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (foreign.Status != WorldFactJournalReadStatus.Corrupt
+			|| !StringComparer.Ordinal.Equals(foreign.ErrorCode, "awake.world_fact.root_schema_mismatch"))
+		{
+			throw new InvalidOperationException("a foreign-schema journal root must report its own sub-cause, got="
+				+ foreign.Status + " code=" + foreign.ErrorCode);
+		}
+
 		Console.WriteLine("PASS world fact journal recovery smoke");
+	}
+
+	/// <summary>
+	/// 世界事实日志**显式重置**判据（2026-10-01 补，缺陷 1 残留①）。
+	/// 真机症状（09-14 23:17 连续三轮 root_corrupt）：root 坏掉后**读侧没有任何恢复能力**，
+	/// 写侧又要等"某条新世界事实恰好被写入"才顺带隔离自愈（WorldStateStore.cs:3671-3679）
+	/// ⇒ 只要没有新事实，`awake_weekly_report_refresh status=unavailable` 就一直挂着。
+	/// 这条钉住"坏账本可以被显式重置成空账本"—— 也就是周报链唯一能恢复的入口：
+	/// WeeklyReportService.TryValidateWeeklyInput 只接受 Success / Empty，legacy 回退也被
+	/// WorldFactQuery.TryCreate 拒掉（:159-163）。
+	/// </summary>
+	private static async Task RunWorldFactJournalResetSmokeAsync()
+	{
+		SessionRef session = new SessionRef("smoke-reset-campaign", "smoke-reset-timeline", "smoke-reset-session");
+		WorldStateStore store = new WorldStateStore(session);
+		FakeKeyValueStore journalStore = new FakeKeyValueStore();
+		journalStore.Seed(AiTaskConstants.WorldFactJournalRootKey, "{ this is not json");
+		store.InjectStoreForTesting(AiTaskConstants.WorldFactJournalNamespace, journalStore);
+		RequestContext context = new FakeClock(DateTimeOffset.UtcNow).Context("awake.smoke", session, "journal-reset");
+
+		// 1) 坏账本读出来必须带具体子原因（不是写死的 root_corrupt）。
+		WorldFactJournalReadResult corrupt = await store.GetWorldFactJournalAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (corrupt.Status != WorldFactJournalReadStatus.Corrupt
+			|| !StringComparer.Ordinal.Equals(corrupt.ErrorCode, "awake.world_fact.root_json_invalid"))
+		{
+			throw new InvalidOperationException("a malformed journal root must read as corrupt with its own sub-cause, got="
+				+ corrupt.Status + " code=" + corrupt.ErrorCode);
+		}
+
+		// 2) 重置：隔离坏值 + 写空账本新 root；返回值就是刚才诊断出的子原因码。
+		OperationResult<string> reset = await store.ResetWorldFactJournalAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (!reset.IsSuccess || !StringComparer.Ordinal.Equals(reset.Value, "awake.world_fact.root_json_invalid"))
+		{
+			throw new InvalidOperationException("reset must succeed and report the diagnosed sub-cause, got ok="
+				+ reset.IsSuccess + " value=" + reset.Value + " code=" + reset.Error?.Code);
+		}
+
+		// 3) 坏值必须留在旁路 key 里（只复制、不删原件）—— 重置不许变成"删数据"。
+		if (journalStore.GetValue(AiTaskConstants.WorldFactJournalRootKey + ".quarantine") == null)
+			throw new InvalidOperationException("reset must quarantine the corrupt root before replacing it.");
+
+		// 4) 重置后必须读成 Empty 且 revision >= 1 —— 这是周报链唯一的可用入口。
+		WorldFactJournalReadResult after = await store.GetWorldFactJournalAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (after.Status != WorldFactJournalReadStatus.Empty || (after.Revision ?? 0) < 1)
+		{
+			throw new InvalidOperationException("a reset journal must read as empty with a revision, got status="
+				+ after.Status + " revision=" + after.Revision + " code=" + after.ErrorCode);
+		}
+
+		// 5) 账本没坏时不许动手（幂等、无副作用）。
+		OperationResult<string> again = await store.ResetWorldFactJournalAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (!again.IsSuccess || !StringComparer.Ordinal.Equals(again.Value, "awake.world_fact.journal_reset_not_needed"))
+			throw new InvalidOperationException("a healthy journal must not be reset, got ok=" + again.IsSuccess + " value=" + again.Value);
+
+		// 6) 重置必须真的解开写侧死锁：空账本 ⇒ 第一条事实能落盘并读回 Success。
+		WorldFact fact = new WorldFact(
+			"wf1-journal-reset-smoke",
+			3,
+			3L * 144L,
+			"smoke_kind",
+			new[] { new WorldFactEntity("hero", "hero-journal-reset", "subject") },
+			"重置烟测事实",
+			"smoke");
+		WorldStateCommand command = new WorldStateCommand(
+			AiTaskConstants.WorldEventsNamespace,
+			"world_events.smoke.v1",
+			"smoke.journal.reset",
+			"idem-smoke-journal-reset",
+			string.Empty,
+			WorldStateKind.WorldEvents,
+			new JObject { ["fact"] = fact.ToJson() },
+			DateTimeOffset.UtcNow,
+			context.CorrelationId);
+		if (!store.TryEnqueue(command)) throw new InvalidOperationException("reset smoke command should enqueue.");
+		await store.DrainAsync(CancellationToken.None).ConfigureAwait(false);
+		WorldFactJournalReadResult recovered = await store.GetWorldFactJournalAsync(context, CancellationToken.None).ConfigureAwait(false);
+		if (recovered.Status != WorldFactJournalReadStatus.Success || recovered.Facts.Count != 1)
+		{
+			throw new InvalidOperationException("the reset journal must accept new facts, got status="
+				+ recovered.Status + " facts=" + recovered.Facts.Count + " code=" + recovered.ErrorCode);
+		}
+
+		Console.WriteLine("PASS world fact journal reset smoke");
 	}
 
 	private static async Task RunStoragePipelineSmokeAsync()

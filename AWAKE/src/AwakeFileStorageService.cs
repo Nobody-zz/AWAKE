@@ -62,13 +62,31 @@ internal sealed class AwakeFileStorageService : IStorageService
                 owner: AwakeConstants.OwnerValue));
         }
 
+        // 缺陷④（2026-10-01）：campaign 还没绑定时**拒绝写入并报可重试**。
+        // 口径是主控直接定的（docs/HANDOFF-STORAGE-CONSISTENCY-20260922.md §1.2 Q11-4：
+        // 「campaign 未绑定时存储怎么办 → 拒绝写入并报可重试（行为变更，现行是照写）」）。
+        // 旧行为落共享的 unbound\ 桶：写入"成功"，可开局后 ResolveCampaignId() 返回真 id，
+        // 同一份账本再也读不回来（09-14 真机实证：unbound\ 与 1IgZ8yHJynfn\ 两份并存）。
+        string campaignId = ResolveCampaignId();
+        if (string.IsNullOrWhiteSpace(campaignId))
+        {
+            AwakeLog.Write("storage_namespace_open_unbound namespace=" + namespaceId);
+            return OperationResult<IKeyValueStore>.Failed(FrameworkErrors.Create(
+                "awake.storage.campaign_unbound",
+                FrameworkErrorCategory.Unavailable,
+                "The campaign is not bound yet; campaign storage is refused until it is.",
+                correlation,
+                retryable: true,
+                owner: AwakeConstants.OwnerValue));
+        }
+
         try
         {
             string path = Path.Combine(
                 AwakeModulePaths.ResolveModuleDirectory(),
                 "PlayerExports",
                 "AwakeState",
-                SafeSegment(ResolveCampaignId()),
+                SafeSegment(campaignId),
                 SafeSegment(namespaceId) + ".json");
 
             JsonFileKeyValueStore store;
@@ -96,11 +114,21 @@ internal sealed class AwakeFileStorageService : IStorageService
         }
     }
 
+    // 测试缝：离线没有 Campaign，造不出「已绑定真存档 id」的路径。
+    // 生产环境恒为 null ⇒ 走真实的 Campaign.Current.UniqueGameId。
+    internal static Func<string> CampaignIdProviderForTesting { get; set; }
+
+    // 未绑定时返回 null（而不是过去那个 "unbound" 桶名）——调用方据此**拒绝**写入，
+    // 而不是往一个共享位置里塞数据（2026-10-01 缺陷④）。
     private static string ResolveCampaignId()
     {
+        Func<string> provider = CampaignIdProviderForTesting;
+        if (provider != null)
+        {
+            return provider();
+        }
         Campaign campaign = Campaign.Current;
-        string id = campaign == null ? null : campaign.UniqueGameId;
-        return string.IsNullOrWhiteSpace(id) ? "unbound" : id;
+        return campaign == null ? null : campaign.UniqueGameId;
     }
 
     private static string SafeSegment(string value)
@@ -244,8 +272,36 @@ internal sealed class AwakeFileStorageService : IStorageService
 
             string temp = path + ".tmp";
             File.WriteAllText(temp, payload.ToString(Formatting.None), new UTF8Encoding(false));
-            if (File.Exists(path)) File.Replace(temp, path, null);
-            else File.Move(temp, path);
+            if (!File.Exists(path))
+            {
+                File.Move(temp, path);
+                return;
+            }
+
+            // 首选原子替换：读者要么看到旧文件、要么看到新文件，不会看到半个。
+            // ⚠️ 但 ReplaceFile 不是到处都可用 —— 2026-10-01 实测：本机在 DSH 文件沙箱下
+            //    （工作区与临时目录都试过）一律返回 UnauthorizedAccessException「对路径的访问被拒绝」，
+            //    而同一目录下 File.Copy(temp, path, true) 正常。结果是离线烟测
+            //    dialogue-chain-redtest 的 storage delete 判据恒红 —— 门红在环境，不在代码。
+            //    因此这里退化为覆盖拷贝：原子性在 Replace 可用的环境仍然保留。
+            try
+            {
+                File.Replace(temp, path, null);
+            }
+            catch (IOException)
+            {
+                ReplaceByCopy(temp, path);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                ReplaceByCopy(temp, path);
+            }
+        }
+
+        private static void ReplaceByCopy(string temp, string path)
+        {
+            File.Copy(temp, path, true);
+            File.Delete(temp);
         }
     }
 }
