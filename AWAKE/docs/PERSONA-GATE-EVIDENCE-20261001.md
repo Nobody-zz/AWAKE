@@ -1,12 +1,12 @@
 # 角色卡质量门 · 红绿证据（2026-10-01）
 
-门：`AWAKE/tools/persona-card-gate.py`（17 条判据：R1–R9、R13–R15、R17 是本门自有的硬判据，R10–R12 委派给外部判据脚本见 §10，R16 是**告警**、不判死）
+门：`AWAKE/tools/persona-card-gate.py`（19 条判据：R1–R9、R13–R15、R17、R18、R19 是本门自有的硬判据，R10–R12 委派给外部判据脚本见 §10，R16 是**告警**、不判死）
 证据等级：**E2（离线测试）** —— 未涉及游戏内验证，本门也不声称游戏内生效。
 配套规格：[`PERSONA-CARD-SPEC-v1-20261001.md`](PERSONA-CARD-SPEC-v1-20261001.md)（巡检会话，另写；关系见 §7）
 
 ---
 
-## 一、十七条判据
+## 一、十九条判据
 
 | # | 规则码 | 判据 | 类型 | 老卡 76 | 新卡 279 |
 |---|---|---|---|---|---|
@@ -27,7 +27,22 @@
 | R15 | `PERSONA_PROFILE_KEY_NONCONFORMANT` | 存在的 profile 字典（`traitProfile`/`expressionProfile`/`behaviorProfile`/`reactionProfile`/`commitmentProfile`）键名须**精确等于**规范键集 | 不变量 | 0 | **68**（17 卡 × 4 套） |
 | R16 | `PERSONA_FACET_MIRRORS_TAGS` | `facetStrengths` 键集不得**等于** `tags`（好卡是严格超集） | **告警** | 2 | 17 |
 | R17 | `PERSONA_BATCH_TAG_STAMP` | **同一批次内**最大标签集合的占比不得超阈值（批 ≥5 张、该组 ≥4 张才判） | 不变量（**批级**） | 0 | **2** |
+| R18 | `PERSONA_FACET_CATEGORY_UNSUPPORTED` | `facetStrengths` 不得含 `trigger.*` / `boundary.*` 键 | 不变量 | 0 | —（2026-10-02 重写批引入 **76**） |
+| R19 | `PERSONA_AXIS_OUT_OF_RANGE` | profile 字典里每个**数值**须落在 `[-3,3]` | 不变量 | 0 | —（2026-10-02 重写批引入 **51**） |
 | — | `PERSONA_CRITERIA_UNAVAILABLE` | 判据脚本加载失败（**门级**失败，不挂在某张卡上） | 不变量 | 0 | 0 |
+
+**R18 / R19 是 2026-10-02 补的**，起因是第 6 道门 `compile-verify.ps1` 在 355 张全绿之后报红：
+`facet.category_not_supported` 76 张、`load.axis.value_invalid` 51 张。根因读源码得到：
+`AWAKE/tools/persona-workbench/src/PersonaWorkbench.Core/PersonaCore.cs:276-279` 对
+`PersonaTagCategory.Trigger` 与 `.Boundary` 直接报 `facet.category_not_supported`；
+`:349-355` `ValidateAxis` 要求轴值在 `-3..3`，而
+`CanonicalPersonaTemplateGenerator.cs:448-466` 只为 `|3|` 准备了 `_EXTREME` 档位，
+4 或 5 会直接抛 `persona.axis_value_invalid`。
+**这两类此前没有任何门能拦**：workbench schema 的 `facetStrengths.propertyNames.enum`
+只有 trait/expression/behavior（**没有 trigger 条目，所以等于没校验**），
+`audit-character-schema.ps1:92` 只查 facet 值的数值范围、`:83` 把越界轴记成**软告警**。
+⇒ 我先前那句「R16 覆盖了 facetStrengths」是错的：R16 只管「键集是否等于 tags」，
+不管键的**类别**，也不管**数值**。补上 R18/R19 之后，本门与第 6 道门在这一点上对齐。
 
 R10–R12 的规则逻辑**不在本门里**：本门只应用阈值，规则实现在
 `AWAKE/tools/persona-workbench/tools/measure-three-criteria.py`（巡检会话产出，详见 §10）。
@@ -236,6 +251,22 @@ R9 改判同样不能靠「改一张真卡」验证（它读的是**语料形状
 `C_diverse` 是关键：它证明新条件**没有**把 R9 变成一道恒红的门 —— 真实的 355 张语料正是这个形状
 （8 种数量取值、348 个不同集合），所以改判后全语料 `failed_cards=0 violations=0` 退出码 0。
 
+### R18 / R19 矩阵（5/5 ALL_PASS，2026-10-02）
+
+这两条是逐卡判据，可以直接拿真卡做变异。取 24 张真卡复制到临时目录，跑门时加
+`--min-population 100 --skip-external-criteria`（前者挡掉 R3/R4/R9 的语料形状规则，
+后者不必要，但让输出更干净），只改目标卡再复跑。
+
+| 用例 | 变异 | 期望 | 实测 | 判定 |
+|---|---|---|---|---|
+| `baseline` | 无 | GREEN | — | ✅ 基线 |
+| `facet_trigger_key` | 往 `facetStrengths` 加 `trigger.social_slight: 2` | RED | `PERSONA_FACET_CATEGORY_UNSUPPORTED count=1` | ✅ R18 开火 |
+| `axis=4` | `traitProfile.pragmatism = 4` | RED | `PERSONA_AXIS_OUT_OF_RANGE count=1` | ✅ R19 开火 |
+| **`axis=3`** | **`traitProfile.pragmatism = 3`（区间上界）** | **GREEN** | — | ✅ **阴性对照（上界合法，不是恒红）** |
+| `restored` | 还原 | GREEN | — | ✅ 无残留 |
+
+脚本 `%TEMP%\r18r19_test.py`，输出 `%TEMP%\r18r19\matrix.txt`（未入库）。
+
 ---
 
 ## 五、判据体检（技能 §3：不可失败门的四种形态）
@@ -312,6 +343,15 @@ R9 改判同样不能靠「改一张真卡」验证（它读的是**语料形状
     （否则小批噪声会淹掉信号），但它们也意味着**小批戳记可以藏**。
 16. **R17 只查批内，不查跨批**：14 个批次各自 8% 同套、但每批用的是**同一套** tag —— 这种「分批
     但同模板」的形态 R17 看不出来（那需要跨批比较，目前没有）。
+17. **R18 / R19 是照着 `PersonaCore.cs` 的当前规则写的**，不是照着契约文档写的。契约
+    （`contracts/persona-workbench.character.v1.schema.json`）在这两点上**要么没写、要么只写软的**：
+    `facetStrengths.propertyNames.enum` 里根本没有 `trigger.*` 条目（等于没约束），轴的范围在
+    `audit-character-schema.ps1:83` 只算告警。⇒ 哪天运行时放宽了轴域或新增了允许的 facet 类别，
+    **本门会先变红而运行时已经接受**，必须同步改这两条。它们不是「契约的忠实翻译」，
+    而是「运行时校验器的忠实翻译」。
+18. **R19 只看「是不是整数且在 -3..3」**。它不管 `reactionProfile.sensitiveConditions` /
+    `commitmentProfile.priorityOrder` 这类**非数值**字段的内容是否合理，也不管
+    `traitProfile` 六轴之间是否自相矛盾（例如 `caution=3` 配 `ambition=3`）。
 
 ---
 

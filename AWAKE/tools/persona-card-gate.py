@@ -141,10 +141,34 @@ Rules
                           measured healthy rate sits 1.75x below it while the
                           smallest known stamp sits 2.9x above.
 
-R13-R15 are LOCAL rules: pure per-card structural checks. R17 is local to a
-BATCH rather than to a card, but it is still population-independent -- it never
-reads a global share, so the size of the surrounding corpus cannot hide a stamp.
-None of the four is gated by --min-population.
+  R18 facet-category-unsupported
+                         facetStrengths must not carry a trigger.* or
+                         boundary.* key. PersonaCore.cs:276-279 raises
+                         "facet.category_not_supported" for exactly those two
+                         categories, so the card fails the real compilation
+                         chain. Nothing upstream caught it: the workbench
+                         schema's facetStrengths.propertyNames.enum simply has
+                         no trigger entry, and audit-character-schema.ps1
+                         checks facet keys only for numeric range, never for
+                         category. Measured 2026-10-02: 76/355 cards carried
+                         one, all exposed only by compile-verify.ps1.
+                         HARD because the runtime loader rejects the card.
+  R19 axis-out-of-range  every numeric value inside a profile dict must sit in
+                         [-3,3]. PersonaCore.cs:349-355 (ValidateAxis) rejects
+                         anything else and
+                         CanonicalPersonaTemplateGenerator.cs:448-466 only maps
+                         |3| (_EXTREME), so a 4 or 5 is a hard load/build
+                         failure. The workbench schema gate records the same
+                         value as a soft WARN only
+                         (audit-character-schema.ps1:83 Test-IntRange -3 3), so
+                         51/355 cards carried 4s and 5s unnoticed until
+                         compile-verify.ps1 ran (measured 2026-10-02).
+                         HARD because the runtime loader rejects the card.
+
+R13-R15, R18 and R19 are LOCAL rules: pure per-card structural checks. R17 is
+local to a BATCH rather than to a card, but it is still population-independent --
+it never reads a global share, so the size of the surrounding corpus cannot hide
+a stamp. None of them is gated by --min-population.
 
 R10-R12 DELEGATE: the rule logic lives in exactly one place -- the external
 criteria script (default persona-workbench/tools/measure-three-criteria.py,
@@ -493,7 +517,7 @@ def main():
     def fail(rule, line):
         failures.append((rule, line))
 
-    # ---------- R1 / R2 / R5 / R6 / R8 / R13 / R14 / R15 / R16 : per card ----
+    # ---------- R1 / R2 / R5 / R6 / R8 / R13 / R14 / R15 / R16 / R18 / R19 : per card ----
     for c in cards:
         if c["error"]:
             fail("PERSONA_CARD_UNREADABLE", "%s :: %s" % (c["name"], c["error"]))
@@ -598,6 +622,40 @@ def main():
                     fail("PERSONA_FACET_MIRRORS_TAGS", line)
                 else:
                     warns.append(("PERSONA_FACET_MIRRORS_TAGS", line))
+
+        # R18 -- facetStrengths must not carry trigger./boundary. keys.
+        # PersonaCore.cs:276-279 raises "facet.category_not_supported" for
+        # exactly those two categories, so such a card fails the real
+        # compilation chain. The workbench schema does not catch it: its
+        # facetStrengths.propertyNames.enum lists only trait/expression/
+        # behavior, and audit-character-schema.ps1 checks the facet keys only
+        # for numeric range, never for category -- this was a blind spot until
+        # compile-verify.ps1 exposed 76 cards on 2026-10-02.
+        if isinstance(fs, dict):
+            for key in sorted(fs):
+                if key.startswith(u"trigger.") or key.startswith(u"boundary."):
+                    fail("PERSONA_FACET_CATEGORY_UNSUPPORTED",
+                         "%s :: facetStrengths carries %s" % (c["name"], key))
+
+        # R19 -- numeric profile axes must stay inside -3..3.
+        # PersonaCore.cs:349-355 (ValidateAxis) rejects anything else, and
+        # CanonicalPersonaTemplateGenerator.cs:448-466 only maps |3|
+        # (_EXTREME); a 4 or 5 is a hard load/build failure. The workbench
+        # schema gate treats the same value as a soft WARN
+        # (audit-character-schema.ps1:83 Test-IntRange ... -3 3), so it never
+        # stopped 51 cards carrying 4s and 5s until compile-verify.ps1 ran.
+        for pname in sorted(CANONICAL_PROFILES):
+            val = d.get(pname)
+            if not isinstance(val, dict):
+                continue
+            for key in sorted(val):
+                v = val[key]
+                if isinstance(v, bool) or not isinstance(v, int):
+                    continue
+                if v < -3 or v > 3:
+                    fail("PERSONA_AXIS_OUT_OF_RANGE",
+                         "%s :: %s.%s=%d outside [-3,3]" % (
+                             c["name"], pname, key, v))
 
     # ---------- R3 : cross-card template load ----------
     sent_cards = defaultdict(set)
@@ -807,6 +865,7 @@ def main():
                  "PERSONA_SUMMARY_COPIED_INTO_EXAMPLE", "PERSONA_SPEAKER_LABEL_PREFIX",
                  "PERSONA_PLACEHOLDER_TEXT", "PERSONA_SUMMARY_DERIVED_FROM_DESCRIPTION",
                  "PERSONA_PROFILE_KEY_NONCONFORMANT", "PERSONA_FACET_MIRRORS_TAGS",
+                 "PERSONA_FACET_CATEGORY_UNSUPPORTED", "PERSONA_AXIS_OUT_OF_RANGE",
                  "PERSONA_BATCH_TAG_STAMP"):
         if not by_rule.get(rule):
             continue
