@@ -107,6 +107,12 @@
     <Compile Include="..\AWAKE\src\AwakeImageClient.cs" Link="AwakeImageClient.cs" />
     <Compile Include="..\AWAKE\src\AwakeImageProbe.cs" Link="AwakeImageProbe.cs" />
     <Compile Include="..\AWAKE\src\AwakeImageConfiguration.cs" Link="AwakeImageConfiguration.cs" />
+    <!-- 2026-10-02 补记：AI 通路收口（片 2c/4）新增了 CloudExportGate 与 AwakePortraitGenerator，
+         AiTaskGateway 立刻引用前者 ⇒ 又是同一个坑的第四次（CS0246: CloudExportGate）。
+         原则不变：**src/ 在 AWAKE.csproj 里通配编译，本工程是显式清单；
+         往 src/ 新增任何源文件都必须同步加到这里，否则只在第二步炸。** -->
+    <Compile Include="..\AWAKE\src\CloudExportGate.cs" Link="CloudExportGate.cs" />
+    <Compile Include="..\AWAKE\src\AwakePortraitGenerator.cs" Link="AwakePortraitGenerator.cs" />
     <Compile Include="..\AWAKE\src\AwakeRuleRegistry.cs" Link="AwakeRuleRegistry.cs" />
     <Compile Include="..\AWAKE\src\AwakeEventDataLoader.cs" Link="AwakeEventDataLoader.cs" />
     <Compile Include="..\AWAKE\src\NpcMemoryConsolidator.cs" Link="NpcMemoryConsolidator.cs" />
