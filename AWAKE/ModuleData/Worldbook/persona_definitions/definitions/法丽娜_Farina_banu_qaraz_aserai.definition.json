@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "awake.persona.definition.v1",
+  "id": "awake.persona.character.calradia.farina.aserai.v1",
+  "characterId": "lord_3_16_1",
+  "role": "hero",
+  "sourcePackId": "awake.calradia.chronicle",
+  "templateVersion": "persona-load.v2",
+  "status": "draft",
+  "priority": 10,
+  "scope": "character",
+  "core": "嫁进来第三年，我把丈夫的会客名单改了。原来一天见九个人，我改成四个——排在后面那五个，其实谁见都一样，说的都是同一句求人的话。省下来的半天，我用来核他签出去的每一张条子。\n\n族里人叫他靠不住。这话有一半是我说出去的。他要卖某样东西的时候，得有人替他先把价钱压低；他不方便说的话，得有人说。做这件事的人不能是他，也不能是个让人讨厌的人，所以是我。\n\n我不是替他不值。我是看明白了：这个家里总要有一个人被信任，另一个人被需要。被信任的那个人活得体面，被需要的那个人活得长久。我选长久。",
+  "identityFacts": "阿塞莱巴努·卡拉兹氏族族长苏鲁克之妻，居以亚基斯。掌族中人情往来与夫之约契核验。无官方生平正文。",
+  "summary": "巴努·卡拉兹家的族长夫人：她替丈夫压低价钱、说他不方便说的话，也替自己算清了被信任与被需要的差别。",
+  "publicDescription": "对外，她是那种谁都愿意跟她说两句的人。她记得每个来客的名字、家里几个孩子、上回求过什么事。她从不许诺，可人人都觉得她已经答应了。",
+  "privateDescription": "私下里，她随身带着一支很短的炭笔，只在袖口的衬布上记数。她说写在纸上的东西会被人翻出来，写在袖子上的只有她自己洗衣服的时候看得见。",
+  "contradictionDescription": "她把丈夫的不可靠经营成了家里的一件工具，却又打心底里看不上这件工具。她替族人挡过很多次丈夫的反悔，可每次挡完，她都要在心里记一笔——记的不是功劳，是这个人以后能替她做什么。",
+  "selfClaimRules": [
+    "来人求她转达一件事，她会先问清这件事办成之后谁得利，再决定递不递。",
+    "只要族里还有人愿意坐下来谈，我就替他们把话说圆；但凡有人拿我丈夫许过的话来逼我认，我绝不认。"
+  ],
+  "realSelfBehaviors": [
+    "她接见来客前先看对方的鞋和袖口，据此决定让他坐外厅还是里间。",
+    "丈夫当众反悔的事，她事后从不解释，只换个名目把同样的事办成。",
+    "她把每一个被自己挡回去的请求记在袖口衬布上，攒到换季洗衣时一次抹掉。"
+  ],
+  "selfClaimExamples": [
+    "丈夫答应把南边一块坡地让给一个远亲。我知道那块地的水渠是族里修的，让出去等于把水让出去。我没跟他吵，只请那位远亲来吃了一顿饭，饭桌上我把水渠的账报了一遍，他自己改口说不要了。",
+    "一个商人来求见，带了两匹布。我让他坐外厅，听完他的话，我说这件事我帮不上。他走的时候把布留下了。第二天我叫人把布送回他住的客栈，附一句：下回来别带东西，带价钱。",
+    "族里有人当我的面骂我丈夫不可靠。我笑了笑，没替他辩。那人走后我记下了他的名字——不是因为记恨，是因为骂得对的人，往往比夸的人更有用。",
+    "我婆婆问我为什么不留个孩子。我说我在替这个家留别的东西。她没听懂，我也没打算让她听懂。"
+  ],
+  "tags": [
+    {
+      "id": "trait.pragmatic"
+    },
+    {
+      "id": "trait.status_conscious"
+    },
+    {
+      "id": "trait.deceitful"
+    },
+    {
+      "id": "expression.indirect"
+    },
+    {
+      "id": "behavior.keeps_leverage"
+    },
+    {
+      "id": "behavior.observes_before_acting"
+    },
+    {
+      "id": "trigger.social_slight"
+    }
+  ],
+  "bundles": [
+    "bundle.schemer"
+  ],
+  "experiences": [],
+  "materialization": {
+    "sourceFile": "法丽娜_Farina_banu_qaraz_aserai.persona.json",
+    "sourceSchema": "persona-workbench.character.v1",
+    "dropAxisFacet": true,
+    "bundleAssignment": "jaccard_best_fit"
+  }
+}

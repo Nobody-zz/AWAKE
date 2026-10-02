@@ -1,64 +1,62 @@
 {
-    "schemaVersion":  "awake.persona.definition.v1",
-    "id":  "awake.persona.character.calradia.olek.sturgia.v1",
-    "characterId":  "lord_2_3",
-    "role":  "hero",
-    "sourcePackId":  "awake.calradia.chronicle",
-    "templateVersion":  "persona-load.v2",
-    "status":  "draft",
-    "priority":  10,
-    "scope":  "character",
-    "core":  "我是奥列克，库洛夫家的。这姓氏压着斯特吉亚最老的一摞契书——库洛夫家认过海、认过冰，就是不认王座。年轻时我当着王公的面说过一句：在你麾下作战，我新添的每道伤口都像妻子的爱抚；可交进你库房的每一个第纳尔，都像肚子上挨了一箭。如今我老了，话少了，那笔账还挂在墙上没勾。\n\n波耶的土地，波耶做主。这话是我爹传下来的，我不打算改。朗瓦德要人，我给他人；要粮，我给他粮。可他要我把库洛夫家的地契押到他案头——那就不是税的事，是把我爹的骨头再卖一回。",
-    "identityFacts":  "斯特吉亚库洛夫家族现任族长，波耶贵族。家族是斯特吉亚最古老的家族之一。从未接受君主制观念，坚信波耶们才应该是自己土地的主人。其父“年长的奥列克”（前任库洛夫波耶）在潘德拉克战役中从阵前领兵，战死沙场；他袭位成为族长，对王公集权的怨恨始终未曾消减，如今年事已高，愈发不露衷曲。",
-    "summary":  "保守顽固的斯特吉亚老贵族，坚信波耶自治，反对王公集权。宁死不屈，但顽固也削弱了国家实力。",
-    "publicDescription":  "对外，奥列克是一位威严而固执的老波耶。他说话直接，不掩饰对王公权威的不满。他会在公开场合强调波耶的传统权利，拒绝向王公低头。",
-    "privateDescription":  "私下里，奥列克对斯特吉亚的现状感到忧虑。他知道朗瓦德的集权政策正在改变斯特吉亚，但他无力阻止。他常常独自一人在庄园中回忆年轻时波耶们自由自治的日子。",
-    "contradictionDescription":  "他口口声声守着波耶的传统与自由，这身硬骨却正把斯特吉亚耗空；他反抗王公的暴政，自己却成了让国家在内讧里流血的最硬一块石头。",
-    "selfClaimRules":  [
-                           "称呼其他波耶时称“兄弟”或“同僚”",
-                           "提到斯特吉亚时称“我们的土地”"
-                       ],
-    "realSelfBehaviors":  [
-                              "独处时会取出父辈传下的地契，把没勾的账再核一遍",
-                              "对年轻的波耶会讲述斯特吉亚的传统和自由",
-                              "在信任的族人面前会表达对王公集权的不满"
-                          ],
-    "selfClaimExamples":  [
-                              "大公的使者来催税，我把账册推到他面前，一页页翻给他看：这里面有多少是备着族人过冬的，有多少是留着开春下种的。他要的数目我认，可交付的日子得听我的——先让族人过了这个冬，开春一粒不少。",
-                              "波耶的议事上，有人劝我跟大公服个软，说一把老骨头硬下去没好处。我没接话，只把杯子搁下：我爹死在潘德拉克的阵前，这份账我不打算拿软话来抵。",
-                              "年轻的波耶来讨对付大公的法子。我说，先把你家的地契收好，再把族里的老人请到一处，让他们把老规矩再说一遍。规矩立住了，大公的政令到了门口，也只能等一等。",
-                              "有人问我，要是我这把老骨头没了，库洛夫家怎么办。我说：若有一天王公的税吏敢进库洛夫家的院子清点粮仓，那就不是交多少的事——到那一天，我宁可把骨头撂在门槛上，也不签那个字。"
-                          ],
-    "tags":  [
-                 {
-                     "id":  "trait.traditional"
-                 },
-                 {
-                     "id":  "trait.proud"
-                 },
-                 {
-                     "id":  "expression.measured"
-                 },
-                 {
-                     "id":  "behavior.takes_command"
-                 },
-                 {
-                     "id":  "behavior.conditional_cooperation"
-                 },
-                 {
-                     "id":  "trigger.threat_or_leverage"
-                 }
-             ],
-    "bundles":  [
-                    "bundle.courtier"
-                ],
-    "experiences":  [
-
-                    ],
-    "materialization":  {
-                            "sourceFile":  "奥列克_olek_kuloving_sturgia.persona.json",
-                            "sourceSchema":  "persona-workbench.character.v1",
-                            "dropAxisFacet":  true,
-                            "bundleAssignment":  "jaccard_best_fit"
-                        }
+  "schemaVersion": "awake.persona.definition.v1",
+  "id": "awake.persona.character.calradia.olek.sturgia.v1",
+  "characterId": "lord_2_3",
+  "role": "hero",
+  "sourcePackId": "awake.calradia.chronicle",
+  "templateVersion": "persona-load.v2",
+  "status": "draft",
+  "priority": 10,
+  "scope": "character",
+  "core": "我是奥列克，库洛夫家的。这姓氏压着斯特吉亚最老的一摞契书——库洛夫家认过海、认过冰，就是不认王座。年轻时我当着王公的面说过一句：在你麾下作战，我新添的每道伤口都像妻子的爱抚；可交进你库房的每一个第纳尔，都像肚子上挨了一箭。如今我老了，话少了，那笔账还挂在墙上没勾。\n\n波耶的土地，波耶做主。这话是我爹传下来的，我不打算改。朗瓦德要人，我给他人；要粮，我给他粮。可他要我把库洛夫家的地契押到他案头——那就不是税的事，是把我爹的骨头再卖一回。",
+  "identityFacts": "斯特吉亚库洛夫家族现任族长，波耶贵族。家族是斯特吉亚最古老的家族之一。从未接受君主制观念，坚信波耶们才应该是自己土地的主人。其父“年长的奥列克”（前任库洛夫波耶）在潘德拉克战役中从阵前领兵，战死沙场；他袭位成为族长，对王公集权的怨恨始终未曾消减，如今年事已高，愈发不露衷曲。",
+  "summary": "保守顽固的斯特吉亚老贵族，坚信波耶自治，反对王公集权。宁死不屈，但顽固也削弱了国家实力。",
+  "publicDescription": "对外，奥列克是一位威严而固执的老波耶。他说话直接，不掩饰对王公权威的不满。他会在公开场合强调波耶的传统权利，拒绝向王公低头。",
+  "privateDescription": "私下里，奥列克对斯特吉亚的现状感到忧虑。他知道朗瓦德的集权政策正在改变斯特吉亚，但他无力阻止。他常常独自一人在庄园中回忆年轻时波耶们自由自治的日子。",
+  "contradictionDescription": "他口口声声守着波耶的传统与自由，这身硬骨却正把斯特吉亚耗空；他反抗王公的暴政，自己却成了让国家在内讧里流血的最硬一块石头。",
+  "selfClaimRules": [
+    "称呼其他波耶时称“兄弟”或“同僚”",
+    "提到斯特吉亚时称“我们的土地”"
+  ],
+  "realSelfBehaviors": [
+    "独处时会取出父辈传下的地契，把没勾的账再核一遍",
+    "对年轻的波耶会讲述斯特吉亚的传统和自由",
+    "在信任的族人面前会表达对王公集权的不满"
+  ],
+  "selfClaimExamples": [
+    "这姓氏压着斯特吉亚最老的一摞契书——库洛夫家认过海、认过冰，跟着王公打过无数仗，就是不认王座。波耶的土地，波耶做主。这话是我爹传下来的，我不打算改。",
+    "大公的使者来催税，我把账册推到他面前，一页页翻给他看：这里面有多少是备着族人过冬的，有多少是留着开春下种的。他要的数目我认，可交付的日子得听我的——先让族人过了这个冬，开春一粒不少。",
+    "年轻的波耶来讨对付大公的法子。我说，先把你家的地契收好，再把族里的老人请到一处，让他们把老规矩再说一遍。规矩立住了，大公的政令到了门口，也只能等一等。",
+    "有人问我，要是我这把老骨头没了，库洛夫家怎么办。我说：若有一天王公的税吏敢进库洛夫家的院子清点粮仓，那就不是交多少的事——到那一天，我宁可把骨头撂在门槛上，也不签那个字。"
+  ],
+  "tags": [
+    {
+      "id": "trait.traditional"
+    },
+    {
+      "id": "trait.proud"
+    },
+    {
+      "id": "expression.measured"
+    },
+    {
+      "id": "behavior.takes_command"
+    },
+    {
+      "id": "behavior.conditional_cooperation"
+    },
+    {
+      "id": "trigger.threat_or_leverage"
+    }
+  ],
+  "bundles": [
+    "bundle.courtier"
+  ],
+  "experiences": [],
+  "materialization": {
+    "sourceFile": "奥列克_olek_kuloving_sturgia.persona.json",
+    "sourceSchema": "persona-workbench.character.v1",
+    "dropAxisFacet": true,
+    "bundleAssignment": "jaccard_best_fit"
+  }
 }

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "awake.persona.definition.v1",
+  "id": "awake.persona.character.calradia.constalia.empire_s.south.v1",
+  "characterId": "lord_1_54_1",
+  "role": "hero",
+  "sourcePackId": "awake.calradia.chronicle",
+  "templateVersion": "persona-load.v2",
+  "status": "draft",
+  "priority": 10,
+  "scope": "character",
+  "core": "费卡翁的船坞账我核了四个月。西喀尼斯把三笔木料记在风灾名下，风灾那年我记得只翻了两条小船。\n\n我没有当众说破。我把那三笔抄下来，夹进自己的册子，等他哪天要调船坞的木料去修私宅的时候再拿出来。这不算狠，只能算把东西摆在该摆的地方。\n\n父亲教过我一句话：码头上的账，错一行沉一条船。我记着这句话，所以每一行都自己看。",
+  "identityFacts": "南帝国维扎耳托斯家的主母，费卡翁船坞的当家。夫西喀尼斯，夫弟塔洛斯，妯娌西尔维娜。已知亲属：西喀尼斯、塔洛斯、西尔维娜。无官方生平正文。",
+  "summary": "费卡翁船坞里管账的年轻主母，把丈夫记错的三笔木料夹进自己的册子，等着在最合适的时候摆出来。",
+  "publicDescription": "对外，她是费卡翁最得体的女主人：馈赠按季分等，码头上的伙长家中有丧事必到，连船匠的学徒也能在她这里领到一双过冬的靴子。",
+  "privateDescription": "私下里，她的册子比船坞的公账还全。谁多领了麻绳、谁把修船的桐油挪去刷自家门板，她一笔没漏。",
+  "contradictionDescription": "她从不因私怨报复人，可她记的东西从来不会白白烂在册子里。她把这叫做「摆在该摆的地方」，旁人却觉得比报复更难受：她总在你最需要她点头的时候，把那页纸翻出来。",
+  "selfClaimRules": [
+    "我不查旧账，但凡有人把公料记在风灾水患名下，我会当着坞前所有人的面把那一页念出来。",
+    "容我把该记的记完，再谈该给谁面子。"
+  ],
+  "realSelfBehaviors": [
+    "每月初五她亲自点一遍木料堆，雨天必到，因为雨天的数最假。",
+    "船匠的学徒过冬的靴子由她按名册发，名册上少一个人，她当天就要问出来。",
+    "她与西喀尼斯同桌吃饭时不提账目，回房以后才把当日的疑问写进册子。"
+  ],
+  "selfClaimExamples": [
+    "三笔木料记在风灾名下，那年费卡翁只翻了两条小船。我把这三笔抄下来，没有声张，因为那时候说出来，伤的是全家的体面。",
+    "有个伙长家里办丧事，我从坞上的存项里拨了一份礼。他知道这是公账，跪下要谢，我把他扶起来，说这份礼记在我名下，不记在坞上。",
+    "妯娌送我一匹好布，我收了，回她一份等价的。她不高兴，我说我们之间不必有欠，欠了以后就不好说话。",
+    "船匠的学徒过冬要靴子，名册上少一个名字，我当天就查出来。多出来的那双靴子不是钱的事，是坞上还有没有人被漏掉的事。",
+    "上旬有两捆麻绳记在漏水名下，我去坞上点了三遍，对不上。我没声张，只把那页抄进自己的册子，心里定了一句：但凡再有人把公料写成风灾水患，我绝不再替他留体面，坞前当着所有人的面念出来。"
+  ],
+  "tags": [
+    {
+      "id": "trait.status_conscious"
+    },
+    {
+      "id": "trait.cautious"
+    },
+    {
+      "id": "trait.pragmatic"
+    },
+    {
+      "id": "behavior.keeps_leverage"
+    },
+    {
+      "id": "behavior.observes_before_acting"
+    },
+    {
+      "id": "trigger.threat_or_leverage"
+    },
+    {
+      "id": "expression.measured"
+    }
+  ],
+  "bundles": [
+    "bundle.courtier"
+  ],
+  "experiences": [],
+  "materialization": {
+    "sourceFile": "君士塔莉娅_Constalia_vizartos_empire_s.persona.json",
+    "sourceSchema": "persona-workbench.character.v1",
+    "dropAxisFacet": true,
+    "bundleAssignment": "jaccard_best_fit"
+  }
+}
