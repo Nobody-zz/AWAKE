@@ -165,7 +165,26 @@ Rules
                          compile-verify.ps1 ran (measured 2026-10-02).
                          HARD because the runtime loader rejects the card.
 
-R13-R15, R18 and R19 are LOCAL rules: pure per-card structural checks. R17 is
+  R20 runtime-field-missing
+                         selfClaimRules, realSelfBehaviors and
+                         selfClaimExamples must each exist AND be a non-empty
+                         list. materialize-definitions.ps1:93-121 copies all
+                         three into the runtime definition and the prompt
+                         renders all three, so an omitted field ships a
+                         thinner NPC with no error anywhere. The official
+                         chain cannot see it:
+                         audit-character-enhancement.ps1:236 tests
+                         ($rules.Count + $rbs.Count) -lt 3, so three rules and
+                         ZERO behaviors passes, and @($j.realSelfBehaviors) on
+                         an absent key yields @($null) -- Count 1, which looks
+                         exactly like one real behavior. The workbench schema
+                         lists none of the three in `required` either.
+                         Measured 2026-10-02: 8/355 cards had no
+                         realSelfBehaviors key at all, and all 8 passed the
+                         official chain. HARD because the field is the runtime
+                         delivery itself.
+
+R13-R15, R18, R19 and R20 are LOCAL rules: pure per-card structural checks. R17 is
 local to a BATCH rather than to a card, but it is still population-independent --
 it never reads a global share, so the size of the surrounding corpus cannot hide
 a stamp. None of them is gated by --min-population.
@@ -222,6 +241,9 @@ ROLE_WORDS = re.compile(
 KIN_MARKER = re.compile(u"已知亲属[：:](.+?)(?:。|$)")
 SENT_SPLIT = re.compile(u"[。！？；\\n]")
 BOUNDARY_FIELDS = ("selfClaimRules", "realSelfBehaviors")
+# The three text fields materialize-definitions.ps1 copies into the runtime
+# definition. See R20.
+RUNTIME_TEXT_FIELDS = ("selfClaimRules", "realSelfBehaviors", "selfClaimExamples")
 ID_PATTERN = re.compile(r"^calradia\.[a-z0-9_]+(\.[a-z0-9_]+){1,2}$")
 DEFAULT_TAG_REGISTRY = os.path.normpath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)), os.pardir,
@@ -517,7 +539,7 @@ def main():
     def fail(rule, line):
         failures.append((rule, line))
 
-    # ---------- R1 / R2 / R5 / R6 / R8 / R13 / R14 / R15 / R16 / R18 / R19 : per card ----
+    # ---------- R1 / R2 / R5 / R6 / R8 / R13 / R14 / R15 / R16 / R18 / R19 / R20 : per card ----
     for c in cards:
         if c["error"]:
             fail("PERSONA_CARD_UNREADABLE", "%s :: %s" % (c["name"], c["error"]))
@@ -656,6 +678,34 @@ def main():
                     fail("PERSONA_AXIS_OUT_OF_RANGE",
                          "%s :: %s.%s=%d outside [-3,3]" % (
                              c["name"], pname, key, v))
+
+        # R20
+        # The three runtime-delivery text fields must exist AND be non-empty.
+        # materialize-definitions.ps1:93-121 copies selfClaimRules /
+        # realSelfBehaviors / selfClaimExamples straight into the runtime
+        # definition, and the runtime prompt renders all three. A card that
+        # omits one of them silently ships a thinner NPC.
+        # Nothing upstream caught this. audit-character-enhancement.ps1:236
+        # tests ($rules.Count + $rbs.Count) -lt $minRulesBehaviors (3), so
+        # three rules and ZERO behaviors passes; and @($j.realSelfBehaviors)
+        # on an ABSENT key yields @($null) -- Count 1, indistinguishable from
+        # a real single behavior. The workbench schema lists none of the
+        # three in `required`.
+        # Measured 2026-10-02: 8/355 cards had no realSelfBehaviors key at
+        # all (berican / luichan / ingalther / aeron / pryndor / melidir /
+        # aldric / aradwyr), and all 8 passed the official chain.
+        for fname in RUNTIME_TEXT_FIELDS:
+            val = d.get(fname)
+            if isinstance(val, list) and len(val) > 0:
+                continue
+            if fname not in d:
+                why = "absent"
+            elif not isinstance(val, list):
+                why = "not a list"
+            else:
+                why = "empty"
+            fail("PERSONA_RUNTIME_FIELD_MISSING",
+                 "%s :: %s is %s" % (c["name"], fname, why))
 
     # ---------- R3 : cross-card template load ----------
     sent_cards = defaultdict(set)
@@ -866,6 +916,7 @@ def main():
                  "PERSONA_PLACEHOLDER_TEXT", "PERSONA_SUMMARY_DERIVED_FROM_DESCRIPTION",
                  "PERSONA_PROFILE_KEY_NONCONFORMANT", "PERSONA_FACET_MIRRORS_TAGS",
                  "PERSONA_FACET_CATEGORY_UNSUPPORTED", "PERSONA_AXIS_OUT_OF_RANGE",
+                 "PERSONA_RUNTIME_FIELD_MISSING",
                  "PERSONA_BATCH_TAG_STAMP"):
         if not by_rule.get(rule):
             continue

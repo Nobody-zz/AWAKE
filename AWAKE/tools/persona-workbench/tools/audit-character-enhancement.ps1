@@ -234,6 +234,20 @@ foreach($f in (Get-ChildItem $charDir -Filter '*.persona.json' | Sort-Object Nam
     if($exs.Count -lt $minExamples){ $errs.Add("E1:样本x$($exs.Count) < $minExamples") }
     if($exs.Count -gt $maxExamples){ $errs.Add("E1:样本x$($exs.Count) > $maxExamples") }
     if(($rules.Count + $rbs.Count) -lt $minRulesBehaviors){ $errs.Add("E1:rules+rbs=$($rules.Count+$rbs.Count) < $minRulesBehaviors") }
+    # E1b 三个运行时文本字段必须各自存在且非空。
+    # 缺键时 @($j.realSelfBehaviors) 得到 @($null)（Count=1），与「真有一条行为」
+    # 无法区分，所以上面那条 rules+rbs 判据看不见缺键；而 3 条 rules + 0 条 rbs
+    # 也正好等于 $minRulesBehaviors=3 而判过。materialize-definitions.ps1:93-121
+    # 会把这三个字段原样拷进运行时定义，缺一个就是给 NPC 少送一段人格文本。
+    # 实测 2026-10-02：355 张里 8 张整个 realSelfBehaviors 键都不存在，全部
+    # 一路通过本门（berican / luichan / ingalther / aeron / pryndor / melidir /
+    # aldric / aradwyr）。
+    foreach($fld in @('selfClaimRules','realSelfBehaviors','selfClaimExamples')){
+        $prop = $j.PSObject.Properties[$fld]
+        if($null -eq $prop){ $errs.Add("E1b:$fld 缺失"); continue }
+        $vals = @(@($prop.Value) | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })
+        if($vals.Count -lt 1){ $errs.Add("E1b:$fld 为空") }
+    }
 
     # E2 三轴声明（值可为 none）
     $tAx = $j.tensionAxes

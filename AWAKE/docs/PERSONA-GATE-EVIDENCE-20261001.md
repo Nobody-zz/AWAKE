@@ -1,12 +1,12 @@
 # 角色卡质量门 · 红绿证据（2026-10-01）
 
-门：`AWAKE/tools/persona-card-gate.py`（19 条判据：R1–R9、R13–R15、R17、R18、R19 是本门自有的硬判据，R10–R12 委派给外部判据脚本见 §10，R16 是**告警**、不判死）
+门：`AWAKE/tools/persona-card-gate.py`（20 条判据：R1–R9、R13–R15、R17–R20 是本门自有的硬判据，R10–R12 委派给外部判据脚本见 §10，R16 是**告警**、不判死）
 证据等级：**E2（离线测试）** —— 未涉及游戏内验证，本门也不声称游戏内生效。
 配套规格：[`PERSONA-CARD-SPEC-v1-20261001.md`](PERSONA-CARD-SPEC-v1-20261001.md)（巡检会话，另写；关系见 §7）
 
 ---
 
-## 一、十九条判据
+## 一、二十条判据
 
 | # | 规则码 | 判据 | 类型 | 老卡 76 | 新卡 279 |
 |---|---|---|---|---|---|
@@ -29,6 +29,7 @@
 | R17 | `PERSONA_BATCH_TAG_STAMP` | **同一批次内**最大标签集合的占比不得超阈值（批 ≥5 张、该组 ≥4 张才判） | 不变量（**批级**） | 0 | **2** |
 | R18 | `PERSONA_FACET_CATEGORY_UNSUPPORTED` | `facetStrengths` 不得含 `trigger.*` / `boundary.*` 键 | 不变量 | 0 | —（2026-10-02 重写批引入 **76**） |
 | R19 | `PERSONA_AXIS_OUT_OF_RANGE` | profile 字典里每个**数值**须落在 `[-3,3]` | 不变量 | 0 | —（2026-10-02 重写批引入 **51**） |
+| R20 | `PERSONA_RUNTIME_FIELD_MISSING` | `selfClaimRules` / `realSelfBehaviors` / `selfClaimExamples` 三个运行时文本字段须各自**存在且非空** | 不变量 | **8** | 0 |
 | — | `PERSONA_CRITERIA_UNAVAILABLE` | 判据脚本加载失败（**门级**失败，不挂在某张卡上） | 不变量 | 0 | 0 |
 
 **R18 / R19 是 2026-10-02 补的**，起因是第 6 道门 `compile-verify.ps1` 在 355 张全绿之后报红：
@@ -267,6 +268,58 @@ R9 改判同样不能靠「改一张真卡」验证（它读的是**语料形状
 
 脚本 `%TEMP%\r18r19_test.py`，输出 `%TEMP%\r18r19\matrix.txt`（未入库）。
 
+### R20 的来历：一道真红，不是预防性加码（2026-10-02）
+
+**发现路径**：把 355 张卡与 355 个物化定义逐字段对齐时（脚本 `%TEMP%\def_align.py`），
+22 个顶层键里 21 个都 355/355 齐全，只有 **`realSelfBehaviors` 空了 8 张**；
+再查卡本体（`%TEMP%\card_keys.py`）确认是**整个键都不存在**，不是空数组。
+那 8 张正是先前 B4 判定的「老卡 ❌」：berican / luichan / ingalther / aeron / pryndor /
+melidir / aldric / aradwyr（全是巴旦尼亚与瓦兰迪亚的老卡）。
+
+**为什么一路没人发现**（读源码得到的三个理由）：
+
+1. `AWAKE/tools/persona-workbench/tools/audit-character-enhancement.ps1:236`
+   写的是 `if(($rules.Count + $rbs.Count) -lt $minRulesBehaviors)`，而 `$minRulesBehaviors = 3`
+   ⇒ **3 条 `selfClaimRules` + 0 条 `realSelfBehaviors` 正好等于 3，判 PASS**。
+2. 同文件 `:229` `$rbs = @($j.realSelfBehaviors)`：键不存在时得到 `@($null)`，**Count = 1**，
+   与「真有一条行为」在 E1 里完全无法区分。
+3. workbench schema（`contracts/persona-workbench.character.v1.schema.json`）的 `required`
+   只有 10 项，**三个运行时文本字段一个都不在里面**。
+
+**为什么它算缺陷而不是口味**：`materialize-definitions.ps1:93-121` 把
+`selfClaimRules` / `realSelfBehaviors` / `selfClaimExamples` 原样拷进运行时定义，
+运行时提示词三个字段全渲染 —— 少一个就是给这个 NPC 少送一段人格文本，而且**没有任何一层报错**。
+
+**修了两处**：
+
+- 本门加 R20（只读、判 `isinstance(val, list) and len(val) > 0`，缺键/非列表/空数组分别报
+  `absent` / `not a list` / `empty`）。
+- 官方第 4 道门 `audit-character-enhancement.ps1` 加 **E1b**（插在 E1 之后）：对三个字段逐个
+  检查「属性存在」+「至少有一条非空白条目」。用的是 `$j.PSObject.Properties[$fld]` 判存在、
+  `@(@($prop.Value) | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })` 判非空，
+  **故意不用 `-isnot [array]`** —— PS 5.1 的 `ConvertFrom-Json` 会把单元素数组塌成标量，
+  那样写会对「只有一条 rule」的合法卡误报。补完后 `DONE allPass=True` exit 0，355 张零误报。
+
+**红绿矩阵（9/9 ALL_PASS，脚本 `%TEMP%\r20_test.py`）**：120 张真卡副本，
+`--min-population 100 --skip-external-criteria`，**每个用例都先把目标卡还原成原样再改**（第一版
+harness 是累积变异，`restore_ok` 因为残留前面的改动而假红 —— 这个坑记下来）。
+
+| 用例 | 变异 | 期望 | 实测 |
+|---|---|---|---|
+| `baseline` | 无 | GREEN | ✅ `failed_cards=0` |
+| `drop_rbs` | 删掉 `realSelfBehaviors` 键 | RED | ✅ `PERSONA_RUNTIME_FIELD_MISSING` |
+| `empty_rbs` | `realSelfBehaviors = []` | RED | ✅ 同上 |
+| `drop_rules` | 删掉 `selfClaimRules` 键 | RED | ✅ 同上 |
+| `empty_rules` | `selfClaimRules = []` | RED | ✅ 同上 |
+| `drop_exs` | 删掉 `selfClaimExamples` 键 | RED | ✅ 同上 |
+| `empty_exs` | `selfClaimExamples = []` | RED | ✅ 同上 |
+| `not_a_list` | `selfClaimExamples = "x"` | RED | ✅ 同上 |
+| **`one_item_ok`** | **`realSelfBehaviors = ["a"]`（单元素）** | **GREEN** | ✅ **阴性对照（不是恒红）** |
+
+**真语料双向验证（脚本 `%TEMP%\r20_real.py`）**：全语料 `total=355 failed_cards=0 violations=0` GREEN；
+把备份的 8 张修复前版本放回去再跑 ⇒ `failed_cards=8 violations=8`，**唯一的规则码就是
+`PERSONA_RUNTIME_FIELD_MISSING`** —— 这不是合成用例，是这道门在真缺陷上的红。
+
 ---
 
 ## 五、判据体检（技能 §3：不可失败门的四种形态）
@@ -297,6 +350,17 @@ R9 改判同样不能靠「改一张真卡」验证（它读的是**语料形状
 
 **根因**：物化器在源卡缺该字段时输出空对象。**这是老批次的既有缺陷，不是新批次引入的。**
 修复方向二选一：① 给这 8 张源卡补上 `realSelfBehaviors` 并重跑物化；② 物化器改为输出 `[]`。
+
+### 2026-10-02 收口：走的是①，并且补了两道门
+
+- **卡侧**：8 张源卡各补 3 条具体行为（不是口号，逐卡贴合其语气与身份），备份在
+  `%TEMP%\awake-rbs-backup-20261002\`；8 张全部 `keys 23 -> 24`。随后全量重跑
+  `materialize-definitions.ps1`（`DEFINITIONS_GENERATED=355`），那 8 个定义不再有空对象。
+- **门侧**：本门加 **R20**、官方第 4 道门加 **E1b**（两者都会拦这一类），红绿矩阵见 §4「R20 的来历」。
+- **真语料双向验证**：修复后全语料 `failed_cards=0`；把备份的修复前版本放回 8 张再跑
+  ⇒ `failed_cards=8 violations=8`，唯一规则码 `PERSONA_RUNTIME_FIELD_MISSING`。
+- **同时暴露的第二个面**：这 8 张在 `git` 里是「已跟踪且被修改」，但逐键比对 `HEAD` 发现
+  **`realSelfBehaviors` 在 HEAD 里也不存在** ⇒ 缺陷是**已提交状态**，不是另一会话的未提交改动引入的。
 
 ---
 
@@ -352,6 +416,14 @@ R9 改判同样不能靠「改一张真卡」验证（它读的是**语料形状
 18. **R19 只看「是不是整数且在 -3..3」**。它不管 `reactionProfile.sensitiveConditions` /
     `commitmentProfile.priorityOrder` 这类**非数值**字段的内容是否合理，也不管
     `traitProfile` 六轴之间是否自相矛盾（例如 `caution=3` 配 `ambition=3`）。
+19. **R20 只判「存在且非空」**，不判内容：一条敷衍的 `realSelfBehaviors`（例如「每天早起」）
+    照样过。它也不能替代官方 E1 的 `rules + rbs >= 3` —— R20 管的是**三个字段各自都在**，
+    E1 管的是**总数够**，两者互补而不是互相覆盖。
+20. **E1b 是我改的、但由另一会话维护的脚本**（`audit-character-enhancement.ps1`，改前
+    `git status` 干净）。改动只加了「存在 + 至少一条非空白」这一层，语义比原 E1 更严，
+    但同样**不判内容**；而且它把「单元素数组」交给 `@(...)` 兜底，所以**不会**因为
+    PS 5.1 的 `ConvertFrom-Json` 把单元素数组塌成标量而误报（这是刻意避开的坑）。
+    该文件的 UTF-8 BOM 已确认保留（`239,187,191`）、换行仍全是 LF。
 
 ---
 
