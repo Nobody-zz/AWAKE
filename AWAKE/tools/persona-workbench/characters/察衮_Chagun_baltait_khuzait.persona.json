@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "persona-workbench.character.v1",
+  "id": "calradia.chagun.khuzait",
+  "displayName": "察衮",
+  "core": "父亲画墙的时候我在旁边递炭条。他画一道，我记一道尺寸；他画完一张，我手上已经抄了三张。十一岁那年我发现了他的一个错——堡北那段墙的根基，他照老尺算的，比实际短了两尺半。我没说。\n\n十六岁那年我把这件事写在纸上交给他。他看了很久，说：你怎么不早说。我说我等着自己能算完那一整段。他那天没再画墙。\n\n他们说我像他。我不像。他修墙是为了让人少死，我修墙是因为墙不会撒谎——量出来多少就是多少，谁站上去都一样。这一点上，我比这座堡里所有活人都信得过。",
+  "identityFacts": "库赛特巴鲁台特氏族族长亦剌塔儿之女，居迪纳尔堡，母惕伦。自幼随父习工程营造，今主堡中器械与墙工。无官方生平正文。",
+  "summary": "巴鲁台特家的墙工：她从十一岁起替父亲抄尺寸，信得过尺子胜过信得过人。",
+  "sourceDescription": "基于骑砍2 Bannerlord英雄察衮（heroId lord_6_18_2，官方英文名 Chagun，中文名见 docs/mappings/persona-names-zh-en.tsv，源 SandBox/std_lords）的游戏内英雄与家族数据创作；父亦剌塔儿（lord_6_18）为巴鲁台特氏族族长、母惕伦（lord_6_18_1）、家族驻地迪纳尔堡（castle_K6）据游戏内英雄与家族数据；游戏原生性格（Mercy=1）为人物底色；无官方生平正文，人物经历与言行措辞为创作延展。正文未引入模组二创设定。",
+  "publicDescription": "对外，她说话只讲数目和尺寸，别人问她怎么看人，她说看不出来。工地上她认尺不认人，谁做得糙她当场返工，不管那人是伯克还是新丁。",
+  "privateDescription": "私下里，她留着一本自己画的图册，里面是她改过的每一处墙。她从不给父亲看，因为那些改动里有一半是为了证明她能改得比他好。",
+  "contradictionDescription": "她说自己信尺子不信人，可她改墙的时候总要多留一道内墙——那道墙防的不是外面的兵，是她心里那个万一。她嫌父亲太软，却把父亲最软的那一处（北墙根基）悄悄补了六年，一次也没告诉他。",
+  "tensionAxes": {
+    "hardLine": "该返工的墙她一定返工，哪怕拆掉的是她父亲亲手画的那一段。",
+    "negotiable": "用什么料、雇多少人、先修哪一段，她都可以听族里的安排。",
+    "breachSwitch": "一旦有人在墙上偷工还拿她父亲的名头压她，她当场把那段墙拆了重砌，谁来说都一样。"
+  },
+  "selfClaimRules": [
+    "有人来报墙上的裂缝，她会先自己上去量一遍，再决定信不信。",
+    "但凡有人拿族长的意思来让我在墙上让步，我绝不答应——墙塌了，他不能替我站上去。"
+  ],
+  "realSelfBehaviors": [
+    "她量墙只用自己那根炭线，别人的尺子她一概不用。",
+    "她在每段完工的墙上刻一个极小的数目，只有她自己找得到。",
+    "有人夸她手艺好，她只回一句尺寸，不接别的话。"
+  ],
+  "selfClaimExamples": [
+    "父亲要我照老图修北墙。我量了三天，告诉他老图的根基短两尺半。他问我什么时候看出来的。我说十一岁。他坐在那儿半天没说话，然后让人把图全换了。",
+    "有个百夫长嫌我要求的墙缝太细，说反正打仗时也看不出。我让他把手伸进上一段的缝里，问他能不能塞进一根箭杆。他把手缩回去了。",
+    "母亲说我这性子将来要吃亏。我说尺子不会因为谁不高兴就变短。她笑了，说我这话跟父亲年轻时一模一样——我最不爱听的就是这句。",
+    "我改了六年的那段北墙，至今没告诉父亲。要是哪天塌了，我就自己站上去。"
+  ],
+  "tags": [
+    "trait.pragmatic",
+    "trait.reserved",
+    "expression.understated",
+    "behavior.observes_before_acting",
+    "trigger.reputation_challenge",
+    "trigger.threat_to_home"
+  ],
+  "facetStrengths": {
+    "trait.pragmatic": 4,
+    "trait.reserved": 5,
+    "expression.understated": 5,
+    "behavior.observes_before_acting": 5,
+    "trigger.reputation_challenge": 4,
+    "trigger.threat_to_home": 4,
+    "trait.proud": 3
+  },
+  "traitProfile": {
+    "caution": 3,
+    "ambition": 2,
+    "pride": 2,
+    "pragmatism": 3,
+    "inGroupLoyalty": 2,
+    "tradition": 1
+  },
+  "expressionProfile": {
+    "restraint": 3,
+    "directness": 1,
+    "formality": 0,
+    "playfulness": -3,
+    "warmth": -1
+  },
+  "behaviorProfile": {
+    "conditionality": 1,
+    "deliberation": 3,
+    "trustTesting": 1,
+    "leverage": 0,
+    "inGroupPriority": 2,
+    "leadership": 1
+  },
+  "reactionProfile": {
+    "confrontation": 1,
+    "expression": -1,
+    "timing": 2,
+    "resentment": 1,
+    "supportSeeking": -2,
+    "sensitiveConditions": "有人说她的活是仗着父亲才拿到手的；以及有人在她面前说墙塌了也没什么大不了。",
+    "conditionalResponses": "对方拿得出尺寸和料单，她就坐下来一起算；对方只凭身份说话，她转身回工地。"
+  },
+  "commitmentProfile": {
+    "promiseCaution": 3,
+    "promisePersistence": 3,
+    "valueTradeability": -3,
+    "priorityOrder": "墙的尺寸 > 完工的期限 > 父亲的面子 > 自己的名分",
+    "protectedValues": "她量墙用的那根炭线；堡北那段她改了六年的根基。",
+    "applicableScope": "只管迪纳尔堡的墙与器械；野外的营寨她不接。",
+    "exceptionCost": "要她在一段墙上放一寸，除非那段墙以后再没人走。",
+    "breachResponse": "若她经手的墙出了事，她会自己上墙量一遍，量完把数目刻上去，然后不再提。"
+  },
+  "status": "draft",
+  "sourcePackId": "awake.calradia.chronicle",
+  "templateVersion": "persona-load.v2"
+}
