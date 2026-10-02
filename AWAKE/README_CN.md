@@ -61,11 +61,15 @@ AWAKE 让卡拉迪亚的 NPC「记得住事、说得上话、知道该知道的�
 
 ```powershell
 cd AWAKE
-# 默认 BannerlordApi=1.3.15；现行游戏是 1.4.8，按你的游戏版本传
+# 默认 BannerlordApi=1.4.8（现行游戏版本）；换游戏版本时显式传
 powershell -File tools\build.ps1 -BannerlordApi 1.4.8
 ```
 
 `build.ps1` 会校验 `BannerlordApi` 与 `GamePath` 下 Native 的版本**严格相等**，不符即报错（这能防住「编错目标却以为没问题」）。
+
+> ⚠️ **本机 `build.ps1` 会在第二步 `AWAKE.Tests` 编译处假红**：它内部的 `dotnet build` 没带 `-m:1`，而本机 `dotnet` 默认并行会**静默假失败**（打印「生成失败 / 0 个警告 / 0 个错误」，约 1.5s 返回 exit 1，零诊断）。这不是代码问题——按等价方式手工跑三步即可拿真结果：
+> ① MSBuild `AWAKE.csproj` ② `dotnet build ..\AWAKE.Tests\AWAKE.Tests.csproj -c Release -m:1` ③ `AWAKE.Tests\bin\Release\net472\Awake.SdkSmoke.exe`。
+> 另：`build.ps1` **不同步游戏目录**；投送要另跑 `package_embedded_runtime.ps1` → `sync_module.ps1 -ConfirmGameSync`（顺序固定，反了会把旧 Runtime 留在游戏目录）。
 
 ```powershell
 # 离线烟测

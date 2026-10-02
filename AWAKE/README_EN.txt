@@ -61,7 +61,7 @@ AWAKE makes Calradia's NPCs actually remember things, hold a conversation, and k
 
 ```powershell
 cd AWAKE
-# Default BannerlordApi=1.3.15; the current game is 1.4.8 — pass your version
+# Default BannerlordApi=1.4.8 (the current game version); pass it explicitly when switching
 powershell -File tools\build.ps1 -BannerlordApi 1.4.8
 ```
 

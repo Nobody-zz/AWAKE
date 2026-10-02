@@ -22,7 +22,7 @@ Set `GamePath` to your Bannerlord installation, or rely on the default:
 
 ```powershell
 cd AWAKE
-dotnet build -c Release -p:BannerlordApi=1.3.15
+dotnet build -c Release -p:BannerlordApi=1.4.8 -m:1
 ```
 
 Run the smoke test:

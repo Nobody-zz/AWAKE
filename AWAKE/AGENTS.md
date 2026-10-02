@@ -14,7 +14,7 @@
 - 与历史 AnimusForge 系工程彻底分离：不同 ModId/DLL/存档命名空间/版本线，不读其状态、不反射其内部签名、不共享实现代码；新代码与新增文档不得再出现该命名。
 - 马库斯框架是唯一权威 AI 底层；本模组只负责世界观语义、玩法规则、内容与游戏内体验。
 - 世界书/设定内容由外部内容包提供，代码全部自建。
-- 游戏环境固定为 `D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord`，Bannerlord API `v1.3.15`。
+- 游戏环境固定为 `D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord`，Bannerlord API **`v1.4.8`**（2026-10-02 实测；1.3.15 已于 09 月被淘汰，不要再按 1.3.15 建参考）。
 
 ## 当前基线与版本政策
 
@@ -39,7 +39,14 @@
 - 0.7.x 生态：跨 Mod 能力、外部人格/世界书。
 - 0.8.x 性能：索引/缓存/RAG/批量读取。
 - 0.9.x 发布：回归、崩溃清零、打包、发行。
-- 未启用服务：Tools / UiRegistry / CapabilityBroker / Assets / Media；相关功能必须等框架接入或使用自建降级，不得写成“已有现成能力”。
+- 未启用服务：Tools / UiRegistry / CapabilityBroker；相关功能必须等框架接入或使用自建降级，不得写成“已有现成能力”。
+- **`Assets` 与 `Media` 已于 2026-10-02 接入**（片 2/4，`docs/PLAN-IMAGE-PORT-TO-FRAMEWORK-20260915.md`）：
+  `HostApi` 把 `media`/`assets` 从运行时端口注入（`runtime as IXxxService ?? 空壳`，默认组合与显式注入可区分）；
+  生图走 `provider.image.v1`（逻辑 Route，运行时反射调 Provider，出图字节入内容寻址资产库、回帧只带 `AssetHandle`），
+  资产读回走 `asset.read` 分块（单块 64 KiB，卡住协议 256 KiB 单帧上限）；
+  立绘调用方经 `AwakePortraitGenerator` 走 `Host.Media` + `Host.Assets`，`AwakeImage*.cs` 保留为回退路径。
+  ⚠️ 该批次最高证据等级：**框架侧 E3**（离线判据 + 同步哈希一致），**mod 侧只有 E1**——真机 E4 尚未取。
+  ⚠️ 替换口仍然只有 5 个（`Permissions/Prompts/Storage/Rag/GameData`）；`Events`/`Models`/`Log` 仍是写死的空壳，属"改框架活"不是"接线活"。
 
 ## 工作流程
 
@@ -117,8 +124,17 @@
 
 ## 质量门
 
-- 主工程：`dotnet build -c Release -p:BannerlordApi=1.3.15` 0 warnings / 0 errors。
-- SdkSmoke：`Awake.SdkSmoke.exe` `PASS ALL`。
+- 主工程：`dotnet build -c Release -p:BannerlordApi=1.4.8` 0 warnings / 0 errors。
+- **`AWAKE.Tests` 也必须编得过**（`dotnet build ..\AWAKE.Tests\AWAKE.Tests.csproj -c Release` 0 errors）。
+  ⚠️ `AWAKE.Tests.csproj` 是**显式 `<Compile Include>` 清单**，而 `AWAKE.csproj` 那边是 `src\**\*.cs` 通配 ⇒
+  **往 `src\` 新增任何源文件都必须同步加进这份清单**，否则主工程编得过、测试工程炸 CS0246。
+  这个坑已踩过四次（清单里留了四条同款补记）。2026-10-02 就是它被 `build.ps1` 第二步抓出来的。
+- **本机 `dotnet` 必须带 `-m:1`**：默认并行（worker nodes）会让 `restore` / `build` **静默假失败**
+  （打印「生成失败 / 0 个警告 / 0 个错误」，约 1.5~2s 返回 exit 1，**零诊断**）。
+  逐开关实测只有 `-m:1` 管用（`--disable-parallel`、`-p:RestoreDisableParallel=true`、`-nodeReuse:false` 都不行）。
+  `tools\package_embedded_runtime.ps1` 已在 `Invoke-Dotnet` 收口点统一补上；`build.ps1` 内部的 `dotnet build` **没有补**，
+  所以 `build.ps1` 在本机跑不到 `TESTS_OK`——要拿真结果就按上面两步手工跑（MSBuild + `dotnet build … -m:1`），别把它的假红当成代码问题。
+- SdkSmoke：`Awake.SdkSmoke.exe` `PASS ALL`（2026-10-02 实测 `RESULT total=70 passed=70 failed=0`）。
 - maf-lint：`MarcusAIFramework_Reference\SDK_20260815\analyzers\maf-lint.ps1` 0 blocking。
 - 文档：README_CN/EN、Framework Usage Map、BUILD_VERIFICATION 与实现同步；版本号一致。\n- 世界书/Studio 批次附加门：Contract JSON parse、世界书占位符审计、Studio 功能测试和 package/release-check；仅适用于对应工具或内容批次，不作为所有运行时批次的通用替代门。
 - 同步：`dist\Modules\AWAKE` 的 DLL 与 `_build_out` SHA-256 一致；游戏目录同步只在用户退出游戏且明确要求时执行。
