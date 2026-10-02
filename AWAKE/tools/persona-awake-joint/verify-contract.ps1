@@ -147,7 +147,19 @@ try {
     $report.observedErrors = @($errorRecord)
 } finally {
     $report.assertions = @($assertions)
-    if ($null -ne $reportPathFull) { Write-JointReport $report $reportPathFull }
+    if ($null -ne $reportPathFull) {
+        Write-JointReport $report $reportPathFull
+    } else {
+        # The report path is validated before anything else, so a rejected path
+        # leaves no report on disk. Without this branch the tool would exit 40 in
+        # total silence -- which is how a relative -ReportPath was mistaken for a
+        # broken chain. The reason goes to stderr; the report is deliberately NOT
+        # written, because writing outside the tool root is what the guard forbids.
+        $reason = 'report path was not resolved.'
+        if ($report.observedErrors.Count -gt 0) { $reason = [string]$report.observedErrors[0].detail }
+        [Console]::Error.WriteLine('verify-contract: ' + [string]$report.status + '/' + [string]$report.exitCode + ' :: ' + $reason)
+        [Console]::Error.WriteLine('verify-contract: -ReportPath must resolve under ' + $script:JointToolRoot + '; pass an absolute path.')
+    }
 }
 
 exit ([int]$report.exitCode)

@@ -18,6 +18,7 @@ $report = [ordered]@{
     exitCode = 40
     fixtureCount = 0
     matchedCount = 0
+    stubCount = 0
     protectedBaselineDriftCount = 0
     unexpectedCount = 0
     sourceSnapshotPath = $null
@@ -90,14 +91,37 @@ try {
 
         $actual = (Read-JointJsonFile $fixtureReportPath ('E2 matrix report ' + $fixtureId)).Value
         $expected = (Read-JointJsonFile $expectedPath ('E2 matrix expected ' + $fixtureId)).Value
+        # expected.json comes in two dialects: the E2 fixtures declare
+        # status/exitCode, the three G3-scope fixtures declare expectedStatus/
+        # expectedExitCode. Reading only the first dialect left those three
+        # comparing against an empty expectation (''/0) and reporting a phantom
+        # mismatch even though their observed result equalled what they declare.
         $expectedStatus = [string](Get-JointJsonProperty $expected 'status')
-        $expectedExit = [int](Get-JointJsonProperty $expected 'exitCode')
+        if ([string]::IsNullOrWhiteSpace($expectedStatus)) {
+            $expectedStatus = [string](Get-JointJsonProperty $expected 'expectedStatus')
+        }
+        $expectedExit = 0
+        if (Test-JointJsonProperty $expected 'exitCode') {
+            $expectedExit = [int](Get-JointJsonProperty $expected 'exitCode')
+        } elseif (Test-JointJsonProperty $expected 'expectedExitCode') {
+            $expectedExit = [int](Get-JointJsonProperty $expected 'expectedExitCode')
+        }
         $actualStatus = [string](Get-JointJsonProperty $actual 'status')
         $actualExit = [int](Get-JointJsonProperty $actual 'exitCode')
         $failedAssertions = @((Get-JointJsonProperty $actual 'assertions') | Where-Object { (Get-JointJsonProperty $_ 'passed') -eq $false }).Count
         $codes = @((Get-JointJsonProperty $actual 'observedErrors') | ForEach-Object { [string](Get-JointJsonProperty $_ 'code') })
         $classification = 'matched'
         $matched = $expectedStatus -eq $actualStatus -and $expectedExit -eq $actualExit -and $failedAssertions -eq 0
+
+        # run-fixtures.ps1 parses the fixture input at :281-292 and only then calls
+        # Add-JointExpectedFixtureAssertions (:348 on success, :382 on failure),
+        # which always contributes expected_status_match when expected.json exists.
+        # A report without that assertion therefore aborted on the input contract
+        # and never executed the fixture. Three staged G3 fixtures are stubs in
+        # exactly this state: counting them as matched is a false green, and
+        # counting them as unexpected blames the tool for a missing feature.
+        $assertionIds = @((Get-JointJsonProperty $actual 'assertions') | ForEach-Object { [string](Get-JointJsonProperty $_ 'id') })
+        $fixtureExecuted = $assertionIds -contains 'expected_status_match'
 
         if ($fixtureId -eq 'PWB-AWAKE-013-frozen-candidate-isolation') {
             $input = (Read-JointJsonFile $inputPath 'PWB-AWAKE-013 input').Value
@@ -113,7 +137,12 @@ try {
             }
         }
 
-        if ($matched) {
+        if (-not $fixtureExecuted -and $classification -ne 'protected_baseline_drift') {
+            $classification = 'fixture_stub'
+            $matched = $false
+            $report.stubCount++
+            Add-MatrixWarning 'persona.e2_matrix_fixture_stub' $fixtureId ('Fixture aborted on its own input contract (' + ($codes -join ',') + '); declared ' + $expectedStatus + '/' + $expectedExit + '; observed ' + $actualStatus + '/' + $actualExit + '. Staged ahead of an unimplemented operation; counted in neither matched nor unexpected.')
+        } elseif ($matched) {
             $report.matchedCount++
         } else {
             $report.unexpectedCount++
@@ -130,6 +159,7 @@ try {
             processExitCode = $processExit
             failedAssertionCount = $failedAssertions
             observedErrorCodes = $codes
+            executed = $fixtureExecuted
             classification = $classification
             reportPath = [IO.Path]::GetFullPath($fixtureReportPath)
         })
@@ -151,7 +181,15 @@ try {
     $report.results = @($results)
     $report.warnings = @($warnings)
     $report.observedErrors = @($errors)
-    if ($null -ne $reportPathFull) { Write-JointReport $report $reportPathFull }
+    if ($null -ne $reportPathFull) {
+        Write-JointReport $report $reportPathFull
+    } else {
+        # See verify-contract.ps1: a rejected -ReportPath must not exit 40 silently.
+        $reason = 'report path was not resolved.'
+        if ($report.observedErrors.Count -gt 0) { $reason = [string]$report.observedErrors[0].detail }
+        [Console]::Error.WriteLine('verify-e2-matrix: ' + [string]$report.status + '/' + [string]$report.exitCode + ' :: ' + $reason)
+        [Console]::Error.WriteLine('verify-e2-matrix: -ReportPath must resolve under ' + $script:JointToolRoot + '; pass an absolute path.')
+    }
 }
 
 exit ([int]$report.exitCode)
