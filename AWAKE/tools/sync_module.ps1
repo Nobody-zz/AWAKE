@@ -18,7 +18,11 @@ $ErrorActionPreference = 'Stop'
 if ([string]::IsNullOrWhiteSpace($ProjectRoot)) { $ProjectRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path) }
 $timestamp = Get-Date -Format 'yyyyMMdd-HHmmssfff'
 if ([string]::IsNullOrWhiteSpace($DistModule)) { $DistModule = Join-Path $ProjectRoot 'dist\Modules\AWAKE' }
-if ([string]::IsNullOrWhiteSpace($BuildDllPath)) { $BuildDllPath = Join-Path $ProjectRoot '_build_out\1.3.15\Release\Awake.dll' }
+# Default must track the workspace baseline (see AGENTS.md "Environment baseline"). It was left at
+# 1.3.15 after the 2026-10 move to 1.4.8, and the stale 1.3.15 output was still on disk -- so a bare
+# `sync_module.ps1` did NOT fail, it silently delivered the 2026-09-22 build while reporting OK.
+# Stale-artifact delivery is the worst failure mode here: everything looks green.
+if ([string]::IsNullOrWhiteSpace($BuildDllPath)) { $BuildDllPath = Join-Path $ProjectRoot '_build_out\1.4.8\Release\Awake.dll' }
 if ([string]::IsNullOrWhiteSpace($ReportPath)) { $ReportPath = Join-Path $ProjectRoot ("docs\sync-reports\sync-" + $timestamp + '.json') }
 $embeddedRuntimeScript = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) 'package_embedded_runtime.ps1'
 

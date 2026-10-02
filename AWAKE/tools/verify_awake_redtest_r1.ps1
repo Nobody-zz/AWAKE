@@ -18,7 +18,7 @@ $buildId = 'awake-20260903-awake-runtime-repair-004'
 $sourceRoot = Join-Path $ProjectRoot 'src'
 $testSource = Join-Path (Split-Path -Parent $ProjectRoot) 'AWAKE.Tests\Program.cs'
 $constantsPath = Join-Path $sourceRoot 'AwakeConstants.cs'
-$buildPath = Join-Path $ProjectRoot '_build_out\1.3.15\Release\Awake.dll'
+$buildPath = Join-Path $ProjectRoot '_build_out\1.4.8\Release\Awake.dll'
 
 function Read-Text([string]$Path) {
     if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {
@@ -81,9 +81,9 @@ if (Test-Path -LiteralPath $buildPath -PathType Leaf) {
     $expected = 'B25A5A4F1F7E95D7182BBD48FDC41A894E8366366440ECA4D27F2582AF74C17E'
     $status = if ($hash -eq $expected) { 'PASS' } else { 'FAIL' }
     $severity = if ($status -eq 'PASS') { 'E1' } else { 'P1' }
-    Add-Check $checks 'identity.awake_dll_hash' $status $severity "Awake.dll SHA-256=$hash。" @('_build_out\1.3.15\Release\Awake.dll') '哈希不一致时禁止继续归属当前候选。'
+    Add-Check $checks 'identity.awake_dll_hash' $status $severity "Awake.dll SHA-256=$hash。" @('_build_out\1.4.8\Release\Awake.dll') '哈希不一致时禁止继续归属当前候选。'
 } else {
-    Add-Check $checks 'identity.awake_dll_hash' 'NOT_ATTEMPTED' 'E1' '当前 Release DLL 不存在。' @('_build_out\1.3.15\Release\Awake.dll') '先执行当前候选 Release 构建。'
+    Add-Check $checks 'identity.awake_dll_hash' 'NOT_ATTEMPTED' 'E1' '当前 Release DLL 不存在。' @('_build_out\1.4.8\Release\Awake.dll') '先执行当前候选 Release 构建。'
 }
 
 $addBehaviorCount = ([regex]::Matches($sourceFiles.submodule, 'campaignStarter\.AddBehavior\(')).Count

@@ -1,6 +1,6 @@
 param(
     [string]$ProjectRoot = '',
-    [string]$BannerlordApi = "1.3.15",
+    [string]$BannerlordApi = "1.4.8",
     [string]$GameModule = "D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AWAKE",
     [string]$RepoModule = ''
 )

@@ -2,7 +2,7 @@
 param(
     [string]$ProjectRoot = '',
     [ValidateSet('1.3.15', '1.4.8')]
-    [string]$BannerlordApi = '1.3.15',
+    [string]$BannerlordApi = '1.4.8',
     [ValidateSet('Debug', 'Release')]
     [string]$Configuration = 'Release',
     [string]$GameModule = 'D:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\AWAKE',
